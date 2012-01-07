@@ -1,0 +1,136 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Data;
+using Buffalobro.DB.CommBase;
+using Buffalobro.DB.QueryConditions;
+using Buffalobro.DB.DbCommon;
+
+namespace Buffalobro.DB.DataBaseAdapter.Oracle9Adapter
+{
+    /// <summary>
+    /// 生成分页语句的类
+    /// </summary>
+    public class CutPageSqlCreater
+    {
+       
+        /// <summary>
+        /// 生成SQL语句
+        /// </summary>
+        /// <param name="list">参数列表</param>
+        /// <param name="oper">连接对象</param>
+        /// <param name="objCondition">条件对象</param>
+        /// <param name="objPage">分页记录类</param>
+        /// <returns></returns>
+        public static string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage)
+        {
+
+            if (objPage.CurrentPage < 0 || objPage.PageSize <= 0)//初始化页数
+            {
+                return "";
+            }
+            //string sql = "select " + objCondition.SqlParams + " from " + DbAdapterLoader.CurrentDbAdapter.FormatTableName(objCondition.Tables) + " where " + objCondition.Condition + " order by " + objCondition.Orders;
+            //StringBuilder sql = new StringBuilder(5000);
+            //sql.Append("select ");
+            //sql.Append(objCondition.SqlParams.ToString());
+            //sql.Append(" from ");
+            //sql.Append(DbAdapterLoader.CurrentDbAdapter.FormatTableName(objCondition.Tables.ToString()));
+            //if (objCondition.Condition.Length > 0)
+            //{
+            //    sql.Append(" where ");
+            //    sql.Append(objCondition.Condition.ToString());
+            //}
+            //if (objCondition.GroupBy.Length > 0)
+            //{
+            //    sql.Append(" group by ");
+            //    sql.Append(objCondition.GroupBy.ToString());
+            //}
+            //if (objCondition.Orders.Length>0)
+            //{
+            //    sql.Append(" order by ");
+            //    sql.Append(objCondition.Orders.ToString());
+            //}
+            //if (objCondition.Having.Length > 0)
+            //{
+            //    sql.Append(" having ");
+            //    sql.Append(objCondition.Having.ToString());
+            //}
+            string sql = objCondition.GetSelect();
+            if (objPage.IsFillTotleRecords)
+            {
+                objPage.TotleRecords = GetTotleRecord(list, oper, sql, objPage.MaxSelectRecords);//获取总记录数
+                long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
+                objPage.TotlePage = totlePage;
+                if (objPage.CurrentPage >= objPage.TotlePage - 1)
+                {
+                    objPage.CurrentPage = objPage.TotlePage - 1;
+
+                }
+            }
+            return GetCutPageSql(sql, objPage);
+        }
+        /// <summary>
+        /// 获取分页语句
+        /// </summary>
+        /// <param name="sql">要被分页的SQL</param>
+        /// <param name="objCondition">分页类</param>
+        /// <returns></returns>
+        public static string GetCutPageSql(string sql, PageContent objPage) 
+        {
+            long starIndex = objPage.GetStarIndex() + 1;
+            long endIndex = objPage.PageSize + starIndex-1;
+            StringBuilder tmpsql = new StringBuilder(5000);
+            string rowNumberName = "\"cur_rowNumber" + objPage.PagerIndex+"\"" ;
+            tmpsql.Append("SELECT * FROM (SELECT tmp.*, ROWNUM as " + rowNumberName + " FROM (");
+            tmpsql.Append(sql);
+            tmpsql.Append(") tmp WHERE ROWNUM <= ");
+            tmpsql.Append(endIndex.ToString());
+            tmpsql.Append(") WHERE " + rowNumberName + " >=");
+            tmpsql.Append(starIndex.ToString());
+            return tmpsql.ToString();
+        }
+
+        /// <summary>
+        /// 获取总记录数
+        /// </summary>
+        /// <param name="part">查询条件</param>
+        /// <param name="list">变量列表</param>
+        /// <param name="oper">通用类</param>
+        public static long GetTotleRecord(ParamList list, DataBaseOperate oper,string sql,long maxRecords)
+        {
+            long totleRecords = 0;
+            StringBuilder tmpsql = new StringBuilder(5000);
+            if (maxRecords > 0)
+            {
+                tmpsql.Append("select count(*) from (select ROWNUM,tmpTable.* from (");
+                tmpsql.Append(sql);
+                tmpsql.Append(") tmpTable where ROWNUM<=");
+                tmpsql.Append(maxRecords.ToString());
+                tmpsql.Append(")");
+            }
+            else
+            {
+                tmpsql.Append("select count(*) from (");
+                tmpsql.Append(sql);
+                tmpsql.Append(")");
+            }
+            IDataReader reader = oper.Query(tmpsql.ToString(), list);
+            try
+            {
+                if (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        totleRecords = Convert.ToInt64(reader[0]);
+                    }
+                }
+            }
+            finally
+            {
+                reader.Close();
+            }
+            return totleRecords;
+        }
+    
+    }
+}
