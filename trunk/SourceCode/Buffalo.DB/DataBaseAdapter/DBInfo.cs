@@ -4,7 +4,7 @@ using System.Text;
 using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 using Buffalo.DB.DbCommon;
 using Buffalo.DB.MessageOutPuters;
-using Buffalo.DB.CsqlCommon.CsqlConditionCommon;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 
 namespace Buffalo.DB.DataBaseAdapter
 {
@@ -18,6 +18,8 @@ namespace Buffalo.DB.DataBaseAdapter
         private IMathFunctions _curMathFunctions = null;
         private IConvertFunction _curConvertFunctions = null;
         private ICommonFunction _curCommonFunctions = null;
+
+
 #if DEBUG
         MessageOutput _sqlOutputer = new MessageOutput();
 #endif
@@ -72,7 +74,6 @@ namespace Buffalo.DB.DataBaseAdapter
                 return _dbName;
             }
         }
-
         /// <summary>
         /// 获取当前数据库的适配器
         /// </summary>
@@ -360,13 +361,13 @@ namespace Buffalo.DB.DataBaseAdapter
         }
 
 
-        private Dictionary<string, CsqlEntityTableHandle> _dicTables = new Dictionary<string, CsqlEntityTableHandle>();
+        private Dictionary<string, BQLEntityTableHandle> _dicTables = new Dictionary<string, BQLEntityTableHandle>();
 
         /// <summary>
         /// 添加到库信息
         /// </summary>
         /// <param name="table"></param>
-        internal void AddToDB(CsqlEntityTableHandle table) 
+        internal void AddToDB(BQLEntityTableHandle table) 
         {
             string key = table.GetEntityInfo().EntityType.FullName;
             if (!_dicTables.ContainsKey(key))
@@ -376,13 +377,13 @@ namespace Buffalo.DB.DataBaseAdapter
         }
 
         /// <summary>
-        /// 通过实体类型查找对应的CSQL表信息
+        /// 通过实体类型查找对应的BQL表信息
         /// </summary>
         /// <param name="entityType"></param>
         /// <returns></returns>
-        public CsqlEntityTableHandle FindTable(Type entityType)
+        public BQLEntityTableHandle FindTable(Type entityType)
         {
-            CsqlEntityTableHandle ret = null;
+            BQLEntityTableHandle ret = null;
             _dicTables.TryGetValue(entityType.FullName, out ret);
             return ret;
         }

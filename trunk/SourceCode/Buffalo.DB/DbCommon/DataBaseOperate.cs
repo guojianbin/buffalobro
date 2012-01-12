@@ -42,7 +42,9 @@ namespace Buffalo.DB.DbCommon
 		private IDbTransaction _tran;
 		private IDbDataAdapter _sda;
 
-        
+        private int _lastAffectedRows;
+
+
         private IDBAdapter _dbAdapter = null;
         
         DBInfo _db = null;
@@ -390,9 +392,15 @@ namespace Buffalo.DB.DbCommon
             }
 			return reader;
 		}
-		
-        
-		
+
+
+        /// <summary>
+        /// 最后影响行数
+        /// </summary>
+        public int LastAffectedRows
+        {
+            get { return _lastAffectedRows; }
+        }
 
         /// <summary>
         /// 回滚事务
@@ -474,7 +482,7 @@ namespace Buffalo.DB.DbCommon
                 }
 #endif
                 ret = _comm.ExecuteNonQuery();
-                
+                _lastAffectedRows = ret;
             }
             catch (Exception e)
             {

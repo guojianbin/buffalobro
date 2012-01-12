@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Buffalo.DB.CsqlCommon.CsqlConditionCommon;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.Kernel;
 
 namespace Buffalo.DB.QueryConditions
@@ -36,9 +36,9 @@ namespace Buffalo.DB.QueryConditions
             
         }
 
-        public void Add(CsqlOrderByHandle orderBy) 
+        public void Add(BQLOrderByHandle orderBy) 
         {
-            //CsqlEntityParamHandle handle=orderBy.Param as CsqlEntityParamHandle;
+            //BQLEntityParamHandle handle=orderBy.Param as BQLEntityParamHandle;
             //if (CommonMethods.IsNull(handle)) 
             //{
             //    throw new Exception("请用表的现存字段进行排序！");
@@ -58,7 +58,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="property">属性</param>
         /// <param name="type">排序类型</param>
         /// <returns>返回是否添加成功</returns>
-        public void Add(CsqlEntityParamHandle property, SortType type)
+        public void Add(BQLEntityParamHandle property, SortType type)
         {
             if (type == SortType.DESC)
             {

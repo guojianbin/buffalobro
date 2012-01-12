@@ -26,7 +26,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
         /// <summary>
         /// 获取变量列表
         /// </summary>
-        public override ParamList CsqlSelectParamList
+        public override ParamList BQLSelectParamList
         {
             get
             {

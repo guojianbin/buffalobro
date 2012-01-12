@@ -33,7 +33,9 @@ namespace Buffalo.DBTools.HelperKernel
         {
             get { return _eRelation; }
         }
-        private ClrTypeShape _classShape;
+        private ClrType _classType;
+
+        
         private CodeElementPosition _cp;
         private string _tableName;
         private string _className;
@@ -46,8 +48,13 @@ namespace Buffalo.DBTools.HelperKernel
             
         }
 
-        
-        
+        /// <summary>
+        /// 关联类型
+        /// </summary>
+        public ClrType ClassType
+        {
+            get { return _classType; }
+        }
 
         /// <summary>
         /// 命名空间
@@ -75,15 +82,30 @@ namespace Buffalo.DBTools.HelperKernel
             set { _className = value; }
         }
 
-        private string _baseType;
+        private ClrType _baseType;
 
         /// <summary>
         /// 基类 
         /// </summary>
-        public string BaseType
+        public ClrType BaseType
         {
             get { return _baseType; }
             set { _baseType = value; }
+        }
+
+        private string _baseTypeName;
+
+
+        /// <summary>
+        /// 基名称
+        /// </summary>
+        public string BaseTypeName 
+        {
+            get
+            {
+
+                return _baseTypeName;
+            }
         }
 
         private List<string> _interfaces;
@@ -132,9 +154,10 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         /// <param name="classShape">类图形</param>
         /// <param name="project">所属项目</param>
-        public EntityConfig(ClrTypeShape classShape,Project project) 
+        public EntityConfig(ClrType ctype, Project project) 
         {
-            _classShape = classShape;
+            //_classShape = classShape;
+            _classType = ctype;
             FillClassInfo();
             InitFleld();
             InitPropertys();
@@ -146,23 +169,19 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         /// <param name="ctype"></param>
         /// <returns></returns>
-        public static string GetBaseClass(ClrType ctype) 
+        public static ClrType GetBaseClass(ClrType ctype,out string typeName) 
         {
             InheritanceTypeRefMoveableCollection col = ctype.InheritanceTypeRefs;
+            typeName = "System.Object";
             if (col != null && col.Count > 0)
             {
-                string baseType = col[0].Name;
-                if (baseType.Equals("System.Object", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    return "System.Object";
-                }
-                else
-                {
-                    return baseType;
-                }
+                typeName = col[0].Name;
+                ClrType baseType = col[0].ClrType;
+
+                return baseType;
             }
 
-            return "System.Object";
+            return null;
             
         }
 
@@ -171,27 +190,28 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         private void FillClassInfo() 
         {
-            ClrType ctype = _classShape.AssociatedType;
+            ClrType ctype = _classType;
             _className = ctype.Name;
 
-            _baseType = GetBaseClass(ctype);
-            if (_baseType == "System.Object") 
-            {
-                _baseType = "EntityBase";
-            }
+            _baseType = GetBaseClass(ctype,out _baseTypeName);
+            
+            //if (_baseType == "System.Object") 
+            //{
+            //    _baseType = "EntityBase";
+            //}
 
             
 
-            InterfaceImplementationTypeRefMoveableCollection itms = ctype.ImplementationTypeRefs;
+            //InterfaceImplementationTypeRefMoveableCollection itms = ctype.ImplementationTypeRefs;
 
-            if (itms != null && itms.Count > 0)
-            {
-                _interfaces = new List<string>();
-                foreach (InterfaceImplementationTypeRef itm in itms) 
-                {
-                    _interfaces.Add(itm.Name);
-                }
-            }
+            //if (itms != null && itms.Count > 0)
+            //{
+            //    _interfaces = new List<string>();
+            //    foreach (InterfaceImplementationTypeRef itm in itms) 
+            //    {
+            //        _interfaces.Add(itm.Name);
+            //    }
+            //}
 
             foreach (CodeElementPosition cp in ctype.SourceCodePositions)
             {
@@ -213,7 +233,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         private void InitFleld()
         {
-            List<ClrField> lstFields = GetAllMember<ClrField>(_classShape.AssociatedType, false);
+            List<ClrField> lstFields = GetAllMember<ClrField>(_classType, false);
             for (int j = 0; j < lstFields.Count; j++)
             {
 
@@ -268,7 +288,7 @@ namespace Buffalo.DBTools.HelperKernel
                 if (_allPropertyNames == null)
                 {
                     _allPropertyNames = new List<string>();
-                    List<ClrProperty> lstProperty = GetAllMember<ClrProperty>(_classShape.AssociatedType, true);
+                    List<ClrProperty> lstProperty = GetAllMember<ClrProperty>(_classType, true);
                     foreach (ClrProperty prot in lstProperty)
                     {
                         if (!IsManyOne(prot))
@@ -286,7 +306,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         private void InitPropertys()
         {
-            List<ClrProperty> lstProperty = GetAllMember<ClrProperty>(_classShape.AssociatedType, false);
+            List<ClrProperty> lstProperty = GetAllMember<ClrProperty>(_classType, false);
             _properties = new Dictionary<string, CodeElementPosition>();
             for (int j = 0; j < lstProperty.Count; j++)
             {
@@ -333,15 +353,33 @@ namespace Buffalo.DBTools.HelperKernel
         }
 
         /// <summary>
+        /// 生成扩展代码
+        /// </summary>
+        private void GenerateExtenCode() 
+        {
+
+            GenerateExtendCode();
+            Generate3Tier g3t = new Generate3Tier(this);
+            BQLEntityGenerater bqlEntity = new BQLEntityGenerater(this);
+            g3t.GenerateBusiness();
+            g3t.GenerateIDataAccess();
+            g3t.GenerateDataAccess();
+            g3t.GenerateBQLDataAccess();
+            bqlEntity.GenerateBQLEntityDB();
+            bqlEntity.GenerateBQLEntity();
+            FileInfo info = new FileInfo(FileName);
+
+            string businessName =info.DirectoryName+"\\"+ FileName.Replace(this.ClassName + ".cs", this.ClassName + ".extend.cs");
+
+            EntityMappingConfig.SaveXML(this);
+        }
+
+        /// <summary>
         /// 生成代码
         /// </summary>
         public void GenerateCode() 
         {
-            string extendName = FileName.Replace(this.ClassName + ".cs", this.ClassName + ".extend.cs");
-            if (!File.Exists(extendName)) 
-            {
-                GenerateExtendCode(extendName);
-            }
+            
             
             List<string> lstSource =CodeFileHelper.ReadFile(FileName);
             List<string> lstTarget = new List<string>(lstSource.Count);
@@ -362,14 +400,6 @@ namespace Buffalo.DBTools.HelperKernel
                         }
                     }
                     lstTarget.Add(str);
-                    //while (str.Trim().IndexOf("{") != 0) 
-                    //{
-                    //    i++;
-                    //    str = lstSource[i];
-                    //}
-                    
-                    //AddSource(lstTarget,CutSpace(str));
-                    //lstTarget.Add(CutSpace(str)+"{");
                 }
                 else if (codeIndex<_eParamFields.Count && i == _eParamFields[codeIndex].StarLine-1 )
                 {
@@ -423,8 +453,8 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             CodeFileHelper.SaveFile(FileName, lstTarget);
-
-            EntityMappingConfig.SaveXML(this);
+            GenerateExtenCode();
+            
 
         }
 
@@ -499,7 +529,8 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         private static string[] _needUsing ={ 
             "using System.Collections.Generic;" ,"using Buffalo.DB.CommBase;",
-            "using Buffalo.Kernel.Defaults;","using Buffalo.DB.PropertyAttributes;","using System.Data;"
+            "using Buffalo.Kernel.Defaults;","using Buffalo.DB.PropertyAttributes;",
+            "using System.Data;"
         };
 
         /// <summary>
@@ -521,27 +552,28 @@ namespace Buffalo.DBTools.HelperKernel
         /// <summary>
         /// 生成扩展类代码文件
         /// </summary>
-        private void GenerateExtendCode(string fileName)
+        private void GenerateExtendCode()
         {
-            string space = "";
-            List<string> codes = new List<string>();
-            codes.Add("using System;");
-            codes.Add("using System.Data;");
-            codes.Add("using System.Collections.Generic;");
-            codes.Add("using Buffalo.DB.CommBase;");
-            codes.Add("using Buffalo.Kernel.Defaults;");
-            codes.Add("using Buffalo.DB.PropertyAttributes;");
+            FileInfo fileInfo = new FileInfo(FileName);
+            string fileName = fileInfo.DirectoryName + "\\" + fileInfo.Name.Replace(".cs", ".extend.cs");
+            if (File.Exists(fileName)) 
+            {
+                return;
+            }
 
-            codes.Add("namespace "+Namespace);
-            codes.Add("{");
-            space+="	";
-            codes.Add(space + "/// <summary>");
-            codes.Add(space + "///  " + _summary);
-            codes.Add(space + "/// </summary>");
-            codes.Add(space + "public partial class "+ClassName);
-            codes.Add(space + "{");
-            codes.Add(space + "}");
-            codes.Add("}");
+            string model = Models.UserEntity;
+            List<string> codes = new List<string>();
+            using (StringReader reader = new StringReader(model)) 
+            {
+                string tmp = null;
+                while((tmp=reader.ReadLine())!=null)
+                {
+                    tmp = tmp.Replace("<%=EntityNamespace%>", Namespace);
+                    tmp = tmp.Replace("<%=Summary%>", _summary);
+                    tmp = tmp.Replace("<%=ClassName%>", ClassName);
+                    codes.Add(tmp);
+                }
+            }
             CodeFileHelper.SaveFile(fileName, codes);
             EnvDTE.ProjectItem newit = _currentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;

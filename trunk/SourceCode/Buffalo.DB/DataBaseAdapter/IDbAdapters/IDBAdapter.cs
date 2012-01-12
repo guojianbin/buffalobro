@@ -212,7 +212,7 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <summary>
         /// 获取变量列表
         /// </summary>
-        ParamList CsqlSelectParamList
+        ParamList BQLSelectParamList
         {
             get;
         }

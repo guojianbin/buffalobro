@@ -31,6 +31,13 @@ namespace Buffalo.DBTools
         /// <returns></returns>
         public static void SaveFile(string fileName, List<string> content)
         {
+
+            FileInfo fInfo = new FileInfo(fileName);
+            if (!fInfo.Directory.Exists) 
+            {
+                Directory.CreateDirectory(fInfo.DirectoryName);
+            }
+
             if(File.Exists( fileName))
             {
                 string bakName=fileName + ".bak";

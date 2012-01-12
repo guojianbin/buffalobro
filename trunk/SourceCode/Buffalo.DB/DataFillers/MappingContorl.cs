@@ -14,11 +14,11 @@ using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.CommBase.DataAccessBases;
 using Buffalo.DB.DbCommon;
 using Buffalo.Kernel.FastReflection;
-using Buffalo.DB.CsqlCommon;
-using Buffalo.DB.CsqlCommon.CsqlConditionCommon;
+using Buffalo.DB.BQLCommon;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.QueryConditions;
-using Buffalo.DB.CsqlCommon.CsqlKeyWordCommon;
-using Buffalo.DB.CsqlCommon.CsqlBaseFunction;
+using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
+using Buffalo.DB.BQLCommon.BQLBaseFunction;
 namespace Buffalo.DB.DataFillers
 {
     /// <summary>
@@ -98,7 +98,7 @@ namespace Buffalo.DB.DataFillers
             if (pks.Count>0)
             {
                 DataBaseOperate oper = StaticConnection.GetStaticOperate(childHandle.DBInfo);
-                CsqlDbBase dao = new CsqlDbBase(oper);
+                BQLDbBase dao = new BQLDbBase(oper);
                 ScopeList lstScope = new ScopeList();
                 
                 sender.OnFillChild(propertyName, lstScope);
@@ -279,7 +279,7 @@ namespace Buffalo.DB.DataFillers
             if (pks.Count>0)
             {
                 DataBaseOperate oper = StaticConnection.GetStaticOperate(fatherInfo.DBInfo);
-                CsqlDbBase dao = new CsqlDbBase(oper);
+                BQLDbBase dao = new BQLDbBase(oper);
                 ScopeList lstScope = new ScopeList();
 
                 sender.OnFillParent(propertyName, lstScope);

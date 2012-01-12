@@ -9,6 +9,7 @@ using Buffalo.DB.DbCommon;
 using Buffalo.DB.QueryConditions;
 using Buffalo.Kernel.Defaults;
 using Buffalo.DB.EntityInfos;
+using Buffalo.DB.CacheManager;
 
 namespace Buffalo.DB.CommBase.BusinessBases
 {
@@ -371,7 +372,8 @@ namespace Buffalo.DB.CommBase.BusinessBases
         public virtual object SaveOrUpdate(T entity)
         {
             object ret = null;
-            EntityInfoHandle CurEntityInfo = EntityInfoManager.GetEntityHandle(typeof(T));//当前类型的信息
+            Type type=typeof(T);
+            EntityInfoHandle CurEntityInfo = EntityInfoManager.GetEntityHandle(type);//当前类型的信息
             EntityPropertyInfo pkInfo=CurEntityInfo.PrimaryProperty;
             DataAccessModel<T> entityDao = new DataAccessModel<T>();
             object pkValue = pkInfo.GetValue(entity);
@@ -388,7 +390,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
             }
             
             ret = Insert(entity);
-
             return ret;
         }
 
@@ -418,7 +419,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
 
             _affectedRows = entityDao.Insert(entity);
             ret = OnInserted();
-
 
             return ret;
         }
@@ -510,37 +510,10 @@ namespace Buffalo.DB.CommBase.BusinessBases
 
             _affectedRows = entityDao.Delete(entity);
             ret = OnDeleted();
-
             return ret;
         }
 
-        ///// <summary>
-        ///// 删除
-        ///// </summary>
-        ///// <param name="entity">对象</param>
-        ///// <returns>大于0:删除完毕,小于0:删除失败</returns>
-        //public virtual object ConcurrencyDelete(T entity)
-        //{
-
-        //    DataAccessModel<T> entityDao = new DataAccessModel<T>();
-
-        //    object ret = HasChild(entity);
-        //    if (ret != null)
-        //    {
-        //        return ret;
-        //    }
-
-        //    ret = OnDeleteing(entity);
-        //    if (ret != null)
-        //    {
-        //        return ret;
-        //    }
-        //    _affectedRows = entityDao.ConcurrencyDelete(entity);
-        //    ret = OnDeleted();
-
-
-        //    return ret;
-        //}
+        
 
         /// <summary>
         /// 根据ID删除记录
@@ -589,10 +562,9 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 return ret;
             }
 
-
+            
             _affectedRows = entityDao.Delete(lstScope);
             ret = OnDeleted();
-
             return ret;
         }
 

@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <IncrementalBuild>false</IncrementalBuild>
+    <DocumentationFile>bin\Buffalo.DBTools.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
@@ -119,6 +120,7 @@
       <DependentUpon>FrmClassDesigner.cs</DependentUpon>
     </Compile>
     <Compile Include="GridViewComboBoxCell.cs" />
+    <Compile Include="HelperKernel\BQLEntityGenerater.cs" />
     <Compile Include="HelperKernel\CodeFile.cs" />
     <Compile Include="HelperKernel\ComboBoxItemCollection.cs" />
     <Compile Include="HelperKernel\DataTypeInfos.cs" />
@@ -130,6 +132,20 @@
     <Compile Include="HelperKernel\EntityRelationCollection.cs" />
     <Compile Include="HelperKernel\EntityRelationItem.cs" />
     <Compile Include="HelperKernel\FieldComparer.cs" />
+    <Compile Include="HelperKernel\Generate3Tier.cs" />
+    <Compile Include="HelperKernel\GrneraterBase.cs" />
+    <Compile Include="Models.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Models.resx</DependentUpon>
+    </Compile>
+    <Content Include="Resources\BQLDB.txt" />
+    <Content Include="Resources\BQLEntity.txt" />
+    <Content Include="Resources\BQLDataAccess.txt" />
+    <Content Include="Resources\IDataAccess.txt" />
+    <Content Include="Resources\DataAccess.txt" />
+    <Content Include="Resources\Business.txt" />
+    <Content Include="Resources\UserEntity.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CommandBar.resx">
@@ -138,6 +154,11 @@
     <EmbeddedResource Include="FrmClassDesigner.resx">
       <DependentUpon>FrmClassDesigner.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Models.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -169,9 +190,6 @@
   <ItemGroup>
     <Content Include="Buffalo.DBTools.AddIn">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="C:\Users\taisandog\Documents\Visual Studio 2005\Addins\Buffalo.DBTools - For Testing.AddIn">
-      <Link>Buffalo.DBTools - For Testing.AddIn</Link>
     </Content>
     <Content Include="Microsoft.VisualStudio.TextManager.Interop.dll" />
   </ItemGroup>

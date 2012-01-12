@@ -7,8 +7,8 @@ using Buffalo.DB.CommBase.DataAccessBases;
 using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 using Buffalo.DB.EntityInfos;
-using Buffalo.DB.CsqlCommon.CsqlConditionCommon;
-using Buffalo.DB.CsqlCommon;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
+using Buffalo.DB.BQLCommon;
 
 namespace Buffalo.DB.CommBase.BusinessBases
 {
@@ -100,7 +100,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public DataSet SelectTable(string tableName,  ScopeList lstScope)
         {
-            CsqlDataAccessBase<T> dao = new CsqlDataAccessBase<T>();
+            BQLDataAccessBase<T> dao = new BQLDataAccessBase<T>();
             return dao.SelectTable(tableName, lstScope);
         }
 
@@ -112,9 +112,9 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <param name="lstScope"></param>
         /// <param name="objPage"></param>
         /// <returns></returns>
-        public DataSet SelectTable(CsqlOtherTableHandle table,  ScopeList lstScope)
+        public DataSet SelectTable(BQLOtherTableHandle table,  ScopeList lstScope)
         {
-            CsqlDataAccessBase<T> dao = new CsqlDataAccessBase<T>();
+            BQLDataAccessBase<T> dao = new BQLDataAccessBase<T>();
             return dao.SelectTable(table, lstScope);
         }
         

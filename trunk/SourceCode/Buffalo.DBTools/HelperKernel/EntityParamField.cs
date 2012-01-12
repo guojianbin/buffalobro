@@ -105,6 +105,9 @@ namespace Buffalo.DBTools.HelperKernel
             get { return _length; }
             set { _length = value; }
         }
+
+        
+
         /// <summary>
         /// Ìí¼Óµ½Ô´Âë
         /// </summary>

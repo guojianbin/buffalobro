@@ -10,7 +10,7 @@ using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 using Buffalo.Kernel.Defaults;
 using Buffalo.DB.EntityInfos;
-using Buffalo.DB.CsqlCommon.CsqlConditionCommon;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.Kernel;
 
 namespace Buffalo.DB.CommBase.DataAccessBases

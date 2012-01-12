@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Buffalo.DB.EntityInfos;
-using Buffalo.DB.CsqlCommon.CsqlConditionCommon;
-using Buffalo.DB.CsqlCommon.CsqlKeyWordCommon;
-using Buffalo.DB.CsqlCommon.CsqlBaseFunction;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
+using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
+using Buffalo.DB.BQLCommon.BQLBaseFunction;
 using Buffalo.Kernel;
 using System.Data;
-using Buffalo.DB.CsqlCommon;
+using Buffalo.DB.BQLCommon;
 
 namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
 {
@@ -41,7 +41,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
             return _primaryTable.LoadFromReader(reader,out hasValue);
         }
 
-        public TableAliasNameManager(CsqlEntityTableHandle pEntityinfo) 
+        public TableAliasNameManager(BQLEntityTableHandle pEntityinfo) 
         {
             _primaryTable = new AliasTableMapping(pEntityinfo, this,null);
             string key = pEntityinfo.GetEntityKey();
@@ -54,7 +54,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
-        public bool AddChildTable(CsqlEntityTableHandle table) 
+        public bool AddChildTable(BQLEntityTableHandle table) 
         {
             string key=table.GetEntityKey();
             bool ret=false;
@@ -72,9 +72,9 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
-        public CsqlAliasHandle GetPrimaryAliasHandle(CsqlTableHandle table) 
+        public BQLAliasHandle GetPrimaryAliasHandle(BQLTableHandle table) 
         {
-            CsqlEntityTableHandle eHandle = table as CsqlEntityTableHandle;
+            BQLEntityTableHandle eHandle = table as BQLEntityTableHandle;
             if (Buffalo.Kernel.CommonMethods.IsNull( eHandle)) 
             {
                 return null;
@@ -91,13 +91,13 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// </summary>
         /// <param name="handle"></param>
         /// <returns></returns>
-        public List<CsqlParamHandle> GetPrimaryAliasParamHandle(CsqlParamHandle[] handles) 
+        public List<BQLParamHandle> GetPrimaryAliasParamHandle(BQLParamHandle[] handles) 
         {
-            List<CsqlParamHandle> lst=new List<CsqlParamHandle>();
+            List<BQLParamHandle> lst=new List<BQLParamHandle>();
             bool hasOther = false;//是否有不是指定的字段
-            foreach (CsqlParamHandle handle in handles)
+            foreach (BQLParamHandle handle in handles)
             {
-                CsqlEntityParamHandle pHandle = handle as CsqlEntityParamHandle;
+                BQLEntityParamHandle pHandle = handle as BQLEntityParamHandle;
                 if (CommonMethods.IsNull(pHandle))
                 {
                     lst.Add(handle);
@@ -126,7 +126,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// 获取子类的字段信息
         /// </summary>
         /// <param name="table"></param>
-        private void LoadChildParams(AliasTableMapping table,List<CsqlParamHandle> lst) 
+        private void LoadChildParams(AliasTableMapping table,List<BQLParamHandle> lst) 
         {
             foreach (KeyValuePair<string,AliasTableMapping> cTableMapping in table.ChildTables) 
             {
@@ -167,14 +167,14 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
                 AliasTableMapping tTable = tablePair.Value;
                 string tTableName = tTable.TableInfo.GetAliasName();
                 EntityMappingInfo minfo = tTable.MappingInfo;
-                CsqlCondition fhandle = null;
+                BQLCondition fhandle = null;
                 //if (minfo.IsPrimary)
                 //{
-                fhandle = CSQL.Tables[sTableName][minfo.SourceProperty.ParamName] == CSQL.Tables[tTableName][minfo.TargetProperty.ParamName];
+                fhandle = BQL.Tables[sTableName][minfo.SourceProperty.ParamName] == BQL.Tables[tTableName][minfo.TargetProperty.ParamName];
                 //}
                 //else
                 //{
-                //    fhandle = CsqlDbBase.CSQL.Tables[sTableName][minfo.SourceProperty.ParamName] == CsqlDbBase.CSQL.Tables[tTableName][minfo.PrimaryKey];
+                //    fhandle = BQLDbBase.BQL.Tables[sTableName][minfo.SourceProperty.ParamName] == BQLDbBase.BQL.Tables[tTableName][minfo.PrimaryKey];
                 //}
                 inner = inner.LeftJoin(tablePair.Value.TableInfo, fhandle);
                 if (tTable.ChildTables.Count > 0)
@@ -190,7 +190,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// </summary>
         /// <param name="paramHandle"></param>
         /// <returns></returns>
-        public string GetTableAliasName(CsqlEntityTableHandle table) 
+        public string GetTableAliasName(BQLEntityTableHandle table) 
         {
             AliasTableMapping mapping = FindMapping(table);
             if (mapping != null) 
@@ -204,7 +204,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// 查找所属的表映射信息
         /// </summary>
         /// <returns></returns>
-        private AliasTableMapping FindMapping(CsqlEntityTableHandle table) 
+        private AliasTableMapping FindMapping(BQLEntityTableHandle table) 
         {
             AliasTableMapping ret = null;
             string key=table.GetEntityKey();

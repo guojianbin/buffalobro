@@ -50,7 +50,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <summary>
         /// 获取变量列表
         /// </summary>
-        public ParamList CsqlSelectParamList
+        public ParamList BQLSelectParamList
         {
             get
             {

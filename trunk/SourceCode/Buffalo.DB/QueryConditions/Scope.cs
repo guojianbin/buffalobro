@@ -83,9 +83,9 @@ namespace Buffalo.DB.QueryConditions
         Scope = 13,
 
         /// <summary>
-        /// CSQL条件
+        /// BQL条件
         /// </summary>
-        [Description("CSQL条件")]
+        [Description("BQL条件")]
         Condition=14
     }
 

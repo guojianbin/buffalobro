@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Buffalo.DB.CsqlCommon.CsqlConditionCommon;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.EntityInfos;
-using Buffalo.DB.CsqlCommon.CsqlKeyWordCommon;
+using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 using Buffalo.Kernel;
-using Buffalo.DB.CsqlCommon.CsqlBaseFunction;
+using Buffalo.DB.BQLCommon.BQLBaseFunction;
 using System.Data;
 using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 using System.Collections;
-using Buffalo.DB.CsqlCommon;
+using Buffalo.DB.BQLCommon;
 
 namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
 {
@@ -17,9 +17,9 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
     {
         
 
-        private CsqlAliasHandle _table;
+        private BQLAliasHandle _table;
 
-        private Dictionary<string,CsqlAliasParamHandle> _dicParams;
+        private Dictionary<string,BQLAliasParamHandle> _dicParams;
 
         private Dictionary<string, AliasTableMapping> _dicChildTables = new Dictionary<string, AliasTableMapping>();
 
@@ -44,11 +44,11 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// </summary>
         /// <param name="table"></param>
         /// <param name="aliasName"></param>
-        public AliasTableMapping(CsqlEntityTableHandle table, TableAliasNameManager belongManager, EntityMappingInfo mappingInfo) 
+        public AliasTableMapping(BQLEntityTableHandle table, TableAliasNameManager belongManager, EntityMappingInfo mappingInfo) 
         {
             _belongManager = belongManager;
             _entityInfo = table.GetEntityInfo();
-            _table = new CsqlAliasHandle(table, _belongManager.NextTableAliasName());
+            _table = new BQLAliasHandle(table, _belongManager.NextTableAliasName());
             _mappingInfo = mappingInfo;
             InitParam(table);
         }
@@ -204,13 +204,13 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// </summary>
         /// <param name="propertyName">所属的属性名</param>
         /// <returns></returns>
-        public List<CsqlParamHandle> GetParamInfo(string propertyName) 
+        public List<BQLParamHandle> GetParamInfo(string propertyName) 
         {
-            List<CsqlParamHandle> lstRet = new List<CsqlParamHandle>();
+            List<BQLParamHandle> lstRet = new List<BQLParamHandle>();
 
             if (propertyName != "*")
             {
-                CsqlAliasParamHandle handle = null;
+                BQLAliasParamHandle handle = null;
                 if (_dicParams.TryGetValue(propertyName, out handle))
                 {
                     lstRet.Add(handle);
@@ -218,7 +218,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
             }
             else 
             {
-                foreach (KeyValuePair<string, CsqlAliasParamHandle> keyPair in _dicParams) 
+                foreach (KeyValuePair<string, BQLAliasParamHandle> keyPair in _dicParams) 
                 {
                     lstRet.Add(keyPair.Value);
                 }
@@ -229,7 +229,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// <summary>
         /// 表信息
         /// </summary>
-        public CsqlAliasHandle TableInfo
+        public BQLAliasHandle TableInfo
         {
             get 
             {
@@ -241,11 +241,11 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// 添加子表
         /// </summary>
         /// <param name="table">子表</param>
-        public AliasTableMapping AddChildTable(CsqlEntityTableHandle table, List<KeyWordJoinItem> lstJoin) 
+        public AliasTableMapping AddChildTable(BQLEntityTableHandle table, List<KeyWordJoinItem> lstJoin) 
         {
             AliasTableMapping retTable = null;
-            Stack<CsqlEntityTableHandle> stkTables = new Stack<CsqlEntityTableHandle>();
-            CsqlEntityTableHandle curTable=table;
+            Stack<BQLEntityTableHandle> stkTables = new Stack<BQLEntityTableHandle>();
+            BQLEntityTableHandle curTable=table;
             do
             {
                 stkTables.Push(curTable);
@@ -255,7 +255,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
             AliasTableMapping lastTable = null;//上一个表
             while (stkTables.Count > 0) 
             {
-                CsqlEntityTableHandle cTable=stkTables.Pop();
+                BQLEntityTableHandle cTable=stkTables.Pop();
 
                 string pName = cTable.GetPropertyName();
                 if (string.IsNullOrEmpty(pName))
@@ -296,13 +296,13 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// </summary>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        public CsqlParamHandle GetAliasParam(string propertyName) 
+        public BQLParamHandle GetAliasParam(string propertyName) 
         {
-            CsqlAliasParamHandle prm = null;
-            CsqlParamHandle ret = null;
+            BQLAliasParamHandle prm = null;
+            BQLParamHandle ret = null;
             if (_dicParams.TryGetValue(propertyName, out prm))
             {
-                ret = CSQL.ToParam(prm.AliasName);
+                ret = BQL.ToParam(prm.AliasName);
                 ret.ValueDbType = prm.ValueDbType;
             }
             return ret;
@@ -313,14 +313,14 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// </summary>
         /// <param name="table"></param>
         /// <param name="paramIndex"></param>
-        private void InitParam(CsqlEntityTableHandle table) 
+        private void InitParam(BQLEntityTableHandle table) 
         {
-            _dicParams = new Dictionary<string, CsqlAliasParamHandle>();
+            _dicParams = new Dictionary<string, BQLAliasParamHandle>();
 
             foreach (EntityPropertyInfo info in table.GetEntityInfo().PropertyInfo) 
             {
                 string prmAliasName=_belongManager.NextParamAliasName(_table.GetAliasName());
-                CsqlAliasParamHandle prm = CSQL.Tables[_table.GetAliasName()][info.ParamName].As(prmAliasName);
+                BQLAliasParamHandle prm = BQL.Tables[_table.GetAliasName()][info.ParamName].As(prmAliasName);
 
                 
                 _dicPropertyInfo[prmAliasName] = info;

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
-using Buffalo.DB.CsqlCommon.CsqlConditionCommon;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 
 namespace Buffalo.DB.QueryConditions
 {
@@ -10,7 +10,7 @@ namespace Buffalo.DB.QueryConditions
     {
         private string _propertyName;
         private SortType _sortType;
-        private CsqlOrderByHandle _orderHandle;
+        private BQLOrderByHandle _orderHandle;
         /// <summary>
         /// 当前的排序的属性名
         /// </summary>
@@ -44,9 +44,9 @@ namespace Buffalo.DB.QueryConditions
             }
         }
         /// <summary>
-        /// CSQL排序条件
+        /// BQL排序条件
         /// </summary>
-        public CsqlOrderByHandle OrderHandle
+        public BQLOrderByHandle OrderHandle
         {
             get
             {

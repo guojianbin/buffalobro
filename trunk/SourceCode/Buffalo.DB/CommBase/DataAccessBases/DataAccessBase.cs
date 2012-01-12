@@ -14,9 +14,9 @@ using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 using Buffalo.Kernel.Defaults;
 using Buffalo.Kernel;
-using Buffalo.DB.CsqlCommon;
+using Buffalo.DB.BQLCommon;
 using Buffalo.DB.CommBase.BusinessBases;
-using Buffalo.DB.CsqlCommon.CsqlConditionCommon;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 
 namespace Buffalo.DB.CommBase.DataAccessBases
 {
@@ -34,12 +34,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         protected internal readonly static EntityInfoHandle CurEntityInfo = EntityInfoManager.GetEntityHandle(typeof(T));
         private static string allParams=null;
 
-        private CsqlDbBase _cdal;//Csql数据层类
+        private BQLDbBase _cdal;//BQL数据层类
 
         /// <summary>
-        /// Csql上下文
+        /// BQL上下文
         /// </summary>
-        internal CsqlDbBase ContextDAL 
+        internal BQLDbBase ContextDAL 
         {
             get 
             {
@@ -81,7 +81,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             set
             {
                 oper = value;
-                _cdal = new CsqlDbBase(oper);
+                _cdal = new BQLDbBase(oper);
             }
         }
 
@@ -178,14 +178,14 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             
             StringBuilder ret = new StringBuilder();
             
-            List<CsqlParamHandle> propertyNames = lstScope.GetShowProperty(CurEntityInfo.DBInfo.FindTable(typeof(T)));
+            List<BQLParamHandle> propertyNames = lstScope.GetShowProperty(CurEntityInfo.DBInfo.FindTable(typeof(T)));
 
 
             if (propertyNames.Count > 0)
             {
-                foreach (CsqlParamHandle property in propertyNames)
+                foreach (BQLParamHandle property in propertyNames)
                 {
-                    CsqlEntityParamHandle eproperty = property as CsqlEntityParamHandle;
+                    BQLEntityParamHandle eproperty = property as BQLEntityParamHandle;
                     if (CommonMethods.IsNull(eproperty))
                     {
                         continue;

@@ -4,7 +4,7 @@ using System.Text;
 using Buffalo.DB.CommBase.DataAccessBases;
 using Buffalo.DB.QueryConditions;
 using System.Data;
-using Buffalo.DB.CsqlCommon;
+using Buffalo.DB.BQLCommon;
 using Buffalo.Kernel.Defaults;
 using Buffalo.DB.EntityInfos;
 
@@ -22,7 +22,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// 获取执行语法的上下文
         /// </summary>
         /// <returns></returns>
-        public static CsqlDbBase GetContext() 
+        public static BQLDbBase GetContext() 
         {
             return GetBaseContext().ContextDAL;
         }

@@ -59,7 +59,7 @@ namespace Buffalo.DBTools
             _relationCell = new GridViewComboBoxCell(gvMapping);
             gvField.AutoGenerateColumns = false;
             gvMapping.AutoGenerateColumns = false;
-            _config= new EntityConfig(SelectedClass,CurrentProject);
+            _config= new EntityConfig(SelectedClass.AssociatedType,CurrentProject);
             BindFieldInfos();
             //_cmbCell.SetDataSource(EntityFieldBase.GetAllSupportTypes());
             gvMapping.CurrentCellChanged += new EventHandler(gvMapping_CurrentCellChanged);
@@ -93,7 +93,9 @@ namespace Buffalo.DBTools
         {
             txtClassName.Text = _config.ClassName;
             txtTableName.Text = _config.TableName;
-            txtBaseClass.Text = _config.BaseType;
+            
+                txtBaseClass.Text = _config.BaseTypeName;
+            
             gvField.DataSource = _config.EParamFields;
             gvMapping.DataSource = _config.ERelation;
         }
@@ -139,7 +141,7 @@ namespace Buffalo.DBTools
 
         private void btnGenCode_Click(object sender, EventArgs e)
         {
-            _config.BaseType = txtBaseClass.Text;
+            //_config.BaseType = txtBaseClass.Text;
             _config.TableName = txtTableName.Text;
             _config.GenerateCode();
             this.DialogResult = DialogResult.OK;

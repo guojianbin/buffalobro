@@ -2,9 +2,8 @@ D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\obj\Debug\ResolveAssemblyReferenc
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\bin\Debug\Buffalo.DB.dll
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\bin\Debug\Buffalo.DB.pdb
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\bin\Debug\Buffalo.Kernel.dll
-D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\bin\Debug\IBM.Data.DB2.dll
-D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\bin\Debug\MySql.Data.dll
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\bin\Debug\System.Data.SQLite.DLL
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\bin\Debug\Buffalo.Kernel.pdb
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\obj\Debug\Buffalo.DB.dll
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\obj\Debug\Buffalo.DB.pdb
+D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\bin\Debug\Buffalo.Kernel.xml

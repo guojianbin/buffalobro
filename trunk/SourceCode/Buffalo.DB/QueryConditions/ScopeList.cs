@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 using Buffalo.DB.ContantSearchs;
-using Buffalo.DB.CsqlCommon.CsqlConditionCommon;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.Kernel;
 using Buffalo.DB.EntityInfos;
 
@@ -30,12 +30,12 @@ namespace Buffalo.DB.QueryConditions
         /// </summary>
         /// <param name="handle"></param>
         /// <returns></returns>
-        public List<CsqlParamHandle> GetShowProperty(CsqlTableHandle table)
+        public List<BQLParamHandle> GetShowProperty(BQLTableHandle table)
         {
-            List<CsqlParamHandle> propertys = new List<CsqlParamHandle>();
+            List<BQLParamHandle> propertys = new List<BQLParamHandle>();
             if (_showProperty != null && _showProperty.Count > 0)
             {
-                foreach (CsqlParamHandle param in _showProperty)
+                foreach (BQLParamHandle param in _showProperty)
                 {
 
                     propertys.Add(param);
@@ -46,15 +46,15 @@ namespace Buffalo.DB.QueryConditions
 
 
 
-            CsqlEntityTableHandle eTable = table as CsqlEntityTableHandle;
+            BQLEntityTableHandle eTable = table as BQLEntityTableHandle;
             if (!CommonMethods.IsNull(eTable))
             {
                 foreach (EntityPropertyInfo info in eTable.GetEntityInfo().PropertyInfo)
                 {
                     string name = info.PropertyName;
-                    foreach (CsqlParamHandle param in _hideProperty)
+                    foreach (BQLParamHandle param in _hideProperty)
                     {
-                        CsqlEntityParamHandle eph = param as CsqlEntityParamHandle;
+                        BQLEntityParamHandle eph = param as BQLEntityParamHandle;
                         if (!CommonMethods.IsNull(eph))
                         {
                             if (eph.PInfo.PropertyName == name)
@@ -227,7 +227,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="where">条件</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool Add(CsqlCondition where, ConnectType conntype)
+        public bool Add(BQLCondition where, ConnectType conntype)
         {
             _hasInner = true;
             this.Add(new Scope(null, where, null, ScopeType.Condition, conntype));
@@ -239,7 +239,7 @@ namespace Buffalo.DB.QueryConditions
         /// </summary>
         /// <param name="property"></param>
         /// <returns></returns>
-        private bool IsInnerTable(CsqlEntityParamHandle property) 
+        private bool IsInnerTable(BQLEntityParamHandle property) 
         {
             return !CommonMethods.IsNull(property.BelongEntity.GetParentTable());
         }
@@ -252,11 +252,11 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="maxValue">最大值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddBetween(CsqlEntityParamHandle property, object minValue, object maxValue, ConnectType conntype)
+        public bool AddBetween(BQLEntityParamHandle property, object minValue, object maxValue, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
-                CsqlCondition where = property.Between(minValue, maxValue);
+                BQLCondition where = property.Between(minValue, maxValue);
                 return Add(where, conntype);
             }
 
@@ -284,11 +284,11 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddContains(CsqlEntityParamHandle property, object value, ConnectType conntype)
+        public bool AddContains(BQLEntityParamHandle property, object value, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
-                CsqlCondition where = property.Contains(value);
+                BQLCondition where = property.Contains(value);
                 return Add(where, conntype);
             }
             else 
@@ -315,11 +315,11 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddMore(CsqlEntityParamHandle property, object value, ConnectType conntype)
+        public bool AddMore(BQLEntityParamHandle property, object value, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
-                CsqlCondition where = property > value;
+                BQLCondition where = property > value;
                 return Add(where, conntype);
             }
             else 
@@ -348,11 +348,11 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddMoreThen(CsqlEntityParamHandle property, object value, ConnectType conntype)
+        public bool AddMoreThen(BQLEntityParamHandle property, object value, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
-                CsqlCondition where = property >= value;
+                BQLCondition where = property >= value;
                 return Add(where, conntype);
             }
             else 
@@ -381,11 +381,11 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddLessThen(CsqlEntityParamHandle property, object value, ConnectType conntype)
+        public bool AddLessThen(BQLEntityParamHandle property, object value, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
-                CsqlCondition where = property <= value;
+                BQLCondition where = property <= value;
                 return Add(where, conntype);
             }
             else 
@@ -413,11 +413,11 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddLess(CsqlEntityParamHandle property, object value, ConnectType conntype)
+        public bool AddLess(BQLEntityParamHandle property, object value, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
-                CsqlCondition where = property < value;
+                BQLCondition where = property < value;
                 return Add(where, conntype);
             }
             else 
@@ -446,12 +446,12 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="valuesCollection">值集合</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddIn(CsqlEntityParamHandle property, IEnumerable valuesCollection, ConnectType conntype)
+        public bool AddIn(BQLEntityParamHandle property, IEnumerable valuesCollection, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
                 
-                CsqlCondition where = property.In(valuesCollection);
+                BQLCondition where = property.In(valuesCollection);
                 return Add(where, conntype);
             }
             else 
@@ -481,11 +481,11 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="valuesCollection">值集合</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddNotIn(CsqlEntityParamHandle property, IEnumerable valuesCollection, ConnectType conntype)
+        public bool AddNotIn(BQLEntityParamHandle property, IEnumerable valuesCollection, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
-                CsqlCondition where = property.NotIn(valuesCollection);
+                BQLCondition where = property.NotIn(valuesCollection);
                 return Add(where, conntype);
             }
             else 
@@ -515,11 +515,11 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddNotEqual(CsqlEntityParamHandle property, object value, ConnectType conntype)
+        public bool AddNotEqual(BQLEntityParamHandle property, object value, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
-                CsqlCondition where = property != value;
+                BQLCondition where = property != value;
                 return Add(where, conntype);
             }
             else 
@@ -549,11 +549,11 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddEqual(CsqlEntityParamHandle property, object value, ConnectType conntype)
+        public bool AddEqual(BQLEntityParamHandle property, object value, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
-                CsqlCondition where = property == value;
+                BQLCondition where = property == value;
                 return Add(where, conntype);
             }
             else 
@@ -583,11 +583,11 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddLike(CsqlEntityParamHandle property, object value, ConnectType conntype)
+        public bool AddLike(BQLEntityParamHandle property, object value, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
-                CsqlCondition where = property.Like(value);
+                BQLCondition where = property.Like(value);
                 return Add(where, conntype);
             }
             else 
@@ -618,11 +618,11 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddStarWith(CsqlEntityParamHandle property, object value, ConnectType conntype)
+        public bool AddStarWith(BQLEntityParamHandle property, object value, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
-                CsqlCondition where = property.StarWith(value);
+                BQLCondition where = property.StarWith(value);
                 return Add(where, conntype);
             }
             else 
@@ -652,11 +652,11 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddEndWith(CsqlEntityParamHandle property, object value, ConnectType conntype)
+        public bool AddEndWith(BQLEntityParamHandle property, object value, ConnectType conntype)
         {
             if (IsInnerTable(property))
             {
-                CsqlCondition where = property.EndWith(value);
+                BQLCondition where = property.EndWith(value);
                 return Add(where, conntype);
             }
             else 
@@ -807,7 +807,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="minValue">最小值</param>
         /// <param name="maxValue">最大值</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddBetween(CsqlEntityParamHandle property, object minValue, object maxValue)
+        public bool AddBetween(BQLEntityParamHandle property, object minValue, object maxValue)
         {
 
             return AddBetween(property, minValue, maxValue, ConnectType.And);
@@ -819,7 +819,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">最小值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddContains(CsqlEntityParamHandle property, object value)
+        public bool AddContains(BQLEntityParamHandle property, object value)
         {
             
                 return AddContains(property, value, ConnectType.And);
@@ -831,7 +831,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="propertyName">属性名</param>
         /// <param name="value">值</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddMore(CsqlEntityParamHandle property, object value)
+        public bool AddMore(BQLEntityParamHandle property, object value)
         {
             return AddMore(property, value, ConnectType.And); ;
         }
@@ -842,7 +842,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="propertyName">属性名</param>
         /// <param name="value">值</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddMoreThen(CsqlEntityParamHandle property, object value)
+        public bool AddMoreThen(BQLEntityParamHandle property, object value)
         {
             return AddMoreThen(property, value, ConnectType.And);
         }
@@ -853,7 +853,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="propertyName">属性名</param>
         /// <param name="value">值</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddLessThen(CsqlEntityParamHandle property, object value)
+        public bool AddLessThen(BQLEntityParamHandle property, object value)
         {
             return AddLessThen(property, value, ConnectType.And);
         }
@@ -864,7 +864,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="propertyName">属性名</param>
         /// <param name="value">值</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddLess(CsqlEntityParamHandle property, object value)
+        public bool AddLess(BQLEntityParamHandle property, object value)
         {
             return AddLess(property, value, ConnectType.And);
         }
@@ -875,7 +875,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="propertyName">属性名</param>
         /// <param name="valuesCollection">值集合</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddIn(CsqlEntityParamHandle property, IEnumerable valuesCollection)
+        public bool AddIn(BQLEntityParamHandle property, IEnumerable valuesCollection)
         {
             return AddIn(property, valuesCollection, ConnectType.And);
         }
@@ -885,7 +885,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="propertyName">属性名</param>
         /// <param name="valuesCollection">值集合</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddNotIn(CsqlEntityParamHandle property, IEnumerable valuesCollection)
+        public bool AddNotIn(BQLEntityParamHandle property, IEnumerable valuesCollection)
         {
             return AddNotIn(property, valuesCollection, ConnectType.And);
         }
@@ -895,7 +895,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="propertyName">属性名</param>
         /// <param name="value">值</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddNotEqual(CsqlEntityParamHandle property, object value)
+        public bool AddNotEqual(BQLEntityParamHandle property, object value)
         {
             return AddNotEqual(property, value, ConnectType.And);
         }
@@ -906,7 +906,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="propertyName">属性名</param>
         /// <param name="value">值</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddEqual(CsqlEntityParamHandle property, object value)
+        public bool AddEqual(BQLEntityParamHandle property, object value)
         {
             return AddEqual(property, value, ConnectType.And);
         }
@@ -916,7 +916,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="propertyName">属性名</param>
         /// <param name="value">值</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddLike(CsqlEntityParamHandle property, object value)
+        public bool AddLike(BQLEntityParamHandle property, object value)
         {
             return AddLike(property, value, ConnectType.And);
         }
@@ -928,7 +928,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddStarWith(CsqlEntityParamHandle property, object value)
+        public bool AddStarWith(BQLEntityParamHandle property, object value)
         {
             return AddStarWith(property, value, ConnectType.And);
         }
@@ -952,7 +952,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="value">值</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool AddEndWith(CsqlEntityParamHandle property, object value)
+        public bool AddEndWith(BQLEntityParamHandle property, object value)
         {
             return AddEndWith(property, value, ConnectType.And);
             
@@ -990,7 +990,7 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="where">条件</param>
         /// <param name="conntype">连接类型</param>
         /// <returns>返回是否添加成功</returns>
-        public bool Add(CsqlCondition where)
+        public bool Add(BQLCondition where)
         {
             this.Add(where, ConnectType.And);
             return true;

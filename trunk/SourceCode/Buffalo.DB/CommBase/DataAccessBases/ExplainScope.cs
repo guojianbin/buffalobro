@@ -6,7 +6,7 @@ using Buffalo.DB.DataBaseAdapter;
 using System.Data;
 using Buffalo.DB.EntityInfos;
 using Buffalo.DB.QueryConditions;
-using Buffalo.DB.CsqlCommon.CsqlConditionCommon;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.FaintnessSearchConditions;
 using System.Collections;
 using Buffalo.Kernel;
@@ -605,11 +605,11 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             ScopeType ctype = scope.ScopeType;
             string connectString = DataAccessCommon.GetConnectString(scope);
 
-            CsqlCondition fhandle = scope.Value1 as CsqlCondition;
+            BQLCondition fhandle = scope.Value1 as BQLCondition;
             if (!CommonMethods.IsNull(fhandle))
             {
                 KeyWordInfomation info = new KeyWordInfomation();
-                info.Infos = new Buffalo.DB.CsqlCommon.CsqlInfos();
+                info.Infos = new Buffalo.DB.BQLCommon.BQLInfos();
                 info.DBInfo = db;
 
                 info.ParamList = list;

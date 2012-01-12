@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Buffalo.DB.CsqlCommon.CsqlConditionCommon;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 
 namespace Buffalo.DB.QueryConditions
 {
-    public class ShowEntityCollection : List<CsqlEntityTableHandle>
+    public class ShowEntityCollection : List<BQLEntityTableHandle>
     {
         private ScopeList _belongList;//所属的集合
 
@@ -22,7 +22,7 @@ namespace Buffalo.DB.QueryConditions
         /// 添加一个项
         /// </summary>
         /// <param name="prm"></param>
-        public new void Add(CsqlEntityTableHandle prm)
+        public new void Add(BQLEntityTableHandle prm)
         {
             _belongList.HasInner = true;
             this.Add(prm);
@@ -32,7 +32,7 @@ namespace Buffalo.DB.QueryConditions
         /// 添加一个输出字段
         /// </summary>
         /// <param name="prm"></param>
-        public void AddRang(params CsqlEntityTableHandle[] prms)
+        public void AddRang(params BQLEntityTableHandle[] prms)
         {
             _belongList.HasInner = true;
             this.AddRang(prms);

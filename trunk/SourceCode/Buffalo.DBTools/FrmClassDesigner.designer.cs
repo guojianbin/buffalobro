@@ -51,15 +51,15 @@
             this.tpMapping = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
             this.gvMapping = new System.Windows.Forms.DataGridView();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
-            this.btnGenCode = new System.Windows.Forms.Button();
             this.ColSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ColField = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPropertyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColTarget = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.btnGenCode = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -90,6 +90,7 @@
             // 
             this.txtBaseClass.Location = new System.Drawing.Point(467, 12);
             this.txtBaseClass.Name = "txtBaseClass";
+            this.txtBaseClass.ReadOnly = true;
             this.txtBaseClass.Size = new System.Drawing.Size(160, 21);
             this.txtBaseClass.TabIndex = 5;
             // 
@@ -120,7 +121,7 @@
             // 
             // txtClassName
             // 
-            this.txtClassName.BackColor = System.Drawing.Color.White;
+            this.txtClassName.BackColor = System.Drawing.SystemColors.Control;
             this.txtClassName.Location = new System.Drawing.Point(50, 12);
             this.txtClassName.Name = "txtClassName";
             this.txtClassName.ReadOnly = true;
@@ -302,36 +303,6 @@
             this.gvMapping.Size = new System.Drawing.Size(777, 407);
             this.gvMapping.TabIndex = 1;
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.button3);
-            this.panel3.Controls.Add(this.btnGenCode);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(3, 456);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(791, 36);
-            this.panel3.TabIndex = 25;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(707, 6);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 24;
-            this.button3.Text = "关闭";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // btnGenCode
-            // 
-            this.btnGenCode.Location = new System.Drawing.Point(626, 6);
-            this.btnGenCode.Name = "btnGenCode";
-            this.btnGenCode.Size = new System.Drawing.Size(75, 23);
-            this.btnGenCode.TabIndex = 22;
-            this.btnGenCode.Text = "生成类";
-            this.btnGenCode.UseVisualStyleBackColor = true;
-            this.btnGenCode.Click += new System.EventHandler(this.btnGenCode_Click);
-            // 
             // ColSelect
             // 
             this.ColSelect.DataPropertyName = "IsGenerate";
@@ -369,6 +340,36 @@
             this.ColTarget.DataPropertyName = "TargetProperty";
             this.ColTarget.HeaderText = "目标实体属性";
             this.ColTarget.Name = "ColTarget";
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.button3);
+            this.panel3.Controls.Add(this.btnGenCode);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(3, 456);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(791, 36);
+            this.panel3.TabIndex = 25;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(707, 6);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 24;
+            this.button3.Text = "关闭";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // btnGenCode
+            // 
+            this.btnGenCode.Location = new System.Drawing.Point(626, 6);
+            this.btnGenCode.Name = "btnGenCode";
+            this.btnGenCode.Size = new System.Drawing.Size(75, 23);
+            this.btnGenCode.TabIndex = 22;
+            this.btnGenCode.Text = "生成类";
+            this.btnGenCode.UseVisualStyleBackColor = true;
+            this.btnGenCode.Click += new System.EventHandler(this.btnGenCode_Click);
             // 
             // FrmClassDesigner
             // 

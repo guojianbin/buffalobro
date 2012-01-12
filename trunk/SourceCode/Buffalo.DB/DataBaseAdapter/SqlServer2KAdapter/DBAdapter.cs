@@ -41,7 +41,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <summary>
         /// 获取变量列表
         /// </summary>
-        public virtual ParamList CsqlSelectParamList
+        public virtual ParamList BQLSelectParamList
         {
             get 
             {

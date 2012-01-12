@@ -4,67 +4,18 @@ using System.Text;
 using System.Web;
 using System.Xml;
 using System.IO;
+using Buffalo.Kernel.FastReflection;
 using Buffalo.DB.PropertyAttributes;
 using Buffalo.Kernel;
-using Buffalo.Kernel.FastReflection;
 
-namespace Buffalo.DB.CacheManager
+namespace SQLCommon.CacheManager
 {
-    class QueryViewConfig
+    public class QueryViewConfig
     {
-        private static Dictionary<string, List<string>> dicConfig = new Dictionary<string,List<string>>();//记录有多少个视图来自该表
-        private static Dictionary<string, bool> dicRegisted = new Dictionary<string,bool>();//记录已经注册过关联的视图
-
-        //#region 初始化配置
-        ///// <summary>
-        ///// 初始化配置
-        ///// </summary>
-        //private static void InitConfig()
-        //{
-        //    dicConfig = new Dictionary<string, List<string>>();
-        //    XmlDocument doc = ConfigXmlLoader.LoadXml("ViewConfig");
-        //    if (doc != null)
-        //    {
-        //        LoadConfig(doc);
-        //    }
-        //}
+        private static Dictionary<string, List<string>> _dicConfig = new Dictionary<string,List<string>>();//记录有多少个视图来自该表
         
 
-        ///// <summary>
-        ///// 加载信息
-        ///// </summary>
-        ///// <param name="doc">XML</param>
-        //private static void LoadConfig(XmlDocument doc)
-        //{
-        //    XmlNodeList lstEntity = doc.GetElementsByTagName("view");
-        //    foreach (XmlNode node in lstEntity)
-        //    {
-        //        XmlAttribute attName = node.Attributes["name"];
-        //        if (attName != null)
-        //        {
-        //            string viewName = attName.Value;
-        //            XmlNodeList lstTable = node.ChildNodes;
-        //            foreach (XmlNode nodeTable in lstTable)
-        //            {
-
-        //                if (nodeTable.Name == "table")
-        //                {
-        //                    string tableName = nodeTable.InnerText;//获取对应表的对象名
-
-        //                    List<string> lstTableNames = null;
-        //                    if (!dicConfig.TryGetValue(tableName, out lstTableNames)) //根据表名获取该表对应的视图集合
-        //                    {
-        //                        lstTableNames = new List<string>();
-        //                        dicConfig.Add(tableName, lstTableNames);
-        //                    }
-        //                    lstTableNames.Add(viewName);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-        //#endregion
-
+        
         /// <summary>
         /// 登记视图
         /// </summary>
@@ -72,35 +23,32 @@ namespace Buffalo.DB.CacheManager
         /// <returns></returns>
         public static bool RegisterView(Type viewType)
         {
-            string vName=viewType.FullName;
-            bool ret = false;
-            if (dicRegisted.TryGetValue(vName, out ret)) 
-            {
-                return ret;
-            }
+            string vName = viewType.FullName;
+            
             ViewRelationTables tInfo = FastInvoke.GetClassAttribute<ViewRelationTables>(viewType);
-            if (tInfo != null) 
+            if (tInfo == null)
             {
-                string[] names = tInfo.EntityNames;
-                if (names != null) 
-                {
-                    foreach (string name in names) 
-                    {
-                        List<string> lstViewNames = null;
-                        if (!dicConfig.TryGetValue(name, out lstViewNames)) //根据表名获取该表对应的视图集合
-                        {
-                            lstViewNames = new List<string>();
-                            using (Lock objLock = new Lock(dicConfig))
-                            {
-                                dicConfig[name] = lstViewNames;
-                            }
-                        }
-                        lstViewNames.Add(vName);
-                    }
-                    ret = true;
-                }
+                return false;
             }
-            dicRegisted[vName] = ret;
+            bool ret = false;
+            string[] names = tInfo.EntityNames;
+            if (names != null)
+            {
+                foreach (string name in names)
+                {
+                    List<string> lstViewNames = null;
+                    if (!_dicConfig.TryGetValue(name, out lstViewNames)) //根据表名获取该表对应的视图集合
+                    {
+                        lstViewNames = new List<string>();
+                        using (Lock objLock = new Lock(_dicConfig))
+                        {
+                            _dicConfig[name] = lstViewNames;
+                        }
+                    }
+                    lstViewNames.Add(vName);
+                }
+                ret = true;
+            }
             return ret;
         }
 
@@ -111,12 +59,9 @@ namespace Buffalo.DB.CacheManager
         /// <returns></returns>
         public static List<string> GetViewList(string entityName) 
         {
-            //if (dicConfig == null) 
-            //{
-            //    InitConfig();
-            //}
+            
             List<string> retList = null;
-            dicConfig.TryGetValue(entityName,out retList);
+            _dicConfig.TryGetValue(entityName,out retList);
             return retList;
         }
     }
