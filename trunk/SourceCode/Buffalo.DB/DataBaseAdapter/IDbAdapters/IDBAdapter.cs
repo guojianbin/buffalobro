@@ -16,7 +16,24 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         {
             get;
         }
+        /// <summary>
+        /// 获取数据库的自增长字段的信息
+        /// </summary>
+        /// <returns></returns>
+        string DBIdentity(string tableName, string paramName);
+        /// <summary>
+        /// 把DBType类型转成对应的SQLType
+        /// </summary>
+        /// <param name="dbType"></param>
+        /// <returns></returns>
+        string DBTypeToSQL(DbType dbType,int length) ;
 
+        /// <summary>
+        /// 把DBType转成本数据库的实际类型
+        /// </summary>
+        /// <param name="dbType"></param>
+        /// <returns></returns>
+        int ToRealDbType(DbType dbType, int length);
         /// <summary>
         /// 是否记录自增长字段作手动处理
         /// </summary>

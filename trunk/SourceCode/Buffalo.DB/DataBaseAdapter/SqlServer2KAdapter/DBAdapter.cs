@@ -25,7 +25,145 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             }
         }
 
+        /// <summary>
+        /// 获取数据库的自增长字段的信息
+        /// </summary>
+        /// <returns></returns>
+        public virtual string DBIdentity(string tableName, string paramName) 
+        {
+            return "IDENTITY(1,1)";
+        }
 
+        /// <summary>
+        /// 把DBType类型转成对应的SQLType
+        /// </summary>
+        /// <param name="dbType"></param>
+        /// <returns></returns>
+        public virtual string DBTypeToSQL(DbType dbType,int length) 
+        {
+            int type = ToRealDbType(dbType,length);
+            SqlDbType stype = (SqlDbType)type;
+
+            switch (stype) 
+            {
+                case SqlDbType.VarChar:
+                    return stype.ToString() + "(" + length + ")";
+                case SqlDbType.Char:
+                    return stype.ToString() + "(" + length + ")";
+                case SqlDbType.Binary:
+                    return stype.ToString() + "(" + length + ")";
+                case SqlDbType.Decimal:
+                    return stype.ToString() + "(" + length + ",5)";
+                case SqlDbType.NVarChar:
+                    return stype.ToString() + "(" + length + ")";
+                case SqlDbType.NChar:
+                    return stype.ToString() + "(" + length + ")";
+                default:
+                    return stype.ToString();
+            }
+
+           
+        }
+
+        /// <summary>
+        /// 把DBType转成本数据库的实际类型
+        /// </summary>
+        /// <param name="dbType"></param>
+        /// <returns></returns>
+        public virtual int ToRealDbType(DbType dbType,int length) 
+        {
+            switch (dbType) 
+            {
+                case DbType.AnsiString:
+                    if (length < 8000)
+                    {
+                        return (int)SqlDbType.VarChar;
+                    }
+                    else 
+                    {
+                        return (int)SqlDbType.Text;
+                    }
+                case DbType.AnsiStringFixedLength:
+                    if (length < 8000)
+                    {
+                        return (int)SqlDbType.Char;
+                    }
+                    else 
+                    {
+                        return (int)SqlDbType.Text;
+                    }
+                case DbType.Binary:
+                    if (length < 8000)
+                    {
+                        return (int)SqlDbType.Binary;
+                    }
+                    else
+                    {
+                        return (int)SqlDbType.Image;
+                    }
+                case DbType.Boolean:
+                    return (int)SqlDbType.Bit;
+                case DbType.Byte:
+                    return (int)SqlDbType.TinyInt;
+                case DbType.Currency:
+                    return (int)SqlDbType.Money;
+                case DbType.Date:
+                    return (int)SqlDbType.DateTime;
+                case DbType.DateTime:
+                    return (int)SqlDbType.DateTime;
+                case DbType.DateTime2:
+                    return (int)SqlDbType.DateTime;
+                case DbType.DateTimeOffset:
+                    return (int)SqlDbType.DateTime;
+                case DbType.Decimal:
+                    return (int)SqlDbType.Decimal;
+                case DbType.Double:
+                    return (int)SqlDbType.Decimal;
+                case DbType.Guid:
+                    return (int)SqlDbType.UniqueIdentifier;
+                case DbType.Int16:
+                    return (int)SqlDbType.SmallInt;
+                case DbType.Int32:
+                    return (int)SqlDbType.Int;
+                case DbType.Int64:
+                    return (int)SqlDbType.BigInt;
+                case DbType.SByte:
+                    return (int)SqlDbType.TinyInt;
+                case DbType.Single:
+                    return (int)SqlDbType.Float;
+                case DbType.String:
+                    if (length < 8000)
+                    {
+                        return (int)SqlDbType.NVarChar;
+                    }
+                    else 
+                    {
+                        return (int)SqlDbType.NText;
+                    }
+                case DbType.StringFixedLength:
+                    if (length < 8000)
+                    {
+                        return (int)SqlDbType.NChar;
+                    }
+                    else
+                    {
+                        return (int)SqlDbType.NText;
+                    }
+                case DbType.Time:
+                    return (int)SqlDbType.DateTime;
+                case DbType.UInt16:
+                    return (int)SqlDbType.Int;
+                case DbType.UInt32:
+                    return (int)SqlDbType.BigInt;
+                case DbType.UInt64:
+                    return (int)SqlDbType.BigInt;
+                case DbType.VarNumeric:
+                    return (int)SqlDbType.Real;
+                default:
+                    return (int)SqlDbType.Structured;
+
+            }
+        }
 
         /// <summary>
         /// 是否记录自增长字段作手动处理

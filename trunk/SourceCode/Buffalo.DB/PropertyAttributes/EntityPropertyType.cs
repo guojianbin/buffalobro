@@ -22,7 +22,7 @@ namespace Buffalo.DB.PropertyAttributes
         /// </summary>
         Version=4,
         /// <summary>
-        /// 自动增长字段(For Oracle)
+        /// 自动增长字段
         /// </summary>
         Identity=8
     }

@@ -97,7 +97,7 @@ namespace Buffalo.DB.DataFillers
             DBInfo db = childInfo.DBInfo;
             if (pks.Count>0)
             {
-                DataBaseOperate oper = StaticConnection.GetStaticOperate(childHandle.DBInfo);
+                DataBaseOperate oper = childHandle.DBInfo.DefaultOperate;
                 BQLDbBase dao = new BQLDbBase(oper);
                 ScopeList lstScope = new ScopeList();
                 
@@ -278,7 +278,7 @@ namespace Buffalo.DB.DataFillers
             DBInfo db = fatherInfo.DBInfo;
             if (pks.Count>0)
             {
-                DataBaseOperate oper = StaticConnection.GetStaticOperate(fatherInfo.DBInfo);
+                DataBaseOperate oper = fatherInfo.DBInfo.DefaultOperate;
                 BQLDbBase dao = new BQLDbBase(oper);
                 ScopeList lstScope = new ScopeList();
 

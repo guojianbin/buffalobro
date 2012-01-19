@@ -22,7 +22,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         protected DataBaseOperate CreateOperateInstance() 
         {
-            DataBaseOperate oper = new DataBaseOperate(_db);
+            DataBaseOperate oper = _db.CreateOperate();
             return oper;
         }
 
@@ -43,7 +43,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         public BusinessModelBaseForSelect()
         {
-            _defaultOperate = StaticConnection.GetStaticOperate(_db);
+            _defaultOperate = _db.DefaultOperate;
         }
 
         /// <summary>

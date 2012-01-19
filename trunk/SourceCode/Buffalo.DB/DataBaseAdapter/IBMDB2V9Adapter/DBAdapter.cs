@@ -375,5 +375,22 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         {
 
         }
+
+
+
+        public string DBIdentity(string tableName, string paramName)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public string DBTypeToSQL(DbType dbType, int length)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public int ToRealDbType(DbType dbType, int length)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

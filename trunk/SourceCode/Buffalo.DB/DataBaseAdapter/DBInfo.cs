@@ -5,6 +5,7 @@ using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 using Buffalo.DB.DbCommon;
 using Buffalo.DB.MessageOutPuters;
 using Buffalo.DB.BQLCommon.BQLConditionCommon;
+using Buffalo.DB.CommBase;
 
 namespace Buffalo.DB.DataBaseAdapter
 {
@@ -18,7 +19,25 @@ namespace Buffalo.DB.DataBaseAdapter
         private IMathFunctions _curMathFunctions = null;
         private IConvertFunction _curConvertFunctions = null;
         private ICommonFunction _curCommonFunctions = null;
+        private IDBStructure _curDBStructure = null;
 
+        private static Dictionary<string, IAdapterLoader> _dicAdapterLoaderName = InitAdapterLoaderName();
+
+        /// <summary>
+        /// 初始化适配器命名空间列表
+        /// </summary>
+        /// <returns></returns>
+        private static Dictionary<string, IAdapterLoader> InitAdapterLoaderName() 
+        {
+            Dictionary<string, IAdapterLoader> dic = new Dictionary<string, IAdapterLoader>();
+            dic["Sql2K"] = new Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.AdapterLoader();
+            dic["Sql2K5"] = new Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter.AdapterLoader();
+            dic["Oracle9"] =new Buffalo.DB.DataBaseAdapter.Oracle9Adapter.AdapterLoader();
+            dic["MySQL5"] = new Buffalo.DB.DataBaseAdapter.MySQL5Adapter.AdapterLoader();
+            dic["SQLite"] = new Buffalo.DB.DataBaseAdapter.SQLiteAdapter.AdapterLoader();
+            dic["DB2v9"] = new Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter.AdapterLoader();
+            return dic;
+        }
 
 #if DEBUG
         MessageOutput _sqlOutputer = new MessageOutput();
@@ -34,11 +53,46 @@ namespace Buffalo.DB.DataBaseAdapter
             _dbType = dbType;
             _connectionString = connectionString;
             _dbName = dbName;
-            _curDbAdapter = LoadDBAdapter();
-            _curAggregateFunctions = LoadAggregate();
-            _curConvertFunctions = LoadConvert();
-            _curCommonFunctions = LoadCommon();
-           // _extendDatabaseConnection = extendDatabaseConnection;
+            InitAdapters();
+        }
+
+        /// <summary>
+        /// 初始化数据库适配器
+        /// </summary>
+        private void InitAdapters() 
+        {
+
+            IAdapterLoader loader = null;
+            if (!_dicAdapterLoaderName.TryGetValue(DbType, out loader)) 
+            {
+                throw new Exception("不支持数据库类型:" + DbType);
+            }
+
+            _curAggregateFunctions = loader.AggregateFunctions;
+            _curCommonFunctions = loader.CommonFunctions;
+            _curConvertFunctions = loader.ConvertFunctions;
+            _curDbAdapter = loader.DbAdapter;
+            _curDBStructure = loader.DBStructure;
+            _curMathFunctions = loader.MathFunctions;
+
+        }
+
+        DataBaseOperate _defaultOper;
+
+        /// <summary>
+        /// 默认连接
+        /// </summary>
+        /// <returns></returns>
+        public DataBaseOperate DefaultOperate 
+        {
+            get
+            {
+                if (_defaultOper == null)
+                {
+                    _defaultOper = StaticConnection.GetStaticOperate(this);
+                }
+                return _defaultOper;
+            }
         }
 
         /// <summary>
@@ -137,7 +191,18 @@ namespace Buffalo.DB.DataBaseAdapter
                 return _curCommonFunctions;
             }
         }
+        /// <summary>
+        /// 数据库结构特性
+        /// </summary>
+        /// <returns></returns>
+        internal IDBStructure DBStructure
+        {
+            get
+            {
 
+                return _curDBStructure;
+            }
+        }
         /// <summary>
         /// 当前数据库的类型
         /// </summary>
@@ -167,198 +232,7 @@ namespace Buffalo.DB.DataBaseAdapter
             }
         }
 
-        /// <summary>
-        /// 根据类型获取数据库的适配器
-        /// </summary>
-        /// <returns></returns>
-        private IDBAdapter LoadDBAdapter()
-        {
-            IDBAdapter ret = null;
-            string type = _dbType;
-            if (type == null)
-            {
-                ret = new SqlServer2KAdapter.DBAdapter();
-            }
-            else if (type.Equals("sql2k",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SqlServer2KAdapter.DBAdapter();
-            }
-            else if (type.Equals("sql2k5",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SqlServer2K5Adapter.DBAdapter();
-            }
-            else if (type.Equals("oracle9",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new Oracle9Adapter.DBAdapter();
-            }
-            else if (type.Equals("mysql5",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new MySQL5Adapter.DBAdapter();
-            }
-            else if (type.Equals( "sqlite",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SQLiteAdapter.DBAdapter();
-            }
-            else if (type.Equals("db2v9", StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new IBMDB2V9Adapter.DBAdapter();
-            }
-            return ret;
-        }
-
-        /// <summary>
-        /// 根据类型获取数据库的聚合函数适配器
-        /// </summary>
-        /// <returns></returns>
-        private IAggregateFunctions LoadAggregate()
-        {
-            IAggregateFunctions ret = null;
-            string type = _dbType;
-            if (type == null)
-            {
-                ret = new SqlServer2KAdapter.AggregateFunctions();
-            }
-            else if (type.Equals("sql2k",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SqlServer2KAdapter.AggregateFunctions();
-            }
-            else if (type.Equals("sql2k5",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SqlServer2K5Adapter.AggregateFunctions();
-            }
-            else if (type.Equals("oracle9",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new Oracle9Adapter.AggregateFunctions();
-            }
-            else if (type.Equals("mysql5",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new MySQL5Adapter.AggregateFunctions();
-            }
-            else if (type.Equals("sqlite",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SQLiteAdapter.AggregateFunctions();
-            }
-            else if (type.Equals("db2v9", StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new IBMDB2V9Adapter.AggregateFunctions();
-            }
-            return ret;
-        }
-
-        /// <summary>
-        /// 根据类型获取数据库的聚合函数适配器
-        /// </summary>
-        /// <returns></returns>
-        private ICommonFunction LoadCommon()
-        {
-            ICommonFunction ret = null;
-            string type = _dbType;
-            if (type == null)
-            {
-                ret = new SqlServer2KAdapter.CommonFunction();
-            }
-            else if (type.Equals("sql2k",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SqlServer2KAdapter.CommonFunction();
-            }
-            else if (type.Equals("sql2k5",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SqlServer2KAdapter.CommonFunction();
-            }
-            else if (type.Equals("oracle9",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new Oracle9Adapter.CommonFunction();
-            }
-            else if (type.Equals("mysql5",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new MySQL5Adapter.CommonFunction();
-            }
-            else if (type.Equals("sqlite",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SQLiteAdapter.CommonFunction();
-            }
-            else if (type.Equals("db2v9", StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new IBMDB2V9Adapter.CommonFunction();
-            }
-            return ret;
-        }
-        /// <summary>
-        /// 根据类型获取数据库的数学函数适配器
-        /// </summary>
-        /// <returns></returns>
-        private IMathFunctions LoadMath()
-        {
-            IMathFunctions ret = null;
-            string type = _dbType;
-            if (type == null)
-            {
-                ret = new SqlServer2KAdapter.MathFunctions();
-            }
-            else if (type.Equals("sql2k",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SqlServer2KAdapter.MathFunctions();
-            }
-            else if (type.Equals("sql2k5",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SqlServer2KAdapter.MathFunctions();
-            }
-            else if (type.Equals("oracle9",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new Oracle9Adapter.MathFunctions();
-            }
-            else if (type.Equals("mysql5",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new MySQL5Adapter.MathFunctions();
-            }
-            else if (type.Equals("sqlite",StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SQLiteAdapter.MathFunctions();
-            }
-            else if (type.Equals("db2v9", StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new IBMDB2V9Adapter.MathFunctions();
-            }
-            return ret;
-        }
-        /// <summary>
-        /// 根据类型获取数据库的数值转换函数适配器
-        /// </summary>
-        /// <returns></returns>
-        private IConvertFunction LoadConvert()
-        {
-            IConvertFunction ret = null;
-            string type = _dbType;
-            if (type == null)
-            {
-                ret = new SqlServer2KAdapter.ConvertFunction();
-            }
-            else if (type.Equals("sql2k", StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SqlServer2KAdapter.ConvertFunction();
-            }
-            else if (type.Equals("sql2k5", StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SqlServer2KAdapter.ConvertFunction();
-            }
-            else if (type.Equals("oracle9", StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new Oracle9Adapter.ConvertFunction();
-            }
-            else if (type.Equals("mysql5", StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new MySQL5Adapter.ConvertFunction();
-            }
-            else if (type.Equals("sqlite", StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new SQLiteAdapter.ConvertFunction();
-            }
-            else if (type.Equals("db2v9", StringComparison.CurrentCultureIgnoreCase))
-            {
-                ret = new IBMDB2V9Adapter.ConvertFunction();
-            }
-            return ret;
-        }
+        
 
 
         private Dictionary<string, BQLEntityTableHandle> _dicTables = new Dictionary<string, BQLEntityTableHandle>();
