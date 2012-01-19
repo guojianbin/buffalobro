@@ -36,6 +36,11 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     entity.TableName = att.InnerText;
                 }
+                att = classNode.Attributes["TableName"];
+                if (att != null)
+                {
+                    entity.TableName = att.InnerText;
+                }
             }
 
             FillPropertyInfo(doc, entity);
@@ -180,7 +185,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// 新建一个XML文档
         /// </summary>
         /// <returns></returns>
-        private static XmlDocument NewXmlDocument() 
+        internal static XmlDocument NewXmlDocument() 
         {
             XmlDocument doc = new XmlDocument();
             doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", "no"));
@@ -217,6 +222,10 @@ namespace Buffalo.DBTools.HelperKernel
 
             att = doc.CreateAttribute("ClassName");
             att.InnerText = entity.Namespace+"."+entity.ClassName;
+            classNode.Attributes.Append(att);
+
+            att = doc.CreateAttribute("IsTable");
+            att.InnerText = "1";
             classNode.Attributes.Append(att);
 
             AppendPropertyInfo(entity, classNode);

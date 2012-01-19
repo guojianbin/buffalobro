@@ -59,7 +59,7 @@ namespace Buffalo.DBTools
             _relationCell = new GridViewComboBoxCell(gvMapping);
             gvField.AutoGenerateColumns = false;
             gvMapping.AutoGenerateColumns = false;
-            _config= new EntityConfig(SelectedClass.AssociatedType,CurrentProject);
+            _config = new EntityConfig(SelectedClass.AssociatedType, CurrentProject, SelectedDiagram);
             BindFieldInfos();
             //_cmbCell.SetDataSource(EntityFieldBase.GetAllSupportTypes());
             gvMapping.CurrentCellChanged += new EventHandler(gvMapping_CurrentCellChanged);

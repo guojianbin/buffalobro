@@ -1,0 +1,48 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using Buffalo.DB.EntityInfos;
+using Buffalo.DB.BQLCommon;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
+using Buffalo.DB.PropertyAttributes;
+namespace <%=BQLEntityNamespace%>
+{
+    public partial class <%=DBName%>
+    {
+        private static <%=DBName%>_<%=ClassName%> _<%=ClassName%> = AddToDB(new <%=DBName%>_<%=ClassName%>()) as <%=DBName%>_<%=ClassName%>;
+    
+        public static <%=DBName%>_<%=ClassName%> <%=ClassName%>
+        {
+            get
+            {
+                return _<%=ClassName%>;
+            }
+        }
+    }
+    
+    /// <summary>
+    ///  <%=Summary%>
+    /// </summary>
+    public partial class <%=DBName%>_<%=ClassName%> : <%=BQLEntityBaseType%>
+    {
+<%=PropertyDetail%>
+<%=RelationDetail%>
+        /// <summary>
+        /// 初始化本类的信息
+        /// </summary>
+        /// <param name="entityInfo">类信息</param>
+        public <%=DBName%>_<%=ClassName%>( BQLEntityTableHandle parent,string propertyName) 
+            :base(EntityInfoManager.GetEntityHandle(typeof(<%=EntityNamespace%>.<%=ClassName%>)),parent,propertyName)
+        {
+<%=PropertyInit%>
+        }
+        /// <summary>
+        /// 初始化本类的信息
+        /// </summary>
+        /// <param name="entityInfo">类信息</param>
+        public <%=DBName%>_<%=ClassName%>() 
+            :this(null,null)
+        {
+        }
+    }
+}

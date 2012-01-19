@@ -382,7 +382,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmClassDesigner";
-            this.Text = "类设计";
+            this.Text = "Buffalo助手--类生成";
             this.Load += new System.EventHandler(this.FrmClassDesigner_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

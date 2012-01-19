@@ -93,10 +93,6 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="spaces">空格</param>
         public void AddSource(List<string> source, string spaces)
         {
-            
-            string fieldSource = spaces + "protected " + TypeName + " " + FieldName + " = null;";
-            source.Add(fieldSource);
-
             //生成对应属性
             if (!_belongEntity.Properties.ContainsKey(PropertyName))
             {

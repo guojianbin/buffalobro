@@ -113,17 +113,31 @@
     <Compile Include="Connect.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DBCreater\TableCreater.cs" />
     <Compile Include="FrmClassDesigner.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmClassDesigner.designer.cs">
       <DependentUpon>FrmClassDesigner.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmDBCreate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDBCreate.Designer.cs">
+      <DependentUpon>FrmDBCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDBSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDBSetting.Designer.cs">
+      <DependentUpon>FrmDBSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="GridViewComboBoxCell.cs" />
     <Compile Include="HelperKernel\BQLEntityGenerater.cs" />
     <Compile Include="HelperKernel\CodeFile.cs" />
     <Compile Include="HelperKernel\ComboBoxItemCollection.cs" />
     <Compile Include="HelperKernel\DataTypeInfos.cs" />
+    <Compile Include="HelperKernel\DBConfigInfo.cs" />
     <Compile Include="HelperKernel\EntityConfig.cs" />
     <Compile Include="HelperKernel\EntityFieldBase.cs" />
     <Compile Include="HelperKernel\EntityMappingConfig.cs" />
@@ -154,6 +168,14 @@
     <EmbeddedResource Include="FrmClassDesigner.resx">
       <DependentUpon>FrmClassDesigner.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDBCreate.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FrmDBCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDBSetting.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FrmDBSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Models.resx">
       <SubType>Designer</SubType>
@@ -192,6 +214,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Microsoft.VisualStudio.TextManager.Interop.dll" />
+    <Content Include="Resources\DBconfig.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Buffalo.DB\Buffalo.DB.csproj">

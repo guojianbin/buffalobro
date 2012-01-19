@@ -8,6 +8,8 @@ using System.IO;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Project;
 using EnvDTE;
 using Buffalo.DB.CommBase;
+using Microsoft.VisualStudio.Modeling.Diagrams;
+using System.Windows.Forms;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -41,7 +43,28 @@ namespace Buffalo.DBTools.HelperKernel
         private string _className;
         private string _namespace;
         private Project _currentProject;
+        private Diagram _currentDiagram;
+        private DBConfigInfo _currentDBConfigInfo;
 
+        /// <summary>
+        /// 数据库配置信息
+        /// </summary>
+        public DBConfigInfo CurrentDBConfigInfo
+        {
+            get { return _currentDBConfigInfo; }
+        }
+        /// <summary>
+        /// 当前类图
+        /// </summary>
+        public Diagram CurrentDiagram
+        {
+            get { return _currentDiagram; }
+        }
+
+
+        /// <summary>
+        /// 当前工程
+        /// </summary>
         public Project CurrentProject
         {
             get { return _currentProject; }
@@ -154,7 +177,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         /// <param name="classShape">类图形</param>
         /// <param name="project">所属项目</param>
-        public EntityConfig(ClrType ctype, Project project) 
+        public EntityConfig(ClrType ctype, Project project, Diagram currentDiagram) 
         {
             //_classShape = classShape;
             _classType = ctype;
@@ -162,6 +185,7 @@ namespace Buffalo.DBTools.HelperKernel
             InitFleld();
             InitPropertys();
             _currentProject = project;
+            _currentDiagram = currentDiagram;
         }
 
         /// <summary>
@@ -194,38 +218,45 @@ namespace Buffalo.DBTools.HelperKernel
             _className = ctype.Name;
 
             _baseType = GetBaseClass(ctype,out _baseTypeName);
-            
-            //if (_baseType == "System.Object") 
+
+            _fileName = GetFileName(ctype, out _cp);
+            //foreach (CodeElementPosition cp in ctype.SourceCodePositions)
             //{
-            //    _baseType = "EntityBase";
-            //}
-
-            
-
-            //InterfaceImplementationTypeRefMoveableCollection itms = ctype.ImplementationTypeRefs;
-
-            //if (itms != null && itms.Count > 0)
-            //{
-            //    _interfaces = new List<string>();
-            //    foreach (InterfaceImplementationTypeRef itm in itms) 
+            //    if (cp.FileName.IndexOf(".extend.cs") <0)
             //    {
-            //        _interfaces.Add(itm.Name);
+            //        _fileName = cp.FileName;
+
+            //        _cp = cp;
+            //        break;
             //    }
             //}
-
-            foreach (CodeElementPosition cp in ctype.SourceCodePositions)
-            {
-                if (cp.FileName.IndexOf(".extend.cs") <0)
-                {
-                    _fileName = cp.FileName;
-
-                    _cp = cp;
-                }
-            }
             _namespace = ctype.OwnerNamespace.Name;
             _summary = ctype.DocSummary;
             _tableName =EntityFieldBase.ToCamelName(_className);
             
+        }
+
+        /// <summary>
+        /// 获取实体所在的文件
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static string GetFileName(ClrType ctype, out CodeElementPosition ocp) 
+        {
+            ocp = null;
+            foreach (CodeElementPosition cp in ctype.SourceCodePositions)
+            {
+                if (cp.FileName.IndexOf(".extend.cs") < 0)
+                {
+                    ocp = cp;
+                    
+                    return cp.FileName;
+
+                    
+                    break;
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -358,19 +389,23 @@ namespace Buffalo.DBTools.HelperKernel
         private void GenerateExtenCode() 
         {
 
-            GenerateExtendCode();
+
+            DBConfigInfo dbinfo = FrmDBSetting.GetDBConfigInfo(this,CurrentProject, CurrentDiagram);
+            if (dbinfo == null) 
+            {
+                return;
+            }
+            this._currentDBConfigInfo = dbinfo;
             Generate3Tier g3t = new Generate3Tier(this);
             BQLEntityGenerater bqlEntity = new BQLEntityGenerater(this);
+            GenerateExtendCode();
+            
             g3t.GenerateBusiness();
             g3t.GenerateIDataAccess();
             g3t.GenerateDataAccess();
             g3t.GenerateBQLDataAccess();
             bqlEntity.GenerateBQLEntityDB();
             bqlEntity.GenerateBQLEntity();
-            FileInfo info = new FileInfo(FileName);
-
-            string businessName =info.DirectoryName+"\\"+ FileName.Replace(this.ClassName + ".cs", this.ClassName + ".extend.cs");
-
             EntityMappingConfig.SaveXML(this);
         }
 
@@ -401,40 +436,60 @@ namespace Buffalo.DBTools.HelperKernel
                     }
                     lstTarget.Add(str);
                 }
-                else if (codeIndex<_eParamFields.Count && i == _eParamFields[codeIndex].StarLine-1 )
+                else if (i == _cp.EndLine - 1) 
                 {
-                    for (int k = i; k < _eParamFields[codeIndex].EndLine; k++)
+                    string space = CutSpace(str) + "   ";
+                    foreach (EntityParamField param in _eParamFields) 
                     {
-                        lstTarget.Add(lstSource[k]);
+                        if (param.IsGenerate) 
+                        {
+                            param.AddSource(lstTarget, space);
+                        }
                     }
-                    if (_eParamFields[codeIndex].IsGenerate)
+                    foreach (EntityRelationItem relation in _eRelation)
                     {
-                        _eParamFields[codeIndex].AddSource(lstTarget, CutSpace(str));
-                        
+                        if (relation.IsGenerate)
+                        {
+                            relation.AddSource(lstTarget, space);
+                        }
                     }
                     
-                    i = _eParamFields[codeIndex].EndLine - 1;
-                    codeIndex++;
+                    lstTarget.Add(str);
                 }
-                else if (relationIndex < _eRelation.Count && i == _eRelation[relationIndex].StarLine - 1)
-                {
-                    if (_eRelation[relationIndex].IsGenerate)
-                    {
-                        _eRelation[relationIndex].AddSource(lstTarget, CutSpace(str));
+                //else if (codeIndex < _eParamFields.Count && i == _eParamFields[codeIndex].StarLine - 1)
+                //{
+                //    for (int k = i; k < _eParamFields[codeIndex].EndLine; k++)
+                //    {
+                //        lstTarget.Add(lstSource[k]);
+                //    }
+                //    if (_eParamFields[codeIndex].IsGenerate)
+                //    {
+                //        _eParamFields[codeIndex].AddSource(lstTarget, CutSpace(str));
 
-                    }
-                    else
-                    {
-                        for (int k = i; k < _eRelation[relationIndex].EndLine; k++)
-                        {
-                            lstTarget.Add(lstSource[k]);
-                        }
+                //    }
 
-                    }
-                    i = _eRelation[relationIndex].EndLine - 1;
-                    relationIndex++;
-                }
-                else if (isUsing && str.IndexOf("namespace " + Namespace) >= 0) 
+                //    i = _eParamFields[codeIndex].EndLine - 1;
+                //    codeIndex++;
+                //}
+                //else if (relationIndex < _eRelation.Count && i == _eRelation[relationIndex].StarLine - 1)
+                //{
+                //    if (_eRelation[relationIndex].IsGenerate)
+                //    {
+                //        _eRelation[relationIndex].AddSource(lstTarget, CutSpace(str));
+
+                //    }
+                //    else
+                //    {
+                //        for (int k = i; k < _eRelation[relationIndex].EndLine; k++)
+                //        {
+                //            lstTarget.Add(lstSource[k]);
+                //        }
+
+                //    }
+                //    i = _eRelation[relationIndex].EndLine - 1;
+                //    relationIndex++;
+                //}
+                else if (isUsing && str.IndexOf("namespace " + Namespace) >= 0)
                 {
                     AddSqlCommonUsing(dicUsing, lstTarget);
                     lstTarget.Add(str);
@@ -460,6 +515,19 @@ namespace Buffalo.DBTools.HelperKernel
 
         private static readonly string[] BaseTypes ={ typeof(EntityBase).Name, typeof(object).Name };
 
+        /// <summary>
+        /// 是否系统类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool IsSystemType(ClrType type) 
+        {
+            if (type == null || type.Name == "System.Object" || type.Name.EndsWith("EntityBase"))
+            {
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>
         /// 获取所有成员
