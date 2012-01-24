@@ -1,0 +1,133 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6459BD92-F5C7-4D2C-BFC2-221EC7C7C601}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DemoLib</RootNamespace>
+    <AssemblyName>DemoLib</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BQLEntity\ManBase.cs" />
+    <Compile Include="BQLEntity\ManClass.cs" />
+    <Compile Include="BQLEntity\ManEmployee.cs" />
+    <Compile Include="BQLEntity\ManMessage.cs" />
+    <Compile Include="BQLEntity\ManUsers.cs" />
+    <Compile Include="BQLEntity\MyClass.cs" />
+    <Compile Include="Business\ManBaseBusiness.cs" />
+    <Compile Include="Business\ManClassBusiness.cs" />
+    <Compile Include="Business\ManEmployeeBusiness.cs" />
+    <Compile Include="Business\ManMessageBusiness.cs" />
+    <Compile Include="Business\ManUsersBusiness.cs" />
+    <Compile Include="DataAccess\Bql\ManBaseDataAccess.cs" />
+    <Compile Include="DataAccess\Bql\ManClassDataAccess.cs" />
+    <Compile Include="DataAccess\Bql\ManEmployeeDataAccess.cs" />
+    <Compile Include="DataAccess\Bql\ManMessageDataAccess.cs" />
+    <Compile Include="DataAccess\Bql\ManUsersDataAccess.cs" />
+    <Compile Include="DataAccess\DB2v9\ManBaseDataAccess.cs" />
+    <Compile Include="DataAccess\DB2v9\ManClassDataAccess.cs" />
+    <Compile Include="DataAccess\DB2v9\ManEmployeeDataAccess.cs" />
+    <Compile Include="DataAccess\DB2v9\ManMessageDataAccess.cs" />
+    <Compile Include="DataAccess\DB2v9\ManUsersDataAccess.cs" />
+    <Compile Include="DataAccess\IDataAccess\IManBaseDataAccess.cs" />
+    <Compile Include="DataAccess\IDataAccess\IManClassDataAccess.cs" />
+    <Compile Include="DataAccess\IDataAccess\IManEmployeeDataAccess.cs" />
+    <Compile Include="DataAccess\IDataAccess\IManMessageDataAccess.cs" />
+    <Compile Include="DataAccess\IDataAccess\IManUsersDataAccess.cs" />
+    <Compile Include="DataAccess\MySQL5\ManBaseDataAccess.cs" />
+    <Compile Include="DataAccess\MySQL5\ManClassDataAccess.cs" />
+    <Compile Include="DataAccess\MySQL5\ManEmployeeDataAccess.cs" />
+    <Compile Include="DataAccess\MySQL5\ManMessageDataAccess.cs" />
+    <Compile Include="DataAccess\MySQL5\ManUsersDataAccess.cs" />
+    <Compile Include="DataAccess\Oracle9\ManBaseDataAccess.cs" />
+    <Compile Include="DataAccess\Oracle9\ManClassDataAccess.cs" />
+    <Compile Include="DataAccess\Oracle9\ManEmployeeDataAccess.cs" />
+    <Compile Include="DataAccess\Oracle9\ManMessageDataAccess.cs" />
+    <Compile Include="DataAccess\Oracle9\ManUsersDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K5\ManBaseDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K5\ManClassDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K5\ManEmployeeDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K5\ManMessageDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K5\ManUsersDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K\ManBaseDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K\ManClassDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K\ManEmployeeDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K\ManMessageDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K\ManUsersDataAccess.cs" />
+    <Compile Include="DataAccess\SQLite\ManBaseDataAccess.cs" />
+    <Compile Include="DataAccess\SQLite\ManClassDataAccess.cs" />
+    <Compile Include="DataAccess\SQLite\ManEmployeeDataAccess.cs" />
+    <Compile Include="DataAccess\SQLite\ManMessageDataAccess.cs" />
+    <Compile Include="DataAccess\SQLite\ManUsersDataAccess.cs" />
+    <Compile Include="ManBase.cs" />
+    <Compile Include="ManBase.extend.cs" />
+    <Compile Include="ManClass.cs" />
+    <Compile Include="ManClass.extend.cs" />
+    <Compile Include="ManEmployee.cs" />
+    <Compile Include="ManEmployee.extend.cs" />
+    <Compile Include="ManMessage.cs" />
+    <Compile Include="ManMessage.extend.cs" />
+    <Compile Include="ManRight.cs" />
+    <Compile Include="ManUsers.cs" />
+    <Compile Include="ManUsers.extend.cs" />
+    <Compile Include="ManUserType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Buffalo.DB\Buffalo.DB.csproj">
+      <Project>{9B0043E4-883B-47BA-9A5A-5110C8583902}</Project>
+      <Name>Buffalo.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Buffalo.Kernel\Buffalo.Kernel.csproj">
+      <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
+      <Name>Buffalo.Kernel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BEM\ManBase.BEM.xml" />
+    <Content Include="BEM\ManClass.BEM.xml" />
+    <Content Include="BEM\ManEmployee.BEM.xml" />
+    <Content Include="BEM\ManMessage.BEM.xml" />
+    <Content Include="BEM\ManUsers.BEM.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BQLEntity\ManClass.cs.bak" />
+    <None Include="BQLEntity\ManEmployee.cs.bak" />
+    <None Include="BQLEntity\ManMessage.cs.bak" />
+    <None Include="BQLEntity\ManUsers.cs.bak" />
+    <None Include="MyClass.cd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

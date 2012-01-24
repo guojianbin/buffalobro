@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="微软雅黑" Size="9" />
+  <Class Name="TestAddIn.ManBase">
+    <Position X="2.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>ManBase.cs</FileName>
+      <HashCode>AAACAAAAAAAAAAAAAABACAAQAACAAAAAAAAABAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestAddIn.ManUsers">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>ManUsers.cs</FileName>
+      <HashCode>gAQAIAAgAAAAAAAAAAAIAAQAAAAASBACAAQAAAEBAQA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestAddIn.ManClass">
+    <Position X="1.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>ManClass.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABABAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestAddIn.ManEmployee">
+    <Position X="5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>ManEmployee.cs</FileName>
+      <HashCode>gAAAYAAgAAAAAAQAgAAIAAQAEAAAAAAAAYQAAAABAQA=</HashCode>
+    </TypeIdentifier>
+    <NestedTypes>
+      <Enum Name="TestAddIn.ManEmployee.EmpType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ManEmployee.extend.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+  </Class>
+  <Class Name="TestAddIn.ManMessage">
+    <Position X="4" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>ManMessage.cs</FileName>
+      <HashCode>AAAAAAAAAIAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="TestAddIn.ManUserType">
+    <Position X="1" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>ManUserType.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+</ClassDiagram>

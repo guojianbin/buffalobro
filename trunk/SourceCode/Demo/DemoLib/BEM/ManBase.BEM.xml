@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<class TableName="manBase" ClassName="TestAddIn.ManBase" IsTable="1">
+  <property FieldName="_id" PropertyName="Id" DbType="Int32" Length="0" EntityPropertyType="10" />
+  <property FieldName="_state" PropertyName="State" DbType="Boolean" Length="0" EntityPropertyType="1" />
+  <property FieldName="_lastUpdate" PropertyName="LastUpdate" DbType="DateTime" Length="0" EntityPropertyType="1" />
+</class>

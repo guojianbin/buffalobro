@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<class TableName="manMessage" ClassName="TestAddIn.ManMessage" IsTable="1">
+  <property FieldName="_title" PropertyName="Title" DbType="String" Length="100" EntityPropertyType="1" />
+  <property FieldName="_content" PropertyName="Content" DbType="String" Length="90000" EntityPropertyType="1" />
+  <property FieldName="_belongUser" PropertyName="BelongUser" DbType="Int32" Length="0" EntityPropertyType="1" />
+  <relation FieldName="_belong" PropertyName="Belong" SourceProperty="BelongUser" TargetProperty="Id" IsToDB="1" />
+</class>

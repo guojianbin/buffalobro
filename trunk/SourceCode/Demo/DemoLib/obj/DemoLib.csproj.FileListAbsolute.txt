@@ -1,0 +1,13 @@
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\bin\Debug\DemoLib.dll
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\bin\Debug\DemoLib.pdb
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\bin\Debug\Buffalo.DB.dll
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\bin\Debug\Buffalo.Kernel.dll
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\bin\Debug\System.Data.SQLite.dll
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\bin\Debug\MySql.Data.dll
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\bin\Debug\Buffalo.Kernel.pdb
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\bin\Debug\Buffalo.DB.pdb
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\obj\Debug\ResolveAssemblyReference.cache
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\obj\Debug\DemoLib.dll
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\obj\Debug\DemoLib.pdb
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\bin\Debug\Buffalo.Kernel.xml
+D:\CShareTest\Buffalobro\SourceCode\Demo\DemoLib\bin\Debug\Buffalo.DB.xml

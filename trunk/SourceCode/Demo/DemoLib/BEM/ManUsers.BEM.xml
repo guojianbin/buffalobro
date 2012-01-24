@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<class TableName="manUsers" ClassName="TestAddIn.ManUsers" IsTable="1">
+  <property FieldName="_name" PropertyName="Name" DbType="AnsiString" Length="32" EntityPropertyType="1" />
+  <property FieldName="_remark" PropertyName="Remark" DbType="AnsiString" Length="32" EntityPropertyType="1" />
+  <property FieldName="_userType" PropertyName="UserType" DbType="Int32" Length="0" EntityPropertyType="1" />
+  <property FieldName="_classId" PropertyName="ClassId" DbType="Int32" Length="0" EntityPropertyType="1" />
+  <property FieldName="_image" PropertyName="Image" DbType="Binary" Length="512" EntityPropertyType="1" />
+  <property FieldName="_age" PropertyName="Age" DbType="Int32" Length="0" EntityPropertyType="1" />
+  <property FieldName="_password" PropertyName="Password" DbType="AnsiString" Length="32" EntityPropertyType="1" />
+  <relation FieldName="_belongClass" PropertyName="BelongClass" SourceProperty="ClassId" TargetProperty="Id" IsToDB="1" IsParent="1" />
+  <relation FieldName="_lstMessage" PropertyName="LstMessage" SourceProperty="Id" TargetProperty="BelongUser" IsToDB="1" IsParent="0" />
+</class>

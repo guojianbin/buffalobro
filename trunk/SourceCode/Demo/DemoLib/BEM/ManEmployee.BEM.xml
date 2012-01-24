@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<class TableName="manEmployee" ClassName="TestAddIn.ManEmployee" IsTable="1">
+  <property FieldName="_name" PropertyName="Name" DbType="AnsiString" Length="32" EntityPropertyType="1" />
+  <property FieldName="_pwd" PropertyName="Pwd" DbType="AnsiString" Length="32" EntityPropertyType="1" />
+  <property FieldName="_classId" PropertyName="ClassId" DbType="Int32" Length="0" EntityPropertyType="1" />
+  <property FieldName="_remark" PropertyName="Remark" DbType="StringFixedLength" Length="90000" EntityPropertyType="1" />
+  <property FieldName="_IDCard" PropertyName="IDCard" DbType="AnsiString" Length="50" EntityPropertyType="1" />
+  <relation FieldName="_belongClass" PropertyName="BelongClass" SourceProperty="ClassId" TargetProperty="Id" IsToDB="1" />
+</class>
