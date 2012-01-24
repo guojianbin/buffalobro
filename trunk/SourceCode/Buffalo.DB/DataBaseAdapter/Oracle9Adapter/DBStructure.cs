@@ -4,6 +4,7 @@ using System.Text;
 using Buffalo.DB.DbCommon;
 using System.Data;
 using Buffalo.DB.DataBaseAdapter.IDbAdapters;
+using Buffalo.DB.PropertyAttributes;
 
 
 namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
@@ -22,6 +23,12 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         }
 
         public string GetAddParamSQL()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+
+        public List<TableRelationAttribute> GetRelation(DBInfo info, string childName)
         {
             throw new Exception("The method or operation is not implemented.");
         }

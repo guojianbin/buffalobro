@@ -44,8 +44,8 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         public KeyWordAddParamItem AddParam(string paramName, 
             DbType dbType, bool allowNull, EntityPropertyType type,int length)
         {
-            TableParamItemInfo info = new TableParamItemInfo(paramName,
-                dbType, allowNull, type, length);
+            EntityParam info = new EntityParam(paramName,"",
+                dbType, type,length, false);
             KeyWordAddParamItem item = new KeyWordAddParamItem(info,_tableName, this);
             return item;
         }
@@ -58,12 +58,31 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         /// <param name="type">类型</param>
         /// <param name="length">长度</param>
         /// <returns></returns>
-        public KeyWordAddParamItem AddParam(TableParamItemInfo info)
+        public KeyWordAddParamItem AddParam(EntityParam info)
         {
             KeyWordAddParamItem item = new KeyWordAddParamItem(info,_tableName, this);
             return item;
         }
-        
+
+        /// <summary>
+        /// 添加约束
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public KeyWordAddForeignkeyItem AddConstraint(TableRelationAttribute info) 
+        {
+            return new KeyWordAddForeignkeyItem(info, this);
+        }
+        /// <summary>
+        /// 添加约束
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public KeyWordAddForeignkeyItem AddConstraint(string name, string parentTable, string childTable,
+            string parentParam, string childParam)
+        {
+            return new KeyWordAddForeignkeyItem(name,parentTable,childTable,parentParam,childParam, this);
+        }
         internal override void LoadInfo(KeyWordInfomation info)
         {
             

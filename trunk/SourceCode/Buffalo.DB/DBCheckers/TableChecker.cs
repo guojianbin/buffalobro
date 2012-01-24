@@ -7,6 +7,7 @@ using Buffalo.DB.BQLCommon.BQLBaseFunction;
 using Buffalo.DB.BQLCommon;
 using Buffalo.DB.QueryConditions;
 using System.Data;
+using Buffalo.DB.PropertyAttributes;
 
 namespace Buffalo.DB.DBCheckers
 {
@@ -34,6 +35,10 @@ namespace Buffalo.DB.DBCheckers
             foreach (KeyWordTableParamItem existsTable in lstExists)
             {
                 sbRet.Append(CheckTableStruct(info, existsTable));
+            }
+            foreach (KeyWordTableParamItem table in tableInfos)
+            {
+                sbRet.Append(CheckRelation(info, table));
             }
             return sbRet.ToString();
         }
@@ -110,7 +115,7 @@ namespace Buffalo.DB.DBCheckers
             }
 
             StringBuilder sbSql = new StringBuilder();
-            foreach (TableParamItemInfo pInfo in table.Params) 
+            foreach (EntityParam pInfo in table.Params) 
             {
                 if (!dic.ContainsKey(pInfo.ParamName.ToLower())) 
                 {
@@ -120,10 +125,47 @@ namespace Buffalo.DB.DBCheckers
                     sbSql.Append(";");
                 }
             }
-
+            
 
             return sbSql.ToString();
         }
+
+        /// <summary>
+        /// 检测关系
+        /// </summary>
+        /// <param name="dbInfo">数据库</param>
+        /// <param name="table">要检测的表</param>
+        /// <returns></returns>
+        private static string CheckRelation(DBInfo dbInfo, KeyWordTableParamItem table) 
+        {
+            List<TableRelationAttribute> lstRelation = dbInfo.DBStructure.GetRelation(dbInfo, table.TableName);
+            StringBuilder  sbSql=new StringBuilder();
+            foreach (TableRelationAttribute item in table.RelationItems) 
+            {
+                bool exists = false;
+                foreach (TableRelationAttribute existsItem in lstRelation) 
+                {
+                    if (item.SourceName.Equals(existsItem.SourceName, StringComparison.CurrentCultureIgnoreCase)) 
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists) 
+                {
+                    item.CreateName();
+                    BQLQuery bql = BQL.AlterTable(table.TableName).AddConstraint(item);
+                    AbsCondition con = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
+                    sbSql.Append(con.GetSql() + ";");
+                }
+            }
+
+
+            return sbSql.ToString();
+
+        }
+
+
 
     }
 

@@ -53,9 +53,7 @@ namespace Buffalo.DB.QueryConditions
             sbRet.Append(Operator + " ");
             if (SqlParams.Length > 0)
             {
-
                 sbRet.Append(SqlParams);
-
             }
             return sbRet.ToString();
         }

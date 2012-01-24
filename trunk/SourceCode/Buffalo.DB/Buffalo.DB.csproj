@@ -52,9 +52,9 @@
   <ItemGroup>
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordCreateTableItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordTableParamItem.cs" />
-    <Compile Include="BQLCommon\BQLKeyWordCommon\TableParamItemInfo.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAlterTableItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddParamItem.cs" />
+    <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddForeignkeyItem.cs" />
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
     <Compile Include="CommBase\BusinessBases\BatchAction.cs" />
@@ -243,7 +243,7 @@
     <Compile Include="PropertyAttributes\EntityParam.cs" />
     <Compile Include="PropertyAttributes\EntityPropertyType.cs" />
     <Compile Include="PropertyAttributes\TableAttribute.cs" />
-    <Compile Include="PropertyAttributes\TableMappingAttribute.cs" />
+    <Compile Include="PropertyAttributes\TableRelationAttribute.cs" />
     <Compile Include="PropertyAttributes\ViewRelationTables.cs" />
     <Compile Include="QueryConditions\AbsCondition.cs" />
     <Compile Include="QueryConditions\CreateTableCondition.cs" />

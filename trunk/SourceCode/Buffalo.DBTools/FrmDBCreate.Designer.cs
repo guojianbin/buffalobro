@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnSubmit = new System.Windows.Forms.Button();
             this.btnCLose = new System.Windows.Forms.Button();
+            this.btnSubmit = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.rtbContent = new System.Windows.Forms.RichTextBox();
-            this.rtbOutput = new System.Windows.Forms.RichTextBox();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.rtbOutput = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -55,6 +55,16 @@
             this.panel1.Size = new System.Drawing.Size(510, 35);
             this.panel1.TabIndex = 0;
             // 
+            // btnCLose
+            // 
+            this.btnCLose.Location = new System.Drawing.Point(432, 6);
+            this.btnCLose.Name = "btnCLose";
+            this.btnCLose.Size = new System.Drawing.Size(75, 23);
+            this.btnCLose.TabIndex = 1;
+            this.btnCLose.Text = "关闭";
+            this.btnCLose.UseVisualStyleBackColor = true;
+            this.btnCLose.Click += new System.EventHandler(this.btnCLose_Click);
+            // 
             // btnSubmit
             // 
             this.btnSubmit.Location = new System.Drawing.Point(351, 6);
@@ -64,15 +74,6 @@
             this.btnSubmit.Text = "执行";
             this.btnSubmit.UseVisualStyleBackColor = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
-            // 
-            // btnCLose
-            // 
-            this.btnCLose.Location = new System.Drawing.Point(432, 6);
-            this.btnCLose.Name = "btnCLose";
-            this.btnCLose.Size = new System.Drawing.Size(75, 23);
-            this.btnCLose.TabIndex = 1;
-            this.btnCLose.Text = "关闭";
-            this.btnCLose.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
@@ -84,24 +85,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(510, 412);
             this.panel2.TabIndex = 1;
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.rtbOutput);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 304);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(510, 108);
-            this.panel3.TabIndex = 0;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.label1);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 286);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(510, 18);
-            this.panel4.TabIndex = 1;
             // 
             // panel5
             // 
@@ -121,15 +104,14 @@
             this.rtbContent.TabIndex = 1;
             this.rtbContent.Text = "";
             // 
-            // rtbOutput
+            // panel4
             // 
-            this.rtbOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbOutput.Location = new System.Drawing.Point(0, 0);
-            this.rtbOutput.Name = "rtbOutput";
-            this.rtbOutput.ReadOnly = true;
-            this.rtbOutput.Size = new System.Drawing.Size(510, 108);
-            this.rtbOutput.TabIndex = 0;
-            this.rtbOutput.Text = "";
+            this.panel4.Controls.Add(this.label1);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(0, 286);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(510, 18);
+            this.panel4.TabIndex = 1;
             // 
             // label1
             // 
@@ -139,6 +121,25 @@
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "输出：";
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.rtbOutput);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(0, 304);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(510, 108);
+            this.panel3.TabIndex = 0;
+            // 
+            // rtbOutput
+            // 
+            this.rtbOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbOutput.Location = new System.Drawing.Point(0, 0);
+            this.rtbOutput.Name = "rtbOutput";
+            this.rtbOutput.ReadOnly = true;
+            this.rtbOutput.Size = new System.Drawing.Size(510, 108);
+            this.rtbOutput.TabIndex = 0;
+            this.rtbOutput.Text = "";
             // 
             // FrmDBCreate
             // 
@@ -152,10 +153,10 @@
             this.Load += new System.EventHandler(this.FrmDBCreate_Load);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            this.panel5.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

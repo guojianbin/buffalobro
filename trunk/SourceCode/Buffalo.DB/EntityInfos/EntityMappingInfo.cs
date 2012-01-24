@@ -11,7 +11,7 @@ namespace Buffalo.DB.EntityInfos
     /// </summary>
     public class EntityMappingInfo : FieldInfoHandle
     {
-        private TableMappingAttribute tableMappingAtt;
+        private TableRelationAttribute tableMappingAtt;
         /// <summary>
         /// 创建属性的信息类
         /// </summary>
@@ -21,7 +21,7 @@ namespace Buffalo.DB.EntityInfos
         /// <param name="tableMappingAtt">映射标识类</param>
         /// <param name="fieldName">属性名</param>
         /// <param name="fieldType">属性类型</param>
-        public EntityMappingInfo(Type belong,GetFieldValueHandle getHandle, SetFieldValueHandle setHandle, TableMappingAttribute tableMappingAtt, string fieldName, Type fieldType)
+        public EntityMappingInfo(Type belong,GetFieldValueHandle getHandle, SetFieldValueHandle setHandle, TableRelationAttribute tableMappingAtt, string fieldName, Type fieldType)
             : base(belong, getHandle, setHandle, fieldType, fieldName)
         {
             this.tableMappingAtt = tableMappingAtt;
@@ -37,13 +37,13 @@ namespace Buffalo.DB.EntityInfos
             }
         }
         /// <summary>
-        /// 本表是否主键表
+        /// 是否主表属性
         /// </summary>
-        public bool IsPrimary
+        public bool IsParent
         {
             get
             {
-                return tableMappingAtt.IsPrimary;
+                return tableMappingAtt.IsParent;
             }
         }
 

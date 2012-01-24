@@ -4,6 +4,8 @@ using System.Text;
 using System.Data;
 using Buffalo.Kernel.Commons;
 using Buffalo.Kernel;
+using Buffalo.DB.DataBaseAdapter.IDbAdapters;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 namespace Buffalo.DB.PropertyAttributes
 {
     public class EntityParam:System.Attribute
@@ -13,7 +15,9 @@ namespace Buffalo.DB.PropertyAttributes
         private DbType _sqlType;
         private EntityPropertyType _propertyType;
         private int _length;
+        private bool _allowNull;
 
+        
 
         /// <summary>
         /// 实体字段标识
@@ -23,7 +27,7 @@ namespace Buffalo.DB.PropertyAttributes
         /// <param name="sqlType">对应的SQL数据类型</param>
         /// <param name="propertyType">属性类型</param>
         public EntityParam(string paramName, string propertyName, DbType sqlType, EntityPropertyType propertyType)
-        :this(paramName,propertyName,sqlType,propertyType,0)
+        :this(paramName,propertyName,sqlType,propertyType,0,true)
         {
             
         }
@@ -35,7 +39,8 @@ namespace Buffalo.DB.PropertyAttributes
         /// <param name="sqlType">对应的SQL数据类型</param>
         /// <param name="propertyType">属性类型</param>
         /// <param name="length">长度</param>
-        public EntityParam(string paramName, string propertyName, DbType sqlType, EntityPropertyType propertyType,int length)
+        public EntityParam(string paramName, string propertyName,
+            DbType sqlType, EntityPropertyType propertyType,int length,bool allowNull)
         {
             this._paramName = paramName;
             this._propertyName = propertyName;
@@ -99,6 +104,14 @@ namespace Buffalo.DB.PropertyAttributes
             
         }
         /// <summary>
+        /// 允许空
+        /// </summary>
+        public bool AllowNull
+        {
+            get { return _allowNull; }
+            set { _allowNull = value; }
+        }
+        /// <summary>
         /// 长度
         /// </summary>
         public int Length
@@ -147,6 +160,39 @@ namespace Buffalo.DB.PropertyAttributes
             {
                 return EnumUnit.ContainerValue((int)_propertyType, (int)EntityPropertyType.Version);
             }
+        }
+
+        public string DisplayInfo(KeyWordInfomation info, string tableName)
+        {
+            StringBuilder sb = new StringBuilder();
+            IDBAdapter idba = info.DBInfo.CurrentDbAdapter;
+            sb.Append(idba.FormatTableName(ParamName) + " ");
+            sb.Append(idba.DBTypeToSQL(SqlType, Length) + " ");
+
+            bool isPrimary = EnumUnit.ContainerValue((int)_propertyType, (int)EntityPropertyType.PrimaryKey);
+            bool isAutoIdentity = EnumUnit.ContainerValue((int)_propertyType, (int)EntityPropertyType.Identity);
+
+            if (isAutoIdentity)
+            {
+                sb.Append(idba.DBIdentity(tableName, _paramName));
+            }
+
+            if (isPrimary)
+            {
+                sb.Append(" primary key ");
+            }
+            else
+            {
+                if (_allowNull)
+                {
+                    sb.Append("NULL");
+                }
+                else
+                {
+                    sb.Append("NOT NULL");
+                }
+            }
+            return sb.ToString();
         }
     }
 }

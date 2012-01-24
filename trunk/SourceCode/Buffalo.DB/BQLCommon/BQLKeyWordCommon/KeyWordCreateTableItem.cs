@@ -57,9 +57,9 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         /// <param name="type">类型</param>
         /// <param name="length">长度</param>
         /// <returns></returns>
-        public KeyWordTableParamItem Param(List<TableParamItemInfo> lstParams)
+        public KeyWordTableParamItem Param(List<EntityParam> lstParams)
         {
-            KeyWordTableParamItem item = new KeyWordTableParamItem(lstParams,_tableName, this);
+            KeyWordTableParamItem item = new KeyWordTableParamItem(lstParams,null,_tableName, this);
             return item;
         }
         internal override void LoadInfo(KeyWordInfomation info)

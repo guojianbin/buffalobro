@@ -143,7 +143,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
                 object child = childMapping.LoadFromReader(reader, out hValue);
                 if (child != null)
                 {
-                    if (!childMapping.MappingInfo.IsPrimary)//ÃÓ≥‰∏∏¿‡
+                    if (childMapping.MappingInfo.IsParent)//ÃÓ≥‰∏∏¿‡
                     {
                         childMapping.MappingInfo.SetValue(objRet, child);
                     }

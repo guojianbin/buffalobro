@@ -8,18 +8,25 @@ namespace Buffalo.DB.PropertyAttributes
     /// <summary>
     /// 子表标识
     /// </summary>
-    public class TableMappingAttribute : System.Attribute
+    public class TableRelationAttribute : System.Attribute
     {
+        private string _name;
         private string _propertyName;
         private EntityPropertyInfo _sourceProperty;
         private EntityPropertyInfo _targetProperty;
-        private bool _isPrimary;
+        private bool _isParent;
 
         private string _sourceName;
         private string _targetName;
         private Type _sourceType;
         private Type _targetType;
+        private string _sourceTable;
+        private string _targetTable;
 
+         /// <summary>
+        /// 关联映射信息
+        /// </summary>
+        public TableRelationAttribute() { }
         /// <summary>
         /// 关联映射信息
         /// </summary>
@@ -28,17 +35,26 @@ namespace Buffalo.DB.PropertyAttributes
         /// <param name="targetProperty">目标对象属性</param>
         /// <param name="sourceTableType">原对象类型</param>
         /// <param name="targetTableType">目标对象类型</param>
-        /// <param name="isPrimary">源对象是否主表</param>
-        public TableMappingAttribute(string propertyName, string sourceProperty, string targetProperty,
-             bool isPrimary) 
+        /// <param name="isParent">是否主表属性</param>
+        public TableRelationAttribute(string name, string sourceTable, string targetTable,
+            string sourceParam, string targetParam, string propertyName, bool isParent) 
         {
 
             _propertyName = propertyName;
-            _sourceName = sourceProperty;
-            _targetName = targetProperty;
-            _isPrimary = isPrimary;
-        }
+            _sourceTable = sourceTable;
+            _sourceName = sourceParam;
+            _targetTable = targetTable;
+            _targetName = targetParam;
 
+            _isParent = isParent;
+        }
+        /// <summary>
+        /// 创建外键名称
+        /// </summary>
+        public void CreateName()
+        {
+            Name = "FK_" + SourceName + "_" + TargetTable + "_" + SourceName;
+        }
         /// <summary>
         /// 设置实体
         /// </summary>
@@ -49,7 +65,14 @@ namespace Buffalo.DB.PropertyAttributes
             _sourceType = sourceType;
             _targetType = targetType;
         }
-
+        /// <summary>
+        /// 约束名
+        /// </summary>
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
         /// <summary>
         /// 对应的属性名
         /// </summary>
@@ -59,16 +82,51 @@ namespace Buffalo.DB.PropertyAttributes
             {
                 return _propertyName;
             }
+            set 
+            {
+                _propertyName=value;
+            }
         }
         /// <summary>
-        /// 本表是否主键表
+        /// 源表名
         /// </summary>
-        public bool IsPrimary
+        public string SourceTable
         {
-            get 
-            {
-                return _isPrimary;
-            }
+            get { return _sourceTable; }
+            set { _sourceTable = value; }
+        }
+        /// <summary>
+        /// 目标表名
+        /// </summary>
+        public string TargetTable
+        {
+            get { return _targetTable; }
+            set { _targetTable = value; }
+        }
+        /// <summary>
+        /// 目标属性名
+        /// </summary>
+        public string TargetName
+        {
+            get { return _targetName; }
+            set { _targetName = value; }
+        }
+
+        /// <summary>
+        /// 源属性名
+        /// </summary>
+        public string SourceName
+        {
+            get { return _sourceName; }
+            set { _sourceName = value; }
+        }
+        /// <summary>
+        /// 是否主表属性
+        /// </summary>
+        public bool IsParent
+        {
+            get { return _isParent; }
+            set { _isParent = value; }
         }
 
         /// <summary>

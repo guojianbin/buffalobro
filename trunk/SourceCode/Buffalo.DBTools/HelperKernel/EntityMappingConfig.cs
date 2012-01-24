@@ -143,7 +143,17 @@ namespace Buffalo.DBTools.HelperKernel
 
                             filed.TargetProperty = att.InnerText;
                         }
-
+                        att = node.Attributes["IsToDB"];
+                        if (att != null)
+                        {
+                            filed.IsToDB = att.InnerText=="1";
+                        }
+                        att = node.Attributes["IsParent"];
+                        if (att != null)
+                        {
+                            filed.IsParent = att.InnerText == "1";
+                        }
+                        
                     }
                 }
             }
@@ -265,6 +275,14 @@ namespace Buffalo.DBTools.HelperKernel
 
                 att = doc.CreateAttribute("TargetProperty");//数据库类型长度
                 att.InnerText = field.TargetProperty;
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("IsToDB");//数据库类型长度
+                att.InnerText = field.IsToDB?"1":"0";
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("IsParent");//数据库类型长度
+                att.InnerText = field.IsParent ? "1" : "0";
                 node.Attributes.Append(att);
             }
         }

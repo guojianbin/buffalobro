@@ -128,7 +128,7 @@ namespace Buffalo.DB.EntityInfos
                         }
                         else
                         {
-                            TableMappingAttribute tableMappingAtt = GetMappingParam(finf);
+                            TableRelationAttribute tableMappingAtt = GetMappingParam(finf);
 
                             if (tableMappingAtt != null)
                             {
@@ -156,12 +156,12 @@ namespace Buffalo.DB.EntityInfos
         /// </summary>
         /// <param name="finf"></param>
         /// <returns></returns>
-        private static TableMappingAttribute GetMappingParam(FieldInfo finf)
+        private static TableRelationAttribute GetMappingParam(FieldInfo finf)
         {
-            object entityParam = FastInvoke.GetPropertyAttribute(finf, typeof(TableMappingAttribute));
+            object entityParam = FastInvoke.GetPropertyAttribute(finf, typeof(TableRelationAttribute));
             if (entityParam != null)
             {
-                return (TableMappingAttribute)entityParam;
+                return (TableRelationAttribute)entityParam;
             }
             return null;
         }

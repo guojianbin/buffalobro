@@ -18,11 +18,11 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
     /// </summary>
     public class KeyWordTableParamItem : BQLQuery
     {
-        protected List<TableParamItemInfo> _tparams;
+        protected List<EntityParam> _tparams;
         /// <summary>
         /// 字段
         /// </summary>
-        public List<TableParamItemInfo> Params
+        public List<EntityParam> Params
         {
             get { return _tparams; }
             set { _tparams = value; }
@@ -35,7 +35,16 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         {
             get { return _tableName; }
         }
+        private List<TableRelationAttribute> _relationItems;
 
+        /// <summary>
+        /// 关系集合
+        /// </summary>
+        public List<TableRelationAttribute> RelationItems
+        {
+            get { return _relationItems; }
+            set { _relationItems = value; }
+        }
 
 
         /// <summary>
@@ -47,17 +56,18 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
             : base(previous) 
         {
             _tableName = tableName;
-            this._tparams = new List<TableParamItemInfo>();
+            this._tparams = new List<EntityParam>();
         }
         /// <summary>
-        /// Insert的字段关键字项
+        /// 表信息
         /// </summary>
         /// <param name="paramHandles">字段集合</param>
         /// <param name="previous">上一个关键字</param>
-        public KeyWordTableParamItem(List<TableParamItemInfo> lstParams, string tableName, BQLQuery previous)
+        public KeyWordTableParamItem(List<EntityParam> lstParams,List<TableRelationAttribute> relationItems, string tableName, BQLQuery previous)
             : base(previous)
         {
             _tableName = tableName;
+            this._relationItems = relationItems;
             this._tparams = lstParams;
         }
 
@@ -74,8 +84,8 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         public KeyWordTableParamItem _(string paramName, DbType dbType, bool allowNull, 
             EntityPropertyType type,int length)
         {
-            TableParamItemInfo info = new TableParamItemInfo(paramName,
-                dbType, allowNull, type, length);
+            EntityParam info = new EntityParam(paramName,"",
+                dbType, type, length, false);
             _tparams.Add(info);
             return this;
         }
@@ -86,7 +96,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         /// <param name="parameter">字段</param>
         /// <param name="valueItem">值</param>
         /// <returns></returns>
-        public KeyWordTableParamItem _(List<TableParamItemInfo> lstParam)
+        public KeyWordTableParamItem _(List<EntityParam> lstParam)
         {
             _tparams.AddRange(lstParam);
             return this;
@@ -102,7 +112,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
             
             for (int i = 0; i < _tparams.Count; i++)
             {
-                TableParamItemInfo item = _tparams[i];
+                EntityParam item = _tparams[i];
                 sb.Append(item.DisplayInfo(info,TableName));
 
 

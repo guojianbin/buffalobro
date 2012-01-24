@@ -17,6 +17,7 @@ using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.QueryConditions;
 using Buffalo.Kernel;
 using Buffalo.DB.DBCheckers;
+using Buffalo.DB.PropertyAttributes;
 
 namespace Buffalo.DBTools
 {
@@ -69,35 +70,26 @@ namespace Buffalo.DBTools
         /// <param name="type"></param>
         private void GetClassSQL() 
         {
-            Stack<EntityConfig> stkConfig = new Stack<EntityConfig>();
-            EntityConfig entity = null;
+            ClrType curType = SelectedClass.AssociatedType;//当前类型
+            EntityConfig entity = new EntityConfig(curType, CurrentProject, SelectedDiagram);
             DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo(entity,CurrentProject, SelectedDiagram);
             DBInfo dbInfo = dbcinfo.CreateDBInfo();
-            ClrType curType=SelectedClass.AssociatedType;//当前类型
+            
             string typeName=null;
-            while(curType!=null)
-            {
-                entity = new EntityConfig(curType, CurrentProject, SelectedDiagram);
-                
-                stkConfig.Push(entity);
-                curType = EntityConfig.GetBaseClass(curType, out typeName);
-                if (EntityConfig.IsSystemType(curType)) 
-                {
-                    break;
-                }
-            }
+            Stack<EntityConfig> stkConfig = EntityConfig.GetEntity(entity, CurrentProject, SelectedDiagram);
 
             
             List<KeyWordTableParamItem> lstTable = new List<KeyWordTableParamItem>();
-            List<TableParamItemInfo> lstParam=new List<TableParamItemInfo>();
+            List<EntityParam> lstParam = new List<EntityParam>();
+            List<TableRelationAttribute> lstRelation = new List<TableRelationAttribute>();
             string lastTableName = null;
             while (stkConfig.Count > 0) 
             {
                 EntityConfig centity = stkConfig.Pop();
-                FillParams(centity, lstParam);
+                FillParams(centity, lstParam, lstRelation);
                 lastTableName = centity.TableName;
             }
-            KeyWordTableParamItem table = new KeyWordTableParamItem(lstParam,lastTableName,null);
+            KeyWordTableParamItem table = new KeyWordTableParamItem(lstParam,lstRelation,lastTableName,null);
             lstTable.Add(table);
             try
             {
@@ -116,7 +108,7 @@ namespace Buffalo.DBTools
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="lstParam"></param>
-        private void FillParams(EntityConfig entity, List<TableParamItemInfo> lstParam) 
+        private void FillParams(EntityConfig entity, List<EntityParam> lstParam, List<TableRelationAttribute> lstRelation) 
         {
             foreach (EntityParamField param in entity.EParamFields) 
             {
@@ -125,11 +117,34 @@ namespace Buffalo.DBTools
                     continue;
                 }
                 DbType dbt=(DbType)EnumUnit.GetEnumInfoByName(typeof(DbType),param.DbType).Value;
-                TableParamItemInfo pInfo = new TableParamItemInfo(
-                    param.ParamName,dbt , true, 
-                    param.EntityPropertyType, param.Length);
+                EntityParam pInfo = new EntityParam(
+                    param.ParamName,"",dbt,
+                    param.EntityPropertyType, param.Length,true);
 
                 lstParam.Add(pInfo);
+            }
+            foreach (EntityRelationItem relation in entity.ERelation) 
+            {
+                if (relation.IsToDB && relation.IsGenerate && relation.IsParent) 
+                {
+                    EntityConfig parent = new EntityConfig(relation.FInfo.MemberType, CurrentProject, SelectedDiagram);
+                    if (parent == null)
+                    {
+                        continue;
+                    }
+                    EntityParamField childProperty = entity.GetParamInfoByPropertyName(relation.SourceProperty);
+                    if (childProperty == null) 
+                    {
+                        continue;
+                    }
+                    EntityParamField parentProperty = parent.GetParamInfoByPropertyName(relation.TargetProperty);
+                    if (parentProperty == null) 
+                    {
+                        continue;
+                    }
+                    lstRelation.Add(new TableRelationAttribute("", entity.TableName,
+                        parent.TableName, childProperty.ParamName, parentProperty.ParamName, "", relation.IsParent));
+                }
             }
         }
 
@@ -148,6 +163,11 @@ namespace Buffalo.DBTools
                 rtbOutput.Text = "错误：" + ex.Message;
             }
 
+        }
+
+        private void btnCLose_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
         }
 
     }

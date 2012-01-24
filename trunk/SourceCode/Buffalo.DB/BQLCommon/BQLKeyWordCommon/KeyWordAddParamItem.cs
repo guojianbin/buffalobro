@@ -18,11 +18,11 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
     /// </summary>
     public class KeyWordAddParamItem : BQLQuery
     {
-        protected TableParamItemInfo _param;
+        protected EntityParam _param;
         /// <summary>
         /// 字段
         /// </summary>
-        public TableParamItemInfo Param
+        public EntityParam Param
         {
             get { return _param; }
             set { _param = value; }
@@ -50,7 +50,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         /// </summary>
         /// <param name="paramHandles">字段集合</param>
         /// <param name="previous">上一个关键字</param>
-        public KeyWordAddParamItem(TableParamItemInfo param, string tableName, BQLQuery previous)
+        public KeyWordAddParamItem(EntityParam param, string tableName, BQLQuery previous)
             : base(previous)
         {
             _tableName = tableName;

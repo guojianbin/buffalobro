@@ -283,6 +283,7 @@ namespace Buffalo.DBTools.HelperKernel
                     }
                     else 
                     {
+                        
                         EntityRelationItem erf = new EntityRelationItem(cp, field, this);
                         _eRelation.Add(erf);
                     }
@@ -438,7 +439,7 @@ namespace Buffalo.DBTools.HelperKernel
                 }
                 else if (i == _cp.EndLine - 1) 
                 {
-                    string space = CutSpace(str) + "   ";
+                    string space = CutSpace(str) + "    ";
                     foreach (EntityParamField param in _eParamFields) 
                     {
                         if (param.IsGenerate) 
@@ -456,39 +457,7 @@ namespace Buffalo.DBTools.HelperKernel
                     
                     lstTarget.Add(str);
                 }
-                //else if (codeIndex < _eParamFields.Count && i == _eParamFields[codeIndex].StarLine - 1)
-                //{
-                //    for (int k = i; k < _eParamFields[codeIndex].EndLine; k++)
-                //    {
-                //        lstTarget.Add(lstSource[k]);
-                //    }
-                //    if (_eParamFields[codeIndex].IsGenerate)
-                //    {
-                //        _eParamFields[codeIndex].AddSource(lstTarget, CutSpace(str));
-
-                //    }
-
-                //    i = _eParamFields[codeIndex].EndLine - 1;
-                //    codeIndex++;
-                //}
-                //else if (relationIndex < _eRelation.Count && i == _eRelation[relationIndex].StarLine - 1)
-                //{
-                //    if (_eRelation[relationIndex].IsGenerate)
-                //    {
-                //        _eRelation[relationIndex].AddSource(lstTarget, CutSpace(str));
-
-                //    }
-                //    else
-                //    {
-                //        for (int k = i; k < _eRelation[relationIndex].EndLine; k++)
-                //        {
-                //            lstTarget.Add(lstSource[k]);
-                //        }
-
-                //    }
-                //    i = _eRelation[relationIndex].EndLine - 1;
-                //    relationIndex++;
-                //}
+                
                 else if (isUsing && str.IndexOf("namespace " + Namespace) >= 0)
                 {
                     AddSqlCommonUsing(dicUsing, lstTarget);
@@ -511,6 +480,53 @@ namespace Buffalo.DBTools.HelperKernel
             GenerateExtenCode();
             
 
+        }
+        /// <summary>
+        /// 通过属性名获取信息
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public EntityParamField GetParamInfoByPropertyName(string propertyName)
+        {
+            Stack<EntityConfig> stkEntity = GetEntity(this, CurrentProject, CurrentDiagram);
+            while (stkEntity.Count > 0)
+            {
+                EntityConfig curEntity = stkEntity.Pop();
+                foreach (EntityParamField item in curEntity.EParamFields)
+                {
+                    if (item.PropertyName == propertyName)
+                    {
+                        return item;
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 获取类的自身和基类集合
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static Stack<EntityConfig> GetEntity(EntityConfig entity, Project curProject, Diagram selDiagram) 
+        {
+            Stack<EntityConfig> stkConfig = new Stack<EntityConfig>();
+
+            ClrType curType = entity.ClassType;
+            string typeName;
+            while (curType != null)
+            {
+
+                
+                stkConfig.Push(entity);
+                curType = EntityConfig.GetBaseClass(curType, out typeName);
+                if (EntityConfig.IsSystemType(curType))
+                {
+                    break;
+                }
+                entity = new EntityConfig(curType, curProject, selDiagram);
+            }
+            return stkConfig;
         }
 
         private static readonly string[] BaseTypes ={ typeof(EntityBase).Name, typeof(object).Name };

@@ -11,21 +11,26 @@ namespace Buffalo.DBTools.HelperKernel
     /// </summary>
     public class EntityRelationItem : EntityFieldBase
     {
-        
-        
-        
-        
-
         private string _sourceProperty;
-
-
-
         private string _targetProperty;
-
-
-
-        
-
+        private bool _isToDB;
+        private bool _isParent;
+        /// <summary>
+        /// 是否主表属性
+        /// </summary>
+        public bool IsParent
+        {
+            get { return _isParent; }
+            set { _isParent = value; }
+        }
+        /// <summary>
+        /// 生成到数据库
+        /// </summary>
+        public bool IsToDB
+        {
+            get { return _isToDB; }
+            set { _isToDB = value; }
+        }
         /// <summary>
         /// 目标属性
         /// </summary>
@@ -70,13 +75,35 @@ namespace Buffalo.DBTools.HelperKernel
             }
         }
 
+        /// <summary>
+        /// 实体映射
+        /// </summary>
+        /// <param name="cp"></param>
+        /// <param name="fInfo"></param>
+        /// <param name="belongEntity"></param>
         public EntityRelationItem(CodeElementPosition cp, ClrField fInfo, EntityConfig belongEntity) 
         {
             _cp = cp;
             _fInfo = fInfo;
+            _isParent = GetIsParent(fInfo);
             GetInfo(fInfo);
             _belongEntity = belongEntity;
         }
+
+        /// <summary>
+        /// 获取此字段是否主表属性
+        /// </summary>
+        /// <param name="fInfo"></param>
+        /// <returns></returns>
+        private static bool GetIsParent(ClrField fInfo)
+        {
+            if (fInfo.MemberType.Generic) 
+            {
+                return false;
+            }
+            return true;
+        }
+
         /// <summary>
         /// 获取字段的配置信息
         /// </summary>
@@ -96,22 +123,45 @@ namespace Buffalo.DBTools.HelperKernel
             //生成对应属性
             if (!_belongEntity.Properties.ContainsKey(PropertyName))
             {
-                source.Add(spaces + "/// <summary>");
-                source.Add(spaces + "/// " + Summary);
-                source.Add(spaces + "/// </summary>");
-                string propertyText = spaces + "public " + TypeName + " " + PropertyName;
-                source.Add(propertyText);
-                source.Add(spaces + "{");
-                source.Add(spaces + "    get");
-                source.Add(spaces + "    {");
-                source.Add(spaces + "       if (" + FieldName + " == null)");
-                source.Add(spaces + "       {");
-                source.Add(spaces + "           FillParent(\"" + PropertyName + "\");");
-                source.Add(spaces + "       }");
-                source.Add(spaces + "        return " + FieldName + ";");
-                source.Add(spaces + "    }");
-                source.Add(spaces + "}");
+                if (IsParent)
+                {
+                    source.Add(spaces + "/// <summary>");
+                    source.Add(spaces + "/// " + Summary);
+                    source.Add(spaces + "/// </summary>");
+                    string propertyText = spaces + "public " + TypeName + " " + PropertyName;
+                    source.Add(propertyText);
+                    source.Add(spaces + "{");
+                    source.Add(spaces + "    get");
+                    source.Add(spaces + "    {");
+                    source.Add(spaces + "       if (" + FieldName + " == null)");
+                    source.Add(spaces + "       {");
+                    source.Add(spaces + "           FillParent(\"" + PropertyName + "\");");
+                    source.Add(spaces + "       }");
+                    source.Add(spaces + "        return " + FieldName + ";");
+                    source.Add(spaces + "    }");
+                    source.Add(spaces + "}");
+                }
+                else 
+                {
+                    source.Add(spaces + "/// <summary>");
+                    source.Add(spaces + "/// " + Summary);
+                    source.Add(spaces + "/// </summary>");
+                    string propertyText = spaces + "public " + TypeName + " " + PropertyName;
+                    source.Add(propertyText);
+                    source.Add(spaces + "{");
+                    source.Add(spaces + "    get");
+                    source.Add(spaces + "    {");
+                    source.Add(spaces + "       if (" + FieldName + " == null)");
+                    source.Add(spaces + "       {");
+                    source.Add(spaces + "           FillChild(\"" + PropertyName + "\");");
+                    source.Add(spaces + "       }");
+                    source.Add(spaces + "        return " + FieldName + ";");
+                    source.Add(spaces + "    }");
+                    source.Add(spaces + "}");
+                }
             }
         }
+
+
     }
 }
