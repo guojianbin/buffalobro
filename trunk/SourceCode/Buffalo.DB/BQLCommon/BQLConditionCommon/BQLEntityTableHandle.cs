@@ -23,11 +23,39 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         private Dictionary<string, BQLEntityParamHandle> _dicParam=new Dictionary<string,BQLEntityParamHandle>();
 
         /// <summary>
-        /// 所属的实体的信息
+        /// 获取所属的实体的信息
         /// </summary>
-        internal EntityInfoHandle GetEntityInfo()
+        public EntityInfoHandle GetEntityInfo()
         {
             return _entityInfo; 
+        }
+
+        /// <summary>
+        /// 设置所属的实体的信息
+        /// </summary>
+        /// <param name="entityInfo">实体信息</param>
+        /// <returns></returns>
+        protected void SetEntityInfo(EntityInfoHandle entityInfo, BQLEntityTableHandle parentTable, string propertyName)
+        {
+            _entityInfo=entityInfo;
+            _parentTable = parentTable;
+            _propertyName = propertyName;
+            if (string.IsNullOrEmpty(propertyName))
+            {
+                _entityKey = entityInfo.EntityType.Name;
+            }
+            else
+            {
+                if (!CommonMethods.IsNull(parentTable))
+                {
+                    StringBuilder sb = new StringBuilder(50);
+                    sb.Append(parentTable.GetEntityKey());
+                    sb.Append(".");
+                    sb.Append(propertyName);
+                    _entityKey = sb.ToString();
+                }
+
+            }
         }
 
         /// <summary>
@@ -52,32 +80,17 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return _parentTable; 
         }
 
+        public BQLEntityTableHandle()
+        {
+        }
+
         public BQLEntityTableHandle(EntityInfoHandle entityInfo)
             :this(entityInfo,null,null)
         {
         }
         public BQLEntityTableHandle(EntityInfoHandle entityInfo, BQLEntityTableHandle parentTable,string propertyName)
         {
-            this._entityInfo = entityInfo;
-            _parentTable = parentTable;
-            _propertyName = propertyName;
-            if (string.IsNullOrEmpty(propertyName))
-            {
-                _entityKey = entityInfo.EntityType.Name;
-            }
-            else
-            {
-                if (!CommonMethods.IsNull(parentTable)) 
-                {
-                    StringBuilder sb = new StringBuilder(50);
-                    sb.Append(parentTable.GetEntityKey());
-                    sb.Append(".");
-                    sb.Append(propertyName);
-                    _entityKey = sb.ToString();
-                }
-                
-            }
-            //this.valueType = BQLValueType.Table;
+            SetEntityInfo(entityInfo, parentTable, propertyName);
         }
         /// <summary>
         /// 创建实体的属性
