@@ -9,3 +9,6 @@ D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\obj\Debug\Buffalo.DB.pdb
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\bin\Debug\Buffalo.Kernel.xml
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\bin\Debug\IBM.Data.DB2.dll
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.DB\bin\Debug\MySql.Data.dll
+D:\CShareTest\Buffalobro\SourceCode\Debug\Buffalo.DB.dll
+D:\CShareTest\Buffalobro\SourceCode\Debug\Buffalo.DB.pdb
+D:\CShareTest\Buffalobro\SourceCode\Debug\Buffalo.DB.XML
