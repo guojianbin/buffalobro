@@ -53,7 +53,7 @@ namespace Buffalo.DB.PropertyAttributes
         /// </summary>
         public void CreateName()
         {
-            Name = "FK_" + SourceName + "_" + TargetTable + "_" + SourceName;
+            Name = "FK_" + SourceTable + "_" + TargetTable + "_" + SourceName;
         }
         /// <summary>
         /// …Ë÷√ µÃÂ

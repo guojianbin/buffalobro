@@ -72,6 +72,14 @@ namespace Buffalo.DBTools
         {
             ClrType curType = SelectedClass.AssociatedType;//当前类型
             EntityConfig entity = new EntityConfig(curType, CurrentProject, SelectedDiagram);
+
+            if (string.IsNullOrEmpty(entity.TableName)) 
+            {
+                MessageBox.Show("此实体为基类实体，不需要生成数据表", "Buffalo助手", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+                return;
+            }
+
             DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo(entity,CurrentProject, SelectedDiagram);
             DBInfo dbInfo = dbcinfo.CreateDBInfo();
             

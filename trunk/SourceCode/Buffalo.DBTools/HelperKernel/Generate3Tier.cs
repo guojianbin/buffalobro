@@ -46,15 +46,22 @@ namespace Buffalo.DBTools.HelperKernel
             
             string baseClass = null;
             ClrType baseType=_entity.BaseType;
+            string businessClassName=ClassName+"Business";
             if (EntityConfig.IsSystemType(baseType))
             {
-                baseClass = "BusinessModelBase<"+ClassName+">";
+                if (!string.IsNullOrEmpty(_entity.TableName))
+                {
+                    baseClass = "BusinessModelBase<" + ClassName + ">";
+                }
+                else 
+                {
+                    baseClass = "BusinessModelBase<T> where T : "+ClassName+", new()";
+                    businessClassName += "<T>";
+                }
             }
             else 
             {
-                
-
-                baseClass = BusinessNamespace+"." + baseType.Name+"Business";
+                baseClass = BusinessNamespace+"." + baseType.Name+"Business<"+ClassName+">";
             }
             List<string> codes = new List<string>();
             using (StringReader reader = new StringReader(model))
@@ -64,7 +71,8 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     tmp = tmp.Replace("<%=EntityNamespace%>", EntityNamespace);
                     tmp = tmp.Replace("<%=Summary%>", Summary);
-                    tmp = tmp.Replace("<%=ClassName%>", ClassName);
+                    tmp = tmp.Replace("<%=BusinessClassName%>", businessClassName);
+                    tmp = tmp.Replace("<%=ClassName%>",ClassName);
                     tmp = tmp.Replace("<%=BusinessNamespace%>", BusinessNamespace);
                     tmp = tmp.Replace("<%=BaseBusinessClass%>", baseClass);
                     codes.Add(tmp);

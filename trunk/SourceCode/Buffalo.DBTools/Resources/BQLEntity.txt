@@ -31,9 +31,9 @@ namespace <%=BQLEntityNamespace%>
         /// 初始化本类的信息
         /// </summary>
         /// <param name="entityInfo">类信息</param>
-        public <%=DBName%>_<%=ClassName%>( BQLEntityTableHandle parent,string propertyName) 
-            :base(EntityInfoManager.GetEntityHandle(typeof(<%=EntityNamespace%>.<%=ClassName%>)),parent,propertyName)
+        public <%=DBName%>_<%=ClassName%>(BQLEntityTableHandle parent,string propertyName) 
         {
+			SetEntityInfo(EntityInfoManager.GetEntityHandle(typeof(<%=EntityNamespace%>.<%=ClassName%>)),parent,propertyName);
 <%=PropertyInit%>
         }
         /// <summary>

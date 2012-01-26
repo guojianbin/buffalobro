@@ -402,9 +402,12 @@ namespace Buffalo.DBTools.HelperKernel
             GenerateExtendCode();
             
             g3t.GenerateBusiness();
-            g3t.GenerateIDataAccess();
-            g3t.GenerateDataAccess();
-            g3t.GenerateBQLDataAccess();
+            if (!string.IsNullOrEmpty(this.TableName))
+            {
+                g3t.GenerateIDataAccess();
+                g3t.GenerateDataAccess();
+                g3t.GenerateBQLDataAccess();
+            }
             bqlEntity.GenerateBQLEntityDB();
             bqlEntity.GenerateBQLEntity();
             EntityMappingConfig.SaveXML(this);
