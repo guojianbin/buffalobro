@@ -36,11 +36,7 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     entity.TableName = att.InnerText;
                 }
-                att = classNode.Attributes["TableName"];
-                if (att != null)
-                {
-                    entity.TableName = att.InnerText;
-                }
+                
             }
 
             FillPropertyInfo(doc, entity);
@@ -236,6 +232,10 @@ namespace Buffalo.DBTools.HelperKernel
 
             att = doc.CreateAttribute("IsTable");
             att.InnerText = "1";
+            classNode.Attributes.Append(att);
+
+            att = doc.CreateAttribute("BelongDB");
+            att.InnerText = entity.CurrentDBConfigInfo.DbName;
             classNode.Attributes.Append(att);
 
             AppendPropertyInfo(entity, classNode);
