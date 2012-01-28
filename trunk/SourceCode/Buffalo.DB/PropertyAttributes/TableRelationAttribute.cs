@@ -56,6 +56,7 @@ namespace Buffalo.DB.PropertyAttributes
         public string FieldName
         {
             get { return _fieldName; }
+            set { _fieldName = value; }
         }
 
         /// <summary>

@@ -11,6 +11,7 @@ using Buffalo.Kernel.Defaults;
 using Buffalo.DB.EntityInfos;
 using Buffalo.Kernel.FastReflection;
 using System.IO;
+using Buffalo.Kernel;
 
 namespace Buffalo.DB.DataBaseAdapter
 {
@@ -23,7 +24,7 @@ namespace Buffalo.DB.DataBaseAdapter
         private static Dictionary<string, Type> _dicLoaderConfig =null;//配置记录集合
         private static Dictionary<string, Type> _dicEntityLoaderConfig = null;//配置实体记录集合
         private static Dictionary<string, DBInfo> _dicDBInfo = null;//配置实体记录集合
-        private static AssemblyTypeLoader _assemblyTypeLoader = null;
+        
         /// <summary>
         /// 是否已经初始化
         /// </summary>
@@ -73,8 +74,10 @@ namespace Buffalo.DB.DataBaseAdapter
                 _dicDBInfo = new Dictionary<string, DBInfo>();
                 foreach (ConfigInfo doc in docs)
                 {
+                    XmlDocument docInfo = doc.Document;
+                    DBInfo dbinfo = GetDBInfo(docInfo);
+                    _dicDBInfo[dbinfo.Name] = dbinfo;
                     
-                    LoadConfig(doc);
                 }
             }
             else 
@@ -139,39 +142,55 @@ namespace Buffalo.DB.DataBaseAdapter
             {
                 throw new Exception("配置文件没有config节点");
             }
-            if (attNames == null)
-            {
-                _assemblyTypeLoader = AssemblyTypeLoader.Default;
-            }
-            else
-            {
-                _assemblyTypeLoader = new AssemblyTypeLoader(attNames);
-            }
+            
             return new DBInfo(name, connectionString, dbType);
         }
 
+        /// <summary>
+        /// 基目录
+        /// </summary>
+        /// <returns></returns>
+        private string GetBaseRoot()
+        {
+            if (CommonMethods.IsWebContext)
+            {
+                return AppDomain.CurrentDomain.DynamicDirectory;
+            }
+            return AppDomain.CurrentDomain.BaseDirectory;
+        }
 
+        
+        /// <summary>
+        /// 加载模块信息
+        /// </summary>
+        private static void LoadModel()
+        {
+            List<Assembly> lstAss = GetAllAssembly();
+
+        }
 
         /// <summary>
-        /// 加载信息
+        /// 获取本模块下所有程序集
         /// </summary>
-        /// <param name="info">配置信息</param>
-        private static void LoadConfig(ConfigInfo info)
+        /// <returns></returns>
+        private static List<Assembly> GetAllAssembly() 
         {
-
-            XmlDocument doc = info.Document;
-            DBInfo dbinfo=GetDBInfo(doc);
-            _dicDBInfo[dbinfo.Name]=dbinfo;
-
-            if (File.Exists(info.CacheFilePath))
+            string baseRoot = GetBaseRoot();//本项目所在的路径
+            Assembly[] arrAss = AppDomain.CurrentDomain.GetAssemblies();
+            List<Assembly> lstAss = new List<Assembly>(arrAss.Length);
+            foreach (Assembly ass in arrAss)
             {
-                CacheLoad(info, dbinfo);
+                try
+                {
+
+                    if (ass.Location.IndexOf(baseRoot) == 0) //如果此程序集所在的文件在本项目路径下则加到程序集字典
+                    {
+                        lstAss.Add(ass);
+                    }
+                }
+                catch { }
             }
-            else
-            {
-                NormalLoad(info, dbinfo);
-            }
-            _assemblyTypeLoader = null;
+            return lstAss;
         }
 
         /// <summary>
@@ -200,172 +219,12 @@ namespace Buffalo.DB.DataBaseAdapter
             
         }
 
-        /// <summary>
-        /// 普通加载
-        /// </summary>
-        /// <param name="cInfo">配置信息</param>
-        /// <param name="dbinfo"></param>
-        private static void NormalLoad(ConfigInfo cInfo, DBInfo dbinfo) 
-        {
-            XmlDocument doc = cInfo.Document;
-            XmlNodeList lstConfig = doc.GetElementsByTagName("config");
-            if (lstConfig.Count > 0)
-            {
-                XmlNode node = lstConfig[0];
-                XmlAttribute attNamespace = node.Attributes["appnamespace"];
-                if (attNamespace != null)
-                {
-                    string aNamespaces = attNamespace.Value;
-                    cInfo.AddDalNamespaces(aNamespaces);
-                }
-
-                
-            }
-            //普通加载
-            XmlNodeList lstEntity = cInfo.Document.GetElementsByTagName("dataAccess");
-            if (lstEntity.Count > 0)
-            {
-                LoadDataAccesses(lstEntity, dbinfo);
-            }
-            LoadTypes(cInfo, dbinfo);
-
-            SaveConfigToCache(cInfo);
-        }
-
-        /// <summary>
-        /// 保存配置到缓存
-        /// </summary>
-        /// <param name="cInfo"></param>
-        private static void SaveConfigToCache(ConfigInfo cInfo) 
-        {
-            XmlDocument doc = new XmlDocument();
-            XmlNode rootNode=doc.CreateElement("cache");
-            doc.AppendChild(rootNode);
-
-            XmlNode dataaccess = doc.CreateElement("dataaccess");
-            rootNode.AppendChild(dataaccess);
-            foreach (KeyValuePair<string, Type> pair in _dicLoaderConfig) 
-            {
-                Type objType = pair.Value;
-                string typeName = objType.FullName;
-                if (cInfo.IsDalNamespace(typeName))
-                {
-                    LoadTypeInfo.AppendNode(dataaccess, objType);
-                }
-            }
-            doc.Save(cInfo.CacheFilePath);
-        }
-
-        /// <summary>
-        /// 加载类型信息
-        /// </summary>
-        /// <param name="cInfo"></param>
-        /// <param name="dbinfo"></param>
-        private static void LoadTypes(ConfigInfo cInfo, DBInfo dbinfo) 
-        {
-
-            List<Type> assTypes = _assemblyTypeLoader.GetTypes();
-            
-            foreach (Type objType in assTypes)
-            {
-                //dbinfo.SqlOutputer.OutPut("Type:", objType.FullName);
-                if (!objType.IsClass || objType.IsGenericType ||objType.IsAbstract) 
-                {
-                    continue;
-                }
-                if (LoadDataAccesses(objType, cInfo, dbinfo)) //加载业务层
-                {
-                    continue;
-                }
-
-                
-            }
-
-        }
+        
 
 
-        /// <summary>
-        /// 加载程序集中的数据层
-        /// </summary>
-        /// <param name="objType"></param>
-        /// <param name="cInfo"></param>
-        /// <param name="dbinfo"></param>
-        private static bool LoadDataAccesses(Type objType,ConfigInfo cInfo, DBInfo dbinfo)
-        {
-            object[] atts = objType.GetCustomAttributes(typeof(IDalAttribute), false);
-            if (atts.Length <= 0)
-            {
-                return false;
-            }
+ 
 
-            IDalAttribute att = atts[0] as IDalAttribute;
-            string typeName = objType.FullName;
-
-
-            if (cInfo.IsDalNamespace(typeName)) 
-            {
-                _dicLoaderConfig.Add(att.InterfaceType.FullName, objType);
-
-                
-                Type[] gTypes = DefaultType.GetGenericType(objType, true);
-                if (gTypes != null && gTypes.Length > 0)
-                {
-                    Type gType = gTypes[0];
-                    _dicEntityLoaderConfig[gType.FullName] = objType;
-                }
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// 加载XML中的数据层
-        /// </summary>
-        /// <param name="lstEntity"></param>
-        /// <param name="dbinfo"></param>
-        private static void LoadDataAccesses(XmlNodeList lstEntity, DBInfo dbinfo) 
-        {
-            foreach (XmlNode node in lstEntity)
-            {
-                XmlAttribute attName = node.Attributes["classname"];
-                XmlAttribute attInterface = node.Attributes["interface"];
-                if (attName != null && attInterface != null)
-                {
-                    string classname = attName.Value;
-                    string interfaceName = attInterface.Value;
-
-                    AddToManager(interfaceName, classname, dbinfo);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 把信息添加到管理器
-        /// </summary>
-        /// <param name="interfaceName">接口名</param>
-        /// <param name="classname">类名</param>
-        /// <param name="dbinfo">数据库类型</param>
-        private static void AddToManager(string interfaceName, string classname, DBInfo dbinfo) 
-        {
-            if (!_dicLoaderConfig.ContainsKey(interfaceName))
-            {
-                string typeName = classname;
-
-                Type curType = _assemblyTypeLoader.LoadType(typeName);
-                if (curType == null)
-                {
-                    throw new Exception("找不到类型:" + typeName + "请检查配置文件的程序域");
-                }
-                _dicLoaderConfig.Add(interfaceName, curType);
-
-                Type[] gTypes = DefaultType.GetGenericType(curType, true);
-                if (gTypes != null && gTypes.Length > 0)
-                {
-                    Type gType = gTypes[0];
-                    _dicEntityLoaderConfig[gType.FullName] = curType;
-                }
-            }
-        }
+        
 
 
         #endregion

@@ -44,7 +44,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         public KeyWordAddParamItem AddParam(string paramName, 
             DbType dbType, bool allowNull, EntityPropertyType type,int length)
         {
-            EntityParam info = new EntityParam(paramName,"",
+            EntityParam info = new EntityParam("",paramName,"",
                 dbType, type,length, false);
             KeyWordAddParamItem item = new KeyWordAddParamItem(info,_tableName, this);
             return item;

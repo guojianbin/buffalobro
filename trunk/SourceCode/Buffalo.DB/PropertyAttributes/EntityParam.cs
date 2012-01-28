@@ -60,6 +60,7 @@ namespace Buffalo.DB.PropertyAttributes
         public string FieldName
         {
             get { return _fieldName; }
+            set { _fieldName = value; }
         }
         
 
@@ -134,6 +135,7 @@ namespace Buffalo.DB.PropertyAttributes
         public int Length
         {
             get { return _length; }
+            set { _length = value; }
         }
         /// <summary>
         /// 获取对应的字段是否主键

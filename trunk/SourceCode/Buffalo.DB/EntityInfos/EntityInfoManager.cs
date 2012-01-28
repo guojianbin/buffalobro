@@ -14,6 +14,7 @@ using Buffalo.DB.CommBase;
 using Buffalo.DB.CommBase.BusinessBases;
 using System.Xml;
 using System.IO;
+using System.Data;
 
 
 namespace Buffalo.DB.EntityInfos
@@ -97,6 +98,9 @@ namespace Buffalo.DB.EntityInfos
             return false;
         }
 
+
+
+
         /// <summary>
         /// 获取资源的配置文件
         /// </summary>
@@ -155,7 +159,7 @@ namespace Buffalo.DB.EntityInfos
         /// </summary>
         /// <param name="dicParam">字段</param>
         /// <param name="dicRelation">关系</param>
-        private static void FillEntityInfos(Dictionary<string, EntityParam> dicParam,
+        private static void FillEntityInfos(Dictionary<string, EntityParam> dicParam,DBInfo db,
             Dictionary<string, TableRelationAttribute> dicRelation, Type type,TableAttribute tableAtt,
             Dictionary<string,XmlDocument> dicConfigs) 
         {
@@ -170,7 +174,7 @@ namespace Buffalo.DB.EntityInfos
                 baseHandle = GetEntityHandle(baseType, false);
                 if (baseType == null)
                 {
-                    InitEntityPropertyInfos(baseType, db);
+                    InitEntityPropertyInfos(baseType, db, dicConfigs);
                 }
                 baseHandle = GetEntityHandle(baseType, false);
             }
@@ -184,7 +188,7 @@ namespace Buffalo.DB.EntityInfos
                 foreach(EntityMappingInfo mInfo in baseHandle.MappingInfo)
                 {
                     TableRelationAttribute tr=mInfo.MappingInfo;
-                    dicParam[tr.FieldName]=tr;
+                    dicRelation[tr.FieldName]=tr;
                 }
             }
             XmlDocument doc=GetResourceDocument(type,dicConfigs);
@@ -295,7 +299,7 @@ namespace Buffalo.DB.EntityInfos
                 att = node.Attributes["DbType"];
                 if (att != null)
                 {
-                    ep.SqlType = att.InnerText;
+                    ep.SqlType =(DbType)Enum.Parse(typeof(DbType),att.InnerText,true);
                 }
                 att = node.Attributes["Length"];
                 if (att != null)
@@ -343,7 +347,7 @@ namespace Buffalo.DB.EntityInfos
             EntityInfoHandle classInfo = new EntityInfoHandle(type, createrHandle,tableAtt.TableName, db);
             Dictionary<string,EntityParam> dicParamsInfo=new Dictionary<string,EntityParam>();
             Dictionary<string,TableRelationAttribute> dicRelationInfo=new Dictionary<string,TableRelationAttribute>();
-            FillEntityInfos(dicParamsInfo, dicRelationInfo, type, tableAtt, dicConfigs);
+            FillEntityInfos(dicParamsInfo,db, dicRelationInfo, type, tableAtt, dicConfigs);
             
 
             //属性信息句柄
@@ -364,9 +368,9 @@ namespace Buffalo.DB.EntityInfos
                     {
                         ///通过属性来反射
                         EntityParam ep = null ;
-                        
 
-                        if (dicParamsInfo.TryGetValue(finf.Name))
+
+                        if (dicParamsInfo.TryGetValue(finf.Name, out ep))
                         {
                             //if (tableAtt.IsParamNameUpper)
                             //{
@@ -394,7 +398,7 @@ namespace Buffalo.DB.EntityInfos
                         {
                             TableRelationAttribute tableMappingAtt = null ;
 
-                            if (dicRelationInfo.TryGetValue(finf.Name))
+                            if (dicRelationInfo.TryGetValue(finf.Name, out tableMappingAtt))
                             {
                                 Type targetType=DefaultType.GetRealValueType(finf.FieldType);
                                 tableMappingAtt.SetEntity(type, targetType);
