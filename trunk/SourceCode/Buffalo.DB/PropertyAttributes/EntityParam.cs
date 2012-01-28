@@ -16,9 +16,12 @@ namespace Buffalo.DB.PropertyAttributes
         private EntityPropertyType _propertyType;
         private int _length;
         private bool _allowNull;
+        private string _fieldName;
 
-        
-
+        /// <summary>
+        /// 实体字段标识
+        /// </summary>
+        public EntityParam() { }
         /// <summary>
         /// 实体字段标识
         /// </summary>
@@ -26,8 +29,9 @@ namespace Buffalo.DB.PropertyAttributes
         /// <param name="propertyName">本字段对应的属性名</param>
         /// <param name="sqlType">对应的SQL数据类型</param>
         /// <param name="propertyType">属性类型</param>
-        public EntityParam(string paramName, string propertyName, DbType sqlType, EntityPropertyType propertyType)
-        :this(paramName,propertyName,sqlType,propertyType,0,true)
+        public EntityParam(string fieldName, string paramName, string propertyName, DbType sqlType, 
+            EntityPropertyType propertyType)
+            : this(fieldName,paramName, propertyName, sqlType, propertyType, 0, true)
         {
             
         }
@@ -39,16 +43,26 @@ namespace Buffalo.DB.PropertyAttributes
         /// <param name="sqlType">对应的SQL数据类型</param>
         /// <param name="propertyType">属性类型</param>
         /// <param name="length">长度</param>
-        public EntityParam(string paramName, string propertyName,
+        public EntityParam(string fieldName, string paramName, string propertyName,
             DbType sqlType, EntityPropertyType propertyType,int length,bool allowNull)
         {
+            this._fieldName = fieldName;
             this._paramName = paramName;
             this._propertyName = propertyName;
             this._sqlType = sqlType;
             this._propertyType = propertyType;
             this._length = length;
+            this._allowNull = allowNull;
+        }
+        /// <summary>
+        /// 对应的字段名
+        /// </summary>
+        public string FieldName
+        {
+            get { return _fieldName; }
         }
         
+
         /// <summary>
         /// 获取对应的字段名
         /// </summary>
@@ -101,7 +115,10 @@ namespace Buffalo.DB.PropertyAttributes
             {
                 return _propertyType;
             }
-            
+            set 
+            {
+                _propertyType = value;
+            }
         }
         /// <summary>
         /// 允许空

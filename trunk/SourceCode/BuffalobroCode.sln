@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo.DBTools", "Buffalo.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{BE14BEB0-8BCE-4C51-B1A3-9927ABA80371}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoLib", "Demo\DemoLib\DemoLib.csproj", "{6459BD92-F5C7-4D2C-BFC2-221EC7C7C601}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAddIn", "..\..\TestAddIn\TestAddIn\TestAddIn.csproj", "{2F221CA8-00E6-46FD-9786-D7C8F09511AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,15 +53,12 @@ Global
 		{C7D75F1D-BBEE-4DCD-8967-2C1697E3945E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7D75F1D-BBEE-4DCD-8967-2C1697E3945E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7D75F1D-BBEE-4DCD-8967-2C1697E3945E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6459BD92-F5C7-4D2C-BFC2-221EC7C7C601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6459BD92-F5C7-4D2C-BFC2-221EC7C7C601}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6459BD92-F5C7-4D2C-BFC2-221EC7C7C601}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6459BD92-F5C7-4D2C-BFC2-221EC7C7C601}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F221CA8-00E6-46FD-9786-D7C8F09511AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F221CA8-00E6-46FD-9786-D7C8F09511AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F221CA8-00E6-46FD-9786-D7C8F09511AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F221CA8-00E6-46FD-9786-D7C8F09511AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{6459BD92-F5C7-4D2C-BFC2-221EC7C7C601} = {BE14BEB0-8BCE-4C51-B1A3-9927ABA80371}
 	EndGlobalSection
 EndGlobal

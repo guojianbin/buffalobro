@@ -15,7 +15,8 @@ namespace Buffalo.DB.DataBaseAdapter
         private XmlDocument _document;
 
         List<string> _dalNamespaces;
-        List<string> _entityNamespaces;
+
+        
 
         /// <summary>
         /// 配置信息
@@ -56,7 +57,7 @@ namespace Buffalo.DB.DataBaseAdapter
                 }
             }
         }
-
+        
         /// <summary>
         /// 是否在数据层的命名空间
         /// </summary>
@@ -91,43 +92,7 @@ namespace Buffalo.DB.DataBaseAdapter
             return IsInNamespace(_dalNamespaces, name);
         }
 
-        /// <summary>
-        /// 是否在实体的命名空间
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public bool IsEntityNamespace(string name)
-        {
-            return IsInNamespace(_entityNamespaces, name);
-        }
-        /// <summary>
-        /// 添加实体命名空间
-        /// </summary>
-        /// <param name="aNamespaces"></param>
-        public void AddEntityNamespaces(string aNamespaces) 
-        {
-            if (_entityNamespaces == null)
-            {
-                _entityNamespaces = new List<string>();
-            }
-            if (!string.IsNullOrEmpty(aNamespaces))
-            {
-                string[] arrNamespaces = aNamespaces.Split('|');
-                for (int i = 0; i < arrNamespaces.Length; i++)
-                {
-                    string str = arrNamespaces[i];
-                    if (string.IsNullOrEmpty(str))
-                    {
-                        continue;
-                    }
-                    if (str[str.Length - 1] != '.')
-                    {
-                        str = str + ".";
-                    }
-                    _entityNamespaces.Add(str);
-                }
-            }
-        }
+        
 
         /// <summary>
         /// 文件路径

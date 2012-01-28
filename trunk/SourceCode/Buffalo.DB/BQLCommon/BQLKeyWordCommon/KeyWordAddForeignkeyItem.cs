@@ -40,7 +40,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
             BQLQuery previous)
             : base(previous)
         {
-            _item = new TableRelationAttribute(name,childTable,parentTable,childParam,parentParam,"",false);
+            _item = new TableRelationAttribute("",name,childTable,parentTable,childParam,parentParam,"",false);
         }
 
 

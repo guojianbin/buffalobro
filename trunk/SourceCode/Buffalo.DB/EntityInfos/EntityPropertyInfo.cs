@@ -14,7 +14,9 @@ namespace Buffalo.DB.EntityInfos
     /// </summary>
     public class EntityPropertyInfo:FieldInfoHandle
     {
-        private EntityParam ep;
+        private EntityParam _paramInfo;
+
+
         private EntityInfoHandle _belong;
 
         /// <summary>
@@ -26,12 +28,32 @@ namespace Buffalo.DB.EntityInfos
         /// <param name="ep">字段标识类</param>
         /// <param name="fieldType">字段类型</param>
         /// <param name="fieldName">字段名</param>
-        public EntityPropertyInfo(EntityInfoHandle belong, GetFieldValueHandle getHandle, SetFieldValueHandle setHandle, EntityParam ep, Type fieldType, string fieldName,DBInfo info)
+        public EntityPropertyInfo(EntityInfoHandle belong, GetFieldValueHandle getHandle, SetFieldValueHandle setHandle, EntityParam paramInfo, Type fieldType, string fieldName)
             : base(belong.EntityType, getHandle, setHandle,fieldType,fieldName)
         {
-            ep.SqlType = info.CurrentDbAdapter.ToCurrentDbType(ep.SqlType);//转换成本数据库支持的数据类型
-            this.ep = ep;
+            paramInfo.SqlType = belong.DBInfo.CurrentDbAdapter.ToCurrentDbType(paramInfo.SqlType);//转换成本数据库支持的数据类型
+            this._paramInfo = paramInfo;
             _belong = belong;
+        }
+
+        /// <summary>
+        /// 字段配置信息
+        /// </summary>
+        public EntityParam ParamInfo
+        {
+            get { return _paramInfo; }
+        }
+        /// <summary>
+        /// 返回拷贝副本
+        /// </summary>
+        /// <param name="belong">新副本所属的实体</param>
+        /// <returns></returns>
+        public EntityPropertyInfo Copy(EntityInfoHandle belong) 
+        {
+
+            EntityPropertyInfo info = new EntityPropertyInfo(belong, _getHandle,
+                _setHandle, _paramInfo, _fieldType, _fieldName);
+            return info;
         }
 
         /// <summary>
@@ -52,7 +74,7 @@ namespace Buffalo.DB.EntityInfos
         {
             get 
             {
-                return ep.PropertyName;
+                return _paramInfo.PropertyName;
             }
         }
         
@@ -64,7 +86,7 @@ namespace Buffalo.DB.EntityInfos
         {
             get
             {
-                return ep.SqlType;
+                return _paramInfo.SqlType;
             }
         }
 
@@ -75,7 +97,7 @@ namespace Buffalo.DB.EntityInfos
         {
             get
             {
-                return ep.ParamName;
+                return _paramInfo.ParamName;
             }
         }
 
@@ -86,7 +108,7 @@ namespace Buffalo.DB.EntityInfos
         {
             get
             {
-                return ep.IsPrimaryKey;
+                return _paramInfo.IsPrimaryKey;
             }
         }
 
@@ -97,7 +119,7 @@ namespace Buffalo.DB.EntityInfos
         {
             get
             {
-                return ep.Identity;
+                return _paramInfo.Identity;
             }
         }
 
@@ -108,7 +130,7 @@ namespace Buffalo.DB.EntityInfos
         {
             get
             {
-                return ep.IsNormal;
+                return _paramInfo.IsNormal;
             }
         }
         
@@ -119,7 +141,7 @@ namespace Buffalo.DB.EntityInfos
         {
             get
             {
-                return ep.IsVersion;
+                return _paramInfo.IsVersion;
             }
         }
     }

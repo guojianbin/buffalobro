@@ -6,26 +6,36 @@ namespace Buffalo.DB.PropertyAttributes
 {
     public class TableAttribute : System.Attribute
     {
-        private string tableName;
-        private bool isParamNameUpper;
+        private string _tableName;
+        private string _belongDB;
+
+
+
         /// <summary>
         /// 类标示
         /// </summary>
         /// <param name="tableName">表名</param>
         /// <param name="connectionKey">连接字符串的键</param>
-        /// <param name="isParamNameUpper">字段名是否转成大写</param>
-        public TableAttribute(string tableName, bool isParamNameUpper)
+        public TableAttribute(string belongDB,string tableName)
         {
-            this.tableName = tableName;
-            this.isParamNameUpper = isParamNameUpper;
+            this._tableName = tableName;
+            this._belongDB = belongDB;
         }
         /// <summary>
         /// 类标示
         /// </summary>
-        /// <param name="tableName">表名</param>
-        public TableAttribute(string tableName):this(tableName,false)
+        public TableAttribute():this("","")
         {
 
+        }
+
+        /// <summary>
+        /// 所属库
+        /// </summary>
+        public string BelongDB
+        {
+            get { return _belongDB; }
+            set { _belongDB = value; }
         }
         /// <summary>
         /// 表名
@@ -34,19 +44,14 @@ namespace Buffalo.DB.PropertyAttributes
         {
             get 
             {
-                return tableName;
+                return _tableName;
             }
-        }
-        /// <summary>
-        /// 字段名是否转成大写
-        /// </summary>
-        public bool IsParamNameUpper
-        {
-            get
+            set 
             {
-                return isParamNameUpper;
+                _tableName = value;
             }
         }
+        
 
     }
 }

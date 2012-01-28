@@ -6,11 +6,11 @@ namespace Buffalo.Kernel.FastReflection
 {
     public class FieldInfoHandle
     {
-        private GetFieldValueHandle _getHandle;
-        private SetFieldValueHandle _setHandle;
-        private Type _fieldType;
-        private string _fieldName;
-        private Type _belong;
+        protected GetFieldValueHandle _getHandle;
+        protected SetFieldValueHandle _setHandle;
+        protected Type _fieldType;
+        protected string _fieldName;
+        protected Type _belong;
         /// <summary>
         /// 创建属性的信息类
         /// </summary>

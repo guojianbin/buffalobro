@@ -11,7 +11,9 @@ namespace Buffalo.DB.EntityInfos
     /// </summary>
     public class EntityMappingInfo : FieldInfoHandle
     {
-        private TableRelationAttribute tableMappingAtt;
+        private TableRelationAttribute _mappingInfo;
+
+        
         /// <summary>
         /// 创建属性的信息类
         /// </summary>
@@ -21,11 +23,30 @@ namespace Buffalo.DB.EntityInfos
         /// <param name="tableMappingAtt">映射标识类</param>
         /// <param name="fieldName">属性名</param>
         /// <param name="fieldType">属性类型</param>
-        public EntityMappingInfo(Type belong,GetFieldValueHandle getHandle, SetFieldValueHandle setHandle, TableRelationAttribute tableMappingAtt, string fieldName, Type fieldType)
+        public EntityMappingInfo(Type belong, GetFieldValueHandle getHandle, SetFieldValueHandle setHandle,
+            TableRelationAttribute mappingInfo,string fieldName, Type fieldType)
             : base(belong, getHandle, setHandle, fieldType, fieldName)
         {
-            this.tableMappingAtt = tableMappingAtt;
+            this._mappingInfo = mappingInfo;
         }
+        /// <summary>
+        /// 映射信息
+        /// </summary>
+        public TableRelationAttribute MappingInfo
+        {
+            get { return _mappingInfo; }
+        }
+        /// <summary>
+        /// 拷贝副本
+        /// </summary>
+        /// <param name="belong">所属实体</param>
+        /// <returns></returns>
+        public EntityMappingInfo Copy(Type belong) 
+        {
+            EntityMappingInfo info = new EntityMappingInfo(belong, _getHandle, _setHandle, _mappingInfo, _fieldName, _fieldType);
+            return info;
+        }
+
         /// <summary>
         /// 对应的属性名
         /// </summary>
@@ -33,7 +54,7 @@ namespace Buffalo.DB.EntityInfos
         {
             get
             {
-                return tableMappingAtt.PropertyName;
+                return _mappingInfo.PropertyName;
             }
         }
         /// <summary>
@@ -43,7 +64,7 @@ namespace Buffalo.DB.EntityInfos
         {
             get
             {
-                return tableMappingAtt.IsParent;
+                return _mappingInfo.IsParent;
             }
         }
 
@@ -55,7 +76,7 @@ namespace Buffalo.DB.EntityInfos
             get
             {
 
-                return tableMappingAtt.SourceProperty;
+                return _mappingInfo.SourceProperty;
             }
         }
         /// <summary>
@@ -66,7 +87,7 @@ namespace Buffalo.DB.EntityInfos
             get
             {
 
-                return tableMappingAtt.TargetProperty;
+                return _mappingInfo.TargetProperty;
             }
         }
     }

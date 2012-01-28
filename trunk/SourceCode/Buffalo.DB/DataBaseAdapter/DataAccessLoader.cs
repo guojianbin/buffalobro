@@ -66,6 +66,7 @@ namespace Buffalo.DB.DataBaseAdapter
             }
             _dicLoaderConfig = new Dictionary<string, Type>();
             _dicEntityLoaderConfig = new Dictionary<string, Type>();
+            Dictionary<string, XmlDocument> dicEntityConfig = new Dictionary<string, XmlDocument>();
             List<ConfigInfo> docs = ConfigXmlLoader.LoadXml("DataAccessConfig");
             if (docs.Count > 0)
             {
@@ -196,21 +197,7 @@ namespace Buffalo.DB.DataBaseAdapter
                     }
                 }
             }
-
-            //实体层
-            lstConfig = doc.GetElementsByTagName("entity");
-            if (lstConfig.Count > 0)
-            {
-                XmlNode node = lstConfig[0];
-                foreach (XmlNode dnode in node.ChildNodes)
-                {
-                    Type objType = LoadTypeInfo.LoadFromXmlNode(dnode, _assemblyTypeLoader);
-                    if (objType != null)
-                    {
-                        LoadEntity(objType, cInfo, dbinfo);
-                    }
-                }
-            }
+            
         }
 
         /// <summary>
@@ -232,12 +219,7 @@ namespace Buffalo.DB.DataBaseAdapter
                     cInfo.AddDalNamespaces(aNamespaces);
                 }
 
-                attNamespace = node.Attributes["entitynamespace"];
-                if (attNamespace != null)
-                {
-                    string aNamespaces = attNamespace.Value;
-                    cInfo.AddEntityNamespaces(aNamespaces);
-                }
+                
             }
             //普通加载
             XmlNodeList lstEntity = cInfo.Document.GetElementsByTagName("dataAccess");
@@ -271,19 +253,6 @@ namespace Buffalo.DB.DataBaseAdapter
                     LoadTypeInfo.AppendNode(dataaccess, objType);
                 }
             }
-
-            XmlNode entity = doc.CreateElement("entity");
-            rootNode.AppendChild(entity);
-
-            foreach (KeyValuePair<string, EntityInfoHandle> pair in EntityInfoManager.AllEntity)
-            {
-                Type objType = pair.Value.EntityType;
-                string typeName = objType.FullName;
-                if (cInfo.IsEntityNamespace(typeName))
-                {
-                    LoadTypeInfo.AppendNode(entity, objType);
-                }
-            }
             doc.Save(cInfo.CacheFilePath);
         }
 
@@ -296,6 +265,7 @@ namespace Buffalo.DB.DataBaseAdapter
         {
 
             List<Type> assTypes = _assemblyTypeLoader.GetTypes();
+            
             foreach (Type objType in assTypes)
             {
                 //dbinfo.SqlOutputer.OutPut("Type:", objType.FullName);
@@ -308,39 +278,11 @@ namespace Buffalo.DB.DataBaseAdapter
                     continue;
                 }
 
-                LoadEntity(objType,cInfo, dbinfo);//加载实体
+                
             }
 
         }
 
-        private static Type _entityBaseType = typeof(EntityBase);
-
-        /// <summary>
-        /// 加载实体
-        /// </summary>
-        /// <param name="objType">类型</param>
-        /// <param name="entityNamespaces">实体命名空间</param>
-        /// <param name="dbinfo"></param>
-        /// <returns></returns>
-        private static bool LoadEntity(Type objType, ConfigInfo cInfo, DBInfo dbinfo) 
-        {
-            bool isBaseType = DefaultType.IsInherit(objType, _entityBaseType);
-            if (!isBaseType) 
-            {
-                return false;
-            }
-            string typeName = objType.FullName;
-
-
-
-
-            if (cInfo.IsEntityNamespace(typeName))
-            {
-
-                EntityInfoManager.SetEntityHandle(objType, dbinfo);
-            }
-            return true;
-        }
 
         /// <summary>
         /// 加载程序集中的数据层

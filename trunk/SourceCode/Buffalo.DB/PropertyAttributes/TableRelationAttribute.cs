@@ -22,7 +22,7 @@ namespace Buffalo.DB.PropertyAttributes
         private Type _targetType;
         private string _sourceTable;
         private string _targetTable;
-
+        private string _fieldName;
          /// <summary>
         /// 关联映射信息
         /// </summary>
@@ -30,16 +30,17 @@ namespace Buffalo.DB.PropertyAttributes
         /// <summary>
         /// 关联映射信息
         /// </summary>
+        /// <param name="fieldName">对应字段</param>
         /// <param name="propertyName">属性</param>
         /// <param name="sourceProperty">源对象属性</param>
         /// <param name="targetProperty">目标对象属性</param>
         /// <param name="sourceTableType">原对象类型</param>
         /// <param name="targetTableType">目标对象类型</param>
         /// <param name="isParent">是否主表属性</param>
-        public TableRelationAttribute(string name, string sourceTable, string targetTable,
+        public TableRelationAttribute(string fieldName,string name, string sourceTable, string targetTable,
             string sourceParam, string targetParam, string propertyName, bool isParent) 
         {
-
+            _fieldName = fieldName;
             _propertyName = propertyName;
             _sourceTable = sourceTable;
             _sourceName = sourceParam;
@@ -48,6 +49,15 @@ namespace Buffalo.DB.PropertyAttributes
 
             _isParent = isParent;
         }
+
+        /// <summary>
+        /// 对应的字段名
+        /// </summary>
+        public string FieldName
+        {
+            get { return _fieldName; }
+        }
+
         /// <summary>
         /// 创建外键名称
         /// </summary>
