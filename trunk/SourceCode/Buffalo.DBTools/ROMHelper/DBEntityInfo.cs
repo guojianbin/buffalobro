@@ -142,10 +142,11 @@ namespace Buffalo.DBTools.ROMHelper
         private string BildRelations() 
         {
             StringBuilder sb = new StringBuilder();
-            foreach (EntityRelationItem er in _belongTable.RelationItems) 
+            foreach (TableRelationAttribute er in _belongTable.RelationItems) 
             {
 
             }
+            return sb.ToString();
         }
 
         /// <summary>

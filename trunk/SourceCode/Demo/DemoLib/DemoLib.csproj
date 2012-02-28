@@ -33,57 +33,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BQLEntity\ManBase.cs" />
-    <Compile Include="BQLEntity\ManClass.cs" />
-    <Compile Include="BQLEntity\ManEmployee.cs" />
-    <Compile Include="BQLEntity\ManMessage.cs" />
-    <Compile Include="BQLEntity\ManUsers.cs" />
-    <Compile Include="BQLEntity\MyClass.cs" />
-    <Compile Include="Business\ManBaseBusiness.cs" />
-    <Compile Include="Business\ManClassBusiness.cs" />
-    <Compile Include="Business\ManEmployeeBusiness.cs" />
-    <Compile Include="Business\ManMessageBusiness.cs" />
-    <Compile Include="Business\ManUsersBusiness.cs" />
-    <Compile Include="DataAccess\Bql\ManBaseDataAccess.cs" />
-    <Compile Include="DataAccess\Bql\ManClassDataAccess.cs" />
-    <Compile Include="DataAccess\Bql\ManEmployeeDataAccess.cs" />
-    <Compile Include="DataAccess\Bql\ManMessageDataAccess.cs" />
-    <Compile Include="DataAccess\Bql\ManUsersDataAccess.cs" />
-    <Compile Include="DataAccess\DB2v9\ManBaseDataAccess.cs" />
-    <Compile Include="DataAccess\DB2v9\ManClassDataAccess.cs" />
-    <Compile Include="DataAccess\DB2v9\ManEmployeeDataAccess.cs" />
-    <Compile Include="DataAccess\DB2v9\ManMessageDataAccess.cs" />
-    <Compile Include="DataAccess\DB2v9\ManUsersDataAccess.cs" />
-    <Compile Include="DataAccess\IDataAccess\IManBaseDataAccess.cs" />
-    <Compile Include="DataAccess\IDataAccess\IManClassDataAccess.cs" />
-    <Compile Include="DataAccess\IDataAccess\IManEmployeeDataAccess.cs" />
-    <Compile Include="DataAccess\IDataAccess\IManMessageDataAccess.cs" />
-    <Compile Include="DataAccess\IDataAccess\IManUsersDataAccess.cs" />
-    <Compile Include="DataAccess\MySQL5\ManBaseDataAccess.cs" />
-    <Compile Include="DataAccess\MySQL5\ManClassDataAccess.cs" />
-    <Compile Include="DataAccess\MySQL5\ManEmployeeDataAccess.cs" />
-    <Compile Include="DataAccess\MySQL5\ManMessageDataAccess.cs" />
-    <Compile Include="DataAccess\MySQL5\ManUsersDataAccess.cs" />
-    <Compile Include="DataAccess\Oracle9\ManBaseDataAccess.cs" />
-    <Compile Include="DataAccess\Oracle9\ManClassDataAccess.cs" />
-    <Compile Include="DataAccess\Oracle9\ManEmployeeDataAccess.cs" />
-    <Compile Include="DataAccess\Oracle9\ManMessageDataAccess.cs" />
-    <Compile Include="DataAccess\Oracle9\ManUsersDataAccess.cs" />
-    <Compile Include="DataAccess\Sql2K5\ManBaseDataAccess.cs" />
-    <Compile Include="DataAccess\Sql2K5\ManClassDataAccess.cs" />
-    <Compile Include="DataAccess\Sql2K5\ManEmployeeDataAccess.cs" />
-    <Compile Include="DataAccess\Sql2K5\ManMessageDataAccess.cs" />
-    <Compile Include="DataAccess\Sql2K5\ManUsersDataAccess.cs" />
-    <Compile Include="DataAccess\Sql2K\ManBaseDataAccess.cs" />
-    <Compile Include="DataAccess\Sql2K\ManClassDataAccess.cs" />
-    <Compile Include="DataAccess\Sql2K\ManEmployeeDataAccess.cs" />
-    <Compile Include="DataAccess\Sql2K\ManMessageDataAccess.cs" />
-    <Compile Include="DataAccess\Sql2K\ManUsersDataAccess.cs" />
-    <Compile Include="DataAccess\SQLite\ManBaseDataAccess.cs" />
-    <Compile Include="DataAccess\SQLite\ManClassDataAccess.cs" />
-    <Compile Include="DataAccess\SQLite\ManEmployeeDataAccess.cs" />
-    <Compile Include="DataAccess\SQLite\ManMessageDataAccess.cs" />
-    <Compile Include="DataAccess\SQLite\ManUsersDataAccess.cs" />
     <Compile Include="ManBase.cs" />
     <Compile Include="ManBase.extend.cs" />
     <Compile Include="ManClass.cs" />
@@ -109,17 +58,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BEM\ManBase.BEM.xml" />
-    <Content Include="BEM\ManClass.BEM.xml" />
-    <Content Include="BEM\ManEmployee.BEM.xml" />
-    <Content Include="BEM\ManMessage.BEM.xml" />
-    <Content Include="BEM\ManUsers.BEM.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="BQLEntity\ManClass.cs.bak" />
-    <None Include="BQLEntity\ManEmployee.cs.bak" />
-    <None Include="BQLEntity\ManMessage.cs.bak" />
-    <None Include="BQLEntity\ManUsers.cs.bak" />
     <None Include="MyClass.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
