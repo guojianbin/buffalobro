@@ -588,10 +588,10 @@ namespace Buffalo.DB.DbCommon
 			return true;
 		}
 		
-		~DataBaseOperate()
-		{
-			CloseDataBase(); 
-		}
+        //~DataBaseOperate()
+        //{
+        //    CloseDataBase(); 
+        //}
 
 	}
 }

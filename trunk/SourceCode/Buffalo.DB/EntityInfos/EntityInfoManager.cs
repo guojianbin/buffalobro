@@ -77,7 +77,7 @@ namespace Buffalo.DB.EntityInfos
         private static bool IsSysBaseType(Type objType) 
         {
 
-            if (objType.IsGenericType && objType.GetGenericTypeDefinition() == ThinEntityBaseType) 
+            if (objType.IsGenericType && objType == ThinEntityBaseType) 
             {
                 return true;
             }
