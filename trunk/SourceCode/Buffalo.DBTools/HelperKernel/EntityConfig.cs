@@ -315,6 +315,10 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     continue;
                 }
+                if (field.SourceCodePositions == null) 
+                {
+                    continue;
+                }
                 foreach (CodeElementPosition cp in field.SourceCodePositions)
                 {
                     if (!IsManyOne(field))
@@ -702,6 +706,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="fillBase">是否级联父类</param>
         public static void FillAllMember<T>(List<T> lst, Dictionary<string, bool> dicExistsPropertyName, ClrType type, bool fillBase) where T : Member
         {
+            
             if (fillBase)
             {
                 InheritanceTypeRefMoveableCollection col = type.InheritanceTypeRefs;
@@ -714,7 +719,11 @@ namespace Buffalo.DBTools.HelperKernel
 
                     if (!isBaseType)
                     {
-                        FillAllMember<T>(lst, dicExistsPropertyName, col[0].ClrType, fillBase);
+                        ClrType btype=col[0].ClrType;
+                        if (btype != null)
+                        {
+                            FillAllMember<T>(lst, dicExistsPropertyName, btype, fillBase);
+                        }
                     }
 
                 }

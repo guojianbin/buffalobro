@@ -69,7 +69,7 @@ namespace Buffalo.DBTools.HelperKernel
             string idal = Models.BQLEntity;
             List<string> codes = new List<string>();
             string baseType = null;
-            if (EntityBaseTypeName == null)
+            if (EntityConfig.IsSystemTypeName(EntityBaseTypeName))
             {
                 baseType = "BQLEntityTableHandle";
             }
