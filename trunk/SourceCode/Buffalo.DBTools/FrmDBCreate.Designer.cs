@@ -97,9 +97,11 @@
             // 
             // rtbContent
             // 
+            this.rtbContent.BackColor = System.Drawing.Color.White;
             this.rtbContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbContent.Location = new System.Drawing.Point(0, 0);
             this.rtbContent.Name = "rtbContent";
+            this.rtbContent.ReadOnly = true;
             this.rtbContent.Size = new System.Drawing.Size(510, 286);
             this.rtbContent.TabIndex = 1;
             this.rtbContent.Text = "";
@@ -133,6 +135,7 @@
             // 
             // rtbOutput
             // 
+            this.rtbOutput.BackColor = System.Drawing.Color.White;
             this.rtbOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbOutput.Location = new System.Drawing.Point(0, 0);
             this.rtbOutput.Name = "rtbOutput";

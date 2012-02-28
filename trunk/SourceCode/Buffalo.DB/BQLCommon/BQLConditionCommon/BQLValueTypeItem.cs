@@ -6,6 +6,7 @@ using Buffalo.Kernel.Defaults;
 using Buffalo.DB.CommBase.DataAccessBases;
 using Buffalo.Kernel;
 using Buffalo.DB.DataBaseAdapter;
+using Buffalo.DB.DbCommon;
 
 namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 {
@@ -61,13 +62,11 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             //string ret = null;
             if (info.ParamList != null && _valueDbType != DbType.Object) 
             {
-                string pName="P"+info.ParamList.Count;
-                string pKeyName = info.DBInfo.CurrentDbAdapter.FormatParamKeyName(pName);
-                string pValueName = info.DBInfo.CurrentDbAdapter.FormatValueName(pName);
                 
-                info.ParamList.AddNew(pKeyName, _valueDbType, itemValue);
                 
-                return pValueName;
+                DBParameter dbPrm=info.ParamList.NewParameter(_valueDbType, itemValue,info.DBInfo);
+
+                return dbPrm.ValueName;
             }
 
             return FormatValueType(info);

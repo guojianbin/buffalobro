@@ -7,6 +7,7 @@ using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 using Buffalo.DB.PropertyAttributes;
 
 
+
 namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
 {
     /// <summary>
@@ -17,7 +18,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
 
         #region IDBStructure ≥…‘±
 
-        public List<string> GetAllTableName(DBInfo info)
+        public List<DBTableInfo> GetAllTableName(DataBaseOperate oper, DBInfo info)
         {
             throw new Exception("The method or operation is not implemented.");
         }
@@ -27,7 +28,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         {
             throw new Exception("The method or operation is not implemented.");
         }
-        public List<TableRelationAttribute> GetRelation(DBInfo info, string childName)
+        public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, string childName)
         {
             throw new Exception("The method or operation is not implemented.");
         }

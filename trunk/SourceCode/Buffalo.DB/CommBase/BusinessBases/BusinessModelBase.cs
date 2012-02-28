@@ -389,7 +389,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 }
             }
             
-            ret = Insert(entity);
+            ret = Insert(entity,false);
             return ret;
         }
 
@@ -400,7 +400,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         /// <param name="entity">对象</param>
         /// <returns>大于0:插入完毕,小于0:插入失败</returns>
-        public virtual object Insert(T entity)
+        public virtual object Insert(T entity,bool fillIdentity)
         {
 
             DataAccessModel<T> entityDao = new DataAccessModel<T>();
@@ -417,41 +417,13 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 return ret;
             }
 
-            _affectedRows = entityDao.Insert(entity);
+            _affectedRows = entityDao.Insert(entity, fillIdentity);
             ret = OnInserted();
 
             return ret;
         }
 
-        /// <summary>
-        /// 插入记录且填充记录自动增长的ID
-        /// </summary>
-        /// <param name="entity">对象</param>
-        /// <returns>大于0:插入完毕,小于0:插入失败</returns>
-        public virtual object IdentityInsert(T entity)
-        {
-
-            DataAccessModel<T> entityDao = new DataAccessModel<T>();
-
-            object ret = Exists(entity);
-            if (ret != null)
-            {
-                return ret;
-            }
-
-            ret = OnInserting(entity);
-            if (ret != null)
-            {
-                return ret;
-            }
-
-
-            _affectedRows = entityDao.IdentityInsert(entity);
-            ret = OnInserted();
-
-
-            return ret;
-        }
+        
         /// <summary>
         /// 插入一组数据
         /// </summary>
@@ -477,7 +449,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 {
                     continue;
                 }
-                _affectedRows += entityDao.Insert(entity);
+                _affectedRows += entityDao.Insert(entity,false);
 
                 ret = OnInserted();
 

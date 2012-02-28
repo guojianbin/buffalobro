@@ -299,11 +299,18 @@ namespace Buffalo.Kernel
         {
             Type valType = sValue.GetType();//实际值的类型
             //Type resType = info.FieldType;//字段值类型
-            
+
             if (!targetType.Equals(valType))
             {
+
+
                 targetType = DefaultType.GetRealValueType(targetType);
+                if (targetType.IsEnum) 
+                {
+                    targetType = typeof(int);
+                }
                 sValue = Convert.ChangeType(sValue, targetType);
+
             }
             return sValue;
         }

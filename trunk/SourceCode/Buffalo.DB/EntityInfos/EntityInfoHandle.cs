@@ -20,7 +20,6 @@ namespace Buffalo.DB.EntityInfos
         private PropertyInfoCollection _propertyInfoHandles;
         private MappingInfoCollection _mappingInfoHandles;
         private EntityPropertyInfo _primaryProperty;//主属性
-        private FieldInfoHandle _baseListInfo;
         private DBInfo _dbInfo;
         /// <summary>
         /// 类的信息
@@ -49,11 +48,10 @@ namespace Buffalo.DB.EntityInfos
         /// <param name="mappingInfoHandles">映射信息集合</param>
         /// <param name="baseListInfo">所属的基集合</param>
         internal void SetInfoHandles(Dictionary<string, EntityPropertyInfo> propertyInfoHandles,
-            Dictionary<string, EntityMappingInfo> mappingInfoHandles, FieldInfoHandle baseListInfo) 
+            Dictionary<string, EntityMappingInfo> mappingInfoHandles) 
         {
             this._propertyInfoHandles = new PropertyInfoCollection(propertyInfoHandles);
             this._mappingInfoHandles = new MappingInfoCollection(mappingInfoHandles);
-            _baseListInfo = baseListInfo;
         }
 
         /// <summary>
@@ -75,17 +73,6 @@ namespace Buffalo.DB.EntityInfos
             get 
             {
                 return entityType;
-            }
-        }
-
-        /// <summary>
-        /// 此对象的查询缓存集合句柄
-        /// </summary>
-        public FieldInfoHandle BaseListInfo 
-        {
-            get 
-            {
-                return _baseListInfo;
             }
         }
 

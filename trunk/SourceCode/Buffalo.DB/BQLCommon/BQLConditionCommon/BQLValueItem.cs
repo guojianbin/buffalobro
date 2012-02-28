@@ -7,6 +7,7 @@ using Buffalo.Kernel;
 using Buffalo.DB.BQLCommon.BQLExtendFunction;
 using Buffalo.DB.DBFunction;
 using Buffalo.DB.BQLCommon.BQLConditions;
+using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 
 namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 {
@@ -224,9 +225,19 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             }
             return value;
         }
-
+        /// <summary>
+        /// 把传进来的值转换成BQL能识别的值项
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static BQLValueItem ToValueItem(object value) 
         {
+            BQLQuery query = value as BQLQuery;
+            if (!CommonMethods.IsNull(query)) 
+            {
+                return query.AS(null);
+            }
+
             BQLValueItem item = value as BQLValueItem;
             if (CommonMethods.IsNull(item)) 
             {

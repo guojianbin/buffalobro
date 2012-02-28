@@ -16,15 +16,77 @@ namespace Buffalo.DB.DbCommon
 	/// </summary>
 	public class ParamList:List<DBParameter>
 	{
+        /// <summary>
+        /// 已经存在的数据库值
+        /// </summary>
+        private Dictionary<string, DBParameter> _dicExistsValue = new Dictionary<string, DBParameter>();
+
+        /// <summary>
+        /// 新的键名
+        /// </summary>
+        /// <returns></returns>
+        private string NewKeyName(DBInfo db) 
+        {
+            string pName = "P" + this.Count;
+            return db.CurrentDbAdapter.FormatParamKeyName(pName);
+        }
+
+        /// <summary>
+        /// 新的值名
+        /// </summary>
+        /// <returns></returns>
+        private string NewValueKeyName(DBInfo db)
+        {
+            string pName = "P" + this.Count;
+            return db.CurrentDbAdapter.FormatValueName(pName);
+        }
+
+        /// <summary>
+        /// 新的数据库值
+        /// </summary>
+        /// <param name="type">数据库类型</param>
+        /// <param name="paramValue">值类型</param>
+        /// <returns></returns>
+        public DBParameter NewParameter(DbType type, object paramValue,DBInfo db) 
+        {
+            
+            if (paramValue is byte[])
+            {
+                string pKeyName = NewKeyName(db);
+                return AddNew(pKeyName, type, paramValue);
+            }
+            else
+            {
+                string strValue = paramValue as string;
+                if (strValue != null && strValue.Length > 5000)
+                {
+                    string pKeyName = NewKeyName(db);
+                    return AddNew(pKeyName, type, paramValue);
+                }
+            }
+
+            DBParameter prm=null;
+            string key =((int)type).ToString()+":"+DataAccessCommon.FormatValue(paramValue, type, db);
+            if (!_dicExistsValue.TryGetValue(key, out prm)) 
+            {
+                string pKeyName = NewKeyName(db);
+                string valueName = NewValueKeyName(db);
+                prm = AddNew(pKeyName, type, paramValue);
+                prm.ValueName = valueName;
+                _dicExistsValue[key] = prm;
+            }
+            return prm;
+        }
+
 		/// <summary>
         /// 创建一个新的IDataParameter并添加到列表
 		/// </summary>
         /// <param name="paramName">IDataParameter要映射参数的名字</param>
 		/// <param name="type">参数类型</param>
 		/// <param name="paramValue">参数的值</param>
-		public void AddNew(string paramName,DbType type,object paramValue)
+        public DBParameter AddNew(string paramName, DbType type, object paramValue)
 		{
-			AddNew(paramName,type,paramValue,ParameterDirection.Input);
+			return AddNew(paramName,type,paramValue,ParameterDirection.Input);
         }
         /// <summary>
         /// 创建一个新的IDataParameter并添加到列表
@@ -33,10 +95,11 @@ namespace Buffalo.DB.DbCommon
 		/// <param name="type">参数类型</param>
 		/// <param name="paramValue">参数的值（如果为输入的参数，此项可为null）</param>
 		/// <param name="paramDir">参数的输入类型</param>
-		public void AddNew(string paramName,DbType type,object paramValue,ParameterDirection paramDir)
+        public DBParameter AddNew(string paramName, DbType type, object paramValue, ParameterDirection paramDir)
 		{
             DBParameter newParam = new DBParameter(paramName, type, paramValue, paramDir);
             this.Add (newParam);
+            return newParam;
 		}
 		
 		/// <summary>

@@ -11,7 +11,6 @@ namespace <%=DataAccessNamespace%>.<%=DataBaseType%>
     ///<summary>
     /// <%=Summary%>数据访问层
     ///</summary>
-    [IDalAttribute(typeof(I<%=ClassName%>DataAccess))]
     public class <%=ClassName%>DataAccess : DataAccessModel<<%=ClassName%>>,I<%=ClassName%>DataAccess
     {
         public <%=ClassName%>DataAccess(DataBaseOperate oper): base(oper)

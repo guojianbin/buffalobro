@@ -62,7 +62,17 @@ namespace Buffalo.DB.PropertyAttributes
             get { return _fieldName; }
             set { _fieldName = value; }
         }
-        
+
+        private string _description;
+
+        /// <summary>
+        /// 字段注释
+        /// </summary>
+        public string Description
+        {
+            get { return _description; }
+            set { _description = value; }
+        }
 
         /// <summary>
         /// 获取对应的字段名

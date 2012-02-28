@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BQLCommon\BQLConditionCommon\BQLConditionValueItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordCreateTableItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordTableParamItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAlterTableItem.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="CommBase\BusinessBases\BusinessModelBase.cs" />
     <Compile Include="CommBase\BusinessBases\BusinessModelBaseForSelect.cs" />
     <Compile Include="CommBase\BusinessBases\DBTransation.cs" />
+    <Compile Include="CommBase\BusinessBases\ModelContext.cs" />
     <Compile Include="CommBase\BusinessBases\ThinModelBase.cs" />
     <Compile Include="CommBase\DataAccessBases\AliasTableMappingManagers\AliasReaderMapping.cs" />
     <Compile Include="CommBase\DataAccessBases\AliasTableMappingManagers\AliasTableMapping.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="CommBase\DataAccessBases\DataAccessBaseForSelect.cs" />
     <Compile Include="CommBase\DataAccessBases\DataAccessCommon.cs" />
     <Compile Include="CommBase\DataAccessBases\DataAccessModel.cs" />
+    <Compile Include="CommBase\DataAccessBases\DataAccessSetBase.cs" />
     <Compile Include="CommBase\DataAccessBases\ExplainScope.cs" />
     <Compile Include="CommBase\DataAccessBases\IDalAttribute.cs" />
     <Compile Include="CommBase\DataAccessBases\IDataAccessModel.cs" />
@@ -147,6 +150,7 @@
     <Compile Include="DataBaseAdapter\ConfigInfo.cs" />
     <Compile Include="DataBaseAdapter\DataAccessLoader.cs" />
     <Compile Include="DataBaseAdapter\DBInfo.cs" />
+    <Compile Include="DataBaseAdapter\DBTableInfo.cs" />
     <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\AdapterLoader.cs" />
     <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\AggregateFunctions.cs" />
     <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\CommonFunction.cs" />
@@ -218,6 +222,7 @@
     <Compile Include="DBFunction\DBCommonFunction.cs" />
     <Compile Include="DBFunction\DBConvertFunction.cs" />
     <Compile Include="DBFunction\DBMathFunction.cs" />
+    <Compile Include="EntityInfos\EntityConfigInfo.cs" />
     <Compile Include="EntityInfos\EntityInfoHandle.cs" />
     <Compile Include="EntityInfos\EntityInfoManager.cs" />
     <Compile Include="EntityInfos\EntityMappingInfo.cs" />
@@ -261,12 +266,28 @@
     <Compile Include="QueryConditions\SortType.cs" />
     <Compile Include="QueryConditions\UpdateCondition.cs" />
     <Compile Include="QueryConditions\AlterTableCondition.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Buffalo.Kernel\Buffalo.Kernel.csproj">
       <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
       <Name>Buffalo.Kernel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tableParam2000.sql" />
+    <None Include="Resources\tableParam2005.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

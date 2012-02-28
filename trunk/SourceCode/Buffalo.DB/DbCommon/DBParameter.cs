@@ -16,6 +16,23 @@ namespace Buffalo.DB.DbCommon
             _direction = paramDir;
         }
 
+        private string _valueName;
+
+        /// <summary>
+        /// 在SQL语句中的值名称
+        /// </summary>
+        internal string ValueName 
+        {
+            get 
+            {
+                return _valueName;
+            }
+            set 
+            {
+                _valueName = value;
+            }
+        }
+
         private DbType _dbType;
 
         /// <summary>

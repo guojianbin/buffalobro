@@ -24,7 +24,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
 
         AliasTableMapping _primaryTable;//主表
 
-        List<KeyWordJoinItem> _lstJoin = new List<KeyWordJoinItem>();//关联的表
+        //List<KeyWordJoinItem> _lstJoin = new List<KeyWordJoinItem>();//关联的表
         private Dictionary<string, AliasTableMapping> _dicKeyTable = new Dictionary<string, AliasTableMapping>();
 
 
@@ -60,7 +60,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
             bool ret=false;
             if (!_dicKeyTable.ContainsKey(key))
             {
-                _dicKeyTable[key] = _primaryTable.AddChildTable(table, _lstJoin);
+                _dicKeyTable[key] = _primaryTable.AddChildTable(table);
                 ret = true;
             }
             return ret;

@@ -6,6 +6,7 @@ using Buffalo.DB.DataBaseAdapter;
 using EnvDTE;
 using Microsoft.VisualStudio.Modeling.Diagrams;
 using System.IO;
+using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -101,14 +102,31 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         /// <param name="curProject"></param>
         /// <param name="curDiagram"></param>
-        public static string GetFileName(Project curProject, Diagram curDiagram) 
+        public static string GetFileName(Project curProject, ClassDesignerDocView docView) 
         {
-            string dbName = curDiagram.AccessibleName;
+            string dbName = GetDbName(docView);
             string proFile = curProject.FileName;
             FileInfo file = new FileInfo(proFile);
             string directory = file.DirectoryName;
             return directory + "\\" + dbName + ".xml";
 
+        }
+
+        /// <summary>
+        /// 获取当前类图的库名
+        /// </summary>
+        /// <param name="docView"></param>
+        /// <returns></returns>
+        public static string GetDbName(ClassDesignerDocView docView) 
+        {
+            FileInfo docFile = new FileInfo(docView.DocData.FileName);
+            string dbName = docFile.Name;
+            int dot = dbName.IndexOf('.');
+            if (dot > 0)
+            {
+                dbName = dbName.Substring(0, dot);
+            }
+            return dbName;
         }
 
         /// <summary>
@@ -154,9 +172,9 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="curProject">当前工程</param>
         /// <param name="curDiagram">当前图</param>
         /// <returns></returns>
-        public static DBConfigInfo LoadInfo(Project curProject,Diagram curDiagram) 
+        public static DBConfigInfo LoadInfo(Project curProject,ClassDesignerDocView docView) 
         {
-            string xmlFieName = GetFileName(curProject, curDiagram);
+            string xmlFieName = GetFileName(curProject, docView);
             DBConfigInfo ret = null;
             XmlDocument doc = EntityMappingConfig.NewXmlDocument();
             try

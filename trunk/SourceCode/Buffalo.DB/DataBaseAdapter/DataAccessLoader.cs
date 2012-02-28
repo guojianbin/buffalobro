@@ -76,9 +76,11 @@ namespace Buffalo.DB.DataBaseAdapter
                 {
                     XmlDocument docInfo = doc.Document;
                     DBInfo dbinfo = GetDBInfo(docInfo);
+
                     _dicDBInfo[dbinfo.Name] = dbinfo;
                     
                 }
+                LoadModel();
             }
             else 
             {
@@ -126,16 +128,24 @@ namespace Buffalo.DB.DataBaseAdapter
                     {
                         connectionString = att.InnerText;
                     }
-                    else if (att.Name.Equals("assembly",StringComparison.CurrentCultureIgnoreCase)) 
+                    else if (att.Name.Equals("appnamespace",StringComparison.CurrentCultureIgnoreCase)) 
                     {
-                        string ass=att.InnerText;
-                        
-                        if(!string.IsNullOrEmpty(ass))
+                        string names=att.InnerText;
+
+                        if (!string.IsNullOrEmpty(names))
                         {
-                            attNames = ass.Split(new char[] { '|' });
+                            attNames = names.Split(new char[] { '|' });
                         }
-                       
+                        for (int i = 0; i < attNames.Length; i++) 
+                        {
+                            string attName = attNames[i];
+                            if (!attName.EndsWith(".")) 
+                            {
+                                attNames[i] = attName + ".";
+                            }
+                        }
                     }
+                    
                 }
             }
             else
@@ -143,14 +153,16 @@ namespace Buffalo.DB.DataBaseAdapter
                 throw new Exception("配置文件没有config节点");
             }
             
-            return new DBInfo(name, connectionString, dbType);
+            DBInfo info=new DBInfo(name, connectionString, dbType);
+            info.DataaccessNamespace=attNames;
+            return info;
         }
 
         /// <summary>
         /// 基目录
         /// </summary>
         /// <returns></returns>
-        private string GetBaseRoot()
+        private static string GetBaseRoot()
         {
             if (CommonMethods.IsWebContext)
             {
@@ -166,7 +178,119 @@ namespace Buffalo.DB.DataBaseAdapter
         private static void LoadModel()
         {
             List<Assembly> lstAss = GetAllAssembly();
+            Dictionary<string, EntityConfigInfo> dicAllEntityInfo = new Dictionary<string, EntityConfigInfo>();//实体信息
+            
+            foreach (Assembly ass in lstAss) 
+            {
+                
+                string[] resourceNames = ass.GetManifestResourceNames();
+                foreach (string name in resourceNames)
+                {
+                    if (name.EndsWith(".BEM.xml", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        try
+                        {
+                            Stream stm = ass.GetManifestResourceStream(name);
+                            XmlDocument doc = new XmlDocument();
+                            doc.Load(stm);
 
+                            //获取类名
+                            XmlNodeList lstNode = doc.GetElementsByTagName("class");
+                            if (lstNode.Count > 0)
+                            {
+                                XmlNode classNode = lstNode[0];
+                                XmlAttribute att = classNode.Attributes["ClassName"];
+                                if (att != null)
+                                {
+                                    string className = att.InnerText;
+                                    if (!string.IsNullOrEmpty(className))
+                                    {
+                                        Type cType = ass.GetType(className);
+
+                                        EntityConfigInfo info = new EntityConfigInfo();
+                                        info.Type = cType;
+                                        info.ConfigXML = doc;
+                                        dicAllEntityInfo[className] = info;
+
+                                    }
+                                }
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    else if (name.EndsWith(".BDM.xml", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        Stream stm = ass.GetManifestResourceStream(name);
+                        XmlDocument doc = new XmlDocument();
+                        doc.Load(stm);
+                        AppendDalLoader(ass, doc);
+                    }
+                }
+            }
+            EntityInfoManager.InitAllEntity(dicAllEntityInfo);
+
+        }
+        /// <summary>
+        /// 添加到数据层
+        /// </summary>
+        /// <param name="doc"></param>
+        private static void AppendDalLoader(Assembly ass, XmlDocument doc) 
+        {
+            XmlNodeList nodes = doc.GetElementsByTagName("dataaccess");
+            if (nodes.Count <= 0) 
+            {
+                return;
+            }
+            XmlAttribute att = nodes[0].Attributes["name"];
+            if (att == null) 
+            {
+                return;
+            }
+            string name = att.InnerText;
+            DBInfo db = null;
+            if (!_dicDBInfo.TryGetValue(name, out db)) 
+            {
+                return;
+            }
+            string[] namespaces = db.DataaccessNamespace;
+            XmlNodeList dalNodes = doc.GetElementsByTagName("item");
+            foreach (XmlNode dalNode in dalNodes) 
+            {
+                att = dalNode.Attributes["type"];
+                if (att == null) 
+                {
+                    continue;
+                }
+                string typeName = att.InnerText;
+                foreach (string allNameSpace in namespaces) 
+                {
+                    if (typeName.StartsWith(allNameSpace)) 
+                    {
+                        Type dalType = ass.GetType(typeName);
+                        if (dalType != null) 
+                        {
+                            att = dalNode.Attributes["interface"];
+                            if (att == null)
+                            {
+                                break;
+                            }
+                            _dicLoaderConfig[att.InnerText] = dalType;
+
+                            Type[] gTypes = DefaultType.GetGenericType(dalType, true);
+                            if (gTypes != null && gTypes.Length > 0)
+                            {
+                                Type gType = gTypes[0];
+                                _dicEntityLoaderConfig[gType.FullName] = dalType;
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -175,7 +299,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// <returns></returns>
         private static List<Assembly> GetAllAssembly() 
         {
-            string baseRoot = GetBaseRoot();//本项目所在的路径
+            string baseRoot =  GetBaseRoot();//本项目所在的路径
             Assembly[] arrAss = AppDomain.CurrentDomain.GetAssemblies();
             List<Assembly> lstAss = new List<Assembly>(arrAss.Length);
             foreach (Assembly ass in arrAss)
@@ -192,40 +316,6 @@ namespace Buffalo.DB.DataBaseAdapter
             }
             return lstAss;
         }
-
-        /// <summary>
-        /// 缓存加载
-        /// </summary>
-        /// <param name="cInfo"></param>
-        /// <param name="dbinfo"></param>
-        private static void CacheLoad(ConfigInfo cInfo, DBInfo dbinfo) 
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(cInfo.CacheFilePath);
-            //数据层
-            XmlNodeList lstConfig = doc.GetElementsByTagName("dataaccess");
-            if (lstConfig.Count > 0)
-            {
-                XmlNode node = lstConfig[0];
-                foreach (XmlNode dnode in node.ChildNodes) 
-                {
-                    Type objType = LoadTypeInfo.LoadFromXmlNode(dnode, _assemblyTypeLoader);
-                    if(objType!=null)
-                    {
-                        LoadDataAccesses(objType, cInfo, dbinfo);
-                    }
-                }
-            }
-            
-        }
-
-        
-
-
- 
-
-        
-
 
         #endregion
 

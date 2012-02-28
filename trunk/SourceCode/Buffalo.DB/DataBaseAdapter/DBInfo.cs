@@ -56,6 +56,7 @@ namespace Buffalo.DB.DataBaseAdapter
             InitAdapters();
         }
 
+
         /// <summary>
         /// 初始化数据库适配器
         /// </summary>
@@ -126,6 +127,22 @@ namespace Buffalo.DB.DataBaseAdapter
             {
 
                 return _dbName;
+            }
+        }
+        private string[] _dataaccessNamespace;
+
+        /// <summary>
+        /// 数据层名称
+        /// </summary>
+        public string[] DataaccessNamespace
+        {
+            get
+            {
+                return _dataaccessNamespace;
+            }
+            set
+            {
+                _dataaccessNamespace = value;
             }
         }
         /// <summary>

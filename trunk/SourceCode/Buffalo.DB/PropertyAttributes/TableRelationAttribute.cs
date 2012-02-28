@@ -49,7 +49,16 @@ namespace Buffalo.DB.PropertyAttributes
 
             _isParent = isParent;
         }
+        private string _description;
 
+        /// <summary>
+        /// 注释
+        /// </summary>
+        public string Description
+        {
+            get { return _description; }
+            set { _description = value; }
+        }
         /// <summary>
         /// 对应的字段名
         /// </summary>
@@ -76,6 +85,18 @@ namespace Buffalo.DB.PropertyAttributes
             _sourceType = sourceType;
             _targetType = targetType;
         }
+
+        private string _fieldTypeName;
+
+        /// <summary>
+        /// 字段类型名
+        /// </summary>
+        public string FieldTypeName
+        {
+            get { return _fieldTypeName; }
+            set { _fieldTypeName = value; }
+        }
+
         /// <summary>
         /// 约束名
         /// </summary>

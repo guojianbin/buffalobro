@@ -10,6 +10,7 @@ using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.DbCommon;
 using EnvDTE;
 using Microsoft.VisualStudio.Modeling.Diagrams;
+using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 
 namespace Buffalo.DBTools
 {
@@ -22,21 +23,23 @@ namespace Buffalo.DBTools
 
         private DBConfigInfo _info=new DBConfigInfo();
 
-        public static DBConfigInfo GetDBConfigInfo(EntityConfig entity, Project curProject, Diagram curDiagram) 
+        public static DBConfigInfo GetDBConfigInfo(Project curProject, ClassDesignerDocView docView,string dalNamespace) 
         {
-            DBConfigInfo dbinfo = DBConfigInfo.LoadInfo(curProject, curDiagram);
+            DBConfigInfo dbinfo = DBConfigInfo.LoadInfo(curProject, docView);
             if (dbinfo == null)
             {
                 using (FrmDBSetting frmSetting = new FrmDBSetting())
                 {
-                    frmSetting.Info.DbName = curDiagram.AccessibleName;
+                    frmSetting.Info.DbName = DBConfigInfo.GetDbName(docView);
                     if (frmSetting.ShowDialog() != DialogResult.OK)
                     {
                         return null;
                     }
                     dbinfo = frmSetting.Info;
-                    dbinfo.AppNamespace = entity.Namespace + ".DataAccess" + "." + dbinfo.DbType;
-                    dbinfo.SaveConfig(DBConfigInfo.GetFileName(curProject, curDiagram));
+
+                    dbinfo.AppNamespace = dalNamespace+"."+dbinfo.DbType;
+
+                    dbinfo.SaveConfig(DBConfigInfo.GetFileName(curProject, docView));
                 }
             }
             return dbinfo;

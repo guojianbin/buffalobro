@@ -28,18 +28,11 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         int DeleteById(object id);
 
         /// <summary>
-        /// 插入记录且填充记录自动增长的ID
-        /// </summary>
-        /// <param name="entity">实体</param>
-        /// <returns></returns>
-        int IdentityInsert(T entity);
-
-        /// <summary>
         /// 插入记录
         /// </summary>
         /// <param name="entity">实体</param>
         /// <returns></returns>
-        int Insert(T entity);
+        int Insert(T entity,bool fillIdentity);
 
         ///<summary>
         ///修改记录

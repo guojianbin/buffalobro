@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Buffalo.Kernel;
 
 namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 {
@@ -29,7 +30,10 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         {
             foreach (BQLValueItem value in parameters) 
             {
-                value.FillInfo(info);
+                if (!CommonMethods.IsNull(value))
+                {
+                    value.FillInfo(info);
+                }
             }
         }
 

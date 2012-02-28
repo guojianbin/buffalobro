@@ -12,11 +12,11 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// <summary>
         /// 正确条件(1=1)
         /// </summary>
-        public static BQLComparItem TrueValue
+        public static BQLConditionValueItem TrueValue
         {
             get
             {
-                BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoEqual, new BQLValueItem[] { 1,1});
+                BQLConditionValueItem fHandle = new BQLConditionValueItem(true);
                 return fHandle;
             }
         }
@@ -24,11 +24,11 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// <summary>
         /// 错误条件(1=2)
         /// </summary>
-        public static BQLComparItem FalseValue
+        public static BQLConditionValueItem FalseValue
         {
             get
             {
-                BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoEqual, new BQLValueItem[] { 1,2 });
+                BQLConditionValueItem fHandle = new BQLConditionValueItem(false);
                 return fHandle;
             }
         }

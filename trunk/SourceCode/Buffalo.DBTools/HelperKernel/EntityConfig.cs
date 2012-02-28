@@ -10,6 +10,12 @@ using EnvDTE;
 using Buffalo.DB.CommBase;
 using Microsoft.VisualStudio.Modeling.Diagrams;
 using System.Windows.Forms;
+using Buffalo.DB.CommBase.BusinessBases;
+using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
+using Buffalo.DB.PropertyAttributes;
+using Buffalo.Kernel;
+using System.Data;
+using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -35,6 +41,17 @@ namespace Buffalo.DBTools.HelperKernel
         {
             get { return _eRelation; }
         }
+
+        ClassDesignerDocView _selectDocView;
+        /// <summary>
+        /// 选择的文档
+        /// </summary>
+        public ClassDesignerDocView SelectDocView
+        {
+            get { return _selectDocView; }
+            set { _selectDocView = value; }
+        }
+
         private ClrType _classType;
 
         
@@ -172,6 +189,26 @@ namespace Buffalo.DBTools.HelperKernel
         {
             get { return _properties; }
         }
+
+        private Dictionary<string, CodeElementPosition> _methods;
+
+        /// <summary>
+        /// 类包含的函数集合
+        /// </summary>
+        public Dictionary<string, CodeElementPosition> Methods
+        {
+            get { return _methods; }
+        }
+
+        private Dictionary<string, CodeElementPosition> _fields;
+
+        /// <summary>
+        /// 类包含的字段集合
+        /// </summary>
+        public Dictionary<string, CodeElementPosition> Fields
+        {
+            get { return _fields; }
+        }
         /// <summary>
         /// 初始化类配置
         /// </summary>
@@ -182,11 +219,14 @@ namespace Buffalo.DBTools.HelperKernel
             //_classShape = classShape;
             _classType = ctype;
             FillClassInfo();
-            InitFleld();
+            InitField();
             InitPropertys();
+            InitMethods();
             _currentProject = project;
             _currentDiagram = currentDiagram;
         }
+
+
 
         /// <summary>
         /// 获取父类信息
@@ -262,9 +302,10 @@ namespace Buffalo.DBTools.HelperKernel
         /// <summary>
         /// 初始化字段信息
         /// </summary>
-        private void InitFleld()
+        private void InitField()
         {
             List<ClrField> lstFields = GetAllMember<ClrField>(_classType, false);
+            _fields = new Dictionary<string, CodeElementPosition>();
             for (int j = 0; j < lstFields.Count; j++)
             {
 
@@ -287,6 +328,8 @@ namespace Buffalo.DBTools.HelperKernel
                         EntityRelationItem erf = new EntityRelationItem(cp, field, this);
                         _eRelation.Add(erf);
                     }
+
+                    _fields[field.Name] = cp;
                 }
                 _eParamFields.SortItem();
                 _eRelation.SortItem();
@@ -330,6 +373,31 @@ namespace Buffalo.DBTools.HelperKernel
                     }
                 }
                 return _allPropertyNames;
+            }
+        }
+
+        /// <summary>
+        /// 初始化函数
+        /// </summary>
+        private void InitMethods() 
+        {
+            List<ClrMethod> lstMethod = GetAllMember<ClrMethod>(_classType, false);
+            _methods = new Dictionary<string, CodeElementPosition>();
+            for (int j = 0; j < lstMethod.Count; j++)
+            {
+                object tm = lstMethod[j];
+
+                ClrMethod method = tm as ClrMethod;
+                if (method == null)
+                {
+                    continue;
+                }
+                foreach (CodeElementPosition cp in method.SourceCodePositions)
+                {
+                    _methods[method.Name] = cp;
+
+                }
+
             }
         }
 
@@ -391,22 +459,21 @@ namespace Buffalo.DBTools.HelperKernel
         {
 
 
-            DBConfigInfo dbinfo = FrmDBSetting.GetDBConfigInfo(this,CurrentProject, CurrentDiagram);
-            if (dbinfo == null) 
-            {
-                return;
-            }
-            this._currentDBConfigInfo = dbinfo;
-            Generate3Tier g3t = new Generate3Tier(this);
+            
+            
+            
             BQLEntityGenerater bqlEntity = new BQLEntityGenerater(this);
             GenerateExtendCode();
-            
-            g3t.GenerateBusiness();
-            if (!string.IsNullOrEmpty(this.TableName))
+            if (_currentDBConfigInfo.Tier == 3)
             {
-                g3t.GenerateIDataAccess();
-                g3t.GenerateDataAccess();
-                g3t.GenerateBQLDataAccess();
+                Generate3Tier g3t = new Generate3Tier(this);
+                g3t.GenerateBusiness();
+                if (!string.IsNullOrEmpty(this.TableName))
+                {
+                    g3t.GenerateIDataAccess();
+                    g3t.GenerateDataAccess();
+                    g3t.GenerateBQLDataAccess();
+                }
             }
             bqlEntity.GenerateBQLEntityDB();
             bqlEntity.GenerateBQLEntity();
@@ -418,12 +485,16 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         public void GenerateCode() 
         {
-            
+            DBConfigInfo dbinfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView,Namespace+".DataAccess");
+            if (dbinfo == null)
+            {
+                return;
+            }
+            this._currentDBConfigInfo = dbinfo;
+
             
             List<string> lstSource =CodeFileHelper.ReadFile(FileName);
             List<string> lstTarget = new List<string>(lstSource.Count);
-            int codeIndex = 0;
-            int relationIndex = 0;
             bool isUsing = true;
             Dictionary<string, bool> dicUsing = new Dictionary<string, bool>();
             for (int i = 0; i < lstSource.Count; i++) 
@@ -457,8 +528,9 @@ namespace Buffalo.DBTools.HelperKernel
                             relation.AddSource(lstTarget, space);
                         }
                     }
-                    
+                    AddContext(lstTarget);
                     lstTarget.Add(str);
+                    
                 }
                 
                 else if (isUsing && str.IndexOf("namespace " + Namespace) >= 0)
@@ -484,6 +556,41 @@ namespace Buffalo.DBTools.HelperKernel
             
 
         }
+
+
+        /// <summary>
+        /// 添加到代码
+        /// </summary>
+        /// <param name="lstTarget"></param>
+        private void AddContext(List<string> lstTarget)
+        {
+            if (_currentDBConfigInfo.Tier != 1 || string.IsNullOrEmpty(TableName))
+            {
+                return;
+            }
+            string strField = "_____baseContext";
+
+            string strPropertie = "GetContext";
+
+            if (!_fields.ContainsKey(strField))
+            {
+                lstTarget.Add("        private static ModelContext<" + ClassName + "> " + strField + "=new ModelContext<" + ClassName + ">();");
+            }
+
+            if (!_methods.ContainsKey(strPropertie))
+            {
+                lstTarget.Add("        /// <summary>");
+                lstTarget.Add("        /// 获取查询关联类");
+                lstTarget.Add("        /// </summary>");
+                lstTarget.Add("        /// <returns></returns>");
+                lstTarget.Add("        public static ModelContext<" + ClassName + "> " + strPropertie + "() ");
+                lstTarget.Add("        {");
+                lstTarget.Add("            return " + strField + ";");
+                lstTarget.Add("        }");
+            }
+
+        }
+
         /// <summary>
         /// 通过属性名获取信息
         /// </summary>
@@ -532,7 +639,8 @@ namespace Buffalo.DBTools.HelperKernel
             return stkConfig;
         }
 
-        private static readonly string[] BaseTypes ={ typeof(EntityBase).Name, typeof(object).Name };
+        private static readonly string[] BaseTypes ={ 
+            typeof(EntityBase).FullName, typeof(object).FullName,"Buffalo.DB.CommBase.BusinessBases.ThinModelBase<T>" };
 
         /// <summary>
         /// 是否系统类型
@@ -541,9 +649,31 @@ namespace Buffalo.DBTools.HelperKernel
         /// <returns></returns>
         public static bool IsSystemType(ClrType type) 
         {
-            if (type == null || type.Name == "System.Object" || type.Name.EndsWith("EntityBase"))
+            if (type == null) 
             {
                 return true;
+            }
+            return IsSystemTypeName(type.Name);
+            
+        }
+
+        /// <summary>
+        /// 是否系统类名
+        /// </summary>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        public static bool IsSystemTypeName(string typeName) 
+        {
+            if (string.IsNullOrEmpty(typeName)) 
+            {
+                return true;
+            }
+            foreach (string basetypeName in BaseTypes)
+            {
+                if (basetypeName.Equals(typeName))
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -579,22 +709,14 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     string baseType = col[0].TypeTypeName;
 
-                    if (!string.IsNullOrEmpty(baseType))
+
+                    bool isBaseType = IsSystemTypeName(baseType);
+
+                    if (!isBaseType)
                     {
-                        bool isBaseType = false;
-                        foreach (string typeName in BaseTypes)
-                        {
-                            if (baseType.EndsWith(typeName))
-                            {
-                                isBaseType = true;
-                                break;
-                            }
-                        }
-                        if (!isBaseType)
-                        {
-                            FillAllMember<T>(lst,dicExistsPropertyName, col[0].ClrType,fillBase);
-                        }
+                        FillAllMember<T>(lst, dicExistsPropertyName, col[0].ClrType, fillBase);
                     }
+
                 }
             }
            
@@ -617,7 +739,7 @@ namespace Buffalo.DBTools.HelperKernel
         private static string[] _needUsing ={ 
             "using System.Collections.Generic;" ,"using Buffalo.DB.CommBase;",
             "using Buffalo.Kernel.Defaults;","using Buffalo.DB.PropertyAttributes;",
-            "using System.Data;"
+            "using System.Data;","using Buffalo.DB.CommBase.BusinessBases;"
         };
 
         /// <summary>
@@ -657,13 +779,73 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     tmp = tmp.Replace("<%=EntityNamespace%>", Namespace);
                     tmp = tmp.Replace("<%=Summary%>", _summary);
-                    tmp = tmp.Replace("<%=ClassName%>", ClassName);
+
+
+                    string classFullName = null;
+                    if (ClassType.Generic)
+                    {
+                        classFullName=ClassType.GenericTypeName;
+                        
+                    }
+                    else
+                    {
+                        classFullName=ClassName;
+                    }
+                    tmp = tmp.Replace("<%=ClassFullName%>", classFullName);
                     codes.Add(tmp);
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
             EnvDTE.ProjectItem newit = _currentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;
+        }
+
+        /// <summary>
+        /// 当前表到表信息的转换
+        /// </summary>
+        /// <returns></returns>
+        public KeyWordTableParamItem ToTableInfo() 
+        {
+            KeyWordTableParamItem table = new KeyWordTableParamItem(TableName, null);
+            table.Description = Summary;
+            table.IsView = false;
+            FillParams(table);
+            FillRelation(table);
+            return table;
+        }
+
+        /// <summary>
+        /// 填充关系信息
+        /// </summary>
+        /// <param name="table"></param>
+        private void FillRelation(KeyWordTableParamItem table) 
+        {
+            table.RelationItems=new List<TableRelationAttribute>();
+            foreach (EntityRelationItem er in ERelation) 
+            {
+                if (!er.IsGenerate) 
+                {
+                    continue;
+                }
+                table.RelationItems.Add(er.GetRelationInfo());
+            }
+        }
+
+        /// <summary>
+        /// 填充字段信息
+        /// </summary>
+        /// <param name="table"></param>
+        private void FillParams(KeyWordTableParamItem table) 
+        {
+            table.Params = new List<EntityParam>();
+            foreach (EntityParamField field in EParamFields) 
+            {
+                if (!field.IsGenerate) 
+                {
+                    continue;
+                }
+                table.Params.Add(field.ToParamInfo());
+            }
         }
 
     }

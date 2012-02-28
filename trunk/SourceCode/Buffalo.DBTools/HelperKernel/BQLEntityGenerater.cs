@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Buffalo.DB.PropertyAttributes;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -21,7 +22,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         public void GenerateBQLEntityDB() 
         {
-            FileInfo info = new FileInfo(_entity.FileName);
+            FileInfo info = new FileInfo(EntityFileName);
             string dicPath = info.DirectoryName + "\\BQLEntity";
             if (!Directory.Exists(dicPath))
             {
@@ -47,7 +48,7 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem newit = _entity.CurrentProject.ProjectItems.AddFromFile(fileName);
+            EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;
         }
 
@@ -56,25 +57,25 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         public void GenerateBQLEntity()
         {
-            FileInfo info = new FileInfo(_entity.FileName);
+            FileInfo info = new FileInfo(EntityFileName);
             string dicPath = info.DirectoryName + "\\BQLEntity";
             if (!Directory.Exists(dicPath))
             {
                 Directory.CreateDirectory(dicPath);
             }
 
-            string fileName = dicPath + "\\"+ _entity.ClassName + ".cs";
+            string fileName = dicPath + "\\"+ ClassName + ".cs";
             
             string idal = Models.BQLEntity;
             List<string> codes = new List<string>();
             string baseType = null;
-            if (_entity.BaseType == null)
+            if (EntityBaseTypeName == null)
             {
                 baseType = "BQLEntityTableHandle";
             }
             else 
             {
-                baseType = DBName + "_" + _entity.BaseType.Name;
+                baseType = DBName + "_" + EntityBaseTypeShortName;
             }
             using (StringReader reader = new StringReader(idal))
             {
@@ -83,11 +84,13 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     tmp = tmp.Replace("<%=EntityNamespace%>", EntityNamespace);
                     tmp = tmp.Replace("<%=BQLEntityNamespace%>", BQLEntityNamespace);
-                    tmp = tmp.Replace("<%=Summary%>", Summary);
+                    tmp = tmp.Replace("<%=Summary%>", Table.Description);
                     tmp = tmp.Replace("<%=DBName%>", DBName);
                     tmp = tmp.Replace("<%=BQLEntityBaseType%>", baseType);
                     tmp = tmp.Replace("<%=DataAccessNamespace%>", DataAccessNamespace);
                     tmp = tmp.Replace("<%=ClassName%>", ClassName);
+                    string entityClassName = ClassName;
+                    tmp = tmp.Replace("<%=EntityClassName%>", entityClassName);
                     tmp = tmp.Replace("<%=PropertyDetail%>", GenProperty());
                     tmp = tmp.Replace("<%=RelationDetail%>", GenRelation());
                     tmp = tmp.Replace("<%=PropertyInit%>", GenInit());
@@ -95,7 +98,7 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem newit = _entity.CurrentProject.ProjectItems.AddFromFile(fileName);
+            EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;
         }
         /// <summary>
@@ -106,15 +109,15 @@ namespace Buffalo.DBTools.HelperKernel
         {
             StringBuilder sbProperty = new StringBuilder();
 
-            foreach (EntityParamField epf in _entity.EParamFields) 
+            foreach (EntityParam epf in Table.Params) 
             {
-                if (!epf.IsGenerate)
-                {
-                    continue;
-                }
+                //if (!epf.IsGenerate)
+                //{
+                //    continue;
+                //}
                 sbProperty.Append("        private BQLEntityParamHandle " + epf.FieldName + " = null;\n");
                 sbProperty.Append("        /// <summary>\n");
-                sbProperty.Append("        /// " + epf.Summary + "\n");
+                sbProperty.Append("        /// " + epf.Description + "\n");
                 sbProperty.Append("        /// </summary>\n");
                 sbProperty.Append("        public BQLEntityParamHandle " + epf.PropertyName + "\n");
                 sbProperty.Append("        {\n");
@@ -135,23 +138,28 @@ namespace Buffalo.DBTools.HelperKernel
         {
             StringBuilder sbRelation = new StringBuilder();
 
-            foreach (EntityRelationItem er in _entity.ERelation)
+            foreach (TableRelationAttribute er in Table.RelationItems)
             {
-                if (!er.IsGenerate || !er.IsParent)
+                //if (!er.IsGenerate)
+                //{
+                //    continue;
+                //}
+                //string targetType = er.FInfo.MemberTypeShortName;
+                if (er.IsParent)
                 {
-                    continue;
+                    string targetType = er.FieldTypeName;
+                    sbRelation.Append("        /// <summary>\n");
+                    sbRelation.Append("        /// " + er.Description + "\n");
+                    sbRelation.Append("        /// </summary>\n");
+                    sbRelation.Append("        public " + DBName + "_" + targetType + " " + er.PropertyName + "\n");
+                    sbRelation.Append("        {\n");
+                    sbRelation.Append("            get\n");
+                    sbRelation.Append("            {\n");
+                    sbRelation.Append("               return new " + DBName + "_" + targetType + "(this,\"" + er.PropertyName + "\");\n");
+                    sbRelation.Append("            }\n");
+                    sbRelation.Append("         }\n");
                 }
-                string targetType = er.FInfo.MemberTypeShortName;
-                sbRelation.Append("        /// <summary>\n");
-                sbRelation.Append("        /// " + er.Summary + "\n");
-                sbRelation.Append("        /// </summary>\n");
-                sbRelation.Append("        public " + DBName + "_" + targetType + " " + er.PropertyName + "\n");
-                sbRelation.Append("        {\n");
-                sbRelation.Append("            get\n");
-                sbRelation.Append("            {\n");
-                sbRelation.Append("               return new " + DBName + "_" + targetType + "(this,\"" + er.PropertyName + "\");\n");
-                sbRelation.Append("            }\n");
-                sbRelation.Append("         }\n");
+                
             }
             return sbRelation.ToString();
         }
@@ -164,12 +172,12 @@ namespace Buffalo.DBTools.HelperKernel
         {
             StringBuilder sbInit = new StringBuilder();
 
-            foreach (EntityParamField epf in _entity.EParamFields)
+            foreach (EntityParam epf in Table.Params)
             {
-                if (!epf.IsGenerate) 
-                {
-                    continue;
-                }
+                //if (!epf.IsGenerate) 
+                //{
+                //    continue;
+                //}
                 sbInit.Append("            " + epf.FieldName + "=CreateProperty(\"" + epf.PropertyName + "\");\n");
                 
             }

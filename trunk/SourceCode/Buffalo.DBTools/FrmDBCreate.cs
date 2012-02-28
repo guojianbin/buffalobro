@@ -18,6 +18,7 @@ using Buffalo.DB.QueryConditions;
 using Buffalo.Kernel;
 using Buffalo.DB.DBCheckers;
 using Buffalo.DB.PropertyAttributes;
+using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 
 namespace Buffalo.DBTools
 {
@@ -56,6 +57,22 @@ namespace Buffalo.DBTools
             get { return _currentProject; }
             set { _currentProject = value; }
         }
+
+
+
+        /// <summary>
+        /// 选中的文档视图
+        /// </summary>
+        private ClassDesignerDocView _selectDocView;
+
+        /// <summary>
+        /// 选中的文档视图
+        /// </summary>
+        public ClassDesignerDocView SelectDocView
+        {
+            get { return _selectDocView; }
+            set { _selectDocView = value; }
+        }
         private void FrmDBCreate_Load(object sender, EventArgs e)
         {
             if (SelectedClass != null) 
@@ -63,7 +80,12 @@ namespace Buffalo.DBTools
                 GetClassSQL();
             }
         }
-        
+
+        /// <summary>
+        /// 要执行的SQL
+        /// </summary>
+        private List<string> _lstSql;
+
         /// <summary>
         /// 获取类的创建语句
         /// </summary>
@@ -80,7 +102,7 @@ namespace Buffalo.DBTools
                 return;
             }
 
-            DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo(entity,CurrentProject, SelectedDiagram);
+            DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView, entity.Namespace + ".DataAccess.");
             DBInfo dbInfo = dbcinfo.CreateDBInfo();
             
             string typeName=null;
@@ -101,14 +123,28 @@ namespace Buffalo.DBTools
             lstTable.Add(table);
             try
             {
-                string sql = TableChecker.CheckTable(dbInfo, lstTable);
-                rtbContent.Text = sql;
+                _lstSql = TableChecker.CheckTable(dbInfo, lstTable);
+                ShowSql();
             }
             catch (Exception ex) 
             {
                 MessageBox.Show("生成语句失败:" + ex.Message);
             }
             
+        }
+
+        /// <summary>
+        /// 显示SQL语句
+        /// </summary>
+        private void ShowSql() 
+        {
+            StringBuilder sbSql = new StringBuilder();
+            foreach (string sql in _lstSql) 
+            {
+                sbSql.Append(sql);
+                sbSql.Append("\n");
+            }
+            rtbContent.Text = sbSql.ToString();
         }
 
         /// <summary>
@@ -125,7 +161,7 @@ namespace Buffalo.DBTools
                     continue;
                 }
                 DbType dbt=(DbType)EnumUnit.GetEnumInfoByName(typeof(DbType),param.DbType).Value;
-                EntityParam pInfo = new EntityParam(
+                EntityParam pInfo = new EntityParam("",
                     param.ParamName,"",dbt,
                     param.EntityPropertyType, param.Length,true);
 
@@ -150,7 +186,7 @@ namespace Buffalo.DBTools
                     {
                         continue;
                     }
-                    lstRelation.Add(new TableRelationAttribute("", entity.TableName,
+                    lstRelation.Add(new TableRelationAttribute("","", entity.TableName,
                         parent.TableName, childProperty.ParamName, parentProperty.ParamName, "", relation.IsParent));
                 }
             }
@@ -158,19 +194,31 @@ namespace Buffalo.DBTools
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            string sql = rtbContent.Text;
-            DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo(null, CurrentProject, SelectedDiagram);
+            DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView, "");
             DBInfo dbInfo = dbcinfo.CreateDBInfo();
-            try
+            rtbOutput.Text = "";
+            if (_lstSql == null || _lstSql.Count == 0) 
             {
-                dbInfo.DefaultOperate.Execute(sql, new Buffalo.DB.DbCommon.ParamList());
-                rtbOutput.Text = "执行完毕";
-            }
-            catch (Exception ex)
-            {
-                rtbOutput.Text = "错误：" + ex.Message;
+                return;
             }
 
+            StringBuilder sbRet = new StringBuilder();
+
+            foreach (string sql in _lstSql)
+            {
+                try
+                {
+                    int row=dbInfo.DefaultOperate.Execute(sql, new Buffalo.DB.DbCommon.ParamList());
+                    sbRet.Append("执行完毕;");
+                    
+                }
+                catch (Exception ex)
+                {
+                    sbRet.Append("执行错误：" + ex.Message);
+                }
+                sbRet.Append("\n");
+            }
+            rtbOutput.Text = sbRet.ToString();
         }
 
         private void btnCLose_Click(object sender, EventArgs e)

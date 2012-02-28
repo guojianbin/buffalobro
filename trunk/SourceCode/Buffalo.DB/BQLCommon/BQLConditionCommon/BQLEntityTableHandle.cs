@@ -30,6 +30,8 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return _entityInfo; 
         }
 
+        
+
         /// <summary>
         /// 设置所属的实体的信息
         /// </summary>
@@ -87,6 +89,10 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         public BQLEntityTableHandle(EntityInfoHandle entityInfo)
             :this(entityInfo,null,null)
         {
+        }
+        public BQLEntityTableHandle(Type entityType, BQLEntityTableHandle parentTable, string propertyName)
+        {
+            SetEntityInfo(EntityInfoManager.GetEntityHandle(entityType), parentTable, propertyName);
         }
         public BQLEntityTableHandle(EntityInfoHandle entityInfo, BQLEntityTableHandle parentTable,string propertyName)
         {

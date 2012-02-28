@@ -49,51 +49,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         }
         internal override void FillInfo(KeyWordInfomation info)
         {
-            //QueryParamCollection coll = new QueryParamCollection();
-            //coll.TableName = aliasName;
-            //if (!CommonMethods.IsNull(table,null)) 
-            //{
-            //    List<ParamInfo> lstInfo = table.GetParamInfoHandle();
-            //    foreach (ParamInfo pinfo in lstInfo) 
-            //    {
-            //        coll[pinfo.PropertyName] = pinfo;
-            //    }
-                
-            //}
-            //else if (query != null) 
-            //{
-            //    foreach (ParamInfo pinfo in qinfo.QueryParams) 
-            //    {
-            //        coll[pinfo.PropertyName] = pinfo;
-            //    }
-            //}
-            //if (info != null)
-            //{
-            //    info.Alias[aliasName] = coll;
-            //}
-            //if (info.DBInfo == null)
-            //{
-            //    if (!CommonMethods.IsNull(table, null))
-            //    {
-            //        table.FillInfo(info);
-            //    }
-            //    else if (query != null)
-            //    {
-            //        KeyWordInfomation qinfo = info.Clone() as KeyWordInfomation;
-            //        qinfo.Condition = new SelectCondition(info.DBInfo);
-            //        qinfo.ParamList = info.ParamList;
-            //        KeyWordConver objCover = new KeyWordConver();
-            //        objCover.CollectItem(query, qinfo);
-            //        //if (info.Condition.PrimaryKey.Length <= 0 && qinfo.Condition.PrimaryKey.Length > 0)
-            //        //{
-            //        //    info.Condition.PrimaryKey.Append(qinfo.Condition.PrimaryKey.ToString());
-            //        //}
-            //        if (qinfo.DBInfo != null) 
-            //        {
-            //            info.DBInfo = qinfo.DBInfo;
-            //        }
-            //    }
-            //}
+            
         }
         internal override string DisplayValue(KeyWordInfomation info)
         {

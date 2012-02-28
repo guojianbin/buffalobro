@@ -11,12 +11,12 @@ namespace Buffalo.DBTools.HelperKernel
     /// </summary>
     public class Generate3Tier : GrneraterBase
     {
-        
+        DataAccessMappingConfig dmt = null;
         
         public Generate3Tier(EntityConfig entity) 
             :base(entity)
         {
-            
+            dmt = new DataAccessMappingConfig(entity);
         }
 
 
@@ -27,7 +27,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="entity"></param>
         public void GenerateBusiness() 
         {
-            FileInfo info = new FileInfo(_entity.FileName);
+            FileInfo info = new FileInfo(EntityFileName);
             
 
             string dicPath = info.DirectoryName + "\\Business";
@@ -35,7 +35,7 @@ namespace Buffalo.DBTools.HelperKernel
             {
                 Directory.CreateDirectory(dicPath);
             }
-            string fileName = dicPath + "\\" + _entity.ClassName + "Business.cs";
+            string fileName = dicPath + "\\" + ClassName + "Business.cs";
             if (File.Exists(fileName)) 
             {
                 return;
@@ -45,11 +45,11 @@ namespace Buffalo.DBTools.HelperKernel
             string model = Models.Business;
             
             string baseClass = null;
-            ClrType baseType=_entity.BaseType;
+            
             string businessClassName=ClassName+"Business";
-            if (EntityConfig.IsSystemType(baseType))
+            if (EntityConfig.IsSystemTypeName(EntityBaseTypeName))
             {
-                if (!string.IsNullOrEmpty(_entity.TableName))
+                if (!string.IsNullOrEmpty(Table.TableName))
                 {
                     baseClass = "BusinessModelBase<" + ClassName + ">";
                 }
@@ -61,7 +61,7 @@ namespace Buffalo.DBTools.HelperKernel
             }
             else 
             {
-                baseClass = BusinessNamespace+"." + baseType.Name+"Business<"+ClassName+">";
+                baseClass = BusinessNamespace+"." + EntityBaseTypeShortName+"Business<"+ClassName+">";
             }
             List<string> codes = new List<string>();
             using (StringReader reader = new StringReader(model))
@@ -70,7 +70,7 @@ namespace Buffalo.DBTools.HelperKernel
                 while ((tmp = reader.ReadLine()) != null)
                 {
                     tmp = tmp.Replace("<%=EntityNamespace%>", EntityNamespace);
-                    tmp = tmp.Replace("<%=Summary%>", Summary);
+                    tmp = tmp.Replace("<%=Summary%>", Table.Description);
                     tmp = tmp.Replace("<%=BusinessClassName%>", businessClassName);
                     tmp = tmp.Replace("<%=ClassName%>",ClassName);
                     tmp = tmp.Replace("<%=BusinessNamespace%>", BusinessNamespace);
@@ -79,7 +79,7 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem newit = _entity.CurrentProject.ProjectItems.AddFromFile(fileName);
+            EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;
         }
 
@@ -133,7 +133,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="entity"></param>
         public void GenerateDataAccess()
         {
-            FileInfo info = new FileInfo(_entity.FileName);
+            FileInfo info = new FileInfo(EntityFileName);
 
 
             string dicPath = info.DirectoryName + "\\DataAccess";
@@ -150,7 +150,7 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     Directory.CreateDirectory(dalPath);
                 }
-                string fileName = dalPath + "\\" + _entity.ClassName + "DataAccess.cs";
+                string fileName = dalPath + "\\" + ClassName + "DataAccess.cs";
                 if (File.Exists(fileName))
                 {
                     continue;
@@ -163,18 +163,19 @@ namespace Buffalo.DBTools.HelperKernel
                     while ((tmp = reader.ReadLine()) != null)
                     {
                         tmp = tmp.Replace("<%=EntityNamespace%>", EntityNamespace);
-                        tmp = tmp.Replace("<%=Summary%>", Summary);
+                        tmp = tmp.Replace("<%=Summary%>", Table.Description);
                         tmp = tmp.Replace("<%=DataAccessNamespace%>", DataAccessNamespace);
                         tmp = tmp.Replace("<%=DataBaseType%>", type);
                         tmp = tmp.Replace("<%=ClassName%>", ClassName);
                         codes.Add(tmp);
                     }
                 }
+                dmt.AppendDal(DataAccessNamespace + "." + type + "." + ClassName + "DataAccess", DataAccessNamespace + ".IDataAccess.I" + ClassName + "DataAccess");
                 CodeFileHelper.SaveFile(fileName, codes);
-                EnvDTE.ProjectItem newit = _entity.CurrentProject.ProjectItems.AddFromFile(fileName);
+                EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(fileName);
                 newit.Properties.Item("BuildAction").Value = 1;
             }
-            
+            dmt.SaveXML();
         }
         /// <summary>
         /// Éú³ÉIDataAccess
@@ -182,7 +183,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="entity"></param>
         public void GenerateIDataAccess() 
         {
-            FileInfo info = new FileInfo(_entity.FileName);
+            FileInfo info = new FileInfo(EntityFileName);
             string dicPath = info.DirectoryName + "\\DataAccess";
             if (!Directory.Exists(dicPath))
             {
@@ -193,7 +194,7 @@ namespace Buffalo.DBTools.HelperKernel
             {
                 Directory.CreateDirectory(idalPath);
             }
-            string fileName = idalPath + "\\I" + _entity.ClassName + "DataAccess.cs";
+            string fileName = idalPath + "\\I" + ClassName + "DataAccess.cs";
             if (File.Exists(fileName))
             {
                 return;
@@ -206,14 +207,14 @@ namespace Buffalo.DBTools.HelperKernel
                 while ((tmp = reader.ReadLine()) != null)
                 {
                     tmp = tmp.Replace("<%=EntityNamespace%>", EntityNamespace);
-                    tmp = tmp.Replace("<%=Summary%>", Summary);
+                    tmp = tmp.Replace("<%=Summary%>", Table.Description);
                     tmp = tmp.Replace("<%=DataAccessNamespace%>", DataAccessNamespace);
                     tmp = tmp.Replace("<%=ClassName%>", ClassName);
                     codes.Add(tmp);
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem newit = _entity.CurrentProject.ProjectItems.AddFromFile(fileName);
+            EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;
         }
 
@@ -222,7 +223,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         public void GenerateBQLDataAccess() 
         {
-            FileInfo info = new FileInfo(_entity.FileName);
+            FileInfo info = new FileInfo(EntityFileName);
             string dicPath = info.DirectoryName + "\\DataAccess";
             if (!Directory.Exists(dicPath))
             {
@@ -234,7 +235,7 @@ namespace Buffalo.DBTools.HelperKernel
             {
                 Directory.CreateDirectory(idalPath);
             }
-            string fileName = idalPath + "\\" + _entity.ClassName + "DataAccess.cs";
+            string fileName = idalPath + "\\" + ClassName + "DataAccess.cs";
             if (File.Exists(fileName))
             {
                 return;
@@ -247,7 +248,7 @@ namespace Buffalo.DBTools.HelperKernel
                 while ((tmp = reader.ReadLine()) != null)
                 {
                     tmp = tmp.Replace("<%=EntityNamespace%>", EntityNamespace);
-                    tmp = tmp.Replace("<%=Summary%>", Summary);
+                    tmp = tmp.Replace("<%=Summary%>", Table.Description);
                     tmp = tmp.Replace("<%=DataAccessNamespace%>", DataAccessNamespace);
                     tmp = tmp.Replace("<%=DataBaseType%>", type);
                     tmp = tmp.Replace("<%=ClassName%>", ClassName);
@@ -256,7 +257,7 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem newit = _entity.CurrentProject.ProjectItems.AddFromFile(fileName);
+            EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;
         }
 

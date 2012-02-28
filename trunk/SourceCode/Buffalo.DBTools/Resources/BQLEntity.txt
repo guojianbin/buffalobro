@@ -27,19 +27,31 @@ namespace <%=BQLEntityNamespace%>
     {
 <%=PropertyDetail%>
 <%=RelationDetail%>
-        /// <summary>
+
+		/// <summary>
         /// 初始化本类的信息
         /// </summary>
-        /// <param name="entityInfo">类信息</param>
+        /// <param name="parent">父表信息</param>
+        /// <param name="propertyName">属性名</param>
         public <%=DBName%>_<%=ClassName%>(BQLEntityTableHandle parent,string propertyName) 
+        :this(typeof(<%=EntityNamespace%>.<%=EntityClassName%>),parent,propertyName)
         {
-			SetEntityInfo(EntityInfoManager.GetEntityHandle(typeof(<%=EntityNamespace%>.<%=ClassName%>)),parent,propertyName);
-<%=PropertyInit%>
+			
         }
         /// <summary>
         /// 初始化本类的信息
         /// </summary>
-        /// <param name="entityInfo">类信息</param>
+        /// <param name="parent">父表信息</param>
+        /// <param name="propertyName">属性名</param>
+        public <%=DBName%>_<%=ClassName%>(Type entityType,BQLEntityTableHandle parent,string propertyName) 
+        :base(entityType,parent,propertyName)
+        {
+<%=PropertyInit%>
+        }
+        
+        /// <summary>
+        /// 初始化本类的信息
+        /// </summary>
         public <%=DBName%>_<%=ClassName%>() 
             :this(null,null)
         {

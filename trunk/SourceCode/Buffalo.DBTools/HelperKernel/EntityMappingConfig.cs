@@ -92,7 +92,12 @@ namespace Buffalo.DBTools.HelperKernel
                             int.TryParse(att.InnerText, out type);
                             filed.EntityPropertyType = (EntityPropertyType)type;
                         }
-
+                        att = node.Attributes["ParamName"];
+                        if (att != null)
+                        {
+                            filed.ParamName = att.InnerText;
+                        }
+                        
                     }
                 }
             }
@@ -144,11 +149,11 @@ namespace Buffalo.DBTools.HelperKernel
                         {
                             filed.IsToDB = att.InnerText=="1";
                         }
-                        att = node.Attributes["IsParent"];
-                        if (att != null)
-                        {
-                            filed.IsParent = att.InnerText == "1";
-                        }
+                        //att = node.Attributes["IsParent"];
+                        //if (att != null)
+                        //{
+                        //    filed.IsParent = att.InnerText == "1";
+                        //}
                         
                     }
                 }
@@ -227,7 +232,12 @@ namespace Buffalo.DBTools.HelperKernel
             classNode.Attributes.Append(att);
 
             att = doc.CreateAttribute("ClassName");
-            att.InnerText = entity.Namespace+"."+entity.ClassName;
+            string className=entity.ClassName;
+            if (entity.ClassType.Generic) 
+            {
+                className += "`" + entity.ClassType.TypeParameterCount;
+            }
+            att.InnerText = entity.Namespace+"."+className;
             classNode.Attributes.Append(att);
 
             att = doc.CreateAttribute("IsTable");
@@ -323,6 +333,10 @@ namespace Buffalo.DBTools.HelperKernel
 
                 att = doc.CreateAttribute("EntityPropertyType");//ÀàÐÍ
                 att.InnerText = ((int)field.EntityPropertyType).ToString();
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("ParamName");//×Ö¶ÎÃû
+                att.InnerText = field.ParamName;
                 node.Attributes.Append(att);
             }
         }

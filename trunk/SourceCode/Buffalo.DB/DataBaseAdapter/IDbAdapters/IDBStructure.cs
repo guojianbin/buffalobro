@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 using Buffalo.DB.PropertyAttributes;
+using Buffalo.DB.DbCommon;
+
 namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
 {
     public interface IDBStructure
@@ -11,7 +13,7 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        List<string> GetAllTableName(DBInfo info);
+        List<DBTableInfo> GetAllTableName(DataBaseOperate oper, DBInfo info);
         /// <summary>
         /// 添加字段的语句
         /// </summary>
@@ -22,6 +24,6 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// </summary>
         /// <param name="chileName">子表名，查询有这里为nulls</param>
         /// <returns></returns>
-        List<TableRelationAttribute> GetRelation(DBInfo info, string childName);
+        List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, string childName);
     }
 }

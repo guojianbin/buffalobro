@@ -67,18 +67,8 @@ namespace Buffalo.DB.EntityInfos
                 return _dicClass;
             }
         }
-
-        /// <summary>
-        /// 设置对象信息
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="db"></param>
-        internal static void SetEntityHandle(Type type, DBInfo db) 
-        {
-            InitEntityPropertyInfos(type, db);
-        }
         public readonly static Type EntityBaseType = typeof(EntityBase);
-        public readonly static Type ThinEntityBaseType = typeof(ThinModelBase<>);
+        public readonly static Type ThinEntityBaseType = typeof(ThinModelBase);
         /// <summary>
         /// 判断是否系统类型
         /// </summary>
@@ -86,8 +76,8 @@ namespace Buffalo.DB.EntityInfos
         /// <returns></returns>
         private static bool IsSysBaseType(Type objType) 
         {
-            
-            if (objType.GetGenericTypeDefinition() == ThinEntityBaseType) 
+
+            if (objType.IsGenericType && objType.GetGenericTypeDefinition() == ThinEntityBaseType) 
             {
                 return true;
             }
@@ -98,102 +88,26 @@ namespace Buffalo.DB.EntityInfos
             return false;
         }
 
-
-
-
-        /// <summary>
-        /// 获取资源的配置文件
-        /// </summary>
-        /// <param name="objType"></param>
-        /// <param name="dicConfigs"></param>
-        /// <returns></returns>
-        private static XmlDocument GetResourceDocument(Type objType,Dictionary<string,XmlDocument> dicConfigs)
-        {
-            string key=objType.FullName;
-            XmlDocument docRet=null;
-            if(!dicConfigs.TryGetValue(key,out docRet))
-            {
-                Assembly ass=objType.Assembly;
-                string[] resourceNames=ass.GetManifestResourceNames();
-                foreach(string name in resourceNames)
-                {
-                    if(name.EndsWith(".BEM.xml",StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        try
-                        {
-                            Stream stm=ass.GetManifestResourceStream(name);
-                            XmlDocument doc=new XmlDocument();
-                            doc.Load(stm);
-
-                            //获取类名
-                            XmlNodeList lstNode= doc.GetElementsByTagName("class");
-                            if(lstNode.Count>0)
-                            {
-                                XmlNode classNode=lstNode[0];
-                                XmlAttribute att= classNode.Attributes["ClassName"];
-                                if(att!=null)
-                                {
-                                    string className=att.InnerText;
-                                    if(!string.IsNullOrEmpty(className))
-                                    {
-                                        dicConfigs[className]=doc;
-                                    }
-                                }
-                            }
-                        }
-                        catch
-                        {
-                            
-                        }
-                    }
-                }
-            }
-
-            dicConfigs.TryGetValue(key,out docRet);
-
-            return docRet;
-        }
-
         /// <summary>
         /// 填充类信息
         /// </summary>
         /// <param name="dicParam">字段</param>
         /// <param name="dicRelation">关系</param>
-        private static void FillEntityInfos(Dictionary<string, EntityParam> dicParam,DBInfo db,
-            Dictionary<string, TableRelationAttribute> dicRelation, Type type,TableAttribute tableAtt,
-            Dictionary<string,XmlDocument> dicConfigs) 
+        private static void FillEntityInfos(Dictionary<string, EntityParam> dicParam,
+            Dictionary<string, TableRelationAttribute> dicRelation, Type type,
+            TableAttribute tableAtt, Dictionary<string, EntityConfigInfo> dicConfigs) 
         {
             string key=type.FullName;
-            Assembly ass=type.Assembly;
-            
 
-            Type baseType = type.BaseType;
-            EntityInfoHandle baseHandle = null;
-            if (baseType != null && !IsSysBaseType(baseType)) 
-            {
-                baseHandle = GetEntityHandle(baseType, false);
-                if (baseType == null)
-                {
-                    InitEntityPropertyInfos(baseType, db, dicConfigs);
-                }
-                baseHandle = GetEntityHandle(baseType, false);
-            }
-            if(baseHandle!=null)//填充基类的配置信息
-            {
-                foreach(EntityPropertyInfo info in baseHandle.PropertyInfo)
-                {
-                    EntityParam ep=info.ParamInfo;
-                    dicParam[ep.FieldName]=ep;
-                }
-                foreach(EntityMappingInfo mInfo in baseHandle.MappingInfo)
-                {
-                    TableRelationAttribute tr=mInfo.MappingInfo;
-                    dicRelation[tr.FieldName]=tr;
-                }
-            }
-            XmlDocument doc=GetResourceDocument(type,dicConfigs);
+            Stack<XmlDocument> stkXml = new Stack<XmlDocument>();//配置栈
 
-            XmlNodeList nodes = doc.GetElementsByTagName("class");
+            EntityConfigInfo curConfig = null;
+            if (!dicConfigs.TryGetValue(key, out curConfig))
+            {
+                throw new Exception("找不到类:"+key+"所属的配置文件");
+            }
+            XmlDocument docCur = curConfig.ConfigXML;
+            XmlNodeList nodes = docCur.GetElementsByTagName("class");
             if (nodes.Count > 0) 
             {
                 XmlNode node = nodes[0];
@@ -209,9 +123,37 @@ namespace Buffalo.DB.EntityInfos
                     tableAtt.BelongDB = att.InnerText;
                 }
             }
-            //初始化属性
-            FillPropertyInfo(doc, dicParam);
-            FillRelationInfo(doc, dicRelation);
+            stkXml.Push(docCur);
+
+            Type baseType = type.BaseType;
+            
+            while (baseType != null && !IsSysBaseType(baseType)) //填充父类配置
+            {
+                EntityConfigInfo config = null;
+                string baseKey =null;
+                if (baseType.IsGenericType)
+                {
+                    baseKey = baseType.GetGenericTypeDefinition().FullName;
+                }
+                else 
+                {
+                    baseKey = baseType.FullName;
+                }
+                if (dicConfigs.TryGetValue(baseKey, out config))
+                {
+                    stkXml.Push(config.ConfigXML);
+                }
+                baseType = baseType.BaseType;
+            }
+
+
+            while (stkXml.Count > 0)
+            {
+                XmlDocument doc = stkXml.Pop();
+                //初始化属性
+                FillPropertyInfo(doc, dicParam);
+                FillRelationInfo(doc, dicRelation);
+            }
             
         }
 
@@ -315,106 +257,122 @@ namespace Buffalo.DB.EntityInfos
                     int.TryParse(att.InnerText, out type);
                     ep.PropertyType = (EntityPropertyType)type;
                 }
+                att = node.Attributes["ParamName"];
+                if (att != null)
+                {
+                    ep.ParamName = att.InnerText;
+                }
                 ep.AllowNull = true;
 
                 dicParam[ep.FieldName] = ep;
             }
         }
+
+        /// <summary>
+        /// 初始化所有实体
+        /// </summary>
+        /// <param name="dicConfigs"></param>
+        internal static void InitAllEntity(Dictionary<string, EntityConfigInfo> dicConfigs) 
+        {
+            foreach (KeyValuePair<string, EntityConfigInfo> item in dicConfigs) 
+            {
+                EntityConfigInfo info = item.Value;
+                if (info.Type != null)
+                {
+                    InitEntityPropertyInfos(info.Type, dicConfigs);
+                }
+            }
+        }
+
         /// <summary>
         /// 初始化类型的属性信息
         /// </summary>
         /// <param name="type">类型</param>
         /// <returns>如果已经初始化过侧返回false</returns>
-        private static void InitEntityPropertyInfos(Type type, DBInfo db, 
-            Dictionary<string, XmlDocument> dicConfigs)
+        private static void InitEntityPropertyInfos(Type type,
+            Dictionary<string, EntityConfigInfo> dicConfigs)
         {
-            if(type==null)
+            if (type == null)
             {
                 return;
             }
 
-            Assembly ass = type.Assembly;
 
-
-
-            IDBAdapter idb = db.CurrentDbAdapter;
             string fullName = type.FullName;
             TableAttribute tableAtt = new TableAttribute();
+            CreateInstanceHandler createrHandle = null;
             //实例化本类型的句柄
-            CreateInstanceHandler createrHandle = FastValueGetSet.GetCreateInstanceHandlerWithOutCache(type);
+            if (!type.IsGenericType)
+            {
+                createrHandle = FastValueGetSet.GetCreateInstanceHandlerWithOutCache(type);
+            }
             Dictionary<string, EntityPropertyInfo> dicPropertys = new Dictionary<string, EntityPropertyInfo>();
             Dictionary<string, EntityMappingInfo> dicMapping = new Dictionary<string, EntityMappingInfo>();
-            EntityInfoHandle classInfo = new EntityInfoHandle(type, createrHandle,tableAtt.TableName, db);
-            Dictionary<string,EntityParam> dicParamsInfo=new Dictionary<string,EntityParam>();
-            Dictionary<string,TableRelationAttribute> dicRelationInfo=new Dictionary<string,TableRelationAttribute>();
-            FillEntityInfos(dicParamsInfo,db, dicRelationInfo, type, tableAtt, dicConfigs);
-            
+
+            Dictionary<string, EntityParam> dicParamsInfo = new Dictionary<string, EntityParam>();
+            Dictionary<string, TableRelationAttribute> dicRelationInfo = new Dictionary<string, TableRelationAttribute>();
+            FillEntityInfos(dicParamsInfo, dicRelationInfo, type, tableAtt, dicConfigs);
+            DBInfo db = DataAccessLoader.GetDBInfo(tableAtt.BelongDB);
+            IDBAdapter idb = db.CurrentDbAdapter;
+            EntityInfoHandle classInfo = new EntityInfoHandle(type, createrHandle, tableAtt.TableName, db);
 
             //属性信息句柄
             FieldInfo[] destproper = type.GetFields(FastValueGetSet.allBindingFlags);
-            FieldInfoHandle baseListHandle = null;
             using (DataBaseOperate oper = new DataBaseOperate(db))
             {
                 ///读取属性别名
                 foreach (FieldInfo finf in destproper)
                 {
-                    if (finf.Name == "_search_baselist_")
+
+                    ///通过属性来反射
+                    EntityParam ep = null;
+
+
+                    if (dicParamsInfo.TryGetValue(finf.Name, out ep))
                     {
+                        //if (tableAtt.IsParamNameUpper)
+                        //{
+                        //    ep.ParamName = ep.ParamName.ToUpper();
+                        //}
+
+                        if (ep.Identity) //给Oracle的主键加序列
+                        {
+                            string seqName = idb.GetSequenceName(tableAtt.TableName, ep.ParamName);
+                            if (seqName != null)//如果是Oracle的
+                            {
+                                idb.InitSequence(seqName, oper);
+                            }
+                        }
+                        string proName = ep.PropertyName;
                         GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
                         SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
-                        baseListHandle = new FieldInfoHandle(classInfo.EntityType,getHandle, setHandle, finf.FieldType, finf.Name);
+                        if (getHandle != null || setHandle != null)
+                        {
+                            EntityPropertyInfo entityProperty = new EntityPropertyInfo(classInfo, getHandle, setHandle, ep, finf.FieldType, finf.Name);
+                            dicPropertys.Add(proName, entityProperty);
+                        }
                     }
                     else
                     {
-                        ///通过属性来反射
-                        EntityParam ep = null ;
+                        TableRelationAttribute tableMappingAtt = null;
 
-
-                        if (dicParamsInfo.TryGetValue(finf.Name, out ep))
+                        if (dicRelationInfo.TryGetValue(finf.Name, out tableMappingAtt))
                         {
-                            //if (tableAtt.IsParamNameUpper)
-                            //{
-                            //    ep.ParamName = ep.ParamName.ToUpper();
-                            //}
-
-                            if (ep.Identity) //给Oracle的主键加序列
-                            {
-                                string seqName = idb.GetSequenceName(tableAtt.TableName, ep.ParamName);
-                                if (seqName != null)//如果是Oracle的
-                                {
-                                    idb.InitSequence(seqName, oper);
-                                }
-                            }
-                            string proName = ep.PropertyName;
+                            Type targetType = DefaultType.GetRealValueType(finf.FieldType);
+                            tableMappingAtt.SetEntity(type, targetType);
                             GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
                             SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
-                            if (getHandle != null || setHandle != null)
-                            {
-                                EntityPropertyInfo entityProperty = new EntityPropertyInfo(classInfo,getHandle, setHandle, ep, finf.FieldType, finf.Name);
-                                dicPropertys.Add(proName, entityProperty);
-                            }
+                            EntityMappingInfo entityMappingInfo = new EntityMappingInfo(type, getHandle, setHandle, tableMappingAtt, finf.Name, finf.FieldType);
+                            dicMapping.Add(tableMappingAtt.PropertyName, entityMappingInfo);
                         }
-                        else
-                        {
-                            TableRelationAttribute tableMappingAtt = null ;
 
-                            if (dicRelationInfo.TryGetValue(finf.Name, out tableMappingAtt))
-                            {
-                                Type targetType=DefaultType.GetRealValueType(finf.FieldType);
-                                tableMappingAtt.SetEntity(type, targetType);
-                                GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
-                                SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
-                                EntityMappingInfo entityMappingInfo = new EntityMappingInfo(type,getHandle, setHandle, tableMappingAtt, finf.Name, finf.FieldType);
-                                dicMapping.Add(tableMappingAtt.PropertyName, entityMappingInfo);
-                            }
-                            
-                        }
                     }
+
                 }
             }
-            classInfo.SetInfoHandles(dicPropertys, dicMapping, baseListHandle);
+            classInfo.SetInfoHandles(dicPropertys, dicMapping);
 
-            _dicClass[fullName]=classInfo;
+            _dicClass[fullName] = classInfo;
         }
 
         

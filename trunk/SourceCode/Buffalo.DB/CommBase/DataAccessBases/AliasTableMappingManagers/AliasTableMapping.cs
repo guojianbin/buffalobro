@@ -130,7 +130,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
                 {
                     _dicInstance[pk.ToString()] = objRet;
                 }
-                objRet._search_baselist_ = _baseList;
+                
                 _baseList.Add(objRet);
                 hasValue = false;
             }
@@ -241,7 +241,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// 添加子表
         /// </summary>
         /// <param name="table">子表</param>
-        public AliasTableMapping AddChildTable(BQLEntityTableHandle table, List<KeyWordJoinItem> lstJoin) 
+        public AliasTableMapping AddChildTable(BQLEntityTableHandle table) 
         {
             AliasTableMapping retTable = null;
             Stack<BQLEntityTableHandle> stkTables = new Stack<BQLEntityTableHandle>();
@@ -256,36 +256,35 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
             while (stkTables.Count > 0) 
             {
                 BQLEntityTableHandle cTable=stkTables.Pop();
-
+                
                 string pName = cTable.GetPropertyName();
                 if (string.IsNullOrEmpty(pName))
                 {
-                    if (cTable.GetEntityInfo().EntityType == cTable.GetEntityInfo().EntityType)
-                    {
-                        lastTable = this;
-                    }
-                    else
-                    {
-                        return null;
-                    }
+
+                    lastTable = this;
+                    retTable = this;
                 }
                 else
                 {
                     if (!lastTable._dicChildTables.ContainsKey(pName))
                     {
-                        
-                        EntityMappingInfo mapInfo = _entityInfo.MappingInfo[pName];
+                        EntityInfoHandle entityInfo = retTable.EntityInfo;
+                        EntityMappingInfo mapInfo = entityInfo.MappingInfo[pName];
                         if (mapInfo != null)
                         {
                             retTable = new AliasTableMapping(cTable, _belongManager, mapInfo);
                             lastTable._dicChildTables[pName] = retTable;
+                            lastTable = retTable;
                         }
-                        else 
+                        else
                         {
-                            throw new MissingMemberException("实体:" + _entityInfo.EntityType.FullName + "中找不到属性:" + pName + "");
+                            throw new MissingMemberException("实体:" + entityInfo.EntityType.FullName + "中找不到属性:" + pName + "");
                         }
+                        
                     }
+
                 }
+                
             }
             return retTable;
         }

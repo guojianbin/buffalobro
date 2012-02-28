@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using EnvDTE;
+using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -9,18 +11,80 @@ namespace Buffalo.DBTools.HelperKernel
     /// </summary>
     public class GrneraterBase
     {
-        protected EntityConfig _entity;
+        //protected EntityConfig _entity;
+
+        ///// <summary>
+        ///// 实体信息
+        ///// </summary>
+        //public EntityConfig Entity
+        //{
+        //    get
+        //    {
+        //        return _entity;
+        //    }
+        //}
+
+        private KeyWordTableParamItem _table;
 
         /// <summary>
-        /// 实体信息
+        /// 表信息
         /// </summary>
-        public EntityConfig Entity
+        public KeyWordTableParamItem Table
+        {
+            get { return _table; }
+        }
+
+        private Project _currentProject;
+
+        /// <summary>
+        /// 当前项目
+        /// </summary>
+        public Project CurrentProject 
+        {
+            get 
+            {
+                return _currentProject;
+            }
+        }
+
+        private string _entityBaseTypeName;
+
+        /// <summary>
+        /// 实体的基类
+        /// </summary>
+        public string EntityBaseTypeName 
+        {
+            get 
+            {
+                return _entityBaseTypeName;
+            }
+        }
+        private string _entityBaseTypeShortName;
+
+        /// <summary>
+        /// 实体的基类名
+        /// </summary>
+        public string EntityBaseTypeShortName 
+        {
+            get 
+            {
+                return _entityBaseTypeShortName;
+            }
+        }
+        private string _entityFileName;
+
+        /// <summary>
+        /// 实体文件名
+        /// </summary>
+        public string EntityFileName 
         {
             get
             {
-                return _entity;
+                return _entityFileName;
             }
         }
+
+        private string _entityNamespace;
 
         /// <summary>
         /// 实体命名空间
@@ -29,7 +93,7 @@ namespace Buffalo.DBTools.HelperKernel
         {
             get
             {
-                return _entity.Namespace;
+                return _entityNamespace;
             }
         }
 
@@ -45,17 +109,7 @@ namespace Buffalo.DBTools.HelperKernel
             }
         }
 
-        /// <summary>
-        /// 实体备注
-        /// </summary>
-        public string Summary
-        {
-            get
-            {
-                return _entity.Summary;
-            }
-        }
-
+        private string _className;
         /// <summary>
         /// 实体名称
         /// </summary>
@@ -63,7 +117,7 @@ namespace Buffalo.DBTools.HelperKernel
         {
             get
             {
-                return _entity.ClassName;
+                return _className;
             }
         }
 
@@ -107,11 +161,28 @@ namespace Buffalo.DBTools.HelperKernel
 
         public GrneraterBase(EntityConfig entity) 
         {
-            _entity = entity;
+            //_entity = entity;
+            //_tableName = entity.TableName;
+            _table = entity.ToTableInfo();
+            _currentProject = entity.CurrentProject;
+            _entityBaseTypeName = entity.BaseTypeName;
+
+            _entityBaseTypeShortName = _entityBaseTypeName;
+            int lastDot = _entityBaseTypeShortName.LastIndexOf('.');
+            if (lastDot >= 0)
+            {
+                _entityBaseTypeShortName = _entityBaseTypeShortName.Substring(lastDot + 1, _entityBaseTypeShortName.Length-lastDot - 1);
+            }
+            _entityFileName = entity.FileName;
+            _entityNamespace = entity.Namespace;
+            //_summary = entity.Summary;
+            _className = entity.ClassName;
             _BQLEntityNamespace = entity.Namespace + ".BQLEntity";
             _businessNamespace = entity.Namespace + ".Business";
             _dataAccessNamespace = entity.Namespace + ".DataAccess";
             _DBName = entity.CurrentDBConfigInfo.DbName; ;
         }
+
+        
     }
 }

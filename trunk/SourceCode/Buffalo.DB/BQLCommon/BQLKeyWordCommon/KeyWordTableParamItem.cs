@@ -18,6 +18,33 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
     /// </summary>
     public class KeyWordTableParamItem : BQLQuery
     {
+        private EntityParam _primaryParam;
+
+        /// <summary>
+        /// Ö÷¼ü
+        /// </summary>
+        public EntityParam PrimaryParam
+        {
+            get 
+            {
+                if (_primaryParam == null) 
+                {
+                    int pkValue=(int)EntityPropertyType.PrimaryKey;
+                    foreach (EntityParam prm in _tparams) 
+                    {
+                        if (EnumUnit.ContainerValue((int)prm.PropertyType, pkValue)) 
+                        {
+                            _primaryParam = prm;
+                            break;
+                        }
+                    }
+                }
+                return _primaryParam;
+            }
+            
+        }
+
+
         protected List<EntityParam> _tparams;
         /// <summary>
         /// ×Ö¶Î
@@ -35,6 +62,29 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         {
             get { return _tableName; }
         }
+
+        private string _description;
+
+        /// <summary>
+        /// ±í×¢ÊÍ
+        /// </summary>
+        public string Description
+        {
+            get { return _description; }
+            set { _description = value; }
+        }
+
+        private bool _isView;
+
+        /// <summary>
+        /// ÊÇ·ñÊÓÍ¼
+        /// </summary>
+        public bool IsView
+        {
+            get { return _isView; }
+            set { _isView = value; }
+        }
+
         private List<TableRelationAttribute> _relationItems;
 
         /// <summary>
@@ -121,9 +171,6 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
                     sb.Append(",");
                 }
             }
-
-            
-
             info.Condition.SqlParams.Append(sb.ToString());
         }
     }

@@ -10,7 +10,7 @@ namespace <%=EntityNamespace%>
 	/// <summary>
 	///  <%=Summary%>
 	/// </summary>
-	public partial class <%=ClassName%>
+	public partial class <%=ClassFullName%>
 	{
 		
 	}

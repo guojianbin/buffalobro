@@ -11,6 +11,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using System.IO;
 using Buffalo.DBTools.HelperKernel;
+using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 
 namespace Buffalo.DBTools
 {
@@ -49,7 +50,15 @@ namespace Buffalo.DBTools
             get { return _currentProject; }
             set { _currentProject = value; }
         }
-
+        ClassDesignerDocView _selectDocView;
+        /// <summary>
+        /// Ñ¡ÔñµÄÎÄµµ
+        /// </summary>
+        public ClassDesignerDocView SelectDocView
+        {
+            get { return _selectDocView; }
+            set { _selectDocView = value; }
+        }
         GridViewComboBoxCell _cmbCell = null;
         GridViewComboBoxCell _relationCell = null;
         EntityConfig _config = null;
@@ -60,6 +69,7 @@ namespace Buffalo.DBTools
             gvField.AutoGenerateColumns = false;
             gvMapping.AutoGenerateColumns = false;
             _config = new EntityConfig(SelectedClass.AssociatedType, CurrentProject, SelectedDiagram);
+            _config.SelectDocView = SelectDocView;
             BindFieldInfos();
             //_cmbCell.SetDataSource(EntityFieldBase.GetAllSupportTypes());
             gvMapping.CurrentCellChanged += new EventHandler(gvMapping_CurrentCellChanged);

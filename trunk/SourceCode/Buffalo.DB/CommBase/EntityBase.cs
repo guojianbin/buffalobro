@@ -19,7 +19,6 @@ namespace Buffalo.DB.CommBase
     public class EntityBase
     {
         private EntityInfoHandle thisInfo = null;//当前类的信息
-        internal IList _search_baselist_ = null;
         internal Dictionary<string, bool> _dicUpdateProperty___ = null;//记录被修改过值的属性
 
         /// <summary>

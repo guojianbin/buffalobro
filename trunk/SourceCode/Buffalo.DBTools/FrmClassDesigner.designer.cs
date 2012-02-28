@@ -52,7 +52,7 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.gvMapping = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.btnGenCode = new System.Windows.Forms.Button();
             this.ColSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ColField = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -307,7 +307,7 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.button3);
+            this.panel3.Controls.Add(this.btnClose);
             this.panel3.Controls.Add(this.btnGenCode);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel3.Location = new System.Drawing.Point(3, 456);
@@ -315,15 +315,15 @@
             this.panel3.Size = new System.Drawing.Size(791, 36);
             this.panel3.TabIndex = 25;
             // 
-            // button3
+            // btnClose
             // 
-            this.button3.Location = new System.Drawing.Point(707, 6);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 24;
-            this.button3.Text = "关闭";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnClose.Location = new System.Drawing.Point(707, 6);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 24;
+            this.btnClose.Text = "关闭";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.button3_Click);
             // 
             // btnGenCode
             // 
@@ -376,13 +376,15 @@
             // ColIsToDB
             // 
             this.ColIsToDB.DataPropertyName = "IsToDB";
-            this.ColIsToDB.HeaderText = "生成到数据库";
+            this.ColIsToDB.HeaderText = "生成约束";
             this.ColIsToDB.Name = "ColIsToDB";
             // 
             // FrmClassDesigner
             // 
+            this.AcceptButton = this.btnGenCode;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(797, 539);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -431,7 +433,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPropertyType;
         private System.Windows.Forms.TabPage tpMapping;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnGenCode;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.DataGridView gvMapping;

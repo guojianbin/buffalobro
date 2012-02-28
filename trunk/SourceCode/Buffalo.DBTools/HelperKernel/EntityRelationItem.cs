@@ -14,14 +14,12 @@ namespace Buffalo.DBTools.HelperKernel
         private string _sourceProperty;
         private string _targetProperty;
         private bool _isToDB;
-        private bool _isParent;
         /// <summary>
         /// 是否主表属性
         /// </summary>
         public bool IsParent
         {
-            get { return _isParent; }
-            set { _isParent = value; }
+            get { return GetIsParent(_fInfo); }
         }
         /// <summary>
         /// 生成到数据库
@@ -75,6 +73,21 @@ namespace Buffalo.DBTools.HelperKernel
             }
         }
 
+        public TableRelationAttribute GetRelationInfo()
+        {
+            TableRelationAttribute tr = new TableRelationAttribute();
+            tr.Description = Summary;
+            tr.FieldName = FieldName;
+            tr.FieldTypeName = FInfo.MemberTypeShortName;
+            tr.IsParent = IsParent;
+            tr.PropertyName = PropertyName;
+            tr.SourceName = SourceProperty;
+            tr.SourceTable = BelongEntity.TableName;
+            tr.TargetName = TargetProperty;
+            tr.IsParent = IsParent;
+            return tr;
+        }
+
         /// <summary>
         /// 实体映射
         /// </summary>
@@ -85,7 +98,7 @@ namespace Buffalo.DBTools.HelperKernel
         {
             _cp = cp;
             _fInfo = fInfo;
-            _isParent = GetIsParent(fInfo);
+            //_isParent = GetIsParent(fInfo);
             GetInfo(fInfo);
             _belongEntity = belongEntity;
         }

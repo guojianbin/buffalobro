@@ -106,7 +106,23 @@ namespace Buffalo.DBTools.HelperKernel
             set { _length = value; }
         }
 
-        
+        /// <summary>
+        /// 转换成字段信息
+        /// </summary>
+        /// <returns></returns>
+        public EntityParam ToParamInfo() 
+        {
+            EntityParam ep = new EntityParam();
+            ep.FieldName = FieldName;
+            ep.Description = Summary;
+            ep.ParamName = ParamName;
+            ep.PropertyName = PropertyName;
+            ep.SqlType = (DbType)EnumUnit.GetEnumInfoByName(typeof(DbType), DbType).Value;
+            ep.PropertyType = EntityPropertyType;
+            ep.AllowNull = true;
+            return ep;
+        }
+
 
         /// <summary>
         /// 添加到源码
