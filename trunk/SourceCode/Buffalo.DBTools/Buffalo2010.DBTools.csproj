@@ -227,6 +227,18 @@
     <EmbeddedResource Include="Models.resx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\BQLDataAccess.txt" />
+    <Content Include="Resources\BQLDB.txt" />
+    <Content Include="Resources\BQLEntity.txt" />
+    <Content Include="Resources\Business.txt" />
+    <Content Include="Resources\DataAccess.txt" />
+    <Content Include="Resources\DataaccessConfig.txt" />
+    <Content Include="Resources\DBconfig.txt" />
+    <Content Include="Resources\Entity.txt" />
+    <Content Include="Resources\IDataAccess.txt" />
+    <Content Include="Resources\UserEntity.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Buffalo.DB\Buffalo2010.DB.csproj">
       <Project>{9B0043E4-883B-47BA-9A5A-5110C8583902}</Project>
       <Name>Buffalo2010.DB</Name>
@@ -239,18 +251,6 @@
       <Project>{48492BAD-6312-4A80-A660-C0DA04957227}</Project>
       <Name>Buffalo2010.Win32Kernel</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\BQLDataAccess.txt" />
-    <Content Include="Resources\BQLDB.txt" />
-    <Content Include="Resources\BQLEntity.txt" />
-    <Content Include="Resources\Business.txt" />
-    <Content Include="Resources\DataAccess.txt" />
-    <Content Include="Resources\DataaccessConfig.txt" />
-    <Content Include="Resources\DBconfig.txt" />
-    <Content Include="Resources\Entity.txt" />
-    <Content Include="Resources\IDataAccess.txt" />
-    <Content Include="Resources\UserEntity.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
