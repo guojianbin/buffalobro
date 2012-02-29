@@ -336,76 +336,75 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                 paramVal = EntityInfo.DBInfo.CurrentDbAdapter.FormatValueName(DataAccessCommon.FormatParam(info.ParamName, index));
                 paramKey = EntityInfo.DBInfo.CurrentDbAdapter.FormatParamKeyName(DataAccessCommon.FormatParam(info.ParamName, index));
 
-                if (DefaultType.IsDefaultValue(curValue)) //如果是主键且没有初始值，则自动增长
-                {
-                    if (info.Identity)
-                    {
-                        if (info.SqlType == DbType.Guid)
-                        {
-                            curValue = Guid.NewGuid();
-                            info.SetValue(obj, curValue);
-                        }
-                        else
-                        {
-                            if (fillIdentity)
-                            {
-                                string idenSQL = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentityValueSQL(EntityInfo);
-                                if (!string.IsNullOrEmpty(idenSQL))
-                                {
-                                    using (IDataReader reader = _oper.Query(idenSQL, null))
-                                    {
-                                        if (reader.Read())
-                                        {
-                                            //object value = reader[0];
 
-                                            EntityInfo.DBInfo.CurrentDbAdapter.SetObjectValueFromReader(reader, 0, obj, info);
-                                            curValue = info.GetValue(obj);
-                                        }
-                                    }
-                                }
-                                else
+                if (info.Identity)
+                {
+                    if (info.SqlType == DbType.Guid)
+                    {
+                        curValue = Guid.NewGuid();
+                        info.SetValue(obj, curValue);
+                    }
+                    else
+                    {
+                        if (fillIdentity)
+                        {
+                            string idenSQL = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentityValueSQL(EntityInfo);
+                            if (!string.IsNullOrEmpty(idenSQL))
+                            {
+                                using (IDataReader reader = _oper.Query(idenSQL, null))
                                 {
-                                    identityInfo = info;
-                                    continue;
+                                    if (reader.Read())
+                                    {
+                                        //object value = reader[0];
+
+                                        EntityInfo.DBInfo.CurrentDbAdapter.SetObjectValueFromReader(reader, 0, obj, info);
+                                        curValue = info.GetValue(obj);
+                                    }
                                 }
                             }
                             else
                             {
-                                param = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentityParamName(info);
-                                if (!string.IsNullOrEmpty(param))
-                                {
-                                    sqlParams.Append(",");
-                                    sqlParams.Append(param);
-                                }
-                                svalue = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentityParamValue(EntityInfo, info);
-                                if (!string.IsNullOrEmpty(svalue))
-                                {
-                                    sqlValues.Append(",");
-                                    sqlValues.Append(svalue);
-                                }
+                                identityInfo = info;
                                 continue;
                             }
                         }
-                    }
-                    else if (info.IsVersion) //版本初始值
-                    {
-                        object conValue = GetDefaultConcurrency(info);
-                        if (conValue != null)
+                        else
                         {
-                            sqlParams.Append(",");
-                            sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
-                            sqlValues.Append(",");
-                            sqlValues.Append(paramVal);
-                            list.AddNew(paramKey, info.SqlType, conValue);
-                            index++;
+                            param = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentityParamName(info);
+                            if (!string.IsNullOrEmpty(param))
+                            {
+                                sqlParams.Append(",");
+                                sqlParams.Append(param);
+                            }
+                            svalue = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentityParamValue(EntityInfo, info);
+                            if (!string.IsNullOrEmpty(svalue))
+                            {
+                                sqlValues.Append(",");
+                                sqlValues.Append(svalue);
+                            }
                             continue;
                         }
                     }
-                    else
+                }
+                else if (info.IsVersion) //版本初始值
+                {
+                    object conValue = GetDefaultConcurrency(info);
+                    if (conValue != null)
                     {
+                        sqlParams.Append(",");
+                        sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
+                        sqlValues.Append(",");
+                        sqlValues.Append(paramVal);
+                        list.AddNew(paramKey, info.SqlType, conValue);
+                        index++;
                         continue;
                     }
                 }
+                else if (curValue == null)
+                {
+                    continue;
+                }
+
                 sqlParams.Append(",");
                 sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
                 sqlValues.Append(",");

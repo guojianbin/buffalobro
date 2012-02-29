@@ -23,6 +23,7 @@ namespace Buffalo.DB.PropertyAttributes
         private string _sourceTable;
         private string _targetTable;
         private string _fieldName;
+        private bool _isToDB=false;
          /// <summary>
         /// 关联映射信息
         /// </summary>
@@ -96,7 +97,14 @@ namespace Buffalo.DB.PropertyAttributes
             get { return _fieldTypeName; }
             set { _fieldTypeName = value; }
         }
-
+        /// <summary>
+        /// 是否生成到数据库
+        /// </summary>
+        public bool IsToDB 
+        {
+            get { return _isToDB; }
+            set { _isToDB = value; }
+        }
         /// <summary>
         /// 约束名
         /// </summary>

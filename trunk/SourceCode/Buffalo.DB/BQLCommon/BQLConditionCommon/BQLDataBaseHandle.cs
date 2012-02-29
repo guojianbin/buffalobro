@@ -7,6 +7,7 @@ using Buffalo.DB.DbCommon;
 using Buffalo.DB.CommBase;
 using Buffalo.DB.CommBase.BusinessBases;
 using Buffalo.Kernel.FastReflection;
+using System.Reflection;
 
 namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 {
@@ -24,6 +25,25 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             
             return _db;
             
+        }
+
+        /// <summary>
+        /// 初始化数据库
+        /// </summary>
+        public static void InitDB() 
+        {
+            Type type = typeof(T);
+            Type baseType=typeof(BQLEntityTableHandle);
+            PropertyInfo[] infos = type.GetProperties();
+            foreach (PropertyInfo info in infos) 
+            {
+                Type objType = info.PropertyType;
+                if (!objType.IsSubclassOf(baseType)) 
+                {
+                    continue;
+                }
+                AddToDB(FastValueGetSet.GetGetMethodInfo(info.Name, type).Invoke(null, new object[] { }) as BQLEntityTableHandle);
+            }
         }
 
         /// <summary>

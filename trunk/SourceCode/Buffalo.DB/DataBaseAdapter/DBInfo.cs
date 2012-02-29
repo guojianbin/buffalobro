@@ -55,7 +55,14 @@ namespace Buffalo.DB.DataBaseAdapter
             _dbName = dbName;
             InitAdapters();
         }
-
+        /// <summary>
+        /// 抛出找不到表的异常
+        /// </summary>
+        /// <param name="eType"></param>
+        internal void ThrowNotFondTable(Type eType)
+        {
+            throw new Exception("找不到实体：" + eType.Name + " 对应的表，请检查程序启动时候数据库：" + _dbName + " 是否已经调用InitDB()方法进行初始化");
+        }
 
         /// <summary>
         /// 初始化数据库适配器

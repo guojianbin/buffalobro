@@ -204,7 +204,11 @@ namespace Buffalo.DB.EntityInfos
                 {
                     tr.IsParent = att.InnerText == "1";
                 }
-
+                att = node.Attributes["IsToDB"];
+                if (att != null)
+                {
+                    tr.IsToDB = att.InnerText == "1";
+                }
                 dicRelation[tr.FieldName] = tr;
 
             }
@@ -285,6 +289,27 @@ namespace Buffalo.DB.EntityInfos
         }
 
         /// <summary>
+        /// 填充没找到的字段和关系
+        /// </summary>
+        /// <param name="dicParams">字段配置</param>
+        /// <param name="dicRelation">关系配置</param>
+        /// <param name="dicNotFindParam">没找到的字段</param>
+        /// <param name="dicNotFindRelation">没找到的关系</param>
+        private static void FillNotFoundField(Dictionary<string, EntityParam> dicParams,
+            Dictionary<string, TableRelationAttribute> dicRelation, Dictionary<string, bool> dicNotFoundParam,
+            Dictionary<string, bool> dicNotFoundRelation) 
+        {
+            foreach (KeyValuePair<string, EntityParam> kvpPrm in dicParams) 
+            {
+                dicNotFoundParam[kvpPrm.Key] = true;
+            }
+            foreach (KeyValuePair<string, TableRelationAttribute> kvpTr in dicRelation)
+            {
+                dicNotFoundRelation[kvpTr.Key] = true;
+            }
+        }
+
+        /// <summary>
         /// 初始化类型的属性信息
         /// </summary>
         /// <param name="type">类型</param>
@@ -315,6 +340,10 @@ namespace Buffalo.DB.EntityInfos
             DBInfo db = DataAccessLoader.GetDBInfo(tableAtt.BelongDB);
             IDBAdapter idb = db.CurrentDbAdapter;
             EntityInfoHandle classInfo = new EntityInfoHandle(type, createrHandle, tableAtt.TableName, db);
+
+            Dictionary<string, bool> dicNotFoundParam=new Dictionary<string,bool>();
+            Dictionary<string, bool> dicNotFoundRelation = new Dictionary<string, bool>();
+            FillNotFoundField(dicParamsInfo, dicRelationInfo, dicNotFoundParam, dicNotFoundRelation);
 
             //属性信息句柄
             FieldInfo[] destproper = type.GetFields(FastValueGetSet.allBindingFlags);
@@ -350,6 +379,7 @@ namespace Buffalo.DB.EntityInfos
                         {
                             EntityPropertyInfo entityProperty = new EntityPropertyInfo(classInfo, getHandle, setHandle, ep, finf.FieldType, finf.Name);
                             dicPropertys.Add(proName, entityProperty);
+                            dicNotFoundParam.Remove(finf.Name);
                         }
                     }
                     else
@@ -364,11 +394,35 @@ namespace Buffalo.DB.EntityInfos
                             SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
                             EntityMappingInfo entityMappingInfo = new EntityMappingInfo(type, getHandle, setHandle, tableMappingAtt, finf.Name, finf.FieldType);
                             dicMapping.Add(tableMappingAtt.PropertyName, entityMappingInfo);
+                            dicNotFoundRelation.Remove(finf.Name);
                         }
 
                     }
 
                 }
+            }
+
+            if (dicNotFoundParam.Count > 0 || dicNotFoundRelation.Count > 0) 
+            {
+                StringBuilder message = new StringBuilder();
+                
+                foreach(KeyValuePair<string,bool> kvp in dicNotFoundParam)
+                {
+                    message.Append(kvp.Key + "、");
+                }
+                
+
+                foreach (KeyValuePair<string, bool> kvp in dicNotFoundRelation)
+                {
+                    message.Append(kvp.Key + "、");
+                }
+                if (message.Length > 0)
+                {
+                    message.Remove(message.Length - 1, 1);
+                }
+                message.Insert(0, "类:" + type.FullName + " 找不到字段:");
+                message.Append("，请检查该类或其父类的对应字段是否为protected或更高的访问级别");
+                throw new MissingFieldException(message.ToString());
             }
             classInfo.SetInfoHandles(dicPropertys, dicMapping);
 

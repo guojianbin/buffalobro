@@ -220,8 +220,13 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             }
             
             StringBuilder ret = new StringBuilder();
-            
-            List<BQLParamHandle> propertyNames = lstScope.GetShowProperty(CurEntityInfo.DBInfo.FindTable(typeof(T)));
+
+            BQLEntityTableHandle table = CurEntityInfo.DBInfo.FindTable(typeof(T));
+            if (CommonMethods.IsNull(table))
+            {
+                CurEntityInfo.DBInfo.ThrowNotFondTable(typeof(T));
+            }
+            List<BQLParamHandle> propertyNames = lstScope.GetShowProperty(table);
 
 
             if (propertyNames.Count > 0)

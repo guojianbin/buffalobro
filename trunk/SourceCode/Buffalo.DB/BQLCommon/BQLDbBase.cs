@@ -80,7 +80,7 @@ namespace Buffalo.DB.BQLCommon
             BQLEntityTableHandle table = oper.DBInfo.FindTable(eType);
             if (CommonMethods.IsNull(table))
             {
-                throw new Exception("找不到此表");
+                oper.DBInfo.ThrowNotFondTable(eType);
             }
 
             BQLCondition where = BQLCondition.TrueValue;
@@ -103,6 +103,8 @@ namespace Buffalo.DB.BQLCommon
             return ret;
         }
 
+        
+
         /// <summary>
         /// 查询表
         /// </summary>
@@ -116,7 +118,7 @@ namespace Buffalo.DB.BQLCommon
             BQLEntityTableHandle table = oper.DBInfo.FindTable(eType);
             if (CommonMethods.IsNull(table)) 
             {
-                throw new Exception("找不到此表");
+                oper.DBInfo.ThrowNotFondTable(eType);
             }
             BQLQuery BQL = GetSelectSql(lstScope, table);
             if (!lstScope.HasPage)
@@ -358,7 +360,7 @@ namespace Buffalo.DB.BQLCommon
             BQLEntityTableHandle table = oper.DBInfo.FindTable(eType);
             if (CommonMethods.IsNull(table))
             {
-                throw new Exception("找不到此表");
+                oper.DBInfo.ThrowNotFondTable(eType);
             }
            // List<BQLParamHandle> lstParams = GetParam(table, lstScope);
            // BQLCondition where = BQLCondition.TrueValue;
@@ -510,7 +512,7 @@ namespace Buffalo.DB.BQLCommon
             BQLEntityTableHandle table = oper.DBInfo.FindTable(tableType);
             if (CommonMethods.IsNull(table))
             {
-                throw new Exception("找不到此表");
+                oper.DBInfo.ThrowNotFondTable(tableType);
             }
             
             BQLQuery BQL = GetSelectSql(lstScope, table);
@@ -545,7 +547,7 @@ namespace Buffalo.DB.BQLCommon
             BQLEntityTableHandle table = oper.DBInfo.FindTable(tableType);
             if (CommonMethods.IsNull(table))
             {
-                throw new Exception("找不到此表");
+                oper.DBInfo.ThrowNotFondTable(tableType);
             }
             
             BQLQuery BQL = GetSelectSql(lstScope, table);
@@ -593,7 +595,7 @@ namespace Buffalo.DB.BQLCommon
             BQLEntityTableHandle table = oper.DBInfo.FindTable(eType);
             if (CommonMethods.IsNull(table))
             {
-                throw new Exception("找不到此表");
+                oper.DBInfo.ThrowNotFondTable(eType);
             }
             List<BQLParamHandle> lstParams = new List<BQLParamHandle>();
             lstParams.Add(table[table.GetEntityInfo().PrimaryProperty.PropertyName]);
@@ -647,7 +649,7 @@ namespace Buffalo.DB.BQLCommon
             BQLEntityTableHandle table = oper.DBInfo.FindTable(eType);
             if (CommonMethods.IsNull(table))
             {
-                throw new Exception("找不到此表");
+                oper.DBInfo.ThrowNotFondTable(eType);
             }
             List<BQLParamHandle> lstParams = GetParam(table, lstScope);
             BQLCondition where = BQLCondition.TrueValue;
