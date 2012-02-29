@@ -29,10 +29,7 @@ namespace Buffalo.DBTools.HelperKernel
                 Directory.CreateDirectory(dicPath);
             }
             string fileName = dicPath + "\\" + DBName + ".cs";
-            if (File.Exists(fileName))
-            {
-                return;
-            }
+            
             string model = Models.BQLDB;
 
             List<string> codes = new List<string>();

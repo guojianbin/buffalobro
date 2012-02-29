@@ -9,7 +9,7 @@ namespace <%=BQLEntityNamespace%>
 {
     public partial class <%=DBName%>
     {
-        private static <%=DBName%>_<%=ClassName%> _<%=ClassName%> = AddToDB(new <%=DBName%>_<%=ClassName%>()) as <%=DBName%>_<%=ClassName%>;
+        private static <%=DBName%>_<%=ClassName%> _<%=ClassName%> = new <%=DBName%>_<%=ClassName%>();
     
         public static <%=DBName%>_<%=ClassName%> <%=ClassName%>
         {

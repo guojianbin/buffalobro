@@ -644,7 +644,7 @@ namespace Buffalo.DBTools.HelperKernel
         }
 
         private static readonly string[] BaseTypes ={ 
-            typeof(EntityBase).FullName, typeof(object).FullName,"Buffalo.DB.CommBase.BusinessBases.ThinModelBase<T>" };
+            typeof(EntityBase).FullName, typeof(object).FullName,"Buffalo.DB.CommBase.BusinessBases.ThinModelBase" };
 
         /// <summary>
         /// 是否系统类型

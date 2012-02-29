@@ -144,7 +144,10 @@ namespace Buffalo.DBTools.ROMHelper
             StringBuilder sb = new StringBuilder();
             foreach (TableRelationAttribute er in _belongTable.RelationItems) 
             {
+                if (er.IsParent) 
+                {
 
+                }
             }
             return sb.ToString();
         }
@@ -159,29 +162,29 @@ namespace Buffalo.DBTools.ROMHelper
             foreach (EntityParam prm in _belongTable.Params) 
             {
                 prm.FieldName = "_"+EntityFieldBase.ToCamelName(prm.ParamName);
-                sb.Append("		///<summary>\n");
-                sb.Append("		///" + prm.Description + "\n");
-                sb.Append("		///</summary>\n");
-                sb.Append("		private " + ToCSharpType(prm.SqlType) + " " + prm.FieldName + ";\n");
-                sb.Append("		\n");
-                sb.Append("		/// <summary>\n");
-                sb.Append("		///"+prm.Description+"\n");
-                sb.Append("		///</summary>\n");
+                sb.AppendLine("		///<summary>");
+                sb.AppendLine("		///" + prm.Description);
+                sb.AppendLine("		///</summary>");
+                sb.AppendLine("		private " + ToCSharpType(prm.SqlType) + " " + prm.FieldName + ";");
+                sb.AppendLine("		");
+
 
                 prm.PropertyName = EntityFieldBase.ToPascalName(prm.ParamName);
-
-                sb.Append("     public string "+prm.PropertyName+"\n");
-                sb.Append("     {");
-                sb.Append("          get");
-                sb.Append("          {");
-                sb.Append("               return " + prm.FieldName + ";");
-                sb.Append("          }");
-                sb.Append("          set");
-                sb.Append("          {");
-                sb.Append("              " + prm.FieldName + "=value;");
-                sb.Append("              OnPropertyUpdated(\"" + prm.PropertyName + "\");");
-                sb.Append("          }");
-                sb.Append("     }");
+                sb.AppendLine("		/// <summary>");
+                sb.AppendLine("		///" + prm.Description + "");
+                sb.AppendLine("		///</summary>");
+                sb.AppendLine("     public string " + prm.PropertyName + "");
+                sb.AppendLine("     {");
+                sb.AppendLine("          get");
+                sb.AppendLine("          {");
+                sb.AppendLine("               return " + prm.FieldName + ";");
+                sb.AppendLine("          }");
+                sb.AppendLine("          set");
+                sb.AppendLine("          {");
+                sb.AppendLine("              " + prm.FieldName + "=value;");
+                sb.AppendLine("              OnPropertyUpdated(\"" + prm.PropertyName + "\");");
+                sb.AppendLine("          }");
+                sb.AppendLine("     }");
             }
 
             return sb.ToString();
