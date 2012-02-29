@@ -8,7 +8,7 @@ namespace Buffalo.Kernel.Defaults
     public class DefaultType
     {
         private static TypeItem[] dbTypeMapping;
-        private static Dictionary<string, TypeItem> dic = InitDefauleValues();
+        private static Dictionary<string, TypeItem> _dicDefaultValues = InitDefauleValues();
         
 
         private static Dictionary<string, TypeItem> InitDefauleValues()
@@ -133,7 +133,7 @@ namespace Buffalo.Kernel.Defaults
             }
             string typeName = value.GetType().FullName;
             TypeItem item = null;
-            if (dic.TryGetValue(typeName, out item)) 
+            if (_dicDefaultValues.TryGetValue(typeName, out item)) 
             {
                 return value.Equals(item.DefaultValue);
             }
@@ -149,7 +149,7 @@ namespace Buffalo.Kernel.Defaults
         {
             string typeName = objType.FullName;
             TypeItem item = null;
-            dic.TryGetValue(typeName, out item);
+            _dicDefaultValues.TryGetValue(typeName, out item);
             return item;
         }
 
