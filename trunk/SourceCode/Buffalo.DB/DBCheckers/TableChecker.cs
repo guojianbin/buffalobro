@@ -26,6 +26,17 @@ namespace Buffalo.DB.DBCheckers
         }
 
         /// <summary>
+        /// 获取表信息
+        /// </summary>
+        /// <param name="info">数据库</param>
+        /// <param name="tableNames">表名</param>
+        /// <returns></returns>
+        public static List<DBTableInfo> GetTableInfo(DBInfo info,List<string> tableNames) 
+        {
+            return info.DBStructure.GetTablesInfo(info.DefaultOperate, info, tableNames);
+        }
+
+        /// <summary>
         /// 检查表信息
         /// </summary>
         /// <param name="info">数据库</param>

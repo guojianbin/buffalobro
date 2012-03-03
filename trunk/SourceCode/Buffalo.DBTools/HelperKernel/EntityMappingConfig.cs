@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml;
 using System.IO;
 using Buffalo.DB.PropertyAttributes;
+using Buffalo.DBTools.ROMHelper;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -164,6 +165,27 @@ namespace Buffalo.DBTools.HelperKernel
         /// 保存XML信息
         /// </summary>
         /// <param name="entity"></param>
+        public static void SaveXML(DBEntityInfo entity)
+        {
+
+            //string fileName = entity.FileName.Replace(entity.ClassName + ".cs", entity.ClassName + ".be.xml");
+            FileInfo classFile = new FileInfo(entity.FileName);
+            string dicName = classFile.DirectoryName + "\\BEM\\";
+            if (!Directory.Exists(dicName))
+            {
+                Directory.CreateDirectory(dicName);
+            }
+            string fileName = dicName + entity.ClassName + ".BEM.xml";
+            XmlDocument doc = ToXML(entity);
+            SaveXML(fileName, doc);
+            EnvDTE.ProjectItem newit = entity.CurrentProject.ProjectItems.AddFromFile(fileName);
+            newit.Properties.Item("BuildAction").Value = 3;
+        }
+
+        /// <summary>
+        /// 保存XML信息
+        /// </summary>
+        /// <param name="entity"></param>
         public static void SaveXML(EntityConfig entity) 
         {
             
@@ -213,6 +235,122 @@ namespace Buffalo.DBTools.HelperKernel
             XmlDocument doc = NewXmlDocument();
             doc.Load(path);
             return doc;
+        }
+
+
+        /// <summary>
+        /// 实体生成XML配置
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static XmlDocument ToXML(DBEntityInfo entity)
+        {
+            XmlDocument doc = NewXmlDocument();
+
+            XmlNode classNode = doc.CreateElement("class");
+            doc.AppendChild(classNode);
+
+            XmlAttribute att = doc.CreateAttribute("TableName");
+            att.InnerText = entity.BelongTable.Name;
+            classNode.Attributes.Append(att);
+
+            att = doc.CreateAttribute("ClassName");
+            string className = entity.ClassName;
+            att.InnerText = entity.EntityNamespace + "." + className;
+            classNode.Attributes.Append(att);
+
+            att = doc.CreateAttribute("IsTable");
+            att.InnerText = entity.BelongTable.IsView?"0":"1";
+            classNode.Attributes.Append(att);
+
+            att = doc.CreateAttribute("BelongDB");
+            att.InnerText = entity.CurrentDBConfigInfo.DbName;
+            classNode.Attributes.Append(att);
+
+            AppendPropertyInfo(entity, classNode);
+            AppendRelationInfo(entity, classNode);
+            return doc;
+        }
+
+        /// <summary>
+        /// 添加映射信息
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="classNode"></param>
+        private static void AppendRelationInfo(DBEntityInfo entity, XmlNode classNode)
+        {
+            XmlDocument doc = classNode.OwnerDocument;
+            foreach (TableRelationAttribute field in entity.BelongTable.RelationItems)
+            {
+                
+                //EntityParamField field = kp.Value;
+                XmlNode node = doc.CreateElement("relation");
+                classNode.AppendChild(node);
+
+                XmlAttribute att = doc.CreateAttribute("FieldName");//字段名
+                att.InnerText = field.FieldName;
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("PropertyName");//对应的属性名名
+                att.InnerText = field.PropertyName;
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("SourceProperty");//数据库类型
+                att.InnerText = field.SourceName;
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("TargetProperty");//数据库类型长度
+                att.InnerText = field.TargetName;
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("IsToDB");//数据库类型长度
+                att.InnerText = field.IsToDB ? "1" : "0";
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("IsParent");//数据库类型长度
+                att.InnerText = field.IsParent ? "1" : "0";
+                node.Attributes.Append(att);
+            }
+        }
+
+        /// <summary>
+        /// 添加属性的XML信息
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="classNode"></param>
+        private static void AppendPropertyInfo(DBEntityInfo entity, XmlNode classNode)
+        {
+            XmlDocument doc = classNode.OwnerDocument;
+            foreach (EntityParam field in entity.BelongTable.Params)
+            {
+                //EntityParamField field = kp.Value;
+                XmlNode node = doc.CreateElement("property");
+                classNode.AppendChild(node);
+
+                XmlAttribute att = doc.CreateAttribute("FieldName");//字段名
+                att.InnerText = field.FieldName;
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("PropertyName");//对应的属性名名
+                att.InnerText = field.PropertyName;
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("DbType");//数据库类型
+                att.InnerText = field.SqlType.ToString();
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("Length");//数据库类型长度
+                att.InnerText = field.Length.ToString();
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("EntityPropertyType");//类型
+                att.InnerText = ((int)field.PropertyType).ToString();
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("ParamName");//字段名
+                att.InnerText = field.ParamName;
+                node.Attributes.Append(att);
+            }
         }
 
         /// <summary>

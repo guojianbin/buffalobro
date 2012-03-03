@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
+using Buffalo.DBTools.ROMHelper;
+using EnvDTE;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -19,7 +21,11 @@ namespace Buffalo.DBTools.HelperKernel
             dmt = new DataAccessMappingConfig(entity);
         }
 
-
+        public Generate3Tier(DBEntityInfo entity,Project project)
+            : base(entity, project)
+        {
+            dmt = new DataAccessMappingConfig(entity,project);
+        }
 
         /// <summary>
         /// 生成业务层

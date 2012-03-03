@@ -5,7 +5,8 @@ using System.Data;
 using Buffalo.DB.CommBase;
 using Buffalo.Kernel.Defaults;
 using Buffalo.DB.PropertyAttributes;
-namespace <%=EntityNamespace%>;
+using Buffalo.DB.CommBase.BusinessBases;
+namespace <%=EntityNamespace%>
 {
 	/// <summary>
     /// <%=Summary%>
@@ -15,5 +16,7 @@ namespace <%=EntityNamespace%>;
 <%=EntityFields%>
         
 <%=EntityRelations%>
+
+<%=EntityContext%>
     }
 }

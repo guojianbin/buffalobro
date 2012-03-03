@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using EnvDTE;
 using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
+using Buffalo.DBTools.ROMHelper;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -159,6 +160,26 @@ namespace Buffalo.DBTools.HelperKernel
             }
         }
 
+        public GrneraterBase(DBEntityInfo entity,Project curProject) 
+        {
+            _table = entity.ToTableInfo();
+            _className = entity.ClassName;
+            _currentProject = curProject;
+            _entityBaseTypeName = entity.BaseType;
+            _entityBaseTypeShortName = entity.BaseType;
+            int lastDot = _entityBaseTypeShortName.LastIndexOf('.');
+            if (lastDot >= 0)
+            {
+                _entityBaseTypeShortName = _entityBaseTypeShortName.Substring(lastDot + 1, _entityBaseTypeShortName.Length - lastDot - 1);
+            }
+            _entityFileName = entity.FileName;
+            _entityNamespace = entity.EntityNamespace;
+            _BQLEntityNamespace = entity.EntityNamespace + ".BQLEntity";
+            _businessNamespace = entity.EntityNamespace + ".Business";
+            _dataAccessNamespace = entity.EntityNamespace + ".DataAccess";
+            _DBName = entity.CurrentDBConfigInfo.DbName; 
+        }
+
         public GrneraterBase(EntityConfig entity) 
         {
             //_entity = entity;
@@ -180,7 +201,7 @@ namespace Buffalo.DBTools.HelperKernel
             _BQLEntityNamespace = entity.Namespace + ".BQLEntity";
             _businessNamespace = entity.Namespace + ".Business";
             _dataAccessNamespace = entity.Namespace + ".DataAccess";
-            _DBName = entity.CurrentDBConfigInfo.DbName; ;
+            _DBName = entity.CurrentDBConfigInfo.DbName; 
         }
 
         

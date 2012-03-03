@@ -19,7 +19,8 @@ FROM
 syscolumns a left join systypes b on a.xusertype=b.xusertype
 inner join sysobjects d on a.id=d.id 
 left join syscomments e on a.cdefault=e.id 
-left join sys.extended_properties g on a.id=G.major_id and a.colid=g.minor_id  
+left join sys.extended_properties g on a.id=g.major_id and a.colid=g.minor_id  
 left join sys.extended_properties f on d.id=f.major_id and f.minor_id=0
 where d.xtype in ('U','V') and  d.[name] not in('dtproperties','sysdiagrams')
+<%=TableNames%>
 order by d.xtype,d.[name],a.colorder

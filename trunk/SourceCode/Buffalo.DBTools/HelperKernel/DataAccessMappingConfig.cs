@@ -4,6 +4,8 @@ using System.Text;
 using System.Xml;
 using System.IO;
 using Buffalo.DB.PropertyAttributes;
+using Buffalo.DBTools.ROMHelper;
+using EnvDTE;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -15,7 +17,18 @@ namespace Buffalo.DBTools.HelperKernel
         XmlDocument _doc = EntityMappingConfig.NewXmlDocument();
         XmlNode _rootNode;
         string _fileName = null;
-        public DataAccessMappingConfig(EntityConfig entity) :base(entity)
+
+
+        public DataAccessMappingConfig(DBEntityInfo entity, Project project)
+            : base(entity, project)
+        {
+            Init();
+        }
+
+        /// <summary>
+        /// 初始化信息
+        /// </summary>
+        private void Init() 
         {
             FileInfo classFile = new FileInfo(EntityFileName);
             string dicName = classFile.DirectoryName + "\\BEM\\";
@@ -30,20 +43,21 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     _doc.Load(_fileName);
                     XmlNodeList rootNodes = _doc.GetElementsByTagName("dataaccess");
-                    if (rootNodes.Count<=0) 
+                    if (rootNodes.Count <= 0)
                     {
                         _doc = EntityMappingConfig.NewXmlDocument();
-                    }else
+                    }
+                    else
                     {
-                        _rootNode=rootNodes[0];
+                        _rootNode = rootNodes[0];
                     }
                 }
-                catch 
+                catch
                 {
 
                 }
             }
-            if(_rootNode==null)
+            if (_rootNode == null)
             {
                 XmlNode dalNode = _doc.CreateElement("dataaccess");
                 _doc.AppendChild(dalNode);
@@ -52,6 +66,11 @@ namespace Buffalo.DBTools.HelperKernel
                 dalNode.Attributes.Append(att);
                 _rootNode = dalNode;
             }
+        }
+
+        public DataAccessMappingConfig(EntityConfig entity) :base(entity)
+        {
+            Init();
         }
 
         /// <summary>

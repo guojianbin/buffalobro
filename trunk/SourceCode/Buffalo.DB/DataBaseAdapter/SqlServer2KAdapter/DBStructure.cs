@@ -125,16 +125,16 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             {
                 sbAllTable.Remove(sbAllTable.Length - 1, 1);
             }
-            StringBuilder sql = new StringBuilder();
-            sql.Append("select * from (");
-            sql.Append(GetTableParamsSQL());
-            sql.Append(") tmp where 1=1");
+            string sql = GetTableParamsSQL();
+
+
+            string tableNamesSql = "";
             if (sbAllTable.Length > 0)
             {
-                sql.Append(" and tableName in (");
-                sql.Append(sbAllTable.ToString());
-                sql.Append(")");
+                tableNamesSql = " and d.[name] in(" + sbAllTable.ToString() + ")";
             }
+            sql = sql.Replace("<%=TableNames%>", tableNamesSql);
+
             List<DBTableInfo> lst = new List<DBTableInfo>();
             Dictionary<string, DBTableInfo> dicTables = new Dictionary<string, DBTableInfo>();
             using (IDataReader reader = oper.Query(sql.ToString(), new ParamList()))
@@ -172,9 +172,8 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                         lst.Add(table);
                         dicTables[table.Name] = table;
                     }
-                    EntityParam prm = new EntityParam();
-                    FillParam(table,prm, reader);
-                    table.Params.Add(prm);
+                    FillParam(table, reader);
+                    
                 }
             }
 
@@ -182,9 +181,11 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             DBTableInfo ptable = null;
             DBTableInfo ctable = null;
 
+            //Dictionary<string, bool> addedRelation = new Dictionary<string, bool>();//已经加过的关系
+
             foreach (TableRelationAttribute tinfo in lstRelation) 
             {
-
+                
                 if (dicTables.TryGetValue(tinfo.SourceTable, out ctable) && dicTables.TryGetValue(tinfo.TargetTable, out ptable)) //填充父项
                 {
                     tinfo.TargetName=ptable.PrimaryParam.ParamName;
@@ -210,10 +211,24 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// </summary>
         /// <param name="prm">字段信息</param>
         /// <param name="reader">reader</param>
-        private void FillParam(DBTableInfo table, EntityParam prm, IDataReader reader) 
+        private void FillParam(DBTableInfo table,IDataReader reader) 
         {
-           
-            prm.ParamName = reader["paramName"] as string;
+            string prmName= reader["paramName"] as string;
+            if(string.IsNullOrEmpty(prmName))
+            {
+                return;
+            }
+
+            foreach(EntityParam ep in table.Params)
+            {
+                if (ep.ParamName == prmName) 
+                {
+                    return;
+                }
+            }
+
+            EntityParam prm = new EntityParam();
+            prm.ParamName = prmName;
             
             EntityPropertyType type = EntityPropertyType.Normal;
             int isPrimary = Convert.ToInt32(reader["isPrimary"]);
@@ -234,7 +249,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             }
             string strDBType= reader["dbType"] as string;
             prm.SqlType = GetDbType(strDBType);
-
+            table.Params.Add(prm);
         }
 
         /// <summary>

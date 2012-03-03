@@ -12,6 +12,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.Modeling.Diagrams;
 using Buffalo.DBTools.ROMHelper;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
+using Buffalo.DB.CommBase.BusinessBases;
 
 namespace Buffalo.DBTools
 {
@@ -56,18 +57,18 @@ namespace Buffalo.DBTools
         }
 
 
-        DBInfo _dbInfo;
+        DBConfigInfo _dbInfo;
         /// <summary>
         /// 数据库信息
         /// </summary>
-        public DBInfo DbInfo 
+        public DBConfigInfo DbInfo 
         {
             get 
             {
                 if (_dbInfo == null) 
                 {
-                    DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo( CurrentProject,SelectDocView, DBEntityInfo.GetNameSpace(SelectDocView, CurrentProject)+".DataAccess");
-                    _dbInfo = dbcinfo.CreateDBInfo();
+                    _dbInfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView, DBEntityInfo.GetNameSpace(SelectDocView, CurrentProject) + ".DataAccess");
+                    
 
                 }
                 return _dbInfo;
@@ -77,44 +78,49 @@ namespace Buffalo.DBTools
         private void FrmAllTables_Load(object sender, EventArgs e)
         {
             gvTables.AutoGenerateColumns = false;
-            List<DBTableInfo> lst=TableChecker.GetAllTables(DbInfo);
+            DBInfo info = DbInfo.CreateDBInfo();
+            List<DBTableInfo> lst = TableChecker.GetAllTables(info);
             gvTables.DataSource = lst;
         }
 
-        public void FillSelection(Project curProject, Diagram curDiagram,
-            List<DBTableInfo> lstTables) 
-        {
-            
-
-        }
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            
             List<DBTableInfo> lst = gvTables.DataSource as List<DBTableInfo>;
             if (lst == null) 
             {
                 return;
             }
-            List<DBTableInfo> lstGen = new List<DBTableInfo>();
+            List<string> selection = new List<string>();
             foreach (DBTableInfo info in lst) 
             {
                 if (info.IsGenerate) 
                 {
-                    lstGen.Add(info);
+                    selection.Add(info.Name);
                 }
             }
-            
-            using (FrmProcess frmPro = FrmProcess.ShowProcess()) 
-            {
-                string entityNamespace = DBEntityInfo.GetNameSpace(SelectDocView, CurrentProject);
-                for (int i = 0; i < lstGen.Count; i++) 
-                {
-                    frmPro.UpdateProgress(i, lstGen.Count, "正在生成");
-                    
-                    DBEntityInfo info = new DBEntityInfo(entityNamespace,lstGen[i]);
+            DBInfo db=DbInfo.CreateDBInfo();
 
+
+            using (BatchAction ba = db.DefaultOperate.StarBatchAction())
+            {
+                using (FrmProcess frmPro = FrmProcess.ShowProcess())
+                {
+                    frmPro.UpdateProgress(0, 10, "正在读取类信息");
+                    List<DBTableInfo> lstGen = TableChecker.GetTableInfo(db, selection);
+
+                    string entityNamespace = DBEntityInfo.GetNameSpace(SelectDocView, CurrentProject);
+                    for (int i = 0; i < lstGen.Count; i++)
+                    {
+                        frmPro.UpdateProgress(i, lstGen.Count, "正在生成");
+
+                        DBEntityInfo info = new DBEntityInfo(entityNamespace, lstGen[i], SelectDocView, CurrentProject, DbInfo);
+                        info.GreanCode();
+                    }
                 }
             }
+            this.Close();
         }
 
 

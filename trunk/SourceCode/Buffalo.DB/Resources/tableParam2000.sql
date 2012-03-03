@@ -28,5 +28,6 @@ left join sysproperties g on a.id=g.id and a.colid=g.smallid
 left join sysproperties f on d.id=f.id and f.smallid=0
 where 
     d.xtype in ('U','V') and  d.[name] not in('dtproperties','sysdiagrams')
+    <%=TableNames%>
 order by 
     d.xtype,d.[name],a.colorder

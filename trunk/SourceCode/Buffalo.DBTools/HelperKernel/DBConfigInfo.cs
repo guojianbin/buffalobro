@@ -98,6 +98,17 @@ namespace Buffalo.DBTools.HelperKernel
         }
 
         /// <summary>
+        /// 获取类图所在路径
+        /// </summary>
+        /// <param name="docView"></param>
+        /// <returns></returns>
+        public static string GetClassDesignerPath(ClassDesignerDocView docView) 
+        {
+            FileInfo docFile = new FileInfo(docView.DocData.FileName);
+            return docFile.DirectoryName;
+        }
+
+        /// <summary>
         /// 生成文件名
         /// </summary>
         /// <param name="curProject"></param>

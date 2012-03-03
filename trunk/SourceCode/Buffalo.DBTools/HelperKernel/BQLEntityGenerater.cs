@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using Buffalo.DB.PropertyAttributes;
+using Buffalo.DBTools.ROMHelper;
+using EnvDTE;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -11,7 +13,10 @@ namespace Buffalo.DBTools.HelperKernel
     /// </summary>
     public class BQLEntityGenerater:GrneraterBase
     {
-        
+        public BQLEntityGenerater(DBEntityInfo config, Project project)
+            : base(config, project)
+        {
+        } 
 
         public BQLEntityGenerater(EntityConfig config) :base(config)
         {

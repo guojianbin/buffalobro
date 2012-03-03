@@ -35,6 +35,13 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         }
 
 
+
+
+        public List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, List<string> tableNames)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
         #endregion
     }
 }

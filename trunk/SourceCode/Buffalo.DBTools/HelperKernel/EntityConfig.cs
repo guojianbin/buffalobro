@@ -733,7 +733,8 @@ namespace Buffalo.DBTools.HelperKernel
             foreach (object pro in type.Members) 
             {
                 T cPro=pro as T;
-                if (cPro != null && !dicExistsPropertyName.ContainsKey(cPro.Name))
+
+                if (cPro != null && !dicExistsPropertyName.ContainsKey(cPro.Name) &&!cPro.IsStatic)
                 {
                     dicExistsPropertyName[cPro.Name] = true;
                     lst.Add(cPro);
