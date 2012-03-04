@@ -53,22 +53,33 @@ namespace Buffalo.DBTools.HelperKernel
             string baseClass = null;
             
             string businessClassName=ClassName+"Business";
-            if (EntityConfig.IsSystemTypeName(EntityBaseTypeName))
+
+
+            if (!string.IsNullOrEmpty(Table.TableName))
             {
-                if (!string.IsNullOrEmpty(Table.TableName))
+                if (EntityConfig.IsSystemTypeName(EntityBaseTypeName))
                 {
                     baseClass = "BusinessModelBase<" + ClassName + ">";
                 }
-                else 
+                else
                 {
-                    baseClass = "BusinessModelBase<T> where T : "+ClassName+", new()";
-                    businessClassName += "<T>";
+                    baseClass = BusinessNamespace + "." + EntityBaseTypeShortName + "Business<" + ClassName + ">";
                 }
             }
             else 
             {
-                baseClass = BusinessNamespace+"." + EntityBaseTypeShortName+"Business<"+ClassName+">";
+                if (EntityConfig.IsSystemTypeName(EntityBaseTypeName))
+                {
+                    baseClass = "BusinessModelBase<T> where T : " + ClassName + ", new()";
+                }
+                else
+                {
+                    baseClass = BusinessNamespace+"."+EntityBaseTypeShortName + "Business<T> where T : " + ClassName + ", new()";
+                }
+                
+                businessClassName += "<T>";
             }
+
             List<string> codes = new List<string>();
             using (StringReader reader = new StringReader(model))
             {

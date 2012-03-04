@@ -38,8 +38,8 @@ namespace Buffalo.DBTools
                     dbinfo = frmSetting.Info;
 
                     dbinfo.AppNamespace = dalNamespace+"."+dbinfo.DbType;
-
-                    dbinfo.SaveConfig(DBConfigInfo.GetFileName(curProject, docView));
+                    dbinfo.FileName = DBConfigInfo.GetFileName(curProject, docView);
+                    dbinfo.SaveConfig(dbinfo.FileName);
                 }
             }
             return dbinfo;
