@@ -296,11 +296,11 @@ namespace Buffalo.DBTools.HelperKernel
                 node.Attributes.Append(att);
 
                 att = doc.CreateAttribute("SourceProperty");//数据库类型
-                att.InnerText = field.SourceName;
+                att.InnerText = EntityFieldBase.ToPascalName( field.SourceName);
                 node.Attributes.Append(att);
 
                 att = doc.CreateAttribute("TargetProperty");//数据库类型长度
-                att.InnerText = field.TargetName;
+                att.InnerText = EntityFieldBase.ToPascalName(field.TargetName);
                 node.Attributes.Append(att);
 
                 att = doc.CreateAttribute("IsToDB");//数据库类型长度
