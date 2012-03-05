@@ -26,12 +26,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
     <Optimize>true</Optimize>
-    <OutputPath>.\bin\Release\</OutputPath>
+    <OutputPath>..\Release\2010\</OutputPath>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <IncrementalBuild>false</IncrementalBuild>
-    <DocumentationFile>Buffalo2010.DBTools.xml</DocumentationFile>
+    <DocumentationFile>..\Release\2010\Buffalo2010.DBTools.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>Buffalo.DBTools</RootNamespace>
@@ -101,6 +101,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DBCreater\TableCreater.cs" />
+    <Compile Include="DocSummary\AssLabelSummary.cs" />
+    <Compile Include="DocSummary\EnumItemSummary.cs" />
+    <Compile Include="DocSummary\EnumSummary.cs" />
+    <Compile Include="DocSummary\InterSummary.cs" />
+    <Compile Include="DocSummary\MemberItem.cs" />
+    <Compile Include="DocSummary\MemberSummary.cs" />
+    <Compile Include="DocSummary\ShapeSummaryDisplayer.cs" />
+    <Compile Include="DocSummary\SummaryShape.cs" />
     <Compile Include="FrmAllTables.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +156,7 @@
     <Compile Include="HelperKernel\FieldComparer.cs" />
     <Compile Include="HelperKernel\Generate3Tier.cs" />
     <Compile Include="HelperKernel\GrneraterBase.cs" />
+    <Compile Include="HelperKernel\TagManager.cs" />
     <Compile Include="Models.Designer.cs" />
     <Compile Include="ROMHelper\DBEntityInfo.cs" />
   </ItemGroup>
@@ -231,6 +240,7 @@
     <Content Include="Resources\BQLDB.txt" />
     <Content Include="Resources\BQLEntity.txt" />
     <Content Include="Resources\Business.txt" />
+    <Content Include="Resources\ClassDiagram.txt" />
     <Content Include="Resources\DataAccess.txt" />
     <Content Include="Resources\DataaccessConfig.txt" />
     <Content Include="Resources\DBconfig.txt" />
