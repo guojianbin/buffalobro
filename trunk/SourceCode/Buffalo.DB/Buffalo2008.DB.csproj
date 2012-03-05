@@ -32,14 +32,22 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\</OutputPath>
+    <OutputPath>..\Release\2008\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\bin\Buffalo.DB.XML</DocumentationFile>
+    <DocumentationFile>..\Release\2008\Buffalo.DB.XML</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IBM.Data.DB2, Version=9.0.0.2, Culture=neutral, PublicKeyToken=7c307b91aa13d208, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dll\Net2.0\IBM.Data.DB2.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dll\Net3.5\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -47,6 +55,10 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Data.SQLite, Version=1.0.79.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dll\Net3.5\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -214,6 +226,7 @@
     <Compile Include="DataBaseAdapter\SqlServer2KAdapter\MathFunctions.cs" />
     <Compile Include="DataFillers\CacheReader.cs" />
     <Compile Include="DataFillers\MappingContorl.cs" />
+    <Compile Include="DBCheckers\DBChecker.cs" />
     <Compile Include="DBCheckers\TableChecker.cs" />
     <Compile Include="DbCommon\DataBaseOperate.cs" />
     <Compile Include="DbCommon\DBConn.cs" />
