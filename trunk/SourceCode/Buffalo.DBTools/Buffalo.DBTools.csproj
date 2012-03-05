@@ -115,6 +115,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DBCreater\TableCreater.cs" />
+    <Compile Include="DocSummary\AssLabelSummary.cs" />
+    <Compile Include="DocSummary\EnumItemSummary.cs" />
+    <Compile Include="DocSummary\EnumSummary.cs" />
+    <Compile Include="DocSummary\InterSummary.cs" />
+    <Compile Include="DocSummary\MemberItem.cs" />
+    <Compile Include="DocSummary\MemberSummary.cs" />
+    <Compile Include="DocSummary\ShapeSummaryDisplayer.cs" />
+    <Compile Include="DocSummary\SummaryShape.cs" />
     <Compile Include="FrmAllTables.cs">
       <SubType>Form</SubType>
     </Compile>
