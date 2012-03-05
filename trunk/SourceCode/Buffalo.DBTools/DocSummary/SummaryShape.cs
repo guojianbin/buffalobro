@@ -50,7 +50,7 @@ namespace Buffalo.DBTools.DocSummary
             }
         }
 
-        private ClrClass GetClass(ShapeElement parentShape)
+        internal static ClrClass GetClass(ShapeElement parentShape)
         {
             if (parentShape is ClrTypeShape)
             {
@@ -70,7 +70,7 @@ namespace Buffalo.DBTools.DocSummary
 
         private string GetPerentSummrytxt(ShapeElement parentShape)
         {
-            ClrClass class2 = this.GetClass(parentShape);
+            ClrClass class2 = GetClass(parentShape);
             if (class2 == null)
             {
                 return "";
@@ -102,7 +102,7 @@ namespace Buffalo.DBTools.DocSummary
 
         private string GetSummrytxt(ShapeElement parentShape)
         {
-            ClrClass class2 = this.GetClass(parentShape);
+            ClrClass class2 = GetClass(parentShape);
             if (class2 == null)
             {
                 return "(ÎÞÕªÒª)";

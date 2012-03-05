@@ -59,6 +59,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         public void GenerateBQLEntity()
         {
+            TagManager tag=new TagManager();
             FileInfo info = new FileInfo(EntityFileName);
             string dicPath = info.DirectoryName + "\\BQLEntity";
             if (!Directory.Exists(dicPath))
@@ -79,24 +80,40 @@ namespace Buffalo.DBTools.HelperKernel
             {
                 baseType = DBName + "_" + EntityBaseTypeShortName;
             }
+            
             using (StringReader reader = new StringReader(idal))
             {
                 string tmp = null;
                 while ((tmp = reader.ReadLine()) != null)
                 {
-                    tmp = tmp.Replace("<%=EntityNamespace%>", EntityNamespace);
-                    tmp = tmp.Replace("<%=BQLEntityNamespace%>", BQLEntityNamespace);
-                    tmp = tmp.Replace("<%=Summary%>", Table.Description);
-                    tmp = tmp.Replace("<%=DBName%>", DBName);
-                    tmp = tmp.Replace("<%=BQLEntityBaseType%>", baseType);
-                    tmp = tmp.Replace("<%=DataAccessNamespace%>", DataAccessNamespace);
-                    tmp = tmp.Replace("<%=ClassName%>", ClassName);
-                    string entityClassName = ClassName;
-                    tmp = tmp.Replace("<%=EntityClassName%>", entityClassName);
-                    tmp = tmp.Replace("<%=PropertyDetail%>", GenProperty());
-                    tmp = tmp.Replace("<%=RelationDetail%>", GenRelation());
-                    tmp = tmp.Replace("<%=PropertyInit%>", GenInit());
-                    codes.Add(tmp);
+                    if (tmp.StartsWith("<%#IF TableName%>")) 
+                    {
+                        tag.AddTag("TableName");
+                    }
+                    else if (tmp.StartsWith("<%#ENDIF%>"))
+                    {
+                        tag.PopTag();
+                    }
+                    else
+                    {
+                        if (tag.CurrentTag == "TableName" && string.IsNullOrEmpty(Table.TableName)) 
+                        {
+                            continue;
+                        }
+                        tmp = tmp.Replace("<%=EntityNamespace%>", EntityNamespace);
+                        tmp = tmp.Replace("<%=BQLEntityNamespace%>", BQLEntityNamespace);
+                        tmp = tmp.Replace("<%=Summary%>", Table.Description);
+                        tmp = tmp.Replace("<%=DBName%>", DBName);
+                        tmp = tmp.Replace("<%=BQLEntityBaseType%>", baseType);
+                        tmp = tmp.Replace("<%=DataAccessNamespace%>", DataAccessNamespace);
+                        tmp = tmp.Replace("<%=ClassName%>", ClassName);
+                        string entityClassName = ClassName;
+                        tmp = tmp.Replace("<%=EntityClassName%>", entityClassName);
+                        tmp = tmp.Replace("<%=PropertyDetail%>", GenProperty());
+                        tmp = tmp.Replace("<%=RelationDetail%>", GenRelation());
+                        tmp = tmp.Replace("<%=PropertyInit%>", GenInit());
+                        codes.Add(tmp);
+                    }
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);

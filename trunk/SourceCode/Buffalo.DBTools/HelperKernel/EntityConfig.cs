@@ -576,12 +576,12 @@ namespace Buffalo.DBTools.HelperKernel
 
             string strPropertie = "GetContext";
 
-            if (!_fields.ContainsKey(strField))
+            if (!ExistsMember<ClrField>( _classType,strField))
             {
                 lstTarget.Add("        private static ModelContext<" + ClassName + "> " + strField + "=new ModelContext<" + ClassName + ">();");
             }
 
-            if (!_methods.ContainsKey(strPropertie))
+            if (!ExistsMember<ClrMethod>(_classType, strPropertie))
             {
                 lstTarget.Add("        /// <summary>");
                 lstTarget.Add("        /// 获取查询关联类");
@@ -704,7 +704,8 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="lst">集合</param>
         /// <param name="type">类型</param>
         /// <param name="fillBase">是否级联父类</param>
-        public static void FillAllMember<T>(List<T> lst, Dictionary<string, bool> dicExistsPropertyName, ClrType type, bool fillBase) where T : Member
+        public static void FillAllMember<T>(List<T> lst, Dictionary<string, bool> dicExistsPropertyName,
+            ClrType type, bool fillBase) where T : Member
         {
             
             if (fillBase)
@@ -741,6 +742,50 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             
+        }
+
+        /// <summary>
+        /// 判断是否存在成员
+        /// </summary>
+        /// <returns></returns>
+        public static bool ExistsMember<T>(ClrType type,string menberName) where T : Member
+        {
+            bool hasName = false;
+
+            //检查基类
+            InheritanceTypeRefMoveableCollection col = type.InheritanceTypeRefs;
+            if (col != null && col.Count > 0)
+            {
+                string baseType = col[0].TypeTypeName;
+                bool isBaseType = IsSystemTypeName(baseType);
+                if (!isBaseType)
+                {
+                    ClrType btype = col[0].ClrType;
+                    if (btype != null)
+                    {
+                        hasName=ExistsMember<T>(btype, menberName);
+                    }
+                }
+            }
+
+            if (hasName) 
+            {
+                return hasName;
+            }
+            //检查本类
+            foreach (object pro in type.Members)
+            {
+                T cPro = pro as T;
+
+                if (cPro!=null)
+                {
+                    if (cPro.Name == menberName) 
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         /// <summary>

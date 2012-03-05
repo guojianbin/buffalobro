@@ -35,20 +35,16 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// 初始化序列
         /// </summary>
         /// <param name="seqName"></param>
-        public static void InitSequence(string seqName, DataBaseOperate oper) 
+        public static string GetInitSequence(string seqName, DataBaseOperate oper)
         {
-            //DataBaseOperate oper = new DataBaseOperate(db);
-            //try 
-            //{
-                if (!IsSequenceExists(seqName, oper)) //判断是否已经存在序列
-                {
-                    CreateSequence(seqName, oper);//创建序列
-                }
-            //}
-            //finally 
-            //{
-            //    oper.CloseDataBase();
-            //}
+
+            if (!IsSequenceExists(seqName, oper)) //判断是否已经存在序列
+            {
+                string sql = "CREATE SEQUENCE \"" + seqName + "\" INCREMENT BY 1 START WITH 1  NOMAXVALUE  NOCYCLE  NoCACHE";//创建序列
+                return sql;
+            }
+            return null;
+
 
         }
 
@@ -82,16 +78,6 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             }
             return count > 0;
         }
-        /// <summary>
-        /// 创建序列
-        /// </summary>
-        /// <param name="seqName">序列名</param>
-        /// <param name="oper">数据库链接</param>
-        private static void CreateSequence(string seqName, DataBaseOperate oper) 
-        {
-            string sql = "CREATE SEQUENCE \""+seqName+"\" INCREMENT BY 1 START WITH 1  NOMAXVALUE  NOCYCLE  NoCACHE";
-            
-            oper.Execute(sql, null);
-        }
+
     }
 }

@@ -353,26 +353,26 @@ namespace Buffalo.DBTools.ROMHelper
                     er.FieldName = "_belong" + EntityFieldBase.ToPascalName(er.TargetTable);
                     er.PropertyName = "Belong" + EntityFieldBase.ToPascalName(er.TargetTable);
                     er.IsToDB = true;
-                    sb.AppendLine("		/// <summary>");
-                    sb.AppendLine("		/// " + er.Description);
-                    sb.AppendLine("		/// </summary>");
-                    sb.AppendLine("		protected " + er.FieldTypeName + " " + er.FieldName + ";");
-                    sb.AppendLine("		");
+                    sb.AppendLine("        /// <summary>");
+                    sb.AppendLine("        /// " + er.Description);
+                    sb.AppendLine("        /// </summary>");
+                    sb.AppendLine("        protected " + er.FieldTypeName + " " + er.FieldName + ";");
+                    sb.AppendLine("");
 
-                    sb.AppendLine("		/// <summary>");
-                    sb.AppendLine("		/// " + er.Description);
-                    sb.AppendLine("		/// </summary>");
-                    sb.AppendLine("		public " + er.FieldTypeName + " " + er.PropertyName);
-                    sb.AppendLine("		{");
-                    sb.AppendLine("				get");
-                    sb.AppendLine("				{");
-                    sb.AppendLine("						if (" + er.FieldName + " == null)");
-                    sb.AppendLine("						{");
-                    sb.AppendLine("								FillParent(\"" + er.PropertyName + "\");");
-                    sb.AppendLine("						}");
-                    sb.AppendLine("						return " + er.FieldName + ";");
-                    sb.AppendLine("				}");
-                    sb.AppendLine("		}");
+                    sb.AppendLine("        /// <summary>");
+                    sb.AppendLine("        /// " + er.Description);
+                    sb.AppendLine("        /// </summary>");
+                    sb.AppendLine("        public " + er.FieldTypeName + " " + er.PropertyName);
+                    sb.AppendLine("        {");
+                    sb.AppendLine("            get");
+                    sb.AppendLine("            {");
+                    sb.AppendLine("               if (" + er.FieldName + " == null)");
+                    sb.AppendLine("               {");
+                    sb.AppendLine("                   FillParent(\"" + er.PropertyName + "\");");
+                    sb.AppendLine("               }");
+                    sb.AppendLine("               return " + er.FieldName + ";");
+                    sb.AppendLine("            }");
+                    sb.AppendLine("        }");
                 }
                 else 
                 {
@@ -380,26 +380,26 @@ namespace Buffalo.DBTools.ROMHelper
                     er.FieldName = "_lst" + EntityFieldBase.ToPascalName(er.TargetTable);
                     er.PropertyName = "Lst" + EntityFieldBase.ToPascalName(er.TargetTable);
                     er.IsToDB = false;
-                    sb.AppendLine("		/// <summary>");
-                    sb.AppendLine("		/// " + er.Description);
-                    sb.AppendLine("		/// </summary>");
-                    sb.AppendLine("		protected " + er.FieldTypeName + " " + er.FieldName + ";");
-                    sb.AppendLine("		");
+                    sb.AppendLine("        /// <summary>");
+                    sb.AppendLine("        /// " + er.Description);
+                    sb.AppendLine("        /// </summary>");
+                    sb.AppendLine("        protected " + er.FieldTypeName + " " + er.FieldName + ";");
+                    sb.AppendLine("");
 
-                    sb.AppendLine("		/// <summary>");
-                    sb.AppendLine("		/// " + er.Description);
-                    sb.AppendLine("		/// </summary>");
-                    sb.AppendLine("		public " + er.FieldTypeName + " " + er.PropertyName);
-                    sb.AppendLine("		{");
-                    sb.AppendLine("				get");
-                    sb.AppendLine("				{");
-                    sb.AppendLine("						if (" + er.FieldName + " == null)");
-                    sb.AppendLine("						{");
-                    sb.AppendLine("								FillChild(\"" + er.PropertyName + "\");");
-                    sb.AppendLine("						}");
-                    sb.AppendLine("						return " + er.FieldName + ";");
-                    sb.AppendLine("				}");
-                    sb.AppendLine("		}");
+                    sb.AppendLine("        /// <summary>");
+                    sb.AppendLine("        /// " + er.Description);
+                    sb.AppendLine("        /// </summary>");
+                    sb.AppendLine("        public " + er.FieldTypeName + " " + er.PropertyName);
+                    sb.AppendLine("        {");
+                    sb.AppendLine("            get");
+                    sb.AppendLine("            {");
+                    sb.AppendLine("               if (" + er.FieldName + " == null)");
+                    sb.AppendLine("               {");
+                    sb.AppendLine("                   FillChild(\"" + er.PropertyName + "\");");
+                    sb.AppendLine("               }");
+                    sb.AppendLine("               return " + er.FieldName + ";");
+                    sb.AppendLine("            }");
+                    sb.AppendLine("        }");
                 }
             }
             return sb.ToString();
@@ -416,29 +416,29 @@ namespace Buffalo.DBTools.ROMHelper
             {
                 prm.FieldName = "_"+EntityFieldBase.ToCamelName(prm.ParamName);
                 string typeName= ToCSharpType(prm.SqlType);
-                sb.AppendLine("		///<summary>");
-                sb.AppendLine("		///" + prm.Description);
-                sb.AppendLine("		///</summary>");
-                sb.AppendLine("		protected " + typeName+ " " + prm.FieldName + ";");
-                sb.AppendLine("		");
+                sb.AppendLine("        ///<summary>");
+                sb.AppendLine("        ///" + prm.Description);
+                sb.AppendLine("        ///</summary>");
+                sb.AppendLine("        protected " + typeName + " " + prm.FieldName + ";");
+                sb.AppendLine("");
 
 
                 prm.PropertyName = EntityFieldBase.ToPascalName(prm.ParamName);
-                sb.AppendLine("		/// <summary>");
-                sb.AppendLine("		///" + prm.Description + "");
-                sb.AppendLine("		///</summary>");
-                sb.AppendLine("     public " + typeName +" "+ prm.PropertyName + "");
-                sb.AppendLine("     {");
-                sb.AppendLine("          get");
-                sb.AppendLine("          {");
-                sb.AppendLine("               return " + prm.FieldName + ";");
-                sb.AppendLine("          }");
-                sb.AppendLine("          set");
-                sb.AppendLine("          {");
-                sb.AppendLine("              " + prm.FieldName + "=value;");
-                sb.AppendLine("              OnPropertyUpdated(\"" + prm.PropertyName + "\");");
-                sb.AppendLine("          }");
-                sb.AppendLine("     }");
+                sb.AppendLine("        /// <summary>");
+                sb.AppendLine("        ///" + prm.Description + "");
+                sb.AppendLine("        ///</summary>");
+                sb.AppendLine("        public " + typeName + " " + prm.PropertyName + "");
+                sb.AppendLine("        {");
+                sb.AppendLine("            get");
+                sb.AppendLine("            {");
+                sb.AppendLine("                return " + prm.FieldName + ";");
+                sb.AppendLine("            }");
+                sb.AppendLine("            set");
+                sb.AppendLine("            {");
+                sb.AppendLine("                " + prm.FieldName + "=value;");
+                sb.AppendLine("                OnPropertyUpdated(\"" + prm.PropertyName + "\");");
+                sb.AppendLine("            }");
+                sb.AppendLine("        }");
             }
 
             return sb.ToString();

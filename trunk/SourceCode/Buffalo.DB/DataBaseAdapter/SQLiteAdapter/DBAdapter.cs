@@ -364,9 +364,13 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
             return null;
         }
 
-        public void InitSequence(string seqName, DataBaseOperate oper)
+        /// <summary>
+        /// 初始化序列名
+        /// </summary>
+        /// <param name="seqName"></param>
+        public string GetSequenceInit(string seqName, DataBaseOperate oper)
         {
-            
+            return null;
         }
 
         #endregion

@@ -6,6 +6,11 @@ using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using Microsoft.VisualStudio.Modeling.Diagrams;
 using System.Drawing.Drawing2D;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
+/** 
+@author 289323612@qq.com
+@version 创建时间：2011-12-1
+显示类图注释
+*/
 namespace Buffalo.DBTools.DocSummary
 {
     internal class EnumSummary : ShapeField

@@ -107,24 +107,9 @@ namespace Buffalo.DB.EntityInfos
                 throw new Exception("找不到类:"+key+"所属的配置文件");
             }
             XmlDocument docCur = curConfig.ConfigXML;
-            XmlNodeList nodes = docCur.GetElementsByTagName("class");
-            if (nodes.Count > 0) 
-            {
-                XmlNode node = nodes[0];
-                XmlAttribute att = node.Attributes["TableName"];
-                if (att != null) 
-                {
-                    tableAtt.TableName = att.InnerText;
-                }
-
-                att = node.Attributes["BelongDB"];
-                if (att != null)
-                {
-                    tableAtt.BelongDB = att.InnerText;
-                }
-            }
+            FillEntityInfo(docCur, tableAtt);
             stkXml.Push(docCur);
-
+            
             Type baseType = type.BaseType;
             
             while (baseType != null && !IsSysBaseType(baseType)) //填充父类配置
@@ -157,13 +142,37 @@ namespace Buffalo.DB.EntityInfos
             
         }
 
+        /// <summary>
+        /// 填充实体信息
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="dicRelation"></param>
+        internal static void FillEntityInfo(XmlDocument doc, TableAttribute tableAtt)
+        {
+            XmlNodeList nodes = doc.GetElementsByTagName("class");
+            if (nodes.Count > 0)
+            {
+                XmlNode node = nodes[0];
+                XmlAttribute att = node.Attributes["TableName"];
+                if (att != null)
+                {
+                    tableAtt.TableName = att.InnerText;
+                }
+
+                att = node.Attributes["BelongDB"];
+                if (att != null)
+                {
+                    tableAtt.BelongDB = att.InnerText;
+                }
+            }
+        }
 
         /// <summary>
         /// 填充映射信息
         /// </summary>
         /// <param name="doc"></param>
         /// <param name="entity"></param>
-        private static void FillRelationInfo(XmlDocument doc, Dictionary<string, TableRelationAttribute> dicRelation)
+        internal static void FillRelationInfo(XmlDocument doc, Dictionary<string, TableRelationAttribute> dicRelation)
         {
             XmlNodeList lstProperty = doc.GetElementsByTagName("relation");
             foreach (XmlNode node in lstProperty)
@@ -219,7 +228,7 @@ namespace Buffalo.DB.EntityInfos
         /// </summary>
         /// <param name="doc"></param>
         /// <param name="entity"></param>
-        private static void FillPropertyInfo(XmlDocument doc, Dictionary<string, EntityParam> dicParam)
+        internal static void FillPropertyInfo(XmlDocument doc, Dictionary<string, EntityParam> dicParam)
         {
             XmlNodeList lstProperty = doc.GetElementsByTagName("property");
             foreach (XmlNode node in lstProperty)
@@ -363,15 +372,6 @@ namespace Buffalo.DB.EntityInfos
                         //{
                         //    ep.ParamName = ep.ParamName.ToUpper();
                         //}
-
-                        if (ep.Identity) //给Oracle的主键加序列
-                        {
-                            string seqName = idb.GetSequenceName(tableAtt.TableName, ep.ParamName);
-                            if (seqName != null)//如果是Oracle的
-                            {
-                                idb.InitSequence(seqName, oper);
-                            }
-                        }
                         string proName = ep.PropertyName;
                         GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
                         SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);

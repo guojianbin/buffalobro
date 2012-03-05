@@ -22,19 +22,26 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// <returns></returns>
         public static DBInfo GetDBinfo()
         {
-            
             return _db;
-            
         }
+
+        /// <summary>
+        /// 是否已经初始化
+        /// </summary>
+        private static bool _isInit=false;
 
         /// <summary>
         /// 初始化数据库
         /// </summary>
         public static void InitDB() 
         {
+            //if (_isInit) 
+            //{
+            //    return;
+            //}
             Type type = typeof(T);
             Type baseType=typeof(BQLEntityTableHandle);
-            PropertyInfo[] infos = type.GetProperties();
+            PropertyInfo[] infos = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
             foreach (PropertyInfo info in infos) 
             {
                 Type objType = info.PropertyType;
@@ -44,6 +51,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 }
                 AddToDB(FastValueGetSet.GetGetMethodInfo(info.Name, type).Invoke(null, new object[] { }) as BQLEntityTableHandle);
             }
+            DataAccessLoader.InitConfig();
         }
 
         /// <summary>
@@ -96,6 +104,8 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             DataBaseOperate oper = _db.CreateOperate();
             return oper;
         }
+
+        
 
         private static DBInfo GetDB() 
         {

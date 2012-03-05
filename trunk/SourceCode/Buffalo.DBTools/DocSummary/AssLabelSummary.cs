@@ -6,6 +6,11 @@ using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using Microsoft.VisualStudio.Modeling.Diagrams;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Collections;
+/** 
+@author 289323612@qq.com
+@version 创建时间：2011-12-1
+显示类图注释
+*/
 namespace Buffalo.DBTools.DocSummary
 {
     internal class AssLabelSummary : ShapeField

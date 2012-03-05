@@ -14,7 +14,7 @@ namespace <%=EntityNamespace%>
     public partial class <%=ClassName%>: <%=EntityBaseType%>
     {
 <%=EntityFields%>
-        
+
 <%=EntityRelations%>
 
 <%=EntityContext%>

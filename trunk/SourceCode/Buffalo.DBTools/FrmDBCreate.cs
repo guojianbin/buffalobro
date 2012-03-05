@@ -19,6 +19,7 @@ using Buffalo.Kernel;
 using Buffalo.DB.DBCheckers;
 using Buffalo.DB.PropertyAttributes;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
+using Buffalo.DB.CommBase.BusinessBases;
 
 namespace Buffalo.DBTools
 {
@@ -28,12 +29,12 @@ namespace Buffalo.DBTools
         {
             InitializeComponent();
         }
-        private ClrTypeShape _selectedClass = null;
+        private List<ClrClass> _selectedClass = null;
 
         /// <summary>
         /// 选中的类
         /// </summary>
-        public ClrTypeShape SelectedClass
+        public List<ClrClass> SelectedClass
         {
             get { return _selectedClass; }
             set { _selectedClass = value; }
@@ -92,45 +93,54 @@ namespace Buffalo.DBTools
         /// <param name="type"></param>
         private void GetClassSQL() 
         {
-            ClrType curType = SelectedClass.AssociatedType;//当前类型
-            EntityConfig entity = new EntityConfig(curType, CurrentProject, SelectedDiagram);
-
-            if (string.IsNullOrEmpty(entity.TableName)) 
-            {
-                MessageBox.Show("此实体为基类实体，不需要生成数据表", "Buffalo助手", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
-                return;
-            }
-
-            DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView, entity.Namespace + ".DataAccess.");
-            DBInfo dbInfo = dbcinfo.CreateDBInfo();
-            
-            string typeName=null;
-            Stack<EntityConfig> stkConfig = EntityConfig.GetEntity(entity, CurrentProject, SelectedDiagram);
-
-            
+            _lstSql = new List<string>();
             List<KeyWordTableParamItem> lstTable = new List<KeyWordTableParamItem>();
-            List<EntityParam> lstParam = new List<EntityParam>();
-            List<TableRelationAttribute> lstRelation = new List<TableRelationAttribute>();
-            string lastTableName = null;
-            while (stkConfig.Count > 0) 
+            DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView,  "DataAccess.");
+            DBInfo dbInfo = dbcinfo.CreateDBInfo();
+
+            foreach (ClrClass curType in SelectedClass)
             {
-                EntityConfig centity = stkConfig.Pop();
-                FillParams(centity, lstParam, lstRelation);
-                lastTableName = centity.TableName;
+                
+                //ClrType curType = classType.AssociatedType;//当前类型
+                EntityConfig entity = new EntityConfig(curType, CurrentProject, SelectedDiagram);
+
+                if (string.IsNullOrEmpty(entity.TableName))
+                {
+                    continue;
+                }
+
+                
+
+                string typeName = null;
+                Stack<EntityConfig> stkConfig = EntityConfig.GetEntity(entity, CurrentProject, SelectedDiagram);
+
+
+                
+                List<EntityParam> lstParam = new List<EntityParam>();
+                List<TableRelationAttribute> lstRelation = new List<TableRelationAttribute>();
+                string lastTableName = null;
+                while (stkConfig.Count > 0)
+                {
+                    EntityConfig centity = stkConfig.Pop();
+                    FillParams(centity, lstParam, lstRelation);
+                    lastTableName = centity.TableName;
+                }
+                KeyWordTableParamItem table = new KeyWordTableParamItem(lstParam, lstRelation, lastTableName, null);
+                lstTable.Add(table);
+                
             }
-            KeyWordTableParamItem table = new KeyWordTableParamItem(lstParam,lstRelation,lastTableName,null);
-            lstTable.Add(table);
             try
             {
-                _lstSql = TableChecker.CheckTable(dbInfo, lstTable);
-                ShowSql();
+                using (BatchAction ba = dbInfo.DefaultOperate.StarBatchAction())
+                {
+                    _lstSql = TableChecker.CheckTable(dbInfo, lstTable);
+                }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show("生成语句失败:" + ex.Message);
             }
-            
+            ShowSql();
         }
 
         /// <summary>

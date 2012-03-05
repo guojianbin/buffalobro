@@ -213,6 +213,7 @@
     <Compile Include="DataBaseAdapter\SqlServer2KAdapter\MathFunctions.cs" />
     <Compile Include="DataFillers\CacheReader.cs" />
     <Compile Include="DataFillers\MappingContorl.cs" />
+    <Compile Include="DBCheckers\DBChecker.cs" />
     <Compile Include="DBCheckers\TableChecker.cs" />
     <Compile Include="DbCommon\DataBaseOperate.cs" />
     <Compile Include="DbCommon\DBConn.cs" />

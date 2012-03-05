@@ -298,13 +298,14 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             return SequenceManager.GetSequenceName(tableName, paramName);
         }
 
+
         /// <summary>
         /// 初始化序列名
         /// </summary>
         /// <param name="seqName"></param>
-        public void InitSequence(string seqName, DataBaseOperate oper) 
+        public string GetSequenceInit(string seqName,DataBaseOperate oper) 
         {
-            SequenceManager.InitSequence(seqName,oper);
+            return SequenceManager.GetInitSequence(seqName,oper);
         }
 
         /// <summary>

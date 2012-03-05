@@ -51,7 +51,7 @@ namespace Buffalo.DBTools.DocSummary
                         }
                         string[] strArray = itemDrawInfo.Text.Split(new char[] { ':', '(', '{', '<' });
                         Member menberByName = this.GetMenberByName(parentShape.ParentShape, strArray[0].Trim());
-                        if ((menberByName == null) || string.IsNullOrEmpty(menberByName.DocSummary))
+                        if ((menberByName == null))
                         {
                             continue;
                         }
@@ -167,7 +167,11 @@ namespace Buffalo.DBTools.DocSummary
                         float height = 0.19f;
                         float recX = (float)itemDrawInfo.ImageMargin;//0.16435f
                         RectangleD bound = parentShape.BoundingBox;
-                        string str=menberByName.Name+"("+docSummary+")";
+                        string str=menberByName.Name;
+                        if (!string.IsNullOrEmpty(docSummary)) 
+                        {
+                            str += "(" + docSummary + ")";
+                        }
                         float x = 0.4f;
 
                         e.Graphics.FillRectangle(this.BackBrush, x,(float)(0.245f+(height) * i), 

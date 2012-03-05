@@ -6,6 +6,7 @@ using Buffalo.DB.DbCommon;
 using Buffalo.DB.MessageOutPuters;
 using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.CommBase;
+using Buffalo.DB.DBCheckers;
 
 namespace Buffalo.DB.DataBaseAdapter
 {
@@ -55,6 +56,32 @@ namespace Buffalo.DB.DataBaseAdapter
             _dbName = dbName;
             InitAdapters();
         }
+
+        /// <summary>
+        /// 检查数据库结构
+        /// </summary>
+        /// <returns></returns>
+        public List<string> CheckDataBase() 
+        {
+            return DBChecker.CheckDataBase(this);
+        }
+
+        /// <summary>
+        /// 检查并更新数据库结构
+        /// </summary>
+        /// <returns></returns>
+        public string UpdateDataBase() 
+        {
+            List<string> sql=DBChecker.CheckDataBase(this);
+            List<string> res=DBChecker.ExecuteSQL(DefaultOperate, sql);
+            StringBuilder sbRet = new StringBuilder();
+            foreach (string str in res)
+            {
+                sbRet.AppendLine(str);
+            }
+            return sbRet.ToString();
+        }
+
         /// <summary>
         /// 抛出找不到表的异常
         /// </summary>
@@ -272,6 +299,20 @@ namespace Buffalo.DB.DataBaseAdapter
             {
                 _dicTables[key]=table;
             }
+        }
+
+        /// <summary>
+        /// 获取所有表
+        /// </summary>
+        /// <returns></returns>
+        public List<BQLEntityTableHandle> GetAllTables() 
+        {
+            List<BQLEntityTableHandle> allTable = new List<BQLEntityTableHandle>(_dicTables.Count);
+            foreach (KeyValuePair<string, BQLEntityTableHandle> kvp in _dicTables) 
+            {
+                allTable.Add(kvp.Value);
+            }
+            return allTable;
         }
 
         /// <summary>

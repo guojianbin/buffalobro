@@ -250,8 +250,9 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// 初始化序列名
         /// </summary>
         /// <param name="seqName"></param>
-        public void InitSequence(string seqName,DataBaseOperate oper)
+        public string GetSequenceInit(string seqName, DataBaseOperate oper)
         {
+            return null;
         }
         /// <summary>
         /// 把数据类型转换成当前数据库支持的类型

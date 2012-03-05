@@ -7,6 +7,8 @@ using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.PropertyAttributes;
 namespace <%=BQLEntityNamespace%>
 {
+<%#IF TableName%>
+
     public partial class <%=DBName%>
     {
         private static <%=DBName%>_<%=ClassName%> _<%=ClassName%> = new <%=DBName%>_<%=ClassName%>();
@@ -19,7 +21,8 @@ namespace <%=BQLEntityNamespace%>
             }
         }
     }
-    
+
+<%#ENDIF%>
     /// <summary>
     ///  <%=Summary%>
     /// </summary>

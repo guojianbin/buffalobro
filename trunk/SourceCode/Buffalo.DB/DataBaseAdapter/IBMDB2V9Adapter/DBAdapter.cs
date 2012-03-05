@@ -371,9 +371,9 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             return null;
         }
 
-        public void InitSequence(string seqName, DataBaseOperate oper)
+        public string GetSequenceInit(string seqName, DataBaseOperate oper) 
         {
-
+            return null;
         }
 
 

@@ -8,6 +8,7 @@ using Buffalo.DB.BQLCommon;
 using Buffalo.DB.QueryConditions;
 using System.Data;
 using Buffalo.DB.PropertyAttributes;
+using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 
 
 namespace Buffalo.DB.DBCheckers
@@ -62,6 +63,25 @@ namespace Buffalo.DB.DBCheckers
             foreach (KeyWordTableParamItem table in tableInfos)
             {
                 CheckRelation(lstRet,info, table);
+            }
+
+            IDBAdapter idb = info.CurrentDbAdapter;
+            
+            foreach (KeyWordTableParamItem table in tableInfos)
+            {
+
+                if (table.PrimaryParam!=null && table.PrimaryParam.Identity) //给Oracle的主键加序列
+                {
+                    string seqName = idb.GetSequenceName(table.TableName, table.PrimaryParam.ParamName);
+                    if (seqName != null)//如果是Oracle的
+                    {
+                        string seqSql = idb.GetSequenceInit(seqName, info.DefaultOperate);
+                        if (string.IsNullOrEmpty(seqSql))
+                        {
+                            lstRet.Add(seqSql + ";");
+                        }
+                    }
+                }
             }
             return lstRet;
         }

@@ -224,7 +224,7 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// 初始化序列名
         /// </summary>
         /// <param name="seqName"></param>
-        void InitSequence(string seqName,DataBaseOperate oper);
+        string GetSequenceInit(string seqName, DataBaseOperate oper);
 
         /// <summary>
         /// 获取变量列表
