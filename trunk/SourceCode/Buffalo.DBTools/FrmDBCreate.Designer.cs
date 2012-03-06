@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDBCreate));
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCLose = new System.Windows.Forms.Button();
             this.btnSubmit = new System.Windows.Forms.Button();
@@ -151,6 +152,7 @@
             this.ClientSize = new System.Drawing.Size(510, 447);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmDBCreate";
             this.Text = "Buffalo助手--创建/修改数据表";
             this.Load += new System.EventHandler(this.FrmDBCreate_Load);

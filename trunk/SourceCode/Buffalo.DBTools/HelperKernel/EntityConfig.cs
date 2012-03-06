@@ -179,7 +179,15 @@ namespace Buffalo.DBTools.HelperKernel
             get { return _summary; }
             set { _summary = value; }
         }
-
+        private bool _isTable = false;
+        /// <summary>
+        /// ≈–∂œ «∑Ò±Ì
+        /// </summary>
+        public bool IsTable
+        {
+            get { return _isTable; }
+            set { _isTable = value; }
+        }
         private Dictionary<string, CodeElementPosition> _properties;
 
         /// <summary>

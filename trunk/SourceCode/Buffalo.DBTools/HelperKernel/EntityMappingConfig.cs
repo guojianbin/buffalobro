@@ -37,7 +37,11 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     entity.TableName = att.InnerText;
                 }
-                
+                att = classNode.Attributes["IsTable"];
+                if (att != null)
+                {
+                    entity.IsTable = att.InnerText=="1";
+                }
             }
 
             FillPropertyInfo(doc, entity);

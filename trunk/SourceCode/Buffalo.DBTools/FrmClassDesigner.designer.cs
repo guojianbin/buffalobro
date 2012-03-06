@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmClassDesigner));
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtBaseClass = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,9 +52,6 @@
             this.tpMapping = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
             this.gvMapping = new System.Windows.Forms.DataGridView();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnGenCode = new System.Windows.Forms.Button();
             this.ColSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ColField = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPropertyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -61,6 +59,9 @@
             this.ColSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColTarget = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColIsToDB = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnGenCode = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -305,36 +306,6 @@
             this.gvMapping.Size = new System.Drawing.Size(777, 407);
             this.gvMapping.TabIndex = 1;
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.btnClose);
-            this.panel3.Controls.Add(this.btnGenCode);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(3, 456);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(791, 36);
-            this.panel3.TabIndex = 25;
-            // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(707, 6);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 24;
-            this.btnClose.Text = "关闭";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // btnGenCode
-            // 
-            this.btnGenCode.Location = new System.Drawing.Point(626, 6);
-            this.btnGenCode.Name = "btnGenCode";
-            this.btnGenCode.Size = new System.Drawing.Size(75, 23);
-            this.btnGenCode.TabIndex = 22;
-            this.btnGenCode.Text = "生成类";
-            this.btnGenCode.UseVisualStyleBackColor = true;
-            this.btnGenCode.Click += new System.EventHandler(this.btnGenCode_Click);
-            // 
             // ColSelect
             // 
             this.ColSelect.DataPropertyName = "IsGenerate";
@@ -379,6 +350,37 @@
             this.ColIsToDB.HeaderText = "生成约束";
             this.ColIsToDB.Name = "ColIsToDB";
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.btnClose);
+            this.panel3.Controls.Add(this.btnGenCode);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(3, 456);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(791, 36);
+            this.panel3.TabIndex = 25;
+            // 
+            // btnClose
+            // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(707, 6);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 24;
+            this.btnClose.Text = "关闭";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // btnGenCode
+            // 
+            this.btnGenCode.Location = new System.Drawing.Point(626, 6);
+            this.btnGenCode.Name = "btnGenCode";
+            this.btnGenCode.Size = new System.Drawing.Size(75, 23);
+            this.btnGenCode.TabIndex = 22;
+            this.btnGenCode.Text = "生成类";
+            this.btnGenCode.UseVisualStyleBackColor = true;
+            this.btnGenCode.Click += new System.EventHandler(this.btnGenCode_Click);
+            // 
             // FrmClassDesigner
             // 
             this.AcceptButton = this.btnGenCode;
@@ -389,6 +391,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmClassDesigner";

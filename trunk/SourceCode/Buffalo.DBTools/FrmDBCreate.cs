@@ -104,7 +104,7 @@ namespace Buffalo.DBTools
                 //ClrType curType = classType.AssociatedType;//当前类型
                 EntityConfig entity = new EntityConfig(curType, CurrentProject, SelectedDiagram);
 
-                if (string.IsNullOrEmpty(entity.TableName))
+                if (string.IsNullOrEmpty(entity.TableName) || !entity.IsTable)
                 {
                     continue;
                 }

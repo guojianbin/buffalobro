@@ -110,6 +110,11 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CommandBar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommandBar.resx</DependentUpon>
+    </Compile>
     <Compile Include="CommandBarId.cs" />
     <Compile Include="Connect.cs">
       <SubType>Code</SubType>
@@ -177,6 +182,11 @@
       <DependentUpon>Models.resx</DependentUpon>
     </Compile>
     <Content Include="Resources\Entity.txt" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="ROMHelper\DBEntityInfo.cs" />
     <Content Include="Resources\BQLDB.txt" />
     <Content Include="Resources\BQLEntity.txt" />
@@ -189,6 +199,8 @@
   <ItemGroup>
     <EmbeddedResource Include="CommandBar.resx">
       <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommandBar.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmAllTables.resx">
       <SubType>Designer</SubType>
@@ -214,6 +226,11 @@
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Models.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -246,7 +263,6 @@
     <Content Include="Buffalo.DBTools.AddIn">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Microsoft.VisualStudio.TextManager.Interop.dll" />
     <Content Include="Resources\DataaccessConfig.txt" />
     <Content Include="Resources\DBconfig.txt" />
   </ItemGroup>
@@ -262,6 +278,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\ClassDiagram.txt" />
+    <Content Include="slogo.ico" />
+    <None Include="Resources\logo.jpg" />
+    <None Include="Resources\slogoico.ico" />
+    <None Include="Resources\slogo.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
