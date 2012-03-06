@@ -201,11 +201,6 @@ namespace Buffalo.DB.PropertyAttributes
             bool isPrimary = EnumUnit.ContainerValue((int)_propertyType, (int)EntityPropertyType.PrimaryKey);
             bool isAutoIdentity = EnumUnit.ContainerValue((int)_propertyType, (int)EntityPropertyType.Identity);
 
-            if (isAutoIdentity)
-            {
-                sb.Append(idba.DBIdentity(tableName, _paramName));
-            }
-
             if (isPrimary)
             {
                 sb.Append(" primary key ");
@@ -220,6 +215,10 @@ namespace Buffalo.DB.PropertyAttributes
                 {
                     sb.Append("NOT NULL");
                 }
+            }
+            if (isAutoIdentity)
+            {
+                sb.Append(idba.DBIdentity(tableName, _paramName));
             }
             return sb.ToString();
         }
