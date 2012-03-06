@@ -67,6 +67,7 @@
     <Compile Include="FastReflection\FastValueGetSet.cs" />
     <Compile Include="FastReflection\FieldInfoHandle.cs" />
     <Compile Include="FastReflection\PropertyInfoHandle.cs" />
+    <Compile Include="FileEncodingInfo.cs" />
     <Compile Include="HttpServerModel\RequestInfo.cs" />
     <Compile Include="HttpServerModel\ResponseInfo.cs" />
     <Compile Include="HttpServerModel\ReuqestParamCollection.cs" />
