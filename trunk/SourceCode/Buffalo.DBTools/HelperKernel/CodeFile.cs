@@ -6,6 +6,7 @@ using System.IO;
 using Buffalo.DBTools.HelperKernel;
 using System.Data;
 using Buffalo.DB.PropertyAttributes;
+using Buffalo.Kernel;
 
 namespace Buffalo.DBTools
 {
@@ -37,17 +38,24 @@ namespace Buffalo.DBTools
             {
                 Directory.CreateDirectory(fInfo.DirectoryName);
             }
-
-            if(File.Exists( fileName))
+            Encoding fileEncoding = DefaultEncoding;
+            
+            if(File.Exists(fileName))
             {
                 string bakName=fileName + ".bak";
                 if(File.Exists(bakName))
                 {
                     File.Delete(bakName);
                 }
+                fileEncoding = FileEncodingInfo.GetEncodingType(fileName);
+                if (fileEncoding == null) 
+                {
+                    fileEncoding=DefaultEncoding;
+                }
                 File.Move(fileName, bakName);
+
             }
-            using (StreamWriter writer = new StreamWriter(fileName, false, DefaultEncoding))
+            using (StreamWriter writer = new StreamWriter(fileName, false, fileEncoding))
             {
                 foreach (string str in content)
                 {

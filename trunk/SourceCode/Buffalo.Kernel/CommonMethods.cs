@@ -97,6 +97,9 @@ namespace Buffalo.Kernel
         {
             return BytesToHexString(id.ToByteArray());
         }
+
+
+
         /// <summary>
         /// 字符串转回GUID
         /// </summary>
