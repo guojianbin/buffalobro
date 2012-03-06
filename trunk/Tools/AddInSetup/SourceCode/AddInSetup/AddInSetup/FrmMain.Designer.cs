@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.gvAddIns = new System.Windows.Forms.DataGridView();
             this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColState = new System.Windows.Forms.DataGridViewButtonColumn();
@@ -40,6 +41,7 @@
             this.gvAddIns.AllowUserToDeleteRows = false;
             this.gvAddIns.AllowUserToResizeColumns = false;
             this.gvAddIns.AllowUserToResizeRows = false;
+            this.gvAddIns.BackgroundColor = System.Drawing.Color.White;
             this.gvAddIns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gvAddIns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColName,
@@ -49,7 +51,7 @@
             this.gvAddIns.MultiSelect = false;
             this.gvAddIns.Name = "gvAddIns";
             this.gvAddIns.RowTemplate.Height = 23;
-            this.gvAddIns.Size = new System.Drawing.Size(641, 363);
+            this.gvAddIns.Size = new System.Drawing.Size(309, 363);
             this.gvAddIns.TabIndex = 0;
             this.gvAddIns.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvAddIns_CellContentClick);
             // 
@@ -74,8 +76,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(641, 363);
+            this.ClientSize = new System.Drawing.Size(309, 363);
             this.Controls.Add(this.gvAddIns);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMain";
             this.Text = "Buffalo插件安装助手";
             this.Load += new System.EventHandler(this.FrmMain_Load);
