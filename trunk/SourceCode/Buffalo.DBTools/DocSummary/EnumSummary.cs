@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using Microsoft.VisualStudio.Modeling.Diagrams;
 using System.Drawing.Drawing2D;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
+using Buffalo.DBTools.DocSummary.VSConfig;
 /** 
 @author 289323612@qq.com
 @version 创建时间：2011-12-1
@@ -19,7 +20,7 @@ namespace Buffalo.DBTools.DocSummary
         private float Overrideheight;
         private SolidBrush SumerBrush = new SolidBrush(Color.Maroon);
         private float summeryx = 0.03f;
-        private float summeryy = 0.2f;
+        private float summeryy = VSConfigManager.CurConfig.MemberSummaryY;
 
         // Methods
         public override void DoPaint(DiagramPaintEventArgs e, ShapeElement parentShape)
@@ -32,7 +33,7 @@ namespace Buffalo.DBTools.DocSummary
             LinearGradientBrush brush = new LinearGradientBrush(rect, Color.FromArgb(0xde, 0xd7, 0xef), Color.White, 0f);
             e.Graphics.FillRectangle(brush, rect);
             
-            e.Graphics.DrawString(summrytxt, font, this.SumerBrush, this.summeryx + 0.05f, this.summeryy);
+            e.Graphics.DrawString("枚举:"+summrytxt, font, this.SumerBrush, this.summeryx + 0.05f, this.summeryy);
         }
 
         private ClrEnumeration GetClass(ShapeElement parentShape)
@@ -58,11 +59,7 @@ namespace Buffalo.DBTools.DocSummary
             ClrEnumeration enumeration = this.GetClass(parentShape);
             if (enumeration == null)
             {
-                return "(无摘要)";
-            }
-            if (string.IsNullOrEmpty(enumeration.DocSummary))
-            {
-                return "(无摘要)";
+                return "";
             }
             return enumeration.DocSummary;
         }

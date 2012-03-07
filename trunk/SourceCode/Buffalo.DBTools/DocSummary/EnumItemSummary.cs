@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using Microsoft.VisualStudio.Modeling.Diagrams;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Collections;
+using Buffalo.DBTools.DocSummary.VSConfig;
 /** 
 @author 289323612@qq.com
 @version 创建时间：2011-12-1
@@ -18,8 +19,8 @@ namespace Buffalo.DBTools.DocSummary
         // Fields
         private Connect _FromAddin;
         private SolidBrush BackBrush = new SolidBrush(Color.White);
-        private SolidBrush SumerBrush = new SolidBrush(Color.Black);
-
+        private SolidBrush NameBrush = new SolidBrush(Color.Black);
+        private SolidBrush SummaryBrush = new SolidBrush(Color.Green);
         // Methods
         public override void DoPaint(DiagramPaintEventArgs e, ShapeElement parentShape)
         {
@@ -52,7 +53,8 @@ namespace Buffalo.DBTools.DocSummary
                             {
                                 string docSummary = menberByName.DocSummary;
                                 this.BackBrush.Color = Color.White;
-                                this.SumerBrush.Color = Color.Black;
+                                this.SummaryBrush.Color = Color.Green;
+                                this.NameBrush.Color = Color.Black;
                                 SelectedShapesCollection seleShapes = this._FromAddin.SelectedShapes;
                                 if (seleShapes != null)
                                 {
@@ -60,8 +62,9 @@ namespace Buffalo.DBTools.DocSummary
                                     {
                                         if (((item.Shape == compartment) && (item.Field == listField)) && (item.SubField.SubFieldHashCode == i))
                                         {
-                                            this.BackBrush.Color = SystemColors.ActiveCaption;
-                                            this.SumerBrush.Color = Color.White;
+                                            this.BackBrush.Color = SystemColors.Highlight;
+                                            this.SummaryBrush.Color = Color.White;
+                                            this.NameBrush.Color = Color.White;
                                             break;
                                         }
                                     }
@@ -69,20 +72,23 @@ namespace Buffalo.DBTools.DocSummary
                                 float height = 0.19f;
                                 float recX = (float)itemDrawInfo.ImageMargin;//0.16435f
                                 RectangleD bound = parentShape.BoundingBox;
-                                string str = menberByName.Name;
-                                if (!string.IsNullOrEmpty(docSummary)) 
-                                {
-                                     str+= "(" + docSummary + ")";
-                                }
-                                float x = 0f;
+                                float width = (float)bound.Width;
 
-                                e.Graphics.FillRectangle(this.BackBrush, x, (float)(0.01f + (height) * i),
-                                    (float)(((float)parentShape.BoundingBox.Width) - 0.45f),
-                                    height);
+                                
+                                
+                                e.Graphics.FillRectangle(this.BackBrush, 0f,
+                                    (0f + VSConfigManager.CurConfig.MemberLineHeight * (float)i),
+                                    width, VSConfigManager.CurConfig.MemberSummaryHeight);
 
-                                e.Graphics.DrawString(str, font, this.SumerBrush, x, (float)(0.02f + (height) * i));
-                                //e.Graphics.FillRectangle(this.BackBrush, (float)0.01f, (float)(0.018f + (0.16435f * i)), (float)(((float)parentShape.BoundingBox.Width) - 0.45f), (float)0.144f);
-                                //e.Graphics.DrawString(docSummary, font, this.SumerBrush, (float)0.01f, (float)(0.02f + (0.16435f * i)));
+                                string curStr = menberByName.Name;
+                                float curX = 0f;
+                                e.Graphics.DrawString(curStr, font, this.NameBrush, curX,
+                                    (0f + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                                curX += e.Graphics.MeasureString(curStr, font).Width;
+                                curStr = "//" + menberByName.DocSummary;
+                                e.Graphics.DrawString(curStr, font, this.SummaryBrush, curX,
+                                    (0f + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+
                             }
                         }
                     }

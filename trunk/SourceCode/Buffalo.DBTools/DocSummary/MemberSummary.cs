@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using Microsoft.VisualStudio.Modeling.Diagrams;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Collections;
+using Buffalo.DBTools.DocSummary.VSConfig;
 /** 
 @author 289323612@qq.com
 @version 创建时间：2011-12-1
@@ -18,8 +19,9 @@ namespace Buffalo.DBTools.DocSummary
         // Fields
         private Connect _FromAddin;
         private SolidBrush BackBrush = new SolidBrush(Color.White);
-        private SolidBrush SumerBrush = new SolidBrush(Color.Black);
-
+        private SolidBrush VarBrush = new SolidBrush(Color.Blue);
+        private SolidBrush NameBrush = new SolidBrush(Color.Black);
+        private SolidBrush SummaryBrush = new SolidBrush(Color.Green);
         // Methods
         public override void DoPaint(DiagramPaintEventArgs e, ShapeElement parentShape)
         {
@@ -56,99 +58,14 @@ namespace Buffalo.DBTools.DocSummary
                             continue;
                         }
                         string docSummary = menberByName.DocSummary;
-                        if (((ClassDiagram)parentShape.Diagram).MembersFormat == MemberTextFormat.NameAndType)
-                        {
+                        string genericTypeName = "";
 
-                            string genericTypeName = "";
-                            if (menberByName.MemberType is ClrStruct)
-                            {
-                                switch (menberByName.MemberTypeName)
-                                {
-                                    case "bool":
-                                        break;
-                                    case "bool?":
-                                        genericTypeName = "是否";
-                                        break;
-
-                                    case "int":
-                                        break;
-                                    case "int?":
-                                        genericTypeName = "整数";
-                                        break;
-
-                                    case "uint":
-                                        break;
-                                    case "uint?":
-                                        genericTypeName = "正整数";
-                                        break;
-
-                                    case "byte":
-                                        break;
-                                    case "byte?":
-                                        genericTypeName = "字节";
-                                        break;
-
-                                    case "byte[]":
-                                        genericTypeName = "字节数组";
-                                        break;
-
-                                    case "long":
-                                        break;
-                                    case "long?":
-                                        genericTypeName = "长整数";
-                                        break;
-
-                                    case "System.DateTime":
-                                        break;
-                                    case "System.DateTime?":
-                                        genericTypeName = "时间";
-                                        break;
-
-                                    case "decimal":
-                                        break;
-                                    case "decimal?":
-                                        genericTypeName = "精确小数";
-                                        break;
-
-                                    case "float":
-                                        break;
-                                    case "float?":
-                                        genericTypeName = "浮点数";
-                                        break;
-                                    default:
-                                        genericTypeName = menberByName.MemberType.GenericTypeName;
-                                        break;
-                                }
-
-                            }
-                            else if ((menberByName.MemberType is ClrClass) || (menberByName.MemberType is ClrEnumeration))
-                            {
-                                if (menberByName.MemberType.Name == "String")
-                                {
-                                    genericTypeName = "文字";
-                                }
-                                else if (menberByName.MemberType.Name == "List")
-                                {
-                                    genericTypeName = menberByName.MemberType.GenericTypeName;
-                                }
-                                else if (string.IsNullOrEmpty(menberByName.MemberType.DocSummary))
-                                {
-                                    genericTypeName = menberByName.MemberType.GenericTypeName;
-                                }
-                                else
-                                {
-                                    genericTypeName = menberByName.MemberType.DocSummary;
-                                }
-                            }
-                            else
-                            {
-                                genericTypeName = menberByName.MemberTypeName;
-                            }
-
-                            docSummary =  docSummary + "：" + genericTypeName ;
-                        }
-                        this.BackBrush.Color = Color.White;
-                        this.SumerBrush.Color = Color.Black;
+                        genericTypeName = menberByName.MemberTypeShortName;
+                        
+                        BackBrush.Color = Color.White;
+                        VarBrush.Color = Color.Blue;
+                        NameBrush.Color =Color.Black;
+                        SummaryBrush.Color =Color.Green;
                         SelectedShapesCollection seleShapes = this._FromAddin.SelectedShapes;
                         if (seleShapes != null)
                         {
@@ -156,31 +73,56 @@ namespace Buffalo.DBTools.DocSummary
                             {
                                 if (((item.Shape == compartment) && (item.Field == listField)) && (item.SubField.SubFieldHashCode == i))
                                 {
-                                    this.BackBrush.Color = SystemColors.ActiveCaption;
-                                    this.SumerBrush.Color = Color.White;
+                                    this.BackBrush.Color = SystemColors.Highlight;
+                                    VarBrush.Color = Color.White;
+                                    NameBrush.Color = Color.White;
+                                    SummaryBrush.Color = Color.White;
                                     break;
                                 }
                             }
                         }
 
                         
-                        float height = 0.19f;
+                        
                         float recX = (float)itemDrawInfo.ImageMargin;//0.16435f
                         RectangleD bound = parentShape.BoundingBox;
-                        string str=menberByName.Name;
-                        if (!string.IsNullOrEmpty(docSummary)) 
-                        {
-                            str += "(" + docSummary + ")";
-                        }
-                        float x = 0.4f;
 
-                        e.Graphics.FillRectangle(this.BackBrush, x,(float)(0.245f+(height) * i), 
-                            (float)(((float)parentShape.BoundingBox.Width) - 0.45f),
-                            height);
-
-                        e.Graphics.DrawString(str, font, this.SumerBrush, x, (float)(0.250f + (height) * i));
+                        float width = (float)bound.Width;
+                        //float MemberStartMargin = 0.26f;
+                        //float MemberLineHeight = 0.19f;
                         
+                        e.Graphics.FillRectangle(this.BackBrush, VSConfigManager.CurConfig.MemberMarginX,
+                            (VSConfigManager.CurConfig.MemberStartMargin +
+                            VSConfigManager.CurConfig.MemberLineHeight * (float)i), width,
+                            VSConfigManager.CurConfig.MemberSummaryHeight);
 
+                        float curX=VSConfigManager.CurConfig.MemberMarginX;
+                        string curStr = genericTypeName;
+
+                        if (BackBrush.Color == Color.White)//非选中状态
+                        {
+                            if (menberByName.MemberType != null && menberByName.MemberType.TypeModifier == TypeModifier.Value)
+                            {
+                                VarBrush.Color = Color.Blue;
+                            }
+                            else
+                            {
+                                VarBrush.Color = Color.DodgerBlue;
+                            }
+                        }
+                        e.Graphics.DrawString(curStr, font, this.VarBrush, curX,
+                            (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                        curX += e.Graphics.MeasureString(curStr, font).Width;
+
+                        curStr = " " + menberByName.Name;
+                        e.Graphics.DrawString(curStr, font, this.NameBrush, curX,
+                            (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                        curX += e.Graphics.MeasureString(curStr, font).Width;
+
+                        curStr = "//" + docSummary;
+                        e.Graphics.DrawString(curStr, font, this.SummaryBrush, curX,
+                            (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                       
                     }
                 }
             }

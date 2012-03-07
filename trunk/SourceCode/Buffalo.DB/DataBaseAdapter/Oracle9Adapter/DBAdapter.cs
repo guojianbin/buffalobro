@@ -54,7 +54,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <param name="paramValue">参数值</param>
         /// <param name="paramDir">参数进出类型</param>
         /// <returns></returns>
-        public IDataParameter GetDataParameter(string paramName, DbType type, object paramValue, ParameterDirection paramDir) 
+        public IDataParameter GetDataParameter(string paramName, DbType type, object paramValue, ParameterDirection paramDir)
         {
             IDataParameter newParam = new OracleParameter();
             newParam.ParameterName = paramName;
@@ -92,7 +92,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// 获取SQL命令类
         /// </summary>
         /// <returns></returns>
-        public IDbCommand GetCommand() 
+        public IDbCommand GetCommand()
         {
             IDbCommand comm = new OracleCommand();
             return comm;
@@ -121,7 +121,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// </summary>
         /// <param name="paramName"></param>
         /// <returns></returns>
-        public string FormatParam(string paramName) 
+        public string FormatParam(string paramName)
         {
             return "\"" + paramName + "\"";
         }
@@ -141,9 +141,9 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// </summary>
         /// <param name="pname"></param>
         /// <returns></returns>
-        public string FormatValueName(string pname) 
+        public string FormatValueName(string pname)
         {
-            return ":"+pname;
+            return ":" + pname;
         }
 
         /// <summary>
@@ -153,16 +153,16 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <returns></returns>
         public string FormatParamKeyName(string pname)
         {
-            return  pname;
+            return pname;
         }
-        
+
         /// <summary>
         /// 返回全文检索的查询语句
         /// </summary>
         /// <param name="paranName"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public string FreeTextLike(string paranName,string value) 
+        public string FreeTextLike(string paranName, string value)
         {
             return " (contains(\"" + paranName + "\"," + value + ")>0)";
         }
@@ -177,7 +177,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <returns></returns>
         public IDataReader Query(string sql, PageContent objPage, DataBaseOperate oper)
         {
-            return CursorPageCutter.Query(sql,null, objPage, oper);
+            return CursorPageCutter.Query(sql, null, objPage, oper);
         }
         /// <summary>
         /// 获取当前时间
@@ -197,7 +197,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <returns></returns>
         public DataTable QueryDataTable(string sql, PageContent objPage, DataBaseOperate oper, Type curType)
         {
-            return CursorPageCutter.QueryDataTable(sql,null, objPage, oper, curType);
+            return CursorPageCutter.QueryDataTable(sql, null, objPage, oper, curType);
         }
         /// <summary>
         /// 游标分页
@@ -234,45 +234,45 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <param name="objCondition">条件对象</param>
         /// <param name="objPage">分页记录类</param>
         /// <returns></returns>
-        public string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage) 
+        public string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage)
         {
             return CutPageSqlCreater.CreatePageSql(list, oper, objCondition, objPage);
         }
-        
-        
+
+
 
         /// <summary>
         /// 获取字符串拼接SQl语句
         /// </summary>
         /// <param name="str">字符串集合</param>
         /// <returns></returns>
-        public string ConcatString(params string[] strs) 
+        public string ConcatString(params string[] strs)
         {
             StringBuilder sbRet = new StringBuilder();
-            foreach (string curStr in strs) 
+            foreach (string curStr in strs)
             {
                 sbRet.Append(curStr + "||");
             }
             string ret = sbRet.ToString();
-            if (ret.Length > 2) 
+            if (ret.Length > 2)
             {
                 ret = ret.Substring(0, ret.Length - 2);
             }
             return ret;
         }
-        
+
         /// <summary>
         /// 获取自动增长的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetIdentitySQL(EntityInfoHandle info) 
+        public string GetIdentitySQL(EntityInfoHandle info)
         {
             EntityPropertyInfo pkInfo = info.PrimaryProperty;//获取主键属性
-            if (pkInfo == null) 
+            if (pkInfo == null)
             {
                 throw new Exception("找不到主键属性");
             }
-            return "select \"" + GetSequenceName(info.TableName,pkInfo.ParamName) + "\".currval as curVal from dual";
+            return "select \"" + GetSequenceName(info.TableName, pkInfo.ParamName) + "\".currval as curVal from dual";
         }
         /// <summary>
         /// 获取自动增长值的SQL
@@ -281,11 +281,11 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         public string GetIdentityValueSQL(EntityInfoHandle info)
         {
             EntityPropertyInfo pkInfo = info.PrimaryProperty;//获取主键属性
-            if (pkInfo == null) 
+            if (pkInfo == null)
             {
                 throw new Exception("找不到主键属性");
             }
-            return "select \"" + GetSequenceName(info.TableName,pkInfo.ParamName) + "\".nextval as curVal from dual";
+            return "select \"" + GetSequenceName(info.TableName, pkInfo.ParamName) + "\".nextval as curVal from dual";
         }
         /// <summary>
         /// 获取序列名
@@ -303,9 +303,9 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// 初始化序列名
         /// </summary>
         /// <param name="seqName"></param>
-        public string GetSequenceInit(string seqName,DataBaseOperate oper) 
+        public string GetSequenceInit(string seqName, DataBaseOperate oper)
         {
-            return SequenceManager.GetInitSequence(seqName,oper);
+            return SequenceManager.GetInitSequence(seqName, oper);
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <returns></returns>
         public string GetIdentityParamName(EntityPropertyInfo info)
         {
-             return "\"" + info.ParamName + "\"";
+            return "\"" + info.ParamName + "\"";
         }
         /// <summary>
         /// 插入时候自动增长的字段值
@@ -372,14 +372,14 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
 
         public int ToRealDbType(DbType dbType, int length)
         {
-            switch (dbType) 
+            switch (dbType)
             {
                 case DbType.AnsiString:
                     if (length < 2000)
                     {
                         return (int)OracleType.Char;
                     }
-                    else 
+                    else
                     {
                         return (int)OracleType.LongVarChar;
                     }
@@ -388,21 +388,21 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     {
                         return (int)OracleType.VarChar;
                     }
-                    else 
+                    else
                     {
-                        return (int)OracleType.Text;
+                        return (int)OracleType.LongVarChar;
                     }
                 case DbType.Binary:
-                    if (length < 8000)
+                    if (length < 2000)
                     {
-                        return (int)SqlDbType.Binary;
+                        return (int)OracleType.Raw;
                     }
                     else
                     {
-                        return (int)SqlDbType.Image;
+                        return (int)OracleType.Blob;
                     }
                 case DbType.Boolean:
-                    return (int)SqlDbType.Bit;
+                    return (int)OracleType.Number;
                 case DbType.Byte:
                     return (int)SqlDbType.TinyInt;
                 case DbType.Currency:
@@ -434,7 +434,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     {
                         return (int)SqlDbType.NVarChar;
                     }
-                    else 
+                    else
                     {
                         return (int)SqlDbType.NText;
                     }
@@ -447,7 +447,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     {
                         return (int)SqlDbType.NText;
                     }
-               
+
                 case DbType.UInt32:
                 case DbType.UInt64:
                     return (int)SqlDbType.BigInt;
@@ -455,7 +455,9 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     return (int)SqlDbType.Real;
                 default:
                     return (int)SqlDbType.Structured;
+            }
         }
+
 
     }
 }

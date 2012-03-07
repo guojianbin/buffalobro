@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.Modeling.Diagrams;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using Buffalo.DBTools.DocSummary.VSConfig;
 /** 
 @author 289323612@qq.com
 @version 创建时间：2011-12-1
@@ -19,10 +20,10 @@ namespace Buffalo.DBTools.DocSummary
         private float Overrideheight;
         private SolidBrush PerentBrush = new SolidBrush(Color.Gray);
         private float perentx = 0.03f;
-        private float perenty = 0.35f;
+        private float perenty = VSConfigManager.CurConfig.MemberExtendSummaryY;
         private SolidBrush SumerBrush = new SolidBrush(Color.Maroon);
         private float summeryx = 0.03f;
-        private float summeryy = 0.2f;
+        private float summeryy = VSConfigManager.CurConfig.MemberSummaryY;
 
         // Methods
         public override void DoPaint(DiagramPaintEventArgs e, ShapeElement parentShape)
@@ -42,7 +43,7 @@ namespace Buffalo.DBTools.DocSummary
             }
             LinearGradientBrush brush = new LinearGradientBrush(rect, Color.FromArgb(0xd4, 0xdd, 0xef), Color.White, 0f);
             e.Graphics.FillRectangle(brush, rect);
-            e.Graphics.DrawString(summrytxt, font, this.SumerBrush, this.summeryx + 0.05f, this.summeryy);
+            e.Graphics.DrawString("类:"+summrytxt, font, this.SumerBrush, this.summeryx + 0.05f, this.summeryy);
             if (flag)
             {
                 Font font2 = this.GetFont(e.View);
@@ -105,12 +106,9 @@ namespace Buffalo.DBTools.DocSummary
             ClrClass class2 = GetClass(parentShape);
             if (class2 == null)
             {
-                return "(无摘要)";
+                return "";
             }
-            if (string.IsNullOrEmpty(class2.DocSummary))
-            {
-                return "(无摘要)";
-            }
+            
             return class2.DocSummary;
         }
     }

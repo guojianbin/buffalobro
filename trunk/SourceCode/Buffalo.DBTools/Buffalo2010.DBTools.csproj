@@ -109,6 +109,11 @@
     <Compile Include="DocSummary\MemberSummary.cs" />
     <Compile Include="DocSummary\ShapeSummaryDisplayer.cs" />
     <Compile Include="DocSummary\SummaryShape.cs" />
+    <Compile Include="DocSummary\VSConfig\IVSConfig.cs" />
+    <Compile Include="DocSummary\VSConfig\VS2005Config.cs" />
+    <Compile Include="DocSummary\VSConfig\VS2008Config.cs" />
+    <Compile Include="DocSummary\VSConfig\VSConfigManager.cs" />
+    <Compile Include="DocSummary\VSConfig\VS2010Config.cs" />
     <Compile Include="FrmAllTables.cs">
       <SubType>Form</SubType>
     </Compile>
