@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using System.Drawing.Drawing2D;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Collections;
+using System.Windows.Forms;
 
 /** 
 @author 289323612@qq.com
@@ -32,6 +33,7 @@ namespace Buffalo.DBTools.DocSummary
             ClrInterfaceShape shape3 = null;
             AssociationShape shape4 = null;
             bool flag = true;
+           
             foreach (ShapeElement element in (IEnumerable) nestedChildShapes)
             {
                 if (element is ClrClassShape)
@@ -60,12 +62,14 @@ namespace Buffalo.DBTools.DocSummary
                     flag = true;
                     SummaryShape shapeField = new SummaryShape();
                     shapeFields.Add(shapeField);
+                    
                 }
                 else
                 {
                     flag = false;
                     shapeFields.RemoveAt(index);
                 }
+                
                 foreach (ShapeElement element2 in (IEnumerable) shape.NestedChildShapes)
                 {
                     if (!(element2 is CDCompartment))
@@ -111,6 +115,7 @@ namespace Buffalo.DBTools.DocSummary
                     }
                 }
             }
+
             if (shape2 != null)
             {
                 ShapeFieldCollection fields2 = shape2.ShapeFields;
@@ -168,6 +173,7 @@ namespace Buffalo.DBTools.DocSummary
                     break;
                 }
             }
+
             foreach (ShapeElement element5 in (IEnumerable) nestedChildShapes)
             {
                 if (element5 is ClrInterfaceShape)
@@ -237,6 +243,7 @@ namespace Buffalo.DBTools.DocSummary
                     break;
                 }
             }
+
             foreach (ShapeElement element7 in (IEnumerable) nestedChildShapes)
             {
                 if (element7 is AssociationShape)
