@@ -60,7 +60,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <param name="paramValue">参数值</param>
         /// <param name="paramDir">参数进出类型</param>
         /// <returns></returns>
-        public IDataParameter GetDataParameter(string paramName, DbType type, object paramValue, ParameterDirection paramDir) 
+        public IDataParameter GetDataParameter(string paramName, DbType type, object paramValue, ParameterDirection paramDir)
         {
             IDataParameter newParam = new SQLiteParameter();
             newParam.ParameterName = paramName;
@@ -76,7 +76,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <param name="sql">查询字符串</param>
         /// <param name="top">top值</param>
         /// <returns></returns>
-        public string GetTopSelectSql(SelectCondition sql,int top) 
+        public string GetTopSelectSql(SelectCondition sql, int top)
         {
             StringBuilder sbSql = new StringBuilder(sql.GetSelect());
             //sbSql.Append(sql);
@@ -97,7 +97,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// 获取SQL命令类
         /// </summary>
         /// <returns></returns>
-        public IDbCommand GetCommand() 
+        public IDbCommand GetCommand()
         {
             IDbCommand comm = new SQLiteCommand();
             return comm;
@@ -126,7 +126,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// </summary>
         /// <param name="paramName"></param>
         /// <returns></returns>
-        public string FormatParam(string paramName) 
+        public string FormatParam(string paramName)
         {
 
             return "[" + paramName + "]";
@@ -158,7 +158,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public string FormatParamKeyName(string pname)
         {
-            return  pname;
+            return pname;
         }
         /// <summary>
         /// 返回全文检索的查询语句
@@ -166,9 +166,9 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <param name="paranName"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public string FreeTextLike(string paranName,string value) 
+        public string FreeTextLike(string paranName, string value)
         {
-            return " like '%"+value+"%'";
+            return " like '%" + value + "%'";
         }
 
         /// <summary>
@@ -179,9 +179,9 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <param name="objPage">分页实体</param>
         /// <param name="oper">数据库链接</param>
         /// <returns></returns>
-        public IDataReader Query(string sql, PageContent objPage, DataBaseOperate oper) 
+        public IDataReader Query(string sql, PageContent objPage, DataBaseOperate oper)
         {
-            return CursorPageCutter.Query(sql,null, objPage, oper);
+            return CursorPageCutter.Query(sql, null, objPage, oper);
         }
 
         /// <summary>
@@ -194,10 +194,10 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public DataTable QueryDataTable(string sql, PageContent objPage, DataBaseOperate oper, Type curType)
         {
-            return CursorPageCutter.QueryDataTable(sql,null, objPage, oper, curType);
+            return CursorPageCutter.QueryDataTable(sql, null, objPage, oper, curType);
         }
-        
-        
+
+
         /// <summary>
         /// 游标分页
         /// </summary>
@@ -207,7 +207,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <param name="objPage">分页实体</param>
         /// <param name="oper">数据库链接</param>
         /// <returns></returns>
-        public IDataReader Query(string sql,ParamList lstParam, PageContent objPage, DataBaseOperate oper) 
+        public IDataReader Query(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper)
         {
             return CursorPageCutter.Query(sql, lstParam, objPage, oper);
         }
@@ -221,7 +221,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <param name="oper">数据库对象</param>
         /// <param name="curType">映射的实体类型(如果用回数据库的原列名，则此为null)</param>
         /// <returns></returns>
-        public DataTable QueryDataTable(string sql,ParamList lstParam, PageContent objPage, DataBaseOperate oper, Type curType)
+        public DataTable QueryDataTable(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper, Type curType)
         {
             return CursorPageCutter.QueryDataTable(sql, lstParam, objPage, oper, curType);
         }
@@ -233,7 +233,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <param name="objCondition">条件对象</param>
         /// <param name="objPage">分页记录类</param>
         /// <returns></returns>
-        public virtual string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage) 
+        public virtual string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage)
         {
             return CutPageSqlCreater.CreatePageSql(list, oper, objCondition, objPage);
         }
@@ -241,7 +241,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// 获取初始化计分函数的SQL语句
         /// </summary>
         /// <returns></returns>
-        public string GetInitPointFunSql() 
+        public string GetInitPointFunSql()
         {
             return null;
         }
@@ -250,7 +250,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// 获取判断计分函数是否存在的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetPiontFunSqlExistsSql() 
+        public string GetPiontFunSqlExistsSql()
         {
             return null;
         }
@@ -265,7 +265,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
                 return null;
             }
         }
-        
+
         /// <summary>
         /// 获取字符串拼接SQl语句
         /// </summary>
@@ -289,7 +289,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// 获取自动增长的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetIdentitySQL(EntityInfoHandle info) 
+        public string GetIdentitySQL(EntityInfoHandle info)
         {
             return "select LAST_INSERT_ROWID()";
         }
@@ -316,7 +316,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
             {
                 dt = (DateTime)value;
             }
-            return "'" + dt .ToString("s")+ "'";
+            return "'" + dt.ToString("s") + "'";
         }
 
         // <summary>
@@ -324,7 +324,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public string GetIdentityParamName(EntityPropertyInfo info) 
+        public string GetIdentityParamName(EntityPropertyInfo info)
         {
             return null;
         }
@@ -336,9 +336,9 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         public string GetInsertPKParamValue(EntityPropertyInfo info)
         {
             return null;
-        } 
+        }
 
-        
+
         /// <summary>
         /// 根据Reader的内容把数值赋进实体
         /// </summary>
@@ -380,17 +380,67 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
 
         public string DBIdentity(string tableName, string paramName)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return "AUTOINCREMENT";
         }
 
         public string DBTypeToSQL(DbType dbType, int length)
         {
-            throw new Exception("The method or operation is not implemented.");
+            //int type = ToRealDbType(dbType, length);            
+            //SqliteType stype = (SqlDbType)type;            
+            switch (dbType)
+            {
+                case DbType.AnsiString:
+                case DbType.AnsiStringFixedLength:
+                    if (length > 8000)
+                    {
+                        return "TEXT";
+                    }
+                    else
+                    {
+                        return "VARCHAR" + "(" + length + ")";
+                    }
+                case DbType.Binary:
+                    return "BLOB";
+                case DbType.Boolean:
+                    return "BOOLEAN";
+                case DbType.Byte:
+                case DbType.Int16:
+                case DbType.Int32:
+                case DbType.UInt16:
+                case DbType.SByte:
+                    return "INTEGER";
+                case DbType.Decimal:
+                case DbType.Currency:
+                case DbType.Double:
+                case DbType.Int64:
+                case DbType.UInt32:
+                case DbType.UInt64:
+                case DbType.VarNumeric:
+                    return "REAL";
+                case DbType.Date:
+                    return "DATE";
+                case DbType.DateTime2:
+                case DbType.DateTimeOffset:
+                case DbType.DateTime:
+                    return "TIMESTAMP";
+                case DbType.Guid:
+                    return "VARCHAR(64)";
+                case DbType.Single:
+                    return "FLOAT";
+                case DbType.String:
+                case DbType.StringFixedLength:
+                    return "NVARCHAR(" + length + ")";
+                case DbType.Time:
+                    return "TIME";
+                default:
+                    return "NUMERIC";
+            }
+
         }
 
         public int ToRealDbType(DbType dbType, int length)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return (int)dbType;
         }
 
         #endregion
