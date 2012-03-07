@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Text;
 using Buffalo.DB.DataBaseAdapter.IDbAdapters;
-using System.Data;
 
 namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
 {
@@ -11,7 +8,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
     {
         public virtual string IsNull(string[] values)
         {
-            return "IFNULL(" + values[0] + "," + values[1] + ")";
+            return "isNull(" + values[0] + "," + values[1] + ")";
         }
 
         public virtual string Len(string[] values)
