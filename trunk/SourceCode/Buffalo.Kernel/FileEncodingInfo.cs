@@ -12,13 +12,14 @@ namespace Buffalo.Kernel
         /// 给定文件的路径，读取文件的二进制数据，判断文件的编码类型
         /// </summary>
         /// <param name="fileName">文件路径</param>
+        /// <param name="valNotBOM">是否验证没BOM的</param>
         /// <returns>文件的编码类型</returns>
-        public static Encoding GetEncodingType(string fileName)
+        public static Encoding GetEncodingType(string fileName,bool valNotBOM)
         {
             Encoding ret = null;
             using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
             {
-                ret = GetEncodingType(fs);
+                ret = GetEncodingType(fs,valNotBOM);
             }
             return ret;
         }
@@ -30,28 +31,36 @@ namespace Buffalo.Kernel
         /// </summary>
         /// <param name="fs">文件流</param>
         /// <returns>文件的编码类型</returns>
-        public static System.Text.Encoding GetEncodingType(Stream fs)
+        public static System.Text.Encoding GetEncodingType(Stream fs,bool valNotBOM)
         {
             
-            Encoding reVal = null;
 
-            byte[] buffer = new byte[512];
+            byte[] buffer = new byte[3];
 
             int read = fs.Read(buffer, 0, buffer.Length);
-            if (IsUTF8Bytes(buffer) || IsEncoding(buffer,UTF8))
+            if (valNotBOM)
             {
-                reVal = Encoding.UTF8;
+                byte[] bufferNotBOM = new byte[fs.Length];
+                int readNotBOM = fs.Read(bufferNotBOM, 0, bufferNotBOM.Length);
+                if (IsUTF8Bytes(bufferNotBOM)) 
+                {
+                    return Encoding.UTF8;
+                }
             }
-            else if (IsEncoding(buffer,UnicodeBIG))
+            if (IsEncoding(buffer,UTF8))
             {
-                reVal = Encoding.BigEndianUnicode;
+                return Encoding.UTF8;
             }
-            else if (IsEncoding(buffer,Unicode))
+            if (IsEncoding(buffer,UnicodeBIG))
             {
-                reVal = Encoding.Unicode;
+                return Encoding.BigEndianUnicode;
+            }
+            if (IsEncoding(buffer,Unicode))
+            {
+                return Encoding.Unicode;
             }
 
-            return reVal;
+            return null;
 
         }
 

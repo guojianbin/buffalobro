@@ -344,6 +344,10 @@ namespace Buffalo.DBTools.ROMHelper
         private string BildRelations() 
         {
             StringBuilder sb = new StringBuilder();
+            if (_belongTable.RelationItems == null) 
+            {
+                return sb.ToString();
+            }
             foreach (TableRelationAttribute er in _belongTable.RelationItems) 
             {
                 
@@ -412,6 +416,10 @@ namespace Buffalo.DBTools.ROMHelper
         private string BildFields() 
         {
             StringBuilder sb = new StringBuilder();
+            if (_belongTable.Params == null)
+            {
+                return sb.ToString();
+            }
             foreach (EntityParam prm in _belongTable.Params) 
             {
                 prm.FieldName = "_"+EntityFieldBase.ToCamelName(prm.ParamName);

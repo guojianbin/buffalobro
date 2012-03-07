@@ -177,6 +177,10 @@ namespace Buffalo.DB.DBCheckers
         private static void CheckRelation(List<string> lstSql,DBInfo dbInfo, KeyWordTableParamItem table) 
         {
             List<TableRelationAttribute> lstRelation = dbInfo.DBStructure.GetRelation(dbInfo.DefaultOperate,dbInfo, table.TableName);
+            if (lstRelation == null) 
+            {
+                return;
+            }
             foreach (TableRelationAttribute item in table.RelationItems) 
             {
                 bool exists = false;

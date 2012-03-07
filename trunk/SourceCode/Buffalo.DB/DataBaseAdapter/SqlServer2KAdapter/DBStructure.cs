@@ -288,7 +288,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                     return DbType.Single;
 
                 case "image":
-                    return DbType.Boolean;
+                    return DbType.Binary;
 
                 case "int":
                     return DbType.Int32;

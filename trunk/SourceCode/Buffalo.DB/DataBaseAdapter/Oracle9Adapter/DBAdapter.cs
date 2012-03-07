@@ -362,7 +362,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
 
         public string DBIdentity(string tableName, string paramName)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return "";
         }
 
         public string DBTypeToSQL(DbType dbType, int length)
@@ -372,7 +372,89 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
 
         public int ToRealDbType(DbType dbType, int length)
         {
-            throw new Exception("The method or operation is not implemented.");
+            switch (dbType) 
+            {
+                case DbType.AnsiString:
+                    if (length < 2000)
+                    {
+                        return (int)OracleType.Char;
+                    }
+                    else 
+                    {
+                        return (int)OracleType.LongVarChar;
+                    }
+                case DbType.AnsiStringFixedLength:
+                    if (length < 8000)
+                    {
+                        return (int)OracleType.VarChar;
+                    }
+                    else 
+                    {
+                        return (int)OracleType.Text;
+                    }
+                case DbType.Binary:
+                    if (length < 8000)
+                    {
+                        return (int)SqlDbType.Binary;
+                    }
+                    else
+                    {
+                        return (int)SqlDbType.Image;
+                    }
+                case DbType.Boolean:
+                    return (int)SqlDbType.Bit;
+                case DbType.Byte:
+                    return (int)SqlDbType.TinyInt;
+                case DbType.Currency:
+                    return (int)SqlDbType.Money;
+                case DbType.Date:
+                case DbType.DateTime:
+                case DbType.DateTime2:
+                case DbType.DateTimeOffset:
+                case DbType.Time:
+                    return (int)SqlDbType.DateTime;
+                case DbType.Decimal:
+                case DbType.Double:
+                    return (int)SqlDbType.Decimal;
+                case DbType.Guid:
+                    return (int)SqlDbType.UniqueIdentifier;
+                case DbType.Int16:
+                    return (int)SqlDbType.SmallInt;
+                case DbType.UInt16:
+                case DbType.Int32:
+                    return (int)SqlDbType.Int;
+                case DbType.Int64:
+                    return (int)SqlDbType.BigInt;
+                case DbType.SByte:
+                    return (int)SqlDbType.TinyInt;
+                case DbType.Single:
+                    return (int)SqlDbType.Float;
+                case DbType.String:
+                    if (length < 8000)
+                    {
+                        return (int)SqlDbType.NVarChar;
+                    }
+                    else 
+                    {
+                        return (int)SqlDbType.NText;
+                    }
+                case DbType.StringFixedLength:
+                    if (length < 8000)
+                    {
+                        return (int)SqlDbType.NChar;
+                    }
+                    else
+                    {
+                        return (int)SqlDbType.NText;
+                    }
+               
+                case DbType.UInt32:
+                case DbType.UInt64:
+                    return (int)SqlDbType.BigInt;
+                case DbType.VarNumeric:
+                    return (int)SqlDbType.Real;
+                default:
+                    return (int)SqlDbType.Structured;
         }
 
     }

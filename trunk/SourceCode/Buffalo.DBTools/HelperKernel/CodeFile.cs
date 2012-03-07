@@ -47,7 +47,7 @@ namespace Buffalo.DBTools
                 {
                     File.Delete(bakName);
                 }
-                fileEncoding = FileEncodingInfo.GetEncodingType(fileName);
+                fileEncoding = FileEncodingInfo.GetEncodingType(fileName,false);
                 if (fileEncoding == null) 
                 {
                     fileEncoding=DefaultEncoding;

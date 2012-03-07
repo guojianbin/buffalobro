@@ -43,7 +43,6 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         {
             int type = ToRealDbType(dbType,length);
             SqlDbType stype = (SqlDbType)type;
-
             switch (stype) 
             {
                 case SqlDbType.VarChar:
@@ -108,21 +107,19 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                 case DbType.Currency:
                     return (int)SqlDbType.Money;
                 case DbType.Date:
-                    return (int)SqlDbType.DateTime;
                 case DbType.DateTime:
-                    return (int)SqlDbType.DateTime;
                 case DbType.DateTime2:
-                    return (int)SqlDbType.DateTime;
                 case DbType.DateTimeOffset:
+                case DbType.Time:
                     return (int)SqlDbType.DateTime;
                 case DbType.Decimal:
-                    return (int)SqlDbType.Decimal;
                 case DbType.Double:
                     return (int)SqlDbType.Decimal;
                 case DbType.Guid:
                     return (int)SqlDbType.UniqueIdentifier;
                 case DbType.Int16:
                     return (int)SqlDbType.SmallInt;
+                case DbType.UInt16:
                 case DbType.Int32:
                     return (int)SqlDbType.Int;
                 case DbType.Int64:
@@ -132,7 +129,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                 case DbType.Single:
                     return (int)SqlDbType.Float;
                 case DbType.String:
-                    if (length < 8000)
+                    if (length < 4000)
                     {
                         return (int)SqlDbType.NVarChar;
                     }
@@ -141,7 +138,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                         return (int)SqlDbType.NText;
                     }
                 case DbType.StringFixedLength:
-                    if (length < 8000)
+                    if (length < 4000)
                     {
                         return (int)SqlDbType.NChar;
                     }
@@ -149,12 +146,8 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                     {
                         return (int)SqlDbType.NText;
                     }
-                case DbType.Time:
-                    return (int)SqlDbType.DateTime;
-                case DbType.UInt16:
-                    return (int)SqlDbType.Int;
+               
                 case DbType.UInt32:
-                    return (int)SqlDbType.BigInt;
                 case DbType.UInt64:
                     return (int)SqlDbType.BigInt;
                 case DbType.VarNumeric:

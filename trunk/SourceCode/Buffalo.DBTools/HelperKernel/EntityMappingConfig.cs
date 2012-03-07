@@ -284,6 +284,10 @@ namespace Buffalo.DBTools.HelperKernel
         private static void AppendRelationInfo(DBEntityInfo entity, XmlNode classNode)
         {
             XmlDocument doc = classNode.OwnerDocument;
+            if (entity.BelongTable.RelationItems == null) 
+            {
+                return;
+            }
             foreach (TableRelationAttribute field in entity.BelongTable.RelationItems)
             {
                 
@@ -325,6 +329,10 @@ namespace Buffalo.DBTools.HelperKernel
         private static void AppendPropertyInfo(DBEntityInfo entity, XmlNode classNode)
         {
             XmlDocument doc = classNode.OwnerDocument;
+            if (entity.BelongTable.Params == null)
+            {
+                return;
+            }
             foreach (EntityParam field in entity.BelongTable.Params)
             {
                 //EntityParamField field = kp.Value;

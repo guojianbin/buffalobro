@@ -127,7 +127,10 @@ namespace Buffalo.DBTools.HelperKernel
         private string GenProperty() 
         {
             StringBuilder sbProperty = new StringBuilder();
-
+            if (Table.Params == null)
+            {
+                return sbProperty.ToString();
+            }
             foreach (EntityParam epf in Table.Params) 
             {
                 //if (!epf.IsGenerate)
@@ -156,7 +159,10 @@ namespace Buffalo.DBTools.HelperKernel
         private string GenRelation()
         {
             StringBuilder sbRelation = new StringBuilder();
-
+            if (Table.RelationItems == null) 
+            {
+                return sbRelation.ToString();
+            }
             foreach (TableRelationAttribute er in Table.RelationItems)
             {
                 //if (!er.IsGenerate)
