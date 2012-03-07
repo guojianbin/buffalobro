@@ -22,6 +22,7 @@ namespace Buffalo.DBTools.DocSummary
         private SolidBrush VarBrush = new SolidBrush(Color.Blue);
         private SolidBrush NameBrush = new SolidBrush(Color.Black);
         private SolidBrush SummaryBrush = new SolidBrush(Color.Green);
+        private SolidBrush ModifierBrush = new SolidBrush(Color.Blue);
         // Methods
         public override void DoPaint(DiagramPaintEventArgs e, ShapeElement parentShape)
         {
@@ -64,6 +65,7 @@ namespace Buffalo.DBTools.DocSummary
                         
                         BackBrush.Color = Color.White;
                         VarBrush.Color = Color.Blue;
+                        ModifierBrush.Color=Color.Blue;
                         NameBrush.Color =Color.Black;
                         SummaryBrush.Color =Color.Green;
                         SelectedShapesCollection seleShapes = this._FromAddin.SelectedShapes;
@@ -77,6 +79,7 @@ namespace Buffalo.DBTools.DocSummary
                                     VarBrush.Color = Color.White;
                                     NameBrush.Color = Color.White;
                                     SummaryBrush.Color = Color.White;
+                                    ModifierBrush.Color=Color.White;
                                     break;
                                 }
                             }
@@ -97,24 +100,43 @@ namespace Buffalo.DBTools.DocSummary
                             VSConfigManager.CurConfig.MemberSummaryHeight);
 
                         float curX=VSConfigManager.CurConfig.MemberMarginX;
-                        string curStr = genericTypeName;
+                        
 
                         if (BackBrush.Color == Color.White)//·ÇÑ¡ÖÐ×´Ì¬
                         {
-                            if (menberByName.MemberType != null && menberByName.MemberType.TypeModifier == TypeModifier.Value)
-                            {
-                                VarBrush.Color = Color.Blue;
-                            }
-                            else
+                            if (
+                                menberByName.MemberTypeName.EndsWith("?") || menberByName.MemberTypeName.EndsWith("[]") ||
+                                menberByName.MemberTypeLookupName == menberByName.MemberTypeName
+                                )
                             {
                                 VarBrush.Color = Color.DodgerBlue;
                             }
+                            //if (!menberByName.IsSpecialName) 
+                            //{
+                            //    VarBrush.Color = Color.DodgerBlue;
+                            //}
                         }
+                        string curStr = null;
+
+                        if (menberByName.IsStatic) 
+                        {
+                            curStr = "static";
+                            e.Graphics.DrawString(curStr, font, ModifierBrush, curX,
+                                (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                            curX += e.Graphics.MeasureString(curStr, font).Width;
+                        }
+
+
+                        curStr = genericTypeName;
                         e.Graphics.DrawString(curStr, font, this.VarBrush, curX,
                             (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
                         curX += e.Graphics.MeasureString(curStr, font).Width;
 
                         curStr = " " + menberByName.Name;
+                        if (menberByName is ClrMethod) 
+                        {
+                            curStr += "()";
+                        }
                         e.Graphics.DrawString(curStr, font, this.NameBrush, curX,
                             (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
                         curX += e.Graphics.MeasureString(curStr, font).Width;
