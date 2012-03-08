@@ -35,6 +35,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
                 {
                     DBTableInfo tableInfo = new DBTableInfo();
                     tableInfo.Name = reader["name"] as string;
+                    tableInfo.IsView = (reader["type"] as string) == "view";
                     lstName.Add(tableInfo);
                 }
             }
