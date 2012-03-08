@@ -70,7 +70,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
 
             IDBAdapter ida = info.DBInfo.CurrentDbAdapter;
 
-            con.Operator.Append("ADD CONSTRAINT ");
+            con.Operator.Append("add constraint ");
             con.SqlParams.Append(_item.Name);
             con.SqlParams.Append(" foreign key (" + ida.FormatParam(_item.SourceName) + ") ");
             con.SqlParams.Append("references ");
