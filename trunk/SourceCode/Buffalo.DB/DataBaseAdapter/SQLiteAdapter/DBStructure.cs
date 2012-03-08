@@ -46,7 +46,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public string GetAddParamSQL()
         {
-            throw new Exception("The method or operation is not implemented.");
+            return "add column";
         }
         /// <summary>
         /// 获取所有关系
@@ -130,48 +130,86 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
                 type = EntityPropertyType.PrimaryKey;
                 type = type | EntityPropertyType.Identity;
             }
+
+            bool allowNull = Convert.ToInt32(reader["notnull"])==0;
+            prm.AllowNull = allowNull;
             prm.PropertyType = type;
             string strDBType = reader["type"] as string;
-            prm.SqlType = GetDbType(strDBType);
+            FillDbType(strDBType,prm);
             table.Params.Add(prm);
         }
+
+
+
         /// <summary>
-        /// 获取DbType
+        /// 填充数据库类型
         /// </summary>
         /// <param name="nativeType"></param>
         /// <returns></returns>
-        private DbType GetDbType(string nativeType)
+        private void FillDbType(string nativeType,EntityParam prm)
         {
             if (string.IsNullOrEmpty(nativeType))
             {
-                return DbType.Object;
+                return;
             }
-            string typeName = nativeType.Trim().ToUpper();
+            string typeName=null;
+            int length=0;
+
+            //截取长度
+            int index = nativeType.IndexOf("(");
+            int lastIndex=nativeType.IndexOf(")");
+            if (index > 0 && lastIndex>index) 
+            {
+                typeName = nativeType.Substring(0, index);
+
+                string strLen = nativeType.Substring(index + 1, lastIndex - index);
+
+                int.TryParse(strLen, out length);
+            }
+
+
+            DbType type=DbType.Object;
+
+            //string typeName = nativeType.Trim().ToUpper();
             switch (typeName)
             {
                 case "BOOLEAN":
-                    return DbType.Boolean;
+                    type=DbType.Boolean;
+                    break;
                 case "BLOB":
-                    return DbType.Binary;
+                    type= DbType.Binary;
+                    break;
                 case "INTEGER":
-                    return DbType.Int32;
+                    type= DbType.Int32;
+                    break;
                 case "REAL":
-                    return DbType.Double;
+                    type= DbType.Double;
+                    break;
                 case "DATE":
-                    return DbType.Date;
+                    type= DbType.Date;
+                    break;
                 case "TIMESTAMP":
-                    return DbType.DateTime;
+                    type= DbType.DateTime;
+                    break;
                 case "VARCHAR":
                 case "NVARCHAR":
                 case "TEXT":
-                    return DbType.String;
+                    type= DbType.String;
+                    break;
                 case "FLOAT":
-                    return DbType.Single;
+                    type= DbType.Single;
+                    break;
                 case "TIME":
-                    return DbType.Time;
+                    type= DbType.Time;
+                    break;
+                default:
+                    break;
             }
-            return DbType.Object;
-        #endregion
+            
+            prm.SqlType=type;
+            prm.Length=length;
         }
+
+        #endregion
     }
 }

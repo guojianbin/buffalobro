@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using Buffalo.DB.DataBaseAdapter;
+using System.Data.Common;
 namespace Buffalo.DB.DbCommon
 {
     public class DBConn
@@ -14,11 +15,11 @@ namespace Buffalo.DB.DbCommon
         /// </summary>
         /// <param name="connectionKey">指定连接的连接字符串的键(如果要默认键则此为null)</param>
         /// <returns></returns>
-        public static IDbConnection GetConnection(DBInfo db)
+        public static DbConnection GetConnection(DBInfo db)
         {
             string connectionString = db.ConnectionString;
             
-            IDbConnection conn = db.CurrentDbAdapter.GetConnection();
+            DbConnection conn = db.CurrentDbAdapter.GetConnection();
             conn.ConnectionString = connectionString;
             return conn;
         }

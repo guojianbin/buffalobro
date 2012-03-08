@@ -8,6 +8,7 @@ using Buffalo.DB.CommBase;
 using Buffalo.DB.EntityInfos;
 using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
+using System.Data.Common;
 namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
 {
     public class DBAdapter : IDBAdapter
@@ -117,9 +118,9 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// 获取SQL连接
         /// </summary>
         /// <returns></returns>
-        public IDbConnection GetConnection()
+        public DbConnection GetConnection()
         {
-            IDbConnection conn = new MySqlConnection();
+            DbConnection conn = new MySqlConnection();
             return conn;
         }
         /// <summary>

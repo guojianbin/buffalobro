@@ -5,6 +5,7 @@ using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.MessageOutPuters;
 using System.Text;
 using Buffalo.DB.CommBase.BusinessBases;
+using System.Data.Common;
 
 ///通用SQL Server访问类v1.2
 
@@ -37,7 +38,15 @@ namespace Buffalo.DB.DbCommon
 		
 		
 		//数据库连接对象
-		private IDbConnection _conn;
+        private DbConnection _conn;
+
+        /// <summary>
+        /// 数据库连接
+        /// </summary>
+        public DbConnection Connection
+        {
+            get { return _conn; }
+        }
 		private IDbCommand _comm;
 		private IDbTransaction _tran;
 		private IDbDataAdapter _sda;
@@ -119,6 +128,35 @@ namespace Buffalo.DB.DbCommon
             :this(db,true)
         { 
         }
+
+        /// <summary>
+        /// 返回此 System.Data.Common.DbConnection 的数据源的架构信息
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetSchema() 
+        {
+            return _conn.GetSchema();
+        }
+        /// <summary>
+        /// 返回此 System.Data.Common.DbConnection 的数据源的架构信息
+        /// </summary>
+        /// <param name="collectionName">指定要返回的架构的名称</param>
+        /// <returns></returns>
+        public DataTable GetSchema(string collectionName)
+        {
+            return _conn.GetSchema(collectionName);
+        }
+        /// <summary>
+        /// 返回此 System.Data.Common.DbConnection 的数据源的架构信息
+        /// </summary>
+        /// <param name="collectionName">指定要返回的架构的名称</param>
+        /// <param name="restrictionValues">为请求的架构指定一组限制值</param>
+        /// <returns></returns>
+        public DataTable GetSchema(string collectionName, string[] restrictionValues)
+        {
+            return _conn.GetSchema(collectionName, restrictionValues);
+        }
+
 		/// <summary>
 		/// 连接数据库，并打开数据库连接
 		/// </summary>

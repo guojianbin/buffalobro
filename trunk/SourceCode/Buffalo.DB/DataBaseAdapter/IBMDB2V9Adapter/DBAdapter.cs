@@ -8,6 +8,7 @@ using Buffalo.DB.CommBase;
 using Buffalo.DB.EntityInfos;
 using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
+using System.Data.Common;
 
 namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
 {
@@ -146,9 +147,9 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// 获取SQL连接
         /// </summary>
         /// <returns></returns>
-        public IDbConnection GetConnection()
+        public DbConnection GetConnection()
         {
-            IDbConnection conn = new DB2Connection();
+            DbConnection conn = new DB2Connection();
             return conn;
         }
         /// <summary>

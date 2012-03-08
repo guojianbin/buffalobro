@@ -9,6 +9,7 @@ using Buffalo.DB.EntityInfos;
 using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 using Buffalo.Kernel;
+using System.Data.Common;
 namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
 {
     public class DBAdapter : IDBAdapter
@@ -302,9 +303,9 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// 获取SQL连接
         /// </summary>
         /// <returns></returns>
-        public virtual IDbConnection GetConnection()
+        public virtual DbConnection GetConnection()
         {
-            IDbConnection conn = new SqlConnection();
+            DbConnection conn = new SqlConnection();
             return conn;
         }
         /// <summary>

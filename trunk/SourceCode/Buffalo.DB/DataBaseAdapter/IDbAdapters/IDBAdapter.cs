@@ -67,7 +67,7 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// 获取SQL连接
         /// </summary>
         /// <returns></returns>
-        System.Data.IDbConnection GetConnection();
+        System.Data.Common.DbConnection GetConnection();
         /// <summary>
         /// 把数据类型转换成当前数据库支持的类型
         /// </summary>
