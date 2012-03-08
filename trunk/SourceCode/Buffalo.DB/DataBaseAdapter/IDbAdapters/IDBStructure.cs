@@ -24,7 +24,7 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// </summary>
         /// <param name="chileName">子表名，查询有这里为nulls</param>
         /// <returns></returns>
-        List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, string childName);
+        List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, IEnumerable<string> childName);
         /// <summary>
         /// 获取表信息
         /// </summary>
@@ -32,6 +32,6 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <param name="info"></param>
         /// <param name="tableNames"></param>
         /// <returns></returns>
-        List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, List<string> tableNames);
+        List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, IEnumerable<string> tableNames);
     }
 }

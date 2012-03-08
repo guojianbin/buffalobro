@@ -56,7 +56,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <param name="info"></param>
         /// <param name="childName"></param>
         /// <returns></returns>
-        public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, string childName)
+        public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, IEnumerable<string> childName)
         {
             return null;
         }
@@ -69,14 +69,14 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <param name="info"></param>
         /// <param name="tableNames"></param>
         /// <returns></returns>
-        public List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, List<string> tableNames)
+        public List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, IEnumerable<string> tableNames)
         {
             Dictionary<string, DBTableInfo> dicTables = new Dictionary<string, DBTableInfo>();
             List<DBTableInfo> lst = new List<DBTableInfo>();
             foreach (string tableName in tableNames)
             {
                 String sql = String.Format("PRAGMA table_info([{0}])", tableName);
-
+                
                 DBTableInfo table = null;
                 dicTables.TryGetValue(tableName, out table);
                 if (table == null)

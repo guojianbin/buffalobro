@@ -366,11 +366,105 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             return "";
         }
 
-        public string DBTypeToSQL(DbType dbType, int length)
+                    /// <summary>
+        /// 把DBType类型转成对应的SQLType
+        /// </summary>
+        /// <param name="dbType"></param>
+        /// <returns></returns>
+        public virtual string DBTypeToSQL(DbType dbType,int length) 
         {
-            throw new Exception("The method or operation is not implemented.");
-        }
+            switch (dbType)
+            {
 
+                case DbType.AnsiString:
+                    if (length < 2000)
+                    {
+                        return "Char(" + length + ")";
+                    }
+                    else
+                    {
+                        return "LONG";
+                    }
+                case DbType.AnsiStringFixedLength:
+                    if (length < 8000)
+                    {
+                        return "VARCHAR2(" + length + ")";
+                    }
+                    else
+                    {
+                        return "LONG";
+                    }
+                case DbType.Binary:
+                    if (length < 2000)
+                    {
+                        return "RAW(" + length + ")";
+                    }
+                    else
+                    {
+                        return "BLOB";
+                    }
+                case DbType.Boolean:
+                    return "Number(1,0)";
+                case DbType.Byte:
+                    return "Number(3,0)";
+                case DbType.Date:
+                    return "DATE";
+                case DbType.DateTimeOffset:
+                    return "TIMESTAMP WITH TIME ZONE";
+                case DbType.DateTime:
+                case DbType.DateTime2:
+                case DbType.Time:
+                    return "TIMESTAMP";
+                case DbType.Decimal:
+                case DbType.Currency:
+                    return "Number(30,30)";
+                case DbType.Double:
+                    return "DOUBLE PRECISION";
+                case DbType.VarNumeric:
+                
+                case DbType.Single:
+                    return "FLOAT(24)";
+                case DbType.Int64:
+                case DbType.UInt64:
+                    return "Number(20,0)";
+
+                case DbType.Int16:
+                    return "Number(6,0)";
+                case DbType.UInt16:
+                    return "Number(6,0)";
+                case DbType.Int32:
+                    return "Number(10,0)";
+                case DbType.UInt32:
+                    return "Number(10,0)";
+                case DbType.SByte:
+                    return "Number(4,0)";
+                case DbType.Guid:
+                    return "VARCHAR2(38)";
+                case DbType.String:
+                    if (length < 8000)
+                    {
+                        return "NVARCHAR2(" + length + ")";
+                    }
+                    else
+                    {
+                        return "LONG";
+                    }
+                case DbType.StringFixedLength:
+                    if (length < 8000)
+                    {
+                        return "NChar("+length+")";
+                    }
+                    else
+                    {
+                        return "LONG";
+                    }
+                default:
+                    return "BLOB";
+            }
+
+           
+        
+        }
         public int ToRealDbType(DbType dbType, int length)
         {
             switch (dbType)
@@ -385,6 +479,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                         return (int)OracleType.LongVarChar;
                     }
                 case DbType.AnsiStringFixedLength:
+                case DbType.Guid:
                     if (length < 8000)
                     {
                         return (int)OracleType.VarChar;
@@ -403,59 +498,56 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                         return (int)OracleType.Blob;
                     }
                 case DbType.Boolean:
-                    return (int)OracleType.Number;
+                    return (int)OracleType.Byte;
                 case DbType.Byte:
-                    return (int)SqlDbType.TinyInt;
-                case DbType.Currency:
-                    return (int)SqlDbType.Money;
+                    return (int)OracleType.Byte;
                 case DbType.Date:
+                    return (int)OracleType.DateTime;
                 case DbType.DateTime:
                 case DbType.DateTime2:
                 case DbType.DateTimeOffset:
                 case DbType.Time:
-                    return (int)SqlDbType.DateTime;
+                    return (int)OracleType.Timestamp;
                 case DbType.Decimal:
                 case DbType.Double:
-                    return (int)SqlDbType.Decimal;
-                case DbType.Guid:
-                    return (int)SqlDbType.UniqueIdentifier;
-                case DbType.Int16:
-                    return (int)SqlDbType.SmallInt;
-                case DbType.UInt16:
-                case DbType.Int32:
-                    return (int)SqlDbType.Int;
+                case DbType.UInt64:
+                case DbType.VarNumeric:
                 case DbType.Int64:
-                    return (int)SqlDbType.BigInt;
+                case DbType.Currency:
+                    return (int)OracleType.Number;
+                
+                case DbType.Int16:
+                    return (int)OracleType.Int16;
+                case DbType.UInt16:
+                    return (int)OracleType.UInt16;
+                case DbType.Int32:
+                    return (int)OracleType.Int32;
+                case DbType.UInt32:
+                    return (int)OracleType.UInt32;
                 case DbType.SByte:
-                    return (int)SqlDbType.TinyInt;
+                    return (int)OracleType.SByte;
                 case DbType.Single:
-                    return (int)SqlDbType.Float;
+                    return (int)OracleType.Float;
                 case DbType.String:
                     if (length < 8000)
                     {
-                        return (int)SqlDbType.NVarChar;
+                        return (int)OracleType.NVarChar;
                     }
                     else
                     {
-                        return (int)SqlDbType.NText;
+                        return (int)OracleType.LongVarChar;
                     }
                 case DbType.StringFixedLength:
                     if (length < 8000)
                     {
-                        return (int)SqlDbType.NChar;
+                        return (int)OracleType.NChar;
                     }
                     else
                     {
-                        return (int)SqlDbType.NText;
+                        return (int)OracleType.LongVarChar;
                     }
-
-                case DbType.UInt32:
-                case DbType.UInt64:
-                    return (int)SqlDbType.BigInt;
-                case DbType.VarNumeric:
-                    return (int)SqlDbType.Real;
                 default:
-                    return (int)SqlDbType.Structured;
+                    return (int)OracleType.Blob;
             }
         }
 

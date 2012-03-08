@@ -6,6 +6,7 @@ using System.Data;
 using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 using Buffalo.DB.PropertyAttributes;
+using Buffalo.DB.CommBase.DataAccessBases;
 
 
 
@@ -36,8 +37,12 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                 while (reader.Read())
                 {
                     DBTableInfo tableInfo = new DBTableInfo();
+                    if (reader.IsDBNull(0))
+                    {
+                        continue;
+                    }
                     tableInfo.Name = reader[0] as string;
-                    string type=reader[1] as string;
+                    string type = reader[1] as string;
                     if(!string.IsNullOrEmpty(type))
                     {
                         if(type.Trim()=="V")
@@ -59,21 +64,47 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         {
             return "add";
         }
+
+        /// <summary>
+        /// 获取要In的表名
+        /// </summary>
+        /// <param name="childName"></param>
+        /// <returns></returns>
+        internal static string AllInTableNames(IEnumerable<string> tableNames) 
+        {
+            if (tableNames == null) 
+            {
+                return null;
+            }
+            StringBuilder sbTables = new StringBuilder();
+            foreach (string tableName in tableNames)
+            {
+                sbTables.Append("'");
+                sbTables.Append(tableName.Replace("'","''"));
+                sbTables.Append("',");
+            }
+            if (sbTables.Length > 0) 
+            {
+                sbTables.Remove(sbTables.Length - 1, 1);
+            }
+            return sbTables.ToString();
+        }
+
         /// <summary>
         /// 获取所有关系
         /// </summary>
         /// <param name="chileName">null则查询所有表</param>
         /// <returns></returns>
-        public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, string childName) 
+        public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, IEnumerable<string> childNames) 
         {
             StringBuilder sql =new StringBuilder();
 
             sql.Append("select * from (select fk.name fkname ,ftable.[name] childname, cn.[name] childparam, rtable.[name] parentname from sysforeignkeys join sysobjects fk on sysforeignkeys.constid = fk.id join sysobjects ftable on sysforeignkeys.fkeyid = ftable.id join sysobjects rtable on sysforeignkeys.rkeyid = rtable.id join syscolumns cn on sysforeignkeys.fkeyid = cn.id and sysforeignkeys.fkey = cn.colid) a where 1=1");
             ParamList lstParam=new ParamList();
+            string childName = AllInTableNames(childNames);
             if(!string.IsNullOrEmpty(childName))
             {
-                sql.Append(" and childname=@childName");
-                lstParam.AddNew("childName", DbType.AnsiString, childName);
+                sql.Append(" and childname in(" + childName + ")");
             }
 
             List<TableRelationAttribute> lst = new List<TableRelationAttribute>();
@@ -112,7 +143,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <param name="info"></param>
         /// <param name="tableNames"></param>
         /// <returns></returns>
-        public List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, List<string> tableNames)
+        public List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, IEnumerable<string> tableNames)
         {
             StringBuilder sbAllTable = new StringBuilder();
             foreach (string tableName in tableNames)

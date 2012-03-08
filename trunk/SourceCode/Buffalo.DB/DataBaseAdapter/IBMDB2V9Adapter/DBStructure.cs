@@ -28,13 +28,13 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, string childName)
+        public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, IEnumerable<string> childNames)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
 
-        public List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, List<string> tableNames)
+        public List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, IEnumerable<string> tableNames)
         {
             throw new Exception("The method or operation is not implemented.");
         }
