@@ -101,13 +101,10 @@ namespace Buffalo.DBTools.DocSummary
 
                         float curX=VSConfigManager.CurConfig.MemberMarginX;
                         
-
+                        string memberTypeName=menberByName.MemberTypeName.TrimEnd('?','[',']');
                         if (BackBrush.Color == Color.White)//·ÇÑ¡ÖÐ×´Ì¬
                         {
-                            if (
-                                menberByName.MemberTypeName.EndsWith("?") || menberByName.MemberTypeName.EndsWith("[]") ||
-                                menberByName.MemberTypeLookupName == menberByName.MemberTypeName
-                                )
+                            if ((memberTypeName!="void") &&(menberByName.MemberTypeLookupName == memberTypeName))
                             {
                                 VarBrush.Color = Color.DodgerBlue;
                             }
