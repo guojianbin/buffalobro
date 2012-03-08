@@ -151,8 +151,7 @@ namespace Buffalo.DBTools
             StringBuilder sbSql = new StringBuilder();
             foreach (string sql in _lstSql) 
             {
-                sbSql.Append(sql);
-                sbSql.Append("\n");
+                sbSql.AppendLine(sql+";");
             }
             rtbContent.Text = sbSql.ToString();
         }

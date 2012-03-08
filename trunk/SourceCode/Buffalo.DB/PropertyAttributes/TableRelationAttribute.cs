@@ -74,7 +74,8 @@ namespace Buffalo.DB.PropertyAttributes
         /// </summary>
         public void CreateName()
         {
-            Name = "FK_" + SourceTable + "_" + TargetTable + "_" + SourceName;
+            
+            Name = "FK" + DateTime.Now.ToString("yyyyMMddHHmmssms");
         }
         /// <summary>
         /// …Ë÷√ µÃÂ

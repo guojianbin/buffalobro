@@ -379,7 +379,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                 case DbType.AnsiString:
                     if (length < 2000)
                     {
-                        return "Char(" + length + ")";
+                        return "VARCHAR2(" + length + ")";
                     }
                     else
                     {
@@ -388,7 +388,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                 case DbType.AnsiStringFixedLength:
                     if (length < 8000)
                     {
-                        return "VARCHAR2(" + length + ")";
+                        return "Char(" + length + ")";
                     }
                     else
                     {
@@ -472,7 +472,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                 case DbType.AnsiString:
                     if (length < 2000)
                     {
-                        return (int)OracleType.Char;
+                        return (int)OracleType.VarChar;
                     }
                     else
                     {
@@ -482,7 +482,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                 case DbType.Guid:
                     if (length < 8000)
                     {
-                        return (int)OracleType.VarChar;
+                        return (int)OracleType.Char;
                     }
                     else
                     {

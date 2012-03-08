@@ -76,9 +76,9 @@ namespace Buffalo.DB.DBCheckers
                     if (seqName != null)//如果是Oracle的
                     {
                         string seqSql = idb.GetSequenceInit(seqName, info.DefaultOperate);
-                        if (string.IsNullOrEmpty(seqSql))
+                        if (!string.IsNullOrEmpty(seqSql))
                         {
-                            lstRet.Add(seqSql + ";");
+                            lstRet.Add(seqSql);
                         }
                     }
                 }
@@ -98,7 +98,7 @@ namespace Buffalo.DB.DBCheckers
             {
                 BQLQuery bql = BQL.CreateTable(table.TableName).Param(table.Params);
                 AbsCondition con = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
-                sql.Add(con.GetSql()+";");
+                sql.Add(con.GetSql());
             }
         }
 
@@ -162,7 +162,7 @@ namespace Buffalo.DB.DBCheckers
                 {
                     bql = BQL.AlterTable(tableName).AddParam(pInfo);
                     AbsCondition acon = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
-                    lstSql.Add(acon.GetSql()+";");
+                    lstSql.Add(acon.GetSql());
                 }
             }
            
@@ -197,7 +197,7 @@ namespace Buffalo.DB.DBCheckers
                     item.CreateName();
                     BQLQuery bql = BQL.AlterTable(table.TableName).AddConstraint(item);
                     AbsCondition con = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
-                    lstSql.Add(con.GetSql() + ";");
+                    lstSql.Add(con.GetSql());
                 }
             }
 
