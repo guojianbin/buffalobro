@@ -115,8 +115,8 @@ namespace Buffalo.DB.DbCommon
 #endif
             for (int i = 0; i < this.Count; i++)
             {
-                DBParameter prm=this[i];
-                IDataParameter dPrm=db.CurrentDbAdapter.GetDataParameter(prm.ParameterName, prm.DbType, prm.Value, prm.Direction);
+                DBParameter prm = this[i];
+                IDataParameter dPrm = GetParameter(prm,db);
                 comm.Parameters.Add(dPrm);
 #if DEBUG
                 if (isOutput)
@@ -131,6 +131,26 @@ namespace Buffalo.DB.DbCommon
             }
             return ret.ToString();
 		}
+
+        /// <summary>
+        /// 获取实际数据库的字段变量
+        /// </summary>
+        /// <param name="prm"></param>
+        /// <returns></returns>
+        private IDataParameter GetParameter(DBParameter prm, DBInfo db)
+        {
+            object value = prm.Value;
+            if (value is Guid)
+            {
+                value = Buffalo.Kernel.CommonMethods.GuidToString((Guid)value);
+            }
+            DbType dbType = prm.DbType;
+            if (dbType == DbType.Guid) 
+            {
+                dbType = DbType.AnsiString;
+            }
+            return db.CurrentDbAdapter.GetDataParameter(prm.ParameterName, dbType, value, prm.Direction);
+        }
 
         /// <summary>
         /// 返回变量的值

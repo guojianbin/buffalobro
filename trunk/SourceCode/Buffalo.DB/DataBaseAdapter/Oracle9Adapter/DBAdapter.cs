@@ -429,17 +429,15 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     return "Number(20,0)";
 
                 case DbType.Int16:
-                    return "Number(6,0)";
                 case DbType.UInt16:
                     return "Number(6,0)";
                 case DbType.Int32:
-                    return "Number(10,0)";
                 case DbType.UInt32:
                     return "Number(10,0)";
                 case DbType.SByte:
                     return "Number(4,0)";
                 case DbType.Guid:
-                    return "VARCHAR2(38)";
+                    return "VARCHAR2(64)";
                 case DbType.String:
                     if (length < 8000)
                     {

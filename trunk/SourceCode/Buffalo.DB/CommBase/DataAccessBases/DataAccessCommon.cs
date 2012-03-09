@@ -139,47 +139,61 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 return null;
             }
-            if (type == DbType.AnsiString || type == DbType.AnsiStringFixedLength || type == DbType.String ||
-                type == DbType.StringFixedLength || type == DbType.Guid)
+
+            switch (type)
             {
-                return "'" + value.ToString().Replace("'", "''") + "'";
+                case DbType.AnsiString:
+                case DbType.AnsiStringFixedLength:
+                case DbType.String:
+                case DbType.StringFixedLength:
+                    return "'" + value.ToString().Replace("'", "''") + "'";
+                case DbType.Guid:
+                    if (value is Guid)
+                    {
+                        return Buffalo.Kernel.CommonMethods.GuidToString((Guid)value);
+                    }
+                    return value.ToString();
+                case DbType.DateTime:
+                case DbType.Time:
+                case DbType.Date:
+                case DbType.DateTime2:
+                case DbType.DateTimeOffset:
+                    return db.CurrentDbAdapter.GetDateTimeString(value);
+                case DbType.Decimal:
+                case DbType.Double:
+                case DbType.Int32:
+                case DbType.Int16:
+                case DbType.Int64:
+                case DbType.SByte:
+                case DbType.Byte:
+                case DbType.Currency:
+                case DbType.UInt16:
+                case DbType.UInt32:
+                case DbType.UInt64:
+                case DbType.VarNumeric:
+                case DbType.Single:
+                    return value.ToString().Replace(" ","");
+                case DbType.Binary:
+                    byte[] binaryValue = value as byte[];
+                    if (binaryValue != null)
+                    {
+                        string hexVal = CommonMethods.BytesToHexString(binaryValue);
+                        return "0x" + hexVal;
+                    }
+                    return "";
+                case DbType.Boolean:
+                    bool valBool = Convert.ToBoolean(value);
+                    if (valBool == true)
+                    {
+                        return "1";
+                    }
+                    else
+                    {
+                        return "0";
+                    }
+                default:
+                    return null;
             }
-            else if(type == DbType.DateTime || type == DbType.Time || type == DbType.Date)
-            {
-                return db.CurrentDbAdapter.GetDateTimeString(value);
-            }
-            else if (type == DbType.Int64||
-                type == DbType.Decimal || type == DbType.Double || type == DbType.Int32 ||
-            type == DbType.Int16 || type == DbType.Double ||
-            type == DbType.SByte || type == DbType.Byte || type == DbType.Currency || type == DbType.UInt16
-            || type == DbType.UInt32 || type == DbType.UInt64 || type == DbType.VarNumeric
-                )
-            {
-                return value.ToString().Replace(" ","");
-            }
-            else if (type == DbType.Binary) 
-            {
-                byte[] binaryValue = value as byte[];
-                if (binaryValue != null)
-                {
-                    string val = CommonMethods.BytesToHexString(binaryValue);
-                    return "0x" + val;
-                }
-                
-            }
-            else if (type == DbType.Boolean)
-            {
-                bool val = Convert.ToBoolean(value);
-                if (val == true)
-                {
-                    return "1";
-                }
-                else
-                {
-                    return "0";
-                }
-            }
-            return null;
         }
     }
 }

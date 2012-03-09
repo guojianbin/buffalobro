@@ -69,11 +69,11 @@ namespace Buffalo.DB.DBCheckers
             
             foreach (KeyWordTableParamItem table in tableInfos)
             {
-
-                if (table.PrimaryParam!=null && table.PrimaryParam.Identity) //给Oracle的主键加序列
+                //创建逐渐序列(暂时只有Oracle)
+                if (table.PrimaryParam != null && table.PrimaryParam.Identity && IsIdentityType(table.PrimaryParam.SqlType)) 
                 {
                     string seqName = idb.GetSequenceName(table.TableName, table.PrimaryParam.ParamName);
-                    if (seqName != null)//如果是Oracle的
+                    if (!string.IsNullOrEmpty(seqName))//需要创建序列
                     {
                         string seqSql = idb.GetSequenceInit(seqName, info.DefaultOperate);
                         if (!string.IsNullOrEmpty(seqSql))
@@ -85,6 +85,30 @@ namespace Buffalo.DB.DBCheckers
             }
             return lstRet;
         }
+
+        /// <summary>
+        /// 判断数据库类型是否可作为自增长主键
+        /// </summary>
+        /// <param name="dbType"></param>
+        /// <returns></returns>
+        private static bool IsIdentityType(DbType dbType) 
+        {
+            switch (dbType) 
+            {
+                case DbType.Int32:
+                case DbType.Int16:
+                case DbType.Int64:
+                case DbType.SByte:
+                case DbType.Byte:
+                case DbType.UInt16:
+                case DbType.UInt32:
+                case DbType.UInt64:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         /// <summary>
         /// 创建表的信息
         /// </summary>

@@ -104,7 +104,10 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             {
                 return DataAccessCommon.FormatValue(itemValue, DbType.Boolean, info.DBInfo);
             }
-            
+            else if (DefaultType.EqualType(valueDataType, DefaultType.GUIDType))
+            {
+                return DataAccessCommon.FormatValue(itemValue, DbType.Guid, info.DBInfo);
+            }
             else if (valueDataType == null) 
             {
                 return "null";

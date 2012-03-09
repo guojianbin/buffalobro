@@ -312,8 +312,27 @@ namespace Buffalo.Kernel
                 {
                     targetType = typeof(int);
                 }
-                sValue = Convert.ChangeType(sValue, targetType);
+                sValue = ChangeType(sValue, targetType);
 
+            }
+            return sValue;
+        }
+
+        /// <summary>
+        /// 转换类型
+        /// </summary>
+        /// <param name="sValue">值</param>
+        /// <param name="targetType">目标类型</param>
+        /// <returns></returns>
+        public static object ChangeType(object sValue, Type targetType) 
+        {
+            if (targetType == DefaultType.GUIDType) 
+            {
+                string str = sValue as string;
+                if (!string.IsNullOrEmpty(str))
+                {
+                    return StringToGuid(str);
+                }
             }
             return sValue;
         }

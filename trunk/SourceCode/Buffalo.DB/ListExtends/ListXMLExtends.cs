@@ -349,7 +349,7 @@ namespace Buffalo.DB.ListExtends
             {
                 return StringToBytes(value.ToString());
             }
-            return Convert.ChangeType(value, type);
+            return Buffalo.Kernel.CommonMethods.ChangeType(value, type);
         }
 
         /// <summary>
