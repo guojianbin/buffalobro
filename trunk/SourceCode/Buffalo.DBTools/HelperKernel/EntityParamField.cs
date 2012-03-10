@@ -17,7 +17,7 @@ namespace Buffalo.DBTools.HelperKernel
         private string _paramName;
         private EntityConfig _belongEntity;
         private int _length;
-        
+        private bool _readonly;
 
 
        
@@ -105,7 +105,14 @@ namespace Buffalo.DBTools.HelperKernel
             get { return _length; }
             set { _length = value; }
         }
-
+        /// <summary>
+        /// 只读
+        /// </summary>
+        public bool ReadOnly
+        {
+            get { return _readonly; }
+            set { _readonly = value; }
+        }
         /// <summary>
         /// 转换成字段信息
         /// </summary>
@@ -120,6 +127,7 @@ namespace Buffalo.DBTools.HelperKernel
             ep.SqlType = (DbType)EnumUnit.GetEnumInfoByName(typeof(DbType), DbType).Value;
             ep.PropertyType = EntityPropertyType;
             ep.AllowNull = true;
+            ep.ReadOnly = ReadOnly;
             return ep;
         }
 

@@ -102,7 +102,11 @@ namespace Buffalo.DBTools.HelperKernel
                         {
                             filed.ParamName = att.InnerText;
                         }
-                        
+                        att = node.Attributes["ReadOnly"];
+                        if (att != null)
+                        {
+                            filed.ReadOnly = att.InnerText=="1";
+                        }
                     }
                 }
             }
@@ -362,6 +366,10 @@ namespace Buffalo.DBTools.HelperKernel
                 att = doc.CreateAttribute("ParamName");//×Ö¶ÎÃû
                 att.InnerText = field.ParamName;
                 node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("ReadOnly");//×Ö¶ÎÃû
+                att.InnerText = field.ReadOnly?"1":"0";
+                node.Attributes.Append(att);
             }
         }
 
@@ -487,6 +495,10 @@ namespace Buffalo.DBTools.HelperKernel
 
                 att = doc.CreateAttribute("ParamName");//×Ö¶ÎÃû
                 att.InnerText = field.ParamName;
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("ReadOnly");//×Ö¶ÎÃû
+                att.InnerText = field.ReadOnly ? "1" : "0";
                 node.Attributes.Append(att);
             }
         }
