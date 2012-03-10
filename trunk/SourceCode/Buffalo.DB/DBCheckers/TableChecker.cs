@@ -91,7 +91,7 @@ namespace Buffalo.DB.DBCheckers
         /// </summary>
         /// <param name="dbType"></param>
         /// <returns></returns>
-        private static bool IsIdentityType(DbType dbType) 
+        internal static bool IsIdentityType(DbType dbType) 
         {
             switch (dbType) 
             {
@@ -103,6 +103,10 @@ namespace Buffalo.DB.DBCheckers
                 case DbType.UInt16:
                 case DbType.UInt32:
                 case DbType.UInt64:
+                case DbType.VarNumeric:
+                case DbType.Currency:
+                case DbType.Decimal:
+                case DbType.Double:
                     return true;
                 default:
                     return false;

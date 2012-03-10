@@ -110,7 +110,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <returns></returns>
         private static bool GetIsParent(ClrField fInfo)
         {
-            if (fInfo.MemberType.Generic) 
+            if (fInfo.MemberType!=null && fInfo.MemberType.Generic) 
             {
                 return false;
             }

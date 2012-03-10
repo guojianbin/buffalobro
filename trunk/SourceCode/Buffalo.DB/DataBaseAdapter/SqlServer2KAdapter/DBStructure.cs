@@ -145,24 +145,12 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, IEnumerable<string> tableNames)
         {
-            StringBuilder sbAllTable = new StringBuilder();
-            foreach (string tableName in tableNames)
-            {
-                sbAllTable.Append("'");
-                sbAllTable.Append(tableName);
-                sbAllTable.Append("',");
-            }
-            if (sbAllTable.Length > 0)
-            {
-                sbAllTable.Remove(sbAllTable.Length - 1, 1);
-            }
+            string inTable = Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBStructure.AllInTableNames(tableNames);
             string sql = GetTableParamsSQL();
-
-
             string tableNamesSql = "";
-            if (sbAllTable.Length > 0)
+            if (!string.IsNullOrEmpty(inTable))
             {
-                tableNamesSql = " and d.[name] in(" + sbAllTable.ToString() + ")";
+                tableNamesSql = " and d.[name] in(" + inTable + ")";
             }
             sql = sql.Replace("<%=TableNames%>", tableNamesSql);
 
@@ -208,7 +196,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                 }
             }
 
-            List<TableRelationAttribute> lstRelation = GetRelation(oper, info, null);
+            List<TableRelationAttribute> lstRelation = GetRelation(oper, info, tableNames);
             DBTableInfo ptable = null;
             DBTableInfo ctable = null;
 

@@ -22,6 +22,7 @@ namespace Buffalo.DBTools.DocSummary.VSConfig
                 return;
             }
             
+
             if (version == "8.0") 
             {
                 _curConfig = new VS2005Config();
