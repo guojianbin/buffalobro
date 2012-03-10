@@ -7,6 +7,7 @@ using System.Data;
 using Buffalo.DB.BQLCommon;
 using Buffalo.DB.EntityInfos;
 using Buffalo.Kernel.Defaults;
+using Buffalo.DB.CommBase.BusinessBases;
 
 namespace Buffalo.DB.CommBase.DataAccessBases
 {
@@ -64,7 +65,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             ///读取属性别名
             foreach (EntityPropertyInfo info in EntityInfo.PropertyInfo)
             {
+                if (info.ReadOnly) 
+                {
+                    continue;
+                }
                 object curValue = info.GetValue(obj);
+
                 if (optimisticConcurrency == true && info.IsVersion) //并发控制
                 {
 
@@ -339,52 +345,38 @@ namespace Buffalo.DB.CommBase.DataAccessBases
 
                 if (info.Identity)
                 {
-                    if (info.SqlType == DbType.Guid)
+                    if (info.SqlType == DbType.Guid && info.FieldType==DefaultType.GUIDType)
                     {
                         curValue = Guid.NewGuid();
                         info.SetValue(obj, curValue);
+                        sqlParams.Append(",");
+                        sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
+                        sqlValues.Append(",");
+                        sqlValues.Append(curValue);
+                        continue;
                     }
                     else
                     {
                         if (fillIdentity)
                         {
-                            string idenSQL = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentityValueSQL(EntityInfo);
-                            if (!string.IsNullOrEmpty(idenSQL))
-                            {
-                                using (IDataReader reader = _oper.Query(idenSQL, null))
-                                {
-                                    if (reader.Read())
-                                    {
-                                        //object value = reader[0];
-
-                                        EntityInfo.DBInfo.CurrentDbAdapter.SetObjectValueFromReader(reader, 0, obj, info);
-                                        curValue = info.GetValue(obj);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                identityInfo = info;
-                                continue;
-                            }
+                            identityInfo = info;
                         }
-                        else
+                        param = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentityParamName(info);
+                        if (!string.IsNullOrEmpty(param))
                         {
-                            param = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentityParamName(info);
-                            if (!string.IsNullOrEmpty(param))
-                            {
-                                sqlParams.Append(",");
-                                sqlParams.Append(param);
-                            }
-                            svalue = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentityParamValue(EntityInfo, info);
-                            if (!string.IsNullOrEmpty(svalue))
-                            {
-                                sqlValues.Append(",");
-                                sqlValues.Append(svalue);
-                            }
-                            continue;
+                            sqlParams.Append(",");
+                            sqlParams.Append(param);
                         }
+                        svalue = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentityParamValue(EntityInfo, info);
+                        if (!string.IsNullOrEmpty(svalue))
+                        {
+                            sqlValues.Append(",");
+                            sqlValues.Append(svalue);
+                        }
+                        continue;
                     }
+
+
                 }
                 else if (info.IsVersion) //版本初始值
                 {
@@ -427,27 +419,27 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             con.SqlValues.Append(sqlValues.ToString());
             int ret = -1;
             con.DbParamList = list;
-            string sql = con.GetSql();
-
-            if (identityInfo != null && fillIdentity)
+            using (BatchAction ba = _oper.StarBatchAction())
             {
-                sql += ";" + EntityInfo.DBInfo.CurrentDbAdapter.GetIdentitySQL(EntityInfo);
-                using (IDataReader reader = _oper.Query(sql, list))
+                string sql = con.GetSql();
+                ret = ExecuteCommand(sql, list, CommandType.Text);
+                if (identityInfo != null && fillIdentity)
                 {
-                    if (reader.Read())
+                    sql = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentitySQL(EntityInfo);
+                    using (IDataReader reader = _oper.Query(sql, new ParamList()))
                     {
-                        if (!reader.IsDBNull(0))
+                        if (reader.Read())
                         {
-                            EntityInfo.DBInfo.CurrentDbAdapter.SetObjectValueFromReader(reader, 0, obj, identityInfo);
-                            ret = 1;
+                            if (!reader.IsDBNull(0))
+                            {
+                                EntityInfo.DBInfo.CurrentDbAdapter.SetObjectValueFromReader(reader, 0, obj, identityInfo);
+                                ret = 1;
+                            }
                         }
                     }
                 }
             }
-            else
-            {
-                ret = ExecuteCommand(sql, list, CommandType.Text);
-            }
+            
             return ret;
         }
 

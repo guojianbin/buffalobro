@@ -15,8 +15,7 @@ namespace Buffalo.DB.EntityInfos
     public class EntityPropertyInfo:FieldInfoHandle
     {
         private EntityParam _paramInfo;
-
-
+        private bool _readOnly;
         private EntityInfoHandle _belong;
 
         /// <summary>
@@ -28,7 +27,8 @@ namespace Buffalo.DB.EntityInfos
         /// <param name="ep">字段标识类</param>
         /// <param name="fieldType">字段类型</param>
         /// <param name="fieldName">字段名</param>
-        public EntityPropertyInfo(EntityInfoHandle belong, GetFieldValueHandle getHandle, SetFieldValueHandle setHandle, EntityParam paramInfo, Type fieldType, string fieldName)
+        public EntityPropertyInfo(EntityInfoHandle belong, GetFieldValueHandle getHandle, SetFieldValueHandle setHandle,
+            EntityParam paramInfo, Type fieldType, string fieldName)
             : base(belong.EntityType, getHandle, setHandle,fieldType,fieldName)
         {
             paramInfo.SqlType = belong.DBInfo.CurrentDbAdapter.ToCurrentDbType(paramInfo.SqlType);//转换成本数据库支持的数据类型
@@ -36,6 +36,17 @@ namespace Buffalo.DB.EntityInfos
             _belong = belong;
         }
 
+        /// <summary>
+        /// 只读
+        /// </summary>
+        public bool ReadOnly 
+        {
+            get
+            {
+                return _paramInfo.ReadOnly;
+            }
+        }
+        
         /// <summary>
         /// 字段配置信息
         /// </summary>

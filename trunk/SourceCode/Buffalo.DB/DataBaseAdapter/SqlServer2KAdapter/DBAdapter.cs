@@ -470,7 +470,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public string GetIdentitySQL(EntityInfoHandle info) 
         {
-            return "select SCOPE_IDENTITY()";
+            return "SELECT @@IDENTITY";
         }
         /// <summary>
         /// 获取自动增长值的SQL

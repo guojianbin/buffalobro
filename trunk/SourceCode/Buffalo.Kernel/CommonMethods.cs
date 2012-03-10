@@ -334,7 +334,7 @@ namespace Buffalo.Kernel
                     return StringToGuid(str);
                 }
             }
-            return sValue;
+            return Convert.ChangeType(sValue,targetType);
         }
 
         /// <summary>

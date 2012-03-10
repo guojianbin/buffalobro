@@ -17,11 +17,17 @@ namespace Buffalo.DB.PropertyAttributes
         private int _length;
         private bool _allowNull;
         private string _fieldName;
+        private bool _readonly;
+
 
         /// <summary>
         /// 实体字段标识
         /// </summary>
-        public EntityParam() { }
+        public EntityParam() 
+        {
+            _readonly = false;
+
+        }
         /// <summary>
         /// 实体字段标识
         /// </summary>
@@ -31,7 +37,7 @@ namespace Buffalo.DB.PropertyAttributes
         /// <param name="propertyType">属性类型</param>
         public EntityParam(string fieldName, string paramName, string propertyName, DbType sqlType, 
             EntityPropertyType propertyType)
-            : this(fieldName,paramName, propertyName, sqlType, propertyType, 0, true)
+            : this(fieldName,paramName, propertyName, sqlType, propertyType, 0, true,false )
         {
             
         }
@@ -43,8 +49,8 @@ namespace Buffalo.DB.PropertyAttributes
         /// <param name="sqlType">对应的SQL数据类型</param>
         /// <param name="propertyType">属性类型</param>
         /// <param name="length">长度</param>
-        public EntityParam(string fieldName, string paramName, string propertyName,
-            DbType sqlType, EntityPropertyType propertyType,int length,bool allowNull)
+        public EntityParam(string fieldName, string paramName, string propertyName, DbType sqlType, 
+            EntityPropertyType propertyType,int length,bool allowNull,bool isReadOnly)
         {
             this._fieldName = fieldName;
             this._paramName = paramName;
@@ -53,6 +59,7 @@ namespace Buffalo.DB.PropertyAttributes
             this._propertyType = propertyType;
             this._length = length;
             this._allowNull = allowNull;
+            this._readonly = isReadOnly;
         }
         /// <summary>
         /// 对应的字段名
@@ -62,7 +69,14 @@ namespace Buffalo.DB.PropertyAttributes
             get { return _fieldName; }
             set { _fieldName = value; }
         }
-
+        /// <summary>
+        /// 是否只读
+        /// </summary>
+        public bool ReadOnly
+        {
+            get { return _readonly; }
+            set { _readonly = value; }
+        }
         private string _description;
 
         /// <summary>

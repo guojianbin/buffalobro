@@ -275,6 +275,11 @@ namespace Buffalo.DB.EntityInfos
                 {
                     ep.ParamName = att.InnerText;
                 }
+                att = node.Attributes["ReadOnly"];
+                if (att != null)
+                {
+                    ep.ReadOnly = att.InnerText=="1";
+                }
                 ep.AllowNull = true;
 
                 dicParam[ep.FieldName] = ep;
