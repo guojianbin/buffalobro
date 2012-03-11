@@ -86,7 +86,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
                     table.RelationItems = new List<TableRelationAttribute>();
                     table.Params = new List<EntityParam>();
                     lst.Add(table);
-                    dicTables[table.Name] = table;
+                    dicTables[table.Name] = table;                   
                 }
                 using (IDataReader reader = oper.Query(sql.ToString(), new ParamList()))
                 {
@@ -159,7 +159,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
             //½ØÈ¡³¤¶È
             int index = nativeType.IndexOf("(");
             int lastIndex=nativeType.IndexOf(")");
-            if (index > 0 && lastIndex>index) 
+            if (index > 0 && lastIndex > index)
             {
                 typeName = nativeType.Substring(0, index);
 
@@ -167,11 +167,13 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
 
                 int.TryParse(strLen, out length);
             }
-
+            else
+            {
+                typeName = nativeType.Trim();
+            }
 
             DbType type=DbType.Object;
-
-            //string typeName = nativeType.Trim().ToUpper();
+            
             switch (typeName)
             {
                 case "BOOLEAN":
