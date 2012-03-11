@@ -75,12 +75,29 @@ namespace Buffalo.DBTools
             }
         }
 
+        /// <summary>
+        /// 当前表集合
+        /// </summary>
+        List<DBTableInfo> _curLst;
+
         private void FrmAllTables_Load(object sender, EventArgs e)
         {
             gvTables.AutoGenerateColumns = false;
             DBInfo info = DbInfo.CreateDBInfo();
-            List<DBTableInfo> lst = TableChecker.GetAllTables(info);
-            gvTables.DataSource = lst;
+            _curLst = TableChecker.GetAllTables(info);
+            RefreashTablesInfo();
+        }
+
+        /// <summary>
+        /// 刷新表状态
+        /// </summary>
+        private void RefreashTablesInfo()
+        {
+            gvTables.DataSource = null;
+            if (_curLst != null && _curLst.Count > 0)
+            {
+                gvTables.DataSource = _curLst;
+            }
         }
 
 
@@ -124,5 +141,55 @@ namespace Buffalo.DBTools
         }
 
 
+
+        /// <summary>
+        /// 刷新选中状态
+        /// </summary>
+        private void RefreashCheckType() 
+        {
+           
+            if (gvTables.Rows.Count>0)
+            {
+                bool isCheckAll = true;
+
+                foreach (DataGridViewRow row in gvTables.Rows) 
+                {
+                    DataGridViewCheckBoxCell cell = row.Cells["ColChecked"] as DataGridViewCheckBoxCell;
+                    if (cell != null && !(bool)cell.FormattedValue) 
+                    {
+                        isCheckAll = false;
+                        break;
+                    }
+                }
+                chkAll.Checked = isCheckAll;
+            }
+            
+        }
+
+
+        private void gvTables_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string colName = gvTables.Columns[e.ColumnIndex].Name;
+            if (colName == "ColChecked")
+            {
+                gvTables.EndEdit();
+                RefreashCheckType();
+                //if ((bool)gvTables.Rows[e.RowIndex].Cells[e.ColumnIndex].FormattedValue)
+                //{
+                //    dgTest[colNumber, e.RowIndex].Value = e.RowIndex.ToString() + 9999;
+                //}
+                
+            }
+        }
+
+
+        private void chkAll_MouseUp(object sender, MouseEventArgs e)
+        {
+            foreach (DataGridViewRow row in gvTables.Rows)
+            {
+                DataGridViewCheckBoxCell cell = row.Cells["ColChecked"] as DataGridViewCheckBoxCell;
+                cell.Value = chkAll.Checked;
+            }
+        }
     }
 }

@@ -113,7 +113,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     }
                     tableInfo.Name = reader["VIEW_NAME"] as string;
                     tableInfo.Description = reader["COMMENTS"] as string;
-                    tableInfo.IsView = false;
+                    tableInfo.IsView = true;
 
                     lstName.Add(tableInfo);
                 }

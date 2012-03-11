@@ -36,6 +36,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.chkAll = new System.Windows.Forms.CheckBox();
             this.gvTables = new System.Windows.Forms.DataGridView();
             this.ColChecked = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ColTableNames = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -88,6 +89,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.chkAll);
             this.panel2.Controls.Add(this.gvTables);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
@@ -95,9 +97,23 @@
             this.panel2.Size = new System.Drawing.Size(567, 405);
             this.panel2.TabIndex = 1;
             // 
+            // chkAll
+            // 
+            this.chkAll.AutoSize = true;
+            this.chkAll.BackColor = System.Drawing.Color.Transparent;
+            this.chkAll.Location = new System.Drawing.Point(3, 3);
+            this.chkAll.Name = "chkAll";
+            this.chkAll.Size = new System.Drawing.Size(48, 16);
+            this.chkAll.TabIndex = 1;
+            this.chkAll.Text = "选择";
+            this.chkAll.UseVisualStyleBackColor = false;
+            this.chkAll.MouseUp += new System.Windows.Forms.MouseEventHandler(this.chkAll_MouseUp);
+            // 
             // gvTables
             // 
             this.gvTables.AllowUserToAddRows = false;
+            this.gvTables.AllowUserToResizeColumns = false;
+            this.gvTables.AllowUserToResizeRows = false;
             this.gvTables.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -119,6 +135,7 @@
             this.gvTables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gvTables.Size = new System.Drawing.Size(567, 405);
             this.gvTables.TabIndex = 0;
+            this.gvTables.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gvTables_CellMouseUp);
             // 
             // ColChecked
             // 
@@ -160,6 +177,7 @@
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvTables)).EndInit();
             this.ResumeLayout(false);
 
@@ -176,5 +194,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColChecked;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColTableNames;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColType;
+        private System.Windows.Forms.CheckBox chkAll;
     }
 }
