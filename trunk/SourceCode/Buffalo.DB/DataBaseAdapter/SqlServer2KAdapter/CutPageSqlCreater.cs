@@ -173,10 +173,10 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             sql.Append(objCondition.SqlParams.ToString());
             sql.Append(" from ");
             sql.Append(objCondition.Tables.ToString());
-            sql.Append(" where(not exists (select * from (select top ");
+            sql.Append(" where(" + objCondition.PrimaryKey.ToString() + " not in (select top ");
             sql.Append(starIndex.ToString());
             sql.Append(" ");
-            sql.Append(objCondition.SqlParams.ToString());
+            sql.Append(objCondition.PrimaryKey.ToString());
             sql.Append(" from ");
             sql.Append(objCondition.Tables.ToString());
             if (objCondition.Condition.Length > 0)
@@ -194,17 +194,18 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                 sql.Append(" order by ");
                 sql.Append(objCondition.Orders.ToString());
             }
-            sql.Append(") tmptable where tmptable.");
-            sql.Append(objCondition.PrimaryKey.ToString() + "=");
-            sql.Append(objCondition.Tables.ToString());
-            sql.Append(".");
-            sql.Append(objCondition.PrimaryKey.ToString());
+            if (objCondition.Having.Length > 0)
+            {
+                sql.Append(" having ");
+                sql.Append(objCondition.Having.ToString());
+            }
+            sql.Append(")");
+            
             sql.Append(")");
             if (objCondition.Condition.Length > 0)
             {
                 sql.Append(" and " + objCondition.Condition.ToString());
             }
-            sql.Append(")");
             if (objCondition.GroupBy.Length > 0)
             {
                 sql.Append(" group by ");

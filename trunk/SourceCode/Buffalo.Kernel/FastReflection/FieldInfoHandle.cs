@@ -150,10 +150,11 @@ namespace Buffalo.Kernel.FastReflection
                     curType = curType.BaseType;
                 }
             }
+            Dictionary<string, bool> dicExists = new Dictionary<string, bool>();
             while (stkType.Count > 0)
             {
                 curType = stkType.Pop();
-                FillFieldInfos(curType, flags, lstRet);
+                FillFieldInfos(curType, flags, lstRet,dicExists);
             }
             return lstRet;
         }
@@ -163,15 +164,20 @@ namespace Buffalo.Kernel.FastReflection
         /// <param name="objType"></param>
         /// <param name="flags"></param>
         /// <param name="fillBase"></param>
-        private static void FillFieldInfos(Type objType, BindingFlags flags,List<FieldInfoHandle> lstRet) 
+        private static void FillFieldInfos(Type objType, BindingFlags flags, List<FieldInfoHandle> lstRet, Dictionary<string, bool> dicExists) 
         {
             FieldInfo[] infos = objType.GetFields(flags);
             foreach (FieldInfo info in infos)
             {
+                if (dicExists.ContainsKey(info.Name)) 
+                {
+                    continue;
+                }
                 GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(info);
                 SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(info);
                 FieldInfoHandle handle = new FieldInfoHandle(objType, getHandle, setHandle, info.FieldType, info.Name);
                 lstRet.Add(handle);
+                dicExists[info.Name] = true;
             }
         }
     }

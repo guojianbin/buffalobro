@@ -147,7 +147,6 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         public KeyWordFromItem ToInnerTable(KeyWordFromItem from, KeyWordInfomation info) 
         {
             KeyWordFromItem inner = InnerTable(from, _primaryTable);
-            info.Condition.PrimaryKey.Append(_primaryTable.TableInfo);
             return inner;
         }
 
