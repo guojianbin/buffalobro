@@ -41,6 +41,16 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 return new BQLOtherParamHandle(this, paramName);
             }
         }
+        /// <summary>
+        /// Ö÷¼ü
+        /// </summary>
+        public virtual string PrimaryParam
+        {
+            get 
+            {
+                return null;
+            }
+        }
 
         /// <summary>
         /// »ñÈ¡×Ö¶Î

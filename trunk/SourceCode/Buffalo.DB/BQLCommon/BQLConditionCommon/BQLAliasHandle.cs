@@ -27,6 +27,14 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             
         }
 
+        public override string PrimaryParam
+        {
+            get
+            {
+                return _table.PrimaryParam;
+            }
+        }
+
         public BQLAliasHandle(BQLQuery query, string aliasName)
         {
             this._query = query;
@@ -53,10 +61,25 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         }
         internal override string DisplayValue(KeyWordInfomation info)
         {
+            if (info.Condition.PrimaryKey.Length <= 0 && !CommonMethods.IsNull(_table))
+            {
+                if (!string.IsNullOrEmpty(_aliasName))
+                {
+                    info.Condition.PrimaryKey.Append(info.DBInfo.CurrentDbAdapter.FormatTableName(_aliasName) + ".");
+                }
+                else
+                {
+                    info.Condition.PrimaryKey.Append(_table.DisplayValue(info) + ".");
+                }
+                info.Condition.PrimaryKey.Append(info.DBInfo.CurrentDbAdapter.FormatParam(_table.PrimaryParam));
+            }
+
             string result = null;
             if (!CommonMethods.IsNull(_table))
             {
+                
                 result = _table.DisplayValue(info);
+                
             }
             else if (_query != null)
             {
@@ -77,6 +100,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             {
                 result += " " + info.DBInfo.CurrentDbAdapter.FormatTableName(_aliasName);
             }
+
             return result;
         }
     }

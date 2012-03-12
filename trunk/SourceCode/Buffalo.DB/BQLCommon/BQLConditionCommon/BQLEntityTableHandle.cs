@@ -30,7 +30,16 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return _entityInfo; 
         }
 
-        
+        /// <summary>
+        /// 主键
+        /// </summary>
+        public override string PrimaryParam
+        {
+            get
+            {
+                return _entityInfo.PrimaryProperty.ParamName;
+            }
+        }
 
         /// <summary>
         /// 设置所属的实体的信息
@@ -199,7 +208,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             IDBAdapter idba = info.DBInfo.CurrentDbAdapter;
             if (info.Condition.PrimaryKey.Length <= 0)
             {
-                info.Condition.PrimaryKey.Append(idba.FormatParam(_entityInfo.PrimaryProperty.ParamName));
+                info.Condition.PrimaryKey.Append(idba.FormatTableName(this._entityInfo.TableName)+"."+idba.FormatParam(PrimaryParam));
             }
 
 
