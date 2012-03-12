@@ -163,5 +163,40 @@ namespace Buffalo.DB.EntityInfos
             }
 
         }
+
+        /// <summary>
+        /// 子属性对应的映射
+        /// </summary>
+        private Dictionary<string,EntityMappingInfo> _dicSourceNameMap=null;
+
+        /// <summary>
+        /// 初始化子属性
+        /// </summary>
+        private void InitSourceNameMap() 
+        {
+            _dicSourceNameMap = new Dictionary<string, EntityMappingInfo>();
+            foreach (EntityMappingInfo info in _mappingInfoHandles) 
+            {
+                if (info.IsParent) 
+                {
+                    _dicSourceNameMap[info.SourceProperty.PropertyName] = info;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 通过属性名获取映射
+        /// </summary>
+        /// <returns></returns>
+        public EntityMappingInfo GetMappingBySourceName(string sourcePropertyName) 
+        {
+            if (_dicSourceNameMap == null) 
+            {
+                InitSourceNameMap();
+            }
+            EntityMappingInfo ret = null;
+            _dicSourceNameMap.TryGetValue(sourcePropertyName, out ret);
+            return ret;
+        }
     }
 }

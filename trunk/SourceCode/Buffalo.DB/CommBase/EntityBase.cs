@@ -18,7 +18,7 @@ namespace Buffalo.DB.CommBase
     /// </summary>
     public class EntityBase
     {
-        private EntityInfoHandle thisInfo = null;//当前类的信息
+        private EntityInfoHandle _thisInfo = null;//当前类的信息
         internal Dictionary<string, bool> _dicUpdateProperty___ = null;//记录被修改过值的属性
 
         /// <summary>
@@ -32,9 +32,43 @@ namespace Buffalo.DB.CommBase
                 _dicUpdateProperty___ = new Dictionary<string, bool>();
 
             }
+            EntityInfoHandle entityInfo = GetEntityInfo();
+            EntityMappingInfo mapInfo = entityInfo.MappingInfo[propertyName];
+            if (mapInfo != null && mapInfo.IsParent) //如果是父类实体
+            {
+                UpdateChildProperty(mapInfo);
+            }
+
+            mapInfo = entityInfo.GetMappingBySourceName(propertyName);
+            if (mapInfo != null && mapInfo.IsParent) //如果是父类实体
+            {
+                ClearParentProperty(mapInfo);
+            }
+
             _dicUpdateProperty___[propertyName] = true;
         }
 
+        /// <summary>
+        /// 更新子属性
+        /// </summary>
+        /// <param name="mapInfo"></param>
+        private void UpdateChildProperty(EntityMappingInfo mapInfo)
+        {
+
+            object parentObject = mapInfo.GetValue(this);
+            object pkValue = mapInfo.TargetProperty.GetValue(parentObject);//获取ID
+            mapInfo.SourceProperty.SetValue(this, pkValue);
+            _dicUpdateProperty___[mapInfo.TargetProperty.PropertyName] = true;
+
+        }
+
+        /// <summary>
+        /// 清空父属性
+        /// </summary>
+        private void ClearParentProperty(EntityMappingInfo mapInfo) 
+        {
+            mapInfo.SetValue(this, null);
+        }
         /// <summary>
         /// 通知属性已经被修改
         /// </summary>
@@ -55,11 +89,11 @@ namespace Buffalo.DB.CommBase
         /// <returns></returns>
         private EntityInfoHandle GetEntityInfo()
         {
-            if (thisInfo == null)
+            if (_thisInfo == null)
             {
-                thisInfo = EntityInfoManager.GetEntityHandle(this.GetType());
+                _thisInfo = EntityInfoManager.GetEntityHandle(this.GetType());
             }
-            return thisInfo;
+            return _thisInfo;
         }
 
         /// <summary>

@@ -139,22 +139,24 @@ namespace Buffalo.Kernel.FastReflection
             List<FieldInfoHandle> lstRet = new List<FieldInfoHandle>();
 
             Type curType = objType;
-            Stack<Type> stkType = new Stack<Type>();
-            stkType.Push(curType);
-            if (fillBase) 
-            {
-                curType = curType.BaseType;
-                while (curType != null) 
-                {
-                    stkType.Push(curType);
-                    curType = curType.BaseType;
-                }
-            }
+
+            //Queue<Type> stkType = new Stack<Type>();
+            //stkType.Push(curType);
+            //if (fillBase) 
+            //{
+            //    curType = curType.BaseType;
+            //    while (curType != null) 
+            //    {
+            //        stkType.Push(curType);
+            //        curType = curType.BaseType;
+            //    }
+            //}
             Dictionary<string, bool> dicExists = new Dictionary<string, bool>();
-            while (stkType.Count > 0)
+            while (curType!=null)
             {
-                curType = stkType.Pop();
+                
                 FillFieldInfos(curType, flags, lstRet,dicExists);
+                curType = curType.BaseType;
             }
             return lstRet;
         }

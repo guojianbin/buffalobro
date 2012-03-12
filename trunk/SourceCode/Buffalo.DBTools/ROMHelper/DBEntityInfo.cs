@@ -376,6 +376,11 @@ namespace Buffalo.DBTools.ROMHelper
                     sb.AppendLine("               }");
                     sb.AppendLine("               return " + er.FieldName + ";");
                     sb.AppendLine("            }");
+                    sb.AppendLine("            set");
+                    sb.AppendLine("            {");
+                    sb.AppendLine("               " + er.FieldName + " = value;");
+                    sb.AppendLine("               OnPropertyUpdated(\"" + er.PropertyName + "\");");
+                    sb.AppendLine("            }");
                     sb.AppendLine("        }");
                 }
                 else 

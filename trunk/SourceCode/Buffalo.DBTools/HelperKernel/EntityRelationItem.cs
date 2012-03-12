@@ -152,7 +152,13 @@ namespace Buffalo.DBTools.HelperKernel
                     source.Add(spaces + "       }");
                     source.Add(spaces + "        return " + FieldName + ";");
                     source.Add(spaces + "    }");
+                    source.Add(spaces + "    set");
+                    source.Add(spaces + "    {");
+                    source.Add(spaces + "        " + FieldName + " = value;");
+                    source.Add(spaces + "        OnPropertyUpdated(\"" + PropertyName + "\");");
+                    source.Add(spaces + "    }");
                     source.Add(spaces + "}");
+
                 }
                 else 
                 {
