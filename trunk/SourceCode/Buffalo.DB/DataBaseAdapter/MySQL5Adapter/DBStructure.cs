@@ -57,7 +57,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// <returns></returns>
         public string GetAddParamSQL()
         {
-            throw new Exception("The method or operation is not implemented.");
+            return "add";
         }
 
         /// <summary>
@@ -65,16 +65,19 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// </summary>
         /// <param name="oper"> </param>
         /// <param name="info"> </param>
-        /// <param name="chileName">null则查询所有表</param>
+        /// <param name="childNames">null则查询所有表</param>
         /// <returns></returns>
         public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, IEnumerable<string> childNames)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append("SELECT constraint_schema,constraint_name,unique_constraint_name,table_name,referenced_table_name FROM `information_schema`.`REFERENTIAL_CONSTRAINTS`;");
+            //sql.Append("SELECT constraint_schema,constraint_name,unique_constraint_name,table_name,referenced_table_name FROM `information_schema`.`REFERENTIAL_CONSTRAINTS`;");
+            sql.Append("SELECT a.constraint_schema,a.constraint_name,a.unique_constraint_name,a.table_name,b.column_name,a.referenced_table_name,b.referenced_column_name FROM `information_schema`.`REFERENTIAL_CONSTRAINTS` a ");
+            sql.Append(" left join `information_schema`.`KEY_COLUMN_USAGE` b ");
+            sql.Append(" on a.constraint_name =b.constraint_name ");
             ParamList lstParam = new ParamList();
 
             string childName = Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBStructure.AllInTableNames(childNames);
-            
+
             if (!string.IsNullOrEmpty(childName))
             {
                 sql.Append(" where table_name in(" + childName + ")");
@@ -89,7 +92,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
                     TableRelationAttribute tinfo = new TableRelationAttribute();
                     tinfo.Name = reader["constraint_name"] as string;
                     tinfo.SourceTable = reader["table_name"] as string;
-                    tinfo.SourceName = reader["constraint_schema"] as string; //todo:干嘛用？什么意思？
+                    tinfo.SourceName = reader["column_name"] as string;
                     tinfo.TargetTable = reader["referenced_table_name"] as string;
                     tinfo.IsParent = true;
                     lst.Add(tinfo);
@@ -99,11 +102,91 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         }
 
 
+        /// <summary>
+        /// 获取表信息
+        /// </summary>
+        /// <param name="oper"></param>
+        /// <param name="info"></param>
+        /// <param name="tableNames"></param>
+        /// <returns></returns>
         public List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, IEnumerable<string> tableNames)
         {
-            throw new Exception("The method or operation is not implemented.");
+            throw new NotImplementedException();
+            string inTable = Buffalo.DB.DataBaseAdapter.MySQL5Adapter.DBStructure.AllInTableNames(tableNames);
+            ////string sql =return Resource.ResourceManager.g
+            //string tableNamesSql = "";
+            //if (!string.IsNullOrEmpty(inTable))
+            //{
+            //    tableNamesSql = " and d.[name] in(" + inTable + ")";
+            //}
+            //sql = sql.Replace("<%=TableNames%>", tableNamesSql);
+
+            //List<DBTableInfo> lst = new List<DBTableInfo>();
+            //Dictionary<string, DBTableInfo> dicTables = new Dictionary<string, DBTableInfo>();
+            //using (IDataReader reader = oper.Query(sql.ToString(), new ParamList()))
+            //{
+
+            //    while (reader.Read())
+            //    {
+            //        string tableName = reader["tableName"] as string;
+            //        if (string.IsNullOrEmpty(tableName))
+            //        {
+            //            continue;
+            //        }
+            //        DBTableInfo table = null;
+            //        dicTables.TryGetValue(tableName, out table);
+            //        if (table == null)
+            //        {
+            //            table = new DBTableInfo();
+            //            table.Name = tableName;
+
+            //            string type = reader["tabletype"] as string;
+            //            table.IsView = false;
+            //            if (!string.IsNullOrEmpty(type))
+            //            {
+            //                if (type.Trim() == "V")
+            //                {
+            //                    table.IsView = true;
+            //                }
+            //            }
+            //            if (!table.IsView)
+            //            {
+            //                table.Description = reader["tableDescription"] as string;
+            //            }
+            //            table.RelationItems = new List<TableRelationAttribute>();
+            //            table.Params = new List<EntityParam>();
+            //            lst.Add(table);
+            //            dicTables[table.Name] = table;
+            //        }
+            //        FillParam(table, reader);
+
+            //    }
         }
 
+        /// <summary>
+        /// 获取要In的表名
+        /// </summary>
+        /// <param name="childName"></param>
+        /// <returns></returns>
+        internal static string AllInTableNames(IEnumerable<string> tableNames)
+        {
+            if (tableNames == null)
+            {
+                return null;
+            }
+            StringBuilder sbTables = new StringBuilder();
+            foreach (string tableName in tableNames)
+            {
+                sbTables.Append("'");
+                sbTables.Append(tableName.Replace("'", "''"));
+                sbTables.Append("',");
+            }
+            if (sbTables.Length > 0)
+            {
+                sbTables.Remove(sbTables.Length - 1, 1);
+            }
+            return sbTables.ToString();
+        }
         #endregion
 
         #region 创建事件
