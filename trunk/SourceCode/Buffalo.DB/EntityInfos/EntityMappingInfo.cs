@@ -43,7 +43,7 @@ namespace Buffalo.DB.EntityInfos
         /// <returns></returns>
         public EntityMappingInfo Copy(Type belong) 
         {
-            EntityMappingInfo info = new EntityMappingInfo(belong, _getHandle, _setHandle, _mappingInfo, _fieldName, _fieldType);
+            EntityMappingInfo info = new EntityMappingInfo(belong, GetHandle, SetHandle, _mappingInfo, _fieldName, _fieldType);
             return info;
         }
 

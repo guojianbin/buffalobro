@@ -381,7 +381,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
 
         public string DBIdentity(string tableName, string paramName)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return "generated always as identity (start with 1 increment by 1)";
         }
 
         public string DBTypeToSQL(DbType dbType, int length)

@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
 
 namespace Buffalo.Kernel.FastReflection
 {
     public class FieldInfoHandle
     {
-        protected GetFieldValueHandle _getHandle;
-        protected SetFieldValueHandle _setHandle;
+        private GetFieldValueHandle _getHandle;
+
+
+        private SetFieldValueHandle _setHandle;
+
+        
         protected Type _fieldType;
         protected string _fieldName;
         protected Type _belong;
@@ -38,7 +43,20 @@ namespace Buffalo.Kernel.FastReflection
                 return _belong;
             }
         }
-
+        /// <summary>
+        /// Set句柄
+        /// </summary>
+        public SetFieldValueHandle SetHandle
+        {
+            get { return _setHandle; }
+        }
+        /// <summary>
+        /// Get句柄
+        /// </summary>
+        public GetFieldValueHandle GetHandle
+        {
+            get { return _getHandle; }
+        }
         /// <summary>
         /// 获取属性的类型
         /// </summary>
@@ -107,6 +125,53 @@ namespace Buffalo.Kernel.FastReflection
             get
             {
                 return _setHandle != null;
+            }
+        }
+
+        /// <summary>
+        /// 获取字段集合
+        /// </summary>
+        /// <param name="objType">类型</param>
+        /// <param name="inner">是否</param>
+        /// <returns></returns>
+        public static List<FieldInfoHandle> GetFieldInfos(Type objType, BindingFlags flags, bool fillBase)
+        {
+            List<FieldInfoHandle> lstRet = new List<FieldInfoHandle>();
+
+            Type curType = objType;
+            Stack<Type> stkType = new Stack<Type>();
+            stkType.Push(curType);
+            if (fillBase) 
+            {
+                curType = curType.BaseType;
+                while (curType != null) 
+                {
+                    stkType.Push(curType);
+                    curType = curType.BaseType;
+                }
+            }
+            while (stkType.Count > 0)
+            {
+                curType = stkType.Pop();
+                FillFieldInfos(curType, flags, lstRet);
+            }
+            return lstRet;
+        }
+        /// <summary>
+        /// 填充值
+        /// </summary>
+        /// <param name="objType"></param>
+        /// <param name="flags"></param>
+        /// <param name="fillBase"></param>
+        private static void FillFieldInfos(Type objType, BindingFlags flags,List<FieldInfoHandle> lstRet) 
+        {
+            FieldInfo[] infos = objType.GetFields(flags);
+            foreach (FieldInfo info in infos)
+            {
+                GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(info);
+                SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(info);
+                FieldInfoHandle handle = new FieldInfoHandle(objType, getHandle, setHandle, info.FieldType, info.Name);
+                lstRet.Add(handle);
             }
         }
     }

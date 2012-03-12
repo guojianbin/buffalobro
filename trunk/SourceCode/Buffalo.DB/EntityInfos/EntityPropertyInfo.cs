@@ -27,9 +27,10 @@ namespace Buffalo.DB.EntityInfos
         /// <param name="ep">字段标识类</param>
         /// <param name="fieldType">字段类型</param>
         /// <param name="fieldName">字段名</param>
+        /// <param name="sourceType">源字段类型</param>
         public EntityPropertyInfo(EntityInfoHandle belong, GetFieldValueHandle getHandle, SetFieldValueHandle setHandle,
             EntityParam paramInfo, Type fieldType, string fieldName)
-            : base(belong.EntityType, getHandle, setHandle,fieldType,fieldName)
+            : base(belong.EntityType, getHandle, setHandle, fieldType, fieldName)
         {
             paramInfo.SqlType = belong.DBInfo.CurrentDbAdapter.ToCurrentDbType(paramInfo.SqlType);//转换成本数据库支持的数据类型
             this._paramInfo = paramInfo;
@@ -62,8 +63,8 @@ namespace Buffalo.DB.EntityInfos
         public EntityPropertyInfo Copy(EntityInfoHandle belong) 
         {
 
-            EntityPropertyInfo info = new EntityPropertyInfo(belong, _getHandle,
-                _setHandle, _paramInfo, _fieldType, _fieldName);
+            EntityPropertyInfo info = new EntityPropertyInfo(belong, GetHandle,
+                SetHandle, _paramInfo, _fieldType, _fieldName);
             return info;
         }
 

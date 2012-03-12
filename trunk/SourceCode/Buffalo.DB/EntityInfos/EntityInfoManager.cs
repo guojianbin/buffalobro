@@ -360,46 +360,46 @@ namespace Buffalo.DB.EntityInfos
             FillNotFoundField(dicParamsInfo, dicRelationInfo, dicNotFoundParam, dicNotFoundRelation);
 
             //属性信息句柄
-            FieldInfo[] destproper = type.GetFields(FastValueGetSet.allBindingFlags);
+            List<FieldInfoHandle> lstFields=FieldInfoHandle.GetFieldInfos(type, FastValueGetSet.allBindingFlags, true);
             using (DataBaseOperate oper = new DataBaseOperate(db))
             {
                 ///读取属性别名
-                foreach (FieldInfo finf in destproper)
+                foreach (FieldInfoHandle finf in lstFields)
                 {
 
                     ///通过属性来反射
                     EntityParam ep = null;
 
 
-                    if (dicParamsInfo.TryGetValue(finf.Name, out ep))
+                    if (dicParamsInfo.TryGetValue(finf.FieldName, out ep))
                     {
                         //if (tableAtt.IsParamNameUpper)
                         //{
                         //    ep.ParamName = ep.ParamName.ToUpper();
                         //}
                         string proName = ep.PropertyName;
-                        GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
-                        SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
-                        if (getHandle != null || setHandle != null)
+                        //GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
+                        //SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
+                        if (finf.HasGetHandle|| finf.HasSetHandle)
                         {
-                            EntityPropertyInfo entityProperty = new EntityPropertyInfo(classInfo, getHandle, setHandle, ep, finf.FieldType, finf.Name);
+                            EntityPropertyInfo entityProperty = new EntityPropertyInfo(classInfo, finf.GetHandle, finf.SetHandle, ep, finf.FieldType, finf.FieldName);
                             dicPropertys.Add(proName, entityProperty);
-                            dicNotFoundParam.Remove(finf.Name);
+                            dicNotFoundParam.Remove(finf.FieldName);
                         }
                     }
                     else
                     {
                         TableRelationAttribute tableMappingAtt = null;
 
-                        if (dicRelationInfo.TryGetValue(finf.Name, out tableMappingAtt))
+                        if (dicRelationInfo.TryGetValue(finf.FieldName, out tableMappingAtt))
                         {
                             Type targetType = DefaultType.GetRealValueType(finf.FieldType);
                             tableMappingAtt.SetEntity(type, targetType);
-                            GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
-                            SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
-                            EntityMappingInfo entityMappingInfo = new EntityMappingInfo(type, getHandle, setHandle, tableMappingAtt, finf.Name, finf.FieldType);
+                            //GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
+                            //SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
+                            EntityMappingInfo entityMappingInfo = new EntityMappingInfo(type, finf.GetHandle, finf.SetHandle, tableMappingAtt, finf.FieldName, finf.FieldType);
                             dicMapping.Add(tableMappingAtt.PropertyName, entityMappingInfo);
-                            dicNotFoundRelation.Remove(finf.Name);
+                            dicNotFoundRelation.Remove(finf.FieldName);
                         }
 
                     }
@@ -425,8 +425,7 @@ namespace Buffalo.DB.EntityInfos
                 {
                     message.Remove(message.Length - 1, 1);
                 }
-                message.Insert(0, "类:" + type.FullName + " 找不到字段:");
-                message.Append("，请检查该类或其父类的对应字段是否为protected或更高的访问级别");
+                message.Insert(0, "类:" + type.FullName + " 找不到字段");
                 throw new MissingFieldException(message.ToString());
             }
             classInfo.SetInfoHandles(dicPropertys, dicMapping);
@@ -434,7 +433,7 @@ namespace Buffalo.DB.EntityInfos
             _dicClass[fullName] = classInfo;
         }
 
-        
+
 
         /// <summary>
         /// 获取某个方法的属性
