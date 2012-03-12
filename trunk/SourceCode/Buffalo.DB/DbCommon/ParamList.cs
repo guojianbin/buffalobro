@@ -53,7 +53,10 @@ namespace Buffalo.DB.DbCommon
             if (paramValue is byte[])
             {
                 string pKeyName = NewKeyName(db);
-                return AddNew(pKeyName, type, paramValue);
+                string valueKey=NewValueKeyName(db);
+                DBParameter prmValue=AddNew(pKeyName, type, paramValue);
+                prmValue.ValueName = valueKey;
+                return prmValue;
             }
             else
             {
@@ -61,7 +64,10 @@ namespace Buffalo.DB.DbCommon
                 if (strValue != null && strValue.Length > 5000)
                 {
                     string pKeyName = NewKeyName(db);
-                    return AddNew(pKeyName, type, paramValue);
+                    string valueKey = NewValueKeyName(db);
+                    DBParameter prmValue = AddNew(pKeyName, type, paramValue);
+                    prmValue.ValueName = valueKey;
+                    return prmValue;
                 }
             }
 
@@ -77,6 +83,7 @@ namespace Buffalo.DB.DbCommon
             }
             return prm;
         }
+
 
 		/// <summary>
         /// 创建一个新的IDataParameter并添加到列表

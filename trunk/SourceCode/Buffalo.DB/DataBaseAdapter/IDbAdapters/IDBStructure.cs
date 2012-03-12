@@ -33,5 +33,16 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <param name="tableNames"></param>
         /// <returns></returns>
         List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, IEnumerable<string> tableNames);
+
+        #region 创建事件
+        /// <summary>
+        /// 数据库检查时候的事建
+        /// </summary>
+        /// <param name="arg">当前类型</param>
+        /// <param name="dbInfo">数据库类型</param>
+        /// <param name="type">检查类型</param>
+        /// <param name="lstSQL">SQL语句</param>
+        void OnCheckEvent(object arg,DBInfo dbInfo,CheckEvent type,List<string> lstSQL);
+        #endregion
     }
 }

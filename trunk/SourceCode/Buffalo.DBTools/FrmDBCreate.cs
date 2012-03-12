@@ -210,22 +210,12 @@ namespace Buffalo.DBTools
             {
                 return;
             }
-
+            List<string> resault = DBChecker.ExecuteSQL(dbInfo.DefaultOperate, _lstSql);
             StringBuilder sbRet = new StringBuilder();
 
-            foreach (string sql in _lstSql)
+            foreach (string res in resault)
             {
-                try
-                {
-                    int row=dbInfo.DefaultOperate.Execute(sql, new Buffalo.DB.DbCommon.ParamList());
-                    sbRet.Append("Ö´ÐÐÍê±Ï;");
-                    
-                }
-                catch (Exception ex)
-                {
-                    sbRet.Append("Ö´ÐÐ´íÎó£º" + ex.Message);
-                }
-                sbRet.Append("\n");
+                sbRet.AppendLine(res);
             }
             rtbOutput.Text = sbRet.ToString();
         }

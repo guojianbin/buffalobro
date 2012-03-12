@@ -7,6 +7,7 @@ using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 using Buffalo.DB.PropertyAttributes;
 using Buffalo.DB.CommBase.DataAccessBases;
+using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 
 
 
@@ -55,6 +56,8 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             }
             return lstName;
         }
+
+
 
         /// <summary>
         /// 添加字段的语句
@@ -197,32 +200,44 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             }
 
             List<TableRelationAttribute> lstRelation = GetRelation(oper, info, tableNames);
+
+            FillRelation(dicTables, lstRelation);
+            return lst;
+        }
+
+        /// <summary>
+        /// 填充关系信息
+        /// </summary>
+        /// <param name="dicTables"></param>
+        /// <param name="lstRelation"></param>
+        internal static void FillRelation(Dictionary<string, DBTableInfo> dicTables,List<TableRelationAttribute> lstRelation) 
+        {
+            if (lstRelation == null) 
+            {
+                return;
+            }
             DBTableInfo ptable = null;
             DBTableInfo ctable = null;
 
-            //Dictionary<string, bool> addedRelation = new Dictionary<string, bool>();//已经加过的关系
-
-            foreach (TableRelationAttribute tinfo in lstRelation) 
+            foreach (TableRelationAttribute tinfo in lstRelation)
             {
-                
+
                 if (dicTables.TryGetValue(tinfo.SourceTable, out ctable) && dicTables.TryGetValue(tinfo.TargetTable, out ptable)) //填充父项
                 {
-                    tinfo.TargetName=ptable.PrimaryParam.ParamName;
+                    tinfo.TargetName = ptable.PrimaryParam.ParamName;
                     ctable.RelationItems.Add(tinfo);
 
                     TableRelationAttribute cinfo = new TableRelationAttribute();
-                    cinfo.SourceName=tinfo.TargetName;
-                    cinfo.SourceTable=tinfo.TargetTable;
-                    cinfo.TargetName=tinfo.SourceName;
-                    cinfo.TargetTable=tinfo.SourceTable;
-                    cinfo.IsParent=false;
+                    cinfo.SourceName = tinfo.TargetName;
+                    cinfo.SourceTable = tinfo.TargetTable;
+                    cinfo.TargetName = tinfo.SourceName;
+                    cinfo.TargetTable = tinfo.SourceTable;
+                    cinfo.IsParent = false;
                     ptable.RelationItems.Add(cinfo);
                 }
 
-                
-            }
 
-            return lst;
+            }
         }
 
         /// <summary>
@@ -380,5 +395,20 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             }
             return DbType.Object;
         }
+
+        #region 创建事件
+        /// <summary>
+        /// 数据库检查时候的事建
+        /// </summary>
+        /// <param name="arg">当前类型</param>
+        /// <param name="dbInfo">数据库类型</param>
+        /// <param name="type">检查类型</param>
+        /// <param name="lstSQL">SQL语句</param>
+        public void OnCheckEvent(object arg, DBInfo dbInfo, CheckEvent type, List<string> lstSQL) 
+        {
+
+        }
+        #endregion
+
     }
 }

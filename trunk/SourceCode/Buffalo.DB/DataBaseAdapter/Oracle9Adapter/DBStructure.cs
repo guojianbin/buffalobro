@@ -173,30 +173,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             }
 
             List<TableRelationAttribute> lstRelation = GetRelation(oper, info, tableNames);
-            DBTableInfo ptable = null;
-            DBTableInfo ctable = null;
-
-            //Dictionary<string, bool> addedRelation = new Dictionary<string, bool>();//已经加过的关系
-
-            foreach (TableRelationAttribute tinfo in lstRelation)
-            {
-
-                if (dicTables.TryGetValue(tinfo.SourceTable, out ctable) && dicTables.TryGetValue(tinfo.TargetTable, out ptable)) //填充父项
-                {
-                    tinfo.TargetName = ptable.PrimaryParam.ParamName;
-                    ctable.RelationItems.Add(tinfo);
-
-                    TableRelationAttribute cinfo = new TableRelationAttribute();
-                    cinfo.SourceName = tinfo.TargetName;
-                    cinfo.SourceTable = tinfo.TargetTable;
-                    cinfo.TargetName = tinfo.SourceName;
-                    cinfo.TargetTable = tinfo.SourceTable;
-                    cinfo.IsParent = false;
-                    ptable.RelationItems.Add(cinfo);
-                }
-
-
-            }
+            Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBStructure.FillRelation(dicTables, lstRelation);
 
             return lst;
         }
@@ -388,6 +365,21 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             return DbType.Object;
         }
 
+
+        #endregion
+
+        #region 创建事件
+        /// <summary>
+        /// 数据库检查时候的事建
+        /// </summary>
+        /// <param name="arg">当前类型</param>
+        /// <param name="dbInfo">数据库类型</param>
+        /// <param name="type">检查类型</param>
+        /// <param name="lstSQL">SQL语句</param>
+        public void OnCheckEvent(object arg, DBInfo dbInfo, CheckEvent type, List<string> lstSQL) 
+        {
+
+        }
 
         #endregion
     }

@@ -327,32 +327,29 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             StringBuilder sqlParams = new StringBuilder(1000);
             StringBuilder sqlValues = new StringBuilder(1000);
             ParamList list = new ParamList();
-            int index = 0;
-            string paramVal = null;
-            string paramKey = null;
             string param = null;
             string svalue = null;
-
+            
             EntityPropertyInfo identityInfo = null;
-
+            
             foreach (EntityPropertyInfo info in EntityInfo.PropertyInfo)
             {
                 //EntityPropertyInfo info = enums.Current.Value;
                 object curValue = info.GetValue(obj);
-                paramVal = EntityInfo.DBInfo.CurrentDbAdapter.FormatValueName(DataAccessCommon.FormatParam(info.ParamName, index));
-                paramKey = EntityInfo.DBInfo.CurrentDbAdapter.FormatParamKeyName(DataAccessCommon.FormatParam(info.ParamName, index));
-
-
+                
                 if (info.Identity)
                 {
                     if (info.SqlType == DbType.Guid && info.FieldType==DefaultType.GUIDType)
                     {
                         curValue = Guid.NewGuid();
                         info.SetValue(obj, curValue);
+
+                        DBParameter prm = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
+
                         sqlParams.Append(",");
                         sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
                         sqlValues.Append(",");
-                        sqlValues.Append(curValue);
+                        sqlValues.Append(prm.ValueName);
                         continue;
                     }
                     else
@@ -383,12 +380,13 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                     object conValue = GetDefaultConcurrency(info);
                     if (conValue != null)
                     {
+                        DBParameter prm = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
+
                         sqlParams.Append(",");
                         sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
                         sqlValues.Append(",");
-                        sqlValues.Append(paramVal);
-                        list.AddNew(paramKey, info.SqlType, conValue);
-                        index++;
+                        sqlValues.Append(prm.ValueName);
+                        
                         continue;
                     }
                 }
@@ -396,13 +394,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                 {
                     continue;
                 }
-
+                DBParameter prmValue = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
                 sqlParams.Append(",");
                 sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
                 sqlValues.Append(",");
-                sqlValues.Append(paramVal);
-                list.AddNew(paramKey, info.SqlType, curValue);
-                index++;
+                sqlValues.Append(prmValue.ValueName);
+                
             }
             if (sqlParams.Length > 0)
             {

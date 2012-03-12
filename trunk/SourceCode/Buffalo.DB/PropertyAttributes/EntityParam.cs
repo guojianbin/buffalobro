@@ -6,6 +6,7 @@ using Buffalo.Kernel.Commons;
 using Buffalo.Kernel;
 using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 using Buffalo.DB.BQLCommon.BQLConditionCommon;
+using Buffalo.DB.DBCheckers;
 namespace Buffalo.DB.PropertyAttributes
 {
     public class EntityParam:System.Attribute
@@ -230,8 +231,9 @@ namespace Buffalo.DB.PropertyAttributes
                     sb.Append("NOT NULL");
                 }
             }
-            if (isAutoIdentity)
+            if (isAutoIdentity && TableChecker.IsIdentityType(SqlType))
             {
+
                 sb.Append(idba.DBIdentity(tableName, _paramName));
             }
             return sb.ToString();

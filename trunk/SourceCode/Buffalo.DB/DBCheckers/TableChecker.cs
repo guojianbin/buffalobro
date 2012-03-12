@@ -54,6 +54,8 @@ namespace Buffalo.DB.DBCheckers
             FilteExistsTable(tableInfos, tables,lstExists,lstNotExists);
 
             List<string> lstRet = new List<string>();
+
+            
             CreateTableSQL(lstRet,info, lstNotExists);
 
             foreach (KeyWordTableParamItem existsTable in lstExists)
@@ -124,9 +126,11 @@ namespace Buffalo.DB.DBCheckers
             
             foreach (KeyWordTableParamItem table in notExists)
             {
+                dbInfo.DBStructure.OnCheckEvent(table, dbInfo, CheckEvent.TableBeginCreate,sql);
                 BQLQuery bql = BQL.CreateTable(table.TableName).Param(table.Params);
                 AbsCondition con = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
                 sql.Add(con.GetSql());
+                dbInfo.DBStructure.OnCheckEvent(table, dbInfo, CheckEvent.TableCreated, sql);
             }
         }
 
@@ -188,9 +192,11 @@ namespace Buffalo.DB.DBCheckers
             {
                 if (!dic.ContainsKey(pInfo.ParamName.ToLower())) 
                 {
+                    dbInfo.DBStructure.OnCheckEvent(pInfo, dbInfo, CheckEvent.TablenBeginCheck, lstSql);
                     bql = BQL.AlterTable(tableName).AddParam(pInfo);
                     AbsCondition acon = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
                     lstSql.Add(acon.GetSql());
+                    dbInfo.DBStructure.OnCheckEvent(pInfo, dbInfo, CheckEvent.TableChecked, lstSql);
                 }
             }
            
@@ -222,10 +228,12 @@ namespace Buffalo.DB.DBCheckers
                 }
                 if (!exists) 
                 {
+                    dbInfo.DBStructure.OnCheckEvent(table, dbInfo, CheckEvent.RelationBeginCheck, lstSql);
                     item.CreateName();
                     BQLQuery bql = BQL.AlterTable(table.TableName).AddConstraint(item);
                     AbsCondition con = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
                     lstSql.Add(con.GetSql());
+                    dbInfo.DBStructure.OnCheckEvent(table, dbInfo, CheckEvent.RelationChecked, lstSql);
                 }
             }
 

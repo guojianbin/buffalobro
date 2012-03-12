@@ -8,6 +8,7 @@ using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.EntityInfos;
 using Buffalo.DB.DbCommon;
+using Buffalo.DB.CommBase.BusinessBases;
 
 namespace Buffalo.DB.DBCheckers
 {
@@ -26,16 +27,19 @@ namespace Buffalo.DB.DBCheckers
         public static List<string> ExecuteSQL(DataBaseOperate oper,List<string> lstSQL) 
         {
             List<string> resaults = new List<string>();
-            foreach (string sql in lstSQL)
+            using (BatchAction ba = oper.StarBatchAction())
             {
-                try
+                foreach (string sql in lstSQL)
                 {
-                    int row = oper.Execute(sql, new Buffalo.DB.DbCommon.ParamList());
-                    resaults.Add("Ö´ÐÐÍê±Ï;");
-                }
-                catch (Exception ex)
-                {
-                    resaults.Add("Ö´ÐÐ´íÎó£º" + ex.Message);
+                    try
+                    {
+                        int row = oper.Execute(sql, new Buffalo.DB.DbCommon.ParamList());
+                        resaults.Add("Ö´ÐÐÍê±Ï;");
+                    }
+                    catch (Exception ex)
+                    {
+                        resaults.Add("Ö´ÐÐ´íÎó£º" + ex.Message);
+                    }
                 }
             }
             return resaults;
@@ -60,6 +64,7 @@ namespace Buffalo.DB.DBCheckers
                 {
                     continue;
                 }
+                
                 KeyWordTableParamItem tableInfo = new KeyWordTableParamItem(tableName, null);
                 FillParamInfos(tableInfo, entityInfo);
                 FillRelation(tableInfo, entityInfo);
