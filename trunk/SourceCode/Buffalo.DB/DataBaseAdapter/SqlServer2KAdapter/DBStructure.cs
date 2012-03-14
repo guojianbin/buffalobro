@@ -102,7 +102,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         {
             StringBuilder sql =new StringBuilder();
 
-            sql.Append("select * from (select fk.name fkname ,ftable.[name] childname, cn.[name] childparam, rtable.[name] parentname from sysforeignkeys join sysobjects fk on sysforeignkeys.constid = fk.id join sysobjects ftable on sysforeignkeys.fkeyid = ftable.id join sysobjects rtable on sysforeignkeys.rkeyid = rtable.id join syscolumns cn on sysforeignkeys.fkeyid = cn.id and sysforeignkeys.fkey = cn.colid) a where 1=1");
+            sql.Append("select * from (select fk.name fkname ,ftable.[name] childname, cn.[name] childparam, rtable.[name] parentname,pn.[name] parentparam from sysforeignkeys join sysobjects fk on sysforeignkeys.constid = fk.id join sysobjects ftable on sysforeignkeys.fkeyid = ftable.id join sysobjects rtable on sysforeignkeys.rkeyid = rtable.id join syscolumns cn on sysforeignkeys.fkeyid = cn.id and sysforeignkeys.fkey = cn.colid join syscolumns pn on sysforeignkeys.rkeyid = pn.id and sysforeignkeys.rkey = pn.colid) a where 1=1");
             ParamList lstParam=new ParamList();
             string childName = AllInTableNames(childNames);
             if(!string.IsNullOrEmpty(childName))
@@ -121,6 +121,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                     tinfo.SourceTable = reader["childname"] as string;
                     tinfo.SourceName = reader["childparam"] as string;
                     tinfo.TargetTable = reader["parentname"] as string;
+                    tinfo.TargetName = reader["parentparam"] as string;
                     tinfo.IsParent = true;
                     lst.Add(tinfo);
                 }
@@ -221,12 +222,12 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
 
             foreach (TableRelationAttribute tinfo in lstRelation)
             {
-
-                if (dicTables.TryGetValue(tinfo.SourceTable, out ctable) && dicTables.TryGetValue(tinfo.TargetTable, out ptable)) //Ìî³ä¸¸Ïî
+                if (dicTables.TryGetValue(tinfo.SourceTable, out ctable))
                 {
-                    tinfo.TargetName = ptable.PrimaryParam.ParamName;
                     ctable.RelationItems.Add(tinfo);
-
+                }
+                if ( dicTables.TryGetValue(tinfo.TargetTable, out ptable)) //Ìî³ä¸¸Ïî
+                {
                     TableRelationAttribute cinfo = new TableRelationAttribute();
                     cinfo.SourceName = tinfo.TargetName;
                     cinfo.SourceTable = tinfo.TargetTable;
@@ -235,6 +236,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                     cinfo.IsParent = false;
                     ptable.RelationItems.Add(cinfo);
                 }
+               
 
 
             }

@@ -116,6 +116,7 @@
       <DependentUpon>CommandBar.resx</DependentUpon>
     </Compile>
     <Compile Include="CommandBarId.cs" />
+    <Compile Include="CommandItems.cs" />
     <Compile Include="Connect.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -128,6 +129,7 @@
     <Compile Include="DocSummary\MemberSummary.cs" />
     <Compile Include="DocSummary\ShapeSummaryDisplayer.cs" />
     <Compile Include="DocSummary\SummaryShape.cs" />
+    <Compile Include="DocSummary\SummaryShowItem.cs" />
     <Compile Include="DocSummary\VSConfig\IVSConfig.cs" />
     <Compile Include="DocSummary\VSConfig\VS2008Config.cs" />
     <Compile Include="DocSummary\VSConfig\VS2005Config.cs" />

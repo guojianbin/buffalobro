@@ -338,6 +338,74 @@ namespace Buffalo.DBTools.ROMHelper
         }
 
         /// <summary>
+        /// 填充关系代码
+        /// </summary>
+        /// <param name="er"></param>
+        /// <param name="sb"></param>
+        internal static void FillRelationsInfo(TableRelationAttribute er, StringBuilder sb) 
+        {
+            if (er.IsParent)
+            {
+                er.FieldTypeName = EntityFieldBase.ToPascalName(er.TargetTable);
+                er.FieldName = "_belong" + EntityFieldBase.ToPascalName(er.TargetTable);
+                er.PropertyName = "Belong" + EntityFieldBase.ToPascalName(er.TargetTable);
+                er.IsToDB = true;
+                sb.AppendLine("        /// <summary>");
+                sb.AppendLine("        /// " + er.Description);
+                sb.AppendLine("        /// </summary>");
+                sb.AppendLine("        protected " + er.FieldTypeName + " " + er.FieldName + ";");
+                sb.AppendLine("");
+
+                sb.AppendLine("        /// <summary>");
+                sb.AppendLine("        /// " + er.Description);
+                sb.AppendLine("        /// </summary>");
+                sb.AppendLine("        public " + er.FieldTypeName + " " + er.PropertyName);
+                sb.AppendLine("        {");
+                sb.AppendLine("            get");
+                sb.AppendLine("            {");
+                sb.AppendLine("               if (" + er.FieldName + " == null)");
+                sb.AppendLine("               {");
+                sb.AppendLine("                   FillParent(\"" + er.PropertyName + "\");");
+                sb.AppendLine("               }");
+                sb.AppendLine("               return " + er.FieldName + ";");
+                sb.AppendLine("            }");
+                sb.AppendLine("            set");
+                sb.AppendLine("            {");
+                sb.AppendLine("               " + er.FieldName + " = value;");
+                sb.AppendLine("               OnPropertyUpdated(\"" + er.PropertyName + "\");");
+                sb.AppendLine("            }");
+                sb.AppendLine("        }");
+            }
+            else
+            {
+                er.FieldTypeName = "List<" + EntityFieldBase.ToPascalName(er.TargetTable) + ">";
+                er.FieldName = "_lst" + EntityFieldBase.ToPascalName(er.TargetTable);
+                er.PropertyName = "Lst" + EntityFieldBase.ToPascalName(er.TargetTable);
+                er.IsToDB = false;
+                sb.AppendLine("        /// <summary>");
+                sb.AppendLine("        /// " + er.Description);
+                sb.AppendLine("        /// </summary>");
+                sb.AppendLine("        protected " + er.FieldTypeName + " " + er.FieldName + ";");
+                sb.AppendLine("");
+
+                sb.AppendLine("        /// <summary>");
+                sb.AppendLine("        /// " + er.Description);
+                sb.AppendLine("        /// </summary>");
+                sb.AppendLine("        public " + er.FieldTypeName + " " + er.PropertyName);
+                sb.AppendLine("        {");
+                sb.AppendLine("            get");
+                sb.AppendLine("            {");
+                sb.AppendLine("               if (" + er.FieldName + " == null)");
+                sb.AppendLine("               {");
+                sb.AppendLine("                   FillChild(\"" + er.PropertyName + "\");");
+                sb.AppendLine("               }");
+                sb.AppendLine("               return " + er.FieldName + ";");
+                sb.AppendLine("            }");
+                sb.AppendLine("        }");
+            }
+        }
+
+        /// <summary>
         /// 创建关系
         /// </summary>
         /// <returns></returns>
@@ -350,69 +418,46 @@ namespace Buffalo.DBTools.ROMHelper
             }
             foreach (TableRelationAttribute er in _belongTable.RelationItems) 
             {
+                FillRelationsInfo(er, sb);
                 
-                if (er.IsParent)
-                {
-                    er.FieldTypeName = EntityFieldBase.ToPascalName(er.TargetTable);
-                    er.FieldName = "_belong" + EntityFieldBase.ToPascalName(er.TargetTable);
-                    er.PropertyName = "Belong" + EntityFieldBase.ToPascalName(er.TargetTable);
-                    er.IsToDB = true;
-                    sb.AppendLine("        /// <summary>");
-                    sb.AppendLine("        /// " + er.Description);
-                    sb.AppendLine("        /// </summary>");
-                    sb.AppendLine("        protected " + er.FieldTypeName + " " + er.FieldName + ";");
-                    sb.AppendLine("");
-
-                    sb.AppendLine("        /// <summary>");
-                    sb.AppendLine("        /// " + er.Description);
-                    sb.AppendLine("        /// </summary>");
-                    sb.AppendLine("        public " + er.FieldTypeName + " " + er.PropertyName);
-                    sb.AppendLine("        {");
-                    sb.AppendLine("            get");
-                    sb.AppendLine("            {");
-                    sb.AppendLine("               if (" + er.FieldName + " == null)");
-                    sb.AppendLine("               {");
-                    sb.AppendLine("                   FillParent(\"" + er.PropertyName + "\");");
-                    sb.AppendLine("               }");
-                    sb.AppendLine("               return " + er.FieldName + ";");
-                    sb.AppendLine("            }");
-                    sb.AppendLine("            set");
-                    sb.AppendLine("            {");
-                    sb.AppendLine("               " + er.FieldName + " = value;");
-                    sb.AppendLine("               OnPropertyUpdated(\"" + er.PropertyName + "\");");
-                    sb.AppendLine("            }");
-                    sb.AppendLine("        }");
-                }
-                else 
-                {
-                    er.FieldTypeName = "List<"+EntityFieldBase.ToPascalName(er.TargetTable)+">";
-                    er.FieldName = "_lst" + EntityFieldBase.ToPascalName(er.TargetTable);
-                    er.PropertyName = "Lst" + EntityFieldBase.ToPascalName(er.TargetTable);
-                    er.IsToDB = false;
-                    sb.AppendLine("        /// <summary>");
-                    sb.AppendLine("        /// " + er.Description);
-                    sb.AppendLine("        /// </summary>");
-                    sb.AppendLine("        protected " + er.FieldTypeName + " " + er.FieldName + ";");
-                    sb.AppendLine("");
-
-                    sb.AppendLine("        /// <summary>");
-                    sb.AppendLine("        /// " + er.Description);
-                    sb.AppendLine("        /// </summary>");
-                    sb.AppendLine("        public " + er.FieldTypeName + " " + er.PropertyName);
-                    sb.AppendLine("        {");
-                    sb.AppendLine("            get");
-                    sb.AppendLine("            {");
-                    sb.AppendLine("               if (" + er.FieldName + " == null)");
-                    sb.AppendLine("               {");
-                    sb.AppendLine("                   FillChild(\"" + er.PropertyName + "\");");
-                    sb.AppendLine("               }");
-                    sb.AppendLine("               return " + er.FieldName + ";");
-                    sb.AppendLine("            }");
-                    sb.AppendLine("        }");
-                }
             }
             return sb.ToString();
         }
+
+        /// <summary>
+        /// 添加字段代码
+        /// </summary>
+        /// <param name="prm"></param>
+        /// <param name="sb"></param>
+        internal static void AppendFieldInfo(EntityParam prm, StringBuilder sb) 
+        {
+            prm.FieldName = "_" + EntityFieldBase.ToCamelName(prm.ParamName);
+            string typeName = ToCSharpType(prm.SqlType);
+            sb.AppendLine("        ///<summary>");
+            sb.AppendLine("        ///" + prm.Description);
+            sb.AppendLine("        ///</summary>");
+            sb.AppendLine("        protected " + typeName + " " + prm.FieldName + ";");
+            sb.AppendLine("");
+
+
+            prm.PropertyName = EntityFieldBase.ToPascalName(prm.ParamName);
+            sb.AppendLine("        /// <summary>");
+            sb.AppendLine("        ///" + prm.Description + "");
+            sb.AppendLine("        ///</summary>");
+            sb.AppendLine("        public " + typeName + " " + prm.PropertyName + "");
+            sb.AppendLine("        {");
+            sb.AppendLine("            get");
+            sb.AppendLine("            {");
+            sb.AppendLine("                return " + prm.FieldName + ";");
+            sb.AppendLine("            }");
+            sb.AppendLine("            set");
+            sb.AppendLine("            {");
+            sb.AppendLine("                " + prm.FieldName + "=value;");
+            sb.AppendLine("                OnPropertyUpdated(\"" + prm.PropertyName + "\");");
+            sb.AppendLine("            }");
+            sb.AppendLine("        }");
+        }
+
 
         /// <summary>
         /// 生成字段
@@ -427,31 +472,7 @@ namespace Buffalo.DBTools.ROMHelper
             }
             foreach (EntityParam prm in _belongTable.Params) 
             {
-                prm.FieldName = "_"+EntityFieldBase.ToCamelName(prm.ParamName);
-                string typeName= ToCSharpType(prm.SqlType);
-                sb.AppendLine("        ///<summary>");
-                sb.AppendLine("        ///" + prm.Description);
-                sb.AppendLine("        ///</summary>");
-                sb.AppendLine("        protected " + typeName + " " + prm.FieldName + ";");
-                sb.AppendLine("");
-
-
-                prm.PropertyName = EntityFieldBase.ToPascalName(prm.ParamName);
-                sb.AppendLine("        /// <summary>");
-                sb.AppendLine("        ///" + prm.Description + "");
-                sb.AppendLine("        ///</summary>");
-                sb.AppendLine("        public " + typeName + " " + prm.PropertyName + "");
-                sb.AppendLine("        {");
-                sb.AppendLine("            get");
-                sb.AppendLine("            {");
-                sb.AppendLine("                return " + prm.FieldName + ";");
-                sb.AppendLine("            }");
-                sb.AppendLine("            set");
-                sb.AppendLine("            {");
-                sb.AppendLine("                " + prm.FieldName + "=value;");
-                sb.AppendLine("                OnPropertyUpdated(\"" + prm.PropertyName + "\");");
-                sb.AppendLine("            }");
-                sb.AppendLine("        }");
+                AppendFieldInfo(prm, sb);
             }
 
             return sb.ToString();
@@ -491,7 +512,7 @@ namespace Buffalo.DBTools.ROMHelper
         /// </summary>
         /// <param name="type">数据库类型</param>
         /// <returns></returns>
-        private string ToCSharpType(DbType type) 
+        private static string ToCSharpType(DbType type) 
         {
             switch (type)
             {

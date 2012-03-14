@@ -16,6 +16,9 @@ using Buffalo.DB.PropertyAttributes;
 using Buffalo.Kernel;
 using System.Data;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
+using Buffalo.DB.DataBaseAdapter;
+using Buffalo.DB.DBCheckers;
+using Buffalo.DBTools.ROMHelper;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -198,6 +201,23 @@ namespace Buffalo.DBTools.HelperKernel
             get { return _properties; }
         }
 
+        DBConfigInfo _dbInfo;
+        /// <summary>
+        /// 数据库信息
+        /// </summary>
+        public DBConfigInfo DbInfo
+        {
+            get
+            {
+                if (_dbInfo == null)
+                {
+                    _dbInfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView, DBEntityInfo.GetNameSpace(SelectDocView, CurrentProject) + ".DataAccess");
+
+
+                }
+                return _dbInfo;
+            }
+        }
         private Dictionary<string, CodeElementPosition> _methods;
 
         /// <summary>
@@ -234,7 +254,146 @@ namespace Buffalo.DBTools.HelperKernel
             _currentDiagram = currentDiagram;
         }
 
+        /// <summary>
+        /// 获取字段对应的属性
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<string, EntityParamField> GetParamMapField() 
+        {
+            Dictionary<string, EntityParamField> dic = new Dictionary<string, EntityParamField>();
+            EntityConfig curType = this;
+            while (curType != null)
+            {
 
+                foreach (EntityParamField field in curType.EParamFields)
+                {
+                    if (!string.IsNullOrEmpty(field.ParamName))
+                    {
+                        dic[field.ParamName] = field;
+                    }
+                }
+                if (!IsSystemType(curType.BaseType))
+                {
+                    try
+                    {
+                        curType = new EntityConfig(curType.BaseType, CurrentProject, CurrentDiagram);
+                    }
+                    catch
+                    {
+                        curType = null;
+                    }
+                }
+                else 
+                {
+                    curType = null;
+                }
+            }
+            return dic;
+        }
+        /// <summary>
+        /// 获取关系对应的属性
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<string, EntityRelationItem> GetRelationmMapField()
+        {
+            Dictionary<string, EntityRelationItem> dic = new Dictionary<string, EntityRelationItem>();
+            EntityConfig curType = this;
+            while (curType != null)
+            {
+                foreach (EntityRelationItem field in curType.ERelation)
+                {
+                    string key = field.TypeName + ":" + field.SourceProperty + ":" + field.TargetProperty;
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        dic[key] = field;
+                    }
+                }
+                if (!IsSystemType(curType.BaseType))
+                {
+                    try
+                    {
+                        curType = new EntityConfig(curType.BaseType, CurrentProject, CurrentDiagram);
+                    }
+                    catch
+                    {
+                        curType = null;
+                    }
+                }
+                else
+                {
+                    curType = null;
+                }
+            }
+            return dic;
+        }
+        private List<EntityParam> _dbParams;
+        /// <summary>
+        /// 数据库所属的此类不存在的字段
+        /// </summary>
+        public List<EntityParam> DbParams
+        {
+            get { return _dbParams; }
+        }
+        private List<TableRelationAttribute> _dbRelations;
+        /// <summary>
+        /// 数据库所属的此类不存在的关系
+        /// </summary>
+        public List<TableRelationAttribute> DbRelations
+        {
+            get { return _dbRelations; }
+        }
+        /// <summary>
+        /// 更新类信息
+        /// </summary>
+        /// <param name="ctype"></param>
+        /// <param name="project"></param>
+        /// <param name="currentDiagram"></param>
+        /// <returns></returns>
+        public static EntityConfig GetEntityConfigByTable(ClrType ctype, Project project, Diagram currentDiagram, ClassDesignerDocView selectDocView) 
+        {
+            
+            EntityConfig entity = new EntityConfig(ctype, project, currentDiagram);
+            entity.SelectDocView = selectDocView;
+            if (string.IsNullOrEmpty(entity.TableName)) 
+            {
+                return null;
+            }
+            DBInfo db=entity.DbInfo.CreateDBInfo();
+            List<string> selTab = new List<string>();
+            selTab.Add(entity.TableName);
+            List<DBTableInfo> lstGen = TableChecker.GetTableInfo(db, selTab);
+            if (lstGen.Count > 0) 
+            {
+                DBTableInfo info = lstGen[0];
+                Dictionary<string, EntityParamField> dicParam = entity.GetParamMapField();
+                entity._dbParams=new List<EntityParam>();
+                foreach (EntityParam prm in info.Params) 
+                {
+                    string paramName = prm.ParamName;
+                    if (dicParam.ContainsKey(paramName)) 
+                    {
+                        continue;
+                    }
+                    entity._dbParams.Add(prm);
+
+                }
+                Dictionary<string, EntityRelationItem> dicRelation = entity.GetRelationmMapField();
+                entity._dbRelations = new List<TableRelationAttribute>();
+                foreach (TableRelationAttribute tr in info.RelationItems)
+                {
+
+                    string key = EntityFieldBase.ToPascalName(tr.TargetTable) + ":" + EntityFieldBase.ToPascalName(tr.SourceName) + ":" + EntityFieldBase.ToPascalName(tr.TargetName);
+                    if (dicRelation.ContainsKey(key))
+                    {
+                        continue;
+                    }
+                    entity._dbRelations.Add(tr);
+
+                }
+                
+            }
+            return entity;
+        } 
 
         /// <summary>
         /// 获取父类信息
@@ -299,9 +458,6 @@ namespace Buffalo.DBTools.HelperKernel
                     ocp = cp;
                     
                     return cp.FileName;
-
-                    
-                    break;
                 }
             }
             return null;
@@ -469,11 +625,6 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         private void GenerateExtenCode() 
         {
-
-
-            
-            
-            
             BQLEntityGenerater bqlEntity = new BQLEntityGenerater(this);
             GenerateExtendCode();
             if (_currentDBConfigInfo.Tier == 3)
@@ -493,6 +644,22 @@ namespace Buffalo.DBTools.HelperKernel
         }
 
         /// <summary>
+        /// 获取所有字段
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<string, ClrField> AllField() 
+        {
+            List<ClrField> lstFields = GetAllMember<ClrField>(this._classType, false);
+
+            Dictionary<string, ClrField> dicFields = new Dictionary<string, ClrField>();
+            foreach (ClrField objField in lstFields)
+            {
+                dicFields[objField.Name] = objField;
+            }
+            return dicFields;
+        }
+
+        /// <summary>
         /// 生成代码
         /// </summary>
         public void GenerateCode() 
@@ -504,7 +671,6 @@ namespace Buffalo.DBTools.HelperKernel
             }
             this._currentDBConfigInfo = dbinfo;
 
-            
             List<string> lstSource =CodeFileHelper.ReadFile(FileName);
             List<string> lstTarget = new List<string>(lstSource.Count);
             bool isUsing = true;
@@ -540,6 +706,29 @@ namespace Buffalo.DBTools.HelperKernel
                             relation.AddSource(lstTarget, space);
                         }
                     }
+
+                    if( _dbParams!=null)
+                    {
+                        foreach (EntityParam param in _dbParams)
+                        {
+                            StringBuilder sb = new StringBuilder();
+                            DBEntityInfo.AppendFieldInfo(param, sb);
+                            lstTarget.Add(sb.ToString());
+                            
+                        }
+                    }
+                    if (_dbRelations != null) 
+                    {
+                        foreach (TableRelationAttribute er in _dbRelations)
+                        {
+                            StringBuilder sb = new StringBuilder();
+                            DBEntityInfo.FillRelationsInfo(er, sb);
+                            lstTarget.Add(sb.ToString());
+
+                        }
+                    }
+
+
                     AddContext(lstTarget);
                     lstTarget.Add(str);
                     
@@ -892,6 +1081,10 @@ namespace Buffalo.DBTools.HelperKernel
                 }
                 table.RelationItems.Add(er.GetRelationInfo());
             }
+            if (_dbRelations != null)
+            {
+                table.RelationItems.AddRange(_dbRelations);
+            }
         }
 
         /// <summary>
@@ -908,6 +1101,10 @@ namespace Buffalo.DBTools.HelperKernel
                     continue;
                 }
                 table.Params.Add(field.ToParamInfo());
+            }
+            if (_dbParams != null) 
+            {
+                table.Params.AddRange(_dbParams);
             }
         }
 

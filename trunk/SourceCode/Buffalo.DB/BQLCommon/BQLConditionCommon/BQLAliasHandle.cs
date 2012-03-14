@@ -26,15 +26,13 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 return _aliasName;
             
         }
-
-        public override string PrimaryParam
+        /// <summary>
+        /// Ö÷¼ü
+        /// </summary>
+        public virtual string GetPrimaryParam()
         {
-            get
-            {
-                return _table.PrimaryParam;
-            }
+            return _table.GetPrimaryParam();
         }
-
         public BQLAliasHandle(BQLQuery query, string aliasName)
         {
             this._query = query;
@@ -71,7 +69,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 {
                     info.Condition.PrimaryKey.Append(_table.DisplayValue(info) + ".");
                 }
-                info.Condition.PrimaryKey.Append(info.DBInfo.CurrentDbAdapter.FormatParam(_table.PrimaryParam));
+                info.Condition.PrimaryKey.Append(info.DBInfo.CurrentDbAdapter.FormatParam(_table.GetPrimaryParam()));
             }
 
             string result = null;

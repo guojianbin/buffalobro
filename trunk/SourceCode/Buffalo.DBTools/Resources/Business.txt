@@ -12,13 +12,23 @@ namespace <%=BusinessNamespace%>
     /// <summary>
     ///  <%=Summary%>业务层
     /// </summary>
-    public class <%=BusinessClassName%>: <%=BaseBusinessClass%>
+    public class <%=BusinessClassName%>Base<T>: <%=BaseBusinessClass%><T> where T:<%=ClassName%>,new()
     {
-        public <%=ClassName%>Business()
+        
+    }
+<%#IF TableName%>
+    
+    /// <summary>
+    ///  <%=Summary%>业务层
+    /// </summary>
+    public class <%=BusinessClassName%>: <%=BusinessClassName%>Base<<%=ClassName%>>
+    {
+        public <%=BusinessClassName%>()
         {
             
         }
     }
+<%#ENDIF%>
 }
 
 

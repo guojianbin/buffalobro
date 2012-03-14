@@ -133,6 +133,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="spaces">空格</param>
         public void AddSource(List<string> source, string spaces)
         {
+
             //生成对应属性
             if (!_belongEntity.Properties.ContainsKey(PropertyName))
             {

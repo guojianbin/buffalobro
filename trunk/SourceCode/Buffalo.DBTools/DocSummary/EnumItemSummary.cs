@@ -7,6 +7,8 @@ using Microsoft.VisualStudio.Modeling.Diagrams;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Collections;
 using Buffalo.DBTools.DocSummary.VSConfig;
+using Buffalo.DBTools.HelperKernel;
+using Buffalo.Kernel;
 /** 
 @author 289323612@qq.com
 @version 创建时间：2011-12-1
@@ -21,6 +23,11 @@ namespace Buffalo.DBTools.DocSummary
         private SolidBrush BackBrush = new SolidBrush(Color.White);
         private SolidBrush NameBrush = new SolidBrush(Color.Black);
         private SolidBrush SummaryBrush = new SolidBrush(Color.Green);
+
+        SummaryShowItem _summaryShowInfo = SummaryShowItem.All;
+
+
+
         // Methods
         public override void DoPaint(DiagramPaintEventArgs e, ShapeElement parentShape)
         {
@@ -80,15 +87,32 @@ namespace Buffalo.DBTools.DocSummary
                                     (0f + VSConfigManager.CurConfig.MemberLineHeight * (float)i),
                                     width, VSConfigManager.CurConfig.MemberSummaryHeight);
 
-                                string curStr = menberByName.Name;
-                                float curX = 0f;
-                                e.Graphics.DrawString(curStr, font, this.NameBrush, curX,
-                                    (0f + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
-                                curX += e.Graphics.MeasureString(curStr, font).Width;
-                                curStr = "//" + menberByName.DocSummary;
-                                e.Graphics.DrawString(curStr, font, this.SummaryBrush, curX,
-                                    (0f + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                                DBConfigInfo dbInfo = DBConfigInfo.LoadInfo(_FromAddin.CurrentProject, _FromAddin.SelectDocView);
 
+                                string curStr = null;
+                                float curX = 0f;
+                                if (EnumUnit.ContainerValue((int)_summaryShowInfo, (int)SummaryShowItem.MemberName))
+                                {
+                                    curStr = menberByName.Name;
+                                    
+                                    e.Graphics.DrawString(curStr, font, this.NameBrush, curX,
+                                        (0f + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                                    curX += e.Graphics.MeasureString(curStr, font).Width;
+                                }
+                                if (EnumUnit.ContainerValue((int)_summaryShowInfo, (int)SummaryShowItem.Summary))
+                                {
+                                    if (!string.IsNullOrEmpty(curStr))
+                                    {
+                                        curStr = ":";
+                                    }
+                                    else
+                                    {
+                                        curStr = "";
+                                    }
+                                    curStr += menberByName.DocSummary;
+                                    e.Graphics.DrawString(curStr, font, this.SummaryBrush, curX,
+                                        (0f + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                                }
                             }
                         }
                     }
@@ -131,6 +155,12 @@ namespace Buffalo.DBTools.DocSummary
             {
                 this._FromAddin = value;
             }
+        }
+
+        public SummaryShowItem SummaryShowInfo
+        {
+            get { return _summaryShowInfo; }
+            set { _summaryShowInfo = value; }
         }
     }
 

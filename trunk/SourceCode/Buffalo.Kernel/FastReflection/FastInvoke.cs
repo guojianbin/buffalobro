@@ -6,6 +6,12 @@ using System.Reflection.Emit;
 
 namespace Buffalo.Kernel.FastReflection
 {
+    /** 
+     * @原作者:JeffreyZhao
+     * @创建时间:2009-02-01
+     * @链接:http://www.cnblogs.com/JeffreyZhao/archive/2009/02/01/Fast-Reflection-Library.html
+     * @说明:.NET IL快速反射类
+    */
     public delegate object CreateInstanceHandler();
     public delegate object FastInvokeHandler(object target, object[] paramters);
     public class FastInvoke

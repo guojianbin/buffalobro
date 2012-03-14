@@ -30,15 +30,13 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return _entityInfo; 
         }
 
+
         /// <summary>
         /// Ö÷¼ü
         /// </summary>
-        public override string PrimaryParam
+        public virtual string GetPrimaryParam()
         {
-            get
-            {
-                return _entityInfo.PrimaryProperty.ParamName;
-            }
+            return _entityInfo.PrimaryProperty.ParamName;
         }
 
         /// <summary>
@@ -208,7 +206,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             IDBAdapter idba = info.DBInfo.CurrentDbAdapter;
             if (info.Condition.PrimaryKey.Length <= 0)
             {
-                info.Condition.PrimaryKey.Append(idba.FormatTableName(this._entityInfo.TableName)+"."+idba.FormatParam(PrimaryParam));
+                info.Condition.PrimaryKey.Append(idba.FormatTableName(this._entityInfo.TableName)+"."+idba.FormatParam(GetPrimaryParam()));
             }
 
 

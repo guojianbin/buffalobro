@@ -54,7 +54,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     tinfo.SourceTable = reader["FKTABLE_NAME"] as string;
                     tinfo.SourceName = reader["FKCOLUMN_NAME"] as string;
                     tinfo.TargetTable = reader["PKTABLE_NAME"] as string;
-
+                    tinfo.TargetName = reader["PKCOLUMN_NAME"] as string;
                     tinfo.IsParent = true;
                     lst.Add(tinfo);
                 }

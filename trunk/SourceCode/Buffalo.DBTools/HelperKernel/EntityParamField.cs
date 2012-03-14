@@ -137,14 +137,17 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         /// <param name="source">源码列表</param>
         /// <param name="spaces">空格</param>
+        /// <param name="greanFiled">是否要生成字段</param>
         public void AddSource(List<string> source,string spaces)
         {
             
             //string att = spaces + "[EntityParam(\"" + ParamName + "\",\"" + PropertyName + "\", DbType." + DbType + ", " + EnumUnit.EnumString(_entityPropertyType) + lenStr + ")]";
             //source.Add(att);
-            //string fieldSource = spaces + "protected " + TypeName + " " + FieldName + " = " + GetMemberVariableDefaultValue(TypeName) + ";";
-            //source.Add(fieldSource);
-            
+            //if (greanFiled)
+            //{
+            //    string fieldSource = spaces + "private " + TypeName + " " + FieldName + ";";
+            //    source.Add(fieldSource);
+            //}
             //生成对应属性
             if (!_belongEntity.Properties.ContainsKey(PropertyName))
             {

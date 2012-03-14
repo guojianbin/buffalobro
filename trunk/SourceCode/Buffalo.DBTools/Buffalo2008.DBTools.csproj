@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandBarId.cs" />
+    <Compile Include="CommandItems.cs" />
     <Compile Include="Connect.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -8,6 +8,7 @@ using System.Drawing.Drawing2D;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Collections;
 using System.Windows.Forms;
+using Buffalo.DBTools.HelperKernel;
 
 /** 
 @author 289323612@qq.com
@@ -33,7 +34,17 @@ namespace Buffalo.DBTools.DocSummary
             ClrInterfaceShape shape3 = null;
             AssociationShape shape4 = null;
             bool flag = true;
-           
+
+            DBConfigInfo dbInfo = DBConfigInfo.LoadInfo(conn.CurrentProject, conn.SelectDocView);
+            SummaryShowItem showInfo = SummaryShowItem.All;
+
+            if (dbInfo != null)
+            {
+                showInfo = dbInfo.SummaryShow;
+            }
+
+
+
             foreach (ShapeElement element in (IEnumerable) nestedChildShapes)
             {
                 if (element is ClrClassShape)
@@ -93,7 +104,7 @@ namespace Buffalo.DBTools.DocSummary
                             MemberSummary summary = new MemberSummary();
 
                             summary.FromAddin = conn;
-                            
+                            summary.SummaryShowInfo = showInfo;
                             shapeFields.Add(summary);
                         }
                     }
@@ -162,7 +173,8 @@ namespace Buffalo.DBTools.DocSummary
                         {
                             EnumItemSummary summary3 = new EnumItemSummary();
                             summary3.FromAddin = conn;
-                            
+
+                            summary3.SummaryShowInfo = showInfo;
                             fields2.Add(summary3);
                         }
                     }
@@ -230,9 +242,9 @@ namespace Buffalo.DBTools.DocSummary
                         if (flag)
                         {
                             MemberSummary summary5 = new MemberSummary();
-                            
-                                summary5.FromAddin = conn;
-                            
+
+                            summary5.FromAddin = conn;
+                            summary5.SummaryShowInfo = showInfo;
                             fields3.Add(summary5);
                         }
                     }

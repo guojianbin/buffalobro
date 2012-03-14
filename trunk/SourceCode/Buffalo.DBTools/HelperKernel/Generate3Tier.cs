@@ -54,45 +54,47 @@ namespace Buffalo.DBTools.HelperKernel
             
             string businessClassName=ClassName+"Business";
 
-
-            if (!string.IsNullOrEmpty(Table.TableName))
+            if (EntityConfig.IsSystemTypeName(EntityBaseTypeName))
             {
-                if (EntityConfig.IsSystemTypeName(EntityBaseTypeName))
-                {
-                    baseClass = "BusinessModelBase<" + ClassName + ">";
-                }
-                else
-                {
-                    baseClass = BusinessNamespace + "." + EntityBaseTypeShortName + "Business<" + ClassName + ">";
-                }
+                baseClass = "BusinessModelBase";
             }
-            else 
+            else
             {
-                if (EntityConfig.IsSystemTypeName(EntityBaseTypeName))
-                {
-                    baseClass = "BusinessModelBase<T> where T : " + ClassName + ", new()";
-                }
-                else
-                {
-                    baseClass = BusinessNamespace+"."+EntityBaseTypeShortName + "Business<T> where T : " + ClassName + ", new()";
-                }
-                
-                businessClassName += "<T>";
+                baseClass = BusinessNamespace + "." + EntityBaseTypeShortName + "BusinessBase";
             }
+            
+            
 
             List<string> codes = new List<string>();
+            TagManager tag = new TagManager();
+
             using (StringReader reader = new StringReader(model))
             {
                 string tmp = null;
                 while ((tmp = reader.ReadLine()) != null)
                 {
-                    tmp = tmp.Replace("<%=EntityNamespace%>", EntityNamespace);
-                    tmp = tmp.Replace("<%=Summary%>", Table.Description);
-                    tmp = tmp.Replace("<%=BusinessClassName%>", businessClassName);
-                    tmp = tmp.Replace("<%=ClassName%>",ClassName);
-                    tmp = tmp.Replace("<%=BusinessNamespace%>", BusinessNamespace);
-                    tmp = tmp.Replace("<%=BaseBusinessClass%>", baseClass);
-                    codes.Add(tmp);
+                    if (tmp.StartsWith("<%#IF TableName%>"))
+                    {
+                        tag.AddTag("TableName");
+                    }
+                    else if (tmp.StartsWith("<%#ENDIF%>"))
+                    {
+                        tag.PopTag();
+                    }
+                    else
+                    {
+                        if (tag.CurrentTag == "TableName" && string.IsNullOrEmpty(Table.TableName))
+                        {
+                            continue;
+                        }
+                        tmp = tmp.Replace("<%=EntityNamespace%>", EntityNamespace);
+                        tmp = tmp.Replace("<%=Summary%>", Table.Description);
+                        tmp = tmp.Replace("<%=BusinessClassName%>", businessClassName);
+                        tmp = tmp.Replace("<%=ClassName%>", ClassName);
+                        tmp = tmp.Replace("<%=BusinessNamespace%>", BusinessNamespace);
+                        tmp = tmp.Replace("<%=BaseBusinessClass%>", baseClass);
+                        codes.Add(tmp);
+                    }
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);

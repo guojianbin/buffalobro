@@ -44,12 +44,11 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// <summary>
         /// Ö÷¼ü
         /// </summary>
-        public virtual string PrimaryParam
+        public virtual string GetPrimaryParam()
         {
-            get 
-            {
-                return null;
-            }
+
+            return null;
+
         }
 
         /// <summary>

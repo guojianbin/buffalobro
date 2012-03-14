@@ -7,6 +7,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.Modeling.Diagrams;
 using System.IO;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
+using Buffalo.DBTools.DocSummary;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -85,7 +86,16 @@ namespace Buffalo.DBTools.HelperKernel
             set { _tier = value; }
         }
 
-        
+        private SummaryShowItem _summaryShow;
+
+        /// <summary>
+        /// 显示方式
+        /// </summary>
+        public SummaryShowItem SummaryShow
+        {
+            get { return _summaryShow; }
+            set { _summaryShow = value; }
+        }
 
         /// <summary>
         /// 创建数据库信息
@@ -174,6 +184,10 @@ namespace Buffalo.DBTools.HelperKernel
             att.InnerText = this.Tier.ToString();
             configNode.Attributes.Append(att);
 
+            att = doc.CreateAttribute("summary");
+            att.InnerText = ((int)this.SummaryShow).ToString();
+            configNode.Attributes.Append(att);
+
             EntityMappingConfig.SaveXML(path, doc);
         }
 
@@ -185,6 +199,10 @@ namespace Buffalo.DBTools.HelperKernel
         /// <returns></returns>
         public static DBConfigInfo LoadInfo(Project curProject,ClassDesignerDocView docView) 
         {
+            if (curProject == null || docView == null) 
+            {
+                return null;
+            }
             string xmlFieName = GetFileName(curProject, docView);
             DBConfigInfo ret = null;
             XmlDocument doc = EntityMappingConfig.NewXmlDocument();
@@ -252,6 +270,19 @@ namespace Buffalo.DBTools.HelperKernel
                     else 
                     {
                         info.Tier = 3;
+                    }
+                }
+                att = config.Attributes["summary"];
+                if (att != null)
+                {
+                    int summary = (int)SummaryShowItem.All;
+                    if (int.TryParse(att.InnerText, out summary))
+                    {
+                        info.SummaryShow = (SummaryShowItem)summary;
+                    }
+                    else
+                    {
+                        info.SummaryShow = SummaryShowItem.All;
                     }
                 }
                 return info;

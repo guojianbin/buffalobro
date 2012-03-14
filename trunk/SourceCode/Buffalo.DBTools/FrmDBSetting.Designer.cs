@@ -38,6 +38,8 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.cmbTier = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.clbSummary = new System.Windows.Forms.CheckedListBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -124,12 +126,34 @@
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             // 
+            // clbSummary
+            // 
+            this.clbSummary.ColumnWidth = 50;
+            this.clbSummary.FormattingEnabled = true;
+            FillSummary();
+            this.clbSummary.Location = new System.Drawing.Point(165, 142);
+            this.clbSummary.MultiColumn = true;
+            this.clbSummary.Name = "clbSummary";
+            this.clbSummary.Size = new System.Drawing.Size(206, 20);
+            this.clbSummary.TabIndex = 9;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(106, 145);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "注释显示:";
+            // 
             // FrmDBSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(419, 195);
+            this.ClientSize = new System.Drawing.Size(434, 195);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.clbSummary);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.cmbTier);
             this.Controls.Add(this.btnCancel);
@@ -141,9 +165,9 @@
             this.Controls.Add(this.cmbType);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(435, 233);
+            this.MaximumSize = new System.Drawing.Size(450, 233);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(435, 233);
+            this.MinimumSize = new System.Drawing.Size(450, 233);
             this.Name = "FrmDBSetting";
             this.Text = "Buffalo助手--数据库设置";
             this.Load += new System.EventHandler(this.FrmDBSetting_Load);
@@ -164,5 +188,7 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ComboBox cmbTier;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.CheckedListBox clbSummary;
+        private System.Windows.Forms.Label label3;
     }
 }

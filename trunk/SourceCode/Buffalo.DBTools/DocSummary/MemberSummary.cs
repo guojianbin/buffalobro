@@ -7,6 +7,8 @@ using Microsoft.VisualStudio.Modeling.Diagrams;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Collections;
 using Buffalo.DBTools.DocSummary.VSConfig;
+using Buffalo.DBTools.HelperKernel;
+using Buffalo.Kernel;
 /** 
 @author 289323612@qq.com
 @version 创建时间：2011-12-1
@@ -23,6 +25,7 @@ namespace Buffalo.DBTools.DocSummary
         private SolidBrush NameBrush = new SolidBrush(Color.Black);
         private SolidBrush SummaryBrush = new SolidBrush(Color.Green);
         private SolidBrush ModifierBrush = new SolidBrush(Color.Blue);
+        SummaryShowItem _summaryShowInfo = SummaryShowItem.All;
         // Methods
         public override void DoPaint(DiagramPaintEventArgs e, ShapeElement parentShape)
         {
@@ -114,34 +117,52 @@ namespace Buffalo.DBTools.DocSummary
                             //}
                         }
                         string curStr = null;
-
-                        if (menberByName.IsStatic) 
+                        
+                        if (EnumUnit.ContainerValue((int)_summaryShowInfo, (int)SummaryShowItem.TypeName))
                         {
-                            curStr = "static";
-                            e.Graphics.DrawString(curStr, font, ModifierBrush, curX,
+
+                            if (menberByName.IsStatic)
+                            {
+                                curStr = "static";
+                                e.Graphics.DrawString(curStr, font, ModifierBrush, curX,
+                                    (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                                curX += e.Graphics.MeasureString(curStr, font).Width;
+                            }
+
+
+                            curStr = genericTypeName + " ";
+                            e.Graphics.DrawString(curStr, font, this.VarBrush, curX,
                                 (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
                             curX += e.Graphics.MeasureString(curStr, font).Width;
                         }
-
-
-                        curStr = genericTypeName;
-                        e.Graphics.DrawString(curStr, font, this.VarBrush, curX,
-                            (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
-                        curX += e.Graphics.MeasureString(curStr, font).Width;
-
-                        curStr = " " + menberByName.Name;
-                        if (menberByName is ClrMethod) 
+                        if (EnumUnit.ContainerValue((int)_summaryShowInfo, (int)SummaryShowItem.MemberName))
                         {
-                            curStr += "()";
-                        }
-                        e.Graphics.DrawString(curStr, font, this.NameBrush, curX,
-                            (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
-                        curX += e.Graphics.MeasureString(curStr, font).Width;
+                            curStr = menberByName.Name;
+                            if (menberByName is ClrMethod)
+                            {
+                                curStr += "()";
+                            }
 
-                        curStr = "//" + docSummary;
-                        e.Graphics.DrawString(curStr, font, this.SummaryBrush, curX,
-                            (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
-                       
+
+                            e.Graphics.DrawString(curStr, font, this.NameBrush, curX,
+                                (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                            curX += e.Graphics.MeasureString(curStr, font).Width;
+
+                        }
+                        if (EnumUnit.ContainerValue((int)_summaryShowInfo, (int)SummaryShowItem.Summary))
+                        {
+                            if (!string.IsNullOrEmpty(curStr))
+                            {
+                                curStr = ":";
+                            }
+                            else 
+                            {
+                                curStr = "";
+                            }
+                            curStr += docSummary;
+                            e.Graphics.DrawString(curStr, font, this.SummaryBrush, curX,
+                                (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                        }
                     }
                 }
             }
@@ -179,7 +200,11 @@ namespace Buffalo.DBTools.DocSummary
             }
             return null;
         }
-
+        public SummaryShowItem SummaryShowInfo
+        {
+            get { return _summaryShowInfo; }
+            set { _summaryShowInfo = value; }
+        }
         // Properties
         public Connect FromAddin
         {

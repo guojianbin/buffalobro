@@ -11,6 +11,8 @@ using Buffalo.DB.DbCommon;
 using EnvDTE;
 using Microsoft.VisualStudio.Modeling.Diagrams;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
+using Buffalo.Kernel;
+using Buffalo.DBTools.DocSummary;
 
 namespace Buffalo.DBTools
 {
@@ -45,12 +47,15 @@ namespace Buffalo.DBTools
             return dbinfo;
         }
 
+        
+
         /// <summary>
         ///  ˝æ›ø‚–≈œ¢
         /// </summary>
         public DBConfigInfo Info
         {
             get { return _info; }
+            set { _info = value; }
         }
 
         /// <summary>
@@ -75,6 +80,77 @@ namespace Buffalo.DBTools
         {
             InitTiers();
             InitDBType();
+            FillEdit();
+            
+        }
+
+        private void FillEdit() 
+        {
+            if (_info != null) 
+            {
+                if (!string.IsNullOrEmpty(_info.DbType))
+                {
+                    cmbType.SelectedValue = _info.DbType;
+                }
+                if (_info.Tier == 1 || _info.Tier == 3)
+                {
+                    cmbTier.SelectedValue = _info.Tier;
+                }
+                rtbConnstr.Text = _info.ConnectionString;
+            }
+        }
+        /// <summary>
+        /// ÃÓ≥‰◊¢ Õ…Ë÷√
+        /// </summary>
+        private void FillSummary() 
+        {
+            List<EnumInfo> infos = EnumUnit.GetEnumInfos(typeof(SummaryShowItem));
+            
+            foreach (EnumInfo info in infos) 
+            {
+                if (info.FieldName != "All") 
+                {
+                    ComboBoxItem item = new ComboBoxItem(info.Description, (int)info.Value);
+                    clbSummary.Items.Add(item);
+                }
+                
+            }
+
+        }
+
+        /// <summary>
+        /// œ‘ æ≈‰÷√øÚ
+        /// </summary>
+        /// <param name="curProject"></param>
+        /// <param name="docView"></param>
+        /// <param name="dalNamespace"></param>
+        public static void ShowConfig(Project curProject, ClassDesignerDocView docView, string dalNamespace) 
+        {
+            DBConfigInfo dbinfo = DBConfigInfo.LoadInfo(curProject, docView);
+
+            using (FrmDBSetting frmSetting = new FrmDBSetting())
+            {
+
+                if (dbinfo == null)
+                {
+                    dbinfo = new DBConfigInfo();
+                    dbinfo.DbName = DBConfigInfo.GetDbName(docView);
+                    dbinfo.SummaryShow = SummaryShowItem.All;
+                    dbinfo.FileName = DBConfigInfo.GetFileName(curProject, docView);
+                }
+                frmSetting.Info= dbinfo;
+                frmSetting.SummaryItem = dbinfo.SummaryShow;
+                if (frmSetting.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                if (string.IsNullOrEmpty(dbinfo.AppNamespace)) 
+                {
+                    dbinfo.AppNamespace = dalNamespace + "." + dbinfo.DbType;
+                }
+                dbinfo.SaveConfig(dbinfo.FileName);
+            }
+            
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -89,6 +165,48 @@ namespace Buffalo.DBTools
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+        }
+
+        private SummaryShowItem _summaryItem;
+
+        /// <summary>
+        /// …Ë÷√◊¢ Õ—°÷–◊¥Ã¨
+        /// </summary>
+        private SummaryShowItem SummaryItem 
+        {
+            get 
+            {
+                int val = 0;
+                for (int i = 0; i < clbSummary.Items.Count; i++) 
+                {
+                    ComboBoxItem item = clbSummary.Items[i] as ComboBoxItem;
+                    
+                    if (clbSummary.GetItemChecked(i) && item != null)
+                    {
+                        int curVal = Convert.ToInt32(item.Value);
+                        val = val | curVal;
+                    }
+                }
+                return (SummaryShowItem)val;
+            }
+            set 
+            {
+                _summaryItem = value;
+                if (clbSummary != null)
+                {
+                    int val = (int)_summaryItem;
+                    for (int i = 0; i < clbSummary.Items.Count; i++)
+                    {
+                        ComboBoxItem item = clbSummary.Items[i] as ComboBoxItem;
+                        if (EnumUnit.ContainerValue(val, Convert.ToInt32(item.Value)))
+                        {
+                            clbSummary.SetItemChecked(i, true);
+                        }
+
+                    }
+                }
+                
+            }
         }
 
         /// <summary>
@@ -116,6 +234,7 @@ namespace Buffalo.DBTools
             }
             _info.ConnectionString = rtbConnstr.Text;
             _info.DbType = dbType;
+            _info.SummaryShow = SummaryItem;
             _info.Tier = Convert.ToInt32(tier);
             return true;
         }

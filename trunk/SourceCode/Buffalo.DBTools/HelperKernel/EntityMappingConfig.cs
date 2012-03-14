@@ -109,6 +109,7 @@ namespace Buffalo.DBTools.HelperKernel
                         }
                     }
                 }
+                
             }
         }
         /// <summary>
@@ -166,6 +167,9 @@ namespace Buffalo.DBTools.HelperKernel
                         
                     }
                 }
+
+                
+
             }
         }
 
@@ -275,8 +279,8 @@ namespace Buffalo.DBTools.HelperKernel
             att.InnerText = entity.CurrentDBConfigInfo.DbName;
             classNode.Attributes.Append(att);
 
-            AppendPropertyInfo(entity, classNode);
-            AppendRelationInfo(entity, classNode);
+            AppendPropertyInfo(entity.BelongTable.Params, classNode);
+            AppendRelationInfo(entity.BelongTable.RelationItems, classNode);
             return doc;
         }
 
@@ -285,14 +289,14 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="classNode"></param>
-        private static void AppendRelationInfo(DBEntityInfo entity, XmlNode classNode)
+        private static void AppendRelationInfo(List<TableRelationAttribute> relationItems, XmlNode classNode)
         {
             XmlDocument doc = classNode.OwnerDocument;
-            if (entity.BelongTable.RelationItems == null) 
+            if (relationItems == null) 
             {
                 return;
             }
-            foreach (TableRelationAttribute field in entity.BelongTable.RelationItems)
+            foreach (TableRelationAttribute field in relationItems)
             {
                 
                 //EntityParamField field = kp.Value;
@@ -330,14 +334,14 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="classNode"></param>
-        private static void AppendPropertyInfo(DBEntityInfo entity, XmlNode classNode)
+        private static void AppendPropertyInfo(List<EntityParam> lstParam, XmlNode classNode)
         {
             XmlDocument doc = classNode.OwnerDocument;
-            if (entity.BelongTable.Params == null)
+            if (lstParam == null)
             {
                 return;
             }
-            foreach (EntityParam field in entity.BelongTable.Params)
+            foreach (EntityParam field in lstParam)
             {
                 //EntityParamField field = kp.Value;
                 XmlNode node = doc.CreateElement("property");
@@ -453,6 +457,12 @@ namespace Buffalo.DBTools.HelperKernel
                 att.InnerText = field.IsParent ? "1" : "0";
                 node.Attributes.Append(att);
             }
+
+
+            if (entity.DbRelations != null)
+            {
+                AppendRelationInfo(entity.DbRelations, classNode);
+            }
         }
 
         /// <summary>
@@ -500,6 +510,11 @@ namespace Buffalo.DBTools.HelperKernel
                 att = doc.CreateAttribute("ReadOnly");//×Ö¶ÎÃû
                 att.InnerText = field.ReadOnly ? "1" : "0";
                 node.Attributes.Append(att);
+            }
+
+            if (entity.DbParams != null)
+            {
+                AppendPropertyInfo(entity.DbParams, classNode);
             }
         }
     }
