@@ -5,6 +5,7 @@ using Buffalo.DB.CommBase.DataAccessBases;
 using Buffalo.DB.BQLCommon;
 using Buffalo.DB.QueryConditions;
 using System.Data;
+using Buffalo.DB.EntityInfos;
 
 namespace Buffalo.DB.CommBase.BusinessBases
 {
@@ -12,13 +13,16 @@ namespace Buffalo.DB.CommBase.BusinessBases
     /// 模型层辅助类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ModelContext<T> where T:EntityBase,new()
+    public class ModelContext<T> where T : ThinModelBase, new()
     {
+        T obj = null;
+        protected internal readonly static EntityInfoHandle CurEntityInfo = EntityInfoManager.GetEntityHandle(typeof(T));
         /// <summary>
         /// 模型层辅助类
         /// </summary>
         public ModelContext() 
         {
+            obj = (T)Activator.CreateInstance(typeof(T));
 
         }
         /// <summary>
@@ -58,6 +62,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public DataSet Select(ScopeList lstScope)
         {
+            obj.OnSelect(lstScope);
             return GetBaseContext().Select(lstScope);
         }
 
@@ -69,6 +74,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public long SelectCount(ScopeList scpoeList)
         {
+            obj.OnSelect(scpoeList);
             return GetBaseContext().SelectCount(scpoeList);
         }
 
@@ -80,6 +86,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public List<T> SelectList(ScopeList scpoeList)
         {
+            obj.OnSelect(scpoeList);
             return GetBaseContext().SelectList(scpoeList);
         }
         /// <summary>
@@ -117,6 +124,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public bool ExistsRecord(ScopeList scpoeList)
         {
+            obj.OnSelect(scpoeList);
             return GetBaseContext().ExistsRecord(scpoeList);
         }
 
@@ -137,7 +145,11 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public T GetEntityById(object id)
         {
-            return GetBaseContext().GetObjectById(id);
+            ScopeList lstScope = new ScopeList();
+            lstScope.AddEqual(CurEntityInfo.PrimaryProperty.PropertyName, id);
+            obj.OnSelect(lstScope);
+            return GetBaseContext().GetUnique(lstScope);
+            //return GetBaseContext().GetObjectById(id);
         }
         /// <summary>
         /// 根据条件查找实体
@@ -146,6 +158,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public T GetUnique(ScopeList lstScope)
         {
+            obj.OnSelect(lstScope);
             return GetBaseContext().GetUnique(lstScope);
         }
 

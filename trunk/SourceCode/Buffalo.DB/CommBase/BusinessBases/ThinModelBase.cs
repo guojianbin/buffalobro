@@ -44,8 +44,15 @@ namespace Buffalo.DB.CommBase.BusinessBases
             return Insert(true);
         }
 
-        
-
+        /// <summary>
+        /// 查询时候触发
+        /// </summary>
+        /// <param name="lstScope"></param>
+        /// <returns></returns>
+        public virtual void OnSelect(ScopeList lstScope) 
+        {
+            
+        }
         
         /// <summary>
         /// 保存实体并填充ID
