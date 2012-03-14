@@ -62,92 +62,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         {
             return null;
         }
-        /// <summary>
-        /// 插入数据前的事件
-        /// </summary>
-        /// <param name="entity">要插入的实体</param>
-        /// <param name="oper">数据库连接对象</param>
-        /// <returns>是否继续进行插入事件</returns>
-        protected virtual object OnInserting(T entity) 
-        {
-            return null;
-        }
-        /// <summary>
-        /// 插入数据后的事件
-        /// </summary>
-        /// <param name="oper">数据库连接对象</param>
-        /// <param name="retValue">返回值</param>
-        /// <returns></returns>
-        protected virtual object OnInserted()
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// 更新数据前的事件
-        /// </summary>
-        /// <param name="entity">要更新的对象</param>
-        /// <param name="lstScope">范围更新集合</param>
-        /// <returns></returns>
-        protected virtual object OnUpdateing(T entity, ScopeList lstScope) 
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// 插入数据后的事件
-        /// </summary>
-        /// <param name="oper">数据库连接对象</param>
-        /// <param name="retValue">返回值</param>
-        /// <returns></returns>
-        protected virtual object OnUpdated()
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// 删除数据前的事件
-        /// </summary>
-        /// <param name="entity">要删除的对象</param>
-        /// <param name="lstScope">范围删除集合</param>
-        /// <param name="oper">数据库连接对象</param>
-        /// <returns></returns>
-        protected virtual object OnDeleteing(T entity)
-        {
-            return null;
-        }
-        /// <summary>
-        /// 删除数据前的事件
-        /// </summary>
-        /// <param name="entity">要删除的对象</param>
-        /// <param name="lstScope">范围删除集合</param>
-        /// <param name="oper">数据库连接对象</param>
-        /// <returns></returns>
-        protected virtual object OnDeleteing(ScopeList lstScope)
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// 删除数据前的事件
-        /// </summary>
-        /// <param name="id">要删除的记录ID</param>
-        /// <param name="oper">数据库连接对象</param>
-        /// <returns></returns>
-        protected virtual object OnDeleteing(object id)
-        {
-            return null;
-        }
-        /// <summary>
-        /// 删除数据后的事件
-        /// </summary>
-        /// <param name="oper">数据库连接对象</param>
-        /// <param name="retValue">数据库连接对象</param>
-        /// <returns></returns>
-        protected virtual object OnDeleted()
-        {
-            return null;
-        }
+        
 
         protected int _affectedRows=-1;
 
@@ -249,13 +164,11 @@ namespace Buffalo.DB.CommBase.BusinessBases
             {
                 return ret;
             }
-            ret = OnUpdateing(entity, null);
             if (ret != null)
             {
                 return ret;
             }
             _affectedRows = entityDao.Update(entity);
-            ret = OnUpdated();
 
 
             return ret;
@@ -277,14 +190,12 @@ namespace Buffalo.DB.CommBase.BusinessBases
             {
                 return ret;
             }
-            ret = OnUpdateing(entity, scorpList);
             if (ret != null)
             {
                 return ret;
             }
 
             _affectedRows = entityDao.Update(entity, scorpList);
-            ret = OnUpdated();
 
 
             return ret;
@@ -312,14 +223,12 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 {
                     continue;
                 }
-                ret = OnUpdateing(entity, null);
                 if (ret != null)
                 {
                     continue;
                 }
 
                 _affectedRows += entityDao.Update(entity);
-                ret = OnUpdated();
 
             }
 
@@ -348,14 +257,11 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 {
                     continue;
                 }
-                ret = OnUpdateing(entity, scorpList);
                 if (ret != null)
                 {
                     continue;
                 }
                 _affectedRows += entityDao.Update(entity, scorpList);
-
-                ret=OnUpdated();
             }
 
             return ret;
@@ -393,7 +299,16 @@ namespace Buffalo.DB.CommBase.BusinessBases
             return ret;
         }
 
+        /// <summary>
+        /// 插入一条数据
+        /// </summary>
+        /// <param name="entity">对象</param>
+        /// <returns>大于0:插入完毕,小于0:插入失败</returns>
+        public virtual object Insert(T entity)
+        {
 
+            return Insert(entity,false);
+        }
 
         /// <summary>
         /// 插入一条数据
@@ -411,14 +326,12 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 return ret;
             }
 
-            ret = OnInserting(entity);
             if (ret != null)
             {
                 return ret;
             }
 
             _affectedRows = entityDao.Insert(entity, fillIdentity);
-            ret = OnInserted();
 
             return ret;
         }
@@ -444,14 +357,11 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 {
                     continue;
                 }
-                ret = OnInserting(entity);
                 if (ret != null)
                 {
                     continue;
                 }
                 _affectedRows += entityDao.Insert(entity,false);
-
-                ret = OnInserted();
 
             }
             return ret;
@@ -474,14 +384,12 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 return ret;
             }
 
-            ret = OnDeleteing(entity);
             if (ret != null)
             {
                 return ret;
             }
 
             _affectedRows = entityDao.Delete(entity);
-            ret = OnDeleted();
             return ret;
         }
 
@@ -501,13 +409,11 @@ namespace Buffalo.DB.CommBase.BusinessBases
             {
                 return ret;
             }
-            ret = OnDeleteing(id);
             if (ret != null)
             {
                 return ret;
             }
             _affectedRows = entityDao.DeleteById(id);
-            ret = OnDeleted();
 
             return ret;
         }
@@ -528,7 +434,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 return ret;
             }
 
-            ret = OnDeleteing(lstScope);
             if (ret != null)
             {
                 return ret;
@@ -536,7 +441,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
 
             
             _affectedRows = entityDao.Delete(lstScope);
-            ret = OnDeleted();
             return ret;
         }
 
@@ -558,14 +462,12 @@ namespace Buffalo.DB.CommBase.BusinessBases
                     continue;
                 }
 
-                res = OnDeleteing(entity);
                 if (res != null)
                 {
                     continue;
                 }
                 _affectedRows += entityDao.Delete(entity);
 
-                res = OnDeleted();
 
             }
 
