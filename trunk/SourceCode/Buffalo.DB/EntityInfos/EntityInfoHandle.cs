@@ -19,7 +19,7 @@ namespace Buffalo.DB.EntityInfos
         private CreateInstanceHandler createInstanceHandler;
         private PropertyInfoCollection _propertyInfoHandles;
         private MappingInfoCollection _mappingInfoHandles;
-        private EntityPropertyInfo _primaryProperty;//主属性
+        private List<EntityPropertyInfo> _primaryProperty;//主属性
         private DBInfo _dbInfo;
         /// <summary>
         /// 类的信息
@@ -138,26 +138,23 @@ namespace Buffalo.DB.EntityInfos
         /// <summary>
         /// 主属性
         /// </summary>
-        public EntityPropertyInfo PrimaryProperty
+        public List<EntityPropertyInfo> PrimaryProperty
         {
             get
             {
                 if (_primaryProperty == null) //找出主属性
                 {
-                    //Dictionary<string, EntityPropertyInfo>.Enumerator enums = propertyInfoHandles.GetPropertyEnumerator();
+
+                    _primaryProperty = new List<EntityPropertyInfo>();
                     foreach (EntityPropertyInfo info in _propertyInfoHandles)
                     {
-                        //EntityPropertyInfo info = enums.Current.Value;
+                        
                         if (info.IsPrimaryKey) 
                         {
-                            _primaryProperty = info;
-                            break;
+                            _primaryProperty.Add(info);
                         }
                     }
-                    if (_primaryProperty == null) 
-                    {
-                        throw new Exception("此表没有主键");
-                    }
+                    
                 }
                 return _primaryProperty;
             }

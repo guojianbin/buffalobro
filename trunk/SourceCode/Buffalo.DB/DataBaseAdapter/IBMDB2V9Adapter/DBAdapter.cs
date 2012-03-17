@@ -303,7 +303,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// 获取自动增长的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetIdentitySQL(EntityInfoHandle info) 
+        public string GetIdentitySQL(EntityPropertyInfo info) 
         {
             return "VALUES IDENTITY_VAL_LOCAL()";
         }
@@ -312,7 +312,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// 获取自动增长值的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetIdentityValueSQL(EntityInfoHandle info)
+        public string GetIdentityValueSQL(EntityPropertyInfo info)
         {
             return null;
         }
@@ -386,12 +386,91 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
 
         public string DBTypeToSQL(DbType dbType, int length)
         {
-            throw new Exception("The method or operation is not implemented.");
+            switch (dbType)
+            {
+
+                case DbType.AnsiString:
+                    if (length < 8000)
+                    {
+                        return "VARCHAR(" + length + ")";
+                    }
+                    else
+                    {
+                        return "CLOB";
+                    }
+                case DbType.AnsiStringFixedLength:
+                    if (length < 8000)
+                    {
+                        return "Char(" + length + ")";
+                    }
+                    else
+                    {
+                        return "CLOB";
+                    }
+                case DbType.Binary:
+                        return "BLOB";
+                case DbType.Boolean:
+                case DbType.Byte:
+                    return "SMALLINT";
+                case DbType.Date:
+                    return "DATE";
+                case DbType.DateTimeOffset:
+                case DbType.DateTime:
+                case DbType.DateTime2:
+                case DbType.Time:
+                    return "TIMESTAMP";
+                case DbType.Decimal:
+                case DbType.Currency:
+                    return "DOUBLE";
+                case DbType.Double:
+                case DbType.VarNumeric:
+                    return "FLOAT";
+                case DbType.Single:
+                    return "REAL";
+                case DbType.Int64:
+                case DbType.UInt64:
+                    return "BIGINT";
+
+                case DbType.Int16:
+                case DbType.UInt16:
+                    return "SMALLINT";
+                case DbType.Int32:
+                case DbType.UInt32:
+                    return "INTEGER";
+                case DbType.SByte:
+                    return "SMALLINT";
+                case DbType.Guid:
+                    return "VARCHAR(64)";
+                case DbType.String:
+                    if (length < 8000)
+                    {
+                        return "NVARCHAR2(" + length + ")";
+                    }
+                    else
+                    {
+                        return "DBCLOB";
+                    }
+                case DbType.StringFixedLength:
+                    if (length < 8000)
+                    {
+                        return "NChar("+length+")";
+                    }
+                    else
+                    {
+                        return "DBCLOB";
+                    }
+                default:
+                    return "BLOB";
+            
+            }
         }
 
         public int ToRealDbType(DbType dbType, int length)
         {
-            throw new Exception("The method or operation is not implemented.");
+            DB2Parameter prm = new DB2Parameter();
+            prm.DbType = dbType;
+            prm.ParameterName = "name";
+            return (int)prm.DB2Type;
         }
     }
 }

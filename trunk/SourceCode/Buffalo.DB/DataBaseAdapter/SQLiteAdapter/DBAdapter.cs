@@ -81,7 +81,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         {
             StringBuilder sbSql = new StringBuilder(sql.GetSelect());
             //sbSql.Append(sql);
-            sbSql.Append("LIMIT 0, " + top);
+            sbSql.Append(" LIMIT 0, " + top);
             return sbSql.ToString();
         }
 
@@ -290,7 +290,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// 获取自动增长的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetIdentitySQL(EntityInfoHandle info)
+        public string GetIdentitySQL(EntityPropertyInfo info)
         {
             return "select LAST_INSERT_ROWID()";
         }
@@ -298,7 +298,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// 获取自动增长值的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetIdentityValueSQL(EntityInfoHandle info)
+        public string GetIdentityValueSQL(EntityPropertyInfo info)
         {
             return null;
         }

@@ -18,30 +18,31 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
     /// </summary>
     public class KeyWordTableParamItem : BQLQuery
     {
-        private EntityParam _primaryParam;
+        private List<EntityParam> _primaryParam;
 
         /// <summary>
         /// Ö÷¼ü
         /// </summary>
-        public EntityParam PrimaryParam
+        public List<EntityParam> PrimaryParam
         {
-            get 
+            get
             {
-                if (_primaryParam == null) 
+                if (_primaryParam == null)
                 {
-                    int pkValue=(int)EntityPropertyType.PrimaryKey;
-                    foreach (EntityParam prm in _tparams) 
+                    _primaryParam = new List<EntityParam>();
+                    int pkValue = (int)EntityPropertyType.PrimaryKey;
+                    foreach (EntityParam prm in _tparams)
                     {
-                        if (EnumUnit.ContainerValue((int)prm.PropertyType, pkValue)) 
+                        if (EnumUnit.ContainerValue((int)prm.PropertyType, pkValue))
                         {
-                            _primaryParam = prm;
-                            break;
+                            _primaryParam.Add(prm);
+
                         }
                     }
                 }
                 return _primaryParam;
             }
-            
+
         }
 
 
@@ -159,17 +160,30 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         internal override void Tran(KeyWordInfomation info)
         {
             StringBuilder sb = new StringBuilder();
-            
-            for (int i = 0; i < _tparams.Count; i++)
+            StringBuilder sbPkstr = new StringBuilder();
+
+
+            foreach (EntityParam item in _tparams)
             {
-                EntityParam item = _tparams[i];
-                sb.Append(item.DisplayInfo(info,TableName));
+                sb.Append(item.DisplayInfo(info, TableName) + ",");
 
-
-                if (i < _tparams.Count - 1)
+                if (item.IsPrimaryKey)
                 {
-                    sb.Append(",");
+                    sbPkstr.Append(info.DBInfo.CurrentDbAdapter.FormatParam(item.ParamName) + ",");
                 }
+            }
+
+            
+            if (sbPkstr.Length > 0)
+            {
+                sb.Append("PRIMARY KEY");
+                sbPkstr.Remove(sbPkstr.Length - 1, 1);
+                sb.Append("(" + sbPkstr.ToString() + "),");
+            }
+
+            if (sb.Length > 0)
+            {
+                sb.Remove(sb.Length - 1, 1);
             }
             info.Condition.SqlParams.Append(sb.ToString());
         }

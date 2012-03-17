@@ -29,7 +29,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// <summary>
         /// Ö÷¼ü
         /// </summary>
-        public virtual string GetPrimaryParam()
+        public override List<string> GetPrimaryParam()
         {
             return _table.GetPrimaryParam();
         }
@@ -59,17 +59,22 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         }
         internal override string DisplayValue(KeyWordInfomation info)
         {
-            if (info.Condition.PrimaryKey.Length <= 0 && !CommonMethods.IsNull(_table))
+            if (info.Condition.PrimaryKey.Count <= 0 && !CommonMethods.IsNull(_table))
             {
-                if (!string.IsNullOrEmpty(_aliasName))
+                foreach (string pks in _table.GetPrimaryParam())
                 {
-                    info.Condition.PrimaryKey.Append(info.DBInfo.CurrentDbAdapter.FormatTableName(_aliasName) + ".");
+                    StringBuilder pkStr = new StringBuilder();
+                    if (!string.IsNullOrEmpty(_aliasName))
+                    {
+                        pkStr.Append(info.DBInfo.CurrentDbAdapter.FormatTableName(_aliasName) + ".");
+                    }
+                    else
+                    {
+                        pkStr.Append(_table.DisplayValue(info) + ".");
+                    }
+                    pkStr.Append(pks);
+                    info.Condition.PrimaryKey.Add(pkStr.ToString());
                 }
-                else
-                {
-                    info.Condition.PrimaryKey.Append(_table.DisplayValue(info) + ".");
-                }
-                info.Condition.PrimaryKey.Append(info.DBInfo.CurrentDbAdapter.FormatParam(_table.GetPrimaryParam()));
             }
 
             string result = null;
@@ -86,10 +91,6 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 qinfo.ParamList = info.ParamList;
                 KeyWordConver objCover = new KeyWordConver();
                 string sql = objCover.ToConver(_query, qinfo).GetSql();
-                //if (info.Condition.PrimaryKey.Length <= 0 && qinfo.Condition.PrimaryKey.Length > 0)
-                //{
-                //    info.Condition.PrimaryKey.Append(qinfo.Condition.PrimaryKey.ToString());
-                //}
                 
                  result = "(" + sql + ")";
                 

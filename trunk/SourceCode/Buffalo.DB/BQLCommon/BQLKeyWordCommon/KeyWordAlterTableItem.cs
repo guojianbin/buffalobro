@@ -69,10 +69,20 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public KeyWordAddForeignkeyItem AddConstraint(TableRelationAttribute info) 
+        public KeyWordAddForeignkeyItem AddForeignkey(TableRelationAttribute info) 
         {
             return new KeyWordAddForeignkeyItem(info, this);
         }
+        /// <summary>
+        /// 添加约束
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public KeyWordAddPrimarykeyItem AddPrimaryKey(IEnumerable<string> pkParams,string name) 
+        {
+            return new KeyWordAddPrimarykeyItem(pkParams, name, this);
+        }
+        
         /// <summary>
         /// 添加约束
         /// </summary>

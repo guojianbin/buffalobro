@@ -266,27 +266,27 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// 获取自动增长的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetIdentitySQL(EntityInfoHandle info)
+        public string GetIdentitySQL(EntityPropertyInfo pkInfo)
         {
-            EntityPropertyInfo pkInfo = info.PrimaryProperty;//获取主键属性
+            
             if (pkInfo == null)
             {
                 throw new Exception("找不到主键属性");
             }
-            return "select \"" + GetSequenceName(info.TableName, pkInfo.ParamName) + "\".currval as curVal from dual";
+            return "select \"" + GetSequenceName(pkInfo.BelongInfo.TableName, pkInfo.ParamName) + "\".currval as curVal from dual";
         }
         /// <summary>
         /// 获取自动增长值的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetIdentityValueSQL(EntityInfoHandle info)
+        public string GetIdentityValueSQL(EntityPropertyInfo pkInfo)
         {
-            EntityPropertyInfo pkInfo = info.PrimaryProperty;//获取主键属性
+            
             if (pkInfo == null)
             {
                 throw new Exception("找不到主键属性");
             }
-            return "select \"" + GetSequenceName(info.TableName, pkInfo.ParamName) + "\".nextval as curVal from dual";
+            return "select \"" + GetSequenceName(pkInfo.BelongInfo.TableName, pkInfo.ParamName) + "\".nextval as curVal from dual";
         }
         /// <summary>
         /// 获取序列名
@@ -383,7 +383,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     }
                     else
                     {
-                        return "LONG";
+                        return "CLOB";
                     }
                 case DbType.AnsiStringFixedLength:
                     if (length < 8000)
@@ -392,7 +392,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     }
                     else
                     {
-                        return "LONG";
+                        return "CLOB";
                     }
                 case DbType.Binary:
                     if (length < 2000)
@@ -445,7 +445,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     }
                     else
                     {
-                        return "LONG";
+                        return "NCLOB";
                     }
                 case DbType.StringFixedLength:
                     if (length < 8000)
@@ -454,7 +454,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     }
                     else
                     {
-                        return "LONG";
+                        return "NCLOB";
                     }
                 default:
                     return "BLOB";

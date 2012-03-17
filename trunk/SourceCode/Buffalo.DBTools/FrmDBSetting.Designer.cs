@@ -130,7 +130,7 @@
             // 
             this.clbSummary.ColumnWidth = 50;
             this.clbSummary.FormattingEnabled = true;
-            FillSummary();
+            
             this.clbSummary.Location = new System.Drawing.Point(165, 142);
             this.clbSummary.MultiColumn = true;
             this.clbSummary.Name = "clbSummary";

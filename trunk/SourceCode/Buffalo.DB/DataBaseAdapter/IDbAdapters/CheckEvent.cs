@@ -37,5 +37,10 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// 关系检查后
         /// </summary>
         RelationChecked,
+
+        /// <summary>
+        /// 主键检查
+        /// </summary>
+        PrimaryChecke,
     }
 }

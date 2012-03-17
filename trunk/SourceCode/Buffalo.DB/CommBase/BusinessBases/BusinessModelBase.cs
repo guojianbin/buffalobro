@@ -270,34 +270,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
 
         #region Insert
 
-        /// <summary>
-        /// 保存或更新操作
-        /// </summary>
-        /// <param name="entity">实体对象</param>
-        /// <returns></returns>
-        public virtual object SaveOrUpdate(T entity)
-        {
-            object ret = null;
-            Type type=typeof(T);
-            EntityInfoHandle CurEntityInfo = EntityInfoManager.GetEntityHandle(type);//当前类型的信息
-            EntityPropertyInfo pkInfo=CurEntityInfo.PrimaryProperty;
-            DataAccessModel<T> entityDao = new DataAccessModel<T>();
-            object pkValue = pkInfo.GetValue(entity);
-            if (!DefaultType.IsDefaultValue(pkValue))
-            {
-                ScopeList lstScope = new ScopeList();
-                lstScope.AddEqual(pkInfo.PropertyName, pkValue);
-                bool exists = entityDao.ExistsRecord(lstScope);
-                if (exists) 
-                {
-                    ret = Update(entity);
-                    return ret;
-                }
-            }
-            
-            ret = Insert(entity,false);
-            return ret;
-        }
+        
 
         /// <summary>
         /// 插入一条数据

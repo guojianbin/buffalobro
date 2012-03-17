@@ -468,7 +468,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// 获取自动增长的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetIdentitySQL(EntityInfoHandle info) 
+        public string GetIdentitySQL(EntityPropertyInfo info) 
         {
             return "SELECT @@IDENTITY";
         }
@@ -476,7 +476,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// 获取自动增长值的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetIdentityValueSQL(EntityInfoHandle info)
+        public string GetIdentityValueSQL(EntityPropertyInfo info)
         {
             return null;
         }

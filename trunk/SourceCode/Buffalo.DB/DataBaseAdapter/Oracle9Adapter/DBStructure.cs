@@ -270,19 +270,20 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             {
                 nativeType = nativeType.Substring(0, index);
             }
+            
             switch (nativeType.Trim().ToUpper())
             {
                 case "BFILE":
-                    return DbType.Object;
+                    return DbType.Binary;
 
                 case "BLOB":
-                    return DbType.Object;
+                    return DbType.Binary;
 
                 case "CHAR":
                     return DbType.AnsiStringFixedLength;
 
                 case "CLOB":
-                    return DbType.Object;
+                    return DbType.AnsiString;
 
                 case "DATE":
                     return DbType.DateTime;
@@ -312,7 +313,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     return DbType.StringFixedLength;
 
                 case "NCLOB":
-                    return DbType.Object;
+                    return DbType.String;
 
                 case "NUMBER":
                     return DbType.VarNumeric;
@@ -360,7 +361,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     return DbType.String;
 
                 case "XMLType":
-                    return DbType.String;
+                    return DbType.Xml;
             }
             return DbType.Object;
         }

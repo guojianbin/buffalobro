@@ -56,6 +56,23 @@ namespace Buffalo.DB.CommBase
         }
 
         /// <summary>
+        /// 清空连接缓存
+        /// </summary>
+        /// <param name="DbName"></param>
+        public static void ClearCacheOperate(string dbName) 
+        {
+            string key = SessionName + dbName;
+            SetOperate(null, key);
+        }
+        /// <summary>
+        /// 清空连接缓存
+        /// </summary>
+        /// <param name="DbName"></param>
+        public static void ClearCacheOperate(DBInfo db)
+        {
+            ClearCacheOperate(db.Name);
+        }
+        /// <summary>
         /// 获取数据库的静态连接
         /// </summary>
         /// <param name="db">数据库信息</param>

@@ -56,6 +56,7 @@
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAlterTableItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddParamItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddForeignkeyItem.cs" />
+    <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddPrimarykeyItem.cs" />
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
     <Compile Include="CommBase\BusinessBases\BatchAction.cs" />
@@ -231,6 +232,7 @@
     <Compile Include="EntityInfos\EntityPropertyInfo.cs" />
     <Compile Include="EntityInfos\MappingInfoCollection.cs" />
     <Compile Include="EntityInfos\MappingInfoEnumerator.cs" />
+    <Compile Include="EntityInfos\PrimaryKeyInfo.cs" />
     <Compile Include="EntityInfos\PropertyEnumerator.cs" />
     <Compile Include="EntityInfos\PropertyInfoCollection.cs" />
     <Compile Include="FaintnessSearchConditions\FullTextConfigManager.cs" />

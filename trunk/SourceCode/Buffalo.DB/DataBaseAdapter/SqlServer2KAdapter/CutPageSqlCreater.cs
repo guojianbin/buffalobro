@@ -165,6 +165,25 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                 return GetFristPageSql(objCondition, objPage);
             }
 
+            string pkKey = null;
+            if (objCondition.PrimaryKey.Count> 1)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (string pk in objCondition.PrimaryKey) 
+                {
+                    sb.Append("convert(varchar," + pk + ",21)+'|'+");
+                }
+                if (sb.Length > 0) 
+                {
+                    sb.Remove(sb.Length - 5, 5);
+                }
+                pkKey = sb.ToString();
+            }
+            else if (objCondition.PrimaryKey.Count == 1)
+            {
+                pkKey = objCondition.PrimaryKey[0];
+            }
+
             StringBuilder sql = new StringBuilder(5000);
             //sql.Append("select top " + totleLine + " " + objCondition.SqlParams.ToString() + " from [" + objCondition.Tables.ToString() + "] where(not exists (select * from (select top " + starIndex.ToString() + " " + objCondition.SqlParams + " from [" + objCondition.Tables + "] where " + objCondition.Condition);
             sql.Append("select top ");
@@ -173,10 +192,10 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             sql.Append(objCondition.SqlParams.ToString());
             sql.Append(" from ");
             sql.Append(objCondition.Tables.ToString());
-            sql.Append(" where(" + objCondition.PrimaryKey.ToString() + " not in (select top ");
+            sql.Append(" where(" + pkKey + " not in (select top ");
             sql.Append(starIndex.ToString());
             sql.Append(" ");
-            sql.Append(objCondition.PrimaryKey.ToString());
+            sql.Append(pkKey);
             sql.Append(" from ");
             sql.Append(objCondition.Tables.ToString());
             if (objCondition.Condition.Length > 0)

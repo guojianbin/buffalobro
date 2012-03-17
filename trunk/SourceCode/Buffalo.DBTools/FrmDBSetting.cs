@@ -13,6 +13,7 @@ using Microsoft.VisualStudio.Modeling.Diagrams;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 using Buffalo.Kernel;
 using Buffalo.DBTools.DocSummary;
+using Buffalo.DB.CommBase;
 
 namespace Buffalo.DBTools
 {
@@ -21,6 +22,7 @@ namespace Buffalo.DBTools
         public FrmDBSetting()
         {
             InitializeComponent();
+            FillSummary();
         }
 
         private DBConfigInfo _info=new DBConfigInfo();
@@ -42,6 +44,7 @@ namespace Buffalo.DBTools
                     dbinfo.AppNamespace = dalNamespace+"."+dbinfo.DbType;
                     dbinfo.FileName = DBConfigInfo.GetFileName(curProject, docView);
                     dbinfo.SaveConfig(dbinfo.FileName);
+                    StaticConnection.ClearCacheOperate(dbinfo.DbName);
                 }
             }
             return dbinfo;
@@ -148,7 +151,9 @@ namespace Buffalo.DBTools
                 {
                     dbinfo.AppNamespace = dalNamespace + "." + dbinfo.DbType;
                 }
+
                 dbinfo.SaveConfig(dbinfo.FileName);
+                StaticConnection.ClearCacheOperate(dbinfo.DbName);
             }
             
         }

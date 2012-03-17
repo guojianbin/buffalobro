@@ -71,19 +71,23 @@ namespace Buffalo.DB.DBCheckers
             
             foreach (KeyWordTableParamItem table in tableInfos)
             {
-                //创建逐渐序列(暂时只有Oracle)
-                if (table.PrimaryParam != null && table.PrimaryParam.Identity && IsIdentityType(table.PrimaryParam.SqlType)) 
+                foreach (EntityParam prm in table.PrimaryParam)
                 {
-                    string seqName = idb.GetSequenceName(table.TableName, table.PrimaryParam.ParamName);
-                    if (!string.IsNullOrEmpty(seqName))//需要创建序列
+                    //创建逐渐序列(暂时只有Oracle)
+                    if (prm.Identity && IsIdentityType(prm.SqlType))
                     {
-                        string seqSql = idb.GetSequenceInit(seqName, info.DefaultOperate);
-                        if (!string.IsNullOrEmpty(seqSql))
+                        string seqName = idb.GetSequenceName(table.TableName, prm.ParamName);
+                        if (!string.IsNullOrEmpty(seqName))//需要创建序列
                         {
-                            lstRet.Add(seqSql);
+                            string seqSql = idb.GetSequenceInit(seqName, info.DefaultOperate);
+                            if (!string.IsNullOrEmpty(seqSql))
+                            {
+                                lstRet.Add(seqSql);
+                            }
                         }
                     }
                 }
+
             }
             return lstRet;
         }
@@ -133,6 +137,8 @@ namespace Buffalo.DB.DBCheckers
                 dbInfo.DBStructure.OnCheckEvent(table, dbInfo, CheckEvent.TableCreated, sql);
             }
         }
+
+       
 
         /// <summary>
         /// 找出不存在的表
@@ -230,7 +236,7 @@ namespace Buffalo.DB.DBCheckers
                 {
                     dbInfo.DBStructure.OnCheckEvent(table, dbInfo, CheckEvent.RelationBeginCheck, lstSql);
                     item.CreateName();
-                    BQLQuery bql = BQL.AlterTable(table.TableName).AddConstraint(item);
+                    BQLQuery bql = BQL.AlterTable(table.TableName).AddForeignkey(item);
                     AbsCondition con = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
                     lstSql.Add(con.GetSql());
                     dbInfo.DBStructure.OnCheckEvent(table, dbInfo, CheckEvent.RelationChecked, lstSql);

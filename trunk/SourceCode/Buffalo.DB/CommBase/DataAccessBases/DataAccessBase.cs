@@ -278,7 +278,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             condition.Tables.Append(CurEntityInfo.DBInfo.CurrentDbAdapter.FormatTableName(CurEntityInfo.TableName));
             condition.SqlParams.Append(GetSelectParams(scopeList)) ;
             condition.Condition.Append("1=1");
-            condition.PrimaryKey.Append(CurEntityInfo.DBInfo.CurrentDbAdapter.FormatParam(CurEntityInfo.PrimaryProperty.ParamName));
+            foreach (EntityPropertyInfo ep in CurEntityInfo.PrimaryProperty)
+            {
+                condition.PrimaryKey.Add(CurEntityInfo.DBInfo.CurrentDbAdapter.FormatParam(ep.ParamName));
+            }
             string conditionWhere = "";
 
             SortList sortList = scopeList.OrderBy;
@@ -418,7 +421,15 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             sql.Append(tabName);
             sql.Append(" WHERE 1=1");
             ScopeList lstScope = new ScopeList();
-            lstScope.AddEqual(CurEntityInfo.PrimaryProperty.PropertyName, id);
+            PrimaryKeyInfo pkInfo = id as PrimaryKeyInfo;
+            if (pkInfo == null)
+            {
+                lstScope.AddEqual(CurEntityInfo.PrimaryProperty[0].PropertyName, id);
+            }
+            else 
+            {
+                pkInfo.FillScope(CurEntityInfo.PrimaryProperty, lstScope, true);
+            }
             sql.Append( DataAccessCommon.FillCondition(CurEntityInfo,list, lstScope));
             
             
@@ -505,7 +516,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 if (scopeList.OrderBy.Count <= 0)
                 {
-                    scopeList.OrderBy.Add(CurEntityInfo.PrimaryProperty.PropertyName, SortType.ASC);
+                    foreach (EntityPropertyInfo pInfo in CurEntityInfo.PrimaryProperty)
+                    {
+                        scopeList.OrderBy.Add(pInfo.PropertyName, SortType.ASC);
+                    }
                 }
                 return _cdal.SelectDataSet<T>(scopeList);
             }
@@ -549,7 +563,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 if (!scopeList.HasSort) 
                 {
-                    scopeList.OrderBy.Add(CurEntityInfo.PrimaryProperty.PropertyName, SortType.ASC);
+                    foreach (EntityPropertyInfo pInfo in CurEntityInfo.PrimaryProperty)
+                    {
+                        scopeList.OrderBy.Add(pInfo.PropertyName, SortType.ASC);
+                    }
                 }
             }
 
@@ -630,7 +647,8 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                 return _cdal.ExistsRecord<T>(scopeList);
             }
             ParamList list = null;
-            SelectCondition sc = GetSelectContant(list, scopeList, CurEntityInfo.DBInfo.CurrentDbAdapter.FormatParam(CurEntityInfo.PrimaryProperty.ParamName));
+
+            SelectCondition sc = GetSelectContant(list, scopeList, CurEntityInfo.DBInfo.CurrentDbAdapter.FormatParam(CurEntityInfo.PrimaryProperty[0].ParamName));
             string sql = CurEntityInfo.DBInfo.CurrentDbAdapter.GetTopSelectSql(sc, 1);
             bool exists = false;
             using (IDataReader reader = _oper.Query(sql, list))

@@ -74,10 +74,13 @@ namespace Buffalo.DB.CommBase.BusinessBases
         public virtual int Update(bool optimisticConcurrency) 
         {
             DataAccessSetBase dal = GetBaseDataAccess();
-            object id = dal.EntityInfo.PrimaryProperty.GetValue(this);
-            if (DefaultType.IsDefaultValue(id)) 
+            foreach (EntityPropertyInfo epPk in dal.EntityInfo.PrimaryProperty)
             {
-                throw new Exception("更新必须要有主键");
+                object id = epPk.GetValue(this);
+                if (DefaultType.IsDefaultValue(id))
+                {
+                    throw new Exception("主键:"+epPk.PropertyName+"的值不能为空");
+                }
             }
             return dal.Update(this, null, optimisticConcurrency);
         }
@@ -98,14 +101,18 @@ namespace Buffalo.DB.CommBase.BusinessBases
         public virtual int Delete(bool optimisticConcurrency) 
         {
             DataAccessSetBase dal = GetBaseDataAccess();
-            EntityPropertyInfo pInfo=dal.EntityInfo.PrimaryProperty;
-            object id = pInfo.GetValue(this);
-            if (DefaultType.IsDefaultValue(id))
-            {
-                throw new Exception("删除必须要有主键");
-            }
             ScopeList lstScope = new ScopeList();
-            lstScope.AddEqual(pInfo.PropertyName, id);
+            foreach (EntityPropertyInfo pInfo in dal.EntityInfo.PrimaryProperty)
+            {
+                object id = pInfo.GetValue(this);
+                if (DefaultType.IsDefaultValue(id))
+                {
+                    throw new Exception("主键:" + pInfo.PropertyName + "的值不能为空");
+                }
+                lstScope.AddEqual(pInfo.PropertyName, id);
+            }
+            
+            
             return dal.Delete(null, lstScope, optimisticConcurrency);
         }
 

@@ -68,14 +68,15 @@ namespace Buffalo.DB.PropertyAttributes
             get { return _fieldName; }
             set { _fieldName = value; }
         }
-
+        static int nameIndex=0;
         /// <summary>
         /// 创建外键名称
         /// </summary>
         public void CreateName()
         {
-            
-            Name = "FK" + DateTime.Now.ToString("yyyyMMddHHmmssms");
+
+            Name = "FK" + DateTime.Now.ToString("yyyyMMddHHmmss" + nameIndex);
+            nameIndex++;
         }
         /// <summary>
         /// 设置实体

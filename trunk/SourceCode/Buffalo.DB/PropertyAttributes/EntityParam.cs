@@ -210,27 +210,29 @@ namespace Buffalo.DB.PropertyAttributes
         {
             StringBuilder sb = new StringBuilder();
             IDBAdapter idba = info.DBInfo.CurrentDbAdapter;
-            sb.Append(idba.FormatTableName(ParamName) + " ");
+            sb.Append(idba.FormatParam(ParamName) + " ");
             sb.Append(idba.DBTypeToSQL(SqlType, Length) + " ");
 
             bool isPrimary = EnumUnit.ContainerValue((int)_propertyType, (int)EntityPropertyType.PrimaryKey);
             bool isAutoIdentity = EnumUnit.ContainerValue((int)_propertyType, (int)EntityPropertyType.Identity);
 
-            if (isPrimary)
-            {
-                sb.Append(" primary key ");
-            }
-            else
-            {
-                if (_allowNull)
+            //if (isPrimary)
+            //{
+            //    sb.Append(" primary key ");
+            //}
+            //else
+            //{
+            
+                if (_allowNull && !isPrimary)
                 {
-                    sb.Append("NULL");
+                    sb.Append("NULL ");
                 }
                 else
                 {
-                    sb.Append("NOT NULL");
+                    sb.Append("NOT NULL ");
                 }
-            }
+            
+            //}
             if (isAutoIdentity && TableChecker.IsIdentityType(SqlType))
             {
 

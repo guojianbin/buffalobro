@@ -276,7 +276,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// 获取自动增长的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetIdentitySQL(EntityInfoHandle info) 
+        public string GetIdentitySQL(EntityPropertyInfo info) 
         {
             return "SELECT LAST_INSERT_ID()";
         }
@@ -312,7 +312,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// 获取自动增长值的SQL
         /// </summary>
         /// <returns></returns>
-        public string GetIdentityValueSQL(EntityInfoHandle info)
+        public string GetIdentityValueSQL(EntityPropertyInfo info)
         {
             return null;
         }

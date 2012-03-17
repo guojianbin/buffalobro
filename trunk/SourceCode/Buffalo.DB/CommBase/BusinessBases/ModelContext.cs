@@ -146,7 +146,16 @@ namespace Buffalo.DB.CommBase.BusinessBases
         public T GetEntityById(object id)
         {
             ScopeList lstScope = new ScopeList();
-            lstScope.AddEqual(CurEntityInfo.PrimaryProperty.PropertyName, id);
+            //lstScope.AddEqual(CurEntityInfo.PrimaryProperty.PropertyName, id);
+            PrimaryKeyInfo info = id as PrimaryKeyInfo;
+            if (info == null)
+            {
+                lstScope.AddEqual(CurEntityInfo.PrimaryProperty[0].PropertyName, id);
+            }
+            else 
+            {
+                info.FillScope(CurEntityInfo.PrimaryProperty, lstScope, true);
+            }
             obj.OnSelect(lstScope);
             return GetBaseContext().GetUnique(lstScope);
             //return GetBaseContext().GetObjectById(id);

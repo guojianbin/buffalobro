@@ -82,7 +82,10 @@ namespace Buffalo.DB.DBCheckers
         private static void FillParamInfos(KeyWordTableParamItem tableInfo,EntityInfoHandle entityInfo) 
         {
             List<EntityParam> prms = new List<EntityParam>();
-            prms.Add(entityInfo.PrimaryProperty.ParamInfo);
+            foreach (EntityPropertyInfo pkInfo in entityInfo.PrimaryProperty)
+            {
+                prms.Add(pkInfo.ParamInfo);
+            }
             foreach ( EntityPropertyInfo pInfo in entityInfo.PropertyInfo) 
             {
 

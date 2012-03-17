@@ -330,7 +330,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             string param = null;
             string svalue = null;
             
-            EntityPropertyInfo identityInfo = null;
+            List<EntityPropertyInfo> identityInfo = new List<EntityPropertyInfo>();
             
             foreach (EntityPropertyInfo info in EntityInfo.PropertyInfo)
             {
@@ -356,7 +356,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                     {
                         if (fillIdentity)
                         {
-                            identityInfo = info;
+                            identityInfo.Add(info);
                         }
                         param = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentityParamName(info);
                         if (!string.IsNullOrEmpty(param))
@@ -420,17 +420,20 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 string sql = con.GetSql();
                 ret = ExecuteCommand(sql, list, CommandType.Text);
-                if (identityInfo != null && fillIdentity)
+                if (identityInfo.Count>0 && fillIdentity)
                 {
-                    sql = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentitySQL(EntityInfo);
-                    using (IDataReader reader = _oper.Query(sql, new ParamList()))
+                    foreach (EntityPropertyInfo pkInfo in identityInfo)
                     {
-                        if (reader.Read())
+                        sql = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentitySQL(pkInfo);
+                        using (IDataReader reader = _oper.Query(sql, new ParamList()))
                         {
-                            if (!reader.IsDBNull(0))
+                            if (reader.Read())
                             {
-                                EntityInfo.DBInfo.CurrentDbAdapter.SetObjectValueFromReader(reader, 0, obj, identityInfo);
-                                ret = 1;
+                                if (!reader.IsDBNull(0))
+                                {
+                                    EntityInfo.DBInfo.CurrentDbAdapter.SetObjectValueFromReader(reader, 0, obj, pkInfo);
+                                    ret = 1;
+                                }
                             }
                         }
                     }
@@ -460,8 +463,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                 if (scopeList == null)//Í¨¹ýIDÉ¾³ý
                 {
                     scopeList = new ScopeList();
-                    scopeList.AddEqual(EntityInfo.PrimaryProperty.PropertyName, EntityInfo.PrimaryProperty.GetValue(obj));
-
+                    foreach (EntityPropertyInfo info in EntityInfo.PrimaryProperty)
+                    {
+                        scopeList.AddEqual(info.PropertyName, info.GetValue(obj));
+                    }
                 }
             }
             con.Condition.Append(DataAccessCommon.FillCondition(EntityInfo, list, scopeList));
@@ -500,7 +505,17 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             ParamList list = new ParamList();
 
             ScopeList lstScope = new ScopeList();
-            lstScope.AddEqual(EntityInfo.PrimaryProperty.PropertyName, id);
+            PrimaryKeyInfo pkInfo = id as PrimaryKeyInfo;
+            if (pkInfo == null)
+            {
+                lstScope.AddEqual(EntityInfo.PrimaryProperty[0].PropertyName, id);
+            }
+            else
+            {
+
+                pkInfo.FillScope(EntityInfo.PrimaryProperty, lstScope, true);
+
+            }
             con.Condition.Append("1=1");
             con.Condition.Append(DataAccessCommon.FillCondition(EntityInfo, list, lstScope));
             ret = ExecuteCommand(con.GetSql(), list, CommandType.Text);

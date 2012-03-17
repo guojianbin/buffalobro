@@ -60,7 +60,16 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
             }
             else//如果没有就用主键排序
             {
-                orderBy = objCondition.PrimaryKey.ToString();
+                StringBuilder sbOrder = new StringBuilder();
+                foreach (string pkName in objCondition.PrimaryKey)
+                {
+                    sbOrder.Append(pkName + ",");
+                }
+                if (sbOrder.Length > 0)
+                {
+                    sbOrder.Remove(sbOrder.Length - 1, 1);
+                    orderBy = sbOrder.ToString();
+                }
             }
             StringBuilder sql = new StringBuilder(5000);
 

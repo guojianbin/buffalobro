@@ -98,12 +98,12 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// </summary>
         /// <param name="info">实体信息</param>
         /// <returns></returns>
-        string GetIdentitySQL(EntityInfoHandle info);
+        string GetIdentitySQL(EntityPropertyInfo info);
         /// <summary>
         /// 获取自动增长值的SQL
         /// </summary>
         /// <returns></returns>
-        string GetIdentityValueSQL(EntityInfoHandle info);
+        string GetIdentityValueSQL(EntityPropertyInfo info);
         /// <summary>
         /// 格式化字段名
         /// </summary>

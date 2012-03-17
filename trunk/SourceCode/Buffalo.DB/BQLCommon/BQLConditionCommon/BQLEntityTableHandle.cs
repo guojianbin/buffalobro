@@ -34,9 +34,14 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// <summary>
         /// Ö÷¼ü
         /// </summary>
-        public virtual string GetPrimaryParam()
+        public override List<string> GetPrimaryParam()
         {
-            return _entityInfo.PrimaryProperty.ParamName;
+            List<string> paramName = new List<string>();
+            foreach(EntityPropertyInfo ep in _entityInfo.PrimaryProperty)
+            {
+                paramName.Add(ep.ParamName);
+            }
+            return paramName;
         }
 
         /// <summary>
@@ -204,9 +209,13 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 
             //FillInfo(info);
             IDBAdapter idba = info.DBInfo.CurrentDbAdapter;
-            if (info.Condition.PrimaryKey.Length <= 0)
+            if (info.Condition.PrimaryKey.Count <= 0)
             {
-                info.Condition.PrimaryKey.Append(idba.FormatTableName(this._entityInfo.TableName)+"."+idba.FormatParam(GetPrimaryParam()));
+                foreach (string pkep in GetPrimaryParam())
+                {
+                    info.Condition.PrimaryKey.Add(idba.FormatTableName(this._entityInfo.TableName) +
+                        "." + idba.FormatParam(pkep));
+                }
             }
 
 

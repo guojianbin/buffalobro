@@ -91,11 +91,11 @@ namespace Buffalo.DB.QueryConditions
         /// <summary>
         /// 主键
         /// </summary>
-        private StringBuilder _primaryKey = new StringBuilder();
+        private List<string> _primaryKey = new List<string>();
         /// <summary>
         /// 主键
         /// </summary>
-        public StringBuilder PrimaryKey
+        public List<string> PrimaryKey
         {
             get { return _primaryKey; }
         }

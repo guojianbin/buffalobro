@@ -598,7 +598,7 @@ namespace Buffalo.DB.BQLCommon
                 oper.DBInfo.ThrowNotFondTable(eType);
             }
             List<BQLParamHandle> lstParams = new List<BQLParamHandle>();
-            lstParams.Add(table[table.GetEntityInfo().PrimaryProperty.PropertyName]);
+            lstParams.Add(table[table.GetEntityInfo().PrimaryProperty[0].PropertyName]);
                 
             BQLCondition where = BQLCondition.TrueValue;
             where = FillCondition(where, table, lstScope);

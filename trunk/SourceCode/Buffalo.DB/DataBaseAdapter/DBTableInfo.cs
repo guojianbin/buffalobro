@@ -11,24 +11,25 @@ namespace Buffalo.DB.DataBaseAdapter
     /// </summary>
     public class DBTableInfo
     {
-        private EntityParam _primaryParam;
+        private List<EntityParam> _primaryParam;
 
         /// <summary>
         /// Ö÷¼ü
         /// </summary>
-        public EntityParam PrimaryParam
+        public List<EntityParam> PrimaryParam
         {
             get
             {
                 if (_primaryParam == null)
                 {
+                    _primaryParam = new List<EntityParam>();
                     int pkValue = (int)EntityPropertyType.PrimaryKey;
                     foreach (EntityParam prm in _tparams)
                     {
                         if (EnumUnit.ContainerValue((int)prm.PropertyType, pkValue))
                         {
-                            _primaryParam = prm;
-                            break;
+                            _primaryParam.Add(prm);
+                            
                         }
                     }
                 }
