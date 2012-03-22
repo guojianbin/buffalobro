@@ -40,7 +40,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// </summary>
         /// <param name="dbType"></param>
         /// <returns></returns>
-        public virtual string DBTypeToSQL(DbType dbType,int length) 
+        public virtual string DBTypeToSQL(DbType dbType,long length) 
         {
             int type = ToRealDbType(dbType,length);
             SqlDbType stype = (SqlDbType)type;
@@ -72,7 +72,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// </summary>
         /// <param name="dbType"></param>
         /// <returns></returns>
-        public virtual int ToRealDbType(DbType dbType,int length) 
+        public virtual int ToRealDbType(DbType dbType,long length) 
         {
             switch (dbType) 
             {

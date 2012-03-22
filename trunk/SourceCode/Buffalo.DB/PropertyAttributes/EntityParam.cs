@@ -15,7 +15,7 @@ namespace Buffalo.DB.PropertyAttributes
         private string _propertyName;
         private DbType _sqlType;
         private EntityPropertyType _propertyType;
-        private int _length;
+        private long _length;
         private bool _allowNull;
         private string _fieldName;
         private bool _readonly;
@@ -157,7 +157,7 @@ namespace Buffalo.DB.PropertyAttributes
         /// <summary>
         /// ³¤¶È
         /// </summary>
-        public int Length
+        public long Length
         {
             get { return _length; }
             set { _length = value; }

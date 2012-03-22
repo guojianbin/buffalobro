@@ -26,14 +26,14 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// </summary>
         /// <param name="dbType"></param>
         /// <returns></returns>
-        string DBTypeToSQL(DbType dbType,int length) ;
+        string DBTypeToSQL(DbType dbType,long length) ;
 
         /// <summary>
         /// 把DBType转成本数据库的实际类型
         /// </summary>
         /// <param name="dbType"></param>
         /// <returns></returns>
-        int ToRealDbType(DbType dbType, int length);
+        int ToRealDbType(DbType dbType, long length);
         /// <summary>
         /// 是否记录自增长字段作手动处理
         /// </summary>

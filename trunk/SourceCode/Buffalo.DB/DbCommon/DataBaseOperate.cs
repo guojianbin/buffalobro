@@ -73,6 +73,34 @@ namespace Buffalo.DB.DbCommon
         private CommitState _commitState = CommitState.AutoCommit;
 
         /// <summary>
+        /// 获取数据库名字
+        /// </summary>
+        /// <returns></returns>
+        public string DataBaseName
+        {
+            get
+            {
+                string tableName = null;
+                try
+                {
+                    //若连接数据库失败抛出错误
+                    if (!ConnectDataBase())
+                    {
+                        throw (new ApplicationException("没有建立数据库连接。"));
+                    }
+                    tableName = _conn.Database;
+                }
+                finally
+                {
+
+                    AutoClose();
+
+                }
+                return tableName;
+            }
+        }
+
+        /// <summary>
         /// 是否自动关闭连接
         /// </summary>
         public CommitState CommitState 

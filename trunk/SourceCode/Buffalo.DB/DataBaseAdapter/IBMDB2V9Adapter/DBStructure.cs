@@ -208,7 +208,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
                 type = type | EntityPropertyType.Identity;
             }
             prm.PropertyType = type;
-            prm.Length = Convert.ToInt32(reader["LENGTH"]);
+            prm.Length = Convert.ToInt64(reader["LENGTH"]);
             if (!table.IsView)
             {
                 prm.Description = reader["REMARKS"] as string;

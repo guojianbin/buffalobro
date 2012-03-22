@@ -185,7 +185,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
             bool allowNull=dr.IsNull("IS_NULLABLE") && ((bool)dr["IS_NULLABLE"]);
             prm.AllowNull = allowNull;
             prm.PropertyType = type;
-            prm.Length = dr.IsNull("CHARACTER_MAXIMUM_LENGTH") ? 0 : ((int)dr["CHARACTER_MAXIMUM_LENGTH"]);
+            prm.Length = dr.IsNull("CHARACTER_MAXIMUM_LENGTH") ? 0 : (Convert.ToInt64(dr["CHARACTER_MAXIMUM_LENGTH"]));
             string strDBType = dr.IsNull("DATA_TYPE") ? "text" : (dr["DATA_TYPE"] as string);
             FillDbType(strDBType, prm, dtDataTypes);
             table.Params.Add(prm);

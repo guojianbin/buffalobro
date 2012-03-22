@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.Modeling.Diagrams;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Collections;
 /** 
-@author 289323612@qq.com
+@author 
 @version 创建时间：2011-12-1
 显示类图注释
 */

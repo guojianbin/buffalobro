@@ -49,7 +49,8 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 {
                     continue;
                 }
-                AddToDB(FastValueGetSet.GetGetMethodInfo(info.Name, type).Invoke(null, new object[] { }) as BQLEntityTableHandle);
+                BQLEntityTableHandle handle = FastValueGetSet.GetGetMethodInfo(info.Name, type).Invoke(null, new object[] { }) as BQLEntityTableHandle;
+                AddToDB(handle);
             }
             DataAccessLoader.InitConfig();
         }

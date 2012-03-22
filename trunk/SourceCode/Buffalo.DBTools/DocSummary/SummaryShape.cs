@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using Buffalo.DBTools.DocSummary.VSConfig;
 /** 
-@author 289323612@qq.com
+@author 
 @version 创建时间：2011-12-1
 显示类图注释
 */

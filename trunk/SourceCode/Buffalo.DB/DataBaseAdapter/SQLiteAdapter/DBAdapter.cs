@@ -384,7 +384,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
             return "AUTOINCREMENT";
         }
 
-        public string DBTypeToSQL(DbType dbType, int length)
+        public string DBTypeToSQL(DbType dbType, long length)
         {
             //int type = ToRealDbType(dbType, length);            
             //SqliteType stype = (SqlDbType)type;            
@@ -439,7 +439,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
 
         }
 
-        public int ToRealDbType(DbType dbType, int length)
+        public int ToRealDbType(DbType dbType, long length)
         {
             return (int)dbType;
         }

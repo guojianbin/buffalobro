@@ -371,7 +371,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// </summary>
         /// <param name="dbType"></param>
         /// <returns></returns>
-        public virtual string DBTypeToSQL(DbType dbType,int length) 
+        public virtual string DBTypeToSQL(DbType dbType,long length) 
         {
             switch (dbType)
             {
@@ -463,7 +463,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
            
         
         }
-        public int ToRealDbType(DbType dbType, int length)
+        public int ToRealDbType(DbType dbType, long length)
         {
             switch (dbType)
             {

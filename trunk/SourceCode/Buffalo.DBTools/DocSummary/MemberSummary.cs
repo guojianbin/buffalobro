@@ -10,7 +10,7 @@ using Buffalo.DBTools.DocSummary.VSConfig;
 using Buffalo.DBTools.HelperKernel;
 using Buffalo.Kernel;
 /** 
-@author 289323612@qq.com
+@author 
 @version 创建时间：2011-12-1
 显示类图注释
 */

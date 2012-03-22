@@ -384,7 +384,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             return "generated always as identity (start with 1 increment by 1)";
         }
 
-        public string DBTypeToSQL(DbType dbType, int length)
+        public string DBTypeToSQL(DbType dbType, long length)
         {
             switch (dbType)
             {
@@ -465,7 +465,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             }
         }
 
-        public int ToRealDbType(DbType dbType, int length)
+        public int ToRealDbType(DbType dbType, long length)
         {
             DB2Parameter prm = new DB2Parameter();
             prm.DbType = dbType;

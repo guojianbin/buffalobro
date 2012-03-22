@@ -259,8 +259,8 @@ namespace Buffalo.DB.EntityInfos
                 att = node.Attributes["Length"];
                 if (att != null)
                 {
-                    int len = 0;
-                    int.TryParse(att.InnerText, out len);
+                    long len = 0;
+                    long.TryParse(att.InnerText, out len);
                     ep.Length = len;
                 }
                 att = node.Attributes["EntityPropertyType"];

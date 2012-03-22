@@ -254,11 +254,13 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                 type = type | EntityPropertyType.Identity;
             }
             prm.PropertyType = type;
-            prm.Length = Convert.ToInt32(reader["DATA_LENGTH"]);
+            prm.Length = Convert.ToInt64(reader["DATA_LENGTH"]);
             if (!table.IsView)
             {
                 prm.Description = reader["COMMENTS"] as string;
             }
+
+
             string strDBType = reader["DATA_TYPE"] as string;
             prm.SqlType = GetDbType(strDBType);
             table.Params.Add(prm);

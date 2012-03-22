@@ -354,17 +354,99 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
 
         public string DBIdentity(string tableName, string paramName)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return "auto_increment";
         }
 
-        public string DBTypeToSQL(DbType dbType, int length)
+        public string DBTypeToSQL(DbType dbType, long length)
         {
-            throw new Exception("The method or operation is not implemented.");
+            switch (dbType)
+            {
+                case DbType.Boolean:
+                    return "bit";
+
+                case DbType.Byte:
+                    return "tinyint unsigned";
+                    
+                case DbType.SByte:
+                    return "tinyint";
+
+                case DbType.UInt16:
+                    return "smallint unsigned";
+                case DbType.Int16:
+                    return "smallint";
+                   
+                case DbType.UInt32:
+                    return "int unsigned";
+                case DbType.Int32:
+                    return "int";
+
+                case DbType.UInt64:
+                    return "bigint unsigned";
+                case DbType.Int64:
+                    return "bigint";
+
+                case DbType.Single:
+                    return "float";
+
+                case DbType.Double:
+                    return "double";
+                case DbType.Currency:
+                case DbType.VarNumeric:
+                case DbType.Decimal:
+                    return "decimal";
+
+                case DbType.Date:
+                    return "date";
+
+                case DbType.DateTime:
+                    return "datetime";
+                case DbType.DateTimeOffset:
+                case DbType.DateTime2:
+                    return "timestamp";
+                case DbType.Time:
+                    return "time";
+                case DbType.AnsiStringFixedLength:
+                    if (length > 8000) 
+                    {
+                        return "longtext";
+                    }
+                    return "char("+length+")";
+                case DbType.StringFixedLength:
+                    if (length > 8000)
+                    {
+                        return "longtext";
+                    }
+                    return "char(" + length + ")";
+                case DbType.AnsiString:
+                    if (length > 8000)
+                    {
+                        return "longtext";
+                    }
+                    return "varchar(" + length + ")";
+                case DbType.String:
+                    if (length > 8000)
+                    {
+                        return "longtext";
+                    }
+                    return "varchar(" + length + ")";
+                case DbType.Binary:
+                    if (length > 8000)
+                    {
+                        return "longblob";
+                    }
+                    return "blob(" + length + ")";
+                default:
+                    return "";
+            }
         }
 
-        public int ToRealDbType(DbType dbType, int length)
+        public int ToRealDbType(DbType dbType, long length)
         {
-            throw new Exception("The method or operation is not implemented.");
+
+            MySqlParameter prm = new MySqlParameter();
+            prm.DbType = dbType;
+            prm.ParameterName = "name";
+            return (int)prm.MySqlDbType;
         }
 
         #endregion
