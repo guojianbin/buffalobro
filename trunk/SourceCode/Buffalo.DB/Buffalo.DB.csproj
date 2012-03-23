@@ -80,6 +80,7 @@
     <Compile Include="CommBase\DataAccessBases\VersionInfo.cs" />
     <Compile Include="CommBase\EntityBase.cs" />
     <Compile Include="CommBase\StaticConnection.cs" />
+    <Compile Include="CommBase\UpdatePropertyInfo.cs" />
     <Compile Include="ConfigXmlLoader.cs" />
     <Compile Include="ContantSearchs\PropertyParamMapping.cs" />
     <Compile Include="ContantSearchs\SearchConditionObject.cs" />

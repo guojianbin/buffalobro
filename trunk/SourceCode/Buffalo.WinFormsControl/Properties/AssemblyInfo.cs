@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Buffalo.WinFormsControl")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Buffalo")]
 [assembly: AssemblyProduct("Buffalo.WinFormsControlLib")]
-[assembly: AssemblyCopyright("版权所有 (C) Microsoft 2011")]
+[assembly: AssemblyCopyright("版权所有 (C) Buffalo 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

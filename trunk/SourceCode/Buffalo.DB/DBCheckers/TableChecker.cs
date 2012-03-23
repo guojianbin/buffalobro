@@ -32,9 +32,19 @@ namespace Buffalo.DB.DBCheckers
         /// <param name="info">数据库</param>
         /// <param name="tableNames">表名</param>
         /// <returns></returns>
-        public static List<DBTableInfo> GetTableInfo(DBInfo info,List<string> tableNames) 
+        public static List<DBTableInfo> GetTableInfo(DBInfo info, List<string> tableNames)
         {
-            return info.DBStructure.GetTablesInfo(info.DefaultOperate, info, tableNames);
+            List<DBTableInfo> lst = info.DBStructure.GetTablesInfo(info.DefaultOperate, info, tableNames);
+            foreach (DBTableInfo tableInfo in lst) 
+            {
+                if (tableInfo.IsView && tableInfo.Params.Count > 0) 
+                {
+                    tableInfo.Params[0].PropertyType = tableInfo.Params[0].PropertyType | EntityPropertyType.PrimaryKey;
+                }
+            }
+
+
+            return lst;
         }
 
         /// <summary>

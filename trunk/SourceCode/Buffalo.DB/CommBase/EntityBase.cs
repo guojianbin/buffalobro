@@ -33,42 +33,22 @@ namespace Buffalo.DB.CommBase
 
             }
             EntityInfoHandle entityInfo = GetEntityInfo();
-            EntityMappingInfo mapInfo = entityInfo.MappingInfo[propertyName];
-            if (mapInfo != null && mapInfo.IsParent) //如果是父类实体
+            UpdatePropertyInfo updateInfo = entityInfo.GetUpdatePropertyInfo(propertyName);
+            if (updateInfo != null) 
             {
-                UpdateChildProperty(mapInfo);
-            }
-
-            mapInfo = entityInfo.GetMappingBySourceName(propertyName);
-            if (mapInfo != null && mapInfo.IsParent) //如果是父类实体
-            {
-                ClearParentProperty(mapInfo);
+                string updatePropertyName=updateInfo.UpdateProperty(this);
+                if (!string.IsNullOrEmpty(updatePropertyName))
+                {
+                    _dicUpdateProperty___[updatePropertyName] = true;
+                }
             }
 
             _dicUpdateProperty___[propertyName] = true;
         }
 
-        /// <summary>
-        /// 更新子属性
-        /// </summary>
-        /// <param name="mapInfo"></param>
-        private void UpdateChildProperty(EntityMappingInfo mapInfo)
-        {
+        
 
-            object parentObject = mapInfo.GetValue(this);
-            object pkValue = mapInfo.TargetProperty.GetValue(parentObject);//获取ID
-            mapInfo.SourceProperty.SetValue(this, pkValue);
-            _dicUpdateProperty___[mapInfo.TargetProperty.PropertyName] = true;
-
-        }
-
-        /// <summary>
-        /// 清空父属性
-        /// </summary>
-        private void ClearParentProperty(EntityMappingInfo mapInfo) 
-        {
-            mapInfo.SetValue(this, null);
-        }
+        
         /// <summary>
         /// 通知属性已经被修改
         /// </summary>

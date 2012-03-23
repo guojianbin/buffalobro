@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Buffalo.Kernel")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Buffalo")]
 [assembly: AssemblyProduct("Buffalo.Kernel")]
-[assembly: AssemblyCopyright("版权所有 (C) Microsoft 2012")]
+[assembly: AssemblyCopyright("版权所有 (C) Buffalo 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

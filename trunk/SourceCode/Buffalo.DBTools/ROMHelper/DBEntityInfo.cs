@@ -472,6 +472,7 @@ namespace Buffalo.DBTools.ROMHelper
             }
             foreach (EntityParam prm in _belongTable.Params) 
             {
+                
                 AppendFieldInfo(prm, sb);
             }
 

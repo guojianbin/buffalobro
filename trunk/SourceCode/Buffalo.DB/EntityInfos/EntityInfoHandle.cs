@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using Buffalo.Kernel.FastReflection;
 using Buffalo.DB.DataBaseAdapter;
+using Buffalo.DB.CommBase;
 
 
 namespace Buffalo.DB.EntityInfos
 {
+
+
     /// <summary>
     /// 类的信息
     /// </summary>
@@ -52,6 +55,7 @@ namespace Buffalo.DB.EntityInfos
         {
             this._propertyInfoHandles = new PropertyInfoCollection(propertyInfoHandles);
             this._mappingInfoHandles = new MappingInfoCollection(mappingInfoHandles);
+            _dicUpdateInfo = InitPropertyUpdateInfo();
         }
 
         /// <summary>
@@ -161,39 +165,42 @@ namespace Buffalo.DB.EntityInfos
 
         }
 
-        /// <summary>
-        /// 子属性对应的映射
-        /// </summary>
-        private Dictionary<string,EntityMappingInfo> _dicSourceNameMap=null;
+
+        private Dictionary<string, UpdatePropertyInfo> _dicUpdateInfo = null;
 
         /// <summary>
-        /// 初始化子属性
+        /// 初始化属性的更新信息
         /// </summary>
-        private void InitSourceNameMap() 
+        private Dictionary<string, UpdatePropertyInfo> InitPropertyUpdateInfo() 
         {
-            _dicSourceNameMap = new Dictionary<string, EntityMappingInfo>();
-            foreach (EntityMappingInfo info in _mappingInfoHandles) 
+            Dictionary<string, UpdatePropertyInfo> dic = new Dictionary<string, UpdatePropertyInfo>();
+            foreach (EntityMappingInfo mapInfo in this.MappingInfo)
             {
-                if (info.IsParent) 
+                if (mapInfo.IsParent) //如果是父类实体
                 {
-                    _dicSourceNameMap[info.SourceProperty.PropertyName] = info;
+                    dic[mapInfo.PropertyName] = new UpdatePropertyInfo(mapInfo, true);
+                    dic[mapInfo.SourceProperty.PropertyName] = new UpdatePropertyInfo(mapInfo, false);
                 }
             }
+
+            
+            return dic;
         }
 
         /// <summary>
-        /// 通过属性名获取映射
+        /// 获取本属性的关联更新信息
         /// </summary>
+        /// <param name="propertyName">属性名</param>
         /// <returns></returns>
-        public EntityMappingInfo GetMappingBySourceName(string sourcePropertyName) 
+        public UpdatePropertyInfo GetUpdatePropertyInfo(string propertyName) 
         {
-            if (_dicSourceNameMap == null) 
+            UpdatePropertyInfo ret = null;
+            if (_dicUpdateInfo.TryGetValue(propertyName, out ret))
             {
-                InitSourceNameMap();
-            }
-            EntityMappingInfo ret = null;
-            _dicSourceNameMap.TryGetValue(sourcePropertyName, out ret);
-            return ret;
+                return ret;
+            } 
+            return null;
         }
+
     }
 }

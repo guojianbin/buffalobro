@@ -31,7 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <IncrementalBuild>false</IncrementalBuild>
-    <DocumentationFile>..\Release\2010\Buffalo2010.DBTools.xml</DocumentationFile>
+    <DocumentationFile>..\Release\2010\Buffalo.DBTools.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>Buffalo.DBTools</RootNamespace>
@@ -97,6 +97,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CommandBarId.cs" />
+    <Compile Include="CommandItems.cs" />
     <Compile Include="Connect.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -109,6 +110,7 @@
     <Compile Include="DocSummary\MemberSummary.cs" />
     <Compile Include="DocSummary\ShapeSummaryDisplayer.cs" />
     <Compile Include="DocSummary\SummaryShape.cs" />
+    <Compile Include="DocSummary\SummaryShowItem.cs" />
     <Compile Include="DocSummary\VSConfig\IVSConfig.cs" />
     <Compile Include="DocSummary\VSConfig\VS2005Config.cs" />
     <Compile Include="DocSummary\VSConfig\VS2008Config.cs" />
@@ -251,6 +253,9 @@
     <Content Include="Resources\DBconfig.txt" />
     <Content Include="Resources\Entity.txt" />
     <Content Include="Resources\IDataAccess.txt" />
+    <Content Include="Resources\logo.jpg" />
+    <Content Include="Resources\slogo.jpg" />
+    <Content Include="Resources\slogoico.ico" />
     <Content Include="Resources\UserEntity.txt" />
   </ItemGroup>
   <ItemGroup>

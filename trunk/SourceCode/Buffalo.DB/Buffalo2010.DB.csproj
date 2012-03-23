@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BQLCommon\BQLConditionCommon\BQLConditionValueItem.cs" />
+    <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddPrimarykeyItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordCreateTableItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordTableParamItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAlterTableItem.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="CommBase\DataAccessBases\VersionInfo.cs" />
     <Compile Include="CommBase\EntityBase.cs" />
     <Compile Include="CommBase\StaticConnection.cs" />
+    <Compile Include="CommBase\UpdatePropertyInfo.cs" />
     <Compile Include="ConfigXmlLoader.cs" />
     <Compile Include="ContantSearchs\PropertyParamMapping.cs" />
     <Compile Include="ContantSearchs\SearchConditionObject.cs" />
@@ -241,6 +243,7 @@
     <Compile Include="EntityInfos\EntityPropertyInfo.cs" />
     <Compile Include="EntityInfos\MappingInfoCollection.cs" />
     <Compile Include="EntityInfos\MappingInfoEnumerator.cs" />
+    <Compile Include="EntityInfos\PrimaryKeyInfo.cs" />
     <Compile Include="EntityInfos\PropertyEnumerator.cs" />
     <Compile Include="EntityInfos\PropertyInfoCollection.cs" />
     <Compile Include="FaintnessSearchConditions\FullTextConfigManager.cs" />

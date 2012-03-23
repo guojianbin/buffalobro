@@ -15,7 +15,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
     /// </summary>
     public class DBStructure : IDBStructure
     {
-        private static string _sqlTables = "SELECT table_name,table_type FROM `information_schema`.`TABLES` where table_schema =?dbName;";
+        private static string _sqlTables = "SELECT TABLE_NAME,TABLE_TYPE,TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA =?dbName";
         #region IDBStructure 成员
 
         
@@ -28,12 +28,30 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// <returns></returns>
         public List<DBTableInfo> GetAllTableName(DataBaseOperate oper, DBInfo info)
         {
+
+            return GetTableNames(oper,info,null);
+
+        }
+        /// <summary>
+        /// 获取所有用户表
+        /// </summary>
+        /// <param name="oper"></param>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        private List<DBTableInfo> GetTableNames(DataBaseOperate oper, DBInfo info,IEnumerable<string> tableNames)
+        {
             ParamList lstParam = new ParamList();
-            
+
             lstParam.AddNew("?dbName", DbType.String, oper.DataBaseName);
             List<DBTableInfo> lstName = new List<DBTableInfo>();
-            
-            using (IDataReader reader = oper.Query(_sqlTables, lstParam))
+            string inTable = Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBStructure.AllInTableNames(tableNames);
+            string sql = _sqlTables;
+            if (!string.IsNullOrEmpty(inTable))
+            {
+                sql += " and TABLE_NAME in(" + inTable + ")";
+            }
+
+            using (IDataReader reader = oper.Query(sql, lstParam))
             {
                 while (reader.Read())
                 {
@@ -47,13 +65,15 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
                             tableInfo.IsView = true;
                         }
                     }
+                    string comment = reader[2] as string;
+                    tableInfo.Description = comment;
+
                     lstName.Add(tableInfo);
                 }
             }
             return lstName;
 
         }
-
 
         /// <summary>
         /// 添加字段的语句
@@ -115,18 +135,25 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// <returns></returns>
         public List<DBTableInfo> GetTablesInfo(DataBaseOperate oper, DBInfo info, IEnumerable<string> tableNames)
         {
-            string inTable = Buffalo.DB.DataBaseAdapter.MySQL5Adapter.DBStructure.AllInTableNames(tableNames);
-            string sql = "SELECT t1.TABLE_NAME,t2.TABLE_TYPE,t2.TABLE_COMMENT,t1.COLUMN_NAME,t1.COLUMN_COMMENT, t1.DATA_TYPE, t1.CHARACTER_OCTET_LENGTH, t1.NUMERIC_PRECISION, t1.NUMERIC_SCALE, CASE t1.IS_NULLABLE WHEN 'NO' THEN 0 ELSE 1 END IS_NULLABLE, t1.COLUMN_TYPE,t1.COLUMN_KEY,t1.EXTRA FROM INFORMATION_SCHEMA.COLUMNS t1 inner join INFORMATION_SCHEMA.TABLES t2 on t1.TABLE_NAME=t2.TABLE_NAME WHERE t1.TABLE_SCHEMA = ?dbName";
-            string tableNamesSql = "";
+            string inTable = Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBStructure.AllInTableNames(tableNames);
+            string sql = "SELECT t1.TABLE_NAME,t1.COLUMN_NAME,t1.COLUMN_COMMENT, t1.DATA_TYPE, t1.CHARACTER_OCTET_LENGTH, t1.NUMERIC_PRECISION, t1.NUMERIC_SCALE, CASE t1.IS_NULLABLE WHEN 'NO' THEN 0 ELSE 1 END IS_NULLABLE, t1.COLUMN_TYPE,t1.COLUMN_KEY,t1.EXTRA FROM INFORMATION_SCHEMA.COLUMNS t1 where t1.TABLE_SCHEMA = ?dbName";
             if (!string.IsNullOrEmpty(inTable))
             {
-                tableNamesSql = " and d.[name] in(" + inTable + ")";
+                sql+= " and t1.TABLE_NAME in(" + inTable + ")";
             }
-
-            List<DBTableInfo> lst = new List<DBTableInfo>();
             Dictionary<string, DBTableInfo> dicTables = new Dictionary<string, DBTableInfo>();
             ParamList lstParam = new ParamList();
             lstParam.AddNew("?dbName", DbType.String, oper.DataBaseName);
+
+            List<DBTableInfo> tables = GetTableNames(oper, info, tableNames);
+
+            foreach(DBTableInfo table in tables)
+            {
+                dicTables[table.Name]=table;
+                table.Params = new List<EntityParam>();
+                table.RelationItems = new List<TableRelationAttribute>();
+            }
+
             using (IDataReader reader = oper.Query(sql.ToString(), lstParam))
             {
 
@@ -141,26 +168,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
                     dicTables.TryGetValue(tableName, out table);
                     if (table == null)
                     {
-                        table = new DBTableInfo();
-                        table.Name = tableName;
-
-                        string type = reader["TABLE_TYPE"] as string;
-                        table.IsView = false;
-                        if (!string.IsNullOrEmpty(type))
-                        {
-                            if (type.Trim() == "VIEW")
-                            {
-                                table.IsView = true;
-                            }
-                        }
-                        if (!table.IsView)
-                        {
-                            table.Description = reader["TABLE_COMMENT"] as string;
-                        }
-                        table.RelationItems = new List<TableRelationAttribute>();
-                        table.Params = new List<EntityParam>();
-                        lst.Add(table);
-                        dicTables[table.Name] = table;
+                        continue;
                     }
                     FillParam(table, reader);
 
@@ -169,7 +177,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
             List<TableRelationAttribute> lstRelation = GetRelation(oper, info, tableNames);
             Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBStructure.FillRelation(dicTables, lstRelation);
 
-            return lst;
+            return tables;
         }
 
         /// 填充字段信息
@@ -226,7 +234,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
             
             if (!table.IsView)
             {
-                prm.Description = reader["TABLE_COMMENT"] as string;
+                prm.Description = reader["COLUMN_COMMENT"] as string;
             }
 
             prm.AllowNull = Convert.ToInt32(reader["IS_NULLABLE"])==1;
@@ -237,31 +245,6 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
             string strDataType= reader["DATA_TYPE"] as string;
             prm.SqlType = GetDbType(strDBType, isUnsigned);
             table.Params.Add(prm);
-        }
-
-        /// <summary>
-        /// 获取要In的表名
-        /// </summary>
-        /// <param name="childName"></param>
-        /// <returns></returns>
-        internal static string AllInTableNames(IEnumerable<string> tableNames)
-        {
-            if (tableNames == null)
-            {
-                return null;
-            }
-            StringBuilder sbTables = new StringBuilder();
-            foreach (string tableName in tableNames)
-            {
-                sbTables.Append("'");
-                sbTables.Append(tableName.Replace("'", "''"));
-                sbTables.Append("',");
-            }
-            if (sbTables.Length > 0)
-            {
-                sbTables.Remove(sbTables.Length - 1, 1);
-            }
-            return sbTables.ToString();
         }
         /// <summary>
         /// 获取数据库类型
