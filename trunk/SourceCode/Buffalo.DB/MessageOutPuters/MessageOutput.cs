@@ -50,11 +50,11 @@ namespace Buffalo.DB.MessageOutPuters
         /// <param name="messName">信息发送者名称</param>
         /// <param name="messInfo">信息</param>
         /// <returns></returns>
-        public bool OutPut(string messName, string messInfo) 
+        public bool OutPut(string messName,string messType, string[] mess) 
         {
             if (_defaultOutputer != null)
             {
-                _defaultOutputer.Output(messName, messInfo);
+                _defaultOutputer.Output(messName, messType, mess);
                 return true;
             }
             return false;

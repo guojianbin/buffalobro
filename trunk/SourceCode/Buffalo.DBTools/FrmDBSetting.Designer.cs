@@ -128,7 +128,7 @@
             // 
             // clbSummary
             // 
-            this.clbSummary.ColumnWidth = 80;
+            this.clbSummary.ColumnWidth = 65;
             this.clbSummary.FormattingEnabled = true;
             this.clbSummary.Location = new System.Drawing.Point(165, 142);
             this.clbSummary.MultiColumn = true;

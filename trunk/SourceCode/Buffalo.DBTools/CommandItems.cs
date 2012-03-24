@@ -50,10 +50,10 @@ namespace Buffalo.DBTools
             commandEntity = AddToCommand("BuffaloEntityConfig", "配置实体", "配置Buffalo实体", true, 523);
             commandCreater = AddToCommand("BuffaloDBCreater", "实体到表", "通过Buffalo实体生成到数据库的表", true, 295);
             commandROM = AddToCommand("BuffaloDBToEntity", "表到实体", "通过数据层的表生成Buffalo实体", true, 292);
-            commandSummary = AddToCommand("ShowHideSummery", "显示/隐藏注释", "显示/隐藏注释", true, 192);
+            commandSummary = AddToCommand("BuffaloShowHideSummery", "显示/隐藏注释", "显示/隐藏注释", true, 192);
             commandDBAll = AddToCommand("BuffaloDBCreateAll", "生成数据库", "生成数据库", true, 577);
             commandDBSet = AddToCommand("BuffaloDBSet", "设置参数", "设置数据库和生成参数", true, 611);
-            commandEntityUpdate = AddToCommand("BuffaloEntityUpdate", "更新实体", "把数据库的新字段更新到实体", true, 59);
+            commandEntityUpdate = AddToCommand("BuffaloUpdateEntityByDB", "更新实体", "把数据库的新字段更新到实体", true, 59);
             //将对应于该命令的控件添加到类菜单
             if ((commandEntityTools != null) && (calssComm != null))
             {
@@ -110,6 +110,11 @@ namespace Buffalo.DBTools
                 commandDBSet.Delete();
                 commandDBSet = null;
             }
+            if (commandEntityUpdate != null)
+            {
+                commandEntityUpdate.Delete();
+                commandEntityUpdate = null;
+            }
             if (_applicationObject != null && commandDB != null)
             {
                 _applicationObject.Commands.RemoveCommandBar(commandDB);
@@ -134,7 +139,6 @@ namespace Buffalo.DBTools
         /// <returns></returns>
         private Command AddToCommand(string name, string buttonText, string tooltip, bool msoButton, object bitmap)
         {
-
             return _commands.AddNamedCommand2(_addInInstance, name, buttonText, tooltip, msoButton, bitmap,
                 ref _contextGUIDS, (int)vsCommandStatus.vsCommandStatusSupported + (int)vsCommandStatus.vsCommandStatusEnabled,
                 (int)vsCommandStyle.vsCommandStylePictAndText, vsCommandControlType.vsCommandControlTypeButton);

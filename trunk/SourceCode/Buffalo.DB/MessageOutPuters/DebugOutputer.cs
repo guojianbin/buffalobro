@@ -12,9 +12,17 @@ namespace Buffalo.DB.MessageOutPuters
         /// </summary>
         /// <param name="messName"></param>
         /// <param name="messInfo"></param>
-        public void Output(string messName, string messInfo) 
+        public void Output(string messName, string messType, string[] mess) 
         {
-            Debug.WriteLine(messName + ":" + messInfo);
+            StringBuilder smsg = new StringBuilder(mess.Length * 20);
+            foreach (string msg in mess)
+            {
+                smsg.Append(msg);
+
+                smsg.Append(",");
+            }
+
+            Debug.WriteLine(messName+"["+messType + "]:" + smsg.ToString());
         }
     }
 }

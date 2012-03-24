@@ -77,7 +77,15 @@ namespace Buffalo.DB.CommBase
         {
 
             object parentObject = _mapInfo.GetValue(entity);
-            object pkValue = _mapInfo.TargetProperty.GetValue(parentObject);//获取ID
+            object pkValue = null;
+            if (parentObject != null)
+            {
+                pkValue = _mapInfo.TargetProperty.GetValue(parentObject);//获取ID
+            }
+            else 
+            {
+                pkValue = _mapInfo.SourceProperty.FieldType.IsValueType ? Activator.CreateInstance(_mapInfo.SourceProperty.FieldType) : null;
+            }
             _mapInfo.SourceProperty.SetValue(entity, pkValue);
             return _mapInfo.TargetProperty.PropertyName;
 

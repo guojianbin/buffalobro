@@ -55,7 +55,7 @@ namespace Buffalo.DB.EntityInfos
         {
             this._propertyInfoHandles = new PropertyInfoCollection(propertyInfoHandles);
             this._mappingInfoHandles = new MappingInfoCollection(mappingInfoHandles);
-            _dicUpdateInfo = InitPropertyUpdateInfo();
+            
         }
 
         /// <summary>
@@ -194,6 +194,10 @@ namespace Buffalo.DB.EntityInfos
         /// <returns></returns>
         public UpdatePropertyInfo GetUpdatePropertyInfo(string propertyName) 
         {
+            if (_dicUpdateInfo == null) 
+            {
+                _dicUpdateInfo = InitPropertyUpdateInfo();
+            }
             UpdatePropertyInfo ret = null;
             if (_dicUpdateInfo.TryGetValue(propertyName, out ret))
             {

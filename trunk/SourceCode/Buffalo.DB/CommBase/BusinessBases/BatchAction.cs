@@ -25,7 +25,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 IMessageOutputer outputer=oper.DBInfo.SqlOutputer.DefaultOutputer;
                 if ( outputer!= null) 
                 {
-                    outputer.Output("SQLCommon", oper.DBInfo.Name + "   StarBatchAction");
+                    outputer.Output("BuffaloDB", "StarBatchAction", new string[] { });
                 }
 #endif
                 _state = oper.CommitState;
@@ -70,7 +70,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 IMessageOutputer outputer=_oper.DBInfo.SqlOutputer.DefaultOutputer;
                 if (outputer != null)
                 {
-                    outputer.Output("SQLCommon", _oper.DBInfo.Name + "   EndBatchAction");
+                    outputer.Output("BuffaloDB", "EndBatchAction", new string[] { });
                 }
 #endif
                 _oper.CommitState = _state;

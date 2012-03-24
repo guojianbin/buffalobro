@@ -268,16 +268,9 @@ namespace Buffalo.DB.DbCommon
         /// 输出信息
         /// </summary>
         /// <param name="message"></param>
-        private void OutMessage(params string[] messages) 
+        private void OutMessage(string messageType, params string[] messages) 
         {
-            StringBuilder smsg = new StringBuilder(messages.Length * 20);
-            foreach (string msg in messages) 
-            {
-                smsg.Append(msg);
-                
-                smsg.Append(";   ");
-            }
-            _db.SqlOutputer.OutPut("SQLCommon."+DBInfo.Name+":", smsg.ToString());
+            _db.SqlOutputer.OutPut("BuffaloDB", messageType, messages);
         }
 #endif
         /// <summary>
@@ -351,7 +344,7 @@ namespace Buffalo.DB.DbCommon
 #if DEBUG
                 if (_db.SqlOutputer.HasOutput)
                 {
-                    OutMessage("[DataSet]:" + sql, paramInfo);
+                    OutMessage("DataSet" , sql, paramInfo);
                 }
 #endif
                 _sda.Fill(dataSet);
@@ -425,7 +418,7 @@ namespace Buffalo.DB.DbCommon
 #if DEBUG
                     if (_db.SqlOutputer.HasOutput)
                     {
-                        OutMessage("[AutoCloseReader]:" + sql, paramInfo);
+                        OutMessage("AutoCloseReader" ,sql, paramInfo);
                     }
 #endif
                     reader = _comm.ExecuteReader(CommandBehavior.CloseConnection);
@@ -438,7 +431,7 @@ namespace Buffalo.DB.DbCommon
 #if DEBUG
                     if (_db.SqlOutputer.HasOutput)
                     {
-                        OutMessage("[Reader]:" + sql, paramInfo);
+                        OutMessage("Reader" ,sql,paramInfo);
                     }
 #endif
                     reader = _comm.ExecuteReader();
@@ -480,7 +473,7 @@ namespace Buffalo.DB.DbCommon
 #if DEBUG
                     if (_db.SqlOutputer.HasOutput)
                     {
-                        OutMessage("[RollbackTransation]");
+                        OutMessage("RollbackTransation");
                     }
 #endif
                     _tran.Rollback();
@@ -544,7 +537,7 @@ namespace Buffalo.DB.DbCommon
 #if DEBUG
                 if (_db.SqlOutputer.HasOutput)
                 {
-                    OutMessage("[NonQuery]:" + sql, paramInfo);
+                    OutMessage("NonQuery" ,sql, paramInfo);
                 }
 #endif
                 ret = _comm.ExecuteNonQuery();
@@ -606,7 +599,7 @@ namespace Buffalo.DB.DbCommon
 #if DEBUG
                 if (_db.SqlOutputer.HasOutput)
                 {
-                    OutMessage("[BeginTransation:Level=" + isolationLevel.ToString() + "]");
+                    OutMessage("BeginTransation","Level=" + isolationLevel.ToString());
                 }
 #endif
                 _tran = _conn.BeginTransaction(isolationLevel);
@@ -622,7 +615,7 @@ namespace Buffalo.DB.DbCommon
         /// 当前待处理事务提交，失败全部回滚
 		/// </summary>
 		/// <returns></returns>
-		public bool Commit()
+		internal bool Commit()
 		{
 			//如果没有开启事务处理功能，不做任何操作，直接返回成功
             if (!IsTran)
@@ -635,7 +628,7 @@ namespace Buffalo.DB.DbCommon
 #if DEBUG
                 if (_db.SqlOutputer.HasOutput)
                 {
-                    OutMessage("[CommitTransation]");
+                    OutMessage("CommitTransation");
                 }
 #endif
                 _tran.Commit();
