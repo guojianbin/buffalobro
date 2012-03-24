@@ -1344,6 +1344,31 @@
             默认数据长度
             </summary>
         </member>
+        <member name="T:Buffalo.DBTools.DocSummary.SummaryShowItem">
+            <summary>
+            注释显示的项数
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.TypeName">
+            <summary>
+            变量类型
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.MemberName">
+            <summary>
+            变量名
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.Summary">
+            <summary>
+            注释
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.All">
+            <summary>
+            所有
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.DBCreater.TableCreater">
             <summary>
             表生成
@@ -1766,6 +1791,40 @@
             所有字段名集合
             </summary>
         </member>
+        <member name="T:Buffalo.DBTools.CommandItems">
+            <summary>
+            菜单类
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.CommandItems.Install(EnvDTE80.DTE2,EnvDTE.AddIn,EnvDTE80.Commands2)">
+            <summary>
+            安装菜单
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.CommandItems.UnInstall">
+            <summary>
+            卸载菜单
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.CommandItems.AddToCommand(System.String,System.String,System.String,System.Boolean,System.Object)">
+            <summary>
+            添加命令
+            </summary>
+            <param name="name"></param>
+            <param name="buttonText"></param>
+            <param name="tooltip"></param>
+            <param name="msoButton"></param>
+            <param name="bitmap"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.CommandItems.AddPopUp(System.String,Microsoft.VisualStudio.CommandBars.CommandBar,System.Int32)">
+            <summary>
+            添加弹出菜单
+            </summary>
+            <param name="buttonText"></param>
+            <param name="parent"></param>
+            <returns></returns>
+        </member>
         <member name="F:Buffalo.DBTools.FrmClassDesigner.components">
             <summary>
             必需的设计器变量。
@@ -1802,65 +1861,6 @@
             <summary>
             选择的文档
             </summary>
-        </member>
-        <member name="T:Buffalo.DBTools.DocSummary.SummaryShowItem">
-            <summary>
-            注释显示的项数
-            </summary>
-        </member>
-        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.TypeName">
-            <summary>
-            变量类型
-            </summary>
-        </member>
-        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.MemberName">
-            <summary>
-            变量名
-            </summary>
-        </member>
-        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.Summary">
-            <summary>
-            注释
-            </summary>
-        </member>
-        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.All">
-            <summary>
-            所有
-            </summary>
-        </member>
-        <member name="T:Buffalo.DBTools.CommandItems">
-            <summary>
-            菜单类
-            </summary>
-        </member>
-        <member name="M:Buffalo.DBTools.CommandItems.Install(EnvDTE80.DTE2,EnvDTE.AddIn,EnvDTE80.Commands2)">
-            <summary>
-            安装菜单
-            </summary>
-        </member>
-        <member name="M:Buffalo.DBTools.CommandItems.UnInstall">
-            <summary>
-            卸载菜单
-            </summary>
-        </member>
-        <member name="M:Buffalo.DBTools.CommandItems.AddToCommand(System.String,System.String,System.String,System.Boolean,System.Object)">
-            <summary>
-            添加命令
-            </summary>
-            <param name="name"></param>
-            <param name="buttonText"></param>
-            <param name="tooltip"></param>
-            <param name="msoButton"></param>
-            <param name="bitmap"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Buffalo.DBTools.CommandItems.AddPopUp(System.String,Microsoft.VisualStudio.CommandBars.CommandBar,System.Int32)">
-            <summary>
-            添加弹出菜单
-            </summary>
-            <param name="buttonText"></param>
-            <param name="parent"></param>
-            <returns></returns>
         </member>
     </members>
 </doc>

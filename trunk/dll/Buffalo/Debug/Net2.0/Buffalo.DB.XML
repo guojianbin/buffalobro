@@ -2313,7 +2313,7 @@
             关闭数据库连接
             </summary>
         </member>
-        <member name="M:Buffalo.DB.DbCommon.DataBaseOperate.OutMessage(System.String[])">
+        <member name="M:Buffalo.DB.DbCommon.DataBaseOperate.OutMessage(System.String,System.String[])">
             <summary>
             输出信息
             </summary>
@@ -2477,6 +2477,45 @@
         <member name="T:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLNowDateHandle">
             <summary>
             当前时间的句柄
+            </summary>
+        </member>
+        <member name="T:Buffalo.DB.CommBase.UpdatePropertyInfo">
+            <summary>
+            属性的关联更新信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.CommBase.UpdatePropertyInfo.#ctor(Buffalo.DB.EntityInfos.EntityMappingInfo,System.Boolean)">
+            <summary>
+            属性的关联更新信息
+            </summary>
+            <param name="mapInfo"></param>
+            <param name="isEntityProperty"></param>
+        </member>
+        <member name="M:Buffalo.DB.CommBase.UpdatePropertyInfo.UpdateProperty(Buffalo.DB.CommBase.EntityBase)">
+            <summary>
+            更新属性
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Buffalo.DB.CommBase.UpdatePropertyInfo.ClearParentProperty(Buffalo.DB.CommBase.EntityBase)">
+            <summary>
+            清空父属性
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.CommBase.UpdatePropertyInfo.UpdateChildProperty(Buffalo.DB.CommBase.EntityBase)">
+            <summary>
+            更新子属性
+            </summary>
+            <param name="mapInfo"></param>
+        </member>
+        <member name="P:Buffalo.DB.CommBase.UpdatePropertyInfo.IsEntityProperty">
+            <summary>
+            是否父实体属性
+            </summary>
+        </member>
+        <member name="P:Buffalo.DB.CommBase.UpdatePropertyInfo.MapInfo">
+            <summary>
+            关联的映射
             </summary>
         </member>
         <member name="T:Buffalo.DB.CommBase.DataAccessBases.DataAccessBaseForSelect`1">
@@ -2798,14 +2837,14 @@
             目标属性
             </summary>
         </member>
-        <member name="M:Buffalo.DB.MessageOutPuters.IMessageOutputer.Output(System.String,System.String)">
+        <member name="M:Buffalo.DB.MessageOutPuters.IMessageOutputer.Output(System.String,System.String,System.String[])">
             <summary>
             输出信息
             </summary>
             <param name="messName">信息发送者名称</param>
             <param name="messInfo">信息</param>
         </member>
-        <member name="M:Buffalo.DB.MessageOutPuters.DebugOutputer.Output(System.String,System.String)">
+        <member name="M:Buffalo.DB.MessageOutPuters.DebugOutputer.Output(System.String,System.String,System.String[])">
             <summary>
             输出信息
             </summary>
@@ -4416,7 +4455,7 @@
             信息输出类
             </summary>
         </member>
-        <member name="M:Buffalo.DB.MessageOutPuters.MessageOutput.OutPut(System.String,System.String)">
+        <member name="M:Buffalo.DB.MessageOutPuters.MessageOutput.OutPut(System.String,System.String,System.String[])">
             <summary>
             输出信息
             </summary>
@@ -9735,45 +9774,6 @@
             根据实体清除对应的缓存
             </summary>
             <param name="entityType"></param>
-        </member>
-        <member name="T:Buffalo.DB.CommBase.UpdatePropertyInfo">
-            <summary>
-            属性的关联更新信息
-            </summary>
-        </member>
-        <member name="M:Buffalo.DB.CommBase.UpdatePropertyInfo.#ctor(Buffalo.DB.EntityInfos.EntityMappingInfo,System.Boolean)">
-            <summary>
-            属性的关联更新信息
-            </summary>
-            <param name="mapInfo"></param>
-            <param name="isEntityProperty"></param>
-        </member>
-        <member name="M:Buffalo.DB.CommBase.UpdatePropertyInfo.UpdateProperty(Buffalo.DB.CommBase.EntityBase)">
-            <summary>
-            更新属性
-            </summary>
-            <param name="entity"></param>
-        </member>
-        <member name="M:Buffalo.DB.CommBase.UpdatePropertyInfo.ClearParentProperty(Buffalo.DB.CommBase.EntityBase)">
-            <summary>
-            清空父属性
-            </summary>
-        </member>
-        <member name="M:Buffalo.DB.CommBase.UpdatePropertyInfo.UpdateChildProperty(Buffalo.DB.CommBase.EntityBase)">
-            <summary>
-            更新子属性
-            </summary>
-            <param name="mapInfo"></param>
-        </member>
-        <member name="P:Buffalo.DB.CommBase.UpdatePropertyInfo.IsEntityProperty">
-            <summary>
-            是否父实体属性
-            </summary>
-        </member>
-        <member name="P:Buffalo.DB.CommBase.UpdatePropertyInfo.MapInfo">
-            <summary>
-            关联的映射
-            </summary>
         </member>
     </members>
 </doc>

@@ -1344,6 +1344,31 @@
             默认数据长度
             </summary>
         </member>
+        <member name="T:Buffalo.DBTools.DocSummary.SummaryShowItem">
+            <summary>
+            注释显示的项数
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.TypeName">
+            <summary>
+            变量类型
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.MemberName">
+            <summary>
+            变量名
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.Summary">
+            <summary>
+            注释
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.All">
+            <summary>
+            所有
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.DBCreater.TableCreater">
             <summary>
             表生成
@@ -1835,31 +1860,6 @@
         <member name="P:Buffalo.DBTools.FrmClassDesigner.SelectDocView">
             <summary>
             选择的文档
-            </summary>
-        </member>
-        <member name="T:Buffalo.DBTools.DocSummary.SummaryShowItem">
-            <summary>
-            注释显示的项数
-            </summary>
-        </member>
-        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.TypeName">
-            <summary>
-            变量类型
-            </summary>
-        </member>
-        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.MemberName">
-            <summary>
-            变量名
-            </summary>
-        </member>
-        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.Summary">
-            <summary>
-            注释
-            </summary>
-        </member>
-        <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.All">
-            <summary>
-            所有
             </summary>
         </member>
     </members>
