@@ -4,6 +4,7 @@ using System.Text;
 using EnvDTE;
 using EnvDTE80;
 using System.IO;
+using Microsoft.VisualStudio.CommandBars;
 
 namespace Buffalo.DBTools
 {
@@ -34,6 +35,36 @@ namespace Buffalo.DBTools
         }
 
         /// <summary>
+        /// 清除指定名称的项(删除可能VS崩溃没执行删除而残余的菜单)
+        /// </summary>
+        /// <param name="bar"></param>
+        /// <param name="name"></param>
+        private void ClearControl(Microsoft.VisualStudio.CommandBars.CommandBar bar, string name) 
+        {
+            int trac = 0;
+            CommandBarControl ctr = null;
+            while (true)
+            {
+                trac++;
+                if (trac >= 100) 
+                {
+                    return;
+                }
+                try
+                {
+                    ctr = bar.Controls[name] as CommandBarControl;
+                }
+                catch { }
+                if (ctr == null)
+                {
+                    return;
+                }
+                ctr.Delete(Type.Missing);
+                ctr = null;
+            }
+        }
+
+        /// <summary>
         /// 安装菜单
         /// </summary>
         public void Install(DTE2 applicationObject, AddIn addInInstance, Commands2 commands) 
@@ -45,6 +76,13 @@ namespace Buffalo.DBTools
 
             Microsoft.VisualStudio.CommandBars.CommandBar calssComm = ((Microsoft.VisualStudio.CommandBars.CommandBars)_applicationObject.CommandBars)[CommandBarId.ClassDesignerContextMenu];
             Microsoft.VisualStudio.CommandBars.CommandBar designerComm = ((Microsoft.VisualStudio.CommandBars.CommandBars)_applicationObject.CommandBars)[CommandBarId.ClassDiagramContextMenu];
+
+
+            ClearControl(calssComm, "Buffalo助手");
+            ClearControl(designerComm, "Buffalo助手");
+            
+            
+            
             commandEntityTools = AddPopUp("Buffalo助手", calssComm, 1);
             commandDB = AddPopUp("Buffalo助手", designerComm, 1);
             commandEntity = AddToCommand("BuffaloEntityConfig", "配置实体", "配置Buffalo实体", true, 523);
@@ -53,7 +91,7 @@ namespace Buffalo.DBTools
             commandSummary = AddToCommand("BuffaloShowHideSummery", "显示/隐藏注释", "显示/隐藏注释", true, 192);
             commandDBAll = AddToCommand("BuffaloDBCreateAll", "生成数据库", "生成数据库", true, 577);
             commandDBSet = AddToCommand("BuffaloDBSet", "设置参数", "设置数据库和生成参数", true, 611);
-            commandEntityUpdate = AddToCommand("BuffaloUpdateEntityByDB", "更新实体", "把数据库的新字段更新到实体", true, 59);
+            commandEntityUpdate = AddToCommand("BuffaloUpdateEntityByDB", "更新实体", "把数据库的新字段更新到实体", true, 524);
             //将对应于该命令的控件添加到类菜单
             if ((commandEntityTools != null) && (calssComm != null))
             {
@@ -117,12 +155,20 @@ namespace Buffalo.DBTools
             }
             if (_applicationObject != null && commandDB != null)
             {
-                _applicationObject.Commands.RemoveCommandBar(commandDB);
+                try
+                {
+                    _applicationObject.Commands.RemoveCommandBar(commandDB);
+                }
+                catch { }
                 commandDB = null;
             }
             if (_applicationObject != null && commandEntityTools != null)
             {
-                _applicationObject.Commands.RemoveCommandBar(commandEntityTools);
+                try
+                {
+                    _applicationObject.Commands.RemoveCommandBar(commandEntityTools);
+                }
+                catch { }
                 commandEntityTools = null;
             }
 

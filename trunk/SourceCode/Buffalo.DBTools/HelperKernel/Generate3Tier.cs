@@ -116,7 +116,9 @@ namespace Buffalo.DBTools.HelperKernel
             ComboBoxItemCollection types = new ComboBoxItemCollection();
             ComboBoxItem item = new ComboBoxItem("SQL Server 2000", "Sql2K");
             types.Add(item);
-            item = new ComboBoxItem("SQL Server 2005 或以上", "Sql2K5");
+            item = new ComboBoxItem("SQL Server 2005", "Sql2K5");
+            types.Add(item);
+            item = new ComboBoxItem("SQL Server 2008 或以上", "Sql2K8");
             types.Add(item);
             item = new ComboBoxItem("Oracle 9 或以上", "Oracle9");
             types.Add(item);

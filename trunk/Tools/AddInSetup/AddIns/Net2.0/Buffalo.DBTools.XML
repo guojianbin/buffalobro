@@ -2287,14 +2287,14 @@
             初始化类信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.GreanCode">
+        <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.GreanCode(System.Xml.XmlDocument)">
             <summary>
             生成代码
             </summary>
             <param name="code">代码行</param>
             <param name="tiers">层数</param>
         </member>
-        <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.SetToDiagram">
+        <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.SetToDiagram(System.Xml.XmlDocument)">
             <summary>
             把类设置到类图
             </summary>
@@ -3312,6 +3312,13 @@
             <summary>
             菜单类
             </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.CommandItems.ClearControl(Microsoft.VisualStudio.CommandBars.CommandBar,System.String)">
+            <summary>
+            清除指定名称的项(删除可能VS崩溃没执行删除而残余的菜单)
+            </summary>
+            <param name="bar"></param>
+            <param name="name"></param>
         </member>
         <member name="M:Buffalo.DBTools.CommandItems.Install(EnvDTE80.DTE2,EnvDTE.AddIn,EnvDTE80.Commands2)">
             <summary>

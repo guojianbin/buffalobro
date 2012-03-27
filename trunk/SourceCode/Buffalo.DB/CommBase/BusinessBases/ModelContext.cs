@@ -146,7 +146,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
         public T GetEntityById(object id)
         {
             ScopeList lstScope = new ScopeList();
-            //lstScope.AddEqual(CurEntityInfo.PrimaryProperty.PropertyName, id);
             PrimaryKeyInfo info = id as PrimaryKeyInfo;
             if (info == null)
             {

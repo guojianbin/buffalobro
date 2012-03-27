@@ -42,11 +42,11 @@
   <ItemGroup>
     <Reference Include="IBM.Data.DB2, Version=9.0.0.2, Culture=neutral, PublicKeyToken=7c307b91aa13d208, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\Net2.0\IBM.Data.DB2.dll</HintPath>
+      <HintPath>..\..\dll\dll\Net2.0\IBM.Data.DB2.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.5.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\Net3.5\MySql.Data.dll</HintPath>
+      <HintPath>..\..\dll\dll\Net3.5\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -57,7 +57,7 @@
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Data.SQLite, Version=1.0.79.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\Net3.5\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\..\dll\dll\Net3.5\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -215,6 +215,11 @@
     <Compile Include="DataBaseAdapter\SqlServer2K5Adapter\CutPageSqlCreater.cs" />
     <Compile Include="DataBaseAdapter\SqlServer2K5Adapter\DBAdapter.cs" />
     <Compile Include="DataBaseAdapter\SqlServer2K5Adapter\DBStructure.cs" />
+    <Compile Include="DataBaseAdapter\SqlServer2K8Adapter\AdapterLoader.cs" />
+    <Compile Include="DataBaseAdapter\SqlServer2K8Adapter\AggregateFunctions.cs" />
+    <Compile Include="DataBaseAdapter\SqlServer2K8Adapter\CutPageSqlCreater.cs" />
+    <Compile Include="DataBaseAdapter\SqlServer2K8Adapter\DBAdapter.cs" />
+    <Compile Include="DataBaseAdapter\SqlServer2K8Adapter\DBStructure.cs" />
     <Compile Include="DataBaseAdapter\SqlServer2KAdapter\AdapterLoader.cs" />
     <Compile Include="DataBaseAdapter\SqlServer2KAdapter\AggregateFunctions.cs" />
     <Compile Include="DataBaseAdapter\SqlServer2KAdapter\CommonFunction.cs" />

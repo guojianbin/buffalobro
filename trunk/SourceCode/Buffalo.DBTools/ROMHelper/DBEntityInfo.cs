@@ -89,6 +89,7 @@ namespace Buffalo.DBTools.ROMHelper
         }
 
 
+
         /// <summary>
         /// 实体信息
         /// </summary>
@@ -162,7 +163,7 @@ namespace Buffalo.DBTools.ROMHelper
         /// </summary>
         /// <param name="code">代码行</param>
         /// <param name="tiers">层数</param>
-        public void GreanCode() 
+        public void GreanCode(XmlDocument doc) 
         {
             string model = Buffalo.DBTools.Models.Entity;
 
@@ -209,16 +210,15 @@ namespace Buffalo.DBTools.ROMHelper
             bqlEntity.GenerateBQLEntityDB();
             bqlEntity.GenerateBQLEntity();
             EntityMappingConfig.SaveXML(this);
-            SetToDiagram();
+            SetToDiagram(doc);
         }
 
         /// <summary>
         /// 把类设置到类图
         /// </summary>
-        private void SetToDiagram() 
+        private void SetToDiagram(XmlDocument doc) 
         {
-            string file = _docView.DocData.FileName;
-            XmlDocument doc = GetClassDiagram(file);
+            
             XmlNodeList lstClassDiagram = doc.GetElementsByTagName("ClassDiagram");
             if (lstClassDiagram.Count > 0) 
             {
@@ -275,9 +275,7 @@ namespace Buffalo.DBTools.ROMHelper
 
                 AppendNode(classDia, maxX);
 
-                //拷贝备份
-                File.Copy(file, file + ".bak",true);
-                EntityMappingConfig.SaveXML(file, doc);
+                
             }
         }
 
@@ -285,7 +283,7 @@ namespace Buffalo.DBTools.ROMHelper
         /// 获取类图文档
         /// </summary>
         /// <returns></returns>
-        private XmlDocument GetClassDiagram(string file) 
+        public static XmlDocument GetClassDiagram(string file) 
         {
             XmlDocument doc = new XmlDocument();
             try

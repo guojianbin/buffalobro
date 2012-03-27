@@ -13,6 +13,8 @@ using Microsoft.VisualStudio.Modeling.Diagrams;
 using Buffalo.DBTools.ROMHelper;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 using Buffalo.DB.CommBase.BusinessBases;
+using System.IO;
+using System.Xml;
 
 namespace Buffalo.DBTools
 {
@@ -124,17 +126,22 @@ namespace Buffalo.DBTools
             {
                 using (FrmProcess frmPro = FrmProcess.ShowProcess())
                 {
+                    string file = SelectDocView.DocData.FileName;
+                    XmlDocument doc = DBEntityInfo.GetClassDiagram(file);
+
                     frmPro.UpdateProgress(0, 10, "正在读取类信息");
                     List<DBTableInfo> lstGen = TableChecker.GetTableInfo(db, selection);
-
                     string entityNamespace = DBEntityInfo.GetNameSpace(SelectDocView, CurrentProject);
                     for (int i = 0; i < lstGen.Count; i++)
                     {
                         frmPro.UpdateProgress(i, lstGen.Count, "正在生成");
 
                         DBEntityInfo info = new DBEntityInfo(entityNamespace, lstGen[i], SelectDocView, CurrentProject, DbInfo);
-                        info.GreanCode();
+                        info.GreanCode(doc);
                     }
+                    //拷贝备份
+                    File.Copy(file, file + ".bak", true);
+                    EntityMappingConfig.SaveXML(file, doc);
                 }
             }
             this.Close();

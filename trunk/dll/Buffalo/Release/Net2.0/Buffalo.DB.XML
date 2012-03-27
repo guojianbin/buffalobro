@@ -1683,6 +1683,16 @@
             当前数据库适配器
             </summary>
         </member>
+        <member name="T:Buffalo.DB.DataBaseAdapter.SqlServer2K8Adapter.AdapterLoader">
+            <summary>
+            适配器加载器
+            </summary>8
+        </member>
+        <member name="P:Buffalo.DB.DataBaseAdapter.SqlServer2K8Adapter.AdapterLoader.DbAdapter">
+            <summary>
+            当前数据库适配器
+            </summary>
+        </member>
         <member name="T:Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter.CutPageSqlCreater">
             <summary>
             生成分页语句的类
@@ -2922,6 +2932,16 @@
             <param name="part">查询条件</param>
             <param name="list">变量列表</param>
             <param name="oper">通用类</param>
+        </member>
+        <member name="T:Buffalo.DB.DataBaseAdapter.SqlServer2K8Adapter.AggregateFunctions">
+            <summary>
+            聚合函数处理
+            </summary>
+        </member>
+        <member name="T:Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter.AggregateFunctions">
+            <summary>
+            聚合函数处理
+            </summary>
         </member>
         <member name="T:Buffalo.DB.DataBaseAdapter.SQLiteAdapter.CursorPageCutter">
             <summary>
@@ -4946,6 +4966,11 @@
             主属性
             </summary>
         </member>
+        <member name="T:Buffalo.DB.DataBaseAdapter.SqlServer2K8Adapter.DBStructure">
+            <summary>
+            数据库结构特性类
+            </summary>
+        </member>
         <member name="T:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.AggregateFunctions">
             <summary>
             聚合函数处理
@@ -6362,6 +6387,13 @@
             所有实体的信息
             </summary>
         </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.SqlServer2K8Adapter.DBAdapter.DBTypeToSQL(System.Data.DbType,System.Int64)">
+            <summary>
+            把DBType类型转成对应的SQLType
+            </summary>
+            <param name="dbType"></param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.SQLiteAdapter.DBAdapter.GetNowDate(System.Data.DbType)">
             <summary>
             获取当前时间
@@ -7103,6 +7135,11 @@
             <param name="oper">数据库对象</param>
             <param name="curType">映射的实体类型(如果用回数据库的原列名，则此为null)</param>
             <returns></returns>
+        </member>
+        <member name="T:Buffalo.DB.DataBaseAdapter.SqlServer2K8Adapter.CutPageSqlCreater">
+            <summary>
+            生成分页语句的类
+            </summary>
         </member>
         <member name="T:Buffalo.DB.DataBaseAdapter.SQLiteAdapter.CutPageSqlCreater">
             <summary>
@@ -8277,6 +8314,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.CommBase.BusinessBases.BusinessModelBaseForSelect`1.OnSelect(Buffalo.DB.QueryConditions.ScopeList)">
+            <summary>
+            执行查询之前触发的事件
+            </summary>
+            <param name="lstScope"></param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DB.CommBase.BusinessBases.BusinessModelBaseForSelect`1.#ctor">
             <summary>
             业务层的查询集合
@@ -8661,11 +8705,6 @@
             <param name="mappingInfo">设置对应元素的的属性句柄</param>
             <param name="dicElement">元素列表</param>
             <returns></returns>
-        </member>
-        <member name="T:Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter.AggregateFunctions">
-            <summary>
-            聚合函数处理
-            </summary>
         </member>
         <member name="T:Buffalo.DB.DataBaseAdapter.IDbAdapters.CheckEvent">
             <summary>
