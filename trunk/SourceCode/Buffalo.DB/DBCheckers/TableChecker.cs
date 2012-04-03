@@ -89,7 +89,7 @@ namespace Buffalo.DB.DBCheckers
                         string seqName = idb.GetSequenceName(table.TableName, prm.ParamName);
                         if (!string.IsNullOrEmpty(seqName))//需要创建序列
                         {
-                            string seqSql = idb.GetSequenceInit(seqName, info.DefaultOperate);
+                            string seqSql = idb.GetSequenceInit(seqName,prm, info.DefaultOperate);
                             if (!string.IsNullOrEmpty(seqSql))
                             {
                                 lstRet.Add(seqSql);

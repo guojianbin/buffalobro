@@ -247,10 +247,15 @@ namespace Buffalo.DB.DbCommon
                             OutMessage("Closed DataBase");
                         }
 #endif
+                        
                         _conn.Close();
                         _conn.Dispose();
-                        //_comm = null;
-                        //_conn = null;
+                        if (_comm != null) 
+                        {
+                            _comm.Dispose();
+                        }
+                        _comm = null;
+                        _conn = null;
                         _tran = null;
                         
                     }
