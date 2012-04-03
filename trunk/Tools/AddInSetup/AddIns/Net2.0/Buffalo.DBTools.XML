@@ -264,6 +264,19 @@
             数据层的类型
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.Generate3Tier.InitConnStrings">
+            <summary>
+            初始化参考字符串
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.Generate3Tier.GetConnString(System.String)">
+            <summary>
+            获取参考字符串
+            </summary>
+            <param name="dbType">数据库类型</param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.Generate3Tier.InitItems">
             <summary>
             初始化数据库类型
@@ -2992,6 +3005,11 @@
             </summary>
             <param name="name"></param>
             <returns></returns>
+        </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.ComboBoxItem.Tag">
+            <summary>
+            附加信息
+            </summary>
         </member>
         <member name="P:Buffalo.DBTools.HelperKernel.ComboBoxItem.Value">
             <summary>

@@ -290,6 +290,50 @@
             默认全部程序集的类型加载器
             </summary>
         </member>
+        <member name="T:GPMSKernel.SmartSellMap.CombinationItem`1">
+            <summary>
+            组合项
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:GPMSKernel.SmartSellMap.CombinationItem`1.#ctor(`0,System.Int32,GPMSKernel.SmartSellMap.ICombinationState,GPMSKernel.SmartSellMap.CombinationItem{`0})">
+            <summary>
+            组合项
+            </summary>
+            <param name="previous"></param>
+        </member>
+        <member name="M:GPMSKernel.SmartSellMap.CombinationItem`1.ToList">
+            <summary>
+            返回组合合
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="P:GPMSKernel.SmartSellMap.CombinationItem`1.ItemIndex">
+            <summary>
+            所属项索引
+            </summary>
+        </member>
+        <member name="P:GPMSKernel.SmartSellMap.CombinationItem`1.Item">
+            <summary>
+            项
+            </summary>
+        </member>
+        <member name="P:GPMSKernel.SmartSellMap.CombinationItem`1.Previous">
+            <summary>
+            上一个
+            </summary>
+        </member>
+        <member name="P:GPMSKernel.SmartSellMap.CombinationItem`1.Sender">
+            <summary>
+            购买者
+            </summary>
+        </member>
+        <member name="P:GPMSKernel.SmartSellMap.CombinationItem`1.TotlePoint">
+            <summary>
+            剩余积分
+            </summary>
+        </member>
         <member name="T:Buffalo.Kernel.FastReflection.ClassInfos.ClassInfoHandle">
             <summary>
             类的信息
@@ -475,6 +519,17 @@
             <summary>
             数据的默认值
             </summary>
+        </member>
+        <member name="T:GPMSKernel.SmartSellMap.ICombinationState">
+            <summary>
+            组合状态拷贝
+            </summary>
+        </member>
+        <member name="M:GPMSKernel.SmartSellMap.ICombinationState.DoBuy(GPMSKernel.SmartSellMap.ICombinationItem)">
+            <summary>
+            购买并返回是否成功
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.Kernel.Replacer.MyReplacer.SplitItems(System.String,System.Collections.Generic.IEnumerable{System.String})">
             <summary>
@@ -1002,6 +1057,30 @@
             写入日志
             </summary>
             <param name="message"></param>
+        </member>
+        <member name="M:GPMSKernel.SmartSellMap.SellCombination`1.#ctor(System.Collections.Generic.IList{`0})">
+            <summary>
+            销售组合
+            </summary>
+            <param name="sender">购买者</param>
+            <param name="lstItems">组合集合</param>
+        </member>
+        <member name="M:GPMSKernel.SmartSellMap.SellCombination`1.SortItem">
+            <summary>
+            按消耗倒序排列
+            </summary>
+        </member>
+        <member name="M:GPMSKernel.SmartSellMap.SellCombination`1.DoCombination(GPMSKernel.SmartSellMap.ICombinationState)">
+            <summary>
+            开始组合
+            </summary>
+        </member>
+        <member name="M:GPMSKernel.SmartSellMap.SellCombination`1.ToCombination">
+            <summary>
+            组合
+            </summary>
+            <param name="curItem">当前项</param>
+            <param name="itemIndex">项索引</param>
         </member>
         <member name="M:Buffalo.Kernel.FastReflection.FastValueGetSet.GetPropertyInfoHandle(System.String,System.Type)">
             <summary>
@@ -2159,6 +2238,23 @@
             <summary>
             当有信息进入时候
             </summary>
+        </member>
+        <member name="T:GPMSKernel.SmartSellMap.ICombinationItem">
+            <summary>
+            组合项
+            </summary>
+        </member>
+        <member name="M:GPMSKernel.SmartSellMap.ICombinationItem.GetConsume">
+            <summary>
+            获取消耗
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GPMSKernel.SmartSellMap.ICombinationItem.GetPoint">
+            <summary>
+            获取得分
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.Kernel.Commons.PropertyType.GetForLen(System.Byte[])">
             <summary>

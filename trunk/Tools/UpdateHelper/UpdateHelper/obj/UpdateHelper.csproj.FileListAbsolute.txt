@@ -1,0 +1,11 @@
+D:\CShareTest\UpdateHelper\UpdateHelper\obj\Debug\ResolveAssemblyReference.cache
+D:\CShareTest\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.FrmMain.resources
+D:\CShareTest\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.Properties.Resources.resources
+D:\CShareTest\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.csproj.GenerateResource.Cache
+D:\CShareTest\UpdateHelper\UpdateHelper\bin\Debug\UpdateConfig.xml
+D:\CShareTest\UpdateHelper\UpdateHelper\bin\Debug\UpdateHelper.exe
+D:\CShareTest\UpdateHelper\UpdateHelper\bin\Debug\UpdateHelper.pdb
+D:\CShareTest\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.exe
+D:\CShareTest\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.pdb
+D:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.exe
+D:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.pdb
