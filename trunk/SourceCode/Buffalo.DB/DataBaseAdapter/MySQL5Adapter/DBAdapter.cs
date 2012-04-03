@@ -9,6 +9,7 @@ using Buffalo.DB.EntityInfos;
 using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 using System.Data.Common;
+using Buffalo.DB.PropertyAttributes;
 namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
 {
     public class DBAdapter : IDBAdapter
@@ -346,7 +347,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// 初始化序列名
         /// </summary>
         /// <param name="seqName"></param>
-        public string GetSequenceInit(string seqName, DataBaseOperate oper)
+        public string GetSequenceInit(string seqName, EntityParam prm, DataBaseOperate oper)
         {
             return null;
         }

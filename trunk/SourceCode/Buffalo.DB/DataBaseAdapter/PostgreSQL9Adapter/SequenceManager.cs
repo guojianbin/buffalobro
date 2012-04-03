@@ -4,8 +4,9 @@ using System.Text;
 using Buffalo.DB.EntityInfos;
 using System.Data;
 using Buffalo.DB.DbCommon;
+using Buffalo.DB.PropertyAttributes;
 
-namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
+namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
 {
     /// <summary>
     /// 主键序列管理
@@ -21,26 +22,21 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <returns></returns>
         public static string GetSequenceName(string tableName,string paramName) 
         {
-            StringBuilder sbSeqName = new StringBuilder(20);
-            sbSeqName.Append("seq_");
-            sbSeqName.Append(tableName);
-            sbSeqName.Append("_");
-            sbSeqName.Append(paramName);
-            sbSeqName.Replace(" ", "");
 
-            return sbSeqName.ToString() ;
+            return Buffalo.DB.DataBaseAdapter.Oracle9Adapter.SequenceManager.GetSequenceName(tableName,paramName);
         }
 
         /// <summary>
         /// 初始化序列
         /// </summary>
         /// <param name="seqName"></param>
-        public static string GetInitSequence(string seqName, DataBaseOperate oper)
+        public static string GetInitSequence(string seqName,EntityParam prm, DataBaseOperate oper)
         {
+            string dbType = oper.DBInfo.CurrentDbAdapter.DBTypeToSQL(prm.SqlType,4);
 
             if (!IsSequenceExists(seqName, oper)) //判断是否已经存在序列
             {
-                string sql = "CREATE SEQUENCE \"" + seqName + "\" INCREMENT BY 1 START WITH 1  NOMAXVALUE  NOCYCLE  NoCACHE";//创建序列
+                string sql = "CREATE SEQUENCE \"" + seqName + "\" INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1";//创建序列
                 return sql;
             }
             return null;
@@ -54,10 +50,10 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <param name="seqName">序列名</param>
         /// <param name="oper">数据库链接</param>
         /// <returns></returns>
-        internal static bool IsSequenceExists(string seqName, DataBaseOperate oper)
+        private static bool IsSequenceExists(string seqName, DataBaseOperate oper)
         {
-            string sql = "select SEQUENCE_NAME from user_sequences where SEQUENCE_NAME='" + seqName + "'";
-            
+            string sql = "select count(*) from information_schema.sequences where SEQUENCE_NAME='" + seqName + "'";
+
             IDataReader reader = null;
             int count = 0;
             try
@@ -65,18 +61,14 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                 reader = oper.Query(sql, null);
                 if (reader.Read())
                 {
-                    if (!reader.IsDBNull(0)) 
-                    {
-                        count = 1;
-                    }
-                   
+                    count = Convert.ToInt32(reader[0]);
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception("查询序列时候出现错误:" + ex.Message);
             }
-            finally 
+            finally
             {
                 reader.Close();
             }

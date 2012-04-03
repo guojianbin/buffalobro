@@ -5,6 +5,7 @@ using Buffalo.DB.EntityInfos;
 using System.Collections.Generic;
 using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
+using Buffalo.DB.PropertyAttributes;
 namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
 {
     public interface IDBAdapter
@@ -224,7 +225,7 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// 初始化序列名
         /// </summary>
         /// <param name="seqName"></param>
-        string GetSequenceInit(string seqName, DataBaseOperate oper);
+        string GetSequenceInit(string seqName,EntityParam prm, DataBaseOperate oper);
 
         /// <summary>
         /// 获取变量列表

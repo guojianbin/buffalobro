@@ -9,6 +9,7 @@ using Buffalo.DB.EntityInfos;
 using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 using System.Data.Common;
+using Buffalo.DB.PropertyAttributes;
 
 namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
 {
@@ -304,7 +305,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// 初始化序列名
         /// </summary>
         /// <param name="seqName"></param>
-        public string GetSequenceInit(string seqName, DataBaseOperate oper)
+        public string GetSequenceInit(string seqName, EntityParam prm, DataBaseOperate oper)
         {
             return SequenceManager.GetInitSequence(seqName, oper);
         }

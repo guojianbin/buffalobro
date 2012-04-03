@@ -10,6 +10,7 @@ using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 using Buffalo.Kernel;
 using System.Data.Common;
+using Buffalo.DB.PropertyAttributes;
 namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
 {
     public class DBAdapter : IDBAdapter
@@ -246,7 +247,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// 初始化序列名
         /// </summary>
         /// <param name="seqName"></param>
-        public string GetSequenceInit(string seqName, DataBaseOperate oper)
+        public string GetSequenceInit(string seqName,EntityParam prm, DataBaseOperate oper)
         {
             return null;
         }
@@ -486,7 +487,27 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public string GetDateTimeString(object value)
         {
+
             return "'" + value.ToString().Replace("'","") + "'";
+        }
+
+        internal string DateTimeString(object value) 
+        {
+            
+            DateTime dt=DateTime.MinValue;
+            if (value == null)
+            {
+                dt = DateTime.MinValue;
+            }
+            else if (value is DateTime)
+            {
+                dt = (DateTime)value;
+            }
+            else 
+            {
+                dt = DateTime.Parse(value.ToString());
+            }
+            return "'" + dt.ToString("yyyy-MM-dd HH:mm:ss.ms") + "'";
         }
 
         /// <summary>

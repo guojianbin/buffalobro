@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
-using IBM.Data.DB2;
+using Npgsql;
 using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 using Buffalo.DB.CommBase;
 using Buffalo.DB.EntityInfos;
@@ -10,8 +10,7 @@ using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 using System.Data.Common;
 using Buffalo.DB.PropertyAttributes;
-
-namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
+namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
 {
     public class DBAdapter : IDBAdapter
     {
@@ -25,6 +24,16 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
                 return false;
             }
         }
+
+        /// <summary>
+        /// 获取当前时间
+        /// </summary>
+        /// <returns></returns>
+        public string GetNowDate(DbType dbType)
+        {
+            return "now()";
+        }
+
         /// <summary>
         /// 是否记录自增长字段作手动处理
         /// </summary>
@@ -35,20 +44,6 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
                 return false;
             }
         }
-
-        /// <summary>
-        /// 获取当前时间
-        /// </summary>
-        /// <returns></returns>
-        public string GetNowDate(DbType dbType)
-        {
-            if (dbType == DbType.Date)
-            {
-                return "current date";
-            }
-            return "current timestamp";
-        }
-
         /// <summary>
         /// 获取变量列表
         /// </summary>
@@ -69,45 +64,13 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <returns></returns>
         public IDataParameter GetDataParameter(string paramName, DbType type, object paramValue, ParameterDirection paramDir) 
         {
-            IDataParameter newParam = new DB2Parameter();
+
+            IDataParameter newParam = new NpgsqlParameter();
             newParam.ParameterName = paramName;
-            newParam.DbType = FormatDbType(type);
-            newParam.Value = FormatValue(paramValue);
+            newParam.DbType = type;
+            newParam.Value = paramValue;
             newParam.Direction = paramDir;
             return newParam;
-        }
-
-        /// <summary>
-        /// 格式化值
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        private object FormatValue(object value) 
-        {
-            if (value == null) 
-            {
-                return null;
-            }
-
-            if (value is bool) 
-            {
-                return (bool)value ? (short)1 : (short)0;
-            }
-            return value;
-        }
-
-        /// <summary>
-        /// 格式化数据库类型
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        private DbType FormatDbType(DbType type) 
-        {
-            if (type == DbType.Boolean) 
-            {
-                return DbType.Int16;
-            }
-            return type;
         }
 
         /// <summary>
@@ -116,13 +79,11 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <param name="sql">查询字符串</param>
         /// <param name="top">top值</param>
         /// <returns></returns>
-        public string GetTopSelectSql(SelectCondition sql, int top)
+        public string GetTopSelectSql(SelectCondition sql,int top) 
         {
-            StringBuilder sbSql = new StringBuilder(500);
-            sbSql.Append(sql.GetSelect());
-            sbSql.Append("  fetch first ");
-            sbSql.Append(top.ToString());
-            sbSql.Append(" rows only");
+            StringBuilder sbSql = new StringBuilder(sql.GetSelect());
+            //sbSql.Append(sql);
+            sbSql.Append(" limit " + top + " offset 0");
             return sbSql.ToString();
         }
 
@@ -141,7 +102,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <returns></returns>
         public IDbCommand GetCommand() 
         {
-            IDbCommand comm = new DB2Command();
+            IDbCommand comm = new NpgsqlCommand();
             return comm;
         }
         /// <summary>
@@ -150,7 +111,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <returns></returns>
         public DbConnection GetConnection()
         {
-            DbConnection conn = new DB2Connection();
+            DbConnection conn = new NpgsqlConnection();
             return conn;
         }
         /// <summary>
@@ -159,7 +120,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <returns></returns>
         public IDbDataAdapter GetAdapter()
         {
-            IDbDataAdapter adapter = new DB2DataAdapter();
+            IDbDataAdapter adapter = new NpgsqlDataAdapter();
             return adapter;
         }
 
@@ -170,6 +131,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <returns></returns>
         public string FormatParam(string paramName) 
         {
+
             return "\"" + paramName + "\"";
         }
 
@@ -182,15 +144,14 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         {
             return FormatParam(tableName);
         }
-
         /// <summary>
         /// 格式化变量名
         /// </summary>
         /// <param name="pname"></param>
         /// <returns></returns>
-        public string FormatValueName(string pname) 
+        public string FormatValueName(string pname)
         {
-            return "@"+pname;
+            return ":" + pname;
         }
 
         /// <summary>
@@ -200,9 +161,8 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <returns></returns>
         public string FormatParamKeyName(string pname)
         {
-            return "@" + pname;
+            return pname;
         }
-        
         /// <summary>
         /// 返回全文检索的查询语句
         /// </summary>
@@ -211,7 +171,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <returns></returns>
         public string FreeTextLike(string paranName,string value) 
         {
-            return " (CONTAINS(\"" + paranName + "\"," + value + ")>0)";
+            return " to_tsvector(" + paranName + ") @@ to_tsquery("+value+")";
         }
 
         /// <summary>
@@ -239,6 +199,8 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         {
             return CursorPageCutter.QueryDataTable(sql,null, objPage, oper, curType);
         }
+        
+        
         /// <summary>
         /// 游标分页
         /// </summary>
@@ -248,7 +210,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <param name="objPage">分页实体</param>
         /// <param name="oper">数据库链接</param>
         /// <returns></returns>
-        public IDataReader Query(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper)
+        public IDataReader Query(string sql,ParamList lstParam, PageContent objPage, DataBaseOperate oper)
         {
             return CursorPageCutter.Query(sql, lstParam, objPage, oper);
         }
@@ -262,7 +224,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <param name="oper">数据库对象</param>
         /// <param name="curType">映射的实体类型(如果用回数据库的原列名，则此为null)</param>
         /// <returns></returns>
-        public DataTable QueryDataTable(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper, Type curType)
+        public DataTable QueryDataTable(string sql,ParamList lstParam, PageContent objPage, DataBaseOperate oper, Type curType)
         {
             return CursorPageCutter.QueryDataTable(sql, lstParam, objPage, oper, curType);
         }
@@ -274,59 +236,32 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <param name="objCondition">条件对象</param>
         /// <param name="objPage">分页记录类</param>
         /// <returns></returns>
-        public string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage) 
+        public virtual string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage) 
         {
             return CutPageSqlCreater.CreatePageSql(list, oper, objCondition, objPage);
         }
         
-
+        
         /// <summary>
         /// 获取字符串拼接SQl语句
         /// </summary>
         /// <param name="str">字符串集合</param>
         /// <returns></returns>
-        public string ConcatString(params string[] strs) 
+        public string ConcatString(params string[] strs)
         {
             StringBuilder sbRet = new StringBuilder();
-            foreach (string curStr in strs) 
+            foreach (string curStr in strs)
             {
                 sbRet.Append(curStr + "||");
             }
             string ret = sbRet.ToString();
-            if (ret.Length > 2) 
+            if (ret.Length > 2)
             {
                 ret = ret.Substring(0, ret.Length - 2);
             }
             return ret;
         }
-        
-        /// <summary>
-        /// 获取自动增长的SQL
-        /// </summary>
-        /// <returns></returns>
-        public string GetIdentitySQL(EntityPropertyInfo info) 
-        {
-            //if (info == null)
-            //{
-            //    throw new Exception("找不到主键属性");
-            //}
-            //return "select LASTASSIGNEDVAL from SYSIBM.SYSSEQUENCES where SEQNAME='" + GetSequenceName(info.BelongInfo.TableName, info.ParamName) + "'";
-            return "VALUES IDENTITY_VAL_LOCAL()";
-        }
 
-        /// <summary>
-        /// 获取自动增长值的SQL
-        /// </summary>
-        /// <returns></returns>
-        public string GetIdentityValueSQL(EntityPropertyInfo info)
-        {
-            //if (info == null)
-            //{
-            //    throw new Exception("找不到主键属性");
-            //}
-            //return "PREVIOUS VALUE FOR \"" + GetSequenceName(info.BelongInfo.TableName, info.ParamName) + "\"";
-            return null;
-        }
 
         /// <summary>
         /// 把变量转变成SQL语句中的时间表达式
@@ -334,40 +269,53 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <returns></returns>
         public string GetDateTimeString(object value)
         {
-            DateTime dt;
-            if (!(value is DateTime))
-            {
-                dt = Convert.ToDateTime(value);
-            }
-            else
-            {
-                dt = (DateTime)value;
-            }
-            return "TIMESTAMP('" + dt.ToString("yyyy-MM-dd HH:mm:ss.ms") + "')";
+            return "'" + value.ToString().Replace("'","") + "'";
         }
 
-        /// <summary>
+        // <summary>
         /// 插入时候自动增长的字段名
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public string GetIdentityParamName(EntityPropertyInfo info)
+        public string GetIdentityParamName(EntityPropertyInfo info) 
         {
-            //return "\"" + info.ParamName + "\"";
+            return "\"" + info.ParamName + "\"";
+            //return null;
+        }
+        /// <summary>
+        /// 插入时候的主键字段值
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public string GetInsertPKParamValue(EntityPropertyInfo info)
+        {
             return null;
         }
         /// <summary>
-        /// 插入时候自动增长的字段值
+        /// 获取自动增长值的SQL
         /// </summary>
-        /// <param name="entityInfo">实体信息</param>
-        /// <param name="info">属性信息</param>
         /// <returns></returns>
-        public string GetIdentityParamValue(EntityInfoHandle entityInfo, EntityPropertyInfo info)
+        public string GetIdentityValueSQL(EntityPropertyInfo info)
         {
-            //return "NEXT VALUE FOR \"" + GetSequenceName(entityInfo.TableName, info.ParamName) + "\"";
-            return null;
+            if (info == null)
+            {
+                throw new Exception("找不到自增属性");
+            }
+            return "select nextval('\"" + GetSequenceName(info.BelongInfo.TableName, info.ParamName) + "\"')";
+            
         }
-
+        /// <summary>
+        /// 获取自动增长的SQL
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentitySQL(EntityPropertyInfo info)
+        {
+            if (info == null)
+            {
+                throw new Exception("找不到自增属性");
+            }
+            return "select currval('\"" + GetSequenceName(info.BelongInfo.TableName, info.ParamName) + "\"')";
+        }
         /// <summary>
         /// 根据Reader的内容把数值赋进实体
         /// </summary>
@@ -380,112 +328,117 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             SqlServer2KAdapter.DBAdapter.ValueFromReader(reader, index, arg, info);
         }
 
-        public string GetSequenceName(string tableName, string paramName)
+        #region IDBAdapter 成员
+
+
+        public string GetIdentityParamValue(EntityInfoHandle entityInfo, EntityPropertyInfo info)
         {
-            //return SequenceManager.GetSequenceName(tableName, paramName);
-            return null;
+            return "nextval('\"" + GetSequenceName(entityInfo.TableName, info.ParamName) + "\"')";
         }
 
-        public string GetSequenceInit(string seqName,EntityParam ep, DataBaseOperate oper) 
+        public string GetSequenceName(string tableName, string paramName)
         {
-            //return SequenceManager.GetInitSequence(seqName, prm, oper);
-            return null;
+            return SequenceManager.GetSequenceName(tableName, paramName);
+        }
+
+        /// <summary>
+        /// 初始化序列名
+        /// </summary>
+        /// <param name="seqName"></param>
+        public string GetSequenceInit(string seqName, EntityParam prm, DataBaseOperate oper)
+        {
+            return SequenceManager.GetInitSequence(seqName,prm, oper);
+            
         }
 
 
 
         public string DBIdentity(string tableName, string paramName)
         {
-            return "generated always as identity (start with 1 increment by 1)";
+            return null;
         }
 
         public string DBTypeToSQL(DbType dbType, long length)
         {
             switch (dbType)
             {
+                case DbType.Boolean:
+                    return "bool";
+
+                case DbType.Byte:
+                    return "int2";
+
+                case DbType.SByte:
+                    return "int2";
+
+                case DbType.UInt16:
+                    return "int4";
+                case DbType.Int16:
+                    return "int2";
+
+                case DbType.UInt32:
+                    return "int8";
+                case DbType.Int32:
+                    return "int4";
+
+                case DbType.UInt64:
+                    return "int8";
+                case DbType.Int64:
+                    return "int8";
+
+                case DbType.Single:
+                    return "float4";
+
+                case DbType.Double:
+                    return "float8";
+                case DbType.Currency:
+                case DbType.VarNumeric:
+                    return "numeric";
+                case DbType.Decimal:
+                    return "numeric(19,4)";
+
+                case DbType.Date:
+                    return "date";
+
+                case DbType.DateTime:
+                    return "timestamp";
+                case DbType.DateTimeOffset:
+                case DbType.DateTime2:
+                    return "timestamptz";
+                case DbType.Time:
+                    return "time";
+                case DbType.AnsiStringFixedLength:
+                case DbType.StringFixedLength:
+                    if (length > 8000)
+                    {
+                        return "text";
+                    }
+                    return "character(" + length + ")";
+
 
                 case DbType.AnsiString:
-                    if (length < 8000)
-                    {
-                        return "VARCHAR(" + length + ")";
-                    }
-                    else
-                    {
-                        return "CLOB";
-                    }
-                case DbType.AnsiStringFixedLength:
-                    if (length < 8000)
-                    {
-                        return "Char(" + length + ")";
-                    }
-                    else
-                    {
-                        return "CLOB";
-                    }
-                case DbType.Binary:
-                        return "BLOB";
-                case DbType.Boolean:
-                case DbType.Byte:
-                    return "SMALLINT";
-                case DbType.Date:
-                    return "DATE";
-                case DbType.DateTimeOffset:
-                case DbType.DateTime:
-                case DbType.DateTime2:
-                case DbType.Time:
-                    return "TIMESTAMP";
-                case DbType.Decimal:
-                case DbType.Currency:
-                    return "DOUBLE";
-                case DbType.Double:
-                case DbType.VarNumeric:
-                    return "FLOAT";
-                case DbType.Single:
-                    return "REAL";
-                case DbType.Int64:
-                case DbType.UInt64:
-                    return "BIGINT";
-
-                case DbType.Int16:
-                case DbType.UInt16:
-                    return "SMALLINT";
-                case DbType.Int32:
-                case DbType.UInt32:
-                    return "INTEGER";
-                case DbType.SByte:
-                    return "SMALLINT";
-                case DbType.Guid:
-                    return "VARCHAR(64)";
                 case DbType.String:
-                    if (length < 8000)
+                    if (length > 8000)
                     {
-                        return "NVARCHAR2(" + length + ")";
+                        return "text";
                     }
-                    else
-                    {
-                        return "DBCLOB";
-                    }
-                case DbType.StringFixedLength:
-                    if (length < 8000)
-                    {
-                        return "NChar("+length+")";
-                    }
-                    else
-                    {
-                        return "DBCLOB";
-                    }
+                    return "varchar(" + length + ")";
+                case DbType.Binary:
+                    return "bytea";
                 default:
-                    return "BLOB";
-            
+                    return "";
             }
         }
 
         public int ToRealDbType(DbType dbType, long length)
         {
-            DB2Parameter prm = new DB2Parameter();
+
+            NpgsqlParameter prm = new NpgsqlParameter();
             prm.DbType = dbType;
             prm.ParameterName = "name";
-            return (int)prm.DB2Type;
+            return (int)prm.NpgsqlDbType;
         }
+
+        #endregion
     }
 }
