@@ -266,5 +266,20 @@ namespace Buffalo.DBTools
 
             }
         }
+
+        private void btnModel_Click(object sender, EventArgs e)
+        {
+            string dbType = cmbType.SelectedValue as string;
+            if (string.IsNullOrEmpty(dbType))
+            {
+                MessageBox.Show("请选择数据库类型", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            string conn = Generate3Tier.GetConnString(dbType);
+            if (!string.IsNullOrEmpty(conn)) 
+            {
+                rtbConnstr.Text = conn;
+            }
+        }
     }
 }

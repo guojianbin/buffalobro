@@ -40,6 +40,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.clbSummary = new System.Windows.Forms.CheckedListBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnModel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +50,7 @@
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Location = new System.Drawing.Point(106, 12);
             this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(184, 20);
+            this.cmbType.Size = new System.Drawing.Size(235, 20);
             this.cmbType.TabIndex = 0;
             // 
             // label1
@@ -80,7 +81,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(106, 163);
+            this.btnTest.Location = new System.Drawing.Point(108, 168);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 23);
             this.btnTest.TabIndex = 4;
@@ -90,7 +91,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(215, 163);
+            this.btnOK.Location = new System.Drawing.Point(275, 168);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 5;
@@ -100,7 +101,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(296, 163);
+            this.btnCancel.Location = new System.Drawing.Point(356, 168);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 6;
@@ -112,7 +113,7 @@
             // 
             this.cmbTier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTier.FormattingEnabled = true;
-            this.cmbTier.Location = new System.Drawing.Point(296, 12);
+            this.cmbTier.Location = new System.Drawing.Point(347, 12);
             this.cmbTier.Name = "cmbTier";
             this.cmbTier.Size = new System.Drawing.Size(75, 20);
             this.cmbTier.TabIndex = 7;
@@ -120,7 +121,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(0, 87);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 89);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(100, 110);
             this.pictureBox1.TabIndex = 8;
@@ -133,7 +134,7 @@
             this.clbSummary.Location = new System.Drawing.Point(165, 142);
             this.clbSummary.MultiColumn = true;
             this.clbSummary.Name = "clbSummary";
-            this.clbSummary.Size = new System.Drawing.Size(206, 20);
+            this.clbSummary.Size = new System.Drawing.Size(266, 20);
             this.clbSummary.TabIndex = 9;
             // 
             // label3
@@ -145,12 +146,23 @@
             this.label3.TabIndex = 10;
             this.label3.Text = "注释显示:";
             // 
+            // btnModel
+            // 
+            this.btnModel.Location = new System.Drawing.Point(377, 117);
+            this.btnModel.Name = "btnModel";
+            this.btnModel.Size = new System.Drawing.Size(54, 23);
+            this.btnModel.TabIndex = 11;
+            this.btnModel.Text = "参考";
+            this.btnModel.UseVisualStyleBackColor = true;
+            this.btnModel.Click += new System.EventHandler(this.btnModel_Click);
+            // 
             // FrmDBSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(434, 195);
+            this.Controls.Add(this.btnModel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.clbSummary);
             this.Controls.Add(this.pictureBox1);
@@ -189,5 +201,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckedListBox clbSummary;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnModel;
     }
 }

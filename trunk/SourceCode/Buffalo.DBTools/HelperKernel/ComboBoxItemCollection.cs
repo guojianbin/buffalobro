@@ -61,6 +61,17 @@ namespace Buffalo.DBTools.HelperKernel
             _text = text;
         }
 
+        private object _tag;
+
+        /// <summary>
+        /// ∏Ωº”–≈œ¢
+        /// </summary>
+        public object Tag
+        {
+            get { return _tag; }
+            set { _tag = value; }
+        }
+
         private object _value;
 
         /// <summary>

@@ -90,6 +90,10 @@
     <Compile Include="Replacer\ReplaceCollection.cs" />
     <Compile Include="Replacer\ReplaceItem.cs" />
     <Compile Include="Replacer\ReplaceItemCollection.cs" />
+    <Compile Include="SmartSellMap\CombinationItem.cs" />
+    <Compile Include="SmartSellMap\ICombinationItem.cs" />
+    <Compile Include="SmartSellMap\ICombinationState.cs" />
+    <Compile Include="SmartSellMap\SellCombination.cs" />
     <Compile Include="SysEventLog.cs" />
     <Compile Include="UpdateModelUnit\ContorlDefaultPropertyInfo.cs" />
     <Compile Include="UpdateModelUnit\UpdateModelInfo.cs" />

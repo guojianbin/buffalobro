@@ -38,6 +38,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dll\dll\Net2.0\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Npgsql, Version=2.0.11.92, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dll\dll\Net2.0\Npgsql2.0.11.92-bin-ms.net\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -162,6 +166,7 @@
     <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\DBAdapter.cs" />
     <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\DBStructure.cs" />
     <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\MathFunctions.cs" />
+    <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\SequenceManager.cs" />
     <Compile Include="DataBaseAdapter\IDbAdapters\CheckEvent.cs" />
     <Compile Include="DataBaseAdapter\IDbAdapters\IAggregateFunctions.cs" />
     <Compile Include="DataBaseAdapter\IDbAdapters\ICommonFunction.cs" />
@@ -188,6 +193,7 @@
     <Compile Include="DataBaseAdapter\Oracle9Adapter\DBStructure.cs" />
     <Compile Include="DataBaseAdapter\Oracle9Adapter\MathFunctions.cs" />
     <Compile Include="DataBaseAdapter\Oracle9Adapter\SequenceManager.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\SequenceManager.cs" />
     <Compile Include="DataBaseAdapter\SQLiteAdapter\AdapterLoader.cs" />
     <Compile Include="DataBaseAdapter\SQLiteAdapter\AggregateFunctions.cs" />
     <Compile Include="DataBaseAdapter\SQLiteAdapter\CommonFunction.cs" />
@@ -219,6 +225,15 @@
     <Compile Include="DataBaseAdapter\IDbAdapters\IDBStructure.cs" />
     <Compile Include="DataBaseAdapter\IDbAdapters\IAdapterLoader.cs" />
     <Compile Include="DataBaseAdapter\SqlServer2KAdapter\MathFunctions.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\AdapterLoader.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\AggregateFunctions.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CommonFunction.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\ConvertFunction.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CursorPageCutter.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CutPageSqlCreater.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\DBAdapter.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\DBStructure.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\MathFunctions.cs" />
     <Compile Include="DataFillers\CacheReader.cs" />
     <Compile Include="DataFillers\MappingContorl.cs" />
     <Compile Include="DBCheckers\DBChecker.cs" />

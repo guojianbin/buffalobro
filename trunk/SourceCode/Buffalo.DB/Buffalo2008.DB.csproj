@@ -48,6 +48,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dll\dll\Net3.5\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Npgsql, Version=2.0.11.92, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dll\dll\Net3.5\Npgsql2.0.11.92-bin-ms.net3.5\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -201,6 +205,16 @@
     <Compile Include="DataBaseAdapter\Oracle9Adapter\DBStructure.cs" />
     <Compile Include="DataBaseAdapter\Oracle9Adapter\MathFunctions.cs" />
     <Compile Include="DataBaseAdapter\Oracle9Adapter\SequenceManager.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\AdapterLoader.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\AggregateFunctions.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CommonFunction.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\ConvertFunction.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CursorPageCutter.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CutPageSqlCreater.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\DBAdapter.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\DBStructure.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\MathFunctions.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\SequenceManager.cs" />
     <Compile Include="DataBaseAdapter\SQLiteAdapter\AdapterLoader.cs" />
     <Compile Include="DataBaseAdapter\SQLiteAdapter\AggregateFunctions.cs" />
     <Compile Include="DataBaseAdapter\SQLiteAdapter\CommonFunction.cs" />
