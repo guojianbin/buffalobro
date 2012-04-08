@@ -175,7 +175,6 @@
     <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\DBAdapter.cs" />
     <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\DBStructure.cs" />
     <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\MathFunctions.cs" />
-    <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\SequenceManager.cs" />
     <Compile Include="DataBaseAdapter\IDbAdapters\CheckEvent.cs" />
     <Compile Include="DataBaseAdapter\IDbAdapters\IAggregateFunctions.cs" />
     <Compile Include="DataBaseAdapter\IDbAdapters\ICommonFunction.cs" />

@@ -160,6 +160,17 @@ namespace Buffalo.DBTools.HelperKernel
             }
         }
 
+        private DBConfigInfo _dbConfig;
+
+        /// <summary>
+        ///  ˝æ›ø‚≈‰÷√
+        /// </summary>
+        public DBConfigInfo BbConfig
+        {
+            get { return _dbConfig; }
+            set { _dbConfig = value; }
+        }
+
         public GrneraterBase(DBEntityInfo entity,Project curProject) 
         {
             _table = entity.ToTableInfo();
@@ -177,7 +188,8 @@ namespace Buffalo.DBTools.HelperKernel
             _BQLEntityNamespace = entity.EntityNamespace + ".BQLEntity";
             _businessNamespace = entity.EntityNamespace + ".Business";
             _dataAccessNamespace = entity.EntityNamespace + ".DataAccess";
-            _DBName = entity.CurrentDBConfigInfo.DbName; 
+            _DBName = entity.CurrentDBConfigInfo.DbName;
+            _dbConfig = entity.CurrentDBConfigInfo;
         }
 
         public GrneraterBase(EntityConfig entity) 
@@ -201,7 +213,8 @@ namespace Buffalo.DBTools.HelperKernel
             _BQLEntityNamespace = entity.Namespace + ".BQLEntity";
             _businessNamespace = entity.Namespace + ".Business";
             _dataAccessNamespace = entity.Namespace + ".DataAccess";
-            _DBName = entity.CurrentDBConfigInfo.DbName; 
+            _DBName = entity.CurrentDBConfigInfo.DbName;
+            _dbConfig = entity.CurrentDBConfigInfo;
         }
 
         

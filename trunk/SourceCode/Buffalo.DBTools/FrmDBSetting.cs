@@ -100,6 +100,7 @@ namespace Buffalo.DBTools
                     cmbTier.SelectedValue = _info.Tier;
                 }
                 rtbConnstr.Text = _info.ConnectionString;
+                chkAllDal.Checked = _info.IsAllDal;
             }
         }
         /// <summary>
@@ -140,6 +141,7 @@ namespace Buffalo.DBTools
                     dbinfo.DbName = DBConfigInfo.GetDbName(docView);
                     dbinfo.SummaryShow = SummaryShowItem.All;
                     dbinfo.FileName = DBConfigInfo.GetFileName(curProject, docView);
+
                 }
                 frmSetting.Info= dbinfo;
                 frmSetting.SummaryItem = dbinfo.SummaryShow;
@@ -240,6 +242,7 @@ namespace Buffalo.DBTools
             _info.ConnectionString = rtbConnstr.Text;
             _info.DbType = dbType;
             _info.SummaryShow = SummaryItem;
+            _info.IsAllDal = chkAllDal.Checked;
             _info.Tier = Convert.ToInt32(tier);
             return true;
         }

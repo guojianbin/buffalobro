@@ -649,7 +649,7 @@ namespace Buffalo.Kernel
         /// <param name="collection">集合类</param>
         /// <param name="keyProperty">键名</param>
         /// <returns></returns>
-        public Dictionary<TKey, TValue> ListToDictionary<TKey, TValue>(IEnumerable<TValue> collection, string keyProperty) 
+        public static Dictionary<TKey, TValue> ListToDictionary<TKey, TValue>(IEnumerable<TValue> collection, string keyProperty) 
         {
             Dictionary<TKey, TValue> dic = new Dictionary<TKey, TValue>();
 

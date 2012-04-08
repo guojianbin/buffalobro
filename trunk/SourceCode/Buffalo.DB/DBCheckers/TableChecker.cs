@@ -9,6 +9,7 @@ using Buffalo.DB.QueryConditions;
 using System.Data;
 using Buffalo.DB.PropertyAttributes;
 using Buffalo.DB.DataBaseAdapter.IDbAdapters;
+using Buffalo.Kernel;
 
 
 namespace Buffalo.DB.DBCheckers
@@ -48,14 +49,130 @@ namespace Buffalo.DB.DBCheckers
         }
 
         /// <summary>
+        /// 去除重复的表
+        /// </summary>
+        /// <param name="lstTable"></param>
+        /// <returns></returns>
+        private static List<KeyWordTableParamItem> FilterDistinct(List<KeyWordTableParamItem> lstTable) 
+        {
+            Dictionary<string, KeyWordTableParamItem> dicTables = new Dictionary<string, KeyWordTableParamItem>();
+            KeyWordTableParamItem curItem = null;
+            List<KeyWordTableParamItem> lstTables = new List<KeyWordTableParamItem>(lstTable.Count);
+            foreach (KeyWordTableParamItem item in lstTable) 
+            {
+                string key = item.TableName.ToLower();
+                if (dicTables.TryGetValue(key, out curItem)) //如果表已经存在，则合并表里边的字段和关联信息
+                {
+                    MergeTableInfo(curItem, item);
+                }
+                else 
+                {
+                    lstTables.Add(item);
+                    dicTables[key] = item;
+                }
+            }
+            return lstTables;
+        }
+
+        /// <summary>
+        /// 合并同名表信息
+        /// </summary>
+        /// <param name="itemSource"></param>
+        /// <param name="itemTarget"></param>
+        private static void MergeTableInfo(KeyWordTableParamItem itemTarget,KeyWordTableParamItem itemSource)
+        {
+            if (itemSource.Params != null)
+            {
+                if (itemTarget.Params == null) 
+                {
+                    itemTarget.Params = new List<EntityParam>();
+                }
+                MergeEntityParam(itemSource.Params, itemTarget.Params);
+            }
+
+            if (itemSource.RelationItems != null)
+            {
+                if (itemTarget.RelationItems == null)
+                {
+                    itemTarget.RelationItems = new List<TableRelationAttribute>();
+                }
+                MergeRelation(itemSource.RelationItems, itemTarget.RelationItems);
+            }
+
+        }
+
+        /// <summary>
+        /// 合并关系
+        /// </summary>
+        private static void MergeRelation(List<TableRelationAttribute> lstSource, List<TableRelationAttribute> lstTarget)
+        {
+            Queue<TableRelationAttribute> queNotExists = new Queue<TableRelationAttribute>();
+            foreach (TableRelationAttribute trSource in lstSource)
+            {
+                if (!trSource.IsParent || !trSource.IsToDB) 
+                {
+                    continue;
+                }
+
+
+                bool exists = false;//是否已经存在
+                foreach (TableRelationAttribute trTarget in lstTarget)
+                {
+                    if (trTarget.SourceName.Equals(trSource.SourceName,StringComparison.CurrentCultureIgnoreCase) &&
+                        trTarget.SourceTable.Equals(trSource.SourceTable, StringComparison.CurrentCultureIgnoreCase) &&
+                        trTarget.TargetName.Equals(trSource.TargetName, StringComparison.CurrentCultureIgnoreCase) &&
+                        trTarget.TargetTable.Equals(trSource.TargetTable, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (!exists) //如果不存在时候就则拷贝过去
+                {
+                    queNotExists.Enqueue(trSource);
+                }
+            }
+            lstTarget.AddRange(queNotExists);//拷贝不存在的字段信息
+        }
+        /// <summary>
+        /// 合并字段
+        /// </summary>
+        private static void MergeEntityParam(List<EntityParam> lstSource, List<EntityParam> lstTarget) 
+        {
+            Queue<EntityParam> queNotExists = new Queue<EntityParam>();
+            foreach (EntityParam epSource in lstSource)
+            {
+                bool exists = false;//是否已经存在
+                foreach (EntityParam epTarget in lstTarget)
+                {
+                    if (epTarget.ParamName.Equals(epSource.ParamName, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (!exists) //如果不存在时候就则拷贝过去
+                {
+                    queNotExists.Enqueue(epSource);
+                }
+            }
+            lstTarget.AddRange(queNotExists);//拷贝不存在的字段信息
+        }
+
+
+        /// <summary>
         /// 检查表信息
         /// </summary>
         /// <param name="info">数据库</param>
         /// <param name="tableName">表名</param>
         /// <param name="lstParams">字段</param>
         /// <returns></returns>
-        public static List<string> CheckTable(DBInfo info, List<KeyWordTableParamItem> tableInfos) 
+        public static List<string> CheckTable(DBInfo info, List<KeyWordTableParamItem> lstTableInfos) 
         {
+            List<KeyWordTableParamItem> tableInfos=FilterDistinct(lstTableInfos);
+
 
             List<DBTableInfo> tables = GetAllTables(info) ;
             BQLDbBase db = new BQLDbBase(info.CreateOperate());

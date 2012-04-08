@@ -100,22 +100,14 @@ namespace Buffalo.DBTools
 
             foreach (ClrClass curType in SelectedClass)
             {
-                
-                //ClrType curType = classType.AssociatedType;//当前类型
                 EntityConfig entity = new EntityConfig(curType, CurrentProject, SelectedDiagram);
 
                 if (string.IsNullOrEmpty(entity.TableName) || !entity.IsTable)
                 {
                     continue;
                 }
-
-                
-
                 string typeName = null;
                 Stack<EntityConfig> stkConfig = EntityConfig.GetEntity(entity, CurrentProject, SelectedDiagram);
-
-
-                
                 List<EntityParam> lstParam = new List<EntityParam>();
                 List<TableRelationAttribute> lstRelation = new List<TableRelationAttribute>();
                 string lastTableName = null;

@@ -210,6 +210,10 @@ namespace Buffalo.DBTools.HelperKernel
             string dal = Models.DataAccess;
             foreach (ComboBoxItem itype in DataAccessTypes) 
             {
+                if (!this.BbConfig.IsAllDal && !this.BbConfig.DbType.Equals(itype.Value)) 
+                {
+                    continue;
+                }
                 string type = itype.Value.ToString();
                 string dalPath = dicPath + "\\" + type;
                 if (!Directory.Exists(dalPath))

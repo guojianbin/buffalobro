@@ -97,6 +97,17 @@ namespace Buffalo.DBTools.HelperKernel
             set { _summaryShow = value; }
         }
 
+        private bool _isAllDal;
+
+        /// <summary>
+        /// 是否生成所有数据层
+        /// </summary>
+        public bool IsAllDal
+        {
+            get { return _isAllDal; }
+            set { _isAllDal = value; }
+        }
+
         /// <summary>
         /// 创建数据库信息
         /// </summary>
@@ -182,6 +193,10 @@ namespace Buffalo.DBTools.HelperKernel
 
             att = doc.CreateAttribute("tier");
             att.InnerText = this.Tier.ToString();
+            configNode.Attributes.Append(att);
+
+            att = doc.CreateAttribute("isAllDal");
+            att.InnerText = this.IsAllDal?"1":"0";
             configNode.Attributes.Append(att);
 
             att = doc.CreateAttribute("summary");
@@ -271,6 +286,12 @@ namespace Buffalo.DBTools.HelperKernel
                     {
                         info.Tier = 3;
                     }
+                }
+
+                att = config.Attributes["isAllDal"];
+                if (att != null)
+                {
+                    info.IsAllDal = (att.InnerText == "1");
                 }
                 att = config.Attributes["summary"];
                 if (att != null)
