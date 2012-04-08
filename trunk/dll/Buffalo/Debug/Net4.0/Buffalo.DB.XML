@@ -3229,6 +3229,30 @@
             <param name="tableNames">表名</param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.DBCheckers.TableChecker.FilterDistinct(System.Collections.Generic.List{Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordTableParamItem})">
+            <summary>
+            去除重复的表
+            </summary>
+            <param name="lstTable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.DBCheckers.TableChecker.MergeTableInfo(Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordTableParamItem,Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordTableParamItem)">
+            <summary>
+            合并同名表信息
+            </summary>
+            <param name="itemSource"></param>
+            <param name="itemTarget"></param>
+        </member>
+        <member name="M:Buffalo.DB.DBCheckers.TableChecker.MergeRelation(System.Collections.Generic.List{Buffalo.DB.PropertyAttributes.TableRelationAttribute},System.Collections.Generic.List{Buffalo.DB.PropertyAttributes.TableRelationAttribute})">
+            <summary>
+            合并关系
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.DBCheckers.TableChecker.MergeEntityParam(System.Collections.Generic.List{Buffalo.DB.PropertyAttributes.EntityParam},System.Collections.Generic.List{Buffalo.DB.PropertyAttributes.EntityParam})">
+            <summary>
+            合并字段
+            </summary>
+        </member>
         <member name="M:Buffalo.DB.DBCheckers.TableChecker.CheckTable(Buffalo.DB.DataBaseAdapter.DBInfo,System.Collections.Generic.List{Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordTableParamItem})">
             <summary>
             检查表信息
@@ -3780,32 +3804,6 @@
             <param name="objPage">分页对象</param>
             <param name="oper">数据库对象</param>
             <param name="curType">映射的实体类型(如果用回数据库的原列名，则此为null)</param>
-            <returns></returns>
-        </member>
-        <member name="T:Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter.SequenceManager">
-            <summary>
-            主键序列管理
-            </summary>
-        </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter.SequenceManager.GetSequenceName(System.String,System.String)">
-            <summary>
-            获取该属性的序列
-            </summary>
-            <param name="info"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter.SequenceManager.GetInitSequence(System.String,Buffalo.DB.PropertyAttributes.EntityParam,Buffalo.DB.DbCommon.DataBaseOperate)">
-            <summary>
-            初始化序列
-            </summary>
-            <param name="seqName"></param>
-        </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter.SequenceManager.IsSequenceExists(System.String,Buffalo.DB.DbCommon.DataBaseOperate)">
-            <summary>
-            获取序列是否存在
-            </summary>
-            <param name="seqName">序列名</param>
-            <param name="oper">数据库链接</param>
             <returns></returns>
         </member>
         <member name="T:Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordLinkValueItemBase">

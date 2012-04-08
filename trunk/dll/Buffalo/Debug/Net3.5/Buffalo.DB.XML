@@ -3229,6 +3229,30 @@
             <param name="tableNames">表名</param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.DBCheckers.TableChecker.FilterDistinct(System.Collections.Generic.List{Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordTableParamItem})">
+            <summary>
+            去除重复的表
+            </summary>
+            <param name="lstTable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.DBCheckers.TableChecker.MergeTableInfo(Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordTableParamItem,Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordTableParamItem)">
+            <summary>
+            合并同名表信息
+            </summary>
+            <param name="itemSource"></param>
+            <param name="itemTarget"></param>
+        </member>
+        <member name="M:Buffalo.DB.DBCheckers.TableChecker.MergeRelation(System.Collections.Generic.List{Buffalo.DB.PropertyAttributes.TableRelationAttribute},System.Collections.Generic.List{Buffalo.DB.PropertyAttributes.TableRelationAttribute})">
+            <summary>
+            合并关系
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.DBCheckers.TableChecker.MergeEntityParam(System.Collections.Generic.List{Buffalo.DB.PropertyAttributes.EntityParam},System.Collections.Generic.List{Buffalo.DB.PropertyAttributes.EntityParam})">
+            <summary>
+            合并字段
+            </summary>
+        </member>
         <member name="M:Buffalo.DB.DBCheckers.TableChecker.CheckTable(Buffalo.DB.DataBaseAdapter.DBInfo,System.Collections.Generic.List{Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordTableParamItem})">
             <summary>
             检查表信息

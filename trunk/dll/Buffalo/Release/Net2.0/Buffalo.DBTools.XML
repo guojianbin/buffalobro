@@ -253,6 +253,11 @@
             数据库名
             </summary>
         </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.GrneraterBase.BbConfig">
+            <summary>
+            数据库配置
+            </summary>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.Generate3Tier.GenerateBusiness">
             <summary>
             生成业务层
@@ -2990,6 +2995,11 @@
         <member name="P:Buffalo.DBTools.HelperKernel.DBConfigInfo.SummaryShow">
             <summary>
             显示方式
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.DBConfigInfo.IsAllDal">
+            <summary>
+            是否生成所有数据层
             </summary>
         </member>
         <member name="M:Buffalo.DBTools.HelperKernel.ComboBoxItemCollection.FindByText(System.String)">
