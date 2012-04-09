@@ -3203,7 +3203,7 @@
             </summary>
             <param name="prm"></param>
         </member>
-        <member name="M:Buffalo.DB.QueryConditions.ShowEntityCollection.AddRang(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle[])">
+        <member name="M:Buffalo.DB.QueryConditions.ShowEntityCollection.AddRange(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle[])">
             <summary>
             添加一个输出字段
             </summary>
@@ -4456,6 +4456,16 @@
         <member name="T:Buffalo.DB.CommBase.EntityBase">
             <summary>
             实体基类
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.CommBase.EntityBase.GetBaseList">
+            <summary>
+            所属列表集合以便在延迟加载时候读出
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.CommBase.EntityBase.SetBaseList(System.Collections.IList)">
+            <summary>
+            所属列表集合以便在延迟加载时候读出
             </summary>
         </member>
         <member name="M:Buffalo.DB.CommBase.EntityBase.OnPropertyUpdated(System.String)">
@@ -9067,7 +9077,7 @@
             </summary>
             <param name="sender">发送者</param>
         </member>
-        <member name="M:Buffalo.DB.DataFillers.MappingContorl.FillChilds(System.Collections.IList,Buffalo.DB.EntityInfos.EntityInfoHandle,Buffalo.DB.EntityInfos.EntityMappingInfo,Buffalo.DB.CommBase.EntityBase,System.String)">
+        <member name="M:Buffalo.DB.DataFillers.MappingContorl.FillChilds(System.Collections.IList,Buffalo.DB.EntityInfos.EntityInfoHandle,Buffalo.DB.EntityInfos.EntityMappingInfo,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.Object}},Buffalo.DB.CommBase.EntityBase,System.String)">
             <summary>
             填充字类列表
             </summary>
@@ -9076,7 +9086,7 @@
             <param name="mappingInfo">映射信息</param>
             <param name="dicElement">元素</param>
         </member>
-        <member name="M:Buffalo.DB.DataFillers.MappingContorl.CollectPks(System.Object,Buffalo.DB.EntityInfos.EntityPropertyInfo,Buffalo.DB.EntityInfos.EntityMappingInfo,Buffalo.DB.DataBaseAdapter.DBInfo)">
+        <member name="M:Buffalo.DB.DataFillers.MappingContorl.CollectPks(System.Collections.IList,Buffalo.DB.EntityInfos.EntityPropertyInfo,Buffalo.DB.EntityInfos.EntityMappingInfo,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.Object}},Buffalo.DB.DataBaseAdapter.DBInfo)">
             <summary>
             收集键列表，把字字段实例化
             </summary>
@@ -9100,7 +9110,7 @@
             </summary>
             <param name="sender">发送者</param>
         </member>
-        <member name="M:Buffalo.DB.DataFillers.MappingContorl.FillParent(System.Collections.IList,Buffalo.DB.EntityInfos.EntityInfoHandle,Buffalo.DB.EntityInfos.EntityMappingInfo,System.String,Buffalo.DB.CommBase.EntityBase)">
+        <member name="M:Buffalo.DB.DataFillers.MappingContorl.FillParent(System.Collections.IList,Buffalo.DB.EntityInfos.EntityInfoHandle,System.Collections.Generic.Dictionary{System.String,System.Collections.ArrayList},Buffalo.DB.EntityInfos.EntityMappingInfo,System.String,Buffalo.DB.CommBase.EntityBase)">
             <summary>
             填充字类列表
             </summary>
@@ -9109,7 +9119,7 @@
             <param name="dicElement">元素</param>
             <param name="mappingInfo">当前父表对应属性的映射信息</param>
         </member>
-        <member name="M:Buffalo.DB.DataFillers.MappingContorl.CollectFks(Buffalo.DB.CommBase.EntityBase,Buffalo.DB.EntityInfos.EntityPropertyInfo,Buffalo.DB.EntityInfos.EntityMappingInfo,Buffalo.DB.DataBaseAdapter.DBInfo)">
+        <member name="M:Buffalo.DB.DataFillers.MappingContorl.CollectFks(System.Collections.IList,Buffalo.DB.EntityInfos.EntityPropertyInfo,Buffalo.DB.EntityInfos.EntityMappingInfo,System.Collections.Generic.Dictionary{System.String,System.Collections.ArrayList},Buffalo.DB.DataBaseAdapter.DBInfo)">
             <summary>
             收集键列表，把字字段实例化
             </summary>
