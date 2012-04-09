@@ -25,17 +25,17 @@ namespace Buffalo.DB.QueryConditions
         public new void Add(BQLEntityTableHandle prm)
         {
             _belongList.HasInner = true;
-            this.Add(prm);
+            base.Add(prm);
         }
 
         /// <summary>
         /// 添加一个输出字段
         /// </summary>
         /// <param name="prm"></param>
-        public void AddRang(params BQLEntityTableHandle[] prms)
+        public void AddRange(params BQLEntityTableHandle[] prms)
         {
             _belongList.HasInner = true;
-            this.AddRang(prms);
+            base.AddRange(prms);
         }
     }
 }

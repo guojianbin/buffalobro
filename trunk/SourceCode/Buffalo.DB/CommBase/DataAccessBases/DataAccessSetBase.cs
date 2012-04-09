@@ -107,7 +107,6 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                         {
                             DBParameter dbPrm = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
                             sql.Append(dbPrm.ValueName);
-
                         }
                         else
                         {

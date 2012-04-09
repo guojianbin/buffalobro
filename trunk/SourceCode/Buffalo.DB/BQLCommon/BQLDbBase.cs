@@ -303,6 +303,7 @@ namespace Buffalo.DB.BQLCommon
         }
 
         private List<E> LoadFromReader<E>(TableAliasNameManager aliasManager, IDataReader reader)
+            where E:EntityBase
         {
             List<E> lst = new List<E>();
             if (reader != null && !reader.IsClosed)
@@ -313,7 +314,9 @@ namespace Buffalo.DB.BQLCommon
                     object value = aliasManager.LoadFromReader(reader, out hasValue);
                     if (!hasValue && value != null)
                     {
-                        lst.Add((E)value);
+                        E obj = (E)value;
+                        obj.SetBaseList(lst);
+                        lst.Add(obj);
                     }
                 }
             }
