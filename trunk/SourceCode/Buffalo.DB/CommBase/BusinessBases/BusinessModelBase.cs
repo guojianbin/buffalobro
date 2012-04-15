@@ -164,10 +164,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
             {
                 return ret;
             }
-            if (ret != null)
-            {
-                return ret;
-            }
             _affectedRows = entityDao.Update(entity);
 
 
@@ -186,10 +182,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
             DataAccessModel<T> entityDao = new DataAccessModel<T>();
 
             object ret = Exists(entity);
-            if (ret != null)
-            {
-                return ret;
-            }
             if (ret != null)
             {
                 return ret;
@@ -223,10 +215,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 {
                     continue;
                 }
-                if (ret != null)
-                {
-                    continue;
-                }
 
                 _affectedRows += entityDao.Update(entity);
 
@@ -253,10 +241,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
             {
 
                 ret = Exists(entity);
-                if (ret != null)
-                {
-                    continue;
-                }
                 if (ret != null)
                 {
                     continue;
@@ -299,11 +283,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 return ret;
             }
 
-            if (ret != null)
-            {
-                return ret;
-            }
-
             _affectedRows = entityDao.Insert(entity, fillIdentity);
 
             return ret;
@@ -326,10 +305,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
 
                 ret = Exists(entity);
 
-                if (ret != null)
-                {
-                    continue;
-                }
                 if (ret != null)
                 {
                     continue;
@@ -357,11 +332,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 return ret;
             }
 
-            if (ret != null)
-            {
-                return ret;
-            }
-
             _affectedRows = entityDao.Delete(entity);
             return ret;
         }
@@ -378,10 +348,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
 
             DataAccessModel<T> entityDao = new DataAccessModel<T>();
             object ret = HasChild(id);
-            if (ret != null)
-            {
-                return ret;
-            }
             if (ret != null)
             {
                 return ret;
@@ -407,11 +373,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 return ret;
             }
 
-            if (ret != null)
-            {
-                return ret;
-            }
-
             
             _affectedRows = entityDao.Delete(lstScope);
             return ret;
@@ -430,11 +391,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
             foreach (T entity in lst)
             {
                 res = HasChild(entity);
-                if (res != null)
-                {
-                    continue;
-                }
-
                 if (res != null)
                 {
                     continue;
