@@ -39,7 +39,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public virtual int Insert() 
+        public int Insert() 
         {
             return Insert(true);
         }
@@ -88,7 +88,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// 更新实体
         /// </summary>
         /// <returns></returns>
-        public virtual int Update()
+        public int Update()
         {
             return Update(false);
         }
@@ -120,7 +120,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// 并发删除
         /// </summary>
         /// <returns></returns>
-        public virtual int Delete()
+        public int Delete()
         {
             return Delete(false);
         }

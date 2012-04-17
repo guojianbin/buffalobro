@@ -72,12 +72,26 @@ namespace Buffalo.DB.DataBaseAdapter
             if (docs.Count > 0)
             {
                 _dicDBInfo = new Dictionary<string, DBInfo>();
+                DBInfo existsInfo = null;
                 foreach (ConfigInfo doc in docs)
                 {
                     XmlDocument docInfo = doc.Document;
                     DBInfo dbinfo = GetDBInfo(docInfo);
-
-                    _dicDBInfo[dbinfo.Name] = dbinfo;
+                    if (!_dicDBInfo.TryGetValue(dbinfo.Name, out existsInfo))
+                    {
+                        _dicDBInfo[dbinfo.Name] = dbinfo;
+                    }
+                    else 
+                    {
+                        if (!existsInfo.ConnectionString.Equals(dbinfo.ConnectionString)) 
+                        {
+                            throw new Exception("同名数据库:" + dbinfo.Name + "，的连接字符串不同");
+                        }
+                        if (!existsInfo.DbType.Equals(existsInfo.DbType)) 
+                        {
+                            throw new Exception("同名数据库:" + dbinfo.Name + "，的数据库类型不同");
+                        }
+                    }
                     
                 }
                 LoadModel();
