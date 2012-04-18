@@ -910,6 +910,13 @@
             <param name="asName">别名</param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem.As">
+            <summary>
+            给字段定义一个别名
+            </summary>
+            <param name="asName">别名</param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem.StarWith(System.Object)">
             <summary>
             StarWith条件
