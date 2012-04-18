@@ -39,7 +39,11 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             bool isWhere = info.IsWhere;
 
             info.IsWhere = true;
-            string ret= _prmHandle.DisplayValue(info) + " as " + idba.FormatParam(_aliasName);
+            string ret= _prmHandle.DisplayValue(info);
+            if (!string.IsNullOrEmpty(_aliasName)) 
+            {
+                ret += " as " + idba.FormatParam(_aliasName);
+            }
             info.IsWhere = isWhere;
             return ret;
         }

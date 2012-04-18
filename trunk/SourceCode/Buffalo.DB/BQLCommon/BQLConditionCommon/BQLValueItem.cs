@@ -42,6 +42,15 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return item;
         }
         /// <summary>
+        /// 给字段定义一个别名
+        /// </summary>
+        /// <param name="asName">别名</param>
+        /// <returns></returns>
+        public BQLAliasParamHandle As()
+        {
+            return As(null);
+        }
+        /// <summary>
         /// StarWith条件
         /// </summary>
         /// <param name="item">条件</param>

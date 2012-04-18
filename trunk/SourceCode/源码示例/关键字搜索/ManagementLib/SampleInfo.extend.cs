@@ -30,11 +30,12 @@ namespace ManagementLib
             foreach(string search in searchs)
             {
                 nameCon=nameCon|Management.SampleInfo.SampleName.Like(search);
-                perValue = perValue + BQL.Case().When(Management.SampleInfo.SampleName.IndexOf(search, 0) <= 0).Then(0).Else(1).End * per;
+                perValue = perValue + BQL.Case().When(BQL.ToParam("SampleName").IndexOf(search, 0) <= 0).Then(0).Else(1).End * per;
                 per /= 2;
             }
             lstScope.ShowProperty.Add(perValue.As("per1"));
             lstScope.Add(nameCon);
+            lstScope.OrderBy.Add(perValue.As("").DESC);
 
             per = Math.Pow(2, searchs.Length);
             perValue = BQLValueItem.ToValueItem(0);
@@ -42,11 +43,12 @@ namespace ManagementLib
             foreach (string search in searchs)
             {
                 nameCon = nameCon | Management.SampleInfo.SamplingTerrace.Like(search);
-                perValue = perValue + BQL.Case().When(Management.SampleInfo.SamplingTerrace.IndexOf(search, 0) <= 0).Then(0).Else(1).End * per;
+                perValue = perValue + BQL.Case().When(BQL.ToParam("SamplingTerrace").IndexOf(search, 0) <= 0).Then(0).Else(1).End * per;
                 per /= 2;
             }
             lstScope.ShowProperty.Add(perValue.As("per2"));
             lstScope.Add(nameCon,ConnectType.OR);
+            lstScope.OrderBy.Add(perValue.As("").DESC);
 
             per = Math.Pow(2, searchs.Length);
             perValue = BQLValueItem.ToValueItem(0);
@@ -54,16 +56,16 @@ namespace ManagementLib
             foreach (string search in searchs)
             {
                 nameCon = nameCon | Management.SampleInfo.SampleNumber.Like(search);
-                perValue = perValue + BQL.Case().When(Management.SampleInfo.SampleNumber.IndexOf(search, 0) <= 0).Then(0).Else(1).End * per;
+                perValue = perValue + BQL.Case().When(BQL.ToParam("SampleNumber").IndexOf(search, 0) <= 0).Then(0).Else(1).End * per;
                 per /= 2;
             }
             lstScope.ShowProperty.Add(perValue.As("per3"));
             lstScope.Add(nameCon, ConnectType.OR);
-
+            lstScope.OrderBy.Add(perValue.As("").DESC);
             
-            lstScope.OrderBy.Add(BQL.ToParam("per1").DESC);
-            lstScope.OrderBy.Add(BQL.ToParam("per2").DESC);
-            lstScope.OrderBy.Add(BQL.ToParam("per3").DESC);
+            //lstScope.OrderBy.Add(BQL.ToParam("per1").DESC);
+            //lstScope.OrderBy.Add(BQL.ToParam("per2").DESC);
+            //lstScope.OrderBy.Add(BQL.ToParam("per3").DESC);
             return GetContext().Select(lstScope);
         }
 	}

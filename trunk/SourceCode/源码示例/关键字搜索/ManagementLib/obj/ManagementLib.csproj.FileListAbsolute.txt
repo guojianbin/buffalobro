@@ -34,3 +34,11 @@ D:\CShareTest\Buffalobro\SourceCode\源码示例\关键字搜索\ManagementLib\o
 D:\CShareTest\Buffalobro\SourceCode\源码示例\关键字搜索\ManagementLib\obj\Debug\ManagementLib.BEM.View_Users_Storage.BEM.xml
 D:\CShareTest\Buffalobro\SourceCode\源码示例\关键字搜索\ManagementLib\obj\Debug\ManagementLib.dll
 D:\CShareTest\Buffalobro\SourceCode\源码示例\关键字搜索\ManagementLib\obj\Debug\ManagementLib.pdb
+D:\CShareTest\Buffalobro\SourceCode\源码示例\关键字搜索\ManagementLib\bin\Debug\Buffalo.DB.pdb
+D:\CShareTest\Buffalobro\SourceCode\源码示例\关键字搜索\ManagementLib\bin\Debug\Npgsql.pdb
+D:\CShareTest\Buffalobro\SourceCode\源码示例\关键字搜索\ManagementLib\bin\Debug\de\Npgsql.resources.dll
+D:\CShareTest\Buffalobro\SourceCode\源码示例\关键字搜索\ManagementLib\bin\Debug\es\Npgsql.resources.dll
+D:\CShareTest\Buffalobro\SourceCode\源码示例\关键字搜索\ManagementLib\bin\Debug\fi\Npgsql.resources.dll
+D:\CShareTest\Buffalobro\SourceCode\源码示例\关键字搜索\ManagementLib\bin\Debug\fr\Npgsql.resources.dll
+D:\CShareTest\Buffalobro\SourceCode\源码示例\关键字搜索\ManagementLib\bin\Debug\ja\Npgsql.resources.dll
+D:\CShareTest\Buffalobro\SourceCode\源码示例\关键字搜索\ManagementLib\bin\Debug\zh-CN\Npgsql.resources.dll
