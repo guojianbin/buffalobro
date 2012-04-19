@@ -46,7 +46,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
             StringBuilder sbSQL = new StringBuilder(_sqlTables);
             if (string.IsNullOrEmpty(inTables))
             {
-                sbSQL.Append(" and [Name] NOT IN('sqlite_sequence')");
+                sbSQL.Append(" and [sql]<>''");
             }
             else 
             {
@@ -120,7 +120,9 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
 
             foreach (DBTableInfo table in lst)
             {
-                dicTables[info.Name] = table;
+                dicTables[table.Name] = table;
+                table.Params = new List<EntityParam>();
+                table.RelationItems = new List<TableRelationAttribute>();
             }
             foreach (DataRow dr in dtSchema.Rows)
             {
