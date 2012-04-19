@@ -128,7 +128,7 @@ namespace Buffalo.DBTools
                 {
                     string file = SelectDocView.DocData.FileName;
                     XmlDocument doc = DBEntityInfo.GetClassDiagram(file);
-
+                    
                     frmPro.UpdateProgress(0, 10, "正在读取类信息");
                     List<DBTableInfo> lstGen = TableChecker.GetTableInfo(db, selection);
                     string entityNamespace = DBEntityInfo.GetNameSpace(SelectDocView, CurrentProject);

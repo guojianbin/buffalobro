@@ -21,17 +21,6 @@ namespace Buffalo.DBTools
             frm.Show();
             return frm;
         }
-    
-
-
-        public bool IsSysExit;
-        public delegate void CloseHandle();
-        public event CloseHandle OnClose;
-        public bool CanClose
-        {
-            get { return button1.Visible; }
-            set { button1.Visible = value; }
-        }
         public FrmProcess()
         {
             InitializeComponent();
@@ -51,25 +40,9 @@ namespace Buffalo.DBTools
             Application.DoEvents();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Close();
-            if (OnClose != null)
-            {
-                OnClose();
-            }
-        }
+
         
-        private void SalesSumProcess_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (!IsSysExit)
-            {
-                if (MessageBox.Show("操作正在进行,确定退出吗?", "游卡通", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                {
-                    e.Cancel = true;
-                }
-            }
-        }
+
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
