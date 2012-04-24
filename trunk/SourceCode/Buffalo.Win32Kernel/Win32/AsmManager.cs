@@ -13,14 +13,14 @@ namespace Buffalo.Win32Kernel.Win32
         /// <param name="pid"></param>
         public static void RunAsm(byte[] asmCode,int pid)
         {
-            int hwnd=0;
-            int addre=0;
-            int threadhwnd = 0 ;
+            IntPtr hwnd = IntPtr.Zero;
+            IntPtr addre=IntPtr.Zero;
+            IntPtr threadhwnd = IntPtr.Zero;
             if (pid != 0)
             {
                 IntPtr hProcess = WindowsAPI.OpenProcess(ProcessAccess.PROCESS_ALL_ACCESS | ProcessAccess.PROCESS_CREATE_THREAD | ProcessAccess.PROCESS_VM_WRITE, 0, pid);
-                hwnd = hProcess.ToInt32();
-                if (hwnd !=0)
+                hwnd = hProcess;
+                if (hwnd != IntPtr.Zero)
                 {
                     addre = WindowsAPI.VirtualAllocEx(hwnd, 0, asmCode.Length, ProcessAccess.MEM_COMMIT, ProcessAccess.PAGE_EXECUTE_READWRITE);
                     WindowsAPI.WriteProcessMemory(hwnd, addre, asmCode, asmCode.Length, 0);

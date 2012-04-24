@@ -1440,5 +1440,20 @@ namespace Buffalo.Win32Kernel.Win32
         public uint dwType;
     }
     #endregion
+
+    #region ²¢¿Ú
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct OVERLAPPED
+    {
+        int Internal;
+        int InternalHigh;
+        int Offset;
+        int OffSetHigh;
+        int hEvent;
+    }
+
+
+    #endregion
 }
 

@@ -2709,4 +2709,18 @@ namespace Buffalo.Win32Kernel.Win32
     }
 
     #endregion
+
+    #region 读写
+    /// <summary>
+    /// 文件打开控制
+    /// </summary>
+    public enum GENERICFileAccess :long
+    {
+        GENERIC_READ=0x80000000L,
+        GENERIC_WRITE=0x40000000L,
+        GENERIC_EXECUTE=0x20000000L,
+        GENERIC_ALL=0x10000000L,
+    }
+    #endregion
+
 }

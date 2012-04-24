@@ -104,6 +104,7 @@
     <Compile Include="Win32\HotKey.cs" />
     <Compile Include="Win32\KeyBoardListener.cs" />
     <Compile Include="Win32\MessageBoxEx.cs" />
+    <Compile Include="Win32\ParallelPort.cs" />
     <Compile Include="Win32\RegistryUtil.cs" />
     <Compile Include="Win32\Structs.cs" />
     <Compile Include="Win32\WindowsAPI.cs" />
@@ -127,7 +128,6 @@
     <Content Include="Resources\Cancel.png" />
     <Content Include="Resources\OK.png" />
     <Content Include="Win32Common.csproj" />
-    <Content Include="Win32Common.csproj.user" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Buffalo.Kernel\Buffalo.Kernel.csproj">

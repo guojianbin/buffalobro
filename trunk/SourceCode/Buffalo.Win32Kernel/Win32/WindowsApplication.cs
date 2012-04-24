@@ -71,7 +71,7 @@ namespace Buffalo.Win32Kernel.Win32
             }
 
             secc = WindowsAPI.AdjustTokenPrivileges(tokenHaldle, false, ref tp, Marshal.SizeOf(tp), IntPtr.Zero, IntPtr.Zero);
-            WindowsAPI.CloseHandle(tokenHaldle.ToInt32());
+            WindowsAPI.CloseHandle(tokenHaldle);
         }
         /// <summary>
         /// …Ë÷√±⁄÷Ω

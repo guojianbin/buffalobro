@@ -49,7 +49,7 @@ namespace Buffalo.Win32Kernel.Win32
         int dwProcessId
         );
         [DllImport("kernel32.dll", EntryPoint = "CloseHandle")]
-        public static extern int CloseHandle(int hObject);
+        public static extern int CloseHandle(IntPtr hObject);
 
         [DllImport("kernel32.dll")]
         public static extern Int32 WriteProcessMemory(
@@ -57,39 +57,39 @@ namespace Buffalo.Win32Kernel.Win32
             IntPtr lpBaseAddress,
             [In, Out] byte[] buffer,
             int size,
-            out IntPtr lpNumberOfBytesWritten);
+            out int lpNumberOfBytesWritten);
 
         [DllImport("kernel32.dll")]
         public static extern Int32 WriteProcessMemory(
-            int hProcess,
-            int lpBaseAddress,
+            IntPtr hProcess,
+            IntPtr lpBaseAddress,
             byte[] buffer,
             int size,
             int lpNumberOfBytesWritten);
 
         [DllImport("kernel32", EntryPoint = "CreateRemoteThread")]
-        public static extern int CreateRemoteThread(
-            int hProcess,
+        public static extern IntPtr CreateRemoteThread(
+            IntPtr hProcess,
             int lpThreadAttributes,
             int dwStackSize,
-            int lpStartAddress,
+            IntPtr lpStartAddress,
             int lpParameter,
             int dwCreationFlags,
             ref int lpThreadId
             );
 
         [DllImport("kernel32.dll", EntryPoint = "CreateRemoteThread")]
-        public static extern int CreateRemoteThread(
-            int hProcess,
+        public static extern IntPtr CreateRemoteThread(
+            IntPtr hProcess,
             ref SECURITY_ATTRIBUTES lpThreadAttributes,
             int dwStackSize,
-            ref int lpStartAddress,
+            ref IntPtr lpStartAddress,
             ref int lpParameter,
             int dwCreationFlags,
             ref int lpThreadId
         );
         [DllImport("Kernel32.dll")]
-        public static extern System.Int32 VirtualAllocEx(
+        public static extern IntPtr VirtualAllocEx(
             System.IntPtr hProcess,
             System.Int32 lpAddress,
             System.Int32 dwSize,
@@ -98,8 +98,8 @@ namespace Buffalo.Win32Kernel.Win32
             );
 
         [DllImport("Kernel32.dll")]
-        public static extern System.Int32 VirtualAllocEx(
-            int hProcess,
+        public static extern IntPtr VirtualAllocEx(
+            IntPtr hProcess,
             int lpAddress,
             int dwSize,
             ProcessAccess flAllocationType,
@@ -107,9 +107,9 @@ namespace Buffalo.Win32Kernel.Win32
             );
 
         [DllImport("Kernel32.dll")]
-        public static extern System.Int32 VirtualFreeEx(
-            int hProcess,
-            int lpAddress,
+        public static extern IntPtr VirtualFreeEx(
+            IntPtr hProcess,
+            IntPtr lpAddress,
             int dwSize,
             ProcessAccess flAllocationType
             );
@@ -809,6 +809,43 @@ namespace Buffalo.Win32Kernel.Win32
             IntPtr hThread
         );
         #endregion
+
+        #region ²¢¿Ú
+        [DllImport("inpout32.dll", EntryPoint = "Out32")]
+         public static extern void Output(uint adress, int value);
+ 
+         [DllImport("inpout32.dll", EntryPoint = "Inp32")]
+         public static extern int Input(uint adress); 
+
+        [DllImport("kernel32.dll ")]
+         public static extern IntPtr CreateFile(
+           string lpFileName,
+           GENERICFileAccess dwDesiredAccess,
+           int dwShareMode,
+           int lpSecurityAttributes,
+           int dwCreationDisposition,
+           int dwFlagsAndAttributes,
+           int hTemplateFile
+           );
+         [DllImport("kernel32.dll ")]
+        public static extern bool WriteFile(
+           IntPtr hFile,
+           byte[] lpBuffer,
+           int nNumberOfBytesToWrite,
+           ref   int lpNumberOfBytesWritten,
+           ref   OVERLAPPED lpOverlapped
+           );
+         [DllImport("kernel32.dll ")]
+        public static extern bool ReadFile(
+           IntPtr hFile,
+           out byte[] lpBuffer,
+           int nNumberOfBytesToRead,
+           ref int lpNumberOfBytesRead,
+           ref OVERLAPPED lpOverlapped
+         ); 
+
+        #endregion
+
         public const int ANYSIZE_ARRAY = 1;
 
         [DllImport("NETAPI32.DLL")]
