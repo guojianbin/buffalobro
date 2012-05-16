@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<class TableName="bpSysModel" ClassName="Buffalo.Permissions.PermissionsInfo.BPSysModel" IsTable="1" BelongDB="PermissionDB">
+  <property FieldName="_modelIdentify" PropertyName="ModelIdentify" DbType="AnsiString" Length="64" EntityPropertyType="1" ParamName="modelIdentify" ReadOnly="0" />
+  <property FieldName="_modelName" PropertyName="ModelName" DbType="AnsiString" Length="150" EntityPropertyType="1" ParamName="modelName" ReadOnly="0" />
+  <property FieldName="_modelDescription" PropertyName="ModelDescription" DbType="AnsiString" Length="500" EntityPropertyType="1" ParamName="modelDescription" ReadOnly="0" />
+  <property FieldName="_modelType" PropertyName="ModelType" DbType="AnsiString" Length="255" EntityPropertyType="1" ParamName="modelType" ReadOnly="0" />
+  <relation FieldName="_lstModelItem" PropertyName="LstModelItem" SourceProperty="Id" TargetProperty="SysModelId" IsToDB="0" IsParent="0" />
+</class>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="微软雅黑" Size="9" />
+  <Comment CommentText="顶层基类">
+    <Position X="2" Y="3.016" Height="0.396" Width="1.367" />
+  </Comment>
+  <Comment CommentText="基础权限数据">
+    <Position X="2.042" Y="6.089" Height="0.29" Width="1.335" />
+  </Comment>
+  <Comment CommentText="用户组权限设置">
+    <Position X="2.073" Y="10.536" Height="0.375" Width="1.7" />
+  </Comment>
+  <Class Name="Buffalo.Permissions.PermissionsInfo.BPBase">
+    <Position X="5" Y="3" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>PermissionsInfo\BPBase.cs</FileName>
+      <HashCode>AAQCAMAAEAAAAAAAAEBAIAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Buffalo.Permissions.PermissionsInfo.BPGroup">
+    <Position X="4.25" Y="6.75" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>PermissionsInfo\BPGroup.cs</FileName>
+      <HashCode>AAQAAEAAAAAAAAAAAAAAAAAAAAAAAAAAIDAAAAEAACE=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Buffalo.Permissions.PermissionsInfo.BPSysModel">
+    <Position X="7.5" Y="6.5" Width="3" />
+    <TypeIdentifier>
+      <FileName>PermissionsInfo\BPSysModel.cs</FileName>
+      <HashCode>AAAAAAAAAAAEAAAEAICCAIAkAAhAAAAAACIIACgAQAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Buffalo.Permissions.PermissionsInfo.BPSysModelItem">
+    <Position X="11.25" Y="6" Width="3.25" />
+    <TypeIdentifier>
+      <FileName>PermissionsInfo\BPSysModelItem.cs</FileName>
+      <HashCode>QAAEAAAAIABCAgAAAAAQAAAAAAAKAAAAACgAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Buffalo.Permissions.PermissionsInfo.BPGroupModelRight">
+    <Position X="4.25" Y="10.25" Width="3" />
+    <TypeIdentifier>
+      <FileName>PermissionsInfo\BPGroupModelRight.cs</FileName>
+      <HashCode>AAAAACAEIAACAAAAAAAAAJAAAAAACAACASBAAAAQAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Buffalo.Permissions.PermissionsInfo.BPGroupItemRight">
+    <Position X="9.25" Y="10.25" Width="2.75" />
+    <TypeIdentifier>
+      <FileName>PermissionsInfo\BPGroupItemRight.cs</FileName>
+      <HashCode>AAAAACAEAAAAIEQAAAAAIAAAAQABAAAAASBAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Buffalo.Permissions.PermissionsInfo.BPModelRights">
+    <Position X="7.5" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PermissionsInfo\BPModelRights.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Buffalo.Permissions.PermissionsInfo.BPModelItemRight">
+    <Position X="12.25" Y="12.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>PermissionsInfo\BPModelItemRight.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAgAAEAAAAAIAgAAEAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+</ClassDiagram>

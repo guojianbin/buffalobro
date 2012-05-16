@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<class TableName="bpGroupItemRight" ClassName="Buffalo.Permissions.PermissionsInfo.BPGroupItemRight" IsTable="1" BelongDB="PermissionDB">
+  <property FieldName="_modelItemId" PropertyName="ModelItemId" DbType="Int32" Length="0" EntityPropertyType="1" ParamName="modelItemId" ReadOnly="0" />
+  <property FieldName="_groupId" PropertyName="GroupId" DbType="Int32" Length="0" EntityPropertyType="1" ParamName="groupId" ReadOnly="0" />
+  <property FieldName="_itemRight" PropertyName="ItemRight" DbType="Int32" Length="0" EntityPropertyType="1" ParamName="itemRight" ReadOnly="0" />
+  <relation FieldName="_belongItem" PropertyName="BelongItem" SourceProperty="ModelItemId" TargetProperty="Id" IsToDB="1" IsParent="1" />
+  <relation FieldName="_belongGroup" PropertyName="BelongGroup" SourceProperty="GroupId" TargetProperty="Id" IsToDB="1" IsParent="1" />
+</class>

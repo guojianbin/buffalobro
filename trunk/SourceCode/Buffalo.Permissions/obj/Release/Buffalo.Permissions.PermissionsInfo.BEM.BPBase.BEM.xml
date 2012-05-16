@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<class TableName="" ClassName="Buffalo.Permissions.PermissionsInfo.BPBase" IsTable="1" BelongDB="PermissionDB">
+  <property FieldName="_id" PropertyName="Id" DbType="Int32" Length="0" EntityPropertyType="10" ParamName="id" ReadOnly="0" />
+  <property FieldName="_createDate" PropertyName="CreateDate" DbType="DateTime" Length="0" EntityPropertyType="1" ParamName="createDate" ReadOnly="0" />
+  <property FieldName="_laseUpdate" PropertyName="LaseUpdate" DbType="DateTime" Length="0" EntityPropertyType="1" ParamName="laseUpdate" ReadOnly="0" />
+</class>

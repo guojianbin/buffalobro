@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Buffalo.DB.CommBase.BusinessBases;
+
+namespace Buffalo.Permissions.PermissionsInfo
+{
+    /// <summary>
+    /// 权限基类
+    /// </summary>
+    public class BPBase:ThinModelBase
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        private int? _id;
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        private DateTime? _createDate;
+
+        /// <summary>
+        /// 更新时间
+        /// </summary>
+        private DateTime? _laseUpdate;
+    }
+}

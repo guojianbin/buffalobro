@@ -1,0 +1,101 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{867FB7C9-CBE1-4C5A-A487-DA7EC2B8CA93}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Buffalo.Permissions</RootNamespace>
+    <AssemblyName>Buffalo.Permissions</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PermissionManager.cs" />
+    <Compile Include="PermissionContainer.cs" />
+    <Compile Include="PermissionsInfo\BPBase.cs" />
+    <Compile Include="PermissionsInfo\BPBase.extend.cs" />
+    <Compile Include="PermissionsInfo\BPGroup.cs" />
+    <Compile Include="PermissionsInfo\BPGroup.extend.cs" />
+    <Compile Include="PermissionsInfo\BPGroupItemRight.cs" />
+    <Compile Include="PermissionsInfo\BPGroupItemRight.extend.cs" />
+    <Compile Include="PermissionsInfo\BPGroupModelRight.cs" />
+    <Compile Include="PermissionsInfo\BPGroupModelRight.extend.cs" />
+    <Compile Include="PermissionsInfo\BPModelItemRight.cs" />
+    <Compile Include="PermissionsInfo\BPModelRights.cs" />
+    <Compile Include="PermissionsInfo\BPSysModel.cs" />
+    <Compile Include="PermissionsInfo\BPSysModel.extend.cs" />
+    <Compile Include="PermissionsInfo\BPSysModelItem.cs" />
+    <Compile Include="PermissionsInfo\BPSysModelItem.extend.cs" />
+    <Compile Include="PermissionsInfo\BQLEntity\BPBase.cs" />
+    <Compile Include="PermissionsInfo\BQLEntity\BPGroup.cs" />
+    <Compile Include="PermissionsInfo\BQLEntity\BPGroupItemRight.cs" />
+    <Compile Include="PermissionsInfo\BQLEntity\BPGroupModelRight.cs" />
+    <Compile Include="PermissionsInfo\BQLEntity\BPSysModel.cs" />
+    <Compile Include="PermissionsInfo\BQLEntity\BPSysModelItem.cs" />
+    <Compile Include="PermissionsInfo\BQLEntity\PermissionDB.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Buffalo.DB\Buffalo.DB.csproj">
+      <Project>{9B0043E4-883B-47BA-9A5A-5110C8583902}</Project>
+      <Name>Buffalo.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buffalo.Kernel\Buffalo.Kernel.csproj">
+      <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
+      <Name>Buffalo.Kernel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PermissionsInfo\PermissionDB.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PermissionsInfo\BEM\BPBase.BEM.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PermissionsInfo\BEM\BPGroup.BEM.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PermissionsInfo\BEM\BPSysModel.BEM.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PermissionsInfo\BEM\BPSysModelItem.BEM.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PermissionsInfo\BEM\BPGroupModelRight.BEM.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PermissionsInfo\BEM\BPGroupItemRight.BEM.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
