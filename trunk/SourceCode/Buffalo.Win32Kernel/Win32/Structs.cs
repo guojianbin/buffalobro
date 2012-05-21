@@ -784,7 +784,14 @@ namespace Buffalo.Win32Kernel.Win32
         public UInt16 wBorders;
     }
     #endregion
+    public struct COPYDATASTRUCT
+    {
+        public IntPtr dwData;
+        public int cbData;
+        [MarshalAs(UnmanagedType.LPStr)]
+        public string lpData;
 
+    }
     /// <summary>
     /// 键盘钩子信息结构体
     /// </summary>

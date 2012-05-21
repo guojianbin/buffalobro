@@ -3,3 +3,8 @@ D:\CShareTest\TestPermission\TestPerLib\TestPerLib\bin\Debug\TestPerLib.pdb
 D:\CShareTest\TestPermission\TestPerLib\TestPerLib\obj\Debug\ResolveAssemblyReference.cache
 D:\CShareTest\TestPermission\TestPerLib\TestPerLib\obj\Debug\TestPerLib.dll
 D:\CShareTest\TestPermission\TestPerLib\TestPerLib\obj\Debug\TestPerLib.pdb
+D:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\TestPerLib.dll
+D:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\TestPerLib.pdb
+D:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\obj\Debug\ResolveAssemblyReference.cache
+D:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\obj\Debug\TestPerLib.dll
+D:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\obj\Debug\TestPerLib.pdb

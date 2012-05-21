@@ -8,6 +8,8 @@ using Buffalo.DB.QueryConditions;
 using Buffalo.Permissions.PermissionsInfo.BQLEntity;
 using Buffalo.Kernel;
 using Buffalo.DB.CommBase.BusinessBases;
+using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
+using Buffalo.DB.BQLCommon.BQLBaseFunction;
 namespace Buffalo.Permissions.PermissionsInfo
 {
 	
@@ -65,10 +67,10 @@ namespace Buffalo.Permissions.PermissionsInfo
                     lstGMRight.Add(curRight);
                     dicModelRights[id] = curRight;
                 }
-
-                List<BPGroupItemRight> lstGroupItemRight=curRight.
-                    CheckModelItemRight(
+                
             }
+            List<BPGroupItemRight> lstGroupItemRight = new List<BPGroupItemRight>();
+            CheckModelItemRight(lstGroupItemRight, lstModelRights, group);
         }
 
         /// <summary>
@@ -86,7 +88,7 @@ namespace Buffalo.Permissions.PermissionsInfo
             BPGroupItemRight curRight = null;
             foreach (BPSysModelItem item in lstItemRight)
             {
-                string id = item.Id.ToString;
+                string id = item.Id.ToString();
                 if (!dicModelRights.TryGetValue(id, out curRight))
                 {
                     curRight = new BPGroupItemRight();

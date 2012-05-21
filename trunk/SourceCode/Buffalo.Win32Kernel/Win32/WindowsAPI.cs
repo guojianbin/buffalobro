@@ -223,6 +223,7 @@ namespace Buffalo.Win32Kernel.Win32
         static public extern bool GetMenuItemRect(IntPtr hWnd, IntPtr hMenu, uint Item, ref RECT rc);
         [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern IntPtr GetParent(IntPtr hWnd);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessage(IntPtr hWnd, Msg msg, IntPtr wParam, IntPtr lParam);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -257,6 +258,46 @@ namespace Buffalo.Win32Kernel.Win32
         public static extern void SendMessage(IntPtr hWnd, Msg msg, int wParam, ref HD_HITTESTINFO hti);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int SendMessage(IntPtr hWnd, Msg msg, int wParam, ref PARAFORMAT2 format);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int SendMessage(IntPtr hWnd, Msg msg, int wParam, ref COPYDATASTRUCT lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessageW(IntPtr hWnd, Msg msg, IntPtr wParam, IntPtr lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessageW(IntPtr hWnd, Msg msg, ref int wParam, ref int lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int SendMessageW(IntPtr hWnd, Msg msg, int wParam, int lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref MSG lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref TOOLINFO lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int SendMessageW(IntPtr hWnd, SpinControlMsg msg, int wParam, ref UDACCEL lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessageW(IntPtr hWnd, Msg msg, int wParam, IntPtr lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern void SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref RECT lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref POINT lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern void SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref TBBUTTON lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern void SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref TBBUTTONINFO lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref REBARBANDINFO lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern void SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref TVITEM lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern void SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref LVITEM lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern void SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref HDITEM lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern void SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref HD_HITTESTINFO hti);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref PARAFORMAT2 format);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int SendMessageW(IntPtr hWnd, Msg msg, int wParam, ref COPYDATASTRUCT lParam);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static public extern int SendDlgItemMessage(IntPtr hWnd, int Id, int msg, int wParam, int lParam);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]

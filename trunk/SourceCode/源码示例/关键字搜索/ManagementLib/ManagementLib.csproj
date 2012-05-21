@@ -28,6 +28,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Buffalo.DB, Version=0.8.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\dll\Buffalo\Debug\Net2.0\Buffalo.DB.dll</HintPath>
+    </Reference>
     <Reference Include="Buffalo.Kernel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\dll\Buffalo\Debug\Net2.0\Buffalo.Kernel.dll</HintPath>
@@ -174,12 +178,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BEM\View_Users_Storage.BEM.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Buffalo.DB\Buffalo.DB.csproj">
-      <Project>{9B0043E4-883B-47BA-9A5A-5110C8583902}</Project>
-      <Name>Buffalo.DB</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

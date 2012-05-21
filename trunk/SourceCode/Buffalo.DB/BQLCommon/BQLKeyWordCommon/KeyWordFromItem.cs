@@ -44,6 +44,17 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
             return item;
         }
         /// <summary>
+        /// 左外连接
+        /// </summary>
+        /// <param name="jionTable">表</param>
+        /// <param name="on">条件</param>
+        /// <returns></returns>
+        public KeyWordJoinItem LeftOuterJoin(BQLTableHandle joinTable, BQLCondition on)
+        {
+            KeyWordJoinItem item = new KeyWordJoinItem(joinTable, on, "left outer", this);
+            return item;
+        }
+        /// <summary>
         /// 右连接
         /// </summary>
         /// <param name="jionTable">表</param>
@@ -52,6 +63,17 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         public KeyWordJoinItem RightJoin(BQLTableHandle joinTable, BQLCondition on)
         {
             KeyWordJoinItem item = new KeyWordJoinItem(joinTable, on, "right", this);
+            return item;
+        }
+        /// <summary>
+        /// 右外连接
+        /// </summary>
+        /// <param name="jionTable">表</param>
+        /// <param name="on">条件</param>
+        /// <returns></returns>
+        public KeyWordJoinItem RightOuterJoin(BQLTableHandle joinTable, BQLCondition on)
+        {
+            KeyWordJoinItem item = new KeyWordJoinItem(joinTable, on, "right outer", this);
             return item;
         }
         /// <summary>
@@ -77,6 +99,17 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
             return item;
         }
         /// <summary>
+        /// 交叉外连接
+        /// </summary>
+        /// <param name="jionTable">表</param>
+        /// <param name="on">条件</param>
+        /// <returns></returns>
+        public KeyWordJoinItem CrossOuterJoin(BQLTableHandle joinTable, BQLCondition on)
+        {
+            KeyWordJoinItem item = new KeyWordJoinItem(joinTable, on, "cross outer", this);
+            return item;
+        }
+        /// <summary>
         /// 全连接
         /// </summary>
         /// <param name="jionTable">表</param>
@@ -85,6 +118,17 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         public KeyWordJoinItem FullJoin(BQLTableHandle joinTable, BQLCondition on)
         {
             KeyWordJoinItem item = new KeyWordJoinItem(joinTable, on, "full", this);
+            return item;
+        }
+        /// <summary>
+        /// 全连接
+        /// </summary>
+        /// <param name="jionTable">表</param>
+        /// <param name="on">条件</param>
+        /// <returns></returns>
+        public KeyWordJoinItem FullOuterJoin(BQLTableHandle joinTable, BQLCondition on)
+        {
+            KeyWordJoinItem item = new KeyWordJoinItem(joinTable, on, "full outer", this);
             return item;
         }
         /// <summary>

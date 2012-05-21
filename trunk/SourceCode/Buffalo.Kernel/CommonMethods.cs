@@ -662,9 +662,19 @@ namespace Buffalo.Kernel
                 {
                     continue;
                 }
-                TKey key=(TKey)handle(obj,emptyParams);
-
-                dic[key] = objValue;
+                TKey key=default(TKey);
+                object objKey = handle(obj, emptyParams);
+                if (typeof(TKey) == DefaultType.StringType)
+                {
+                    object strkey = objKey.ToString();
+                    dic[(TKey)strkey] = objValue;
+                }
+                else 
+                {
+                    key = (TKey)objKey;
+                    dic[key] = objValue;
+                }
+                
             }
             return dic;
         }
@@ -728,7 +738,6 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static string CurrentDataString()
         {
-
             return DateTime.Now.ToString("yyyyMMddHHmmssms");
         }
 

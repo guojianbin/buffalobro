@@ -10,6 +10,8 @@ using System.Web.UI.HtmlControls;
 using Buffalo.Kernel;
 using Buffalo.Permissions.PermissionsInfo;
 using Buffalo.Permissions;
+using Buffalo.DB.BQLCommon.BQLBaseFunction;
+using Buffalo.DB.QueryConditions;
 
 public partial class _Default : System.Web.UI.Page 
 {
@@ -38,5 +40,6 @@ public partial class _Default : System.Web.UI.Page
     protected void Button2_Click(object sender, EventArgs e)
     {
         PermissionManager.AddUserGroup("1", "管理员组");
+        
     }
 }

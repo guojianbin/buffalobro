@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 
-namespace GPMSKernel.SmartSellMap
+namespace Buffalo.Kernel.SmartSellMap
 {
     public class SellCombination<T> where T : ICombinationItem
     {

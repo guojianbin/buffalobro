@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 
-namespace GPMSKernel.SmartSellMap
+namespace Buffalo.Kernel.SmartSellMap
 {
     /// <summary>
     /// 组合项

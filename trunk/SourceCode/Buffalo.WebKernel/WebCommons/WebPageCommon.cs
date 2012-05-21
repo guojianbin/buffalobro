@@ -21,15 +21,29 @@ namespace Buffalo.WebKernel.WebCommons
             {
                 return null;
             }
+            Control ret = null;
             Page currentPage = objControl as Page;
             if (currentPage!=null)
             {
                 if (currentPage.Master != null) //如果是带有模版的页面，自动穷举所有模版，找出控件
                 {
-                    return FindControlInMaster(currentPage.Master, controlId, new Stack<IList>());
+                    ret = FindControlInMaster(currentPage.Master, controlId, new Stack<IList>());
                 }
             }
-            return objControl.FindControl(controlId);
+            if (ret == null)
+            {
+                Control ctr = objControl;
+                while (ctr != null)
+                {
+                    ret = objControl.FindControl(controlId);
+                    if (ret != null) 
+                    {
+                        break;
+                    }
+                    ctr = ctr.Parent;
+                }
+            }
+            return ret;
         }
         private static PropertyInfoHandle pInfoHandle = FastValueGetSet.GetPropertyInfoHandle("ContentPlaceHolders", typeof(MasterPage));//利用IL把模版了类的子容器拿出来
         /// <summary>
