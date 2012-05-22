@@ -414,6 +414,8 @@ namespace Buffalo.Win32Kernel.Win32
         static public extern IntPtr FindWindowEx(IntPtr hWnd, IntPtr hChild, string strClassName, string strName);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static public extern IntPtr FindWindowEx(IntPtr hWnd, IntPtr hChild, string strClassName, IntPtr strName);
+        [DllImport("User32.dll ", EntryPoint = "FindWindow")]
+        public static extern IntPtr FindWindow(string lpClassName,string lpWindowName);   
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static public extern int AnimateWindow(IntPtr hWnd, uint dwTime, uint dwFlags);
         [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]

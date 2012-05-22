@@ -47,7 +47,7 @@
             // smi_Cancel
             // 
             this.smi_Cancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(238)))), ((int)(((byte)(255)))));
-            this.smi_Cancel.Image = global::Buffalo.Win32Kernel.Properties.Resources.Cancel;
+            this.smi_Cancel.Image = Resource.Cancel;
             this.smi_Cancel.Name = "smi_Cancel";
             this.smi_Cancel.Size = new System.Drawing.Size(98, 22);
             this.smi_Cancel.Text = "取消";
@@ -56,7 +56,7 @@
             // smi_OK
             // 
             this.smi_OK.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(238)))), ((int)(((byte)(255)))));
-            this.smi_OK.Image = global::Buffalo.Win32Kernel.Properties.Resources.OK;
+            this.smi_OK.Image = Resource.OK;
             this.smi_OK.Name = "smi_OK";
             this.smi_OK.Size = new System.Drawing.Size(98, 22);
             this.smi_OK.Text = "完成";
