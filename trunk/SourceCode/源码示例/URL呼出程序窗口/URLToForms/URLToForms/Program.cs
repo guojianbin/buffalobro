@@ -51,6 +51,7 @@ namespace URLToForms
             string head="openform://";
             string str = args[0];
             string formId = str.Substring(head.Length, str.Length - head.Length).Trim('/');
+            bool find = false;
             foreach (Process pro in Process.GetProcesses()) 
             {
                 try
@@ -58,19 +59,26 @@ namespace URLToForms
                     if (pro.MainModule.FileName.Equals(CurrentFileName, StringComparison.CurrentCultureIgnoreCase))
                     {
                         IntPtr mainFormHandle = WindowsAPI.FindWindow(null, "主窗体");
-                        byte[] sarr = System.Text.Encoding.Default.GetBytes(formId);
-                        int len = sarr.Length;
-                        COPYDATASTRUCT cds;
-                        cds.dwData = (IntPtr)100;
-                        cds.lpData = formId;
-                        cds.cbData = len + 1;
-                        WindowsAPI.SendMessage(mainFormHandle, Msg.WM_COPYDATA, 0, ref cds);
-                        
+                        if (mainFormHandle != IntPtr.Zero)
+                        {
+                            byte[] sarr = System.Text.Encoding.Default.GetBytes(formId);
+                            int len = sarr.Length;
+                            COPYDATASTRUCT cds;
+                            cds.dwData = (IntPtr)100;
+                            cds.lpData = formId;
+                            cds.cbData = len + 1;
+                            WindowsAPI.SendMessage(mainFormHandle, Msg.WM_COPYDATA, 0, ref cds);
+                            find = true;
+                        }
                     }
                 }
                 catch(Exception ex) 
                 {
                 }
+            }
+            if (!find) 
+            {
+                MessageBox.Show("请先打开应用程序");
             }
         }
     }
