@@ -89,11 +89,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Buffalobro\SourceCode\Buffalo.Kernel\Buffalo.Kernel.csproj">
+    <ProjectReference Include="..\..\..\..\Buffalo.Kernel\Buffalo.Kernel.csproj">
       <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
       <Name>Buffalo.Kernel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Buffalobro\SourceCode\Buffalo.Win32Kernel\Buffalo.Win32Kernel.csproj">
+    <ProjectReference Include="..\..\..\..\Buffalo.Win32Kernel\Buffalo.Win32Kernel.csproj">
       <Project>{48492BAD-6312-4A80-A660-C0DA04957227}</Project>
       <Name>Buffalo.Win32Kernel</Name>
     </ProjectReference>

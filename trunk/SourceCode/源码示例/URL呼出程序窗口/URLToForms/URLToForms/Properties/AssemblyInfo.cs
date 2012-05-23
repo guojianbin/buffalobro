@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("URLToForms")]
+[assembly: AssemblyTitle("测试URL调出窗体")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("URLToForms")]
-[assembly: AssemblyCopyright("版权所有 (C) Microsoft 2012")]
+[assembly: AssemblyProduct("BuffaloWin32示例")]
+[assembly: AssemblyCopyright("dogcom")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

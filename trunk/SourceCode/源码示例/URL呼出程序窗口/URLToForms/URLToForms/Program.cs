@@ -27,7 +27,7 @@ namespace URLToForms
             Application.Run(new FrmMain());
         }
 
-        private static string CurrentFileName 
+        public static string CurrentFileName 
         {
             get 
             {
