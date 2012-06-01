@@ -22,6 +22,20 @@ namespace Buffalo.WinFormsControl.DataGridViewEx
             return cell;
         }
 
+        private object _selectValue;
+
+        /// <summary>
+        /// 选中的值
+        /// </summary>
+        public object SelectValue
+        {
+            get { return _selectValue; }
+            internal set 
+            {
+                _selectValue = value;
+            }
+        }
+
         // By default, enable the CheckBox cell.
         public DataGridViewExComboBoxCell()
         {

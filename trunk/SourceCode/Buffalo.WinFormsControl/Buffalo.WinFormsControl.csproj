@@ -47,8 +47,6 @@
     <Compile Include="DataGridViewEx\DataGridViewImageButtomColumn.cs" />
     <Compile Include="DataGridViewEx\DataGridViewPercentCell.cs" />
     <Compile Include="DataGridViewEx\DataGridViewPercentColumn.cs" />
-    <Compile Include="DataGridViewPercent\DataGridPercentCell.cs" />
-    <Compile Include="DataGridViewPercent\DataGridViewPercentColumn.cs" />
     <Compile Include="PagingBar\MediumPagingBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -88,6 +86,9 @@
       <Project>{48492BAD-6312-4A80-A660-C0DA04957227}</Project>
       <Name>Buffalo.Win32Kernel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataGridViewPercent\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

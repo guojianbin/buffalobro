@@ -54,6 +54,7 @@ namespace Buffalo.WinFormsControl.DataGridViewEx
             {
                 for (int i = 0; i < cmb.Items.Count; i++)
                 {
+
                     if (cmb.Items[i] != null && cmb.Items[i].ToString().Equals(cell.Value == null ? "" : cell.Value.ToString()))
                     {
                         cmb.SelectedIndex = i;
@@ -94,16 +95,15 @@ namespace Buffalo.WinFormsControl.DataGridViewEx
 
         public DataGridViewExComboBoxColumn()
         {
-            _columnComboBox = new ComboBox();
-            this.ReadOnly = true ;
-            this.CellTemplate = new DataGridViewExComboBoxCell();
             
+            
+            this.CellTemplate = new DataGridViewExComboBoxCell();
+           
         }
-
-        
-
         protected override void OnDataGridViewChanged()
         {
+            _columnComboBox = new ComboBox();
+            this.ReadOnly = true;
             this.DataGridView.Controls.Add(_columnComboBox);
             _columnComboBox.Visible = false;
             _columnComboBox.Leave += new EventHandler(_columnComboBox_Leave);
@@ -112,14 +112,18 @@ namespace Buffalo.WinFormsControl.DataGridViewEx
 
         void _columnComboBox_Leave(object sender, EventArgs e)
         {
-            DataGridViewCell cell=this.DataGridView.CurrentCell;
+            DataGridViewExComboBoxCell cell = this.DataGridView.CurrentCell as DataGridViewExComboBoxCell;
             if (cell != null)
             {
                 cell.Value = _columnComboBox.Text;
 
                 if (_columnComboBox.SelectedItem != null)
                 {
-                    cell.Tag = _columnComboBox.SelectedItem;
+                    cell.SelectValue = _columnComboBox.SelectedItem;
+                }
+                else 
+                {
+                    cell.SelectValue = cell.Value;
                 }
 
                 HideComboBox();
