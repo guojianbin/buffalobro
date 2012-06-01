@@ -1,33 +1,29 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-/** 
-@author 289323612@qq.com
-@version 创建时间：2011-12-1
-给DataGridView添加支持百分比的列 
-*/
-namespace Buffalo.WinFormsControl.DataGridViewPercent
+
+namespace Buffalo.WinFormsControl.DataGridViewEx
 {
     public class DataGridViewPercentColumn:System.Windows.Forms.DataGridViewColumn
     {
 
         public DataGridViewPercentColumn()
         {
-            base.CellTemplate = new DataGridPercentCell();
+            base.CellTemplate = new DataGridViewPercentCell();
         }
 
-        private bool _showTotle=false;
+        private bool _showTotle = false;
 
         /// <summary>
         /// 是否在值后边显示总数
         /// </summary>
-        public bool ShowTotle 
+        public bool ShowTotle
         {
-            get 
+            get
             {
                 return _showTotle;
             }
-            set 
+            set
             {
                 _showTotle = value;
             }

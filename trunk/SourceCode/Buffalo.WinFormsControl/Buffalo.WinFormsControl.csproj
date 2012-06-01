@@ -37,6 +37,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataGridViewEx\DataGridViewExButtonCell.cs" />
+    <Compile Include="DataGridViewEx\DataGridViewExButtonColumn .cs" />
+    <Compile Include="DataGridViewEx\DataGridViewExCheckBoxCell.cs" />
+    <Compile Include="DataGridViewEx\DataGridViewExCheckBoxColumn.cs" />
+    <Compile Include="DataGridViewEx\DataGridViewExComboBoxCell.cs" />
+    <Compile Include="DataGridViewEx\DataGridViewExComboBoxColumn.cs" />
+    <Compile Include="DataGridViewEx\DataGridViewImageButtomCell.cs" />
+    <Compile Include="DataGridViewEx\DataGridViewImageButtomColumn.cs" />
+    <Compile Include="DataGridViewEx\DataGridViewPercentCell.cs" />
+    <Compile Include="DataGridViewEx\DataGridViewPercentColumn.cs" />
     <Compile Include="DataGridViewPercent\DataGridPercentCell.cs" />
     <Compile Include="DataGridViewPercent\DataGridViewPercentColumn.cs" />
     <Compile Include="PagingBar\MediumPagingBar.cs">
@@ -72,6 +82,12 @@
     <Content Include="Resources\Last.png" />
     <Content Include="Resources\Next.png" />
     <Content Include="Resources\Previous.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Buffalo.Win32Kernel\Buffalo.Win32Kernel.csproj">
+      <Project>{48492BAD-6312-4A80-A660-C0DA04957227}</Project>
+      <Name>Buffalo.Win32Kernel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

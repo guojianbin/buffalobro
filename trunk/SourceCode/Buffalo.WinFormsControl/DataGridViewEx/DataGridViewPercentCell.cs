@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 
-/** 
-@author 289323612@qq.com
-@version 创建时间：2011-12-1
-给DataGridView添加支持百分比的列 
-*/
-namespace Buffalo.WinFormsControl.DataGridViewPercent
+namespace Buffalo.WinFormsControl.DataGridViewEx
 {
-    public class DataGridPercentCell : System.Windows.Forms.DataGridViewCell
+    public class DataGridViewPercentCell : System.Windows.Forms.DataGridViewCell
     {
         protected override object GetFormattedValue(object value, int rowIndex, ref System.Windows.Forms.DataGridViewCellStyle cellStyle, System.ComponentModel.TypeConverter valueTypeConverter, System.ComponentModel.TypeConverter formattedValueTypeConverter, System.Windows.Forms.DataGridViewDataErrorContexts context)
         {
@@ -20,13 +15,9 @@ namespace Buffalo.WinFormsControl.DataGridViewPercent
             }
             else
             {
-                
                 return value;
             }
         }
-
-        
-
         protected override void Paint(System.Drawing.Graphics graphics, System.Drawing.Rectangle clipBounds, System.Drawing.Rectangle cellBounds, int rowIndex, System.Windows.Forms.DataGridViewElementStates cellState, object value, object formattedValue, string errorText, System.Windows.Forms.DataGridViewCellStyle cellStyle, System.Windows.Forms.DataGridViewAdvancedBorderStyle advancedBorderStyle, System.Windows.Forms.DataGridViewPaintParts paintParts)
         {
             bool canParse = true;
@@ -35,36 +26,37 @@ namespace Buffalo.WinFormsControl.DataGridViewPercent
             {
                 val = Convert.ToDecimal(value);
             }
-            catch 
+            catch
             {
                 canParse = false;
             }
-            
-            DataGridViewPercentColumn col=this.OwningColumn as DataGridViewPercentColumn;
-            if (canParse && col.TotleCount>0)
+
+            DataGridViewPercentColumn col = this.OwningColumn as DataGridViewPercentColumn;
+            if (canParse && col.TotleCount > 0)
             {
                 decimal decv = val / col.TotleCount;
                 if (decv > 1) decv = 1;
                 if (decv < 0) decv = 0;
                 Brush bs = new SolidBrush(cellStyle.BackColor);
-                Brush bs2 = new SolidBrush(Color.YellowGreen);
+                //Brush bs2 = new SolidBrush(Color.YellowGreen);
+                Brush bs2 = new SolidBrush(Color.Red);
                 Brush bsstring = new SolidBrush(cellStyle.ForeColor);
                 if ((cellState & System.Windows.Forms.DataGridViewElementStates.Selected) == System.Windows.Forms.DataGridViewElementStates.Selected)
                 {
                     bs = new SolidBrush(cellStyle.SelectionBackColor);
                     bsstring = new SolidBrush(cellStyle.SelectionForeColor);
                 }
-                if (decv < 0.75m)
-                {
-                    if (decv < 0.2m)
-                    {
-                        bs2 = new SolidBrush(Color.Red);
-                    }
-                    else
-                    {
-                        bs2 = new SolidBrush(Color.Orange);
-                    }
-                }
+                //if (decv < 0.75m)
+                //{
+                //    if (decv < 0.2m)
+                //    {
+                //        bs2 = new SolidBrush(Color.Red);
+                //    }
+                //    else
+                //    {
+                //        bs2 = new SolidBrush(Color.Orange);
+                //    }
+                //}
                 Pen p = new Pen(DataGridView.GridColor, 1);
                 graphics.FillRectangle(bs, cellBounds.X, cellBounds.Y, cellBounds.Width, cellBounds.Height);
                 graphics.FillRectangle(bs2, cellBounds.X + 1, cellBounds.Y + 1, (float)((cellBounds.Width - 3) * decv), cellBounds.Height - 3);
@@ -72,13 +64,13 @@ namespace Buffalo.WinFormsControl.DataGridViewPercent
                 graphics.DrawLine(p, cellBounds.X + cellBounds.Width - 1, cellBounds.Y, cellBounds.X + cellBounds.Width - 1, cellBounds.Y + cellBounds.Height - 1);
                 if (cellBounds.Width > cellStyle.Font.Size * 4)
                 {
-                    string showString=null;
+                    string showString = null;
                     if (col.ShowTotle)
                     {
 
                         showString = GetNumberString(val) + "/" + GetNumberString(col.TotleCount);
                     }
-                    else 
+                    else
                     {
                         showString = GetNumberString(val);
                     }
@@ -95,6 +87,7 @@ namespace Buffalo.WinFormsControl.DataGridViewPercent
                 graphics.FillRectangle(bs, cellBounds.X, cellBounds.Y, cellBounds.Width, cellBounds.Height);
             }
         }
+
 
         /// <summary>
         /// 获取数字的格式化字符串
