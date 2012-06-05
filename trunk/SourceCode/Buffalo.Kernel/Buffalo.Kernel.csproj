@@ -20,6 +20,7 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>..\Debug\2005\Buffalo.Kernel.XML</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,10 +37,12 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayTypeConvert.cs" />
     <Compile Include="CommonMethods.cs" />
     <Compile Include="CommonRegular.cs" />
     <Compile Include="CSVReader.cs" />
@@ -90,6 +93,9 @@
     <Compile Include="Replacer\ReplaceCollection.cs" />
     <Compile Include="Replacer\ReplaceItem.cs" />
     <Compile Include="Replacer\ReplaceItemCollection.cs" />
+    <Compile Include="Win32\Enums.cs" />
+    <Compile Include="Win32\Structs.cs" />
+    <Compile Include="Win32\SystemInfo.cs" />
     <Compile Include="SmartSellMap\CombinationItem.cs" />
     <Compile Include="SmartSellMap\ICombinationItem.cs" />
     <Compile Include="SmartSellMap\ICombinationState.cs" />
@@ -97,6 +103,7 @@
     <Compile Include="SysEventLog.cs" />
     <Compile Include="UpdateModelUnit\ContorlDefaultPropertyInfo.cs" />
     <Compile Include="UpdateModelUnit\UpdateModelInfo.cs" />
+    <Compile Include="Win32\WindowsAPI.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
