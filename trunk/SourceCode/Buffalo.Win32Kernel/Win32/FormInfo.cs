@@ -4,6 +4,7 @@ using System.Text;
 using Buffalo.Win32Kernel.Win32;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Buffalo.Kernel.Win32;
 
 namespace Buffalo.Win32Kernel
 {

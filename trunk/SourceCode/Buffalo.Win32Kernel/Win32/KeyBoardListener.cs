@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Collections.Specialized;
 using System.Runtime.InteropServices;
 using Buffalo.Kernel.Commons;
+using Buffalo.Kernel.Win32;
 
 namespace Buffalo.Win32Kernel.Win32
 {
@@ -61,7 +62,7 @@ namespace Buffalo.Win32Kernel.Win32
             hook.Uninstall();
             isListening = false;
         }
-        void hook_HookInvoked(object sender, HookEventArgs e)
+        void hook_HookInvoked(object sender, Buffalo.Kernel.Win32.WindowsAPI.HookEventArgs e)
         {
             KBDLLHOOKSTRUCT keyboardHook = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(e.lParam, typeof(KBDLLHOOKSTRUCT));
             KeyBoardType type = (KeyBoardType)e.wParam;

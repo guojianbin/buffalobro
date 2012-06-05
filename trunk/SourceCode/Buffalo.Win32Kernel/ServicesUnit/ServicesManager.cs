@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using Buffalo.Win32Kernel.Win32;
+using Buffalo.Kernel.Win32;
 
 namespace Buffalo.Win32Kernel.ServicesUnit
 {

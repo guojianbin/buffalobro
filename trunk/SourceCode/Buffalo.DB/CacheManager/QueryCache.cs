@@ -7,7 +7,6 @@ using System.Threading;
 using System.Data.SqlClient;
 using System.Web;
 using System.Web.Caching;
-using SQLCommon.CacheManager;
 
 namespace Buffalo.DB.CacheManager
 {

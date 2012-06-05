@@ -3,17 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
+using Buffalo.Kernel.Win32;
 
 namespace Buffalo.Win32Kernel.Win32
 {
-    #region Class HookEventArgs
-    public class HookEventArgs : EventArgs
-    {
-        public int HookCode;    // Hook code
-        public IntPtr wParam;    // WPARAM argument
-        public IntPtr lParam;    // LPARAM argument
-    }
-    #endregion
+
     public class WindowsHook:IDisposable
     {
         // ************************************************************************
@@ -36,7 +30,7 @@ namespace Buffalo.Win32Kernel.Win32
         // ************************************************************************
         // Event: HookInvoked 
         public event WindowsAPI.HookEventHandler HookInvoked;
-        protected void OnHookInvoked(HookEventArgs e)
+        protected void OnHookInvoked(Buffalo.Kernel.Win32.WindowsAPI.HookEventArgs e)
         {
             if (HookInvoked != null)
                 HookInvoked(this, e);
@@ -65,7 +59,7 @@ namespace Buffalo.Win32Kernel.Win32
                 return WindowsAPI.CallNextHookEx(m_hhook, code, wParam, lParam);
 
             // Let clients determine what to do
-            HookEventArgs e = new HookEventArgs();
+            Buffalo.Kernel.Win32.WindowsAPI.HookEventArgs e = new Buffalo.Kernel.Win32.WindowsAPI.HookEventArgs();
             e.HookCode = code;
             e.wParam = wParam;
             e.lParam = lParam;

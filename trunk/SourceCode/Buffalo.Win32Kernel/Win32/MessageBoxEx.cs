@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using Buffalo.Kernel.Win32;
 
 namespace Buffalo.Win32Kernel.Win32
 {

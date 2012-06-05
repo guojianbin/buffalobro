@@ -4,6 +4,7 @@ using System.Text;
 using System.ServiceProcess;
 using Buffalo.Win32Kernel.Win32;
 using Microsoft.Win32;
+using Buffalo.Kernel.Win32;
 
 namespace Buffalo.Win32Kernel.ServicesUnit
 {

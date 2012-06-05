@@ -4,6 +4,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Management;
 using Buffalo.Win32Kernel.Win32;
+using Buffalo.Kernel.Win32;
 
 namespace Buffalo.Win32Kernel.Win32
 {
@@ -137,11 +138,11 @@ namespace Buffalo.Win32Kernel.Win32
         /// <returns></returns>
         public static string GetMacByIP(string ip)
         {
-            Int32 ldest = Win32.WindowsAPI.inet_addr(ip); //目的地的ip 
-            Int32 lhost = Win32.WindowsAPI.inet_addr("");    //本地服务器的ip 
+            Int32 ldest = WindowsAPI.inet_addr(ip); //目的地的ip 
+            Int32 lhost = WindowsAPI.inet_addr("");    //本地服务器的ip 
             Int64 macinfo = new Int64();
             Int32 len = 6;
-            int res = Win32.WindowsAPI.SendARP(ldest, 0, ref macinfo, ref len);
+            int res = WindowsAPI.SendARP(ldest, 0, ref macinfo, ref len);
             string mac_src = macinfo.ToString("X");
             while (mac_src.Length < 12)
             {

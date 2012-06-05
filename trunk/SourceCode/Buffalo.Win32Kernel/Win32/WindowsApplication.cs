@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using Buffalo.Kernel.Win32;
 
 namespace Buffalo.Win32Kernel.Win32
 {
@@ -58,7 +59,7 @@ namespace Buffalo.Win32Kernel.Win32
             TOKEN_PRIVILEGES tp = new TOKEN_PRIVILEGES();
 
             IntPtr tokenHaldle = IntPtr.Zero;
-            bool secc = WindowsAPI.OpenProcessToken(Process.GetCurrentProcess().Handle, TOKEN.TOKEN_ADJUST_PRIVILEGES, ref tokenHaldle);
+            bool secc = WindowsAPI.OpenProcessToken(WindowsAPI.GetCurrentProcess(), TOKEN.TOKEN_ADJUST_PRIVILEGES, ref tokenHaldle);
             secc = WindowsAPI.LookupPrivilegeValue(null, SystemName.SE_DEBUG_NAME, ref tp.Privileges.Luid);
             tp.PrivilegeCount = 1;
             if (enable)
@@ -124,7 +125,7 @@ namespace Buffalo.Win32Kernel.Win32
         {
             bool ok;
             TOKEN_PRIVILEGES tp=new TOKEN_PRIVILEGES();
-            IntPtr hproc = WindowsAPI.GetCurrentProcess();
+            IntPtr hproc = Process.GetCurrentProcess().Handle;
             IntPtr htok = IntPtr.Zero;
             ok = WindowsAPI.OpenProcessToken(hproc, TOKEN.TOKEN_ADJUST_PRIVILEGES | TOKEN.TOKEN_QUERY, ref htok);
             tp.PrivilegeCount = 1;
@@ -137,58 +138,6 @@ namespace Buffalo.Win32Kernel.Win32
             return ok;
         }
 
-        public delegate bool DelIsWow64Process(IntPtr pHandle, ref bool is64);
-        /// <summary>
-        /// 是否64位系统
-        /// </summary>
-        /// <returns></returns>
-        public static bool Is64System()
-        {
-            bool ret = false;
-            IntPtr pModule = WindowsAPI.GetModuleHandle("kernel32.dll");
-            IntPtr ptrPro = WindowsAPI.GetProcAddress(pModule, "IsWow64Process");
 
-            DelIsWow64Process delIs64 = Marshal.GetDelegateForFunctionPointer(ptrPro, typeof(DelIsWow64Process)) as DelIsWow64Process;
-            if (delIs64 != null)
-            {
-                delIs64(Process.GetCurrentProcess().Handle, ref ret);
-            }
-            return ret;
-        }
-
-        /// <summary>
-        /// Gets a value indicating if the operating system is a Windows 2000 or a newer one.
-        /// </summary>
-        public static bool IsWindows2000OrNewer
-        {
-            get { return (Environment.OSVersion.Platform == PlatformID.Win32NT) && (Environment.OSVersion.Version.Major >= 5); }
-        }
-
-        /// <summary>
-        /// Gets a value indicating if the operating system is a Windows XP or a newer one.
-        /// </summary>
-        public static bool IsWindowsXpOrNewer
-        {
-            get
-            {
-                return
-                    (Environment.OSVersion.Platform == PlatformID.Win32NT) &&
-                    (
-                        (Environment.OSVersion.Version.Major >= 6) ||
-                        (
-                            (Environment.OSVersion.Version.Major == 5) &&
-                            (Environment.OSVersion.Version.Minor >= 1)
-                        )
-                    );
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating if the operating system is a Windows Vista or a newer one.
-        /// </summary>
-        public static bool IsWindowsVistaOrNewer
-        {
-            get { return (Environment.OSVersion.Platform == PlatformID.Win32NT) && (Environment.OSVersion.Version.Major >= 6); }
-        }
     }
 }

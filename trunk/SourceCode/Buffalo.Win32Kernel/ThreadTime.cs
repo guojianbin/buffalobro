@@ -4,6 +4,7 @@ using System.Text;
 using System.Diagnostics;
 using Buffalo.Win32Kernel.Win32;
 using System.Threading;
+using Buffalo.Kernel.Win32;
 
 namespace Buffalo.Win32Kernel
 {
@@ -26,7 +27,7 @@ namespace Buffalo.Win32Kernel
         public ulong GetCurTnreadCycle() 
         {
             ulong ret=0;
-            if (WindowsApplication.IsWindowsVistaOrNewer)
+            if (SystemInfo.IsWindowsVistaOrNewer)
             {
                 WindowsAPI.QueryThreadCycleTime(currentThreadHandle, ref ret);
             }

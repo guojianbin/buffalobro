@@ -8,7 +8,7 @@ using Buffalo.Kernel.FastReflection;
 using Buffalo.DB.PropertyAttributes;
 using Buffalo.Kernel;
 
-namespace SQLCommon.CacheManager
+namespace Buffalo.DB.CacheManager
 {
     public class QueryViewConfig
     {

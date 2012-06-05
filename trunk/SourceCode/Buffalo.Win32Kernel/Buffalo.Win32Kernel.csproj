@@ -102,7 +102,6 @@
     <Compile Include="UpdateModelUnit\ControlDefaultValue.cs" />
     <Compile Include="UpdateModelUnit\ModelUpdateHelper.cs" />
     <Compile Include="Win32\AsmManager.cs" />
-    <Compile Include="Win32\Enums.cs" />
     <Compile Include="Win32\FormInfo.cs" />
     <Compile Include="Win32\HardwareInfo.cs" />
     <Compile Include="Win32\HotKey.cs" />
@@ -112,8 +111,6 @@
     <Compile Include="Win32\ProcessUrlRegistry.cs" />
     <Compile Include="Win32\RegExportImport.cs" />
     <Compile Include="Win32\RegistryUtil.cs" />
-    <Compile Include="Win32\Structs.cs" />
-    <Compile Include="Win32\WindowsAPI.cs" />
     <Compile Include="Win32\WindowsApplication.cs" />
     <Compile Include="Win32\WindowsHook.cs" />
   </ItemGroup>
