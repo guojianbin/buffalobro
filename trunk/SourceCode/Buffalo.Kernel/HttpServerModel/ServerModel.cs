@@ -29,7 +29,23 @@ namespace Buffalo.Kernel.HttpServerModel
         Thread _lisThread = null;
         bool isrunning=false;
         int _port = 0;
+
+        /// <summary>
+        /// ¶Ë¿Ú
+        /// </summary>
+        public int Port
+        {
+            get { return _port; }
+        }
         IPAddress _ip;
+
+        /// <summary>
+        /// IP
+        /// </summary>
+        public IPAddress IP
+        {
+            get { return _ip; }
+        }
         static readonly Encoding DefaultEncoding = System.Text.Encoding.UTF8;
 
         /// <summary>
