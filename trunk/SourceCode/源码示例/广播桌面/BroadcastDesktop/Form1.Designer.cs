@@ -36,6 +36,7 @@
             this.txturl = new System.Windows.Forms.TextBox();
             this.nupFPS = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
+            this.chkIsMouse = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nupPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupFPS)).BeginInit();
             this.SuspendLayout();
@@ -133,11 +134,22 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "帧/秒";
             // 
+            // chkIsMouse
+            // 
+            this.chkIsMouse.AutoSize = true;
+            this.chkIsMouse.Location = new System.Drawing.Point(185, 43);
+            this.chkIsMouse.Name = "chkIsMouse";
+            this.chkIsMouse.Size = new System.Drawing.Size(96, 16);
+            this.chkIsMouse.TabIndex = 9;
+            this.chkIsMouse.Text = "是否绘制鼠标";
+            this.chkIsMouse.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Controls.Add(this.chkIsMouse);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.nupFPS);
             this.Controls.Add(this.txturl);
@@ -167,6 +179,7 @@
         private System.Windows.Forms.TextBox txturl;
         private System.Windows.Forms.NumericUpDown nupFPS;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox chkIsMouse;
     }
 }
 

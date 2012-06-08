@@ -157,7 +157,7 @@ namespace Buffalo.Kernel.Win32
 
     }
     [StructLayout(LayoutKind.Sequential)]
-    struct CURSORINFO
+    public struct CURSORINFO
     {
         public Int32 cbSize;        // Specifies the size, in bytes, of the structure. 
         // The caller must set this to Marshal.SizeOf(typeof(CURSORINFO)).
@@ -166,6 +166,35 @@ namespace Buffalo.Kernel.Win32
         //    CURSOR_SHOWING    The cursor is showing.
         public IntPtr hCursor;          // Handle to the cursor. 
         public POINT ptScreenPos;       // A POINT structure that receives the screen coordinates of the cursor. 
+
+        /// <summary>
+        /// ªÊ÷∆ Û±Í
+        /// </summary>
+        /// <param name="grp">ÕºœÒ</param>
+        /// <param name="x">Œª÷√x</param>
+        /// <param name="y">Œª÷√y</param>
+        public void DrawMouseIcon(Graphics grp,int x,int y) 
+        {
+            IntPtr iCursor = WindowsAPI.CopyIcon(hCursor);
+            if (iCursor == IntPtr.Zero) 
+            {
+                int err = WindowsAPI.GetLastError();
+            }
+            Icon objIcon = Icon.FromHandle(iCursor);
+            //WindowsAPI.DrawIcon(grp.GetHdc(), x, y, iCursor);
+            
+            grp.DrawIcon(objIcon, x, y);
+            WindowsAPI.DestroyCursor(iCursor);
+        }
+
+        /// <summary>
+        /// ªÊ÷∆ Û±Í
+        /// </summary>
+        /// <param name="grp">ÕºœÒ</param>
+        public void DrawMouseIcon(Graphics grp)
+        {
+            DrawMouseIcon(grp, ptScreenPos.x, ptScreenPos.y);
+        }
     }
     #endregion
 

@@ -230,7 +230,20 @@ namespace Buffalo.Kernel.Win32
         static public extern bool GetMenuItemRect(IntPtr hWnd, IntPtr hMenu, uint Item, ref RECT rc);
         [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern IntPtr GetParent(IntPtr hWnd);
-
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorInfo(out CURSORINFO pci);
+        [DllImport("user32", EntryPoint = "CopyIcon")]
+        public static extern IntPtr CopyIcon(
+                IntPtr hIcon
+        );
+        [DllImport("user32.dll")]
+        public static extern bool DestroyCursor(IntPtr hCursor);
+        [DllImport("user32.dll")]
+        public static extern bool DrawIcon(IntPtr hDC, int X, int Y, IntPtr hIcon);
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon,
+           int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw,
+           int diFlags);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessage(IntPtr hWnd, Msg msg, IntPtr wParam, IntPtr lParam);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]

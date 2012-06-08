@@ -111,7 +111,7 @@ namespace BroadcastDesktop
             txturl.Text = "http://" + cmbIP.Text + ":" + (int)nupPort.Value + "/desktop";
             sm.OnRequestProcessing += new RequestProcessingHandle(sm_OnRequestProcessing);
             sm.StarServer();
-            _cache = new DesktopCache(1000 / ((int)nupFPS.Value));
+            _cache = new DesktopCache(1000 / ((int)nupFPS.Value), chkIsMouse.Checked);
             _cache.StarUpdate();
             Listening(true);
         }

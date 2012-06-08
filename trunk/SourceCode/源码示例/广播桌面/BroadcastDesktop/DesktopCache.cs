@@ -6,6 +6,8 @@ using System.Drawing;
 using Buffalo.Win32Kernel.Win32;
 using Buffalo.Kernel;
 using System.Threading;
+using Buffalo.Kernel.Win32;
+using System.Runtime.InteropServices;
 
 namespace BroadcastDesktop
 {
@@ -18,14 +20,16 @@ namespace BroadcastDesktop
         private Thread _updateThread;
         private bool _isRunning=false;
         private int _sleeptime;
-
+        private bool _isDrawMouse;
         /// <summary>
         /// 屏幕桌面缓存
         /// </summary>
         /// <param name="sleeptime">截取时间间隔(毫秒)</param>
-        public DesktopCache(int sleeptime) 
+        /// <param name="isDrawMouse">是否绘制鼠标</param>
+        public DesktopCache(int sleeptime,bool isDrawMouse) 
         {
             _sleeptime = sleeptime;
+            _isDrawMouse = isDrawMouse;
         }
 
         /// <summary>
@@ -57,7 +61,10 @@ namespace BroadcastDesktop
             while (_isRunning)
             {
                 Image img = WindowsApplication.PrintScreen();
-
+                if (_isDrawMouse) 
+                {
+                    DrawMousePoint(img);
+                }
                 _msCache = Picture.PictureToBytes(img, System.Drawing.Imaging.ImageFormat.Jpeg);
 
                 Thread.Sleep(_sleeptime);
@@ -77,5 +84,18 @@ namespace BroadcastDesktop
                 Thread.Sleep(100);
             }
         }
+
+        private void DrawMousePoint(Image img) 
+        {
+            CURSORINFO pci;
+            pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
+            WindowsAPI.GetCursorInfo(out pci);
+            using (Graphics grp = Graphics.FromImage(img)) 
+            {
+                
+                pci.DrawMouseIcon(grp);
+            }
+        }
+
     }
 }
