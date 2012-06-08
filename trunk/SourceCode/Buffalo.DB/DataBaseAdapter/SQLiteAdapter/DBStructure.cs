@@ -207,22 +207,27 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
             if ((rowArray != null) && (rowArray.Length > 0))
             {
                 prm.SqlType = (DbType)rowArray[0]["ProviderDbType"];
+                return;
             }
             if (Regex.IsMatch(nativeType, "int", RegexOptions.IgnoreCase))
             {
                 prm.SqlType = DbType.Int64;
+                return;
             }
             if (Regex.IsMatch(nativeType, "real|floa|doub", RegexOptions.IgnoreCase))
             {
                 prm.SqlType = DbType.Double;
+                return;
             }
             if (Regex.IsMatch(nativeType, "numeric", RegexOptions.IgnoreCase))
             {
                 prm.SqlType = DbType.Decimal;
+                return;
             }
             if (Regex.IsMatch(nativeType, "char|clob|text", RegexOptions.IgnoreCase))
             {
                 prm.SqlType = DbType.String;
+                return;
             }
             prm.SqlType = DbType.Object;
             

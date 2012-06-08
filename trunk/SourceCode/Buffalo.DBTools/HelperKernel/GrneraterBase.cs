@@ -192,6 +192,16 @@ namespace Buffalo.DBTools.HelperKernel
             _dbConfig = entity.CurrentDBConfigInfo;
         }
 
+        /// <summary>
+        /// 格式化名字
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static string FormatName(string name) 
+        {
+            return name.Replace(" ", "_");
+        }
+
         public GrneraterBase(EntityConfig entity) 
         {
             //_entity = entity;

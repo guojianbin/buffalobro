@@ -4,5 +4,6 @@
   <property FieldName="_itemName" PropertyName="ItemName" DbType="String" Length="64" EntityPropertyType="1" ParamName="itemName" ReadOnly="0" />
   <property FieldName="_itemDescription" PropertyName="ItemDescription" DbType="String" Length="500" EntityPropertyType="1" ParamName="itemDescription" ReadOnly="0" />
   <property FieldName="_itemIdentify" PropertyName="ItemIdentify" DbType="AnsiString" Length="64" EntityPropertyType="1" ParamName="itemIdentify" ReadOnly="0" />
+  <property FieldName="_defaultRight" PropertyName="DefaultRight" DbType="Int32" Length="0" EntityPropertyType="1" ParamName="defaultRight" ReadOnly="0" />
   <relation FieldName="_belongModel" PropertyName="BelongModel" SourceProperty="SysModelId" TargetProperty="Id" IsToDB="1" IsParent="1" />
 </class>

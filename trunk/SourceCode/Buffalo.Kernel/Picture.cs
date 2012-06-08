@@ -105,7 +105,7 @@ namespace Buffalo.Kernel
 		/// </summary>
 		/// <param name="img">图片</param>
 		/// <returns></returns>
-		public static byte[] PictureToBytes(Image img,System.Drawing.Imaging.ImageFormat format)
+        public static byte[] PictureToBytes(Image img, System.Drawing.Imaging.ImageFormat format)
 		{
 			byte[] imgBytes=null;
 			MemoryStream stm=new MemoryStream();
@@ -114,7 +114,9 @@ namespace Buffalo.Kernel
 				
 				//Bitmap bmp=new Bitmap(img);
 
-                img.Save(stm, format);
+                
+                    img.Save(stm, format);
+                
 				imgBytes=new byte[stm.Length];
 				stm.Position=0;
 				stm.Read(imgBytes,0,imgBytes.Length);
@@ -145,7 +147,7 @@ namespace Buffalo.Kernel
 		/// </summary>
 		/// <param name="byteImage">图片字节</param>
 		/// <returns></returns>
-		public static Bitmap BytesToPicture(byte[] byteImage)
+        public static Bitmap BytesToPicture(byte[] byteImage)
 		{
 			if(byteImage==null)
 			{

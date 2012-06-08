@@ -255,6 +255,7 @@ namespace Buffalo.WebControls.LocationSelecter
 
         private string CreateJs() 
         {
+            
             return Resource.LocationPicker;
             //StringBuilder sb = new StringBuilder();
             //sb.Append("	\n");

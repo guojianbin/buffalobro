@@ -49,10 +49,12 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayTypeConvert.cs" />
     <Compile Include="CommonMethods.cs" />
     <Compile Include="CommonRegular.cs" />
     <Compile Include="CSVReader.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="FastReflection\FastValueGetSet.cs" />
     <Compile Include="FastReflection\FieldInfoHandle.cs" />
     <Compile Include="FastReflection\PropertyInfoHandle.cs" />
+    <Compile Include="FieldCloneHelper.cs" />
     <Compile Include="FileEncodingInfo.cs" />
     <Compile Include="HttpServerModel\RequestInfo.cs" />
     <Compile Include="HttpServerModel\ResponseInfo.cs" />
@@ -106,6 +109,10 @@
     <Compile Include="SysEventLog.cs" />
     <Compile Include="UpdateModelUnit\ContorlDefaultPropertyInfo.cs" />
     <Compile Include="UpdateModelUnit\UpdateModelInfo.cs" />
+    <Compile Include="Win32\Enums.cs" />
+    <Compile Include="Win32\Structs.cs" />
+    <Compile Include="Win32\SystemInfo.cs" />
+    <Compile Include="Win32\WindowsAPI.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

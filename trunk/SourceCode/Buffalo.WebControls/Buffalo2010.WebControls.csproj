@@ -64,6 +64,7 @@
     <Compile Include="MyTipText\TipItemInfo.cs" />
     <Compile Include="MyTipText\TipText.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource.Designer.cs" />
     <Compile Include="TYWebCalendar\TYWebCalendar.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +76,12 @@
       <Project>{CBD39541-7A26-4C92-A369-0F2DF5D13030}</Project>
       <Name>Buffalo2010.WebKernel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\locationpicker.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

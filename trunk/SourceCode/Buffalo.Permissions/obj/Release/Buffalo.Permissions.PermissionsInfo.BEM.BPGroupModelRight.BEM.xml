@@ -5,4 +5,5 @@
   <property FieldName="_ModelRight" PropertyName="ModelRight" DbType="Int32" Length="0" EntityPropertyType="1" ParamName="ModelRight" ReadOnly="0" />
   <relation FieldName="_belongModel" PropertyName="BelongModel" SourceProperty="ModelId" TargetProperty="Id" IsToDB="1" IsParent="1" />
   <relation FieldName="_belongGroup" PropertyName="BelongGroup" SourceProperty="GroupId" TargetProperty="Id" IsToDB="1" IsParent="1" />
+  <relation FieldName="_lstGroupItemRight" PropertyName="LstGroupItemRight" SourceProperty="Id" TargetProperty="GroupModelRightId" IsToDB="0" IsParent="0" />
 </class>
