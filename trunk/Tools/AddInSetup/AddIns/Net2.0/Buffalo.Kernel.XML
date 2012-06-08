@@ -1956,6 +1956,20 @@
             </summary>
             <param name="lParam"></param>
         </member>
+        <member name="M:Buffalo.Kernel.Win32.CURSORINFO.DrawMouseIcon(System.Drawing.Graphics,System.Int32,System.Int32)">
+            <summary>
+            绘制鼠标
+            </summary>
+            <param name="grp">图像</param>
+            <param name="x">位置x</param>
+            <param name="y">位置y</param>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.CURSORINFO.DrawMouseIcon(System.Drawing.Graphics)">
+            <summary>
+            绘制鼠标
+            </summary>
+            <param name="grp">图像</param>
+        </member>
         <member name="T:Buffalo.Kernel.Win32.KBDLLHOOKSTRUCT">
             <summary>
             键盘钩子信息结构体
