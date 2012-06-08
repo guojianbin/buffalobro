@@ -34,7 +34,10 @@
             this.nupPort = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.txturl = new System.Windows.Forms.TextBox();
+            this.nupFPS = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nupPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupFPS)).BeginInit();
             this.SuspendLayout();
             // 
             // btnListen
@@ -85,7 +88,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 45);
+            this.label1.Location = new System.Drawing.Point(12, 85);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 12);
             this.label1.TabIndex = 5;
@@ -93,17 +96,50 @@
             // 
             // txturl
             // 
-            this.txturl.Location = new System.Drawing.Point(14, 60);
+            this.txturl.Location = new System.Drawing.Point(14, 100);
             this.txturl.Name = "txturl";
             this.txturl.ReadOnly = true;
             this.txturl.Size = new System.Drawing.Size(260, 21);
             this.txturl.TabIndex = 6;
+            // 
+            // nupFPS
+            // 
+            this.nupFPS.Location = new System.Drawing.Point(14, 38);
+            this.nupFPS.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nupFPS.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nupFPS.Name = "nupFPS";
+            this.nupFPS.Size = new System.Drawing.Size(89, 21);
+            this.nupFPS.TabIndex = 7;
+            this.nupFPS.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(106, 42);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 12);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "帧/秒";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.nupFPS);
             this.Controls.Add(this.txturl);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nupPort);
@@ -115,6 +151,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.nupPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupFPS)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -128,6 +165,8 @@
         private System.Windows.Forms.NumericUpDown nupPort;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txturl;
+        private System.Windows.Forms.NumericUpDown nupFPS;
+        private System.Windows.Forms.Label label2;
     }
 }
 

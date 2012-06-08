@@ -135,6 +135,47 @@
             <param name="val2">值2</param>
             <returns>-1为val1&lt;val2,0为val1=val2,1为val1&gt;val2</returns>
         </member>
+        <member name="T:Buffalo.Kernel.ArrayTypeConvert">
+            <summary>
+            快速类型转换(修改类型标志，非拷贝)
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.ArrayTypeConvert.IntArrayToByteArray(System.Int32[])">
+            <summary>
+            整型数组转换成字节数组
+            </summary>
+            <param name="arr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.ArrayTypeConvert.ByteArrayToIntArray(System.Byte[])">
+            <summary>
+            字节数组转换成整型数组
+            </summary>
+            <param name="arr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.ArrayTypeConvert.ByteArrayToCharArray(System.Byte[])">
+            <summary>
+            字节数组转换成
+            </summary>
+            <param name="arr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.ArrayTypeConvert.CharArrayToByteArray(System.Char[])">
+            <summary>
+            字符数组转换成整型数组
+            </summary>
+            <param name="arr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.ArrayTypeConvert.ChangeArrayTypeHandle(System.Type,System.Byte*,System.Int32)">
+            <summary>
+            转换数组类型
+            </summary>
+            <param name="objType">新类型</param>
+            <param name="pbarr">原类型指针</param>
+            <param name="newLength">新数组长度</param>
+        </member>
         <member name="T:Buffalo.Kernel.MassManager">
             <summary>
             常量管理器
@@ -325,6 +366,121 @@
             获取字段的信息
             </summary>
         </member>
+        <member name="T:Buffalo.Kernel.Win32.PeekMessageFlags">
+            <summary>
+            Window API enumerations
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.Msg">
+            <summary>
+            Windows消息类型
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.ProcessAccess">
+            <summary>
+            进程状态
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.EWX">
+            <summary>
+            退出Windows状态
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.TOKEN">
+            <summary>
+            退出Windows状态
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.KeyModifiers">
+            <summary>
+            组合键枚举
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.MessageSCType">
+            <summary>
+            Windows消息SC类型
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.SPIAction">
+            <summary>
+            SystemParametersInfo的动作
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.DebugState">
+            <summary>
+            调试器状态
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.DebugState.DBG_CONTINUE">
+            <summary>
+             //返回继续调试状态值
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.DebugState.INFINITE">
+            <summary>
+            等待事件
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.ContextFlags64">
+            <summary>
+            线程信息标志
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.WMode">
+            <summary>
+            异常类型
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.ServicesAccessType">
+            <summary>
+            AccessType
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.ServicesStartType">
+            <summary>
+            Start Type
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.ServicesStartType.SERVICE_BOOT_START">
+            <summary>
+            系统引导时候开始
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.ServicesStartType.SERVICE_SYSTEM_START">
+            <summary>
+            系统启动时候开始
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.ServicesStartType.SERVICE_AUTO_START">
+            <summary>
+            自动开始
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.ServicesStartType.SERVICE_DEMAND_START">
+            <summary>
+            手动
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.ServicesStartType.SERVICE_DISABLED">
+            <summary>
+            禁用
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.ServicesErrorControl">
+            <summary>
+            Error control
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.ControlManagerAccessTypes">
+            <summary>
+            Control Manager object specific access types
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.GENERICFileAccess">
+            <summary>
+            文件打开控制
+            </summary>
+        </member>
         <member name="P:Buffalo.Kernel.Replacer.ReplaceItemCollection.MinLength">
             <summary>
             集合中字符串最小的长度
@@ -389,6 +545,16 @@
         <member name="E:Buffalo.Kernel.HttpServerModel.ServerModel.OnRequestProcessing">
             <summary>
             请求处理呃事件
+            </summary>
+        </member>
+        <member name="P:Buffalo.Kernel.HttpServerModel.ServerModel.Port">
+            <summary>
+            端口
+            </summary>
+        </member>
+        <member name="P:Buffalo.Kernel.HttpServerModel.ServerModel.IP">
+            <summary>
+            IP
             </summary>
         </member>
         <member name="M:Buffalo.Kernel.FastReflection.FieldInfoHandle.#ctor(System.Type,Buffalo.Kernel.FastReflection.GetFieldValueHandle,Buffalo.Kernel.FastReflection.SetFieldValueHandle,System.Type,System.String)">
@@ -598,6 +764,32 @@
             </summary>
             <param name="key"></param>
             <returns></returns>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.SystemInfo">
+            <summary>
+            系统信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.SystemInfo.Is64System">
+            <summary>
+            是否64位系统
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Buffalo.Kernel.Win32.SystemInfo.IsWindows2000OrNewer">
+            <summary>
+            Gets a value indicating if the operating system is a Windows 2000 or a newer one.
+            </summary>
+        </member>
+        <member name="P:Buffalo.Kernel.Win32.SystemInfo.IsWindowsXpOrNewer">
+            <summary>
+            Gets a value indicating if the operating system is a Windows XP or a newer one.
+            </summary>
+        </member>
+        <member name="P:Buffalo.Kernel.Win32.SystemInfo.IsWindowsVistaOrNewer">
+            <summary>
+            Gets a value indicating if the operating system is a Windows Vista or a newer one.
+            </summary>
         </member>
         <member name="T:Buffalo.Kernel.IniSettings">
             <summary>
@@ -985,6 +1177,25 @@
             <param name="str">要加密的字符串</param>
             <returns></returns>
         </member>
+        <member name="T:Buffalo.Kernel.FieldCloneHelper">
+            <summary>
+            对对象进行字段克隆
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.FieldCloneHelper.CopyTo(System.Object,System.Object)">
+            <summary>
+            拷贝数据
+            </summary>
+            <param name="source">源类</param>
+            <param name="target">目标类</param>
+        </member>
+        <member name="M:Buffalo.Kernel.FieldCloneHelper.Clone(System.Object)">
+            <summary>
+            克隆
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
         <member name="T:Buffalo.Kernel.SysEventLog">
             <summary>
             系统事件
@@ -1319,6 +1530,20 @@
             <param name="configRoot"></param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.Kernel.CommonMethods.Clone(System.Object)">
+            <summary>
+            克隆
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.CommonMethods.CopyTo(System.Object,System.Object)">
+            <summary>
+            拷贝数据
+            </summary>
+            <param name="source">源类</param>
+            <param name="target">目标类</param>
+        </member>
         <member name="M:Buffalo.Kernel.CommonMethods.IsNull(System.Object)">
             <summary>
             判断是否为空
@@ -1641,6 +1866,54 @@
             发送源邮箱登录名
             </summary>
         </member>
+        <member name="T:Buffalo.Kernel.Win32.CREATESTRUCT">
+            <summary>
+            Structures to interoperate with the Windows 32 API  
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.POINT.#ctor(System.Int32)">
+            <summary>
+            Point creation from lParam `s data
+            </summary>
+            <param name="lParam"></param>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.KBDLLHOOKSTRUCT">
+            <summary>
+            键盘钩子信息结构体
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.KBDLLHOOKSTRUCT.vkCode">
+            <summary>Especifica el codigo de tecla virtual, el codigo esta entre 1 y 254.</summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.KBDLLHOOKSTRUCT.scanCode">
+            <summary>Especifica el escaneo de hardware del codigo de la tecla</summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.KBDLLHOOKSTRUCT.flags">
+            <summary>especifica flags extendidos, mirar la estrucutra 'KBDLLHOOKSTRUCT' para mas info</summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.KBDLLHOOKSTRUCT.time">
+            <summary>especifica el time stamp para este mensaje.</summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.KBDLLHOOKSTRUCT.dwExtraInfo">
+            <summary>Especifica informacion extra para el mensaje</summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.TOKEN_PRIVILEGES">
+            <summary>
+            进程令牌
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.SystemName">
+            <summary>
+            系统名名
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.BROWSEINFO">
+            <summary>
+            Contains parameters for the SHBrowseForFolder function and
+            receives information about the folder selected 
+            by the user.
+            </summary>
+        </member>
         <member name="M:Buffalo.Kernel.FileEncodingInfo.GetEncodingType(System.String,System.Boolean)">
             <summary>
             给定文件的路径，读取文件的二进制数据，判断文件的编码类型
@@ -1727,6 +2000,215 @@
             获取指定类的标识
             </summary>
             <param name="classType">指定类的类型</param>
+            <returns></returns>
+        </member>
+        <member name="T:Buffalo.Kernel.Win32.WindowsAPI">
+            <summary>
+            Windows API Functions
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.GetForegroundWindow">
+            <summary>
+            获取当前系统的活动窗口
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.SystemParametersInfo(Buffalo.Kernel.Win32.SPIAction,System.Int32,System.IntPtr,System.Int32)">
+            <summary>
+            数查询或设置系统级参数
+            </summary>
+            <param name="uAction">设置动作</param>
+            <param name="uParam">参数</param>
+            <param name="lpvParam"></param>
+            <param name="fuWinIni"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.GetWindowThreadProcessId(System.IntPtr,System.Int32@)">
+            <summary>
+            获取窗体所在的进程
+            </summary>
+            <param name="hwnd">指定窗口句柄</param>
+            <param name="lpdwProcessId">返回进程id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.AttachThreadInput(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            绑定线程输入
+            </summary>
+            <param name="idAttach">欲连接线程的标识符（ID）</param>
+            <param name="idAttachTo">与idAttach线程连接的另一个线程的标识符</param>
+            <param name="fAttach">TRUE（非零）连接，FALSE撤消连接</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.SHGetMalloc(System.IntPtr@)">
+            <summary>
+            Retrieves a pointer to the Shell's IMalloc interface.
+            </summary>
+            <param name="hObject">Address of a pointer that receives the Shell's IMalloc interface pointer.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.SHGetFolderLocation(System.IntPtr,System.Int32,System.IntPtr,System.UInt32,System.IntPtr@)">
+            <summary>
+            Retrieves the path of a folder as an PIDL.
+            </summary>
+            <param name="hwndOwner">Handle to the owner window.</param>
+            <param name="nFolder">A CSIDL value that identifies the folder to be located</param>
+            <param name="hToken">Token that can be used to represent a particular user</param>
+            <param name="dwReserved">Reserved</param>
+            <param name="ppidl">Address of a pointer to an item identifier list structure specifying the folder's location relative to the root of the namespace (the desktop).</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.SHGetPathFromIDList(System.IntPtr,System.Text.StringBuilder)">
+            <summary>
+            Converts an item identifier list to a file system path. 
+            </summary>
+            <param name="pidl">Address of an item identifier list that specifies a file or directory location relative to the root of the namespace (the desktop). </param>
+            <param name="pszPath">Address of a buffer to receive the file system path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.SHGetFolderPath(System.IntPtr,System.Int32,System.IntPtr,System.UInt32,System.Text.StringBuilder)">
+            <summary>
+            Takes the CSIDL of a folder and returns the pathname.
+            </summary>
+            <param name="hwndOwner">Handle to an owner window.</param>
+            <param name="nFolder">A CSIDL value that identifies the folder whose path is to be retrieved.</param>
+            <param name="hToken">An access token that can be used to represent a particular user.</param>
+            <param name="dwFlags">Flags to specify which path is to be returned. It is used for cases where the folder associated with a CSIDL may be moved or renamed by the user. </param>
+            <param name="pszPath">Pointer to a null-terminated string which will receive the path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.SHParseDisplayName(System.String,System.IntPtr,System.IntPtr@,System.UInt32,System.UInt32@)">
+            <summary>
+            Translates a Shell namespace object's display name into an item 
+            identifier list and returns the attributes of the object. This function is 
+            the preferred method to convert a string to a pointer to an item identifier 
+            list (PIDL). 
+            </summary>
+            <param name="pszName">Pointer to a zero-terminated wide string that contains the display name  to parse. </param>
+            <param name="pBndContext">Optional bind context that controls the parsing operation. This parameter is normally set to NULL.</param>
+            <param name="ppidl">Address of a pointer to a variable of type ITEMIDLIST that receives the item identifier list for the object.</param>
+            <param name="AttrToQuery">ULONG value that specifies the attributes to query.</param>
+            <param name="ResultAttr">Pointer to a ULONG. On return, those attributes that are true for the object and were requested in AttrToQuery will be set. </param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.SHGetDesktopFolder(System.IntPtr@)">
+            <summary>
+            Retrieves the IShellFolder interface for the desktop folder,
+            which is the root of the Shell's namespace. 
+            </summary>
+            <param name="ppshf">Address that receives an IShellFolder interface pointer for the desktop folder.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.SHBindToParent(System.IntPtr,System.Guid,System.IntPtr@,System.IntPtr@)">
+            <summary>
+            This function takes the fully-qualified pointer to an item
+            identifier list (PIDL) of a namespace object, and returns a specified
+            interface pointer on the parent object.
+            </summary>
+            <param name="pidl">The item's PIDL. </param>
+            <param name="riid">The REFIID of one of the interfaces exposed by the item's parent object.</param>
+            <param name="ppv">A pointer to the interface specified by riid. You must release the object when you are finished.</param>
+            <param name="ppidlLast">// The item's PIDL relative to the parent folder. This PIDL can be used with many of the methods supported by the parent folder's interfaces. If you set ppidlLast to NULL, the PIDL will not be returned. </param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.StrRetToBSTR(Buffalo.Kernel.Win32.STRRET@,System.IntPtr,System.String@)">
+            <summary>
+            Accepts a STRRET structure returned by
+            ShellFolder::GetDisplayNameOf that contains or points to a string, and then
+            returns that string as a BSTR.
+            </summary>
+            <param name="pstr">Pointer to a STRRET structure.</param>
+            <param name="pidl">Pointer to an ITEMIDLIST uniquely identifying a file object or subfolder relative to the parent folder.</param>
+            <param name="pbstr">Pointer to a variable of type BSTR that contains the converted string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.StrRetToBuf(Buffalo.Kernel.Win32.STRRET@,System.IntPtr,System.Text.StringBuilder,System.UInt32)">
+            <summary>
+            Takes a STRRET structure returned by IShellFolder::GetDisplayNameOf,
+            converts it to a string, and places the result in a buffer. 
+            </summary>
+            <param name="pstr">Pointer to the STRRET structure. When the function returns, this pointer will no longer be valid.</param>
+            <param name="pidl">Pointer to the item's ITEMIDLIST structure.</param>
+            <param name="pszBuf">Buffer to hold the display name. It will be returned as a null-terminated string. If cchBuf is too small, the name will be truncated to fit.</param>
+            <param name="cchBuf">Size of pszBuf, in characters. If cchBuf is too small, the string will be truncated to fit. </param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.SHBrowseForFolder(Buffalo.Kernel.Win32.BROWSEINFO@)">
+            <summary>
+            Displays a dialog box that enables the user to select a Shell folder. 
+            </summary>
+            <param name="lbpi">// Pointer to a BROWSEINFO structure that contains information used to display the dialog box.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.SetThreadContext(System.IntPtr,Buffalo.Kernel.Win32.CONTEXT@)">
+            <summary>
+            设置线程信息
+            </summary>
+            <param name="hThread"></param>
+            <param name="lpContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.GetThreadContext(System.IntPtr,Buffalo.Kernel.Win32.CONTEXT@)">
+            <summary>
+            获取线程信息
+            </summary>
+            <param name="hThread"></param>
+            <param name="lpContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.ReadProcessMemory(System.IntPtr,System.IntPtr,System.Byte[],System.Int32,System.UInt32@)">
+            <summary>
+            读取进程内存
+            </summary>
+            <param name="hProcess">进程句柄</param>
+            <param name="lpBaseAddress">基地址</param>
+            <param name="lpBuffer">缓冲</param>
+            <param name="nSize">要读的字节数</param>
+            <param name="lpNumberOfBytesWritten">实际读出的字节数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.WriteProcessMemory(System.IntPtr,System.IntPtr,System.Byte[],System.Int32,System.UInt32@)">
+            <summary>
+            写入进程内存
+            </summary>
+            <param name="hProcess">进程句柄</param>
+            <param name="lpBaseAddress">基地址</param>
+            <param name="lpBuffer">缓冲</param>
+            <param name="nSize">要写入的字节数</param>
+            <param name="lpNumberOfBytesWritten">真正写入的字节数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.SuspendThread(System.IntPtr)">
+            <summary>
+            挂起线程
+            </summary>
+            <param name="hThread">线程句柄</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.ResumeThread(System.IntPtr)">
+            <summary>
+            继续线程
+            </summary>
+            <param name="hThread">线程句柄</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Win32.WindowsAPI.CreateService(System.IntPtr,System.String,System.String,Buffalo.Kernel.Win32.ServicesAccessType,System.ServiceProcess.ServiceType,Buffalo.Kernel.Win32.ServicesStartType,Buffalo.Kernel.Win32.ServicesErrorControl,System.String,System.String,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            创建服务
+            </summary>
+            <param name="hSCManager">SCManager 数据库</param>
+            <param name="lpServiceName">服务名</param>
+            <param name="lpDisplayName">显示名</param>
+            <param name="dwDesiredAccess"></param>
+            <param name="dwServiceType"></param>
+            <param name="dwStartType"></param>
+            <param name="dwErrorControl"></param>
+            <param name="lpBinaryPathName">文件路径</param>
+            <param name="lpLoadOrderGroup"></param>
+            <param name="lpdwTagId"></param>
+            <param name="lpDependencies"></param>
+            <param name="lp">本地用户名</param>
+            <param name="lpPassword">本地用户密码</param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.Kernel.Replacer.ReplaceCollection.Add(System.String,System.String)">

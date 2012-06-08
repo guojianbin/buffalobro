@@ -4392,9 +4392,25 @@
             <param name="on">条件</param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordFromItem.LeftOuterJoin(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLTableHandle,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLCondition)">
+            <summary>
+            左外连接
+            </summary>
+            <param name="jionTable">表</param>
+            <param name="on">条件</param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordFromItem.RightJoin(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLTableHandle,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLCondition)">
             <summary>
             右连接
+            </summary>
+            <param name="jionTable">表</param>
+            <param name="on">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordFromItem.RightOuterJoin(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLTableHandle,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLCondition)">
+            <summary>
+            右外连接
             </summary>
             <param name="jionTable">表</param>
             <param name="on">条件</param>
@@ -4416,7 +4432,23 @@
             <param name="on">条件</param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordFromItem.CrossOuterJoin(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLTableHandle,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLCondition)">
+            <summary>
+            交叉外连接
+            </summary>
+            <param name="jionTable">表</param>
+            <param name="on">条件</param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordFromItem.FullJoin(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLTableHandle,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLCondition)">
+            <summary>
+            全连接
+            </summary>
+            <param name="jionTable">表</param>
+            <param name="on">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLKeyWordCommon.KeyWordFromItem.FullOuterJoin(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLTableHandle,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLCondition)">
             <summary>
             全连接
             </summary>
@@ -10221,14 +10253,14 @@
             是否已经提交
             </summary>
         </member>
-        <member name="M:SQLCommon.CacheManager.QueryViewConfig.RegisterView(System.Type)">
+        <member name="M:Buffalo.DB.CacheManager.QueryViewConfig.RegisterView(System.Type)">
             <summary>
             登记视图
             </summary>
             <param name="entityType"></param>
             <returns></returns>
         </member>
-        <member name="M:SQLCommon.CacheManager.QueryViewConfig.GetViewList(System.String)">
+        <member name="M:Buffalo.DB.CacheManager.QueryViewConfig.GetViewList(System.String)">
             <summary>
             根据实体名获取对应的视图集合
             </summary>

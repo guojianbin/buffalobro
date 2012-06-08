@@ -14,13 +14,24 @@ namespace BroadcastDesktop
     /// </summary>
     public class DesktopCache
     {
-        private static byte[] _msCache = null;
-        private static Thread _updateThread;
-        private static bool _isRunning=false;
+        private byte[] _msCache = null;
+        private Thread _updateThread;
+        private bool _isRunning=false;
+        private int _sleeptime;
+
+        /// <summary>
+        /// 屏幕桌面缓存
+        /// </summary>
+        /// <param name="sleeptime">截取时间间隔(毫秒)</param>
+        public DesktopCache(int sleeptime) 
+        {
+            _sleeptime = sleeptime;
+        }
+
         /// <summary>
         /// 当前桌面
         /// </summary>
-        public static byte[] CurrentDesktop 
+        public byte[] CurrentDesktop 
         {
             get 
             {
@@ -31,7 +42,7 @@ namespace BroadcastDesktop
         /// <summary>
         /// 开始更新
         /// </summary>
-        public static void StarUpdate() 
+        public void StarUpdate() 
         {
             _isRunning = true;
             _updateThread = new Thread(new ThreadStart(UpdatePrintScreen));
@@ -41,7 +52,7 @@ namespace BroadcastDesktop
         /// <summary>
         /// 刷新屏幕数据
         /// </summary>
-        private static void UpdatePrintScreen()
+        private void UpdatePrintScreen()
         {
             while (_isRunning)
             {
@@ -49,14 +60,14 @@ namespace BroadcastDesktop
 
                 _msCache = Picture.PictureToBytes(img, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-                Thread.Sleep(300);
+                Thread.Sleep(_sleeptime);
             }
         }
 
         /// <summary>
         /// 开始更新
         /// </summary>
-        public static void StopUpdate()
+        public void StopUpdate()
         {
             _isRunning = false;
             if (_updateThread != null)

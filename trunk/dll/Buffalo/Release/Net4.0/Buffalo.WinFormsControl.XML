@@ -110,22 +110,85 @@
             总记录条数
             </summary>
         </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewPercent.DataGridViewPercentColumn.ShowTotle">
+        <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.HideComboBox">
+            <summary>
+            隐藏ComboBox
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.ShowComboBox(System.Windows.Forms.DataGridViewCell)">
+            <summary>
+            显示ComboBox
+            </summary>
+            <param name="cell"></param>
+            <param name="dataSource"></param>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.SetComboBoxDataSource(System.Collections.IEnumerable)">
+            <summary>
+            设置数据源
+            </summary>
+            <param name="dataSource"></param>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.ColumnComboBox">
+            <summary>
+            列所属的ComboBox
+            </summary>
+        </member>
+        <member name="T:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxCell">
+            <summary>
+            扩展的Checkbox单元格
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxCell.Enabled">
+            <summary>
+            可用
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxCell.BelongColumn">
+            <summary>
+            所属列
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxCell.RealEnable">
+            <summary>
+            真正的可用性
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxColumn.Enabled">
+            <summary>
+            可用
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.ShowTotle">
             <summary>
             是否在值后边显示总数
             </summary>
         </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewPercent.DataGridViewPercentColumn.TotleCount">
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.TotleCount">
             <summary>
             列总数
             </summary>
         </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewPercent.DataGridViewPercentColumn.ValueForamt">
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.ValueForamt">
             <summary>
             值的格式化
             </summary>
         </member>
-        <member name="M:Buffalo.WinFormsControl.DataGridViewPercent.DataGridPercentCell.GetNumberString(System.Decimal)">
+        <member name="T:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell">
+            <summary>
+            扩展的Checkbox单元格
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell.SelectValue">
+            <summary>
+            选中的值
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell.BelongColumn">
+            <summary>
+            所属列
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentCell.GetNumberString(System.Decimal)">
             <summary>
             获取数字的格式化字符串
             </summary>

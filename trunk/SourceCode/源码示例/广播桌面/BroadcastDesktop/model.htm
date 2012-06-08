@@ -9,7 +9,7 @@
 		        var vimg=document.getElementById("dimg").src="http://<%=url%>/getdesktop?id="+i;
 		        i++;
 		        i%=65535;
-		        setTimeout("startRefreash()",300);
+		        setTimeout("startRefreash()","<%=timeout%>");
 		    }
 		</script>
 	</head>

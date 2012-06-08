@@ -23,6 +23,7 @@ namespace BroadcastDesktop
         }
         
         ServerModel sm ;
+        DesktopCache _cache;
         private void Form1_Load(object sender, EventArgs e)
         {
             
@@ -52,15 +53,17 @@ namespace BroadcastDesktop
             {
                 
                 //response.MimeType = "image/jpeg";
-                response.Write(Resources.model.Replace("<%=url%>", sm.IP.ToString() + ":" + sm.Port));
+                string content = Resources.model.Replace("<%=url%>", sm.IP.ToString() + ":" + sm.Port);
+                content=content.Replace("<%=timeout%>", (1000 / ((int)nupFPS.Value)).ToString());
+                response.Write(content);
                 return;
             }
             if (url.Equals("/getdesktop", StringComparison.CurrentCultureIgnoreCase))
             {
                 response.MimeType = "image/jpeg";
-                if (DesktopCache.CurrentDesktop != null)
+                if (_cache.CurrentDesktop != null)
                 {
-                    response.Write(DesktopCache.CurrentDesktop);
+                    response.Write(_cache.CurrentDesktop);
                 }
                 return;
             }
@@ -87,7 +90,8 @@ namespace BroadcastDesktop
                 {
                     sm.StopServer();
 
-                    DesktopCache.StopUpdate();
+                    _cache.StopUpdate();
+                    _cache = null;
                     Listening(false);
                 }
                 catch { }
@@ -107,7 +111,8 @@ namespace BroadcastDesktop
             txturl.Text = "http://" + cmbIP.Text + ":" + (int)nupPort.Value + "/desktop";
             sm.OnRequestProcessing += new RequestProcessingHandle(sm_OnRequestProcessing);
             sm.StarServer();
-            DesktopCache.StarUpdate();
+            _cache = new DesktopCache(1000 / ((int)nupFPS.Value));
+            _cache.StarUpdate();
             Listening(true);
         }
     }

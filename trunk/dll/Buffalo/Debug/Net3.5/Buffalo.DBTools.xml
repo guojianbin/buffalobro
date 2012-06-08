@@ -198,6 +198,13 @@
             生成器基类
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.GrneraterBase.FormatName(System.String)">
+            <summary>
+            格式化名字
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
         <member name="P:Buffalo.DBTools.HelperKernel.GrneraterBase.Table">
             <summary>
             表信息

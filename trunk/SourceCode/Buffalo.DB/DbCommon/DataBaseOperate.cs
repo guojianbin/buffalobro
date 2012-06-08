@@ -45,7 +45,14 @@ namespace Buffalo.DB.DbCommon
         /// </summary>
         public DbConnection Connection
         {
-            get { return _conn; }
+            get
+            {
+                if (!ConnectDataBase())
+                {
+                    throw (new ApplicationException("没有建立数据库连接。"));
+                }
+                return _conn;
+            }
         }
 		private IDbCommand _comm;
 		private IDbTransaction _tran;
@@ -163,6 +170,10 @@ namespace Buffalo.DB.DbCommon
         /// <returns></returns>
         public DataTable GetSchema() 
         {
+            if (!ConnectDataBase())
+            {
+                throw (new ApplicationException("没有建立数据库连接。"));
+            }
             return _conn.GetSchema();
         }
         /// <summary>
@@ -172,6 +183,10 @@ namespace Buffalo.DB.DbCommon
         /// <returns></returns>
         public DataTable GetSchema(string collectionName)
         {
+            if (!ConnectDataBase())
+            {
+                throw (new ApplicationException("没有建立数据库连接。"));
+            }
             return _conn.GetSchema(collectionName);
         }
         /// <summary>
@@ -182,6 +197,10 @@ namespace Buffalo.DB.DbCommon
         /// <returns></returns>
         public DataTable GetSchema(string collectionName, string[] restrictionValues)
         {
+            if (!ConnectDataBase())
+            {
+                throw (new ApplicationException("没有建立数据库连接。"));
+            }
             return _conn.GetSchema(collectionName, restrictionValues);
         }
 
