@@ -47,6 +47,8 @@ D:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\bin\Debug\fi\Npgsql.reso
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\bin\Debug\fr\Npgsql.resources.dll
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\bin\Debug\ja\Npgsql.resources.dll
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\bin\Debug\zh-CN\Npgsql.resources.dll
+D:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.dll
+D:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.pdb
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Debug\ResolveAssemblyReference.cache
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.PermissionsInfo.BEM.BPBase.BEM.xml
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.PermissionsInfo.BEM.BPGroup.BEM.xml

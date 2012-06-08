@@ -78,6 +78,25 @@ namespace Buffalo.Kernel
                 return (HttpContext.Current != null);
             }
         }
+
+        /// <summary>
+        /// 克隆
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static object Clone(object source) 
+        {
+            return FieldCloneHelper.Clone(source);
+        }
+        /// <summary>
+        /// 拷贝数据
+        /// </summary>
+        /// <param name="source">源类</param>
+        /// <param name="target">目标类</param>
+        public static void CopyTo(object source, object target)
+        {
+            FieldCloneHelper.CopyTo(source, target);
+        }
         /// <summary>
         /// 判断是否为空
         /// </summary>

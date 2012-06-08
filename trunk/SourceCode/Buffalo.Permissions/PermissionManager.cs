@@ -22,7 +22,7 @@ namespace Buffalo.Permissions
         /// <returns></returns>
         public static bool AddUserGroup(string groupId,string groupName) 
         {
-
+             
             BPGroup objGroup = new BPGroup();
             objGroup.GroupID = groupId;
             objGroup.GroupName = groupName;
@@ -35,7 +35,7 @@ namespace Buffalo.Permissions
         /// 检查权限
         /// </summary>
         public static void CheckPermission(params Assembly[] arrAss) 
-        {
+        { 
             //检查数据库结构
             PermissionDB.GetDBinfo().UpdateDataBase();
 

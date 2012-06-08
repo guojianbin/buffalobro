@@ -42,7 +42,7 @@ namespace Buffalo.Permissions.PermissionsInfo
             List<BPGroupModelRight> lstGMRight = BPGroupModelRight.GetContext().SelectList(lstScope);
 
             CheckModelRight(lstGMRight, lstModelRights, objGroup);
-
+            return lstGMRight;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Buffalo.Permissions.PermissionsInfo
                 
             }
             List<BPGroupItemRight> lstGroupItemRight = new List<BPGroupItemRight>();
-            CheckModelItemRight(lstGroupItemRight, lstModelRights, group);
+            //CheckModelItemRight(lstGroupItemRight, lstModelRights, group);
         }
 
         /// <summary>
