@@ -178,12 +178,12 @@ namespace Buffalo.Kernel.Win32
             IntPtr iCursor = WindowsAPI.CopyIcon(hCursor);
             if (iCursor == IntPtr.Zero) 
             {
-                int err = WindowsAPI.GetLastError();
+                return;
             }
-            Icon objIcon = Icon.FromHandle(iCursor);
-            //WindowsAPI.DrawIcon(grp.GetHdc(), x, y, iCursor);
+            //Icon objIcon = Icon.FromHandle(iCursor);
+            WindowsAPI.DrawIcon(grp.GetHdc(), x, y, iCursor);
             
-            grp.DrawIcon(objIcon, x, y);
+            //grp.DrawIcon(objIcon, x, y);
             WindowsAPI.DestroyCursor(iCursor);
         }
 

@@ -99,6 +99,26 @@ namespace Buffalo.Kernel
         {
             return PictureToBytes(img, System.Drawing.Imaging.ImageFormat.Jpeg);
         }
+        /// <summary>
+        /// 获取特定的图像编解码信息
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
+        
 
 		/// <summary>
 		/// 把图片转换成字节
@@ -111,11 +131,7 @@ namespace Buffalo.Kernel
 			MemoryStream stm=new MemoryStream();
 			try
 			{
-				
-				//Bitmap bmp=new Bitmap(img);
-
-                
-                    img.Save(stm, format);
+                img.Save(stm, format);
                 
 				imgBytes=new byte[stm.Length];
 				stm.Position=0;
@@ -131,16 +147,49 @@ namespace Buffalo.Kernel
 			return imgBytes;
 		}
 
-//		/// <summary>
-//		/// 把图片流转成字节
-//		/// </summary>
-//		/// <param name="fileStm">图片流</param>
-//		/// <returns></returns>
-//		public static byte[] PictureToBytes(Stream fileStm)
-//		{
-//			return PictureToBytes(fileStm,180,180);
-//		}
+        /// <summary>
+        /// 图片转换为字节
+        /// </summary>
+        /// <param name="img">图片</param>
+        /// <param name="codeInfo">编码</param>
+        /// <param name="qty">质量</param>
+        /// <returns></returns>
+        public static byte[] PictureToBytes(Image img, ImageCodecInfo codeInfo, long qty) 
+        {
+            byte[] imgBytes = null;
+            MemoryStream stm = new MemoryStream();
+            try
+            {
+                WhitePictureToStream(stm, img, codeInfo, qty);
 
+                imgBytes = new byte[stm.Length];
+                stm.Position = 0;
+                stm.Read(imgBytes, 0, imgBytes.Length);
+
+            }
+            finally
+            {
+                stm.Flush();
+                stm.Close();
+                //img.Dispose();
+            }
+            return imgBytes;
+        }
+
+        /// <summary>
+        /// 把图片写入流
+        /// </summary>
+        /// <param name="img"></param>
+        /// <param name="codeInfo"></param>
+        /// <param name="qty"></param>
+        public static void WhitePictureToStream(Stream stm,Image img, ImageCodecInfo codeInfo,long qty) 
+        {
+            Encoder picEncoder = Encoder.Quality;
+            EncoderParameters picEncoderParameters=new EncoderParameters(1);
+            EncoderParameter qtyEncoderParameter = new EncoderParameter(picEncoder, qty); //指定质量
+            picEncoderParameters.Param[0] = qtyEncoderParameter;
+            img.Save(stm, codeInfo, picEncoderParameters);
+        }
 		
 		/// <summary>
 		/// 把字节转换为图片
@@ -209,27 +258,6 @@ namespace Buffalo.Kernel
 
 		}
 
-        /// <summary>
-        /// 把图片写入服务器
-        /// </summary>
-        /// <param name="stmImg">文件流</param>
-        /// <param name="root">保存的路径</param>
-        /// <param name="picSize">图片尺寸</param>
-        public static void WhileImages(Stream stmImg, string root, Size picSize)
-        {
-            Image originalImage = Image.FromStream(stmImg);
-            Image bitmap = ChangeSize(originalImage, picSize);
-            try
-            {
-                //以jpg格式保存缩略图
-                bitmap.Save(root, System.Drawing.Imaging.ImageFormat.Jpeg);
-            }
-            finally
-            {
-                originalImage.Dispose();
-                bitmap.Dispose();
-            }
-        }
 
         
 
@@ -272,17 +300,6 @@ namespace Buffalo.Kernel
             return bitmap;
         }
 
-        /// <summary>
-        /// 把图片写入服务器
-        /// </summary>
-        /// <param name="stmImg">文件流</param>
-        /// <param name="root">保存的路径</param>
-        public static void WhileImages(Stream stmImg, string root)
-        {
-            Image img = Image.FromStream(stmImg);
-            img = ChangeSize(img, img.Size);
-            img.Save(root, System.Drawing.Imaging.ImageFormat.Jpeg);
-        }
 
         /// <summary>
         /// 获取编码信息

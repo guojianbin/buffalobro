@@ -37,6 +37,8 @@
             this.nupFPS = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.chkIsMouse = new System.Windows.Forms.CheckBox();
+            this.cmbQty = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nupPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupFPS)).BeginInit();
             this.SuspendLayout();
@@ -89,7 +91,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 85);
+            this.label1.Location = new System.Drawing.Point(12, 102);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 12);
             this.label1.TabIndex = 5;
@@ -97,7 +99,7 @@
             // 
             // txturl
             // 
-            this.txturl.Location = new System.Drawing.Point(14, 100);
+            this.txturl.Location = new System.Drawing.Point(14, 117);
             this.txturl.Name = "txturl";
             this.txturl.ReadOnly = true;
             this.txturl.Size = new System.Drawing.Size(260, 21);
@@ -117,7 +119,7 @@
             0,
             0});
             this.nupFPS.Name = "nupFPS";
-            this.nupFPS.Size = new System.Drawing.Size(89, 21);
+            this.nupFPS.Size = new System.Drawing.Size(124, 21);
             this.nupFPS.TabIndex = 7;
             this.nupFPS.Value = new decimal(new int[] {
             10,
@@ -128,7 +130,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(106, 42);
+            this.label2.Location = new System.Drawing.Point(144, 43);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 12);
             this.label2.TabIndex = 8;
@@ -137,18 +139,40 @@
             // chkIsMouse
             // 
             this.chkIsMouse.AutoSize = true;
-            this.chkIsMouse.Location = new System.Drawing.Point(185, 43);
+            this.chkIsMouse.Checked = true;
+            this.chkIsMouse.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkIsMouse.Location = new System.Drawing.Point(185, 40);
             this.chkIsMouse.Name = "chkIsMouse";
-            this.chkIsMouse.Size = new System.Drawing.Size(96, 16);
+            this.chkIsMouse.Size = new System.Drawing.Size(72, 16);
             this.chkIsMouse.TabIndex = 9;
-            this.chkIsMouse.Text = "是否绘制鼠标";
+            this.chkIsMouse.Text = "绘制鼠标";
             this.chkIsMouse.UseVisualStyleBackColor = true;
+            // 
+            // cmbQty
+            // 
+            this.cmbQty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbQty.FormattingEnabled = true;
+            this.cmbQty.Location = new System.Drawing.Point(12, 65);
+            this.cmbQty.Name = "cmbQty";
+            this.cmbQty.Size = new System.Drawing.Size(126, 20);
+            this.cmbQty.TabIndex = 11;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 154);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(221, 24);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Win7下选择文本的鼠标指针会不见了\r\n只需要去控制面板选择黑色鼠标方案即可";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cmbQty);
             this.Controls.Add(this.chkIsMouse);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.nupFPS);
@@ -158,6 +182,10 @@
             this.Controls.Add(this.cmbIP);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnListen);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(300, 300);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "Form1";
             this.Text = "桌面共享";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -180,6 +208,8 @@
         private System.Windows.Forms.NumericUpDown nupFPS;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chkIsMouse;
+        private System.Windows.Forms.ComboBox cmbQty;
+        private System.Windows.Forms.Label label3;
     }
 }
 

@@ -8,6 +8,7 @@ using Buffalo.Kernel;
 using System.Threading;
 using Buffalo.Kernel.Win32;
 using System.Runtime.InteropServices;
+using System.Drawing.Imaging;
 
 namespace BroadcastDesktop
 {
@@ -21,6 +22,16 @@ namespace BroadcastDesktop
         private bool _isRunning=false;
         private int _sleeptime;
         private bool _isDrawMouse;
+        private long _qty=100L;
+        ImageCodecInfo _codecInfo = null;
+        /// <summary>
+        /// 质量
+        /// </summary>
+        public long Qty
+        {
+            get { return _qty; }
+            set { _qty = value; }
+        }
         /// <summary>
         /// 屏幕桌面缓存
         /// </summary>
@@ -30,7 +41,10 @@ namespace BroadcastDesktop
         {
             _sleeptime = sleeptime;
             _isDrawMouse = isDrawMouse;
+            _codecInfo = Picture.GetEncoder(ImageFormat.Png);
         }
+
+        
 
         /// <summary>
         /// 当前桌面
@@ -65,8 +79,14 @@ namespace BroadcastDesktop
                 {
                     DrawMousePoint(img);
                 }
-                _msCache = Picture.PictureToBytes(img, System.Drawing.Imaging.ImageFormat.Jpeg);
-
+                if (_qty > 0)
+                {
+                    _msCache = Picture.PictureToBytes(img, _codecInfo, _qty);
+                }
+                else 
+                {
+                    _msCache = Picture.PictureToBytes(img,ImageFormat.Png);
+                }
                 Thread.Sleep(_sleeptime);
             }
         }

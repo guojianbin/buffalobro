@@ -12,6 +12,7 @@ using System.IO;
 using System.Threading;
 using BroadcastDesktop.Properties;
 using System.Net;
+using Buffalo.Win32Kernel;
 
 namespace BroadcastDesktop
 {
@@ -29,6 +30,7 @@ namespace BroadcastDesktop
             
             Listening(false);
             BindIP();
+            BindQty();
         }
 
         private void BindIP() 
@@ -78,7 +80,34 @@ namespace BroadcastDesktop
             nupPort.Enabled = !isListen;
         }
 
-        
+        private void BindQty() 
+        {
+            cmbQty.Items.Clear();
+            ComboBoxItem item = new ComboBoxItem();
+            item.Text = "高质量(250K)";
+            item.Tag = -1L;
+            cmbQty.Items.Add(item);
+            
+
+            item = new ComboBoxItem();
+            item.Text = "中高质量(150K)";
+            item.Tag = 80L;
+            cmbQty.Items.Add(item);
+
+            item = new ComboBoxItem();
+            item.Text = "中质量(100K)";
+            item.Tag = 50L;
+            cmbQty.Items.Add(item);
+            item = new ComboBoxItem();
+            item.Text = "中低质量(75K)";
+            item.Tag = 25L;
+            cmbQty.Items.Add(item);
+            item = new ComboBoxItem();
+            item.Text = "低质量(45K)";
+            item.Tag = 10L;
+            cmbQty.Items.Add(item);
+            cmbQty.SelectedIndex = 0;
+        }
 
         
 
@@ -89,7 +118,7 @@ namespace BroadcastDesktop
                 try
                 {
                     sm.StopServer();
-
+                    Thread.Sleep(100);
                     _cache.StopUpdate();
                     _cache = null;
                     Listening(false);
@@ -112,6 +141,11 @@ namespace BroadcastDesktop
             sm.OnRequestProcessing += new RequestProcessingHandle(sm_OnRequestProcessing);
             sm.StarServer();
             _cache = new DesktopCache(1000 / ((int)nupFPS.Value), chkIsMouse.Checked);
+            ComboBoxItem selQry=cmbQty.SelectedItem as ComboBoxItem;
+            if (selQry!=null) 
+            {
+                _cache.Qty = (long)selQry.Tag;
+            }
             _cache.StarUpdate();
             Listening(true);
         }

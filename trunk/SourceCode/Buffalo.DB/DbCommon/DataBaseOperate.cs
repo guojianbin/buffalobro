@@ -79,6 +79,8 @@ namespace Buffalo.DB.DbCommon
         //是否自动关闭连接
         private CommitState _commitState = CommitState.AutoCommit;
 
+        string _databaseName;
+
         /// <summary>
         /// 获取数据库名字
         /// </summary>
@@ -87,23 +89,25 @@ namespace Buffalo.DB.DbCommon
         {
             get
             {
-                string tableName = null;
-                try
+                if (_databaseName == null)
                 {
-                    //若连接数据库失败抛出错误
-                    if (!ConnectDataBase())
+                    try
                     {
-                        throw (new ApplicationException("没有建立数据库连接。"));
+                        //若连接数据库失败抛出错误
+                        if (!ConnectDataBase())
+                        {
+                            throw (new ApplicationException("没有建立数据库连接。"));
+                        }
+                        _databaseName = _conn.Database;
                     }
-                    tableName = _conn.Database;
-                }
-                finally
-                {
+                    finally
+                    {
 
-                    AutoClose();
+                        AutoClose();
 
+                    }
                 }
-                return tableName;
+                return _databaseName;
             }
         }
 
@@ -170,11 +174,20 @@ namespace Buffalo.DB.DbCommon
         /// <returns></returns>
         public DataTable GetSchema() 
         {
-            if (!ConnectDataBase())
+            DataTable dt = null;
+            try
             {
-                throw (new ApplicationException("没有建立数据库连接。"));
+                if (!ConnectDataBase())
+                {
+                    throw (new ApplicationException("没有建立数据库连接。"));
+                }
+                dt = _conn.GetSchema();
             }
-            return _conn.GetSchema();
+            finally 
+            {
+                AutoClose();
+            }
+            return dt;
         }
         /// <summary>
         /// 返回此 System.Data.Common.DbConnection 的数据源的架构信息
@@ -183,11 +196,20 @@ namespace Buffalo.DB.DbCommon
         /// <returns></returns>
         public DataTable GetSchema(string collectionName)
         {
-            if (!ConnectDataBase())
+            DataTable dt = null;
+            try
             {
-                throw (new ApplicationException("没有建立数据库连接。"));
+                if (!ConnectDataBase())
+                {
+                    throw (new ApplicationException("没有建立数据库连接。"));
+                }
+                dt = _conn.GetSchema(collectionName);
             }
-            return _conn.GetSchema(collectionName);
+            finally
+            {
+                AutoClose();
+            }
+            return dt;
         }
         /// <summary>
         /// 返回此 System.Data.Common.DbConnection 的数据源的架构信息
@@ -197,11 +219,20 @@ namespace Buffalo.DB.DbCommon
         /// <returns></returns>
         public DataTable GetSchema(string collectionName, string[] restrictionValues)
         {
-            if (!ConnectDataBase())
+            DataTable dt = null;
+            try
             {
-                throw (new ApplicationException("没有建立数据库连接。"));
+                if (!ConnectDataBase())
+                {
+                    throw (new ApplicationException("没有建立数据库连接。"));
+                }
+                dt = _conn.GetSchema(collectionName, restrictionValues);
             }
-            return _conn.GetSchema(collectionName, restrictionValues);
+            finally
+            {
+                AutoClose();
+            }
+            return dt;
         }
 
 		/// <summary>
