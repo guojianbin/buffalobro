@@ -40,17 +40,17 @@
             this.cmbQty = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gpSetting = new System.Windows.Forms.GroupBox();
             this.btnCopy = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gpIP = new System.Windows.Forms.GroupBox();
             this.txtInternetIP = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnCopyInternet = new System.Windows.Forms.Button();
             this.btnGetIP = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nupPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupFPS)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.gpSetting.SuspendLayout();
+            this.gpIP.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnListen
@@ -186,22 +186,22 @@
             this.label4.TabIndex = 13;
             this.label4.Text = "绑定地址:";
             // 
-            // groupBox1
+            // gpSetting
             // 
-            this.groupBox1.Controls.Add(this.cmbQty);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.cmbIP);
-            this.groupBox1.Controls.Add(this.nupPort);
-            this.groupBox1.Controls.Add(this.nupFPS);
-            this.groupBox1.Controls.Add(this.chkIsMouse);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(408, 83);
-            this.groupBox1.TabIndex = 14;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "设置";
+            this.gpSetting.Controls.Add(this.cmbQty);
+            this.gpSetting.Controls.Add(this.label4);
+            this.gpSetting.Controls.Add(this.cmbIP);
+            this.gpSetting.Controls.Add(this.nupPort);
+            this.gpSetting.Controls.Add(this.nupFPS);
+            this.gpSetting.Controls.Add(this.chkIsMouse);
+            this.gpSetting.Controls.Add(this.label2);
+            this.gpSetting.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gpSetting.Location = new System.Drawing.Point(0, 0);
+            this.gpSetting.Name = "gpSetting";
+            this.gpSetting.Size = new System.Drawing.Size(408, 83);
+            this.gpSetting.TabIndex = 14;
+            this.gpSetting.TabStop = false;
+            this.gpSetting.Text = "设置";
             // 
             // btnCopy
             // 
@@ -213,23 +213,23 @@
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
-            // groupBox2
+            // gpIP
             // 
-            this.groupBox2.Controls.Add(this.btnGetIP);
-            this.groupBox2.Controls.Add(this.txtInternetIP);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.btnCopyInternet);
-            this.groupBox2.Controls.Add(this.txturl);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.btnCopy);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox2.Location = new System.Drawing.Point(0, 83);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(408, 147);
-            this.groupBox2.TabIndex = 17;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "地址";
+            this.gpIP.Controls.Add(this.btnGetIP);
+            this.gpIP.Controls.Add(this.txtInternetIP);
+            this.gpIP.Controls.Add(this.label5);
+            this.gpIP.Controls.Add(this.btnCopyInternet);
+            this.gpIP.Controls.Add(this.txturl);
+            this.gpIP.Controls.Add(this.label1);
+            this.gpIP.Controls.Add(this.btnCopy);
+            this.gpIP.Controls.Add(this.label3);
+            this.gpIP.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gpIP.Location = new System.Drawing.Point(0, 83);
+            this.gpIP.Name = "gpIP";
+            this.gpIP.Size = new System.Drawing.Size(408, 147);
+            this.gpIP.TabIndex = 17;
+            this.gpIP.TabStop = false;
+            this.gpIP.Text = "地址";
             // 
             // txtInternetIP
             // 
@@ -273,8 +273,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(408, 262);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gpIP);
+            this.Controls.Add(this.gpSetting);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnListen);
             this.MaximizeBox = false;
@@ -285,10 +285,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.nupPort)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupFPS)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.gpSetting.ResumeLayout(false);
+            this.gpSetting.PerformLayout();
+            this.gpIP.ResumeLayout(false);
+            this.gpIP.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -307,9 +307,9 @@
         private System.Windows.Forms.ComboBox cmbQty;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gpSetting;
         private System.Windows.Forms.Button btnCopy;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox gpIP;
         private System.Windows.Forms.TextBox txtInternetIP;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnCopyInternet;

@@ -4,13 +4,23 @@
 		<title>Desktop</title>
 		<script language="javascript">
 		var i=0;
+		var vimg;
 		    function startRefreash()
 		    {
-		        var vimg=document.getElementById("dimg").src="http://<%=url%>/getdesktop?id="+i;
-		        i++;
-		        i%=65535;
+		        if(vimg==null)
+		        {
+                    vimg=document.getElementById("dimg");
+		        }
+		        if(vimg.readyState=="complete"||vimg.readyState=="loaded"|| vimg.complete==true)
+		        {
+		            
+		            vimg.src="http://<%=url%>/getdesktop?id="+i;
+		            i++;
+		            i%=65535;
+		        }
 		        setTimeout("startRefreash()","<%=timeout%>");
 		    }
+
 		</script>
 	</head>
 	<body>

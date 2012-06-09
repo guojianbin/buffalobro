@@ -75,9 +75,10 @@ namespace BroadcastDesktop
         private void Listening(bool isListen)
         {
             btnListen.Enabled = !isListen;
+            gpSetting.Enabled = !isListen;
+            gpIP.Enabled = isListen;
+
             btnStop.Enabled = isListen;
-            cmbIP.Enabled = !isListen;
-            nupPort.Enabled = !isListen;
         }
 
         private void BindQty() 
