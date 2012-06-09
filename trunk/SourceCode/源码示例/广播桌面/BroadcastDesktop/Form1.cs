@@ -55,7 +55,7 @@ namespace BroadcastDesktop
             {
                 
                 //response.MimeType = "image/jpeg";
-                string content = Resources.model.Replace("<%=url%>", sm.IP.ToString() + ":" + sm.Port);
+                string content = Resources.model.Replace("<%=url%>", request.Host.Trim());
                 content=content.Replace("<%=timeout%>", (1000 / ((int)nupFPS.Value)).ToString());
                 response.Write(content);
                 return;
@@ -148,6 +148,29 @@ namespace BroadcastDesktop
             }
             _cache.StarUpdate();
             Listening(true);
+        }
+
+        private void btnGetIP_Click(object sender, EventArgs e)
+        {
+            string ip = HttpHelper.GetInternetIP();
+            if (string.IsNullOrEmpty(ip))
+            {
+                MessageBox.Show("获取外网IP失败");
+            }
+            else 
+            {
+                txtInternetIP.Text = "http://" + ip+":" + ((int)nupPort.Value).ToString() + "/desktop";
+            }
+        }
+
+        private void btnCopyInternet_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetDataObject(txtInternetIP.Text);
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetDataObject(txturl.Text);
         }
     }
 }

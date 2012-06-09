@@ -39,13 +39,23 @@
             this.chkIsMouse = new System.Windows.Forms.CheckBox();
             this.cmbQty = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnCopy = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtInternetIP = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnCopyInternet = new System.Windows.Forms.Button();
+            this.btnGetIP = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nupPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupFPS)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnListen
             // 
-            this.btnListen.Location = new System.Drawing.Point(56, 214);
+            this.btnListen.Location = new System.Drawing.Point(48, 236);
             this.btnListen.Name = "btnListen";
             this.btnListen.Size = new System.Drawing.Size(75, 23);
             this.btnListen.TabIndex = 0;
@@ -55,7 +65,7 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(170, 214);
+            this.btnStop.Location = new System.Drawing.Point(162, 236);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 23);
             this.btnStop.TabIndex = 1;
@@ -66,21 +76,21 @@
             // cmbIP
             // 
             this.cmbIP.FormattingEnabled = true;
-            this.cmbIP.Location = new System.Drawing.Point(12, 12);
+            this.cmbIP.Location = new System.Drawing.Point(66, 20);
             this.cmbIP.Name = "cmbIP";
             this.cmbIP.Size = new System.Drawing.Size(167, 20);
             this.cmbIP.TabIndex = 2;
             // 
             // nupPort
             // 
-            this.nupPort.Location = new System.Drawing.Point(185, 11);
+            this.nupPort.Location = new System.Drawing.Point(239, 20);
             this.nupPort.Maximum = new decimal(new int[] {
             -1530494977,
             232830,
             0,
             0});
             this.nupPort.Name = "nupPort";
-            this.nupPort.Size = new System.Drawing.Size(89, 21);
+            this.nupPort.Size = new System.Drawing.Size(47, 21);
             this.nupPort.TabIndex = 3;
             this.nupPort.Value = new decimal(new int[] {
             8080,
@@ -91,23 +101,23 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 102);
+            this.label1.Location = new System.Drawing.Point(18, 52);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 12);
             this.label1.TabIndex = 5;
-            this.label1.Text = "您的地址为：";
+            this.label1.Text = "内网地址为：";
             // 
             // txturl
             // 
-            this.txturl.Location = new System.Drawing.Point(14, 117);
+            this.txturl.Location = new System.Drawing.Point(93, 49);
             this.txturl.Name = "txturl";
             this.txturl.ReadOnly = true;
-            this.txturl.Size = new System.Drawing.Size(260, 21);
+            this.txturl.Size = new System.Drawing.Size(204, 21);
             this.txturl.TabIndex = 6;
             // 
             // nupFPS
             // 
-            this.nupFPS.Location = new System.Drawing.Point(14, 38);
+            this.nupFPS.Location = new System.Drawing.Point(239, 50);
             this.nupFPS.Maximum = new decimal(new int[] {
             255,
             0,
@@ -119,7 +129,7 @@
             0,
             0});
             this.nupFPS.Name = "nupFPS";
-            this.nupFPS.Size = new System.Drawing.Size(124, 21);
+            this.nupFPS.Size = new System.Drawing.Size(53, 21);
             this.nupFPS.TabIndex = 7;
             this.nupFPS.Value = new decimal(new int[] {
             10,
@@ -130,7 +140,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(144, 43);
+            this.label2.Location = new System.Drawing.Point(298, 54);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 12);
             this.label2.TabIndex = 8;
@@ -141,7 +151,7 @@
             this.chkIsMouse.AutoSize = true;
             this.chkIsMouse.Checked = true;
             this.chkIsMouse.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkIsMouse.Location = new System.Drawing.Point(185, 40);
+            this.chkIsMouse.Location = new System.Drawing.Point(296, 21);
             this.chkIsMouse.Name = "chkIsMouse";
             this.chkIsMouse.Size = new System.Drawing.Size(72, 16);
             this.chkIsMouse.TabIndex = 9;
@@ -152,48 +162,134 @@
             // 
             this.cmbQty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbQty.FormattingEnabled = true;
-            this.cmbQty.Location = new System.Drawing.Point(12, 65);
+            this.cmbQty.Location = new System.Drawing.Point(66, 51);
             this.cmbQty.Name = "cmbQty";
-            this.cmbQty.Size = new System.Drawing.Size(126, 20);
+            this.cmbQty.Size = new System.Drawing.Size(163, 20);
             this.cmbQty.TabIndex = 11;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 154);
+            this.label3.ForeColor = System.Drawing.Color.Red;
+            this.label3.Location = new System.Drawing.Point(18, 106);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(221, 24);
+            this.label3.Size = new System.Drawing.Size(221, 36);
             this.label3.TabIndex = 12;
-            this.label3.Text = "Win7下选择文本的鼠标指针会不见了\r\n只需要去控制面板选择黑色鼠标方案即可";
+            this.label3.Text = "把地址通过IM软件发给好友\r\nWin7下选择文本的鼠标指针会不见了\r\n只需要去控制面板选择黑色鼠标方案即可";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 23);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(59, 12);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "绑定地址:";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cmbQty);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.cmbIP);
+            this.groupBox1.Controls.Add(this.nupPort);
+            this.groupBox1.Controls.Add(this.nupFPS);
+            this.groupBox1.Controls.Add(this.chkIsMouse);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(408, 83);
+            this.groupBox1.TabIndex = 14;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "设置";
+            // 
+            // btnCopy
+            // 
+            this.btnCopy.Location = new System.Drawing.Point(303, 49);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(75, 23);
+            this.btnCopy.TabIndex = 16;
+            this.btnCopy.Text = "复制";
+            this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.btnGetIP);
+            this.groupBox2.Controls.Add(this.txtInternetIP);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.btnCopyInternet);
+            this.groupBox2.Controls.Add(this.txturl);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.btnCopy);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox2.Location = new System.Drawing.Point(0, 83);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(408, 147);
+            this.groupBox2.TabIndex = 17;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "地址";
+            // 
+            // txtInternetIP
+            // 
+            this.txtInternetIP.Location = new System.Drawing.Point(93, 20);
+            this.txtInternetIP.Name = "txtInternetIP";
+            this.txtInternetIP.ReadOnly = true;
+            this.txtInternetIP.Size = new System.Drawing.Size(204, 21);
+            this.txtInternetIP.TabIndex = 18;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(18, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(77, 12);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "外网地址为：";
+            // 
+            // btnCopyInternet
+            // 
+            this.btnCopyInternet.Location = new System.Drawing.Point(352, 19);
+            this.btnCopyInternet.Name = "btnCopyInternet";
+            this.btnCopyInternet.Size = new System.Drawing.Size(50, 23);
+            this.btnCopyInternet.TabIndex = 19;
+            this.btnCopyInternet.Text = "复制";
+            this.btnCopyInternet.UseVisualStyleBackColor = true;
+            this.btnCopyInternet.Click += new System.EventHandler(this.btnCopyInternet_Click);
+            // 
+            // btnGetIP
+            // 
+            this.btnGetIP.Location = new System.Drawing.Point(300, 19);
+            this.btnGetIP.Name = "btnGetIP";
+            this.btnGetIP.Size = new System.Drawing.Size(50, 23);
+            this.btnGetIP.TabIndex = 20;
+            this.btnGetIP.Text = "获取";
+            this.btnGetIP.UseVisualStyleBackColor = true;
+            this.btnGetIP.Click += new System.EventHandler(this.btnGetIP_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.cmbQty);
-            this.Controls.Add(this.chkIsMouse);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.nupFPS);
-            this.Controls.Add(this.txturl);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.nupPort);
-            this.Controls.Add(this.cmbIP);
+            this.ClientSize = new System.Drawing.Size(408, 262);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnListen);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(300, 300);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "Form1";
             this.Text = "桌面共享";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.nupPort)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupFPS)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -210,6 +306,14 @@
         private System.Windows.Forms.CheckBox chkIsMouse;
         private System.Windows.Forms.ComboBox cmbQty;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox txtInternetIP;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnCopyInternet;
+        private System.Windows.Forms.Button btnGetIP;
     }
 }
 
