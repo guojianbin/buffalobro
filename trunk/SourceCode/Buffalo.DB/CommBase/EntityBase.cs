@@ -11,12 +11,13 @@ using Buffalo.DB.DataFillers;
 using Buffalo.Kernel.Defaults;
 using System.Data;
 using Buffalo.DB.QueryConditions;
+using Buffalo.Kernel;
 namespace Buffalo.DB.CommBase
 {
     /// <summary>
     /// 实体基类
     /// </summary>
-    public class EntityBase
+    public class EntityBase:ICloneable
     {
         private EntityInfoHandle _thisInfo = null;//当前类的信息
         internal Dictionary<string, bool> _dicUpdateProperty___ = null;//记录被修改过值的属性
@@ -177,9 +178,20 @@ namespace Buffalo.DB.CommBase
         /// 把本类的字段拷贝到目标类
         /// </summary>
         /// <param name="target"></param>
-        public int CopyTo(object target) 
+        public void CopyTo(object target) 
         {
-            return ClassInfoManager.ObjectCopy(this, target);
+            FieldCloneHelper.CopyTo(this, target);
         }
+
+        #region ICloneable 成员
+
+        public object Clone()
+        {
+            object target = Activator.CreateInstance(this.GetType());
+            FieldCloneHelper.CopyTo(this, target);
+            return target;
+        }
+
+        #endregion
     }
 }

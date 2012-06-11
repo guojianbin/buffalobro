@@ -1011,12 +1011,36 @@
             <param name="img">图片</param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.Kernel.Picture.GetEncoder(System.Drawing.Imaging.ImageFormat)">
+            <summary>
+            获取特定的图像编解码信息
+            </summary>
+            <param name="format"></param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.Kernel.Picture.PictureToBytes(System.Drawing.Image,System.Drawing.Imaging.ImageFormat)">
             <summary>
             把图片转换成字节
             </summary>
             <param name="img">图片</param>
             <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Picture.PictureToBytes(System.Drawing.Image,System.Drawing.Imaging.ImageCodecInfo,System.Int64)">
+            <summary>
+            图片转换为字节
+            </summary>
+            <param name="img">图片</param>
+            <param name="codeInfo">编码</param>
+            <param name="qty">质量</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Picture.WhitePictureToStream(System.IO.Stream,System.Drawing.Image,System.Drawing.Imaging.ImageCodecInfo,System.Int64)">
+            <summary>
+            把图片写入流
+            </summary>
+            <param name="img"></param>
+            <param name="codeInfo"></param>
+            <param name="qty"></param>
         </member>
         <member name="M:Buffalo.Kernel.Picture.BytesToPicture(System.Byte[])">
             <summary>
@@ -1041,14 +1065,6 @@
             <param name="root">文件路径</param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.Kernel.Picture.WhileImages(System.IO.Stream,System.String,System.Drawing.Size)">
-            <summary>
-            把图片写入服务器
-            </summary>
-            <param name="stmImg">文件流</param>
-            <param name="root">保存的路径</param>
-            <param name="picSize">图片尺寸</param>
-        </member>
         <member name="M:Buffalo.Kernel.Picture.ChangeSize(System.Drawing.Image,System.Drawing.Size)">
             <summary>
             改变图片尺寸
@@ -1056,13 +1072,6 @@
             <param name="originalImage">源图片</param>
             <param name="picSize">尺寸</param>
             <returns></returns>
-        </member>
-        <member name="M:Buffalo.Kernel.Picture.WhileImages(System.IO.Stream,System.String)">
-            <summary>
-            把图片写入服务器
-            </summary>
-            <param name="stmImg">文件流</param>
-            <param name="root">保存的路径</param>
         </member>
         <member name="M:Buffalo.Kernel.Picture.GetEncoderInfo(System.String)">
             <summary>

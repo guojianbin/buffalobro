@@ -172,19 +172,19 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
             prm.ParamName = prmName;
 
             EntityPropertyType type = EntityPropertyType.Normal;
-            bool isPrimary = dr.IsNull("PRIMARY_KEY") && ((bool)dr["PRIMARY_KEY"]);
+            bool isPrimary = (!dr.IsNull("PRIMARY_KEY")) && ((bool)dr["PRIMARY_KEY"]);
 
             if (isPrimary)
             {
                 type = EntityPropertyType.PrimaryKey;
 
             }
-            bool isIdentity = dr.IsNull("AUTOINCREMENT") && ((bool)dr["AUTOINCREMENT"]);
+            bool isIdentity = (!dr.IsNull("AUTOINCREMENT")) && ((bool)dr["AUTOINCREMENT"]);
             if (isIdentity)
             {
                 type = type | EntityPropertyType.Identity;
             }
-            bool allowNull=dr.IsNull("IS_NULLABLE") && ((bool)dr["IS_NULLABLE"]);
+            bool allowNull=(!dr.IsNull("IS_NULLABLE")) && ((bool)dr["IS_NULLABLE"]);
             prm.AllowNull = allowNull;
             prm.PropertyType = type;
             prm.Length = dr.IsNull("CHARACTER_MAXIMUM_LENGTH") ? 0 : (Convert.ToInt64(dr["CHARACTER_MAXIMUM_LENGTH"]));
