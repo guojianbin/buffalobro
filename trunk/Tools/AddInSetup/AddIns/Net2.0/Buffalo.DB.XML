@@ -6391,12 +6391,6 @@
             <param name="doc"></param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.DataAccessLoader.GetBaseRoot">
-            <summary>
-            基目录
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.DataAccessLoader.LoadModel">
             <summary>
             加载模块信息
@@ -7051,6 +7045,12 @@
         <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLDataBaseHandle`1.CreateOperate">
             <summary>
             创新数据库连接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLDataBaseHandle`1.GetDB">
+            <summary>
+            获取当前类关联的DB信息
             </summary>
             <returns></returns>
         </member>

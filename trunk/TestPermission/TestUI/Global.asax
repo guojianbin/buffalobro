@@ -4,9 +4,10 @@
 
     void Application_Start(object sender, EventArgs e) 
     {
+
         Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB.InitDB();
         // 在应用程序启动时运行的代码
-
+    
     }
     
     void Application_End(object sender, EventArgs e) 

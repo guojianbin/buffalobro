@@ -172,18 +172,7 @@ namespace Buffalo.DB.DataBaseAdapter
             return info;
         }
 
-        /// <summary>
-        /// 基目录
-        /// </summary>
-        /// <returns></returns>
-        private static string GetBaseRoot()
-        {
-            if (CommonMethods.IsWebContext)
-            {
-                return AppDomain.CurrentDomain.DynamicDirectory;
-            }
-            return AppDomain.CurrentDomain.BaseDirectory;
-        }
+        
 
         
         /// <summary>
@@ -313,7 +302,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// <returns></returns>
         private static List<Assembly> GetAllAssembly() 
         {
-            string baseRoot =  GetBaseRoot();//本项目所在的路径
+            string baseRoot = CommonMethods.GetBaseRoot();//本项目所在的路径
             Assembly[] arrAss = AppDomain.CurrentDomain.GetAssemblies();
             List<Assembly> lstAss = new List<Assembly>(arrAss.Length);
             foreach (Assembly ass in arrAss)
@@ -340,7 +329,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// <returns></returns>
         public static object GetInstanceByEntity(Type entityType, DataBaseOperate oper)
         {
-            InitConfig();
+            //InitConfig();
             Type objType = null;
             if (!_dicEntityLoaderConfig.TryGetValue(entityType.FullName, out objType))
             {
@@ -377,7 +366,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// <returns></returns>
         public static object GetInstance(Type interfaceType, DataBaseOperate oper) 
         {
-            InitConfig();
+            //InitConfig();
             Type objType = null;
             if (!_dicLoaderConfig.TryGetValue(interfaceType.FullName, out objType)) 
             {
@@ -405,7 +394,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// <returns></returns>
         public static object GetInstanceByEntity(Type entityType)
         {
-            InitConfig();
+            //InitConfig();
             Type objType = null;
             if (!_dicEntityLoaderConfig.TryGetValue(entityType.FullName, out objType))
             {
@@ -442,7 +431,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// <returns></returns>
         public static object GetInstance(Type interfaceType)
         {
-            InitConfig();
+            //InitConfig();
             Type objType = null;
             if (!_dicLoaderConfig.TryGetValue(interfaceType.FullName, out objType))
             {

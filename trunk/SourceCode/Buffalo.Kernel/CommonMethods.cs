@@ -78,7 +78,18 @@ namespace Buffalo.Kernel
                 return (HttpContext.Current != null);
             }
         }
-
+        /// <summary>
+        /// 获取应用程序的基目录
+        /// </summary>
+        /// <returns></returns>
+        public static string GetBaseRoot()
+        {
+            if (IsWebContext)
+            {
+                return AppDomain.CurrentDomain.DynamicDirectory;
+            }
+            return AppDomain.CurrentDomain.BaseDirectory;
+        }
         /// <summary>
         /// 克隆
         /// </summary>

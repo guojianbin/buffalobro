@@ -37,10 +37,10 @@ namespace Buffalo.DB.EntityInfos
             string fullName = type.FullName;
             EntityInfoHandle classHandle = null;
 
-            if (!DataAccessLoader.HasInit)
-            {
-                DataAccessLoader.InitConfig();
-            }
+            //if (!DataAccessLoader.HasInit)
+            //{
+            //    DataAccessLoader.InitConfig();
+            //}
             if (isThrowException && (!_dicClass.TryGetValue(fullName, out classHandle)))
             {
                 throw new Exception("找不到实体" + fullName + "请检查配置文件");

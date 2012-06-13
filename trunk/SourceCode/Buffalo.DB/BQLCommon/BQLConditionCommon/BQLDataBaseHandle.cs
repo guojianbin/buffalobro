@@ -14,7 +14,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
     
     public class BQLDataBaseHandle<T>
     {
-        private static DBInfo _db = GetDB();
+        private static DBInfo _db = null;
 
         /// <summary>
         /// 获取数据库信息
@@ -39,6 +39,9 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             //{
             //    return;
             //}
+            
+            DataAccessLoader.InitConfig();
+            _db = GetDB();
             Type type = typeof(T);
             Type baseType=typeof(BQLEntityTableHandle);
             PropertyInfo[] infos = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
@@ -52,7 +55,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 BQLEntityTableHandle handle = FastValueGetSet.GetGetMethodInfo(info.Name, type).Invoke(null, new object[] { }) as BQLEntityTableHandle;
                 AddToDB(handle);
             }
-            DataAccessLoader.InitConfig();
+            
         }
 
         /// <summary>
@@ -107,7 +110,10 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         }
 
         
-
+        /// <summary>
+        /// 获取当前类关联的DB信息
+        /// </summary>
+        /// <returns></returns>
         private static DBInfo GetDB() 
         {
             Type cType=typeof(T);
