@@ -2721,6 +2721,75 @@ namespace Buffalo.Kernel.Win32
         GENERIC_EXECUTE=0x20000000L,
         GENERIC_ALL=0x10000000L,
     }
+    /// <summary>
+    /// 操作类型
+    /// </summary>
+    public enum WFunc
+    {
+        FO_MOVE = 0x0001,
+        FO_COPY = 0x0002,
+        FO_DELETE = 0x0003,
+        FO_RENAME = 0x0004
+    }
+
+    public enum FILEOPError 
+    {
+
+    }
+
+    public enum FILEOP_FLAGS
+    {
+        /// <summary>
+        /// pTo 指定了多个目标文件，而不是单个目录
+        /// </summary>
+        FOF_MULTIDESTFILES = 0x0001, 
+        FOF_CONFIRMMOUSE = 0x0002,
+        /// <summary>
+        /// 不显示一个进度对话框
+        /// </summary>
+        FOF_SILENT = 0x0044,
+        /// <summary>
+        /// 碰到有抵触的名字时，自动分配前缀
+        /// </summary>
+        FOF_RENAMEONCOLLISION = 0x0008, 
+        /// <summary>
+        /// 不对用户显示提示
+        /// </summary>
+        FOF_NOCONFIRMATION = 0x10, 
+        /// <summary>
+        ///  填充 hNameMappings 字段，必须使用 SHFreeNameMappings 释放
+        /// </summary>
+        FOF_WANTMAPPINGHANDLE = 0x0020, 
+        /// <summary>
+        /// 允许撤销
+        /// </summary>
+        FOF_ALLOWUNDO = 0x40, 
+        /// <summary>
+        /// 使用 *.* 时, 只对文件操作
+        /// </summary>
+        FOF_FILESONLY = 0x0080, 
+        /// <summary>
+        ///  简单进度条，意味者不显示文件名。
+        /// </summary>
+        FOF_SIMPLEPROGRESS = 0x0100, 
+        /// <summary>
+        /// 建新目录时不需要用户确定
+        /// </summary>
+        FOF_NOCONFIRMMKDIR = 0x0200, 
+        /// <summary>
+        /// 不显示出错用户界面
+        /// </summary>
+        FOF_NOERRORUI = 0x0400, 
+        /// <summary>
+        ///  不复制 NT 文件的安全属性
+        /// </summary>
+        FOF_NOCOPYSECURITYATTRIBS = 0x0800, 
+        /// <summary>
+        /// 不递归目录
+        /// </summary>
+        FOF_NORECURSION = 0x1000 
+    }
+
     #endregion
 
 }

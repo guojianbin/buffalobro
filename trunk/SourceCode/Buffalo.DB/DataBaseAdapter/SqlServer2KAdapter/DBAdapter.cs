@@ -54,6 +54,10 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                 case SqlDbType.Binary:
                     return stype.ToString() + "(" + length + ")";
                 case SqlDbType.Decimal:
+                    if (length <= 0) 
+                    {
+                        length = 18;
+                    }
                     return stype.ToString() + "(" + length + ",5)";
                 case SqlDbType.NVarChar:
                     return stype.ToString() + "(" + length + ")";

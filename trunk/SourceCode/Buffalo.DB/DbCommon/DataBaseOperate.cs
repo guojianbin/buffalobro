@@ -608,7 +608,7 @@ namespace Buffalo.DB.DbCommon
             {
                 AutoClose();
             }
-            if (paramList != null)
+            if (paramList != null && _comm.CommandType==CommandType.StoredProcedure)
             {
                 paramList.ReturnParameterValue(_comm, _db);
             }

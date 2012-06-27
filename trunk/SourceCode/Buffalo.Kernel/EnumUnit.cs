@@ -113,6 +113,7 @@ namespace Buffalo.Kernel
                     sbTmp.Append("|");
                 }
             }
+            
             if (sbTmp.Length > 0) 
             {
                 sbTmp.Remove(sbTmp.Length - 1, 1);

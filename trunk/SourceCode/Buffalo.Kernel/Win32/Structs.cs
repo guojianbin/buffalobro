@@ -832,6 +832,18 @@ namespace Buffalo.Kernel.Win32
         public string lpData;
 
     }
+    
+    public struct SHFILEOPSTRUCT
+    {
+        public IntPtr hwnd;
+        public WFunc wFunc;
+        public string pFrom;
+        public string pTo;
+        public FILEOP_FLAGS fFlags;
+        public bool fAnyOperationsAborted;
+        public IntPtr hNameMappings;
+        public string lpszProgressTitle;
+    }
     /// <summary>
     /// 键盘钩子信息结构体
     /// </summary>

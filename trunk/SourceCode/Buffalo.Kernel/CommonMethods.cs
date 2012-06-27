@@ -16,6 +16,7 @@ using Buffalo.Kernel.Defaults;
 using Buffalo.Kernel.FastReflection;
 using System.Web;
 using Buffalo.Kernel.FastReflection.ClassInfos;
+using Buffalo.Kernel.Win32;
 
 
 namespace Buffalo.Kernel
@@ -99,6 +100,27 @@ namespace Buffalo.Kernel
         {
             return FieldCloneHelper.Clone(source);
         }
+
+        /// <summary>
+        /// 把文件移到回收站
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static int SendToRecycleBin(string file) 
+        {
+            SHFILEOPSTRUCT lpFileOp = new SHFILEOPSTRUCT();
+            lpFileOp.wFunc = WFunc.FO_DELETE;
+            lpFileOp.pFrom = file + "\0";
+            lpFileOp.fFlags = FILEOP_FLAGS.FOF_NOCONFIRMATION | FILEOP_FLAGS.FOF_NOERRORUI | FILEOP_FLAGS.FOF_SILENT;
+            lpFileOp.fFlags |= FILEOP_FLAGS.FOF_ALLOWUNDO;//允许撤销即为放进回收站
+            lpFileOp.fAnyOperationsAborted = false;
+
+            int n =WindowsAPI.SHFileOperation(ref lpFileOp);
+            return n;
+
+            
+        }
+
         /// <summary>
         /// 拷贝数据
         /// </summary>

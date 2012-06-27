@@ -145,7 +145,8 @@ namespace Buffalo.Kernel.Win32
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr GetProcAddress([In] IntPtr hModule, [In, MarshalAs(UnmanagedType.LPStr)] string lpProcName);
         #endregion
-
+        [DllImport("shell32.dll")]
+        public static extern int SHFileOperation(ref SHFILEOPSTRUCT lpFileOp);
         #region Gdi32.dll functions
         [DllImport("gdi32.dll")]
         static public extern bool StretchBlt(IntPtr hDCDest, int XOriginDest, int YOriginDest, int WidthDest, int HeightDest,

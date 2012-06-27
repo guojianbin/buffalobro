@@ -25,6 +25,7 @@ namespace Buffalo.DBTools
         Command commandDBAll = null;
         Command commandDBSet = null;
         Command commandEntityUpdate = null;
+        Command commandRemove = null;
         object[] _contextGUIDS = null;
 
         public CommandItems() 
@@ -87,6 +88,7 @@ namespace Buffalo.DBTools
             commandDB = AddPopUp("Buffalo助手", designerComm, 1);
             commandEntity = AddToCommand("BuffaloEntityConfig", "配置实体", "配置Buffalo实体", true, 523);
             commandCreater = AddToCommand("BuffaloDBCreater", "实体到表", "通过Buffalo实体生成到数据库的表", true, 295);
+            commandRemove = AddToCommand("BuffaloEntityRemove", "删除实体", "通过Buffalo实体生成到数据库的表", true, 232);
             commandROM = AddToCommand("BuffaloDBToEntity", "表到实体", "通过数据层的表生成Buffalo实体", true, 292);
             commandSummary = AddToCommand("BuffaloShowHideSummery", "显示/隐藏注释", "显示/隐藏注释", true, 192);
             commandDBAll = AddToCommand("BuffaloDBCreateAll", "生成数据库", "生成数据库", true, 577);
@@ -100,6 +102,7 @@ namespace Buffalo.DBTools
                 commandEntity.AddControl(commandEntityTools, 1);
                 commandCreater.AddControl(commandEntityTools, 2);
                 commandEntityUpdate.AddControl(commandEntityTools, 3);
+                commandRemove.AddControl(commandEntityTools, 4);
             }
             //将对应于该命令的控件添加到总类图菜单
             if ((commandDB != null) && (designerComm != null))
@@ -137,6 +140,11 @@ namespace Buffalo.DBTools
             {
                 commandSummary.Delete();
                 commandSummary = null;
+            }
+            if (commandRemove != null)
+            {
+                commandRemove.Delete();
+                commandRemove = null;
             }
             if (commandDBAll != null)
             {

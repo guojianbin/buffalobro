@@ -71,7 +71,22 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         public DBConfigInfo CurrentDBConfigInfo
         {
-            get { return _currentDBConfigInfo; }
+            get 
+            {
+               
+                return _currentDBConfigInfo;
+            }
+        }
+
+        /// <summary>
+        /// 初始化数据库信息
+        /// </summary>
+        public void InitDBConfig() 
+        {
+            if (_currentDBConfigInfo == null)
+            {
+                _currentDBConfigInfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView, Namespace + ".DataAccess");
+            }
         }
         /// <summary>
         /// 当前类图
@@ -664,12 +679,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         public void GenerateCode() 
         {
-            DBConfigInfo dbinfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView,Namespace+".DataAccess");
-            if (dbinfo == null)
-            {
-                return;
-            }
-            this._currentDBConfigInfo = dbinfo;
+            InitDBConfig();
 
             List<string> lstSource =CodeFileHelper.ReadFile(FileName);
             List<string> lstTarget = new List<string>(lstSource.Count);

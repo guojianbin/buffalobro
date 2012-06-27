@@ -112,6 +112,28 @@ namespace Buffalo.DBTools.HelperKernel
         }
 
         /// <summary>
+        /// É¾³ýDAL
+        /// </summary>
+        /// <param name="typeName"></param>
+        public void DeleteDal(string typeName) 
+        {
+            
+            XmlNodeList itemNodes = _doc.GetElementsByTagName("item");
+            for (int i = itemNodes.Count-1; i>=0; i--)
+            {
+                XmlNode node = itemNodes[i];
+                XmlAttribute att = node.Attributes["type"];
+                if (att != null)
+                {
+                    if (att.InnerText == typeName)
+                    {
+                        node.ParentNode.RemoveChild(node);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// ÅÐ¶ÏÊÇ·ñ´æÔÚ
         /// </summary>
         /// <param name="typeName"></param>
