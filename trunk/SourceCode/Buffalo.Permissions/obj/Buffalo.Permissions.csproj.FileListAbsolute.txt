@@ -58,3 +58,4 @@ D:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permis
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.PermissionsInfo.BEM.BPGroupItemRight.BEM.xml
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.dll
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.pdb
+D:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.XML

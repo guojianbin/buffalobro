@@ -525,6 +525,71 @@
             文件打开控制
             </summary>
         </member>
+        <member name="T:Buffalo.Kernel.Win32.WFunc">
+            <summary>
+            操作类型
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.FILEOP_FLAGS.FOF_MULTIDESTFILES">
+            <summary>
+            pTo 指定了多个目标文件，而不是单个目录
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.FILEOP_FLAGS.FOF_SILENT">
+            <summary>
+            不显示一个进度对话框
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.FILEOP_FLAGS.FOF_RENAMEONCOLLISION">
+            <summary>
+            碰到有抵触的名字时，自动分配前缀
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.FILEOP_FLAGS.FOF_NOCONFIRMATION">
+            <summary>
+            不对用户显示提示
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.FILEOP_FLAGS.FOF_WANTMAPPINGHANDLE">
+            <summary>
+             填充 hNameMappings 字段，必须使用 SHFreeNameMappings 释放
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.FILEOP_FLAGS.FOF_ALLOWUNDO">
+            <summary>
+            允许撤销
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.FILEOP_FLAGS.FOF_FILESONLY">
+            <summary>
+            使用 *.* 时, 只对文件操作
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.FILEOP_FLAGS.FOF_SIMPLEPROGRESS">
+            <summary>
+             简单进度条，意味者不显示文件名。
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.FILEOP_FLAGS.FOF_NOCONFIRMMKDIR">
+            <summary>
+            建新目录时不需要用户确定
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.FILEOP_FLAGS.FOF_NOERRORUI">
+            <summary>
+            不显示出错用户界面
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.FILEOP_FLAGS.FOF_NOCOPYSECURITYATTRIBS">
+            <summary>
+             不复制 NT 文件的安全属性
+            </summary>
+        </member>
+        <member name="F:Buffalo.Kernel.Win32.FILEOP_FLAGS.FOF_NORECURSION">
+            <summary>
+            不递归目录
+            </summary>
+        </member>
         <member name="P:Buffalo.Kernel.Replacer.ReplaceItemCollection.MinLength">
             <summary>
             集合中字符串最小的长度
@@ -1629,6 +1694,13 @@
             克隆
             </summary>
             <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.CommonMethods.SendToRecycleBin(System.String)">
+            <summary>
+            把文件移到回收站
+            </summary>
+            <param name="file"></param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.Kernel.CommonMethods.CopyTo(System.Object,System.Object)">

@@ -159,6 +159,7 @@
     <Compile Include="HelperKernel\EntityParamFieldCollection.cs" />
     <Compile Include="HelperKernel\EntityRelationCollection.cs" />
     <Compile Include="HelperKernel\EntityRelationItem.cs" />
+    <Compile Include="HelperKernel\EntityRemoveHelper.cs" />
     <Compile Include="HelperKernel\FieldComparer.cs" />
     <Compile Include="HelperKernel\Generate3Tier.cs" />
     <Compile Include="HelperKernel\GrneraterBase.cs" />

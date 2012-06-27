@@ -365,6 +365,12 @@
             <param name="entity"></param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.DataAccessMappingConfig.DeleteDal(System.String)">
+            <summary>
+            删除DAL
+            </summary>
+            <param name="typeName"></param>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.DataAccessMappingConfig.Exists(System.String)">
             <summary>
             判断是否存在
@@ -1527,6 +1533,11 @@
             </summary>
             <param name="dia">图</param>
         </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.InitDBConfig">
+            <summary>
+            初始化数据库信息
+            </summary>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.#ctor(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType,EnvDTE.Project,Microsoft.VisualStudio.Modeling.Diagrams.Diagram)">
             <summary>
             初始化类配置
@@ -1903,6 +1914,21 @@
             <summary>
             选择的文档
             </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityRemoveHelper.RemoveFromProject(System.String,EnvDTE.Project)">
+            <summary>
+            从项目中删除文件
+            </summary>
+            <param name="fileName"></param>
+            <param name="project"></param>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityRemoveHelper.FindItem(EnvDTE.ProjectItems,System.String)">
+            <summary>
+            通过名字查找项目中的项
+            </summary>
+            <param name="items"></param>
+            <param name="name"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>
