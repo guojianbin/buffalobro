@@ -41,11 +41,11 @@ namespace Buffalo.DBTools.HelperKernel
             
 
             //É¾³ýBQLEntity
-            fileName = dicPath + "\\BQLEntity\\" + entity.ClassName + ".cs";
+            fileName = info.DirectoryName + "\\BQLEntity\\" + entity.ClassName + ".cs";
             RemoveFromProject(fileName, entity.CurrentProject);
 
             //BEM.xml
-            fileName = dicPath+"\\BEM\\" + entity.ClassName + ".BEM.xml";
+            fileName = info.DirectoryName + "\\BEM\\" + entity.ClassName + ".BEM.xml";
             RemoveFromProject(fileName, entity.CurrentProject);
 
             //ÒÆ³ýÊµÌå
