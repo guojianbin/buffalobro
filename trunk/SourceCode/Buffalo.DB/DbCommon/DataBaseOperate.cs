@@ -403,7 +403,10 @@ namespace Buffalo.DB.DbCommon
                 }
 #endif
                 _sda.Fill(dataSet);
-                
+                if (paramList != null)
+                {
+                    paramList.ReturnParameterValue(_comm, _db);
+                }
             }
             catch (Exception e)
             {
@@ -415,10 +418,7 @@ namespace Buffalo.DB.DbCommon
             {
                 AutoClose();
             }
-            if (paramList != null)
-            {
-                paramList.ReturnParameterValue(_comm, _db);
-            }
+
             return dataSet;
 		}
 		#endregion
@@ -491,6 +491,10 @@ namespace Buffalo.DB.DbCommon
 #endif
                     reader = _comm.ExecuteReader();
                 }
+                if (paramList != null)
+                {
+                    paramList.ReturnParameterValue(_comm, _db);
+                }
                 
             }
             catch (Exception e)
@@ -500,10 +504,7 @@ namespace Buffalo.DB.DbCommon
                 throw e;
             }
             
-            if (paramList != null)
-            {
-                paramList.ReturnParameterValue(_comm, _db);
-            }
+
 			return reader;
 		}
 
@@ -597,6 +598,10 @@ namespace Buffalo.DB.DbCommon
 #endif
                 ret = _comm.ExecuteNonQuery();
                 _lastAffectedRows = ret;
+                if (paramList != null && _comm.CommandType == CommandType.StoredProcedure)
+                {
+                    paramList.ReturnParameterValue(_comm, _db);
+                }
             }
             catch (Exception e)
             {
@@ -608,10 +613,7 @@ namespace Buffalo.DB.DbCommon
             {
                 AutoClose();
             }
-            if (paramList != null && _comm.CommandType==CommandType.StoredProcedure)
-            {
-                paramList.ReturnParameterValue(_comm, _db);
-            }
+
             return ret;			
 		}
 
