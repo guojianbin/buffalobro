@@ -294,7 +294,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         /// <param name="lst">对象</param>
         /// <returns>大于0:插入完毕,小于0:插入失败</returns>
-        public virtual object Insert(List<T> lst)
+        public virtual object Insert(List<T> lst, bool fillIdentity)
         {
 
             DataAccessModel<T> entityDao = new DataAccessModel<T>();
@@ -309,10 +309,20 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 {
                     continue;
                 }
-                _affectedRows += entityDao.Insert(entity,false);
+                _affectedRows += entityDao.Insert(entity, fillIdentity);
 
             }
             return ret;
+        }
+
+        /// <summary>
+        /// 插入一组数据
+        /// </summary>
+        /// <param name="lst">对象</param>
+        /// <returns>大于0:插入完毕,小于0:插入失败</returns>
+        public virtual object Insert(List<T> lst)
+        {
+            return Insert(lst, true);
         }
         #endregion
 

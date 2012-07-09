@@ -6379,6 +6379,12 @@
             <param name="dbName">数据库名</param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.DataAccessLoader.AppendDBInfo(Buffalo.DB.DataBaseAdapter.DBInfo)">
+            <summary>
+            添加数据库信息
+            </summary>
+            <param name="dbinfo"></param>
+        </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.DataAccessLoader.InitConfig">
             <summary>
             初始化配置
@@ -8943,6 +8949,13 @@
             插入一条数据
             </summary>
             <param name="entity">对象</param>
+            <returns>大于0:插入完毕,小于0:插入失败</returns>
+        </member>
+        <member name="M:Buffalo.DB.CommBase.BusinessBases.BusinessModelBase`1.Insert(System.Collections.Generic.List{`0},System.Boolean)">
+            <summary>
+            插入一组数据
+            </summary>
+            <param name="lst">对象</param>
             <returns>大于0:插入完毕,小于0:插入失败</returns>
         </member>
         <member name="M:Buffalo.DB.CommBase.BusinessBases.BusinessModelBase`1.Insert(System.Collections.Generic.List{`0})">

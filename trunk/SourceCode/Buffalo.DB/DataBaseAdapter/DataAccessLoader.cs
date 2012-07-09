@@ -23,7 +23,7 @@ namespace Buffalo.DB.DataBaseAdapter
         
         private static Dictionary<string, Type> _dicLoaderConfig =null;//配置记录集合
         private static Dictionary<string, Type> _dicEntityLoaderConfig = null;//配置实体记录集合
-        private static Dictionary<string, DBInfo> _dicDBInfo = null;//配置实体记录集合
+        private static Dictionary<string, DBInfo> _dicDBInfo = new Dictionary<string, DBInfo>();//配置实体记录集合
         
         /// <summary>
         /// 是否已经初始化
@@ -53,7 +53,14 @@ namespace Buffalo.DB.DataBaseAdapter
         }
 
         #region 初始化配置
-
+        /// <summary>
+        /// 添加数据库信息
+        /// </summary>
+        /// <param name="dbinfo"></param>
+        public static void AppendDBInfo(DBInfo dbinfo) 
+        {
+            _dicDBInfo[dbinfo.Name] = dbinfo;
+        }
         
 
         /// <summary>
@@ -71,7 +78,7 @@ namespace Buffalo.DB.DataBaseAdapter
             List<ConfigInfo> docs = ConfigXmlLoader.LoadXml("DataAccessConfig");
             if (docs.Count > 0)
             {
-                _dicDBInfo = new Dictionary<string, DBInfo>();
+                
                 DBInfo existsInfo = null;
                 foreach (ConfigInfo doc in docs)
                 {
@@ -94,12 +101,14 @@ namespace Buffalo.DB.DataBaseAdapter
                     }
                     
                 }
-                LoadModel();
+                
             }
-            else 
+            if (_dicDBInfo.Count == 0) 
             {
-                throw new Exception("没有找到配置文件，请在config文件中加入DataAccessConfig的程序键");
+                throw new Exception("没有配置数据库信息，请检查config文件");
             }
+
+            LoadModel();
             return true;
         }
 
