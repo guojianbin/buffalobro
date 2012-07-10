@@ -466,7 +466,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.IDbAdapters.IDBAdapter.GetConnection">
+        <member name="M:Buffalo.DB.DataBaseAdapter.IDbAdapters.IDBAdapter.GetConnection(Buffalo.DB.DataBaseAdapter.DBInfo)">
             <summary>
             获取SQL连接
             </summary>
@@ -640,6 +640,14 @@
             </summary>
             <param name="seqName"></param>
         </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.IDbAdapters.IDBAdapter.OnConnectionClosed(System.Data.Common.DbConnection,Buffalo.DB.DataBaseAdapter.DBInfo)">
+            <summary>
+            连接被关闭时候触发
+            </summary>
+            <param name="conn">连接</param>
+            <param name="db">数据库信息</param>
+            <returns></returns>
+        </member>
         <member name="P:Buffalo.DB.DataBaseAdapter.IDbAdapters.IDBAdapter.IsShowExpression">
             <summary>
             全文搜索时候排序字段是否显示表达式
@@ -706,7 +714,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter.DBAdapter.GetConnection">
+        <member name="M:Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter.DBAdapter.GetConnection(Buffalo.DB.DataBaseAdapter.DBInfo)">
             <summary>
             获取SQL连接
             </summary>
@@ -1502,7 +1510,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBAdapter.GetConnection">
+        <member name="M:Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBAdapter.GetConnection(Buffalo.DB.DataBaseAdapter.DBInfo)">
             <summary>
             获取SQL连接
             </summary>
@@ -3995,7 +4003,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.DBAdapter.GetConnection">
+        <member name="M:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.DBAdapter.GetConnection(Buffalo.DB.DataBaseAdapter.DBInfo)">
             <summary>
             获取SQL连接
             </summary>
@@ -5245,7 +5253,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.MySQL5Adapter.DBAdapter.GetConnection">
+        <member name="M:Buffalo.DB.DataBaseAdapter.MySQL5Adapter.DBAdapter.GetConnection(Buffalo.DB.DataBaseAdapter.DBInfo)">
             <summary>
             获取SQL连接
             </summary>
@@ -6663,7 +6671,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.SQLiteAdapter.DBAdapter.GetConnection">
+        <member name="M:Buffalo.DB.DataBaseAdapter.SQLiteAdapter.DBAdapter.GetConnection(Buffalo.DB.DataBaseAdapter.DBInfo)">
             <summary>
             获取SQL连接
             </summary>
@@ -7488,7 +7496,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter.DBAdapter.GetConnection">
+        <member name="M:Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter.DBAdapter.GetConnection(Buffalo.DB.DataBaseAdapter.DBInfo)">
             <summary>
             获取SQL连接
             </summary>
@@ -8787,12 +8795,6 @@
             <param name="BQL">BQL</param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.CommBase.BusinessBases.BusinessModelBaseForSelect`1.CreateOperateInstance">
-            <summary>
-            创建数据连接实例
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Buffalo.DB.CommBase.BusinessBases.BusinessModelBaseForSelect`1.OnSelect(Buffalo.DB.QueryConditions.ScopeList)">
             <summary>
             执行查询之前触发的事件
@@ -9087,6 +9089,43 @@
         <member name="P:Buffalo.DB.EntityInfos.EntityMappingInfo.TargetProperty">
             <summary>
             目标属性
+            </summary>
+        </member>
+        <member name="T:Buffalo.DB.DbCommon.LockDBItem">
+            <summary>
+            锁定的连接项
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.DbCommon.LockDBItem.#ctor(Buffalo.DB.DataBaseAdapter.DBInfo,System.Int32)">
+            <summary>
+            锁定的连接项
+            </summary>
+            <param name="db">要锁定的数据库</param>
+            <param name="timeout">超时时间</param>
+        </member>
+        <member name="F:Buffalo.DB.DbCommon.LockDBItem._db">
+            <summary>
+            连接
+            </summary>
+        </member>
+        <member name="F:Buffalo.DB.DbCommon.LockDBItem._lock">
+            <summary>
+            锁
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.DbCommon.LockDBItem.Dispose">
+            <summary>
+            释放锁
+            </summary>
+        </member>
+        <member name="P:Buffalo.DB.DbCommon.LockDBItem.DB">
+            <summary>
+            连接
+            </summary>
+        </member>
+        <member name="P:Buffalo.DB.DbCommon.LockDBItem.Lock">
+            <summary>
+            锁
             </summary>
         </member>
         <member name="T:Buffalo.DB.DBCheckers.DBChecker">
@@ -9747,6 +9786,29 @@
             <param name="collection">值集合</param>
             <param name="type">类型</param>
             <returns></returns>
+        </member>
+        <member name="T:Buffalo.DB.DbCommon.DBInfoLocker">
+            <summary>
+            数据库信息锁定器
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.DbCommon.DBInfoLocker.LockDB(Buffalo.DB.DataBaseAdapter.DBInfo)">
+            <summary>
+            获取连接
+            </summary>
+            <param name="info">数据库信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.DbCommon.DBInfoLocker.FreeConnection(Buffalo.DB.DataBaseAdapter.DBInfo)">
+            <summary>
+            释放连接
+            </summary>
+            <param name="info"></param>
+        </member>
+        <member name="P:Buffalo.DB.DbCommon.DBInfoLocker.MillisecondsTimeout">
+            <summary>
+            锁定超时时间
+            </summary>
         </member>
         <member name="T:Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.ConvertFunction">
             <summary>

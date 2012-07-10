@@ -19,16 +19,6 @@ namespace Buffalo.DB.CommBase.BusinessBases
         protected readonly static DBInfo _db = _curEntityInfo.DBInfo;
 
         /// <summary>
-        /// 创建数据连接实例
-        /// </summary>
-        /// <returns></returns>
-        protected DataBaseOperate CreateOperateInstance() 
-        {
-            DataBaseOperate oper = _db.CreateOperate();
-            return oper;
-        }
-
-        /// <summary>
         /// 执行查询之前触发的事件
         /// </summary>
         /// <param name="lstScope"></param>

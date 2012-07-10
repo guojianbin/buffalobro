@@ -148,7 +148,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// 获取SQL连接
         /// </summary>
         /// <returns></returns>
-        public DbConnection GetConnection()
+        public DbConnection GetConnection(DBInfo db)
         {
             DbConnection conn = new DB2Connection();
             return conn;
@@ -487,5 +487,15 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             prm.ParameterName = "name";
             return (int)prm.DB2Type;
         }
+
+        #region IDBAdapter 成员
+
+
+        public bool OnConnectionClosed(DbConnection conn, DBInfo db)
+        {
+            return true;
+        }
+
+        #endregion
     }
 }

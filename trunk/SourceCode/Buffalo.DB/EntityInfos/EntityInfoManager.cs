@@ -361,51 +361,51 @@ namespace Buffalo.DB.EntityInfos
 
             //属性信息句柄
             List<FieldInfoHandle> lstFields=FieldInfoHandle.GetFieldInfos(type, FastValueGetSet.allBindingFlags, true);
-            using (DataBaseOperate oper = new DataBaseOperate(db))
-            {
+            DataBaseOperate oper = db.DefaultOperate;
+            
                 ///读取属性别名
-                foreach (FieldInfoHandle finf in lstFields)
+            foreach (FieldInfoHandle finf in lstFields)
+            {
+
+                ///通过属性来反射
+                EntityParam ep = null;
+
+
+                if (dicParamsInfo.TryGetValue(finf.FieldName, out ep))
                 {
-
-                    ///通过属性来反射
-                    EntityParam ep = null;
-
-
-                    if (dicParamsInfo.TryGetValue(finf.FieldName, out ep))
+                    //if (tableAtt.IsParamNameUpper)
+                    //{
+                    //    ep.ParamName = ep.ParamName.ToUpper();
+                    //}
+                    string proName = ep.PropertyName;
+                    //GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
+                    //SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
+                    if (finf.HasGetHandle || finf.HasSetHandle)
                     {
-                        //if (tableAtt.IsParamNameUpper)
-                        //{
-                        //    ep.ParamName = ep.ParamName.ToUpper();
-                        //}
-                        string proName = ep.PropertyName;
+                        EntityPropertyInfo entityProperty = new EntityPropertyInfo(classInfo, finf.GetHandle, finf.SetHandle, ep, finf.FieldType, finf.FieldName);
+                        dicPropertys.Add(proName, entityProperty);
+                        dicNotFoundParam.Remove(finf.FieldName);
+                    }
+                }
+                else
+                {
+                    TableRelationAttribute tableMappingAtt = null;
+
+                    if (dicRelationInfo.TryGetValue(finf.FieldName, out tableMappingAtt))
+                    {
+                        Type targetType = DefaultType.GetRealValueType(finf.FieldType);
+                        tableMappingAtt.SetEntity(type, targetType);
                         //GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
                         //SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
-                        if (finf.HasGetHandle|| finf.HasSetHandle)
-                        {
-                            EntityPropertyInfo entityProperty = new EntityPropertyInfo(classInfo, finf.GetHandle, finf.SetHandle, ep, finf.FieldType, finf.FieldName);
-                            dicPropertys.Add(proName, entityProperty);
-                            dicNotFoundParam.Remove(finf.FieldName);
-                        }
-                    }
-                    else
-                    {
-                        TableRelationAttribute tableMappingAtt = null;
-
-                        if (dicRelationInfo.TryGetValue(finf.FieldName, out tableMappingAtt))
-                        {
-                            Type targetType = DefaultType.GetRealValueType(finf.FieldType);
-                            tableMappingAtt.SetEntity(type, targetType);
-                            //GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
-                            //SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
-                            EntityMappingInfo entityMappingInfo = new EntityMappingInfo(type, finf.GetHandle, finf.SetHandle, tableMappingAtt, finf.FieldName, finf.FieldType);
-                            dicMapping.Add(tableMappingAtt.PropertyName, entityMappingInfo);
-                            dicNotFoundRelation.Remove(finf.FieldName);
-                        }
-
+                        EntityMappingInfo entityMappingInfo = new EntityMappingInfo(type, finf.GetHandle, finf.SetHandle, tableMappingAtt, finf.FieldName, finf.FieldType);
+                        dicMapping.Add(tableMappingAtt.PropertyName, entityMappingInfo);
+                        dicNotFoundRelation.Remove(finf.FieldName);
                     }
 
                 }
+
             }
+            
 
             if (dicNotFoundParam.Count > 0 || dicNotFoundRelation.Count > 0) 
             {

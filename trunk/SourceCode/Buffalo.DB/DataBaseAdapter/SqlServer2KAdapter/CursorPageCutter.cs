@@ -49,7 +49,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             }
             finally
             {
-                oper.CloseDataBase();
+                oper.AutoClose();
 
             }
             isCheck = true;

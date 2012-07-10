@@ -310,7 +310,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// 获取SQL连接
         /// </summary>
         /// <returns></returns>
-        public virtual DbConnection GetConnection()
+        public virtual DbConnection GetConnection(DBInfo db)
         {
             DbConnection conn = new SqlConnection();
             return conn;
@@ -559,6 +559,10 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         public void SetObjectValueFromReader(IDataReader reader, int index, object arg, EntityPropertyInfo info)
         {
             ValueFromReader(reader, index, arg, info);
+        }
+        public bool OnConnectionClosed(DbConnection conn, DBInfo db)
+        {
+            return true;
         }
     }
 }

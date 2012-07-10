@@ -109,7 +109,7 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
         /// 获取SQL连接
         /// </summary>
         /// <returns></returns>
-        public DbConnection GetConnection()
+        public DbConnection GetConnection(DBInfo db)
         {
             DbConnection conn = new NpgsqlConnection();
             return conn;
@@ -438,7 +438,10 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
             prm.ParameterName = "name";
             return (int)prm.NpgsqlDbType;
         }
-
+        public bool OnConnectionClosed(DbConnection conn, DBInfo db)
+        {
+            return true;
+        }
         #endregion
     }
 }

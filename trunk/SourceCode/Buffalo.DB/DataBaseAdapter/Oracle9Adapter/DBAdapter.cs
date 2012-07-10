@@ -103,7 +103,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// 获取SQL连接
         /// </summary>
         /// <returns></returns>
-        public DbConnection GetConnection()
+        public DbConnection GetConnection(DBInfo db)
         {
             DbConnection conn = new OracleConnection();
             return conn;
@@ -549,7 +549,10 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     return (int)OracleType.Blob;
             }
         }
-
+        public bool OnConnectionClosed(DbConnection conn, DBInfo db)
+        {
+            return true;
+        }
 
     }
 }

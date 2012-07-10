@@ -19,7 +19,7 @@ namespace Buffalo.DB.DbCommon
         {
             string connectionString = db.ConnectionString;
             
-            DbConnection conn = db.CurrentDbAdapter.GetConnection();
+            DbConnection conn = db.CurrentDbAdapter.GetConnection(db);
             conn.ConnectionString = connectionString;
             return conn;
         }

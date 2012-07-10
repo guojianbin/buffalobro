@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 using Buffalo.DB.PropertyAttributes;
+using System.Data.Common;
 namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
 {
     public interface IDBAdapter
@@ -58,17 +59,17 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// 获取SQL适配器
         /// </summary>
         /// <returns></returns>
-        System.Data.IDbDataAdapter GetAdapter();
+        IDbDataAdapter GetAdapter();
         /// <summary>
         /// 获取SQL命令类
         /// </summary>
         /// <returns></returns>
-        System.Data.IDbCommand GetCommand();
+        IDbCommand GetCommand();
         /// <summary>
         /// 获取SQL连接
         /// </summary>
         /// <returns></returns>
-        System.Data.Common.DbConnection GetConnection();
+        DbConnection GetConnection(DBInfo db);
         /// <summary>
         /// 把数据类型转换成当前数据库支持的类型
         /// </summary>
@@ -90,7 +91,7 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <param name="paramValue">参数值</param>
         /// <param name="paramDir">参数进出类型</param>
         /// <returns></returns>
-        System.Data.IDataParameter GetDataParameter(string paramName, System.Data.DbType type, object paramValue, System.Data.ParameterDirection paramDir);
+        IDataParameter GetDataParameter(string paramName, System.Data.DbType type, object paramValue, System.Data.ParameterDirection paramDir);
 
 
 
@@ -234,5 +235,12 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         {
             get;
         }
+        /// <summary>
+        /// 连接被关闭时候触发
+        /// </summary>
+        /// <param name="conn">连接</param>
+        /// <param name="db">数据库信息</param>
+        /// <returns></returns>
+        bool OnConnectionClosed(DbConnection conn, DBInfo db);
     }
 }

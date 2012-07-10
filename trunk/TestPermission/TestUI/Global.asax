@@ -4,9 +4,9 @@
 
     void Application_Start(object sender, EventArgs e) 
     {
-        //Buffalo.DB.DataBaseAdapter.DBInfo info=new Buffalo.DB.DataBaseAdapter.DBInfo("PermissionDB","server=.;database=School;uid=sa;pwd=111111","Sql2K5");
-        //info.DataaccessNamespace = new string[] { "Buffalo.Permissions.PermissionsInfo.DataAccess.Sql2K5" };
-        //Buffalo.DB.DataBaseAdapter.DataAccessLoader.AppendDBInfo(info);
+        Buffalo.DB.DataBaseAdapter.DBInfo info = new Buffalo.DB.DataBaseAdapter.DBInfo("PermissionDB", "server=.;database=School;uid=sa;pwd=111111", "Sql2K5");
+        info.DataaccessNamespace = new string[] { "Buffalo.Permissions.PermissionsInfo.DataAccess.Sql2K5" };
+        Buffalo.DB.DataBaseAdapter.DataAccessLoader.AppendDBInfo(info);
         Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB.InitDB();
         // 在应用程序启动时运行的代码
     

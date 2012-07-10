@@ -56,7 +56,7 @@ namespace Buffalo.Kernel
             {
                 if (throwTimeoutException)
                 {
-                    throw new TimeoutException();
+                    throw new TimeoutException("锁定项:"+obj.ToString()+"已经超时");
                 }
             }
         }

@@ -304,6 +304,7 @@ namespace Buffalo.DB.DbCommon
                         {
                             _comm.Dispose();
                         }
+                        _dbAdapter.OnConnectionClosed(_conn, _db);
                         _comm = null;
                         _conn = null;
                         _tran = null;

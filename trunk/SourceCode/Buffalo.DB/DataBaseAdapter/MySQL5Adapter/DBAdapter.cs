@@ -119,7 +119,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// 获取SQL连接
         /// </summary>
         /// <returns></returns>
-        public DbConnection GetConnection()
+        public DbConnection GetConnection(DBInfo db)
         {
             DbConnection conn = new MySqlConnection();
             return conn;
@@ -449,7 +449,10 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
             prm.ParameterName = "name";
             return (int)prm.MySqlDbType;
         }
-
+        public bool OnConnectionClosed(DbConnection conn, DBInfo db)
+        {
+            return true;
+        }
         #endregion
     }
 }

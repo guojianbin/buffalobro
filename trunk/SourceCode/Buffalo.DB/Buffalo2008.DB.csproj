@@ -252,7 +252,9 @@
     <Compile Include="DBCheckers\TableChecker.cs" />
     <Compile Include="DbCommon\DataBaseOperate.cs" />
     <Compile Include="DbCommon\DBConn.cs" />
+    <Compile Include="DbCommon\DBInfoLocker.cs" />
     <Compile Include="DbCommon\DBParameter.cs" />
+    <Compile Include="DbCommon\LockDBItem.cs" />
     <Compile Include="DbCommon\ParamList.cs" />
     <Compile Include="DBFunction\DBAggregateFunction.cs" />
     <Compile Include="DBFunction\DBCommonFunction.cs" />
