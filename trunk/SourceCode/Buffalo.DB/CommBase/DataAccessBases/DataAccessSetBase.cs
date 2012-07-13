@@ -135,7 +135,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             where.Append(DataAccessCommon.FillCondition(EntityInfo, list, scopeList));
             if (sql.Length <= 0)
             {
-                return -1;
+                return 0;
             }
             else
             {
@@ -404,9 +404,17 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 sqlParams.Remove(0, 1);
             }
+            else 
+            {
+                return 0;
+            }
             if (sqlValues.Length > 0)
             {
                 sqlValues.Remove(0, 1);
+            }
+            else
+            {
+                return 0;
             }
 
             InsertCondition con = new InsertCondition(EntityInfo.DBInfo);

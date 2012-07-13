@@ -126,7 +126,7 @@ namespace Buffalo.DBTools.HelperKernel
             ep.PropertyName = PropertyName;
             ep.SqlType = (DbType)EnumUnit.GetEnumInfoByName(typeof(DbType), DbType).Value;
             ep.PropertyType = EntityPropertyType;
-            ep.AllowNull = true;
+            ep.AllowNull = IsNullProperty(_fInfo.MemberTypeShortName);
             ep.ReadOnly = ReadOnly;
             return ep;
         }

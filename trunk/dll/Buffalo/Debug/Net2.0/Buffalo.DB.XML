@@ -4516,6 +4516,11 @@
             实体基类
             </summary>
         </member>
+        <member name="M:Buffalo.DB.CommBase.EntityBase.GetChangedPropertyName">
+            <summary>
+            修改过的属性名
+            </summary>
+        </member>
         <member name="M:Buffalo.DB.CommBase.EntityBase.GetBaseList">
             <summary>
             所属列表集合以便在延迟加载时候读出

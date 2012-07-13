@@ -255,7 +255,29 @@ namespace Buffalo.DBTools.HelperKernel
                 return ret;
             }
             return null;
-        } 
+        }
+
+        /// <summary>
+        /// 判断类型是否为非空
+        /// </summary>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        public static bool IsNullProperty(string typeName) 
+        {
+            DataTypeInfos info = GetTypeInfo(typeName);
+            if (info != null)
+            {
+                if (typeName.Trim().LastIndexOf('?') >= 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return info.DefaultValue == info.DefaultNullValue;
+                }
+            }
+            return true;
+        }
 
         /// <summary>
         /// 获取数值默认类型
@@ -274,7 +296,6 @@ namespace Buffalo.DBTools.HelperKernel
                 return info.DefaultValue;
             }
             return "null";
-
         }
 
         private static ComboBoxItemCollection _lstPropertyTypeItem = InitPropertyType();

@@ -430,7 +430,7 @@ namespace Buffalo.DBTools.ROMHelper
         internal static void AppendFieldInfo(EntityParam prm, StringBuilder sb) 
         {
             prm.FieldName = "_" + EntityFieldBase.ToCamelName(prm.ParamName);
-            string typeName = ToCSharpType(prm.SqlType);
+            string typeName = ToCSharpType(prm.SqlType,prm.AllowNull);
             sb.AppendLine("        ///<summary>");
             sb.AppendLine("        ///" + prm.Description);
             sb.AppendLine("        ///</summary>");
@@ -510,35 +510,126 @@ namespace Buffalo.DBTools.ROMHelper
         /// 获取C#类型
         /// </summary>
         /// <param name="type">数据库类型</param>
+        /// <param name="nullAble">是否可空</param>
         /// <returns></returns>
-        private static string ToCSharpType(DbType type) 
+        private static string ToCSharpType(DbType type,bool nullable) 
         {
             switch (type)
             {
                 case DbType.AnsiString: return "string";
                 case DbType.AnsiStringFixedLength: return "string";
                 case DbType.Binary: return "byte[]";
-                case DbType.Boolean: return "bool?";
-                case DbType.Byte: return "byte?";
-                case DbType.Currency: return "decimal?";
-                case DbType.Date: return "DateTime?";
-                case DbType.DateTime: return "DateTime?";
-                case DbType.Decimal: return "decimal?";
-                case DbType.Double: return "double?";
-                case DbType.Guid: return "Guid?";
-                case DbType.Int16: return "short?";
-                case DbType.Int32: return "int?";
-                case DbType.Int64: return "long?";
+                case DbType.Boolean:
+                    if (nullable)
+                    {
+                        return "bool?";
+                    }
+                    return "bool";
+                case DbType.Byte:
+                    if (nullable)
+                    {
+                        return "byte?";
+                    }
+                    return "byte";
+                case DbType.Currency:
+                    if (nullable)
+                    {
+                        return "decimal?";
+                    }
+                    return "decimal";
+                case DbType.Date: 
+                    if (nullable)
+                    {
+                        return "DateTime?";
+                    }
+                    return "DateTime";
+                case DbType.DateTime:
+                    if (nullable)
+                    {
+                        return "DateTime?";
+                    }
+                    return "DateTime";
+                case DbType.Decimal:
+                    if (nullable)
+                    {
+                        return "decimal?";
+                    }
+                    return "decimal";
+                case DbType.Double: 
+                    if (nullable)
+                    {
+                        return "double?";
+                    }
+                    return "double";
+                case DbType.Guid: 
+                    if (nullable)
+                    {
+                        return "Guid?";
+                    }
+                    return "Guid";
+                case DbType.Int16: 
+                    if (nullable)
+                    {
+                        return "short?";
+                    }
+                    return "short";
+                case DbType.Int32:
+                    if (nullable)
+                    {
+                        return "int?";
+                    }
+                    return "int";
+                case DbType.Int64:
+                    if (nullable)
+                    {
+                        return "long?";
+                    }
+                    return "long";
                 case DbType.Object: return "object";
-                case DbType.SByte: return "sbyte?";
-                case DbType.Single: return "float?";
+                case DbType.SByte:
+                    if (nullable)
+                    {
+                        return "sbyte?";
+                    }
+                    return "sbyte";
+                case DbType.Single:
+                    if (nullable)
+                    {
+                        return "float?";
+                    }
+                    return "float";
                 case DbType.String: return "string";
                 case DbType.StringFixedLength: return "string";
-                case DbType.Time: return "TimeSpan?";
-                case DbType.UInt16: return "ushort?";
-                case DbType.UInt32: return "uint?";
-                case DbType.UInt64: return "ulong?";
-                case DbType.VarNumeric: return "decimal?";
+                case DbType.Time: 
+                    if (nullable)
+                    {
+                        return "TimeSpan?";
+                    }
+                    return "TimeSpan";
+                case DbType.UInt16: 
+                    if (nullable)
+                    {
+                        return "ushort?";
+                    }
+                    return "ushort";
+                case DbType.UInt32:
+                    if (nullable)
+                    {
+                        return "uint?";
+                    }
+                    return "uint";
+                case DbType.UInt64:
+                    if (nullable)
+                    {
+                        return "ulong?";
+                    }
+                    return "ulong";
+                case DbType.VarNumeric:
+                    if (nullable)
+                    {
+                        return "decimal?";
+                    }
+                    return "decimal";
                 default:
                     {
                         return "object" ;

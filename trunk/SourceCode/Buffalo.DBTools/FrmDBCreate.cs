@@ -161,11 +161,12 @@ namespace Buffalo.DBTools
                 {
                     continue;
                 }
+                
                 DbType dbt=(DbType)EnumUnit.GetEnumInfoByName(typeof(DbType),param.DbType).Value;
                 EntityParam pInfo = new EntityParam("",
                     param.ParamName,"",dbt,
-                    param.EntityPropertyType, param.Length, true, param.ReadOnly);
-
+                    param.EntityPropertyType, param.Length, EntityFieldBase.IsNullProperty(param.FInfo.MemberTypeShortName), param.ReadOnly);
+                
                 lstParam.Add(pInfo);
             }
             foreach (EntityRelationItem relation in entity.ERelation) 

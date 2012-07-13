@@ -54,6 +54,13 @@
             <param name="typeName"></param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityFieldBase.IsNullProperty(System.String)">
+            <summary>
+            判断类型是否为非空
+            </summary>
+            <param name="typeName"></param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.EntityFieldBase.GetMemberVariableDefaultValue(System.String)">
             <summary>
             获取数值默认类型
@@ -873,11 +880,12 @@
             </summary>
             <param name="lstTarget"></param>
         </member>
-        <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.ToCSharpType(System.Data.DbType)">
+        <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.ToCSharpType(System.Data.DbType,System.Boolean)">
             <summary>
             获取C#类型
             </summary>
             <param name="type">数据库类型</param>
+            <param name="nullAble">是否可空</param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.ToTableInfo">

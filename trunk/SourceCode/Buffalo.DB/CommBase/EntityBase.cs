@@ -22,6 +22,19 @@ namespace Buffalo.DB.CommBase
         private EntityInfoHandle _thisInfo = null;//当前类的信息
         internal Dictionary<string, bool> _dicUpdateProperty___ = null;//记录被修改过值的属性
 
+        /// <summary>
+        /// 修改过的属性名
+        /// </summary>
+        public List<string> GetChangedPropertyName()
+        {
+            List<string> pNames = new List<string>(_dicUpdateProperty___.Count);
+            foreach (KeyValuePair<string, bool> kvp in _dicUpdateProperty___) 
+            {
+                pNames.Add(kvp.Key);
+            }
+            return pNames;
+        }
+
         private IList _baseListInfo;
         /// <summary>
         /// 所属列表集合以便在延迟加载时候读出

@@ -11,7 +11,8 @@ namespace Buffalo.DBTools.HelperKernel
     public class DataTypeInfos
     {
 
-        public DataTypeInfos(string typeName, IList<DbType> dbTypes, string defaultValue, string defaultNullValue, int dbLength) 
+        public DataTypeInfos(string typeName, IList<DbType> dbTypes,
+            string defaultValue, string defaultNullValue, int dbLength) 
         {
             _typeName = typeName;
             _dbTypes = dbTypes;
@@ -19,6 +20,8 @@ namespace Buffalo.DBTools.HelperKernel
             _dbLength = dbLength;
             _defaultNullValue = defaultNullValue;
         }
+
+
 
         private string _typeName;
 
