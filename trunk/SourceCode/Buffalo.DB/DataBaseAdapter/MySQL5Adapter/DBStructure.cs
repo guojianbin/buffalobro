@@ -243,7 +243,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
             bool isUnsigned = strDBType.IndexOf("unsigned") > -1;
 
             string strDataType= reader["DATA_TYPE"] as string;
-            prm.SqlType = GetDbType(strDBType, isUnsigned);
+            prm.SqlType = GetDbType(strDataType, isUnsigned);
             table.Params.Add(prm);
         }
         /// <summary>
