@@ -8,11 +8,11 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-using SQLCommon;
 using System.Text;
-using Commons;
-using WebCommons.ContorlCommons;
-using WebCommons.PagerCommon;
+using Buffalo.WebKernel.WebCommons.PagerCommon;
+using Buffalo.WebKernel.WebCommons.ContorlCommons;
+using Buffalo.Kernel;
+
 
 
 public partial class WebPageNumberBar_MyPageNumberBar : PagerBase
@@ -158,7 +158,7 @@ public partial class WebPageNumberBar_MyPageNumberBar : PagerBase
 
         protected void btnGo_Click(object sender, System.EventArgs e)
 		{
-            int page = Convert.ToInt32(Commons.CommonMethods.GetAllNumber(txtPage.Value));
+            int page = Convert.ToInt32(CommonMethods.GetAllNumber(txtPage.Value));
 
             long totle = TotlePage;
             if (page > totle)

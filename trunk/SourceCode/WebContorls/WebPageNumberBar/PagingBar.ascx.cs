@@ -10,11 +10,11 @@ using System.Web.UI;
 using System.Web.UI.MobileControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-using SQLCommon;
-using Commons;
+
 using System.Text;
-using WebCommons.ContorlCommons;
-using WebCommons.PagerCommon;
+using Buffalo.WebKernel.WebCommons.PagerCommon;
+using Buffalo.Kernel;
+using Buffalo.WebKernel.WebCommons.ContorlCommons;
 public partial class PagingBar:PagerBase
 {
     /// <summary>
@@ -58,7 +58,7 @@ public partial class PagingBar:PagerBase
 
     protected void btnGo_Click(object sender, System.EventArgs e)
     {
-        int page = Convert.ToInt32(Commons.CommonMethods.GetAllNumber(txtPage.Value));
+        int page = Convert.ToInt32(CommonMethods.GetAllNumber(txtPage.Value));
 
         long totle = TotlePage;
         if (page > totle)
