@@ -363,6 +363,11 @@
             当前日期的最后一刻(如2007-1-1就返回2007-1-1 23:59:59 999)
             </summary>
         </member>
+        <member name="P:Buffalo.WebControls.KimSoftWebCalendars.KimSoftWebCalendar.ContainerClientID">
+            <summary>
+            容器的客户端ID
+            </summary>
+        </member>
         <member name="M:Buffalo.WebControls.GroupControlLib.GroupVisableSetter.GetViewStateName(System.String)">
             <summary>
             获取ViewState名字

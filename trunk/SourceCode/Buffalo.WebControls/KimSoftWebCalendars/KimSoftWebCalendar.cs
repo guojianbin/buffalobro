@@ -350,6 +350,28 @@ namespace Buffalo.WebControls.KimSoftWebCalendars
 
 
         private TextBox txtValue;
+
+        public override string ClientID
+        {
+            get
+            {
+                if (txtValue == null) 
+                {
+                    return null;
+                }
+                return txtValue.ClientID;
+            }
+        }
+        /// <summary>
+        /// 容器的客户端ID
+        /// </summary>
+        public string ContainerClientID 
+        {
+            get 
+            {
+                return base.ClientID;
+            }
+        }
         /// <summary>
         /// 初始化中转值的控件
         /// </summary>
