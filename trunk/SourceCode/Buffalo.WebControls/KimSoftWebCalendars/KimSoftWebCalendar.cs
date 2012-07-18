@@ -351,25 +351,15 @@ namespace Buffalo.WebControls.KimSoftWebCalendars
 
         private TextBox txtValue;
 
-        public override string ClientID
-        {
-            get
-            {
-                if (txtValue == null) 
-                {
-                    return null;
-                }
-                return txtValue.ClientID;
-            }
-        }
+       
         /// <summary>
         /// ÈÝÆ÷µÄ¿Í»§¶ËID
         /// </summary>
-        public string ContainerClientID 
+        public string TextClientID 
         {
             get 
             {
-                return base.ClientID;
+                return txtValue.ClientID;
             }
         }
         /// <summary>
@@ -412,7 +402,7 @@ namespace Buffalo.WebControls.KimSoftWebCalendars
             }
             if (!Page.ClientScript.IsStartupScriptRegistered("Init"))
             {
-                string commonPanl = "document.write('<div id=\"calendarPanel\" style=\"position: absolute;visibility: hidden;z-index: 9999;background-color: #FFFFFF;border: 1px solid #CCCCCC;width:175px;font-size:12px;\"></div>');\n";
+                string commonPanl = "document.write('<div id=\""+this.ClientID+"_calendarPanel\" style=\"position: absolute;visibility: hidden;z-index: 9999;background-color: #FFFFFF;border: 1px solid #CCCCCC;width:175px;font-size:12px;\"></div>');\n";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Init", commonPanl, true);
             }
             string lan = "1";//ÓïÑÔ
