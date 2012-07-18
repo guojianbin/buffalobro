@@ -36,6 +36,11 @@ namespace Buffalo.WebControls.KimSoftWebCalendars
             }
             set
             {
+                if (string.IsNullOrEmpty(value)) 
+                {
+                    txtValue.Text = "";
+                    return;
+                }
                 DateTime dt = DateTime.MinValue;
                 if (DateTime.TryParse(value, out dt))
                 {
