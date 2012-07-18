@@ -402,7 +402,7 @@ namespace Buffalo.WebControls.KimSoftWebCalendars
             }
             if (!Page.ClientScript.IsStartupScriptRegistered("Init"))
             {
-                string commonPanl = "document.write('<div id=\""+this.ClientID+"_calendarPanel\" style=\"position: absolute;visibility: hidden;z-index: 9999;background-color: #FFFFFF;border: 1px solid #CCCCCC;width:175px;font-size:12px;\"></div>');\n";
+                string commonPanl = "document.write('<div id=\"calendarPanel\" style=\"position: absolute;visibility: hidden;z-index: 9999;background-color: #FFFFFF;border: 1px solid #CCCCCC;width:175px;font-size:12px;\"></div>');\n";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Init", commonPanl, true);
             }
             string lan = "1";//”Ô—‘
