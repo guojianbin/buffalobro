@@ -250,8 +250,10 @@ namespace Buffalo.DB.DbCommon
                         _conn = DBConn.GetConnection(_db);
 						
 					}
-                    
-                    _conn.Open();
+                    if (_conn.State == ConnectionState.Closed)
+                    {
+                        _conn.Open();
+                    }
 
                     if (_comm == null)
                     {
@@ -299,7 +301,7 @@ namespace Buffalo.DB.DbCommon
 #endif
                         
                         _conn.Close();
-                        _conn.Dispose();
+                        
                         if (_comm != null) 
                         {
                             _comm.Dispose();

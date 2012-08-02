@@ -13,6 +13,9 @@ using System.Threading;
 using BroadcastDesktop.Properties;
 using System.Net;
 using Buffalo.Win32Kernel;
+using System.Net.Sockets;
+using System.Management;
+using System.Net.NetworkInformation;
 
 namespace BroadcastDesktop
 {
@@ -38,15 +41,42 @@ namespace BroadcastDesktop
             IPAddress[] ips= Dns.GetHostAddresses(Dns.GetHostName());
             foreach (IPAddress ip in ips) 
             {
+                AddressFamily str = ip.AddressFamily;
                 cmbIP.Items.Add(ip.ToString());
             }
-            if (cmbIP.Items.Count > 0) 
-            {
-                cmbIP.SelectedIndex = 0;
-            }
+            cmbIP.Text = GetCurrentIPAddress();
         }
 
+        /// <summary>
+        /// 获取当前IP
+        /// </summary>
+        /// <returns></returns>
+        private string GetCurrentIPAddress()
+        {
 
+            ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
+            ManagementObjectCollection moc = mc.GetInstances();
+            foreach (ManagementObject mo in moc)
+            {
+                if ((bool)mo["IPEnabled"] == true)
+                {
+                    string[] ips=mo["IPAddress"] as string[];
+                    if(ips!=null)
+                    {
+                        return ips[0];
+                    }
+                    string ip=mo["IPAddress"] as string;
+                    if (ip != null)
+                    {
+                        return ip;
+                    }
+                }
+
+            }
+            return "";
+
+        }
+        
 
         void sm_OnRequestProcessing(RequestInfo request, ResponseInfo response)
         {

@@ -440,6 +440,7 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
         }
         public bool OnConnectionClosed(DbConnection conn, DBInfo db)
         {
+            conn.Dispose();
             return true;
         }
         #endregion

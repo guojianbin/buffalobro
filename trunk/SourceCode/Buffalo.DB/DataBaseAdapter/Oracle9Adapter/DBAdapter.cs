@@ -551,6 +551,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         }
         public bool OnConnectionClosed(DbConnection conn, DBInfo db)
         {
+            conn.Dispose();
             return true;
         }
 

@@ -562,6 +562,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         }
         public bool OnConnectionClosed(DbConnection conn, DBInfo db)
         {
+            conn.Dispose();
             return true;
         }
     }

@@ -451,6 +451,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         }
         public bool OnConnectionClosed(DbConnection conn, DBInfo db)
         {
+            conn.Dispose();
             return true;
         }
         #endregion

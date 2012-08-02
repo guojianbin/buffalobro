@@ -110,7 +110,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public DbConnection GetConnection(DBInfo db)
         {
-            DBInfoLocker.LockDB(db);//线程锁定
+            //DBInfoLocker.LockDB(db);//线程锁定
             DbConnection conn = new SQLiteConnection();
             return conn;
         }
@@ -447,7 +447,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         }
         public bool OnConnectionClosed(DbConnection conn, DBInfo db)
         {
-            DBInfoLocker.FreeConnection(db);
+            //DBInfoLocker.FreeConnection(db);
             return true;
         }
         #endregion

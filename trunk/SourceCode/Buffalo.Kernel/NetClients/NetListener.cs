@@ -5,6 +5,7 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using System.ComponentModel;
+using System.Management;
 
 namespace Buffalo.Kernel.NetClients
 {
@@ -60,15 +61,7 @@ namespace Buffalo.Kernel.NetClients
             IPAddress ipAddr = null;
             if (string.IsNullOrEmpty(ipAddress))
             {
-                IPAddress[] ipAddrs = Dns.GetHostAddresses(Dns.GetHostName());
-                foreach (IPAddress ips in ipAddrs) 
-                {
-                    if (ips.AddressFamily == AddressFamily.InterNetwork) 
-                    {
-                        ipAddr = ips;
-                        break;
-                    }
-                }
+                ipAddr = IPAddress.Parse(GetActiveIPAddress());
             }
             else
             {
@@ -76,6 +69,28 @@ namespace Buffalo.Kernel.NetClients
             }
             endPoint = new IPEndPoint(ipAddr, port);
             _synInvoker = synInvoker;
+        }
+
+        /// <summary>
+        /// 获取活动IP
+        /// </summary>
+        /// <returns></returns>
+        public static string GetActiveIPAddress()
+        {
+            
+            ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
+            ManagementObjectCollection moc = mc.GetInstances();
+            string str = " ";
+            foreach (ManagementObject mo in moc)
+            {
+                if ((bool)mo["IPEnabled"] == true)
+                {
+                    return (mo["IPAddress"] as string[])[0];
+                }
+
+            }
+            return "";
+
         }
         /// <summary>
         /// 开始监听

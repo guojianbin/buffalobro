@@ -256,11 +256,12 @@ namespace Buffalo.DBTools
                     return;
                 }
                 DBInfo db = _info.CreateDBInfo();
-                DataBaseOperate oper = db.CreateOperate();
+                using (DataBaseOperate oper = db.CreateOperate())
+                {
 
-                oper.ConnectDataBase();
-                MessageBox.Show("测试成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    oper.ConnectDataBase();
+                    MessageBox.Show("测试成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
 
             }
             catch (Exception ex)
