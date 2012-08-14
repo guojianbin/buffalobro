@@ -185,7 +185,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// 获取当前数据库的适配器
         /// </summary>
         /// <returns></returns>
-        internal IDBAdapter CurrentDbAdapter
+        public IDBAdapter CurrentDbAdapter
         {
             get
             {
@@ -197,7 +197,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// 获取聚合函数的处理
         /// </summary>
         /// <returns></returns>
-        internal IAggregateFunctions Aggregate
+        public IAggregateFunctions Aggregate
         {
             get
             {
@@ -210,7 +210,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// 获取数学函数的处理
         /// </summary>
         /// <returns></returns>
-        internal IMathFunctions Math
+        public IMathFunctions Math
         {
             get
             {
@@ -223,7 +223,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// 获取转换函数的处理
         /// </summary>
         /// <returns></returns>
-        internal IConvertFunction Convert
+        public IConvertFunction Convert
         {
             get
             {
@@ -236,7 +236,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// 获取常用函数的处理的处理
         /// </summary>
         /// <returns></returns>
-        internal ICommonFunction Common
+        public ICommonFunction Common
         {
             get
             {
@@ -248,7 +248,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// 数据库结构特性
         /// </summary>
         /// <returns></returns>
-        internal IDBStructure DBStructure
+        public IDBStructure DBStructure
         {
             get
             {

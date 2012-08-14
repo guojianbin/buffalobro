@@ -12,6 +12,8 @@ using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using System.IO;
 using Buffalo.DBTools.HelperKernel;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
+using Buffalo.DB.DataBaseAdapter.IDbAdapters;
+using Buffalo.Kernel;
 
 namespace Buffalo.DBTools
 {
@@ -59,17 +61,22 @@ namespace Buffalo.DBTools
             get { return _selectDocView; }
             set { _selectDocView = value; }
         }
+
+        IDBAdapter _ida;
         GridViewComboBoxCell _cmbCell = null;
         GridViewComboBoxCell _relationCell = null;
         EntityConfig _config = null;
         private void FrmClassDesigner_Load(object sender, EventArgs e)
         {
+
             _cmbCell = new GridViewComboBoxCell(gvField);
             _relationCell = new GridViewComboBoxCell(gvMapping);
             gvField.AutoGenerateColumns = false;
             gvMapping.AutoGenerateColumns = false;
             _config = new EntityConfig(SelectedClass.AssociatedType, CurrentProject, SelectedDiagram);
             _config.SelectDocView = SelectDocView;
+            _config.InitDBConfig();
+            _ida = _config.DbInfo.CreateDBInfo().CurrentDbAdapter;
             BindFieldInfos();
             //_cmbCell.SetDataSource(EntityFieldBase.GetAllSupportTypes());
             gvMapping.CurrentCellChanged += new EventHandler(gvMapping_CurrentCellChanged);
@@ -108,6 +115,11 @@ namespace Buffalo.DBTools
             
             gvField.DataSource = _config.EParamFields;
             gvMapping.DataSource = _config.ERelation;
+
+            for (int i = 0; i < gvField.Rows.Count; i++) 
+            {
+                FillDBRealType(i);
+            }
         }
 
         private void gvField_CurrentCellChanged(object sender, EventArgs e)
@@ -162,7 +174,38 @@ namespace Buffalo.DBTools
             this.Close();
         }
 
+        private void gvField_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            
+        }
 
+        private void gvField_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0)
+            {
+                return;
+            }
+
+            string colName = gvField.Columns[e.ColumnIndex].Name;
+            if (colName.Equals("ColParamType", StringComparison.CurrentCultureIgnoreCase) ||
+                colName.Equals("ColLength", StringComparison.CurrentCultureIgnoreCase))
+            {
+                FillDBRealType(e.RowIndex);
+            }
+        }
+
+        /// <summary>
+        /// 填充数据层实际类型
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        private void FillDBRealType(int rowIndex) 
+        {
+            int len = Convert.ToInt32(gvField.Rows[rowIndex].Cells["ColLength"].Value);
+            DbType type = (DbType)EnumUnit.GetEnumInfoByName(typeof(DbType),
+                gvField.Rows[rowIndex].Cells["ColParamType"].Value.ToString()).Value;
+
+            gvField.Rows[rowIndex].Cells["DBRealType"].Value = _ida.DBTypeToSQL(type, len);
+        }
         
 
     }

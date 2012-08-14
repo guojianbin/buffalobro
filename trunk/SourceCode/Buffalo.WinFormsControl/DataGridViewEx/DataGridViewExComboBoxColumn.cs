@@ -102,8 +102,13 @@ namespace Buffalo.WinFormsControl.DataGridViewEx
         }
         protected override void OnDataGridViewChanged()
         {
+            if (this.DataGridView == null) 
+            {
+                return;
+            }
             _columnComboBox = new ComboBox();
             this.ReadOnly = true;
+
             this.DataGridView.Controls.Add(_columnComboBox);
             _columnComboBox.Visible = false;
             _columnComboBox.Leave += new EventHandler(_columnComboBox_Leave);

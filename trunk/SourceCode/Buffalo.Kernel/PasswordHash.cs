@@ -50,5 +50,43 @@ namespace Buffalo.Kernel
             byte[] retBytes = hash.ComputeHash(content);
             return CommonMethods.BytesToHexString(retBytes);
         }
+
+        /// <summary>
+        /// AES解密
+        /// </summary>
+        /// <param name="toDecrypt">要解密的数据</param>
+        /// <param name="pwd">解密密码(32字节数组)</param>
+        /// <returns></returns>
+        public static byte[] AESDecrypt(byte[] toDecrypt,byte[] pwd)
+        {
+            RijndaelManaged rDel = new RijndaelManaged();
+            rDel.Key = pwd;
+            rDel.Mode = CipherMode.ECB;
+            rDel.Padding = PaddingMode.PKCS7;
+
+            ICryptoTransform cTransform = rDel.CreateDecryptor();
+            byte[] resultArray = cTransform.TransformFinalBlock(toDecrypt, 0, toDecrypt.Length);
+
+            return resultArray;
+        }
+
+        /// <summary>
+        /// AES加密
+        /// </summary>
+        /// <param name="toEncrypt">要加密的数据</param>
+        /// <param name="pwd">密码(32字节数组)</param>
+        /// <returns></returns>
+        public static byte[] AESEncrypt(byte[] toEncrypt, byte[] pwd)
+        {
+            RijndaelManaged rDel = new RijndaelManaged();
+            rDel.Key = pwd;
+            rDel.Mode = CipherMode.ECB;
+            rDel.Padding = PaddingMode.PKCS7;
+
+            ICryptoTransform cTransform = rDel.CreateEncryptor();
+            byte[] resultArray = cTransform.TransformFinalBlock(toEncrypt, 0, toEncrypt.Length);
+
+            return resultArray;
+        }
     }
 }

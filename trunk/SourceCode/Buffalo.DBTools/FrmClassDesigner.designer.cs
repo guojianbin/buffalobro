@@ -41,6 +41,16 @@
             this.tbEntity = new System.Windows.Forms.TabControl();
             this.tpEntity = new System.Windows.Forms.TabPage();
             this.gvField = new System.Windows.Forms.DataGridView();
+            this.ColChecked = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColFName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColProperty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColParam = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColParamType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DBRealType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColPropertyType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColReadOnly = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tpMapping = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
             this.gvMapping = new System.Windows.Forms.DataGridView();
@@ -54,15 +64,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnGenCode = new System.Windows.Forms.Button();
-            this.ColChecked = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ColFName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColProperty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColParam = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColParamType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColPropertyType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColReadOnly = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -86,7 +87,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(848, 44);
+            this.panel1.Size = new System.Drawing.Size(951, 44);
             this.panel1.TabIndex = 0;
             // 
             // txtBaseClass
@@ -146,7 +147,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 44);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(848, 495);
+            this.panel2.Size = new System.Drawing.Size(951, 495);
             this.panel2.TabIndex = 1;
             // 
             // groupBox2
@@ -156,7 +157,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(848, 495);
+            this.groupBox2.Size = new System.Drawing.Size(951, 495);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "配置实体";
@@ -169,7 +170,7 @@
             this.tbEntity.Location = new System.Drawing.Point(3, 17);
             this.tbEntity.Name = "tbEntity";
             this.tbEntity.SelectedIndex = 0;
-            this.tbEntity.Size = new System.Drawing.Size(842, 439);
+            this.tbEntity.Size = new System.Drawing.Size(945, 439);
             this.tbEntity.TabIndex = 26;
             // 
             // tpEntity
@@ -178,7 +179,7 @@
             this.tpEntity.Location = new System.Drawing.Point(4, 22);
             this.tpEntity.Name = "tpEntity";
             this.tpEntity.Padding = new System.Windows.Forms.Padding(3);
-            this.tpEntity.Size = new System.Drawing.Size(834, 413);
+            this.tpEntity.Size = new System.Drawing.Size(937, 413);
             this.tpEntity.TabIndex = 0;
             this.tpEntity.Text = "实体字段";
             this.tpEntity.UseVisualStyleBackColor = true;
@@ -187,7 +188,6 @@
             // 
             this.gvField.AllowUserToAddRows = false;
             this.gvField.AllowUserToDeleteRows = false;
-            this.gvField.AllowUserToResizeColumns = false;
             this.gvField.AllowUserToResizeRows = false;
             this.gvField.BackgroundColor = System.Drawing.Color.White;
             this.gvField.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -198,6 +198,7 @@
             this.ColProperty,
             this.ColParam,
             this.ColParamType,
+            this.DBRealType,
             this.ColLength,
             this.ColPropertyType,
             this.ColReadOnly});
@@ -208,8 +209,76 @@
             this.gvField.RowHeadersVisible = false;
             this.gvField.RowTemplate.Height = 23;
             this.gvField.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gvField.Size = new System.Drawing.Size(828, 407);
+            this.gvField.Size = new System.Drawing.Size(931, 407);
             this.gvField.TabIndex = 27;
+            this.gvField.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvField_CellValueChanged);
+            this.gvField.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.gvField_CellFormatting);
+            // 
+            // ColChecked
+            // 
+            this.ColChecked.DataPropertyName = "IsGenerate";
+            this.ColChecked.HeaderText = "选中";
+            this.ColChecked.Name = "ColChecked";
+            this.ColChecked.Width = 50;
+            // 
+            // ColFName
+            // 
+            this.ColFName.DataPropertyName = "FieldName";
+            this.ColFName.HeaderText = "变量名";
+            this.ColFName.Name = "ColFName";
+            this.ColFName.Width = 113;
+            // 
+            // ColType
+            // 
+            this.ColType.DataPropertyName = "FieldType";
+            this.ColType.HeaderText = "变量类型";
+            this.ColType.Name = "ColType";
+            this.ColType.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColType.Width = 112;
+            // 
+            // ColProperty
+            // 
+            this.ColProperty.DataPropertyName = "PropertyName";
+            this.ColProperty.HeaderText = "属性名";
+            this.ColProperty.Name = "ColProperty";
+            // 
+            // ColParam
+            // 
+            this.ColParam.DataPropertyName = "ParamName";
+            this.ColParam.HeaderText = "字段名";
+            this.ColParam.Name = "ColParam";
+            // 
+            // ColParamType
+            // 
+            this.ColParamType.DataPropertyName = "DbType";
+            this.ColParamType.HeaderText = "字段类型";
+            this.ColParamType.Name = "ColParamType";
+            this.ColParamType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // DBRealType
+            // 
+            this.DBRealType.HeaderText = "数据库类型";
+            this.DBRealType.Name = "DBRealType";
+            this.DBRealType.ReadOnly = true;
+            // 
+            // ColLength
+            // 
+            this.ColLength.DataPropertyName = "Length";
+            this.ColLength.HeaderText = "长度";
+            this.ColLength.Name = "ColLength";
+            // 
+            // ColPropertyType
+            // 
+            this.ColPropertyType.DataPropertyName = "PropertyType";
+            this.ColPropertyType.HeaderText = "类型";
+            this.ColPropertyType.Name = "ColPropertyType";
+            // 
+            // ColReadOnly
+            // 
+            this.ColReadOnly.DataPropertyName = "ReadOnly";
+            this.ColReadOnly.HeaderText = "只读";
+            this.ColReadOnly.Name = "ColReadOnly";
+            this.ColReadOnly.Width = 50;
             // 
             // tpMapping
             // 
@@ -217,7 +286,7 @@
             this.tpMapping.Location = new System.Drawing.Point(4, 22);
             this.tpMapping.Name = "tpMapping";
             this.tpMapping.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMapping.Size = new System.Drawing.Size(783, 413);
+            this.tpMapping.Size = new System.Drawing.Size(937, 413);
             this.tpMapping.TabIndex = 1;
             this.tpMapping.Text = "实体映射";
             this.tpMapping.UseVisualStyleBackColor = true;
@@ -228,7 +297,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(777, 407);
+            this.panel4.Size = new System.Drawing.Size(931, 407);
             this.panel4.TabIndex = 1;
             // 
             // gvMapping
@@ -252,7 +321,7 @@
             this.gvMapping.RowHeadersVisible = false;
             this.gvMapping.RowTemplate.Height = 23;
             this.gvMapping.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gvMapping.Size = new System.Drawing.Size(777, 407);
+            this.gvMapping.Size = new System.Drawing.Size(931, 407);
             this.gvMapping.TabIndex = 1;
             // 
             // ColSelect
@@ -306,13 +375,13 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel3.Location = new System.Drawing.Point(3, 456);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(842, 36);
+            this.panel3.Size = new System.Drawing.Size(945, 36);
             this.panel3.TabIndex = 25;
             // 
             // btnClose
             // 
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(707, 6);
+            this.btnClose.Location = new System.Drawing.Point(861, 6);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 24;
@@ -322,7 +391,7 @@
             // 
             // btnGenCode
             // 
-            this.btnGenCode.Location = new System.Drawing.Point(626, 6);
+            this.btnGenCode.Location = new System.Drawing.Point(780, 6);
             this.btnGenCode.Name = "btnGenCode";
             this.btnGenCode.Size = new System.Drawing.Size(75, 23);
             this.btnGenCode.TabIndex = 22;
@@ -330,79 +399,16 @@
             this.btnGenCode.UseVisualStyleBackColor = true;
             this.btnGenCode.Click += new System.EventHandler(this.btnGenCode_Click);
             // 
-            // ColChecked
-            // 
-            this.ColChecked.DataPropertyName = "IsGenerate";
-            this.ColChecked.HeaderText = "选中";
-            this.ColChecked.Name = "ColChecked";
-            this.ColChecked.Width = 50;
-            // 
-            // ColFName
-            // 
-            this.ColFName.DataPropertyName = "FieldName";
-            this.ColFName.HeaderText = "变量名";
-            this.ColFName.Name = "ColFName";
-            this.ColFName.Width = 113;
-            // 
-            // ColType
-            // 
-            this.ColType.DataPropertyName = "FieldType";
-            this.ColType.HeaderText = "变量类型";
-            this.ColType.Name = "ColType";
-            this.ColType.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColType.Width = 112;
-            // 
-            // ColProperty
-            // 
-            this.ColProperty.DataPropertyName = "PropertyName";
-            this.ColProperty.HeaderText = "属性名";
-            this.ColProperty.Name = "ColProperty";
-            // 
-            // ColParam
-            // 
-            this.ColParam.DataPropertyName = "ParamName";
-            this.ColParam.HeaderText = "字段名";
-            this.ColParam.Name = "ColParam";
-            // 
-            // ColParamType
-            // 
-            this.ColParamType.DataPropertyName = "DbType";
-            this.ColParamType.HeaderText = "字段类型";
-            this.ColParamType.Name = "ColParamType";
-            this.ColParamType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // ColLength
-            // 
-            this.ColLength.DataPropertyName = "Length";
-            this.ColLength.HeaderText = "长度";
-            this.ColLength.Name = "ColLength";
-            // 
-            // ColPropertyType
-            // 
-            this.ColPropertyType.DataPropertyName = "PropertyType";
-            this.ColPropertyType.HeaderText = "类型";
-            this.ColPropertyType.Name = "ColPropertyType";
-            // 
-            // ColReadOnly
-            // 
-            this.ColReadOnly.DataPropertyName = "ReadOnly";
-            this.ColReadOnly.HeaderText = "只读";
-            this.ColReadOnly.Name = "ColReadOnly";
-            this.ColReadOnly.Width = 50;
-            // 
             // FrmClassDesigner
             // 
             this.AcceptButton = this.btnGenCode;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(848, 539);
+            this.ClientSize = new System.Drawing.Size(951, 539);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "FrmClassDesigner";
             this.Text = "Buffalo助手--类生成";
             this.Load += new System.EventHandler(this.FrmClassDesigner_Load);
@@ -454,6 +460,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColProperty;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColParam;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColParamType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DBRealType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLength;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPropertyType;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColReadOnly;

@@ -259,6 +259,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="project">所属项目</param>
         public EntityConfig(ClrType ctype, Project project, Diagram currentDiagram) 
         {
+            
             //_classShape = classShape;
             _classType = ctype;
             FillClassInfo();
@@ -267,6 +268,7 @@ namespace Buffalo.DBTools.HelperKernel
             InitMethods();
             _currentProject = project;
             _currentDiagram = currentDiagram;
+            
         }
 
         /// <summary>
@@ -679,7 +681,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         public void GenerateCode() 
         {
-            InitDBConfig();
+            //InitDBConfig();
 
             List<string> lstSource =CodeFileHelper.ReadFile(FileName);
             List<string> lstTarget = new List<string>(lstSource.Count);
@@ -1060,10 +1062,53 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem newit = _currentProject.ProjectItems.AddFromFile(fileName);
-            newit.Properties.Item("BuildAction").Value = 1;
+            EnvDTE.ProjectItem classItem = GetProjectItemByFileName(_currentProject, _cp.FileName);
+            //DTEHelper.AddFileToProjectItem(item, NHBFilePath, 3);
+            EnvDTE.ProjectItem newit = classItem.ProjectItems.AddFromFile(fileName);
+            //EnvDTE.ProjectItem newit = _currentProject.ProjectItems.AddFromFile(fileName);
+            
+            newit.Properties.Item("BuildAction").Value = 3;
         }
 
+        /// <summary>
+        /// 获取项目项
+        /// </summary>
+        /// <param name="project">项目</param>
+        /// <param name="fileName">文件名</param>
+        /// <returns></returns>
+        public static EnvDTE.ProjectItem GetProjectItemByFileName(Project project, string fileName)
+        {
+            foreach (EnvDTE.ProjectItem item in project.ProjectItems)
+            {
+                EnvDTE.ProjectItem res = GetProjectItemByFileName(item, fileName);
+                if (res != null)
+                {
+                    return res;
+                }
+            }
+            return null;
+        }
+        /// <summary>
+        /// 获取文件所属的项目项
+        /// </summary>
+        /// <param name="item">项</param>
+        /// <param name="fileName">文件名</param>
+        /// <returns></returns>
+        public static EnvDTE.ProjectItem GetProjectItemByFileName(EnvDTE.ProjectItem item, string fileName)
+        {
+            if (item.get_FileNames(0).ToLower() == fileName.ToLower()) return item;
+            if (item.ProjectItems.Count == 0) return null;
+            foreach (EnvDTE.ProjectItem i in item.ProjectItems)
+            {
+                EnvDTE.ProjectItem res = GetProjectItemByFileName(i, fileName);
+                if (res != null)
+                {
+                    return res;
+                }
+            }
+            return null;
+        }
+        
         /// <summary>
         /// 当前表到表信息的转换
         /// </summary>
