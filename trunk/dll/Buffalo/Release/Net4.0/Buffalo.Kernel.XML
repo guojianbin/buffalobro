@@ -2739,6 +2739,12 @@
             <param name="port">监听端口</param>
             <param name="synInvoker">需要线程同步的宿主(如：当前窗体)</param>
         </member>
+        <member name="M:Buffalo.Kernel.NetClients.NetListener.GetActiveIPAddress">
+            <summary>
+            获取活动IP
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.Kernel.NetClients.NetListener.StarListen">
             <summary>
             开始监听

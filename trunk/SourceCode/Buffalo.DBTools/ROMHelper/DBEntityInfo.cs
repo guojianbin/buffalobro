@@ -681,8 +681,12 @@ namespace Buffalo.DBTools.ROMHelper
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem newit = _currentProject.ProjectItems.AddFromFile(fileName);
-            newit.Properties.Item("BuildAction").Value = 1;
+
+            EnvDTE.ProjectItem classItem =EntityConfig.GetProjectItemByFileName(_currentProject, FileName);
+            EnvDTE.ProjectItem newit = classItem.ProjectItems.AddFromFile(fileName);
+            newit.Properties.Item("BuildAction").Value = 3;
+            //EnvDTE.ProjectItem newit = _currentProject.ProjectItems.AddFromFile(fileName);
+            //newit.Properties.Item("BuildAction").Value = 1;
         }
     }
 }
