@@ -260,6 +260,14 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                 prm.Description = reader["COMMENTS"] as string;
             }
 
+            object val = reader["NULLABLE"];
+            bool isNull = false;
+            if (!(val is DBNull))
+            {
+                isNull = val.ToString().Equals("Y", StringComparison.CurrentCultureIgnoreCase);
+            }
+
+            prm.AllowNull = isNull;
 
             string strDBType = reader["DATA_TYPE"] as string;
             prm.SqlType = GetDbType(strDBType);

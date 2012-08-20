@@ -277,6 +277,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             {
                 type = type | EntityPropertyType.Identity;
             }
+            prm.AllowNull = Convert.ToBoolean(reader["allowNull"]);
             prm.PropertyType = type;
             prm.Length = Convert.ToInt64(reader["length"]);
             if (!table.IsView)

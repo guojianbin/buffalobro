@@ -146,6 +146,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
                         {
                             table.Description = reader["TABREMARK"] as string;
                         }
+                        
                         table.RelationItems = new List<TableRelationAttribute>();
                         table.Params = new List<EntityParam>();
                         lst.Add(table);
@@ -207,6 +208,14 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             {
                 type = type | EntityPropertyType.Identity;
             }
+
+            val = reader["NULLS"];
+            bool isNull = false;
+            if (!(val is DBNull))
+            {
+                isNull = val.ToString().Equals("Y", StringComparison.CurrentCultureIgnoreCase);
+            }
+            prm.AllowNull = isNull;
             prm.PropertyType = type;
             prm.Length = Convert.ToInt64(reader["LENGTH"]);
             if (!table.IsView)
