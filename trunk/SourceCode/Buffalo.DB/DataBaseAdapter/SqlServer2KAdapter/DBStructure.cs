@@ -367,7 +367,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                     return DbType.String;
 
                 case "timestamp":
-                    return DbType.DateTimeOffset;
+                    return DbType.Binary;
 
                 case "tinyint":
                     return DbType.Int16;
@@ -395,6 +395,8 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
 
                 case "datetimeoffset":
                     return DbType.DateTimeOffset;
+
+
             }
             return DbType.Object;
         }

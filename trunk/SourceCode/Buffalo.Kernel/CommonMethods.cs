@@ -352,6 +352,10 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static object EntityProChangeType(object sValue, Type targetType) 
         {
+            if(targetType==null || targetType==typeof(object))
+            {
+                return sValue;
+            }
             Type valType = sValue.GetType();//实际值的类型
             //Type resType = info.FieldType;//字段值类型
 
