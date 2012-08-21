@@ -52,6 +52,7 @@ namespace Buffalo.DB.QueryConditions
                 foreach (EntityPropertyInfo info in eTable.GetEntityInfo().PropertyInfo)
                 {
                     string name = info.PropertyName;
+                    bool hidden = false;
                     foreach (BQLParamHandle param in _hideProperty)
                     {
                         BQLEntityParamHandle eph = param as BQLEntityParamHandle;
@@ -59,13 +60,17 @@ namespace Buffalo.DB.QueryConditions
                         {
                             if (eph.PInfo.PropertyName == name)
                             {
-                                continue;
+                                hidden = true;
+                                break;
                             }
                         }
                         
 
                     }
-                    propertys.Add(eTable[info.PropertyName]);
+                    if (!hidden)
+                    {
+                        propertys.Add(eTable[info.PropertyName]);
+                    }
                 }
                 return propertys;
 
