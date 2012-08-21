@@ -40,6 +40,7 @@
             this.gvTables = new System.Windows.Forms.DataGridView();
             this.ColChecked = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ColTableNames = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColExists = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -51,9 +52,9 @@
             // 
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 405);
+            this.panel1.Location = new System.Drawing.Point(0, 430);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(567, 32);
+            this.panel1.Size = new System.Drawing.Size(584, 32);
             this.panel1.TabIndex = 0;
             // 
             // panel3
@@ -61,7 +62,7 @@
             this.panel3.Controls.Add(this.btnCancel);
             this.panel3.Controls.Add(this.btnSubmit);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel3.Location = new System.Drawing.Point(353, 0);
+            this.panel3.Location = new System.Drawing.Point(370, 0);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(214, 32);
             this.panel3.TabIndex = 2;
@@ -94,7 +95,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(567, 405);
+            this.panel2.Size = new System.Drawing.Size(584, 430);
             this.panel2.TabIndex = 1;
             // 
             // chkAll
@@ -126,6 +127,7 @@
             this.gvTables.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColChecked,
             this.ColTableNames,
+            this.ColExists,
             this.ColType});
             this.gvTables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gvTables.Location = new System.Drawing.Point(0, 0);
@@ -133,8 +135,9 @@
             this.gvTables.RowHeadersVisible = false;
             this.gvTables.RowTemplate.Height = 23;
             this.gvTables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gvTables.Size = new System.Drawing.Size(567, 405);
+            this.gvTables.Size = new System.Drawing.Size(584, 430);
             this.gvTables.TabIndex = 0;
+            this.gvTables.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(gvTables_RowPrePaint);
             this.gvTables.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gvTables_CellMouseUp);
             // 
             // ColChecked
@@ -154,6 +157,12 @@
             this.ColTableNames.Name = "ColTableNames";
             this.ColTableNames.ReadOnly = true;
             // 
+            // ColExists
+            // 
+            this.ColExists.HeaderText = "";
+            this.ColExists.Name = "ColExists";
+            this.ColExists.Width = 50;
+            // 
             // ColType
             // 
             this.ColType.DataPropertyName = "ObjectTypeName";
@@ -166,7 +175,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(567, 437);
+            this.ClientSize = new System.Drawing.Size(584, 462);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -183,6 +192,8 @@
 
         }
 
+
+
         #endregion
 
         private System.Windows.Forms.Panel panel1;
@@ -191,9 +202,10 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.DataGridView gvTables;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.CheckBox chkAll;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColChecked;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColTableNames;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColExists;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColType;
-        private System.Windows.Forms.CheckBox chkAll;
     }
 }

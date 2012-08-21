@@ -112,8 +112,20 @@ namespace Buffalo.DBTools.ROMHelper
         private void InitInfo() 
         {
             _className = EntityFieldBase.ToPascalName(_belongTable.Name);
-            FileInfo docfile = new FileInfo(_docView.DocData.FileName);
-            _fileName = docfile.DirectoryName + "\\" + _className + ".cs";
+
+            _fileName = GetRealFileName(_belongTable,_docView);
+        }
+        /// <summary>
+        /// 获取实体的文件名
+        /// </summary>
+        /// <param name="table">实体表信息</param>
+        /// <param name="doc">文档信息</param>
+        /// <returns></returns>
+        public static string GetRealFileName(DBTableInfo table, ClassDesignerDocView doc) 
+        {
+            string className = EntityFieldBase.ToPascalName(table.Name);
+            FileInfo docfile = new FileInfo(doc.DocData.FileName);
+            return docfile.DirectoryName + "\\" + className + ".cs";
         }
 
         private string _entityNamespace;

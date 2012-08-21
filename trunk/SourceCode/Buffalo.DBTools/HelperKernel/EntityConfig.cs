@@ -73,7 +73,7 @@ namespace Buffalo.DBTools.HelperKernel
         {
             get 
             {
-               
+                InitDBConfig();
                 return _currentDBConfigInfo;
             }
         }
@@ -777,7 +777,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="lstTarget"></param>
         private void AddContext(List<string> lstTarget)
         {
-            if (_currentDBConfigInfo.Tier != 1 || string.IsNullOrEmpty(TableName))
+            if (CurrentDBConfigInfo.Tier != 1 || string.IsNullOrEmpty(TableName))
             {
                 return;
             }

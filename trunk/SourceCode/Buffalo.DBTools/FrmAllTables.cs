@@ -15,6 +15,7 @@ using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 using Buffalo.DB.CommBase.BusinessBases;
 using System.IO;
 using System.Xml;
+using Buffalo.Win32Kernel.DataGridViewUnit;
 
 namespace Buffalo.DBTools
 {
@@ -80,13 +81,14 @@ namespace Buffalo.DBTools
         /// <summary>
         /// 当前表集合
         /// </summary>
-        List<DBTableInfo> _curLst;
+        BindingCollection<DBTableInfo> _curLst;
 
         private void FrmAllTables_Load(object sender, EventArgs e)
         {
             gvTables.AutoGenerateColumns = false;
             DBInfo info = DbInfo.CreateDBInfo();
-            _curLst = TableChecker.GetAllTables(info);
+            _curLst =new BindingCollection<DBTableInfo>(TableChecker.GetAllTables(info));
+            gvTables.AllowUserToOrderColumns = true;
             RefreashTablesInfo();
         }
 
@@ -98,15 +100,70 @@ namespace Buffalo.DBTools
             gvTables.DataSource = null;
             if (_curLst != null && _curLst.Count > 0)
             {
+
                 gvTables.DataSource = _curLst;
+            }
+            //RefreashExistsInfo();
+            
+
+        }
+
+        /// <summary>
+        /// 填充是否存在的列
+        /// </summary>
+        private void RefreashExistsInfo() 
+        {
+            foreach (DataGridViewRow dr in gvTables.Rows) 
+            {
+                string exists = "未生成";
+                DBTableInfo info = dr.DataBoundItem as DBTableInfo;
+                if (info != null) 
+                {
+                    string fileName = DBEntityInfo.GetRealFileName(info, SelectDocView);
+                    try
+                    {
+                        if (File.Exists(fileName))
+                        {
+                            exists = "已生成";
+                            dr.DefaultCellStyle.ForeColor = Color.Red;
+                        }
+                    }
+                    catch { }
+                }
+                dr.Cells["ColExists"].Value = exists;
             }
         }
 
+        void gvTables_RowPrePaint(object sender, System.Windows.Forms.DataGridViewRowPrePaintEventArgs e)
+        {
+            int row = e.RowIndex;
+            if (row < 0)
+            {
+                return;
+            }
+            DataGridViewRow dr = gvTables.Rows[row];
+            string exists = "未生成";
+            DBTableInfo info = dr.DataBoundItem as DBTableInfo;
+            if (info != null)
+            {
+                string fileName = DBEntityInfo.GetRealFileName(info, SelectDocView);
+                try
+                {
+                    if (File.Exists(fileName))
+                    {
+                        exists = "已生成";
+                        dr.DefaultCellStyle.ForeColor = Color.Red;
+                    }
+                }
+                catch { }
+            }
+            dr.Cells["ColExists"].Value = exists;
+        }
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            
-            List<DBTableInfo> lst = gvTables.DataSource as List<DBTableInfo>;
+
+            IEnumerable<DBTableInfo> lst = gvTables.DataSource as IEnumerable<DBTableInfo>;
             if (lst == null) 
             {
                 return;
