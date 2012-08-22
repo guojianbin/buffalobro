@@ -82,8 +82,16 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
             string rowNumberName = "[cur_rowNumber" + objPage.PagerIndex+"]";
             //long endIndex = objCondition.PageSize * (objCondition.CurrentPage + 1);
             sql.Append("select top " + objPage.PageSize + " * from(");
-
-            sql.Append("select row_number() over(order by " + orderBy + ") as " +
+            string newOrderBy = null;
+            if (objCondition.HasGroup)
+            {
+                newOrderBy = Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.CutPageSqlCreater.FilterGroupOrderBy(orderBy, "[_tmpInnerTable]");
+            }
+            else 
+            {
+                newOrderBy = orderBy;
+            }
+            sql.Append("select row_number() over(order by " + newOrderBy + ") as " +
                 rowNumberName + "," );
 
             

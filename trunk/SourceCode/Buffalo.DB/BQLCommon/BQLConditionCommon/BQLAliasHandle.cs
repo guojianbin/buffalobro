@@ -59,7 +59,13 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         }
         internal override string DisplayValue(KeyWordInfomation info)
         {
-            if (info.Condition.PrimaryKey.Count <= 0 && !CommonMethods.IsNull(_table))
+            SelectCondition con = info.Condition as SelectCondition;
+            bool isGroup = false;
+            if (con != null) 
+            {
+                isGroup = con.HasGroup;
+            }
+            if (info.Condition.PrimaryKey.Count <= 0 && !CommonMethods.IsNull(_table) && !isGroup)
             {
                 foreach (string pks in _table.GetPrimaryParam())
                 {

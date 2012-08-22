@@ -21,8 +21,23 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         //private AliasCollection alias = new AliasCollection();
         private List<IdentityInfo> _identityInfos = new List<IdentityInfo>();
 
-        
 
+        private bool _hasGroup = false;
+
+        /// <summary>
+        ///  «∑Ò”–æ€∫œ”Ôæ‰
+        /// </summary>
+        public bool HasGroup
+        {
+            get
+            {
+                return _hasGroup;
+            }
+            set
+            {
+                _hasGroup = value;
+            }
+        }
        
         private bool _isWhere = false;
 

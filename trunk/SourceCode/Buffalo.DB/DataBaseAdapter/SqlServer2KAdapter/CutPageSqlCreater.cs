@@ -141,10 +141,37 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                 if (objCondition.Orders.Length > 0)
                 {
                     sql.Append(" order by ");
-                    sql.Append(objCondition.Orders.ToString());
+                    sql.Append(FilterGroupOrderBy(objCondition.Orders.ToString(),"tmp"));
                 }
             }
             return sql.ToString();
+        }
+
+        /// <summary>
+        /// 处理groupBy
+        /// </summary>
+        /// <param name="group">groupBy</param>
+        /// <param name="newAlias">新别名</param>
+        /// <returns></returns>
+        protected internal static string FilterGroupOrderBy(string group, string newAlias) 
+        {
+            string[] prms = group.Split(',');
+            StringBuilder sbItem = new StringBuilder();
+            foreach (string prm in prms) 
+            {
+                string tmp = prm;
+                int index=tmp.IndexOf('.');
+                if (index >= 0) 
+                {
+                    tmp = newAlias+tmp.Substring(index, tmp.Length - index);
+                }
+                sbItem.Append(tmp+",");
+            }
+            if (sbItem.Length > 0) 
+            {
+                sbItem.Remove(sbItem.Length - 1, 1);
+            }
+            return sbItem.ToString();
         }
 
         /// <summary>

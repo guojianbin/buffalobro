@@ -209,7 +209,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 
             //FillInfo(info);
             IDBAdapter idba = info.DBInfo.CurrentDbAdapter;
-            if (info.Condition.PrimaryKey.Count <= 0)
+            if (info.Condition.PrimaryKey.Count <= 0 && !info.HasGroup)
             {
                 foreach (string pkep in GetPrimaryParam())
                 {

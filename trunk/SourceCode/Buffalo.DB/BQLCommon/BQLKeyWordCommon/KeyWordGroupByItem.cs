@@ -22,7 +22,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         }
         internal override void LoadInfo(KeyWordInfomation info)
         {
-
+            info.HasGroup = true;
         }
         ///// <summary>
         ///// ×Ö¶Î¼¯ºÏ
@@ -70,19 +70,22 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         {
             info.IsWhere = true;
             string ret = "";
+            SelectCondition con = info.Condition as SelectCondition;
+
             for (int i = 0; i < paramhandles.Count; i++)
             {
                 BQLParamHandle prm = paramhandles[i];
-                ret += prm.DisplayValue(info);
+                string prmStr=prm.DisplayValue(info);
+                ret +=prmStr ;
                 if (i < paramhandles.Count - 1)
                 {
                     ret += ",";
                 }
-            }
-            SelectCondition con = info.Condition as SelectCondition;
-            if (con != null)
-            {
-                con.HasGroup = true;
+                if (con != null)
+                {
+                    info.Condition.PrimaryKey.Add(prmStr);
+
+                }
             }
             info.Condition.GroupBy.Append(ret);
             info.IsWhere = false;

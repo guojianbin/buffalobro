@@ -6,6 +6,7 @@ using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.DbCommon;
 using Buffalo.Kernel;
+using Buffalo.DB.QueryConditions;
 
 namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
 {
@@ -58,6 +59,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
             {
                 prm.FillInfo(info);
             }
+
         }
 
         /// <summary>
@@ -69,14 +71,14 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         {
             if (info.Condition == null)
             {
-                info.Condition = new Buffalo.DB.QueryConditions.SelectCondition(info.DBInfo);
+                SelectCondition con=new Buffalo.DB.QueryConditions.SelectCondition(info.DBInfo);
+                con.HasGroup = info.HasGroup;
+                info.Condition = con;
                 
             }
             if (info.ParamList == null)
             {
-                
-                    info.ParamList = new ParamList();
-                
+                info.ParamList = new ParamList();
             }
             
             StringBuilder ret = new StringBuilder();
