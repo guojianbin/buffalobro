@@ -512,9 +512,9 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <returns></returns>
         public DataSet Select(ScopeList scopeList)
         {
-            if (scopeList.HasInner && scopeList.HasPage)
+            if (scopeList.HasInner )
             {
-                if (scopeList.OrderBy.Count <= 0)
+                if (scopeList.OrderBy.Count <= 0 && scopeList.HasPage)
                 {
                     foreach (EntityPropertyInfo pInfo in CurEntityInfo.PrimaryProperty)
                     {
