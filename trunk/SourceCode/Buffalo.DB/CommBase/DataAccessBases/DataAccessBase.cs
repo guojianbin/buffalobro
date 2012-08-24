@@ -512,7 +512,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <returns></returns>
         public DataSet Select(ScopeList scopeList)
         {
-            if (scopeList.HasInner)
+            if (scopeList.HasInner && scopeList.HasPage)
             {
                 if (scopeList.OrderBy.Count <= 0)
                 {
