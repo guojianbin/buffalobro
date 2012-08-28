@@ -114,13 +114,14 @@ namespace Buffalo.DB.DataFillers
         /// </summary>
         internal static List<EntityPropertyInfo> GenerateCache(IDataReader reader, EntityInfoHandle entityInfo)
         {
-
+            IDBAdapter idb = entityInfo.DBInfo.CurrentDbAdapter;
             Dictionary<string, EntityPropertyInfo> dicParamHandle = new Dictionary<string, EntityPropertyInfo>();//获取字段名跟属性对照的集合
             //Dictionary<string, EntityPropertyInfo>.Enumerator enums = entityInfo.PropertyInfo.GetPropertyEnumerator();
             foreach (EntityPropertyInfo info in entityInfo.PropertyInfo) 
             {
                 //EntityPropertyInfo info=enums.Current.Value;
                 dicParamHandle.Add(info.ParamName, info);
+                dicParamHandle[idb.FormatParam(info.ParamName)]=info;
             }
 
             List<EntityPropertyInfo> cacheReader = new List<EntityPropertyInfo>();
