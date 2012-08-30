@@ -37,7 +37,7 @@ namespace Buffalo.DBTools.DocSummary.VSConfig
             }
             else 
             {
-                _curConfig = new VS2008Config();
+                _curConfig = new VS2010Config();
             }
         }
         /// <summary>

@@ -4,6 +4,147 @@
         <name>Buffalo.WinFormsControl</name>
     </assembly>
     <members>
+        <member name="T:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxCell">
+            <summary>
+            扩展的Checkbox单元格
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxCell.Enabled">
+            <summary>
+            可用
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxCell.BelongColumn">
+            <summary>
+            所属列
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxCell.RealEnable">
+            <summary>
+            真正的可用性
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxColumn.Enabled">
+            <summary>
+            可用
+            </summary>
+        </member>
+        <member name="T:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell">
+            <summary>
+            扩展的Checkbox单元格
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell.SelectValue">
+            <summary>
+            选中的值
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell.BelongColumn">
+            <summary>
+            所属列
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.HideComboBox">
+            <summary>
+            隐藏ComboBox
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.ShowComboBox(System.Windows.Forms.DataGridViewCell)">
+            <summary>
+            显示ComboBox
+            </summary>
+            <param name="cell"></param>
+            <param name="dataSource"></param>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.SetComboBoxDataSource(System.Collections.IEnumerable)">
+            <summary>
+            设置数据源
+            </summary>
+            <param name="dataSource"></param>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.ColumnComboBox">
+            <summary>
+            列所属的ComboBox
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentCell.GetNumberString(System.Decimal)">
+            <summary>
+            获取数字的格式化字符串
+            </summary>
+            <param name="num"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.ShowTotle">
+            <summary>
+            是否在值后边显示总数
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.TotleCount">
+            <summary>
+            列总数
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.ValueForamt">
+            <summary>
+            值的格式化
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.DoPageIndexChange(System.Object,System.Int64)">
+            <summary>
+            对控件进行翻页处理
+            </summary>
+            <param name="sender"></param>
+            <param name="currentIndex"></param>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.GetAllNumber(System.String)">
+            <summary>
+            获取字符串里边的所有数字
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.BindData">
+            <summary>
+            填充数据
+            </summary>
+        </member>
+        <member name="F:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.TotlePage">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.CurrentPage">
+             <summary>
+            当前页数
+             </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.PageSize">
+            <summary>
+            数据源
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.TotleRecords">
+            <summary>
+            总记录条数
+            </summary>
+        </member>
         <member name="M:Buffalo.WinFormsControl.PagingBar.PagingBar.DoPageIndexChange(System.Object,System.Int64)">
             <summary>
             对控件进行翻页处理
@@ -53,147 +194,6 @@
             <summary>
             总记录条数
             </summary>
-        </member>
-        <member name="F:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.components">
-            <summary> 
-            必需的设计器变量。
-            </summary>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.Dispose(System.Boolean)">
-            <summary> 
-            清理所有正在使用的资源。
-            </summary>
-            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.InitializeComponent">
-            <summary> 
-            设计器支持所需的方法 - 不要
-            使用代码编辑器修改此方法的内容。
-            </summary>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.DoPageIndexChange(System.Object,System.Int64)">
-            <summary>
-            对控件进行翻页处理
-            </summary>
-            <param name="sender"></param>
-            <param name="currentIndex"></param>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.GetAllNumber(System.String)">
-            <summary>
-            获取字符串里边的所有数字
-            </summary>
-            <param name="str"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.BindData">
-            <summary>
-            填充数据
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.TotlePage">
-            <summary>
-            总页数
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.CurrentPage">
-             <summary>
-            当前页数
-             </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.PageSize">
-            <summary>
-            数据源
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.TotleRecords">
-            <summary>
-            总记录条数
-            </summary>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.HideComboBox">
-            <summary>
-            隐藏ComboBox
-            </summary>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.ShowComboBox(System.Windows.Forms.DataGridViewCell)">
-            <summary>
-            显示ComboBox
-            </summary>
-            <param name="cell"></param>
-            <param name="dataSource"></param>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.SetComboBoxDataSource(System.Collections.IEnumerable)">
-            <summary>
-            设置数据源
-            </summary>
-            <param name="dataSource"></param>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.ColumnComboBox">
-            <summary>
-            列所属的ComboBox
-            </summary>
-        </member>
-        <member name="T:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxCell">
-            <summary>
-            扩展的Checkbox单元格
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxCell.Enabled">
-            <summary>
-            可用
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxCell.BelongColumn">
-            <summary>
-            所属列
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxCell.RealEnable">
-            <summary>
-            真正的可用性
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxColumn.Enabled">
-            <summary>
-            可用
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.ShowTotle">
-            <summary>
-            是否在值后边显示总数
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.TotleCount">
-            <summary>
-            列总数
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.ValueForamt">
-            <summary>
-            值的格式化
-            </summary>
-        </member>
-        <member name="T:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell">
-            <summary>
-            扩展的Checkbox单元格
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell.SelectValue">
-            <summary>
-            选中的值
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell.BelongColumn">
-            <summary>
-            所属列
-            </summary>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentCell.GetNumberString(System.Decimal)">
-            <summary>
-            获取数字的格式化字符串
-            </summary>
-            <param name="num"></param>
-            <returns></returns>
         </member>
         <member name="T:Buffalo.WinFormsControl.Properties.Resources">
             <summary>
