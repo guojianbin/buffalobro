@@ -10,9 +10,9 @@ namespace ModelCompiler
     /// </summary>
     public class ModelCodeTran
     {
-        private string _content;
+        private StringReader _content;
 
-        private int _currentIndex;
+        
         /// <summary>
         /// 生成的代码存放容器
         /// </summary>
@@ -23,13 +23,29 @@ namespace ModelCompiler
         /// <param name="content">模版内容</param>
         public ModelCodeTran(string content) 
         {
-            _content = content;
-            _currentIndex = 0;
+            _content = new StringReader(content);
+           
         }
 
-        public bool MoveNext() 
+        private void Tran() 
         {
+            string tmp = null;
+            while ((tmp = _content.ReadLine()) != null) 
+            {
+                if (tmp.IndexOf("<?script") >= 0) 
+                {
 
+                }
+            }
         }
+
+        /// <summary>
+        /// 处理Script标签
+        /// </summary>
+        private void TranScript(string tag) 
+        {
+            
+        }
+        
     }
 }

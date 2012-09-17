@@ -1,13 +1,13 @@
-<script type="linked">
+<?script type="linked">
 abc.dll
-</script>
+</?script>
 
-<script type="using">
+<?script type="using">
 using System;
 using System.Collections.Generic;
 using System.Text;
-</script>
-
+</?script>
+<?script type="output">
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,10 +23,10 @@ public class <%=className%>
         return sb.ToString();
     }
 }
-
-<script type="code">
+</?script>
+<?script type="code">
 private string GetInfo(int num)
 {
     return "D" + num;
 }
-</script>
+</?script>
