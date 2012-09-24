@@ -34,7 +34,7 @@ namespace ModelCompiler
             {
                 if (tmp.IndexOf("<?script") >= 0) 
                 {
-
+                    
                 }
             }
         }
@@ -44,7 +44,8 @@ namespace ModelCompiler
         /// </summary>
         private void TranScript(string tag) 
         {
-            
+            string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>[^<]+)</[#]script>";
+            MatchCollection matches = new Regex(strRef).Matches(content);
         }
         
     }
