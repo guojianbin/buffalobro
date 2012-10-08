@@ -1,0 +1,10 @@
+D:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\bin\Debug\ModelCompiler.exe
+D:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\bin\Debug\ModelCompiler.pdb
+D:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ResolveAssemblyReference.cache
+D:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ModelCompiler.Properties.Resources.resources
+D:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ModelCompiler.csproj.GenerateResource.Cache
+D:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ModelCompiler.exe
+D:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ModelCompiler.pdb
+D:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ModelCompiler.Form1.resources
+E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ModelCompiler.exe
+E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ModelCompiler.pdb
