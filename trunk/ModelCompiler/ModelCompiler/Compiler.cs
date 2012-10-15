@@ -9,7 +9,8 @@ namespace ModelCompiler
     {
         private string _content;
         private int index = -1;
-        
+        Queue<ExpressionItem> queitem = new Queue<ExpressionItem>();
+
 
         public Compiler(string content) 
         {
@@ -32,6 +33,17 @@ namespace ModelCompiler
                 return false;
             }
             index++;
+        }
+
+        /// <summary>
+        /// µ±Ç°×Ö·û
+        /// </summary>
+        private char CurrentChar 
+        {
+            get 
+            {
+                return _content[index];
+            }
         }
     }
 }
