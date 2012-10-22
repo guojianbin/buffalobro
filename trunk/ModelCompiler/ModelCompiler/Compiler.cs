@@ -11,7 +11,7 @@ namespace ModelCompiler
         private int index = -1;
         Queue<ExpressionItem> queitem = new Queue<ExpressionItem>();
 
-
+        ExpressionItem _currentItem = null;
         public Compiler(string content) 
         {
             
@@ -19,7 +19,53 @@ namespace ModelCompiler
 
         public string GetContent() 
         {
-            
+            while (MoveNext()) 
+            {
+                if (CurrentChar == '<') 
+                {
+                    CompilerPart();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 处理代码块
+        /// </summary>
+        private void CompilerPart() 
+        {
+            if (MoveNext()) 
+            {
+                if (CurrentChar == '?')
+                {
+
+                    queitem.Enqueue(_currentItem);
+                    _currentItem = new ExpressionItem();
+                    if (MoveNext()) 
+                    {
+                        if (CurrentChar == '=')
+                        {
+                            _currentItem.Type = ExpressionType.Express;
+                        }
+                        else 
+                        {
+                            _currentItem.Type = ExpressionType.Code;
+                            _currentItem.Content.Append(CurrentChar);
+                        }
+                    }
+
+                }
+                else 
+                {
+                    _currentItem.Content.Append("<" + CurrentChar);
+                }
+            }
+        }
+        /// <summary>
+        /// 解释代码块
+        /// </summary>
+        private void CompilerCode() 
+        {
+
         }
 
         /// <summary>
