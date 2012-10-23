@@ -79,6 +79,7 @@ namespace ModelCompiler
                 return false;
             }
             index++;
+            return true;
         }
 
         /// <summary>
