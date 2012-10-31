@@ -65,7 +65,41 @@ namespace ModelCompiler
         /// </summary>
         private void CompilerCode() 
         {
-
+            Stack<char> stkChr=new Stack<char>();
+            char priChar = '\0';//上一个字符
+            while (MoveNext()) 
+            {
+                if (CurrentChar == '\"') 
+                {
+                    if (stkChr.Count > 0 && stkChr.Peek() == '\"')
+                    {
+                        stkChr.Pop();
+                    }
+                    else
+                    {
+                        stkChr.Push('\"');
+                    }
+                    _currentItem.Content.Append(CurrentChar);
+                }
+                else if (CurrentChar == '?')
+                {
+                    if (stkChr.Count <= 0)
+                    {
+                        if (MoveNext())
+                        {
+                            if (CurrentChar == '>') //结束符号
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                _currentItem.Content.Append("?" + CurrentChar);
+                            }
+                        }
+                    }
+                }
+                
+            }
         }
 
         /// <summary>
