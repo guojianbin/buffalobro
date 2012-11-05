@@ -14,18 +14,30 @@ namespace ModelCompiler
         ExpressionItem _currentItem = null;
         public Compiler(string content) 
         {
-            
+            _content = content;
         }
 
         public string GetContent() 
         {
             while (MoveNext()) 
             {
-                if (CurrentChar == '<') 
+                if (CurrentChar == '<')
                 {
                     CompilerPart();
                 }
+                else 
+                {
+                    if (_currentItem == null) 
+                    {
+                        _currentItem = new ExpressionItem();
+                        _currentItem.Type = ExpressionType.String;
+                        queitem.Enqueue(_currentItem);
+
+                    }
+                    _currentItem.Content.Append(CurrentChar);
+                }
             }
+            return null;
         }
 
         /// <summary>
@@ -37,9 +49,9 @@ namespace ModelCompiler
             {
                 if (CurrentChar == '?')
                 {
-
-                    queitem.Enqueue(_currentItem);
                     _currentItem = new ExpressionItem();
+                    queitem.Enqueue(_currentItem);
+                    
                     if (MoveNext()) 
                     {
                         if (CurrentChar == '=')
@@ -51,6 +63,9 @@ namespace ModelCompiler
                             _currentItem.Type = ExpressionType.Code;
                             _currentItem.Content.Append(CurrentChar);
                         }
+                        CompilerCode();
+                        
+                        _currentItem = null;
                     }
 
                 }
@@ -66,18 +81,25 @@ namespace ModelCompiler
         private void CompilerCode() 
         {
             Stack<char> stkChr=new Stack<char>();
-            char priChar = '\0';//上一个字符
             while (MoveNext()) 
             {
                 if (CurrentChar == '\"') 
                 {
-                    if (stkChr.Count > 0 && stkChr.Peek() == '\"')
+                    if (stkChr.Count > 0 && (stkChr.Peek() == '\"' || stkChr.Peek() == '\\'))
                     {
                         stkChr.Pop();
                     }
                     else
                     {
                         stkChr.Push('\"');
+                    }
+                    _currentItem.Content.Append(CurrentChar);
+                }
+                else if (CurrentChar == '\\') 
+                {
+                    if (stkChr.Count > 0 && (stkChr.Peek() == '\"'))//在字符串里边
+                    {
+                        stkChr.Push('\\');
                     }
                     _currentItem.Content.Append(CurrentChar);
                 }
@@ -89,6 +111,7 @@ namespace ModelCompiler
                         {
                             if (CurrentChar == '>') //结束符号
                             {
+                               
                                 return;
                             }
                             else
@@ -96,6 +119,10 @@ namespace ModelCompiler
                                 _currentItem.Content.Append("?" + CurrentChar);
                             }
                         }
+                    }
+                    else
+                    {
+                        _currentItem.Content.Append(CurrentChar);
                     }
                 }
                 

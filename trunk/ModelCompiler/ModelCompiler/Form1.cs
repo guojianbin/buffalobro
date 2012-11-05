@@ -19,7 +19,7 @@ namespace ModelCompiler
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string content = File.ReadAllText(@"D:\CShareTest\Buffalobro\ModelCompiler\model.txt");
+            string content = File.ReadAllText(@"E:\CShareTest\Buffalobro\ModelCompiler\model.txt");
             string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>[^<]+)</[#]script>";
             MatchCollection matches = new Regex(strRef).Matches(content);
 

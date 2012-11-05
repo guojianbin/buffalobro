@@ -12,3 +12,5 @@ E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ResolveAssemblyRe
 E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ModelCompiler.Form1.resources
 E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ModelCompiler.Properties.Resources.resources
 E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ModelCompiler.csproj.GenerateResource.Cache
+E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\bin\Debug\ModelCompiler.exe
+E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\bin\Debug\ModelCompiler.pdb

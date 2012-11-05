@@ -35,7 +35,7 @@ namespace ModelCompiler
             {
                 if (tmp.IndexOf("<?script") >= 0) 
                 {
-                    
+                    TranScript(tmp);
                 }
             }
         }
@@ -46,7 +46,19 @@ namespace ModelCompiler
         private void TranScript(string tag) 
         {
             string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>[^<]+)</[#]script>";
-            MatchCollection matches = new Regex(strRef).Matches(content);
+            MatchCollection matches = new Regex(strRef).Matches(tag);
+            foreach (Match ma in matches)
+            {
+                if (ma.Groups["type"] == null) 
+                {
+                    continue;
+                }
+                string type = ma.Groups["type"].Value;
+                if (type.Equals("linked",StringComparison.CurrentCultureIgnoreCase)) 
+                {
+
+                }
+            }
         }
         
     }
