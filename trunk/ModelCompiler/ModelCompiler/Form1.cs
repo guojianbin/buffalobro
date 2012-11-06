@@ -20,13 +20,8 @@ namespace ModelCompiler
         private void button1_Click(object sender, EventArgs e)
         {
             string content = File.ReadAllText(@"E:\CShareTest\Buffalobro\ModelCompiler\model.txt");
-            string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>[^<]+)</[#]script>";
-            MatchCollection matches = new Regex(strRef).Matches(content);
-
-            foreach (Match ma in matches) 
-            {
-                MessageBox.Show(ma.Groups["type"].Value);
-            }
+            Compiler com = new Compiler(content);
+            Queue<ExpressionItem> item = com.ExpressionItems;
         }
     }
 }

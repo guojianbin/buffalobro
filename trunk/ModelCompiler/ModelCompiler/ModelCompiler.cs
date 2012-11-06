@@ -9,7 +9,7 @@ namespace ModelCompiler
     /// <summary>
     /// 模版到代码的转换器
     /// </summary>
-    public class ModelCodeTran
+    public class ModelCompiler
     {
         private StringReader _content;
 
@@ -22,7 +22,7 @@ namespace ModelCompiler
         /// 模版到代码的转换器
         /// </summary>
         /// <param name="content">模版内容</param>
-        public ModelCodeTran(string content) 
+        public ModelCompiler(string content) 
         {
             _content = new StringReader(content);
            
@@ -33,7 +33,7 @@ namespace ModelCompiler
             string tmp = null;
             while ((tmp = _content.ReadLine()) != null) 
             {
-                if (tmp.IndexOf("<?script") >= 0) 
+                if (tmp.IndexOf("<#script") >= 0) 
                 {
                     TranScript(tmp);
                 }
@@ -56,7 +56,8 @@ namespace ModelCompiler
                 string type = ma.Groups["type"].Value;
                 if (type.Equals("linked",StringComparison.CurrentCultureIgnoreCase)) 
                 {
-
+                    
+                    
                 }
             }
         }

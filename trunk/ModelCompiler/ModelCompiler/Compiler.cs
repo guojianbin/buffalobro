@@ -9,16 +9,29 @@ namespace ModelCompiler
     {
         private string _content;
         private int index = -1;
-        Queue<ExpressionItem> queitem = new Queue<ExpressionItem>();
+        Queue<ExpressionItem> _queitem = new Queue<ExpressionItem>();
+
+        /// <summary>
+        /// ´úÂëÊ÷
+        /// </summary>
+        public Queue<ExpressionItem> ExpressionItems
+        {
+            get { return _queitem; }
+        }
 
         ExpressionItem _currentItem = null;
         public Compiler(string content) 
         {
             _content = content;
+            DoCompiler();
         }
 
-        public string GetContent() 
+        private void DoCompiler() 
         {
+            _currentItem = new ExpressionItem();
+            _currentItem.Type = ExpressionType.String;
+            _queitem.Enqueue(_currentItem);
+
             while (MoveNext()) 
             {
                 if (CurrentChar == '<')
@@ -31,13 +44,13 @@ namespace ModelCompiler
                     {
                         _currentItem = new ExpressionItem();
                         _currentItem.Type = ExpressionType.String;
-                        queitem.Enqueue(_currentItem);
+                        _queitem.Enqueue(_currentItem);
 
                     }
                     _currentItem.Content.Append(CurrentChar);
                 }
             }
-            return null;
+            
         }
 
         /// <summary>
@@ -50,7 +63,7 @@ namespace ModelCompiler
                 if (CurrentChar == '?')
                 {
                     _currentItem = new ExpressionItem();
-                    queitem.Enqueue(_currentItem);
+                    _queitem.Enqueue(_currentItem);
                     
                     if (MoveNext()) 
                     {
@@ -111,7 +124,7 @@ namespace ModelCompiler
                         {
                             if (CurrentChar == '>') //½áÊø·ûºÅ
                             {
-                               
+
                                 return;
                             }
                             else
@@ -125,7 +138,10 @@ namespace ModelCompiler
                         _currentItem.Content.Append(CurrentChar);
                     }
                 }
-                
+                else 
+                {
+                    _currentItem.Content.Append(CurrentChar);
+                }
             }
         }
 
@@ -135,7 +151,7 @@ namespace ModelCompiler
         /// <returns></returns>
         private bool MoveNext() 
         {
-            if (_content.Length <= index - 1) 
+            if (_content.Length <= index+1) 
             {
                 return false;
             }
