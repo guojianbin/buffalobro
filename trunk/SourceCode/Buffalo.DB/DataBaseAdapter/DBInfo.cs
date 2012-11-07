@@ -114,7 +114,6 @@ namespace Buffalo.DB.DataBaseAdapter
 
         }
 
-        DataBaseOperate _defaultOper;
 
         /// <summary>
         /// Ä¬ÈÏÁ¬½Ó
@@ -124,11 +123,7 @@ namespace Buffalo.DB.DataBaseAdapter
         {
             get
             {
-                if (_defaultOper == null)
-                {
-                    _defaultOper = StaticConnection.GetStaticOperate(this);
-                }
-                return _defaultOper;
+                return StaticConnection.GetStaticOperate(this);
             }
         }
 

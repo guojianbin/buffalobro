@@ -123,7 +123,7 @@ namespace Buffalo.Kernel.Win32
         [DllImport("kernel32.dll",EntryPoint="GetCurrentProcess")]
         public static extern IntPtr GetCurrentProcess();
 
-        [DllImport("kernel32.dll", EntryPoint = "LoadLibrary")]
+        [DllImport("kernel32", SetLastError=true, CharSet = CharSet.Unicode)]
         public static extern IntPtr LoadLibrary(
             string lpLibFileName
         );

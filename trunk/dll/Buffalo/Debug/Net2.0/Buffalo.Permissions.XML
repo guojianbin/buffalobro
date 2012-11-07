@@ -4,85 +4,6 @@
         <name>Buffalo.Permissions</name>
     </assembly>
     <members>
-        <member name="T:Buffalo.Permissions.PermissionsInfo.BPGroup">
-            <summary>
-             权限组
-            </summary>
-            <summary>
-            权限组
-            </summary>
-        </member>
-        <member name="T:Buffalo.Permissions.PermissionsInfo.BPBase">
-            <summary>
-             权限基类
-            </summary>
-            <summary>
-            权限基类
-            </summary>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPBase._id">
-            <summary>
-            ID
-            </summary>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPBase._createDate">
-            <summary>
-            创建时间
-            </summary>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPBase._laseUpdate">
-            <summary>
-            更新时间
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPBase.Id">
-            <summary>
-            ID
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPBase.CreateDate">
-            <summary>
-            创建时间
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPBase.LaseUpdate">
-            <summary>
-            更新时间
-            </summary>
-        </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BPGroup.GetByGroupId(System.String)">
-            <summary>
-            通过组ID获取组信息
-            </summary>
-            <param name="groupId"></param>
-            <returns></returns>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroup._groupID">
-            <summary>
-            来自外部系统的组标识
-            </summary>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroup._groupName">
-            <summary>
-            来自外部系统的表名
-            </summary>
-        </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BPGroup.GetContext">
-            <summary>
-            获取查询关联类
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroup.GroupID">
-            <summary>
-            来自外部系统的组标识
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroup.GroupName">
-            <summary>
-            来自外部系统的表名
-            </summary>
-        </member>
         <member name="T:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupModelRight">
             <summary>
              用户组的模块权限
@@ -171,54 +92,51 @@
             所属分组
             </summary>
         </member>
-        <member name="T:Buffalo.Permissions.PermissionsInfo.BPModelItemRight">
-            <summary>
-            子模块权限
-            </summary>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPModelItemRight.None">
-            <summary>
-            无
-            </summary>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPModelItemRight.Use">
-            <summary>
-            使用
-            </summary>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPModelItemRight.Authorization">
-            <summary>
-            被授权使用
-            </summary>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPModelItemRight.Disable">
-            <summary>
-            禁用
-            </summary>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPModelItemRight.AuthorizationTo">
-            <summary>
-            授权他人使用
-            </summary>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPModelItemRight.All">
-            <summary>
-            所有权限
-            </summary>
-        </member>
         <member name="T:Buffalo.Permissions.PermissionsInfo.BPSysModel">
-            <summary>
-             系统模块
-            </summary>
             <summary>
             系统模块
             </summary>
-        </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BPSysModel.RootModel">
             <summary>
-            获取根权限模块(所有权限)
+             系统模块
             </summary>
-            <returns></returns>
+        </member>
+        <member name="T:Buffalo.Permissions.PermissionsInfo.BPBase">
+            <summary>
+             权限基类
+            </summary>
+            <summary>
+            权限基类
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPBase._id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPBase._createDate">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPBase._laseUpdate">
+            <summary>
+            更新时间
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPBase.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPBase.CreateDate">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPBase.LaseUpdate">
+            <summary>
+            更新时间
+            </summary>
         </member>
         <member name="M:Buffalo.Permissions.PermissionsInfo.BPSysModel.CreateSysModel(System.String,System.String,System.String,System.String)">
             <summary>
@@ -267,6 +185,12 @@
             <param name="itemName"></param>
             <param name="description"></param>
         </member>
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BPSysModel.RootModel">
+            <summary>
+            获取根权限模块(所有权限)
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModel.ModelName">
             <summary>
             模块名称
@@ -297,88 +221,53 @@
             默认权限
             </summary>
         </member>
-        <member name="T:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight">
+        <member name="T:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel">
             <summary>
-             模块子项权限
-            </summary>
-            <summary>
-            模块子项权限
+             系统模块
             </summary>
         </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._modelItemId">
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.#ctor(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.String)">
             <summary>
-            子模块ID
+            初始化本类的信息
+            </summary>
+            <param name="parent">父表信息</param>
+            <param name="propertyName">属性名</param>
+        </member>
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.#ctor(System.Type,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.String)">
+            <summary>
+            初始化本类的信息
+            </summary>
+            <param name="parent">父表信息</param>
+            <param name="propertyName">属性名</param>
+        </member>
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.#ctor">
+            <summary>
+            初始化本类的信息
             </summary>
         </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._groupId">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.ModelIdentify">
             <summary>
-            组ID
+            模块标识
             </summary>
         </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._groupModelRightId">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.ModelName">
             <summary>
-            所属的模块权限记录ID
+            模块名称
             </summary>
         </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._itemRight">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.ModelDescription">
             <summary>
-            项权限
+            模块注释
             </summary>
         </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._belongItem">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.ModelType">
             <summary>
-            所属子项
+            模块分类
             </summary>
         </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._belongGroup">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.DefaultModelRight">
             <summary>
-            所属分组
-            </summary>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._belongGroupModelRight">
-            <summary>
-            所属的模块权限记录
-            </summary>
-        </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.GetContext">
-            <summary>
-            获取查询关联类
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.ModelItemId">
-            <summary>
-            子模块ID
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.GroupId">
-            <summary>
-            组ID
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.ItemRight">
-            <summary>
-            项权限
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.BelongItem">
-            <summary>
-            所属子项
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.BelongGroup">
-            <summary>
-            所属分组
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.GroupModelRightId">
-            <summary>
-            所属的模块权限记录
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.BelongGroupModelRight">
-            <summary>
-            所属的模块权限记录
+            默认权限
             </summary>
         </member>
         <member name="T:Buffalo.Permissions.PermissionsInfo.BPModelRights">
@@ -396,104 +285,159 @@
             禁用
             </summary>
         </member>
-        <member name="T:Buffalo.Permissions.PermissionsInfo.BPSysModelItem">
+        <member name="T:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight">
             <summary>
-             子模块权限
-            </summary>
-            <summary>
-            子模块权限
+             模块子项权限
             </summary>
         </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPSysModelItem._sysModelId">
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.#ctor(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.String)">
             <summary>
-            所属模块ID
+            初始化本类的信息
+            </summary>
+            <param name="parent">父表信息</param>
+            <param name="propertyName">属性名</param>
+        </member>
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.#ctor(System.Type,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.String)">
+            <summary>
+            初始化本类的信息
+            </summary>
+            <param name="parent">父表信息</param>
+            <param name="propertyName">属性名</param>
+        </member>
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.#ctor">
+            <summary>
+            初始化本类的信息
             </summary>
         </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPSysModelItem._itemName">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.ModelItemId">
             <summary>
-            子项名
+            子模块ID
             </summary>
         </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPSysModelItem._itemDescription">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.GroupId">
             <summary>
-            子项注释
+            组ID
             </summary>
         </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPSysModelItem._belongModel">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.GroupModelRightId">
             <summary>
-            所属模块
+            所属的模块权限记录ID
             </summary>
         </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPSysModelItem._itemIdentify">
-            <summary>
-            子项标识
-            </summary>
-        </member>
-        <member name="F:Buffalo.Permissions.PermissionsInfo.BPSysModelItem._defaultRight">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.ItemRight">
             <summary>
             项权限
             </summary>
         </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.GetContext">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.BelongItem">
+            <summary>
+            所属子项
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.BelongGroup">
+            <summary>
+            所属分组
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.BelongGroupModelRight">
+            <summary>
+            所属的模块权限记录
+            </summary>
+        </member>
+        <member name="T:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem">
+            <summary>
+             子模块权限
+            </summary>
+        </member>
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.#ctor(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.String)">
+            <summary>
+            初始化本类的信息
+            </summary>
+            <param name="parent">父表信息</param>
+            <param name="propertyName">属性名</param>
+        </member>
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.#ctor(System.Type,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.String)">
+            <summary>
+            初始化本类的信息
+            </summary>
+            <param name="parent">父表信息</param>
+            <param name="propertyName">属性名</param>
+        </member>
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.#ctor">
+            <summary>
+            初始化本类的信息
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.SysModelId">
+            <summary>
+            所属模块ID
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.ItemName">
+            <summary>
+            子项名
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.ItemDescription">
+            <summary>
+            子项注释
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.ItemIdentify">
+            <summary>
+            子项标识
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.DefaultRight">
+            <summary>
+            项权限
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.BelongModel">
+            <summary>
+            所属模块
+            </summary>
+        </member>
+        <member name="T:Buffalo.Permissions.PermissionsInfo.BPGroup">
+            <summary>
+            权限组
+            </summary>
+            <summary>
+             权限组
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroup._groupID">
+            <summary>
+            来自外部系统的组标识
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroup._groupName">
+            <summary>
+            来自外部系统的表名
+            </summary>
+        </member>
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BPGroup.GetContext">
             <summary>
             获取查询关联类
             </summary>
             <returns></returns>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.SysModelId">
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BPGroup.GetByGroupId(System.String)">
             <summary>
-            所属模块ID
+            通过组ID获取组信息
             </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.ItemName">
-            <summary>
-            子项名
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.ItemDescription">
-            <summary>
-            子项注释
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.BelongModel">
-            <summary>
-            所属模块
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.ItemIdentify">
-            <summary>
-            子项标识
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.DefaultRight">
-            <summary>
-            项权限
-            </summary>
-        </member>
-        <member name="T:Buffalo.Permissions.PermissionManager">
-            <summary>
-            项目权限检查
-            </summary>
-        </member>
-        <member name="M:Buffalo.Permissions.PermissionManager.AddUserGroup(System.String,System.String)">
-            <summary>
-            添加用户组
-            </summary>
-            <param name="groupId">组标识(组ID)</param>
-            <param name="groupName">组名</param>
+            <param name="groupId"></param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.Permissions.PermissionManager.CheckPermission(System.Reflection.Assembly[])">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroup.GroupID">
             <summary>
-            检查权限
+            来自外部系统的组标识
             </summary>
         </member>
-        <member name="M:Buffalo.Permissions.PermissionManager.CheckModelInfo(System.Collections.Generic.Dictionary{System.String,Buffalo.Permissions.PermissionsInfo.BPSysModel},Buffalo.Permissions.PermissionsInfo.BPSysModel)">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroup.GroupName">
             <summary>
-            检查模块信息
+            来自外部系统的表名
             </summary>
-            <param name="dicModel">系统模块</param>
-            <param name="model">现存模块</param>
         </member>
         <member name="T:Buffalo.Permissions.PermissionsInfo.BPGroupModelRight">
             <summary>
@@ -592,63 +536,88 @@
             此组的子项权限
             </summary>
         </member>
-        <member name="T:Buffalo.Permissions.PermissionContainer">
+        <member name="T:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight">
             <summary>
-            权限容器
+             模块子项权限
+            </summary>
+            <summary>
+            模块子项权限
             </summary>
         </member>
-        <member name="T:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem">
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._modelItemId">
             <summary>
-             子模块权限
+            子模块ID
             </summary>
         </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.#ctor(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.String)">
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._groupId">
             <summary>
-            初始化本类的信息
-            </summary>
-            <param name="parent">父表信息</param>
-            <param name="propertyName">属性名</param>
-        </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.#ctor(System.Type,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.String)">
-            <summary>
-            初始化本类的信息
-            </summary>
-            <param name="parent">父表信息</param>
-            <param name="propertyName">属性名</param>
-        </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.#ctor">
-            <summary>
-            初始化本类的信息
+            组ID
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.SysModelId">
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._groupModelRightId">
             <summary>
-            所属模块ID
+            所属的模块权限记录ID
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.ItemName">
-            <summary>
-            子项名
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.ItemDescription">
-            <summary>
-            子项注释
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.ItemIdentify">
-            <summary>
-            子项标识
-            </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.DefaultRight">
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._itemRight">
             <summary>
             项权限
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModelItem.BelongModel">
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._belongItem">
             <summary>
-            所属模块
+            所属子项
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._belongGroup">
+            <summary>
+            所属分组
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight._belongGroupModelRight">
+            <summary>
+            所属的模块权限记录
+            </summary>
+        </member>
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.GetContext">
+            <summary>
+            获取查询关联类
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.ModelItemId">
+            <summary>
+            子模块ID
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.GroupId">
+            <summary>
+            组ID
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.ItemRight">
+            <summary>
+            项权限
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.BelongItem">
+            <summary>
+            所属子项
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.BelongGroup">
+            <summary>
+            所属分组
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.GroupModelRightId">
+            <summary>
+            所属的模块权限记录
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight.BelongGroupModelRight">
+            <summary>
+            所属的模块权限记录
             </summary>
         </member>
         <member name="T:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroup">
@@ -685,113 +654,144 @@
             来自外部系统的表名
             </summary>
         </member>
-        <member name="T:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight">
+        <member name="T:Buffalo.Permissions.PermissionsInfo.BPModelItemRight">
             <summary>
-             模块子项权限
+            子模块权限
             </summary>
         </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.#ctor(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.String)">
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPModelItemRight.None">
             <summary>
-            初始化本类的信息
-            </summary>
-            <param name="parent">父表信息</param>
-            <param name="propertyName">属性名</param>
-        </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.#ctor(System.Type,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.String)">
-            <summary>
-            初始化本类的信息
-            </summary>
-            <param name="parent">父表信息</param>
-            <param name="propertyName">属性名</param>
-        </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.#ctor">
-            <summary>
-            初始化本类的信息
+            无
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.ModelItemId">
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPModelItemRight.Use">
             <summary>
-            子模块ID
+            使用
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.GroupId">
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPModelItemRight.Authorization">
             <summary>
-            组ID
+            被授权使用
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.GroupModelRightId">
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPModelItemRight.Disable">
             <summary>
-            所属的模块权限记录ID
+            禁用
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.ItemRight">
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPModelItemRight.AuthorizationTo">
+            <summary>
+            授权他人使用
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPModelItemRight.All">
+            <summary>
+            所有权限
+            </summary>
+        </member>
+        <member name="T:Buffalo.Permissions.PermissionContainer">
+            <summary>
+            权限容器
+            </summary>
+        </member>
+        <member name="T:Buffalo.Permissions.PermissionsInfo.BPSysModelItem">
+            <summary>
+            子模块权限
+            </summary>
+            <summary>
+             子模块权限
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPSysModelItem._sysModelId">
+            <summary>
+            所属模块ID
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPSysModelItem._itemName">
+            <summary>
+            子项名
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPSysModelItem._itemDescription">
+            <summary>
+            子项注释
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPSysModelItem._belongModel">
+            <summary>
+            所属模块
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPSysModelItem._itemIdentify">
+            <summary>
+            子项标识
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.PermissionsInfo.BPSysModelItem._defaultRight">
             <summary>
             项权限
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.BelongItem">
+        <member name="M:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.GetContext">
             <summary>
-            所属子项
+            获取查询关联类
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.SysModelId">
+            <summary>
+            所属模块ID
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.BelongGroup">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.ItemName">
             <summary>
-            所属分组
+            子项名
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPGroupItemRight.BelongGroupModelRight">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.ItemDescription">
             <summary>
-            所属的模块权限记录
+            子项注释
             </summary>
         </member>
-        <member name="T:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.BelongModel">
             <summary>
-             系统模块
+            所属模块
             </summary>
         </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.#ctor(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.String)">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.ItemIdentify">
             <summary>
-            初始化本类的信息
-            </summary>
-            <param name="parent">父表信息</param>
-            <param name="propertyName">属性名</param>
-        </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.#ctor(System.Type,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.String)">
-            <summary>
-            初始化本类的信息
-            </summary>
-            <param name="parent">父表信息</param>
-            <param name="propertyName">属性名</param>
-        </member>
-        <member name="M:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.#ctor">
-            <summary>
-            初始化本类的信息
+            子项标识
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.ModelIdentify">
+        <member name="P:Buffalo.Permissions.PermissionsInfo.BPSysModelItem.DefaultRight">
             <summary>
-            模块标识
+            项权限
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.ModelName">
+        <member name="T:Buffalo.Permissions.PermissionManager">
             <summary>
-            模块名称
+            项目权限检查
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.ModelDescription">
+        <member name="M:Buffalo.Permissions.PermissionManager.AddUserGroup(System.String,System.String)">
             <summary>
-            模块注释
+            添加用户组
+            </summary>
+            <param name="groupId">组标识(组ID)</param>
+            <param name="groupName">组名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Permissions.PermissionManager.CheckPermission(System.Reflection.Assembly[])">
+            <summary>
+            检查权限
             </summary>
         </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.ModelType">
+        <member name="M:Buffalo.Permissions.PermissionManager.CheckModelInfo(System.Collections.Generic.Dictionary{System.String,Buffalo.Permissions.PermissionsInfo.BPSysModel},Buffalo.Permissions.PermissionsInfo.BPSysModel)">
             <summary>
-            模块分类
+            检查模块信息
             </summary>
-        </member>
-        <member name="P:Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB_BPSysModel.DefaultModelRight">
-            <summary>
-            默认权限
-            </summary>
+            <param name="dicModel">系统模块</param>
+            <param name="model">现存模块</param>
         </member>
     </members>
 </doc>

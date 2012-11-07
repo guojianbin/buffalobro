@@ -648,6 +648,14 @@
             DllInvoke 的摘要说明
             </summary>
         </member>
+        <member name="M:Buffalo.Kernel.DllInvoke.Invoke(System.String,System.Type)">
+            <summary>
+            将要执行的函数转换为委托
+            </summary>
+            <param name="APIName"></param>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
         <member name="P:Buffalo.Kernel.EnumInfo.Value">
             <summary>
             值

@@ -279,8 +279,10 @@ namespace Buffalo.DB.BQLCommon
 
                 finally
                 {
-                    reader.Close();
-
+                    if (reader != null)
+                    {
+                        reader.Close();
+                    }
                 }
             }
             return retlist;
