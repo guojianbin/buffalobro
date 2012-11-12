@@ -8,7 +8,7 @@ namespace ModelCompiler
     {
 
         #region ICodeOutputer ≥…‘±
-        public string[] GetCode(Queue<ExpressionItem> queitem)
+        public List<string> GetCode(Queue<ExpressionItem> queitem)
         {
             List<string> lst=new List<string>();
             while (queitem.Count > 0) 
@@ -23,7 +23,7 @@ namespace ModelCompiler
                         break;
                 }
             }
-            return lst.ToArray();
+            return lst;
         }
 
         #endregion

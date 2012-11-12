@@ -11,42 +11,27 @@ namespace ModelCompiler
     /// </summary>
     public class ModelCompiler
     {
-        private StringReader _content;
 
-        
-        /// <summary>
-        /// 生成的代码存放容器
-        /// </summary>
-        private StringBuilder _sbContainer = new StringBuilder();
+        private CodesManger man = new CodesManger();
+        string _content;
         /// <summary>
         /// 模版到代码的转换器
         /// </summary>
         /// <param name="content">模版内容</param>
         public ModelCompiler(string content) 
         {
-            _content = new StringReader(content);
-           
+            _content = content;
         }
 
-        private void Tran() 
-        {
-            string tmp = null;
-            while ((tmp = _content.ReadLine()) != null) 
-            {
-                if (tmp.IndexOf("<#script") >= 0) 
-                {
-                    TranScript(tmp);
-                }
-            }
-        }
 
         /// <summary>
         /// 处理Script标签
         /// </summary>
-        private void TranScript(string tag) 
+        public string TranScript() 
         {
-            string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>[^<]+)</[#]script>";
-            MatchCollection matches = new Regex(strRef).Matches(tag);
+            //string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>[^<]+)</[#]script>";
+            string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>(.*?))</[#]script>";
+            MatchCollection matches = new Regex(strRef).Matches(_content);
             foreach (Match ma in matches)
             {
                 if (ma.Groups["type"] == null) 
@@ -54,12 +39,35 @@ namespace ModelCompiler
                     continue;
                 }
                 string type = ma.Groups["type"].Value;
+                string content=ma.Groups["content"].Value;
+                Compiler com=new Compiler(content);
+                Queue<ExpressionItem> queitem=com.ExpressionItems;
                 if (type.Equals("linked",StringComparison.CurrentCultureIgnoreCase)) 
                 {
-                    
-                    
+                    LinkOutputer outputer = new LinkOutputer();
+                    List<string> str = outputer.GetCode(queitem);
+                    man.Link.AddRange(str);
+                }
+                else if (type.Equals("using", StringComparison.CurrentCultureIgnoreCase)) 
+                {
+                    UsingOutputer outputer = new UsingOutputer();
+                    string str = outputer.GetCode(queitem);
+                    man.Using.Append(str);
+                }
+                else if (type.Equals("code", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    CodeOutputer outputer = new CodeOutputer();
+                    string str = outputer.GetCode(queitem);
+                    man.Code.Append(str);
+                }
+                else if (type.Equals("method", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    MethodOutputer outputer = new MethodOutputer();
+                    string str = outputer.GetCode(queitem);
+                    man.Method.Append(str);
                 }
             }
+            return null;
         }
         
     }

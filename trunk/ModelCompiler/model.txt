@@ -5,9 +5,10 @@ abc.dll
 <#script type="using">
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text
 </#script>
-<#script type="output">
+
+<#script type="code">
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,7 +25,8 @@ public class <?=className?>
     }
 }
 </#script>
-<#script type="code">
+
+<#script type="method">
 private string GetInfo(int num)
 {
     return "D" + num;

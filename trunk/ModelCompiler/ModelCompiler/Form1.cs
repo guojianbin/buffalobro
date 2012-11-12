@@ -19,9 +19,9 @@ namespace ModelCompiler
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string content = File.ReadAllText(@"E:\CShareTest\Buffalobro\ModelCompiler\model.txt");
-            Compiler com = new Compiler(content);
-            Queue<ExpressionItem> item = com.ExpressionItems;
+            string content = File.ReadAllText(@"E:\CShareTest\Buffalobro\ModelCompiler\model.txt",System.Text.Encoding.Default);
+            ModelCompiler com = new ModelCompiler(content);
+            com.TranScript();
         }
     }
 }

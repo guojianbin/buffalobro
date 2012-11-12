@@ -10,6 +10,6 @@ namespace ModelCompiler
         /// ЛёШЁДњТы
         /// </summary>
         /// <returns></returns>
-        public string GetCode(Queue<ExpressionItem> queitem);
+        string GetCode(Queue<ExpressionItem> queitem);
     }
 }

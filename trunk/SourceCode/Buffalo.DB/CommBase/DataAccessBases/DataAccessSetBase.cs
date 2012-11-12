@@ -65,69 +65,71 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             ///读取属性别名
             foreach (EntityPropertyInfo info in EntityInfo.PropertyInfo)
             {
-                if (info.ReadOnly) 
-                {
-                    continue;
-                }
+
+
                 object curValue = info.GetValue(obj);
-
-                if (optimisticConcurrency == true && info.IsVersion) //并发控制
+                if (!info.ReadOnly)
                 {
+                    if (optimisticConcurrency == true && info.IsVersion) //并发控制
+                    {
 
-                    object newValue = FillUpdateConcurrency(sql, info, list, curValue, ref index);
-                    FillWhereConcurrency(where, info, list, curValue, ref index);
-                    if (lstVersionInfo == null)
-                    {
-                        lstVersionInfo = new List<VersionInfo>();
-                    }
-                    lstVersionInfo.Add(new VersionInfo(info, curValue, newValue));//添加信息
-                }
-                else
-                {
-                    //string paramVal = CurEntityInfo.DBInfo.CurrentDbAdapter.FormatValueName(DataAccessCommon.FormatParam(info.ParamName, index));
-                    //string paramKey = CurEntityInfo.DBInfo.CurrentDbAdapter.FormatParamKeyName(DataAccessCommon.FormatParam(info.ParamName, index));
-                    if (info.IsNormal)
-                    {
-                        if (obj._dicUpdateProperty___ == null || obj._dicUpdateProperty___.Count == 0)
+                        object newValue = FillUpdateConcurrency(sql, info, list, curValue, ref index);
+                        FillWhereConcurrency(where, info, list, curValue, ref index);
+                        if (lstVersionInfo == null)
                         {
-                            if (DefaultType.IsDefaultValue(curValue))
+                            lstVersionInfo = new List<VersionInfo>();
+                        }
+                        lstVersionInfo.Add(new VersionInfo(info, curValue, newValue));//添加信息
+                    }
+                    else
+                    {
+                        //string paramVal = CurEntityInfo.DBInfo.CurrentDbAdapter.FormatValueName(DataAccessCommon.FormatParam(info.ParamName, index));
+                        //string paramKey = CurEntityInfo.DBInfo.CurrentDbAdapter.FormatParamKeyName(DataAccessCommon.FormatParam(info.ParamName, index));
+                        if (info.IsNormal)
+                        {
+                            if (obj._dicUpdateProperty___ == null || obj._dicUpdateProperty___.Count == 0)
+                            {
+                                if (DefaultType.IsDefaultValue(curValue))
+                                {
+                                    continue;
+                                }
+                            }
+                            else if (!obj._dicUpdateProperty___.ContainsKey(info.PropertyName))
                             {
                                 continue;
                             }
-                        }
-                        else if (!obj._dicUpdateProperty___.ContainsKey(info.PropertyName))
-                        {
-                            continue;
-                        }
 
-                        sql.Append(",");
-                        sql.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
-                        sql.Append("=");
-                        if (curValue != null)
-                        {
-                            DBParameter dbPrm = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
-                            sql.Append(dbPrm.ValueName);
-                        }
-                        else
-                        {
-                            sql.Append("null");
+                            sql.Append(",");
+                            sql.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
+                            sql.Append("=");
+                            if (curValue != null)
+                            {
+                                DBParameter dbPrm = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
+                                sql.Append(dbPrm.ValueName);
+                            }
+                            else
+                            {
+                                sql.Append("null");
+                            }
                         }
                     }
-                    else if (info.IsPrimaryKey)
-                    {
-                        if (DefaultType.IsDefaultValue(curValue))
-                        {
-                            continue;
-                        }
-                        DBParameter dbPrm = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
-                        where.Append(" and ");
-                        where.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
-                        where.Append("=");
-                        where.Append(dbPrm.ValueName);
-                        //primaryKeyValue=curValue;
-                    }
-                    index++;
                 }
+
+                if (info.IsPrimaryKey)
+                {
+                    if (DefaultType.IsDefaultValue(curValue))
+                    {
+                        continue;
+                    }
+                    DBParameter dbPrm = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
+                    where.Append(" and ");
+                    where.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
+                    where.Append("=");
+                    where.Append(dbPrm.ValueName);
+                    //primaryKeyValue=curValue;
+                }
+                index++;
+
 
 
             }
