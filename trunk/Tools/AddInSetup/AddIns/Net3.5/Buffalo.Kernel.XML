@@ -889,6 +889,13 @@
             发送源邮箱登录名
             </summary>
         </member>
+        <member name="M:Buffalo.Kernel.FastReflection.ClassInfos.ProxyObject.#ctor(System.String,System.String,System.String,System.Object[])">
+            <summary>
+            加载类型
+            </summary>
+            <param name="filePath">文件名</param>
+            <param name="TypeName">类名</param>
+        </member>
         <member name="M:Buffalo.Kernel.FastReflection.ClassInfos.ProxyObject.#ctor(System.String,System.String,System.Object[])">
             <summary>
             加载类型

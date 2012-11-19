@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace ModelCompiler
 {
@@ -13,7 +14,8 @@ namespace ModelCompiler
     {
 
         private CodesManger man = new CodesManger();
-        string _content;
+        private string _content;
+        private string _workspace;
         /// <summary>
         /// 模版到代码的转换器
         /// </summary>
@@ -27,7 +29,7 @@ namespace ModelCompiler
         /// <summary>
         /// 处理Script标签
         /// </summary>
-        public string TranScript() 
+        private string TranScript() 
         {
             //string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>[^<]+)</[#]script>";
             string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>(.*?))</[#]script>";
@@ -40,7 +42,7 @@ namespace ModelCompiler
                 }
                 string type = ma.Groups["type"].Value;
                 string content=ma.Groups["content"].Value;
-                Compiler com=new Compiler(content);
+                CodeGeneration com=new CodeGeneration(content);
                 Queue<ExpressionItem> queitem=com.ExpressionItems;
                 if (type.Equals("linked",StringComparison.CurrentCultureIgnoreCase)) 
                 {
@@ -67,8 +69,29 @@ namespace ModelCompiler
                     man.Method.Append(str);
                 }
             }
-            return null;
+            return man.ToCode();
         }
-        
+
+        /// <summary>
+        /// 获取编译运行后的代码
+        /// </summary>
+        /// <param name="errorMessage">如果出错此为信息</param>
+        /// <returns></returns>
+        public string GetContent(StringBuilder errorMessage) 
+        {
+            string code = TranScript();
+            string ret = null;
+            Type objType = SourceCodeCompiler.DoCompiler(code, "ModelCompilerItems.CompilerClass", errorMessage);
+            if (objType != null) 
+            {
+                object comObject=Activator.CreateInstance(objType);
+                MethodInfo mi = objType.GetMethod("DoCompiler");
+                if (mi != null) 
+                {
+                    ret = mi.Invoke(comObject, new object[] {"NewClass1" }) as string;
+                }
+            }
+            return ret;
+        }
     }
 }

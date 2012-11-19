@@ -19,9 +19,21 @@ namespace ModelCompiler
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string content = File.ReadAllText(@"E:\CShareTest\Buffalobro\ModelCompiler\model.txt",System.Text.Encoding.Default);
+            richTextBox1.Text="";
+            string modelName=@"E:\CShareTest\Buffalobro\ModelCompiler\model.txt";
+            string content = File.ReadAllText(modelName,System.Text.Encoding.Default);
             ModelCompiler com = new ModelCompiler(content);
-            com.TranScript();
+            StringBuilder err = new StringBuilder(2000);
+            string code=com.GetContent(err);
+            if (string.IsNullOrEmpty(code))
+            {
+                richTextBox1.AppendText("´íÎó:\n");
+                richTextBox1.AppendText(err.ToString());
+            }
+            else 
+            {
+                richTextBox1.Text = code;
+            }
         }
     }
 }

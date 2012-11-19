@@ -3,9 +3,7 @@ abc.dll
 </#script>
 
 <#script type="using">
-using System;
-using System.Collections.Generic;
-using System.Text
+
 </#script>
 
 <#script type="code">
@@ -19,7 +17,7 @@ public class <?=className?>
         StringBuilder sb=new StringBuilder();
         <? for(int i=0;i<10;i++){
         ?>
-            sb.Append("第<?=GetInfo(i) %>行");
+            sb.Append("第<?=GetInfo(i) ?>行");
         <? } ?>
         return sb.ToString();
     }

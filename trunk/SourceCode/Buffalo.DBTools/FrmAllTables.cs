@@ -81,13 +81,16 @@ namespace Buffalo.DBTools
         /// <summary>
         /// 当前表集合
         /// </summary>
-        BindingCollection<DBTableInfo> _curLst;
-
+        List<DBTableInfo> _curLst;
+        /// <summary>
+        /// 查找的表名
+        /// </summary>
+        string _searchName;
         private void FrmAllTables_Load(object sender, EventArgs e)
         {
             gvTables.AutoGenerateColumns = false;
             DBInfo info = DbInfo.CreateDBInfo();
-            _curLst =new BindingCollection<DBTableInfo>(TableChecker.GetAllTables(info));
+            _curLst =TableChecker.GetAllTables(info);
             gvTables.AllowUserToOrderColumns = true;
             RefreashTablesInfo();
         }
@@ -101,11 +104,44 @@ namespace Buffalo.DBTools
             if (_curLst != null && _curLst.Count > 0)
             {
 
-                gvTables.DataSource = _curLst;
+                gvTables.DataSource = FilterTableInfo();
             }
             //RefreashExistsInfo();
             
 
+        }
+
+        /// <summary>
+        /// 筛选表信息
+        /// </summary>
+        private BindingCollection<DBTableInfo> FilterTableInfo() 
+        {
+            ClearTableCheck();
+            if (string.IsNullOrEmpty(_searchName) || string.IsNullOrEmpty(_searchName.Trim()))
+            {
+                return new BindingCollection<DBTableInfo>(_curLst);
+            }
+            BindingCollection<DBTableInfo> lst = new BindingCollection<DBTableInfo>();
+            foreach( DBTableInfo info in _curLst)
+            {
+                if (info.Name.IndexOf(_searchName,StringComparison.CurrentCultureIgnoreCase) >= 0) 
+                {
+                    lst.Add(info);
+                }
+            }
+            
+            return lst;
+        }
+
+        /// <summary>
+        /// 清空所有表的选中状态
+        /// </summary>
+        private void ClearTableCheck() 
+        {
+            foreach (DBTableInfo info in _curLst)
+            {
+                info.IsGenerate = false;
+            }
         }
 
         /// <summary>
@@ -254,6 +290,12 @@ namespace Buffalo.DBTools
                 DataGridViewCheckBoxCell cell = row.Cells["ColChecked"] as DataGridViewCheckBoxCell;
                 cell.Value = chkAll.Checked;
             }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            _searchName = txtSearch.Text;
+            RefreashTablesInfo();
         }
     }
 }

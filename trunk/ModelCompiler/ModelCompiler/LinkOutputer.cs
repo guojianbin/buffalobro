@@ -8,6 +8,16 @@ namespace ModelCompiler
     {
 
         #region ICodeOutputer 成员
+        ///// <summary>
+        ///// 过滤连接dll信息
+        ///// </summary>
+        ///// <param name="items"></param>
+        ///// <returns></returns>
+        //private string[] LinkFilter(string items) 
+        //{
+
+        //}
+
         public List<string> GetCode(Queue<ExpressionItem> queitem)
         {
             List<string> lst=new List<string>();

@@ -32,6 +32,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAllTables));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSubmit = new System.Windows.Forms.Button();
@@ -50,12 +53,41 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnSearch);
+            this.panel1.Controls.Add(this.txtSearch);
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 430);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(584, 32);
             this.panel1.TabIndex = 0;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(209, 5);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(44, 23);
+            this.btnSearch.TabIndex = 2;
+            this.btnSearch.Text = "搜索";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(51, 6);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(152, 21);
+            this.txtSearch.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 10);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 12);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "表名:";
             // 
             // panel3
             // 
@@ -137,8 +169,8 @@
             this.gvTables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gvTables.Size = new System.Drawing.Size(584, 430);
             this.gvTables.TabIndex = 0;
-            this.gvTables.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(gvTables_RowPrePaint);
             this.gvTables.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gvTables_CellMouseUp);
+            this.gvTables.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.gvTables_RowPrePaint);
             // 
             // ColChecked
             // 
@@ -184,6 +216,7 @@
             this.Text = "Buffalo助手--选择要生成的表";
             this.Load += new System.EventHandler(this.FrmAllTables_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -207,5 +240,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColTableNames;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColExists;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColType;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Label label1;
     }
 }

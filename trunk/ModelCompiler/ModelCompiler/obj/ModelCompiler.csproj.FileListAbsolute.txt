@@ -14,3 +14,6 @@ E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ModelCompiler.Pro
 E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\obj\Debug\ModelCompiler.csproj.GenerateResource.Cache
 E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\bin\Debug\ModelCompiler.exe
 E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\bin\Debug\ModelCompiler.pdb
+E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\bin\Debug\Buffalo.Kernel.dll
+E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\bin\Debug\Buffalo.Kernel.pdb
+E:\CShareTest\Buffalobro\ModelCompiler\ModelCompiler\bin\Debug\Buffalo.Kernel.xml

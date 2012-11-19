@@ -2142,9 +2142,24 @@
             当前表集合
             </summary>
         </member>
+        <member name="F:Buffalo.DBTools.FrmAllTables._searchName">
+            <summary>
+            查找的表名
+            </summary>
+        </member>
         <member name="M:Buffalo.DBTools.FrmAllTables.RefreashTablesInfo">
             <summary>
             刷新表状态
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.FrmAllTables.FilterTableInfo">
+            <summary>
+            筛选表信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.FrmAllTables.ClearTableCheck">
+            <summary>
+            清空所有表的选中状态
             </summary>
         </member>
         <member name="M:Buffalo.DBTools.FrmAllTables.RefreashExistsInfo">

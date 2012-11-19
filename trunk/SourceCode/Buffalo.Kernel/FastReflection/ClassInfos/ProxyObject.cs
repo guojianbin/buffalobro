@@ -2,24 +2,44 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
+using System.IO;
 namespace Buffalo.Kernel.FastReflection.ClassInfos
 {
     public class ProxyObject : MarshalByRefObject,IDisposable
     {
-        ClassInfoHandle _classHandle = null;
-        object instance;//实例
-        AppDomain app;
+        private ClassInfoHandle _classHandle = null;
+        private object _instance;//实例
+        private AppDomain _app;
         /// <summary>
         /// 加载类型
         /// </summary>
         /// <param name="filePath">文件名</param>
         /// <param name="TypeName">类名</param>
-        public ProxyObject(string filePath,string TypeName,params object[] args)
+        public ProxyObject(string filePath, string TypeName, string domainName, params object[] args)
         {
-            Assembly assembly = Assembly.LoadFrom(filePath);
-            
+            Assembly assembly = null;
+            if (!string.IsNullOrEmpty(domainName))
+            {
+                _app = AppDomain.CreateDomain(domainName);
+
+                assembly = _app.Load(File.ReadAllBytes(filePath));
+            }
+            else 
+            {
+                 assembly = Assembly.LoadFrom(filePath);
+            }
             Type tp = assembly.GetType(TypeName);
             Init(tp,args);
+        }
+        /// <summary>
+        /// 加载类型
+        /// </summary>
+        /// <param name="filePath">文件名</param>
+        /// <param name="TypeName">类名</param>
+        public ProxyObject(string filePath, string TypeName, params object[] args)
+            :this(filePath,TypeName,null,args)
+        {
+            
         }
         /// <summary>
         /// 加载类型
@@ -28,8 +48,15 @@ namespace Buffalo.Kernel.FastReflection.ClassInfos
         /// <param name="TypeName">类名</param>
         public ProxyObject(byte[] dllContent, string TypeName,string domainName, params object[] args)
         {
-            app=AppDomain.CreateDomain(domainName);
-            Assembly assembly = app.Load(dllContent);
+            if (!string.IsNullOrEmpty(domainName))
+            {
+                _app = AppDomain.CreateDomain(domainName);
+            }
+            else 
+            {
+                _app = AppDomain.CreateDomain("domain" + TypeName);
+            }
+            Assembly assembly = _app.Load(dllContent);
             Type tp = assembly.GetType(TypeName);
             Init(tp, args);
             
@@ -40,11 +67,8 @@ namespace Buffalo.Kernel.FastReflection.ClassInfos
         /// <param name="dllContent">文件内容</param>
         /// <param name="TypeName">类名</param>
         public ProxyObject(byte[] dllContent, string TypeName, params object[] args)
+            :this(dllContent,TypeName,null,args)
         {
-            app = AppDomain.CreateDomain("domain"+TypeName);
-            Assembly assembly = app.Load(dllContent);
-            Type tp = assembly.GetType(TypeName);
-            Init(tp, args);
 
         }
         /// <summary>
@@ -75,7 +99,7 @@ namespace Buffalo.Kernel.FastReflection.ClassInfos
         {
             
             _classHandle = ClassInfoManager.GetClassHandle(tp);
-            instance = Activator.CreateInstance(tp,args);
+            _instance = Activator.CreateInstance(tp,args);
         }
 
         /// <summary>
@@ -87,7 +111,7 @@ namespace Buffalo.Kernel.FastReflection.ClassInfos
         public object Invoke(string methodName, params object[] args)
         {
             FastInvokeHandler fhandle = FastValueGetSet.GetCustomerMethodInfo(_classHandle.ClassType, methodName, GetParamTypes(args));
-            return fhandle.Invoke(instance, args);
+            return fhandle.Invoke(_instance, args);
         }
 
         /// <summary>
@@ -117,11 +141,11 @@ namespace Buffalo.Kernel.FastReflection.ClassInfos
         {
             get 
             {
-                return _classHandle.PropertyInfo[propertyName].GetValue(instance);
+                return _classHandle.PropertyInfo[propertyName].GetValue(_instance);
             }
             set 
             {
-                 _classHandle.PropertyInfo[propertyName].SetValue(value,instance);
+                 _classHandle.PropertyInfo[propertyName].SetValue(value,_instance);
             }
         }
 
@@ -138,9 +162,9 @@ namespace Buffalo.Kernel.FastReflection.ClassInfos
 
         public void Dispose()
         {
-            if (app != null) 
+            if (_app != null) 
             {
-                AppDomain.Unload(app);
+                AppDomain.Unload(_app);
             }
             GC.SuppressFinalize(this);
         }
