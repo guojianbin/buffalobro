@@ -1,9 +1,9 @@
 <#script type="linked">
-abc.dll
+{BasePath}\dll\Buffalo.Kernel.dll
 </#script>
 
 <#script type="using">
-
+using Buffalo.Kernel;
 </#script>
 
 <#script type="code">
@@ -22,6 +22,8 @@ public class <?=className?>
         return sb.ToString();
     }
 }
+
+<?=CommonMethods.GuidToString(Guid.NewGuid())?>
 </#script>
 
 <#script type="method">

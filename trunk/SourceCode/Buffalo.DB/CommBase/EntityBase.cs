@@ -196,6 +196,8 @@ namespace Buffalo.DB.CommBase
             FieldCloneHelper.CopyTo(this, target);
         }
 
+        
+
         #region ICloneable ≥…‘±
 
         public object Clone()

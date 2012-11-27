@@ -21,12 +21,15 @@ namespace ModelCompiler
         {
             richTextBox1.Text="";
             string modelName=@"E:\CShareTest\Buffalobro\ModelCompiler\model.txt";
+
+            FileInfo info=new FileInfo(modelName);
             string content = File.ReadAllText(modelName,System.Text.Encoding.Default);
-            ModelCompiler com = new ModelCompiler(content);
+            ModelCompiler com = new ModelCompiler(content, info.DirectoryName);
             StringBuilder err = new StringBuilder(2000);
             string code=com.GetContent(err);
             if (string.IsNullOrEmpty(code))
             {
+                
                 richTextBox1.AppendText("´íÎó:\n");
                 richTextBox1.AppendText(err.ToString());
             }

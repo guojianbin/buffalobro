@@ -197,6 +197,19 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="ROMHelper\DBEntityInfo.cs" />
+    <Compile Include="UIHelper\ModelLoader\CodeGeneration.cs" />
+    <Compile Include="UIHelper\ModelLoader\CodeOutputer.cs" />
+    <Compile Include="UIHelper\ModelLoader\CodesManger.cs" />
+    <Compile Include="UIHelper\ModelLoader\Compiler.cs" />
+    <Compile Include="UIHelper\ModelLoader\ExpressionItem.cs" />
+    <Compile Include="UIHelper\ModelLoader\ExpressionType.cs" />
+    <Compile Include="UIHelper\ModelLoader\ICodeOutputer.cs" />
+    <Compile Include="UIHelper\ModelLoader\LinkOutputer.cs" />
+    <Compile Include="UIHelper\ModelLoader\MethodOutputer.cs" />
+    <Compile Include="UIHelper\ModelLoader\ModelCompiler.cs" />
+    <Compile Include="UIHelper\ModelLoader\SourceCodeCompiler.cs" />
+    <Compile Include="UIHelper\ModelLoader\UsingOutputer.cs" />
+    <Compile Include="UIHelper\UIModelItem.cs" />
     <Content Include="Resources\BQLDB.txt" />
     <Content Include="Resources\BQLEntity.txt" />
     <Content Include="Resources\BQLDataAccess.txt" />
@@ -291,6 +304,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\ClassDiagram.txt" />
+    <Content Include="Resources\UIConfigItem.xml" />
     <Content Include="slogo.ico" />
     <None Include="Resources\logo.jpg" />
     <None Include="Resources\slogoico.ico" />

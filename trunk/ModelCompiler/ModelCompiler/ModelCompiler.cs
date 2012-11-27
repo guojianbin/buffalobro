@@ -20,9 +20,10 @@ namespace ModelCompiler
         /// 模版到代码的转换器
         /// </summary>
         /// <param name="content">模版内容</param>
-        public ModelCompiler(string content) 
+        public ModelCompiler(string content,string workspace) 
         {
             _content = content;
+            _workspace = workspace;
         }
 
 
@@ -47,7 +48,7 @@ namespace ModelCompiler
                 if (type.Equals("linked",StringComparison.CurrentCultureIgnoreCase)) 
                 {
                     LinkOutputer outputer = new LinkOutputer();
-                    List<string> str = outputer.GetCode(queitem);
+                    List<string> str = outputer.GetCode(queitem,_workspace);
                     man.Link.AddRange(str);
                 }
                 else if (type.Equals("using", StringComparison.CurrentCultureIgnoreCase)) 
@@ -81,7 +82,7 @@ namespace ModelCompiler
         {
             string code = TranScript();
             string ret = null;
-            Type objType = SourceCodeCompiler.DoCompiler(code, "ModelCompilerItems.CompilerClass", errorMessage);
+            Type objType = SourceCodeCompiler.DoCompiler(code, "ModelCompilerItems.CompilerClass", man.Link, errorMessage);
             if (objType != null) 
             {
                 object comObject=Activator.CreateInstance(objType);

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using Buffalo.Kernel.FastReflection;
+using System.Runtime.Serialization;
+using Buffalo.Kernel.Defaults;
 
 namespace Buffalo.Kernel
 {
@@ -11,7 +13,8 @@ namespace Buffalo.Kernel
     /// </summary>
     public class FieldCloneHelper
     {
-        private static Dictionary<string, List<FieldInfoHandle>> _dicFieldInfo = new Dictionary<string, List<FieldInfoHandle>>();
+        private static Dictionary<string, List<FieldInfoHandle>> _dicFieldInfo 
+            = new Dictionary<string, List<FieldInfoHandle>>();
 
 
         /// <summary>
@@ -54,6 +57,9 @@ namespace Buffalo.Kernel
         {
             string key = objType.FullName;
             List<FieldInfoHandle> ret = null;
+
+           
+            
             if (!_dicFieldInfo.TryGetValue(key, out ret)) 
             {
                 ret = new List<FieldInfoHandle>();
@@ -66,10 +72,12 @@ namespace Buffalo.Kernel
                     FieldInfo[] fInfos = currentType.GetFields(FastValueGetSet.allBindingFlags);
                     foreach (FieldInfo finfo in fInfos)
                     {
+
                         GetFieldValueHandle getHandle=FastFieldGetSet.GetGetValueHandle(finfo);
                         SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finfo);
                         FieldInfoHandle handle = new FieldInfoHandle(objType, getHandle, setHandle, finfo.FieldType, finfo.Name);
                         ret.Add(handle);
+                        
                     }
                     currentType = currentType.BaseType;
                     if (currentType == typeof(object)) 
@@ -77,11 +85,12 @@ namespace Buffalo.Kernel
                         break;
                     }
                 }
-
-
             }
+            
             return ret;
         }
+
+  
 
     }
 }

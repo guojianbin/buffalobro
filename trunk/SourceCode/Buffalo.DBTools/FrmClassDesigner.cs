@@ -106,17 +106,17 @@ namespace Buffalo.DBTools
             }
         }
 
-        private void BindFieldInfos() 
+        private void BindFieldInfos()
         {
             txtClassName.Text = _config.ClassName;
             txtTableName.Text = _config.TableName;
-            
-                txtBaseClass.Text = _config.BaseTypeName;
-            
+
+            txtBaseClass.Text = _config.BaseTypeName;
+
             gvField.DataSource = _config.EParamFields;
             gvMapping.DataSource = _config.ERelation;
 
-            for (int i = 0; i < gvField.Rows.Count; i++) 
+            for (int i = 0; i < gvField.Rows.Count; i++)
             {
                 FillDBRealType(i);
             }
