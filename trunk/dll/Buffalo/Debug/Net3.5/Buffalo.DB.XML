@@ -9535,7 +9535,7 @@
             <param name="lst"></param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.DBStructure.FillParam(Buffalo.DB.DataBaseAdapter.DBTableInfo,System.Data.IDataReader,System.String)">
+        <member name="M:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.DBStructure.FillParam(Buffalo.DB.DataBaseAdapter.DBTableInfo,System.Data.IDataReader,System.Collections.Generic.Dictionary{System.String,System.Boolean})">
             <summary>
             填充字段信息
             </summary>

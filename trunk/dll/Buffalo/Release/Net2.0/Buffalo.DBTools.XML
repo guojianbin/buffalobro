@@ -1685,6 +1685,19 @@
             选中的文档视图
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ICodeOutputer.GetCode(System.Collections.Generic.Queue{Buffalo.DBTools.UIHelper.ModelLoader.ExpressionItem})">
+            <summary>
+            获取代码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeOutputer.FilterCode(System.Text.StringBuilder)">
+            <summary>
+            处理字符
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
         <member name="F:Buffalo.DBTools.FrmProcess.components">
             <summary>
             Required designer variable.
@@ -1859,6 +1872,39 @@
         <member name="M:Buffalo.DBTools.HelperKernel.Generate3Tier.GenerateBQLDataAccess">
             <summary>
             生成BQL数据层
+            </summary>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.SourceCodeCompiler">
+            <summary>
+            源码编译器
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.SourceCodeCompiler.DoCompiler(System.String,System.String,System.Collections.Generic.List{System.String},System.Text.StringBuilder)">
+            <summary>
+            编译
+            </summary>
+            <param name="code">代码</param>
+            <param name="errorMessage">错误信息</param>
+            <returns></returns>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.ExpressionType">
+            <summary>
+            表达式类型
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.ModelLoader.ExpressionType.String">
+            <summary>
+            字符串
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.ModelLoader.ExpressionType.Express">
+            <summary>
+            表达式
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.ModelLoader.ExpressionType.Code">
+            <summary>
+            代码块
             </summary>
         </member>
         <member name="T:Buffalo.DBTools.Models">
@@ -2120,6 +2166,14 @@
             隐藏ComboBox
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.LinkOutputer.GetCode(System.Collections.Generic.Queue{Buffalo.DBTools.UIHelper.ModelLoader.ExpressionItem},System.String)">
+            <summary>
+            获取代码
+            </summary>
+            <param name="queitem"></param>
+            <param name="modelPath">模块路径</param>
+            <returns></returns>
+        </member>
         <member name="F:Buffalo.DBTools.FrmAllTables.components">
             <summary>
             必需的设计器变量。
@@ -2318,6 +2372,29 @@
             <param name="parent"></param>
             <returns></returns>
         </member>
+        <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler">
+            <summary>
+            模版到代码的转换器
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.#ctor(System.String,System.String)">
+            <summary>
+            模版到代码的转换器
+            </summary>
+            <param name="content">模版内容</param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.TranScript">
+            <summary>
+            处理Script标签
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.GetContent(System.Text.StringBuilder)">
+            <summary>
+            获取编译运行后的代码
+            </summary>
+            <param name="errorMessage">如果出错此为信息</param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.EntityRemoveHelper.RemoveFromProject(System.String,EnvDTE.Project)">
             <summary>
             从项目中删除文件
@@ -2463,6 +2540,94 @@
         <member name="P:Buffalo.DBTools.FrmClassDesigner.SelectDocView">
             <summary>
             选择的文档
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.Compiler.CompilerPart">
+            <summary>
+            处理代码块
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.Compiler.CompilerCode">
+            <summary>
+            解释代码块
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.Compiler.MoveNext">
+            <summary>
+            移动到下一个字符
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.Compiler.ExpressionItems">
+            <summary>
+            代码树
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.Compiler.CurrentChar">
+            <summary>
+            当前字符
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodesManger.GetUsingCode(System.Text.StringBuilder)">
+            <summary>
+            获取Using部分代码
+            </summary>
+            <param name="sbCode"></param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodesManger.GetGreanCode(System.Text.StringBuilder)">
+            <summary>
+            获取生成的代码
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.CodesManger.Link">
+            <summary>
+            关联类库
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.CodesManger.Using">
+            <summary>
+            需要using的类
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.CodesManger.Code">
+            <summary>
+            生成的输出模版
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.CodesManger.Method">
+            <summary>
+            函数块
+            </summary>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.CodeGeneration">
+            <summary>
+            代码生成
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeGeneration.CompilerPart">
+            <summary>
+            处理代码块
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeGeneration.CompilerCode">
+            <summary>
+            解释代码块
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeGeneration.MoveNext">
+            <summary>
+            移动到下一个字符
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.CodeGeneration.ExpressionItems">
+            <summary>
+            代码树
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.CodeGeneration.CurrentChar">
+            <summary>
+            当前字符
             </summary>
         </member>
         <member name="T:Buffalo.DBTools.Resource">
@@ -2894,6 +3059,11 @@
         <member name="P:Buffalo.DBTools.HelperKernel.DBConfigInfo.IsAllDal">
             <summary>
             是否生成所有数据层
+            </summary>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.UIModelItem">
+            <summary>
+            UI需要的信息
             </summary>
         </member>
         <member name="T:Buffalo.DBTools.HelperKernel.EntityRelationItem">
@@ -3478,6 +3648,21 @@
         <member name="T:Buffalo.DBTools.DBCreater.TableCreater">
             <summary>
             表生成
+            </summary>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.ExpressionItem">
+            <summary>
+            表达式项
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.ExpressionItem.Content">
+            <summary>
+            内容
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.ExpressionItem.Type">
+            <summary>
+            类型
             </summary>
         </member>
         <member name="T:Buffalo.DBTools.DocSummary.SummaryShowItem">

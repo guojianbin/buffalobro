@@ -142,7 +142,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             }
 
             List<DBTableInfo> lst = FillAllTableInfos(oper,info,tableNames);
-            Dictionary<string, string> dicPkMap = GetPrimaryKeyMap(oper, info, tableNames);
+            Dictionary<string, Dictionary<string,bool>> dicPkMap = GetPrimaryKeyMap(oper, info, tableNames);
             Dictionary<string, DBTableInfo> dicTables = new Dictionary<string, DBTableInfo>();
 
             foreach (DBTableInfo table in lst) 
@@ -154,7 +154,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
 
             using (IDataReader reader = oper.Query(sql.ToString(), new ParamList()))
             {
-
+                Dictionary<string, bool> dicPkNames = null;
                 while (reader.Read())
                 {
                     string tableName = reader["TABLE_NAME"] as string;
@@ -165,9 +165,15 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     DBTableInfo table = null;
                     if (dicTables.TryGetValue(tableName, out table))
                     {
-                        string pkName = null;
-                        dicPkMap.TryGetValue(tableName, out pkName);
-                        FillParam(table, reader, pkName);
+
+                        if (dicPkMap.TryGetValue(tableName, out dicPkNames))
+                        {
+                            FillParam(table, reader, dicPkNames);
+                        }
+                        else 
+                        {
+                            FillParam(table, reader, new Dictionary<string,bool>());
+                        }
                     }
                 }
             }
@@ -183,7 +189,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// </summary>
         /// <param name="lst"></param>
         /// <returns></returns>
-        private Dictionary<string, string> GetPrimaryKeyMap(DataBaseOperate oper, DBInfo info, IEnumerable<string> lst) 
+        private Dictionary<string, Dictionary<string,bool>> GetPrimaryKeyMap(DataBaseOperate oper, DBInfo info, IEnumerable<string> lst) 
         {
             string inTable = Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBStructure.AllInTableNames(lst);
             StringBuilder sql = new StringBuilder();
@@ -192,7 +198,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             {
                 sql.Append(" and au.table_name  in (" + inTable + ")");
             }
-            Dictionary<string, string> dic = new Dictionary<string, string>();
+            Dictionary<string, Dictionary<string, bool>> dic = new Dictionary<string, Dictionary<string, bool>>();
 
             using (IDataReader reader = oper.Query(sql.ToString(), new ParamList()))
             {
@@ -209,7 +215,14 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     {
                         continue;
                     }
-                    dic[tableName] = prmName;
+                    Dictionary<string, bool> dicKeys=null;
+                    dic.TryGetValue(tableName, out dicKeys);
+                    if (dicKeys == null) 
+                    {
+                        dicKeys = new Dictionary<string, bool>();
+                        dic[tableName] = dicKeys;
+                    }
+                    dicKeys[prmName] = true;
                 }
             }
             return dic;
@@ -220,7 +233,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// </summary>
         /// <param name="prm">×Ö¶ÎÐÅÏ¢</param>
         /// <param name="reader">reader</param>
-        private void FillParam(DBTableInfo table, IDataReader reader,string pkName)
+        private void FillParam(DBTableInfo table, IDataReader reader, Dictionary<string, bool> pkNames)
         {
             string prmName = reader["COLUMN_NAME"] as string;
             if (string.IsNullOrEmpty(prmName))
@@ -242,17 +255,17 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             EntityPropertyType type = EntityPropertyType.Normal;
             int isIdentity = 0;
             
-            if (pkName == prmName)
+            if (pkNames.ContainsKey(prmName))
             {
                 type = EntityPropertyType.PrimaryKey;
 
-                isIdentity = 1;
+                //isIdentity = 1;
 
             }
-            if (isIdentity == 1)
-            {
-                type = type | EntityPropertyType.Identity;
-            }
+            //if (isIdentity == 1)
+            //{
+            //    type = type | EntityPropertyType.Identity;
+            //}
             prm.PropertyType = type;
             prm.Length = Convert.ToInt64(reader["DATA_LENGTH"]);
             if (!table.IsView)
