@@ -171,18 +171,45 @@ namespace Buffalo.DBTools.HelperKernel
             set { _dbConfig = value; }
         }
 
+        /// <summary>
+        /// 获取基类短名
+        /// </summary>
+        /// <param name="baseType"></param>
+        /// <returns></returns>
+        private string GetBaseTypeShortName(string baseType) 
+        {
+            baseType = GetBaseTypeName(baseType);
+            int lastDot = baseType.LastIndexOf('.');
+            if (lastDot >= 0)
+            {
+                return baseType.Substring(lastDot + 1, baseType.Length - lastDot - 1);
+            }
+            return baseType;
+        }
+        /// <summary>
+        /// 获取基类名
+        /// </summary>
+        /// <returns></returns>
+        private string GetBaseTypeName(string baseType) 
+        {
+            int genTypeIndex = baseType.IndexOf('<');
+            if (genTypeIndex >= 0)
+            {
+                baseType = baseType.Substring(0, genTypeIndex);
+            }
+            return baseType;
+        }
+
         public GrneraterBase(DBEntityInfo entity,Project curProject) 
         {
             _table = entity.ToTableInfo();
             _className = entity.ClassName;
             _currentProject = curProject;
-            _entityBaseTypeName = entity.BaseType;
-            _entityBaseTypeShortName = entity.BaseType;
-            int lastDot = _entityBaseTypeShortName.LastIndexOf('.');
-            if (lastDot >= 0)
-            {
-                _entityBaseTypeShortName = _entityBaseTypeShortName.Substring(lastDot + 1, _entityBaseTypeShortName.Length - lastDot - 1);
-            }
+            _entityBaseTypeName = GetBaseTypeName(entity.BaseType);
+           
+
+            _entityBaseTypeShortName =GetBaseTypeShortName( entity.BaseType);
+           
             _entityFileName = entity.FileName;
             _entityNamespace = entity.EntityNamespace;
             _BQLEntityNamespace = entity.EntityNamespace + ".BQLEntity";
@@ -208,14 +235,10 @@ namespace Buffalo.DBTools.HelperKernel
             //_tableName = entity.TableName;
             _table = entity.ToTableInfo();
             _currentProject = entity.CurrentProject;
-            _entityBaseTypeName = entity.BaseTypeName;
+            _entityBaseTypeName = GetBaseTypeName(entity.BaseTypeName);
 
-            _entityBaseTypeShortName = _entityBaseTypeName;
-            int lastDot = _entityBaseTypeShortName.LastIndexOf('.');
-            if (lastDot >= 0)
-            {
-                _entityBaseTypeShortName = _entityBaseTypeShortName.Substring(lastDot + 1, _entityBaseTypeShortName.Length-lastDot - 1);
-            }
+            
+            _entityBaseTypeShortName = GetBaseTypeShortName(entity.BaseTypeName);
             _entityFileName = entity.FileName;
             _entityNamespace = entity.Namespace;
             //_summary = entity.Summary;

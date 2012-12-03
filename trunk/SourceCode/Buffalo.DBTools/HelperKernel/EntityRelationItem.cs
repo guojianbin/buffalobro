@@ -62,6 +62,11 @@ namespace Buffalo.DBTools.HelperKernel
             {
                 if (_targetPropertyList == null)
                 {
+                    if (FInfo.MemberType == null) 
+                    {
+                        _targetPropertyList = new List<string>();
+                        return _targetPropertyList;
+                    }
                     List<ClrProperty> lstPropertys = EntityConfig.GetAllMember<ClrProperty>(FInfo.MemberType, true);
                     _targetPropertyList = new List<string>(lstPropertys.Count);
                     foreach (ClrProperty pro in lstPropertys)

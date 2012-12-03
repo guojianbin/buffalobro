@@ -457,6 +457,63 @@ namespace Buffalo.DBTools.HelperKernel
             _namespace = ctype.OwnerNamespace.Name;
             _summary = ctype.DocSummary;
             _tableName =EntityFieldBase.ToCamelName(_className);
+            _lstSource = CodeFileHelper.ReadFile(FileName);
+            if (ctype.Generic) 
+            {
+                InitGeneric(ctype);
+            }
+        }
+
+        /// <summary>
+        /// 初始化泛型信息
+        /// </summary>
+        /// <param name="ctype">类型</param>
+        private void InitGeneric(ClrType ctype) 
+        {
+            string headCode = ctype.OuterText.DeclarationOuterText.Substring(0, ctype.OuterText.DeclarationHeaderLength);
+            string genericParameters = ctype.TypeParameters;
+            List<int> lstIndex = new List<int>();
+            string tag=" where ";
+            int curIndex = 0;
+            do
+            {
+                curIndex = headCode.IndexOf(tag, curIndex);
+                
+                if (curIndex >= 0)
+                {
+                    lstIndex.Add(curIndex);
+                    curIndex++;
+                }
+            } while (curIndex >= 0);
+
+            if (lstIndex.Count <= 0) 
+            {
+                return;
+            }
+            string code = null;
+            for (int i = 0; i < lstIndex.Count; i++) 
+            {
+
+                if (i < lstIndex.Count - 1)
+                {
+                    code = headCode.Substring(lstIndex[i] + tag.Length, lstIndex[i + 1] - (lstIndex[i] + tag.Length));
+                }
+                else 
+                {
+                    code = headCode.Substring(lstIndex[i] + tag.Length, headCode.Length - (lstIndex[i] + tag.Length));
+                    int classBegin = code.IndexOf("{");
+                    if (classBegin > 0) 
+                    {
+                        code = code.Substring(0, classBegin);
+                    }
+                }
+                code = code.Replace("\r\n", "");
+                code = code.Replace("\r", "");
+                code = code.Replace("\n", "");
+
+                string[] typeParts = code.Split(':');
+
+            }
             
         }
 
@@ -675,7 +732,7 @@ namespace Buffalo.DBTools.HelperKernel
             }
             return dicFields;
         }
-
+        private List<string> _lstSource = null;
         /// <summary>
         /// 生成代码
         /// </summary>
@@ -683,13 +740,13 @@ namespace Buffalo.DBTools.HelperKernel
         {
             //InitDBConfig();
 
-            List<string> lstSource =CodeFileHelper.ReadFile(FileName);
-            List<string> lstTarget = new List<string>(lstSource.Count);
+            
+            List<string> lstTarget = new List<string>(_lstSource.Count);
             bool isUsing = true;
             Dictionary<string, bool> dicUsing = new Dictionary<string, bool>();
-            for (int i = 0; i < lstSource.Count; i++) 
+            for (int i = 0; i < _lstSource.Count; i++) 
             {
-                string str=lstSource[i];
+                string str=_lstSource[i];
                 if (i == _cp.StartLine-1) 
                 {
                     if (str.IndexOf("class")>0) 
@@ -1067,7 +1124,7 @@ namespace Buffalo.DBTools.HelperKernel
             EnvDTE.ProjectItem newit = classItem.ProjectItems.AddFromFile(fileName);
             //EnvDTE.ProjectItem newit = _currentProject.ProjectItems.AddFromFile(fileName);
             
-            newit.Properties.Item("BuildAction").Value = 3;
+            newit.Properties.Item("BuildAction").Value = 1;
         }
 
         /// <summary>

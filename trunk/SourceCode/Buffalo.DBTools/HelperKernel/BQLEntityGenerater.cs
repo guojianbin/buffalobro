@@ -106,6 +106,8 @@ namespace Buffalo.DBTools.HelperKernel
                         tmp = tmp.Replace("<%=DBName%>", DBName);
                         tmp = tmp.Replace("<%=BQLEntityBaseType%>", baseType);
                         tmp = tmp.Replace("<%=DataAccessNamespace%>", DataAccessNamespace);
+                        string className = ClassName;
+                        
                         tmp = tmp.Replace("<%=ClassName%>", ClassName);
                         string entityClassName = ClassName;
                         tmp = tmp.Replace("<%=EntityClassName%>", entityClassName);
