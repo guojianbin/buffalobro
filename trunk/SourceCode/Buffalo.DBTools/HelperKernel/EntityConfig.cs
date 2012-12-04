@@ -463,7 +463,7 @@ namespace Buffalo.DBTools.HelperKernel
                 InitGeneric(ctype);
             }
         }
-
+        Dictionary<string, List<string>> _dicGenericInfo = new Dictionary<string, List<string>>();
         /// <summary>
         /// 初始化泛型信息
         /// </summary>
@@ -512,6 +512,9 @@ namespace Buffalo.DBTools.HelperKernel
                 code = code.Replace("\n", "");
 
                 string[] typeParts = code.Split(':');
+
+
+
 
             }
             
