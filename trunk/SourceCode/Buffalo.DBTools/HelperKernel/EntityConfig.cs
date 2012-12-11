@@ -465,6 +465,13 @@ namespace Buffalo.DBTools.HelperKernel
         }
         Dictionary<string, List<string>> _dicGenericInfo = new Dictionary<string, List<string>>();
         /// <summary>
+        /// 泛型信息
+        /// </summary>
+        public Dictionary<string, List<string>> GenericInfo
+        {
+            get { return _dicGenericInfo; }
+        }
+        /// <summary>
         /// 初始化泛型信息
         /// </summary>
         /// <param name="ctype">类型</param>
@@ -472,6 +479,7 @@ namespace Buffalo.DBTools.HelperKernel
         {
             string headCode = ctype.OuterText.DeclarationOuterText.Substring(0, ctype.OuterText.DeclarationHeaderLength);
             string genericParameters = ctype.TypeParameters;
+            AppendGenericParam(genericParameters);
             List<int> lstIndex = new List<int>();
             string tag=" where ";
             int curIndex = 0;
@@ -506,18 +514,52 @@ namespace Buffalo.DBTools.HelperKernel
                     {
                         code = code.Substring(0, classBegin);
                     }
+                    
                 }
-                code = code.Replace("\r\n", "");
-                code = code.Replace("\r", "");
-                code = code.Replace("\n", "");
-
-                string[] typeParts = code.Split(':');
-
-
-
-
+                AppendToKeys(code);
             }
             
+        }
+        /// <summary>
+        /// 添加泛型信息
+        /// </summary>
+        /// <param name="genericParam"></param>
+        private void AppendGenericParam(string genericParam) 
+        {
+            genericParam = genericParam.Trim('<', '>', ' ');
+            string[] itemParts = genericParam.Split(',');
+            foreach (string strItem in itemParts)
+            {
+                _dicGenericInfo[strItem.Trim()] = null;
+            }
+        }
+
+        /// <summary>
+        /// 加到泛型集合
+        /// </summary>
+        /// <param name="code"></param>
+        private void AppendToKeys(string code) 
+        {
+            code = code.Replace("\r\n", "");
+            code = code.Replace("\r", "");
+            code = code.Replace("\n", "");
+
+            string[] typeParts = code.Split(':');
+            if (typeParts.Length != 2) 
+            {
+                return;
+            }
+            string key = typeParts[0];
+            string items = typeParts[1];
+
+            string[] itemParts = items.Split(',');
+            List<string> lstItem = new List<string>();
+            foreach (string strItem in itemParts) 
+            {
+                lstItem.Add(strItem.Trim());
+            }
+
+            _dicGenericInfo[key] = lstItem;
         }
 
         /// <summary>

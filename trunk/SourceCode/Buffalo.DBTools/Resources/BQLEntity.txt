@@ -9,7 +9,7 @@ namespace <%=BQLEntityNamespace%>
 {
 <%#IF TableName%>
 
-    public partial class <%=DBName%>
+    public partial class <%=DBName%> 
     {
         private static <%=DBName%>_<%=ClassName%> _<%=ClassName%> = new <%=DBName%>_<%=ClassName%>();
     
@@ -26,7 +26,7 @@ namespace <%=BQLEntityNamespace%>
     /// <summary>
     ///  <%=Summary%>
     /// </summary>
-    public partial class <%=DBName%>_<%=ClassName%> : <%=BQLEntityBaseType%>
+    public partial class <%=DBName%>_<%=ClassName%><%=Generic%> : <%=BQLEntityBaseType%><%=GenericWhere%>
     {
 <%=PropertyDetail%>
 <%=RelationDetail%>
@@ -37,7 +37,7 @@ namespace <%=BQLEntityNamespace%>
         /// <param name="parent">父表信息</param>
         /// <param name="propertyName">属性名</param>
         public <%=DBName%>_<%=ClassName%>(BQLEntityTableHandle parent,string propertyName) 
-        :this(typeof(<%=EntityNamespace%>.<%=EntityClassName%>),parent,propertyName)
+        :this(typeof(<%=EntityNamespace%>.<%=EntityClassName%><%=HasGeneric%>),parent,propertyName)
         {
 			
         }

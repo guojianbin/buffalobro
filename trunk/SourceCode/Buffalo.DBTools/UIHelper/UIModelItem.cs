@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Buffalo.DBTools.HelperKernel;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -9,6 +10,17 @@ namespace Buffalo.DBTools.UIHelper
     /// </summary>
     public class UIModelItem
     {
+        /// <summary>
+        /// UI信息
+        /// </summary>
+        /// <param name="dicCheckItem">选中项</param>
+        /// <param name="belongProperty">所属属性</param>
+        public UIModelItem(Dictionary<string, bool> dicCheckItem, EntityParamField belongProperty) 
+        {
+            _dicCheckItem = dicCheckItem;
+            _belongProperty = belongProperty;
+        }
+
         private Dictionary<string, bool> _dicCheckItem;
 
         /// <summary>
@@ -24,6 +36,15 @@ namespace Buffalo.DBTools.UIHelper
                 return ret;
             }
             return false;
+        }
+
+        private EntityParamField _belongProperty;
+        /// <summary>
+        /// 所属属性
+        /// </summary>
+        public EntityParamField BelongProperty
+        {
+            get { return _belongProperty; }
         }
     }
 }

@@ -171,6 +171,15 @@ namespace Buffalo.DBTools.HelperKernel
             set { _dbConfig = value; }
         }
 
+        Dictionary<string, List<string>> _dicGenericInfo;
+        /// <summary>
+        /// 泛型信息
+        /// </summary>
+        public Dictionary<string, List<string>> GenericInfo
+        {
+            get { return _dicGenericInfo; }
+        }
+
         /// <summary>
         /// 获取基类短名
         /// </summary>
@@ -248,6 +257,7 @@ namespace Buffalo.DBTools.HelperKernel
             _dataAccessNamespace = entity.Namespace + ".DataAccess";
             _DBName = entity.CurrentDBConfigInfo.DbName;
             _dbConfig = entity.CurrentDBConfigInfo;
+            _dicGenericInfo = entity.GenericInfo;
         }
 
         
