@@ -61,6 +61,7 @@ namespace Buffalo.DBTools.UIHelper
                 Directory.CreateDirectory(directory);
             }
             string xml = "UIConfigItem.xml";
+            return null;
         }
 
         /// <summary>
@@ -71,9 +72,9 @@ namespace Buffalo.DBTools.UIHelper
         public XmlDocument GetConfigName()
         {
 
-            
 
-            return directory + "\\.bmodels\\" + dbName + ".xml";
+
+            return null;
 
         }
     }

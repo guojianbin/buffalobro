@@ -15,28 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo2008.WinFormsControl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo2008.WebKernel", "Buffalo.WebKernel\Buffalo2008.WebKernel.csproj", "{CBD39541-7A26-4C92-A369-0F2DF5D13030}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebSite1", "C:\Users\taisandog\Documents\Visual Studio 2008\WebSites\WebSite1", "{9FE87540-3157-451A-907C-83AE37DF97E4}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFramework = "3.5"
-		ProjectReferences = "{6EC04216-A422-4751-AA81-1211DCB10BAB}|Buffalo.Kernel.dll;{533404A2-5255-478A-9F57-F4C37EBD6DBF}|Buffalo.WebControls.dll;{CBD39541-7A26-4C92-A369-0F2DF5D13030}|Buffalo.WebKernel.dll;"
-		Debug.AspNetCompiler.VirtualPath = "/WebSite1"
-		Debug.AspNetCompiler.PhysicalPath = "C:\Users\taisandog\Documents\Visual Studio 2008\WebSites\WebSite1\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\WebSite1\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/WebSite1"
-		Release.AspNetCompiler.PhysicalPath = "C:\Users\taisandog\Documents\Visual Studio 2008\WebSites\WebSite1\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\WebSite1\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "13285"
-		DefaultWebSiteLanguage = "Visual C#"
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -117,16 +95,6 @@ Global
 		{CBD39541-7A26-4C92-A369-0F2DF5D13030}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CBD39541-7A26-4C92-A369-0F2DF5D13030}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{CBD39541-7A26-4C92-A369-0F2DF5D13030}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{9FE87540-3157-451A-907C-83AE37DF97E4}.Debug|.NET.ActiveCfg = Debug|.NET
-		{9FE87540-3157-451A-907C-83AE37DF97E4}.Debug|.NET.Build.0 = Debug|.NET
-		{9FE87540-3157-451A-907C-83AE37DF97E4}.Debug|Any CPU.ActiveCfg = Debug|.NET
-		{9FE87540-3157-451A-907C-83AE37DF97E4}.Debug|Mixed Platforms.ActiveCfg = Debug|.NET
-		{9FE87540-3157-451A-907C-83AE37DF97E4}.Debug|Mixed Platforms.Build.0 = Debug|.NET
-		{9FE87540-3157-451A-907C-83AE37DF97E4}.Release|.NET.ActiveCfg = Debug|.NET
-		{9FE87540-3157-451A-907C-83AE37DF97E4}.Release|.NET.Build.0 = Debug|.NET
-		{9FE87540-3157-451A-907C-83AE37DF97E4}.Release|Any CPU.ActiveCfg = Debug|.NET
-		{9FE87540-3157-451A-907C-83AE37DF97E4}.Release|Mixed Platforms.ActiveCfg = Debug|.NET
-		{9FE87540-3157-451A-907C-83AE37DF97E4}.Release|Mixed Platforms.Build.0 = Debug|.NET
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

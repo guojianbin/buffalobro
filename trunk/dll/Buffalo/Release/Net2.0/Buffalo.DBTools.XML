@@ -1698,6 +1698,50 @@
             <param name="str"></param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.LoadConfig">
+            <summary>
+            检测文件
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.GetConfigName">
+            <summary>
+            生成文件名
+            </summary>
+            <param name="curProject"></param>
+            <param name="curDiagram"></param>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.FrmUIGenerater.components">
+            <summary>
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.Dispose(System.Boolean)">
+            <summary>
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.InitializeComponent">
+            <summary>
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.FrmUIGenerater.CurrentProject">
+            <summary>
+            当前项目
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.FrmUIGenerater.SelectDocView">
+            <summary>
+            选择的文档
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.FrmUIGenerater.SelectedClass">
+            <summary>
+            选中的类
+            </summary>
+        </member>
         <member name="F:Buffalo.DBTools.FrmProcess.components">
             <summary>
             Required designer variable.
@@ -1753,6 +1797,19 @@
             <summary>
             生成器基类
             </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.GrneraterBase.GetBaseTypeShortName(System.String)">
+            <summary>
+            获取基类短名
+            </summary>
+            <param name="baseType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.GrneraterBase.GetBaseTypeName(System.String)">
+            <summary>
+            获取基类名
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.DBTools.HelperKernel.GrneraterBase.FormatName(System.String)">
             <summary>
@@ -1819,6 +1876,11 @@
         <member name="P:Buffalo.DBTools.HelperKernel.GrneraterBase.BbConfig">
             <summary>
             数据库配置
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.GrneraterBase.GenericInfo">
+            <summary>
+            泛型信息
             </summary>
         </member>
         <member name="M:Buffalo.DBTools.HelperKernel.Generate3Tier.GenerateBusiness">
@@ -2130,6 +2192,12 @@
             生成BQL实体
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.BQLEntityGenerater.GetGeneric(System.Text.StringBuilder,System.Text.StringBuilder)">
+            <summary>
+            获取泛型字符串
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.BQLEntityGenerater.GenProperty">
             <summary>
             生成属性
@@ -2164,6 +2232,33 @@
         <member name="M:Buffalo.DBTools.GridViewComboBoxCell.HideComboBox">
             <summary>
             隐藏ComboBox
+            </summary>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.UIConfigItem">
+            <summary>
+            UI配置信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.#ctor(System.Xml.XmlDocument)">
+            <summary>
+            UI配置信息
+            </summary>
+            <param name="config">配置的XML</param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.FillConfigItems(System.Xml.XmlNode)">
+            <summary>
+            填充配置项
+            </summary>
+            <param name="node"></param>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIConfigItem.ConfigItems">
+            <summary>
+            可选项
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIConfigItem.Projects">
+            <summary>
+            所属工程
             </summary>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.LinkOutputer.GetCode(System.Collections.Generic.Queue{Buffalo.DBTools.UIHelper.ModelLoader.ExpressionItem},System.String)">
@@ -2711,6 +2806,21 @@
             基类注释
             </summary>
         </member>
+        <member name="T:Buffalo.DBTools.UIHelper.ConfigItem">
+            <summary>
+            可选项
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ConfigItem.Name">
+            <summary>
+            名字
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ConfigItem.Summary">
+            <summary>
+            说明
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.ROMHelper.DBEntityInfo">
             <summary>
             数据库到实体的信息
@@ -3066,6 +3176,25 @@
             UI需要的信息
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.#ctor(System.Collections.Generic.Dictionary{System.String,System.Boolean},Buffalo.DBTools.HelperKernel.EntityParamField)">
+            <summary>
+            UI信息
+            </summary>
+            <param name="dicCheckItem">选中项</param>
+            <param name="belongProperty">所属属性</param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.HasItem(System.String)">
+            <summary>
+            获取是否选中项
+            </summary>
+            <param name="itemName">项名称</param>
+            <returns></returns>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.BelongProperty">
+            <summary>
+            所属属性
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.HelperKernel.EntityRelationItem">
             <summary>
             映射信息
@@ -3168,6 +3297,24 @@
             <summary>
             填充类信息
             </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.InitGeneric(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType)">
+            <summary>
+            初始化泛型信息
+            </summary>
+            <param name="ctype">类型</param>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.AppendGenericParam(System.String)">
+            <summary>
+            添加泛型信息
+            </summary>
+            <param name="genericParam"></param>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.AppendToKeys(System.String)">
+            <summary>
+            加到泛型集合
+            </summary>
+            <param name="code"></param>
         </member>
         <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.GetFileName(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType,Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.CodeElementPosition@)">
             <summary>
@@ -3439,6 +3586,11 @@
             数据库所属的此类不存在的关系
             </summary>
         </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.GenericInfo">
+            <summary>
+            泛型信息
+            </summary>
+        </member>
         <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.AllPropertyNames">
             <summary>
             所有字段名集合
@@ -3477,6 +3629,26 @@
         <member name="P:Buffalo.DBTools.DocSummary.VSConfig.VS2005Config.MemberExtendSummaryY">
             <summary>
             基类注释
+            </summary>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.UIProjectItem">
+            <summary>
+            UI工程项
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIProjectItem.ModelPath">
+            <summary>
+            模版路径
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIProjectItem.GenType">
+            <summary>
+            生成类型
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIProjectItem.TargetPath">
+            <summary>
+            生成路径
             </summary>
         </member>
         <member name="M:Buffalo.DBTools.HelperKernel.EntityParamField.GetEntityParamInfo(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrField)">
@@ -3608,6 +3780,21 @@
         <member name="P:Buffalo.DBTools.FrmDBSetting.SummaryItem">
             <summary>
             设置注释选中状态
+            </summary>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.FileGenType">
+            <summary>
+            文件生成类型
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.FileGenType.Code">
+            <summary>
+            代码
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.FileGenType.Resource">
+            <summary>
+            嵌入资源
             </summary>
         </member>
         <member name="T:Buffalo.DBTools.DocSummary.VSConfig.VS2010Config">

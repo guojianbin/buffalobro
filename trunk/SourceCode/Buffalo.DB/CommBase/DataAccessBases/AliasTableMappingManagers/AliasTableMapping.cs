@@ -280,7 +280,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
                         {
                             throw new MissingMemberException("实体:" + entityInfo.EntityType.FullName + "中找不到属性:" + pName + "");
                         }
-                        
+
+                    }
+                    else 
+                    {
+                        retTable = lastTable._dicChildTables[pName];
+                        lastTable = retTable;
                     }
 
                 }

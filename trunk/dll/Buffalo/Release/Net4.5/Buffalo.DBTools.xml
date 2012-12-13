@@ -599,6 +599,19 @@
             生成器基类
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.GrneraterBase.GetBaseTypeShortName(System.String)">
+            <summary>
+            获取基类短名
+            </summary>
+            <param name="baseType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.GrneraterBase.GetBaseTypeName(System.String)">
+            <summary>
+            获取基类名
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.GrneraterBase.FormatName(System.String)">
             <summary>
             格式化名字
@@ -666,6 +679,11 @@
             数据库配置
             </summary>
         </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.GrneraterBase.GenericInfo">
+            <summary>
+            泛型信息
+            </summary>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.BQLEntityGenerater.GenerateBQLEntityDB">
             <summary>
             生成DB声明
@@ -675,6 +693,12 @@
             <summary>
             生成BQL实体
             </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.BQLEntityGenerater.GetGeneric(System.Text.StringBuilder,System.Text.StringBuilder)">
+            <summary>
+            获取泛型字符串
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.DBTools.HelperKernel.BQLEntityGenerater.GenProperty">
             <summary>
@@ -951,6 +975,24 @@
             填充类信息
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.InitGeneric(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType)">
+            <summary>
+            初始化泛型信息
+            </summary>
+            <param name="ctype">类型</param>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.AppendGenericParam(System.String)">
+            <summary>
+            添加泛型信息
+            </summary>
+            <param name="genericParam"></param>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.AppendToKeys(System.String)">
+            <summary>
+            加到泛型集合
+            </summary>
+            <param name="code"></param>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.GetFileName(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType,Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.CodeElementPosition@)">
             <summary>
             获取实体所在的文件
@@ -1219,6 +1261,11 @@
         <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.DbRelations">
             <summary>
             数据库所属的此类不存在的关系
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.GenericInfo">
+            <summary>
+            泛型信息
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.AllPropertyNames">
