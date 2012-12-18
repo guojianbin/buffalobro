@@ -19,7 +19,22 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public static string GetSequenceName(string tableName,string paramName) 
+        public static string GetSequenceName(EntityPropertyInfo info) 
+        {
+            if (!string.IsNullOrEmpty(info.ParamInfo.SequenceName)) 
+            {
+                return info.ParamInfo.SequenceName;
+            }
+            return GetDefaultName(info.BelongInfo.TableName, info.ParamInfo.ParamName);
+        }
+
+        /// <summary>
+        /// 获取默认的序列名
+        /// </summary>
+        /// <param name="tableName">表</param>
+        /// <param name="paramName">字段</param>
+        /// <returns></returns>
+        internal static string GetDefaultName(string tableName, string paramName) 
         {
             StringBuilder sbSeqName = new StringBuilder(20);
             sbSeqName.Append("seq_");
@@ -28,9 +43,8 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             sbSeqName.Append(paramName);
             sbSeqName.Replace(" ", "");
 
-            return sbSeqName.ToString() ;
+            return sbSeqName.ToString();
         }
-
         /// <summary>
         /// 初始化序列
         /// </summary>

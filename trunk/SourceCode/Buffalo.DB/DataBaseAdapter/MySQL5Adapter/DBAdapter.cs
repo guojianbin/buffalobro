@@ -338,11 +338,20 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
             return "";
         }
 
-        public string GetSequenceName(string tableName, string paramName)
+        public string GetSequenceName(EntityPropertyInfo info)
         {
             return null;
         }
-
+        /// <summary>
+        ///  获取默认序列名
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="paramName">字段名</param>
+        /// <returns></returns>
+        public string GetDefaultSequenceName(string tableName, string paramName)
+        {
+            return null;
+        }
         /// <summary>
         /// 初始化序列名
         /// </summary>

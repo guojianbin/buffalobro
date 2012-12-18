@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9B0043E4-883B-47BA-9A5A-5110C8583902}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -286,6 +286,7 @@
     <Compile Include="PropertyAttributes\DataBaseAttribute.cs" />
     <Compile Include="PropertyAttributes\EntityParam.cs" />
     <Compile Include="PropertyAttributes\EntityPropertyType.cs" />
+    <Compile Include="PropertyAttributes\SequenceAttributes.cs" />
     <Compile Include="PropertyAttributes\TableAttribute.cs" />
     <Compile Include="PropertyAttributes\TableRelationAttribute.cs" />
     <Compile Include="PropertyAttributes\ViewRelationTables.cs" />

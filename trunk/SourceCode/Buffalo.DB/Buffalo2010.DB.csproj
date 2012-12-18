@@ -282,6 +282,7 @@
     <Compile Include="PropertyAttributes\DataBaseAttribute.cs" />
     <Compile Include="PropertyAttributes\EntityParam.cs" />
     <Compile Include="PropertyAttributes\EntityPropertyType.cs" />
+    <Compile Include="PropertyAttributes\SequenceAttributes.cs" />
     <Compile Include="PropertyAttributes\TableAttribute.cs" />
     <Compile Include="PropertyAttributes\TableRelationAttribute.cs" />
     <Compile Include="PropertyAttributes\ViewRelationTables.cs" />

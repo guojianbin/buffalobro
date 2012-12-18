@@ -20,10 +20,24 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public static string GetSequenceName(string tableName,string paramName) 
+        public static string GetSequenceName(EntityPropertyInfo info) 
         {
 
-            return Buffalo.DB.DataBaseAdapter.Oracle9Adapter.SequenceManager.GetSequenceName(tableName,paramName);
+            return Buffalo.DB.DataBaseAdapter.Oracle9Adapter.SequenceManager.GetSequenceName(info);
+        }
+
+
+        /// <summary>
+        /// 获取默认的序列名
+        /// </summary>
+        /// <param name="tableName">表</param>
+        /// <param name="paramName">字段</param>
+        /// <returns></returns>
+        internal static string GetDefaultName(string tableName, string paramName)
+        {
+
+
+            return Buffalo.DB.DataBaseAdapter.Oracle9Adapter.SequenceManager.GetDefaultName(tableName,paramName);
         }
 
         /// <summary>

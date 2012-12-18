@@ -19,6 +19,7 @@ namespace Buffalo.DB.PropertyAttributes
         private bool _allowNull;
         private string _fieldName;
         private bool _readonly;
+        private string _sequenceName;
 
 
         /// <summary>
@@ -88,7 +89,14 @@ namespace Buffalo.DB.PropertyAttributes
             get { return _description; }
             set { _description = value; }
         }
-
+        /// <summary>
+        /// 序列名
+        /// </summary>
+        public string SequenceName
+        {
+            get { return _sequenceName; }
+            internal set { _sequenceName = value; }
+        }
         /// <summary>
         /// 获取对应的字段名
         /// </summary>
@@ -160,7 +168,7 @@ namespace Buffalo.DB.PropertyAttributes
         public long Length
         {
             get { return _length; }
-            set { _length = value; }
+            internal set { _length = value; }
         }
         /// <summary>
         /// 获取对应的字段是否主键

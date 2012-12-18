@@ -301,7 +301,7 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
             {
                 throw new Exception("找不到自增属性");
             }
-            return "select nextval('\"" + GetSequenceName(info.BelongInfo.TableName, info.ParamName) + "\"')";
+            return "select nextval('\"" + GetSequenceName(info) + "\"')";
             
         }
         /// <summary>
@@ -314,7 +314,7 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
             {
                 throw new Exception("找不到自增属性");
             }
-            return "select currval('\"" + GetSequenceName(info.BelongInfo.TableName, info.ParamName) + "\"')";
+            return "select currval('\"" + GetSequenceName(info) + "\"')";
         }
         /// <summary>
         /// 根据Reader的内容把数值赋进实体
@@ -333,12 +333,12 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
 
         public string GetIdentityParamValue(EntityInfoHandle entityInfo, EntityPropertyInfo info)
         {
-            return "nextval('\"" + GetSequenceName(entityInfo.TableName, info.ParamName) + "\"')";
+            return "nextval('\"" + GetSequenceName(info) + "\"')";
         }
 
-        public string GetSequenceName(string tableName, string paramName)
+        public string GetSequenceName(EntityPropertyInfo info)
         {
-            return SequenceManager.GetSequenceName(tableName, paramName);
+            return SequenceManager.GetSequenceName(info);
         }
 
         /// <summary>
@@ -350,7 +350,16 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
             return SequenceManager.GetInitSequence(seqName,prm, oper);
             
         }
-
+        /// <summary>
+        ///  获取默认序列名
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="paramName">字段名</param>
+        /// <returns></returns>
+        public string GetDefaultSequenceName(string tableName, string paramName)
+        {
+            return SequenceManager.GetDefaultName(tableName,paramName);
+        }
 
 
         public string DBIdentity(string tableName, string paramName)

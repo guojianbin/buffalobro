@@ -217,11 +217,16 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <summary>
         /// 获取序列名
         /// </summary>
-        /// <param name="tableName">表名</param>
-        /// <param name="entityInfo">字段名</param>
+        /// <param name="info">属性</param>
         /// <returns></returns>
-        string GetSequenceName(string tableName, string paramName);
-
+        string GetSequenceName(EntityPropertyInfo info);
+        /// <summary>
+        ///  获取默认序列名
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="paramName">字段名</param>
+        /// <returns></returns>
+        string GetDefaultSequenceName(string tableName,string paramName);
         /// <summary>
         /// 初始化序列名
         /// </summary>

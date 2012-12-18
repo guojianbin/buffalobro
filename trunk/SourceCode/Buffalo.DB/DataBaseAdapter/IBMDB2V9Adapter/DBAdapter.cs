@@ -380,7 +380,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             SqlServer2KAdapter.DBAdapter.ValueFromReader(reader, index, arg, info);
         }
 
-        public string GetSequenceName(string tableName, string paramName)
+        public string GetSequenceName(EntityPropertyInfo info)
         {
             //return SequenceManager.GetSequenceName(tableName, paramName);
             return null;
@@ -392,7 +392,16 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             return null;
         }
 
-
+        /// <summary>
+        ///  获取默认序列名
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="paramName">字段名</param>
+        /// <returns></returns>
+        public string GetDefaultSequenceName(string tableName, string paramName)
+        {
+            return null;
+        }
 
         public string DBIdentity(string tableName, string paramName)
         {

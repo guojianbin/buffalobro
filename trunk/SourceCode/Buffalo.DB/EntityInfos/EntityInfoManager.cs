@@ -429,11 +429,36 @@ namespace Buffalo.DB.EntityInfos
                 throw new MissingFieldException(message.ToString());
             }
             classInfo.SetInfoHandles(dicPropertys, dicMapping);
-
+            FillSequenceInfo(type, classInfo);
             _dicClass[fullName] = classInfo;
         }
 
+        /// <summary>
+        /// 填充
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="dicParamsInfo"></param>
+        /// <param name="tableAtt"></param>
+        private static void FillSequenceInfo(Type type,EntityInfoHandle classInfo) 
+        {
+            object[] atts = type.GetCustomAttributes(typeof(SequenceAttributes), true);
+            foreach (object objAtt in atts) 
+            {
+                SequenceAttributes satt = objAtt as SequenceAttributes;
+                if (satt == null) 
+                {
+                    continue;
+                }
 
+                EntityPropertyInfo info = classInfo.PropertyInfo[satt.PropertyName];
+                if (info == null) 
+                {
+                    throw new System.MissingMemberException("实体:" + classInfo.EntityType.FullName
+                        + "  ,不包含属性找不到属性:" + satt.PropertyName);
+                }
+                info.ParamInfo.SequenceName = satt.SequenceName;
+            }
+        }
 
         /// <summary>
         /// 获取某个方法的属性

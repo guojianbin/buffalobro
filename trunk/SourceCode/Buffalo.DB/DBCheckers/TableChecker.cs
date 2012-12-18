@@ -203,10 +203,11 @@ namespace Buffalo.DB.DBCheckers
                     //创建逐渐序列(暂时只有Oracle)
                     if (prm.Identity && IsIdentityType(prm.SqlType))
                     {
-                        string seqName = idb.GetSequenceName(table.TableName, prm.ParamName);
-                        if (!string.IsNullOrEmpty(seqName))//需要创建序列
+                        string seqName = idb.GetDefaultSequenceName(table.TableName, prm.ParamName);
+                        if (!string.IsNullOrEmpty(seqName))
                         {
-                            string seqSql = idb.GetSequenceInit(seqName,prm, info.DefaultOperate);
+                            string seqSql = idb.GetSequenceInit(seqName, prm, info.DefaultOperate);
+
                             if (!string.IsNullOrEmpty(seqSql))
                             {
                                 lstRet.Add(seqSql);

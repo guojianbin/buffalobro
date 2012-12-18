@@ -274,7 +274,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             {
                 throw new Exception("找不到主键属性");
             }
-            return "select \"" + GetSequenceName(pkInfo.BelongInfo.TableName, pkInfo.ParamName) + "\".currval as curVal from dual";
+            return "select \"" + GetSequenceName(pkInfo) + "\".currval as curVal from dual";
         }
         /// <summary>
         /// 获取自动增长值的SQL
@@ -287,7 +287,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             {
                 throw new Exception("找不到主键属性");
             }
-            return "select \"" + GetSequenceName(pkInfo.BelongInfo.TableName, pkInfo.ParamName) + "\".nextval as curVal from dual";
+            return "select \"" + GetSequenceName(pkInfo) + "\".nextval as curVal from dual";
         }
         /// <summary>
         /// 获取序列名
@@ -295,12 +295,21 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <param name="tableName">表名</param>
         /// <param name="entityInfo">字段名</param>
         /// <returns></returns>
-        public string GetSequenceName(string tableName, string paramName)
+        public string GetSequenceName(EntityPropertyInfo info)
         {
-            return SequenceManager.GetSequenceName(tableName, paramName);
+            return SequenceManager.GetSequenceName(info);
         }
 
-
+        /// <summary>
+        ///  获取默认序列名
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="paramName">字段名</param>
+        /// <returns></returns>
+        public string GetDefaultSequenceName(string tableName, string paramName)
+        {
+            return SequenceManager.GetDefaultName(tableName, paramName);
+        }
         /// <summary>
         /// 初始化序列名
         /// </summary>
@@ -345,7 +354,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <returns></returns>
         public string GetIdentityParamValue(EntityInfoHandle entityInfo, EntityPropertyInfo info)
         {
-            return "\"" + GetSequenceName(entityInfo.TableName, info.ParamName) + "\".nextval";
+            return "\"" + GetSequenceName(info) + "\".nextval";
         }
 
         /// <summary>
