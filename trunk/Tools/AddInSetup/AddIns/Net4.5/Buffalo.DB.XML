@@ -4758,12 +4758,19 @@
             <param name="arg">目标对象</param>
             <param name="info">目标属性的句柄</param>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.IDbAdapters.IDBAdapter.GetSequenceName(System.String,System.String)">
+        <member name="M:Buffalo.DB.DataBaseAdapter.IDbAdapters.IDBAdapter.GetSequenceName(Buffalo.DB.EntityInfos.EntityPropertyInfo)">
             <summary>
             获取序列名
             </summary>
+            <param name="info">属性</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.IDbAdapters.IDBAdapter.GetDefaultSequenceName(System.String,System.String)">
+            <summary>
+             获取默认序列名
+            </summary>
             <param name="tableName">表名</param>
-            <param name="entityInfo">字段名</param>
+            <param name="paramName">字段名</param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.IDbAdapters.IDBAdapter.GetSequenceInit(System.String,Buffalo.DB.PropertyAttributes.EntityParam,Buffalo.DB.DbCommon.DataBaseOperate)">
@@ -4994,6 +5001,14 @@
             <param name="index">当前Reader的索引</param>
             <param name="arg">目标对象</param>
             <param name="info">目标属性的句柄</param>
+        </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter.DBAdapter.GetDefaultSequenceName(System.String,System.String)">
+            <summary>
+             获取默认序列名
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="paramName">字段名</param>
+            <returns></returns>
         </member>
         <member name="P:Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter.DBAdapter.IsShowExpression">
             <summary>
@@ -5601,6 +5616,14 @@
             <param name="arg">目标对象</param>
             <param name="info">目标属性的句柄</param>
         </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.MySQL5Adapter.DBAdapter.GetDefaultSequenceName(System.String,System.String)">
+            <summary>
+             获取默认序列名
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="paramName">字段名</param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.MySQL5Adapter.DBAdapter.GetSequenceInit(System.String,Buffalo.DB.PropertyAttributes.EntityParam,Buffalo.DB.DbCommon.DataBaseOperate)">
             <summary>
             初始化序列名
@@ -5941,12 +5964,20 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.DBAdapter.GetSequenceName(System.String,System.String)">
+        <member name="M:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.DBAdapter.GetSequenceName(Buffalo.DB.EntityInfos.EntityPropertyInfo)">
             <summary>
             获取序列名
             </summary>
             <param name="tableName">表名</param>
             <param name="entityInfo">字段名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.DBAdapter.GetDefaultSequenceName(System.String,System.String)">
+            <summary>
+             获取默认序列名
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="paramName">字段名</param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.DBAdapter.GetSequenceInit(System.String,Buffalo.DB.PropertyAttributes.EntityParam,Buffalo.DB.DbCommon.DataBaseOperate)">
@@ -6054,11 +6085,19 @@
             主键序列管理
             </summary>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.SequenceManager.GetSequenceName(System.String,System.String)">
+        <member name="M:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.SequenceManager.GetSequenceName(Buffalo.DB.EntityInfos.EntityPropertyInfo)">
             <summary>
             获取该属性的序列
             </summary>
             <param name="info"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.SequenceManager.GetDefaultName(System.String,System.String)">
+            <summary>
+            获取默认的序列名
+            </summary>
+            <param name="tableName">表</param>
+            <param name="paramName">字段</param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.Oracle9Adapter.SequenceManager.GetInitSequence(System.String,Buffalo.DB.DbCommon.DataBaseOperate)">
@@ -6407,6 +6446,14 @@
             </summary>
             <param name="seqName"></param>
         </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter.DBAdapter.GetDefaultSequenceName(System.String,System.String)">
+            <summary>
+             获取默认序列名
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="paramName">字段名</param>
+            <returns></returns>
+        </member>
         <member name="P:Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter.DBAdapter.IsShowExpression">
             <summary>
             全文搜索时候排序字段是否显示表达式
@@ -6476,11 +6523,19 @@
             主键序列管理
             </summary>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter.SequenceManager.GetSequenceName(System.String,System.String)">
+        <member name="M:Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter.SequenceManager.GetSequenceName(Buffalo.DB.EntityInfos.EntityPropertyInfo)">
             <summary>
             获取该属性的序列
             </summary>
             <param name="info"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter.SequenceManager.GetDefaultName(System.String,System.String)">
+            <summary>
+            获取默认的序列名
+            </summary>
+            <param name="tableName">表</param>
+            <param name="paramName">字段</param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter.SequenceManager.GetInitSequence(System.String,Buffalo.DB.PropertyAttributes.EntityParam,Buffalo.DB.DbCommon.DataBaseOperate)">
@@ -6792,6 +6847,14 @@
             <param name="index">当前Reader的索引</param>
             <param name="arg">目标对象</param>
             <param name="info">目标属性的句柄</param>
+        </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.SQLiteAdapter.DBAdapter.GetDefaultSequenceName(System.String,System.String)">
+            <summary>
+             获取默认序列名
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="paramName">字段名</param>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.SQLiteAdapter.DBAdapter.GetSequenceInit(System.String,Buffalo.DB.PropertyAttributes.EntityParam,Buffalo.DB.DbCommon.DataBaseOperate)">
             <summary>
@@ -7111,12 +7174,20 @@
             <param name="top">top值</param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBAdapter.GetSequenceName(System.String,System.String)">
+        <member name="M:Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBAdapter.GetSequenceName(Buffalo.DB.EntityInfos.EntityPropertyInfo)">
             <summary>
             获取序列名
             </summary>
             <param name="tableName">表名</param>
             <param name="entityInfo">字段名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBAdapter.GetDefaultSequenceName(System.String,System.String)">
+            <summary>
+             获取默认序列名
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="paramName">字段名</param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBAdapter.GetSequenceInit(System.String,Buffalo.DB.PropertyAttributes.EntityParam,Buffalo.DB.DbCommon.DataBaseOperate)">
@@ -8386,6 +8457,14 @@
             <param name="type">类型</param>
             <returns>如果已经初始化过侧返回false</returns>
         </member>
+        <member name="M:Buffalo.DB.EntityInfos.EntityInfoManager.FillSequenceInfo(System.Type,Buffalo.DB.EntityInfos.EntityInfoHandle)">
+            <summary>
+            填充
+            </summary>
+            <param name="type"></param>
+            <param name="dicParamsInfo"></param>
+            <param name="tableAtt"></param>
+        </member>
         <member name="M:Buffalo.DB.EntityInfos.EntityInfoManager.GetMappingParam(System.Reflection.FieldInfo)">
             <summary>
             获取某个方法的属性
@@ -9013,6 +9092,11 @@
             字段注释
             </summary>
         </member>
+        <member name="P:Buffalo.DB.PropertyAttributes.EntityParam.SequenceName">
+            <summary>
+            序列名
+            </summary>
+        </member>
         <member name="P:Buffalo.DB.PropertyAttributes.EntityParam.ParamName">
             <summary>
             获取对应的字段名
@@ -9086,6 +9170,38 @@
         <member name="F:Buffalo.DB.PropertyAttributes.EntityPropertyType.Identity">
             <summary>
             自动增长字段
+            </summary>
+        </member>
+        <member name="T:Buffalo.DB.PropertyAttributes.SequenceAttributes">
+            <summary>
+            序列标识
+            </summary>
+        </member>
+        <member name="F:Buffalo.DB.PropertyAttributes.SequenceAttributes._propertyName">
+            <summary>
+            属性名
+            </summary>
+        </member>
+        <member name="F:Buffalo.DB.PropertyAttributes.SequenceAttributes._sequenceName">
+            <summary>
+            序列名
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.PropertyAttributes.SequenceAttributes.#ctor(System.String,System.String)">
+            <summary>
+            序列标识
+            </summary>
+            <param name="propertyName"></param>
+            <param name="sequenceName"></param>
+        </member>
+        <member name="P:Buffalo.DB.PropertyAttributes.SequenceAttributes.PropertyName">
+            <summary>
+            属性名
+            </summary>
+        </member>
+        <member name="P:Buffalo.DB.PropertyAttributes.SequenceAttributes.SequenceName">
+            <summary>
+            序列名
             </summary>
         </member>
         <member name="M:Buffalo.DB.PropertyAttributes.TableAttribute.#ctor(System.String,System.String)">
