@@ -1,0 +1,8 @@
+E:\CShareTest\Win7Score\Win7Score\bin\Debug\Win7Score.exe
+E:\CShareTest\Win7Score\Win7Score\bin\Debug\Win7Score.pdb
+E:\CShareTest\Win7Score\Win7Score\obj\Debug\ResolveAssemblyReference.cache
+E:\CShareTest\Win7Score\Win7Score\obj\Debug\Win7Score.Form1.resources
+E:\CShareTest\Win7Score\Win7Score\obj\Debug\Win7Score.Properties.Resources.resources
+E:\CShareTest\Win7Score\Win7Score\obj\Debug\Win7Score.csproj.GenerateResource.Cache
+E:\CShareTest\Win7Score\Win7Score\obj\Debug\Win7Score.exe
+E:\CShareTest\Win7Score\Win7Score\obj\Debug\Win7Score.pdb
