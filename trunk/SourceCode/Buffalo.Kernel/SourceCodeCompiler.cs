@@ -6,7 +6,7 @@ using System.Reflection;
 using Buffalo.Kernel.FastReflection.ClassInfos;
 using System.IO;
 
-namespace Buffalo.DBTools.UIHelper.ModelLoader
+namespace Buffalo.Kernel
 {
     /// <summary>
     /// Ô´Âë±àÒëÆ÷

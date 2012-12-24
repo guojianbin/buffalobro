@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using Buffalo.DBTools.HelperKernel;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -71,8 +72,55 @@ namespace Buffalo.DBTools.UIHelper
                 ConfigItem item = new ConfigItem();
                 item.Name = cnode.Attributes["name"] != null ? cnode.Attributes["name"].InnerText : "";
                 item.Summary = cnode.Attributes["summary"] != null ? cnode.Attributes["summary"].InnerText : "";
+                item.Items = GetValueItems(cnode);
                 _configItems.Add(item);
             }
         }
+
+        /// <summary>
+        /// 获取值类型项
+        /// </summary>
+        /// <param name="cnode"></param>
+        /// <returns></returns>
+        private List<ComboBoxItem> GetValueItems(XmlNode cnode) 
+        {
+            XmlAttribute att = cnode.Attributes["select"];
+            if (att == null) 
+            {
+                return null;
+            }
+            string selItems = att.InnerText;
+            string[] items = selItems.Split(',');
+            List<ComboBoxItem> ret = new List<ComboBoxItem>(items.Length);
+            foreach (string strItem in items) 
+            {
+                string[] sitems = strItem.Split(':');
+                ComboBoxItem cmbItem = new ComboBoxItem("");
+                if (sitems.Length >= 1)
+                {
+                    cmbItem.Text = sitems[0].Trim();
+                    ret.Add(cmbItem);
+                }
+                else 
+                {
+                    continue;
+                }
+                if (sitems.Length >= 2)
+                {
+                    cmbItem.Value = sitems[1].Trim();
+                }
+                else 
+                {
+                    cmbItem.Value = sitems[0].Trim();
+                }
+            }
+
+            if (ret.Count <= 0) 
+            {
+                return null;
+            }
+            return ret;
+        }
+
     }
 }

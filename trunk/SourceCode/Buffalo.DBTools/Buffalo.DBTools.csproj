@@ -215,7 +215,6 @@
     <Compile Include="UIHelper\ModelLoader\LinkOutputer.cs" />
     <Compile Include="UIHelper\ModelLoader\MethodOutputer.cs" />
     <Compile Include="UIHelper\ModelLoader\ModelCompiler.cs" />
-    <Compile Include="UIHelper\ModelLoader\SourceCodeCompiler.cs" />
     <Compile Include="UIHelper\ModelLoader\UsingOutputer.cs" />
     <Compile Include="UIHelper\UIConfigItem.cs" />
     <Compile Include="UIHelper\UIModelItem.cs" />

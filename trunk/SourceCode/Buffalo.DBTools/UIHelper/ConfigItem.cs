@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Buffalo.DBTools.HelperKernel;
+
+
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -28,5 +31,14 @@ namespace Buffalo.DBTools.UIHelper
             get { return _summary; }
             set { _summary = value; }
         }
+
+        private List<ComboBoxItem> _lstItems = null;
+
+        public List<ComboBoxItem> Items
+        {
+            get { return _lstItems; }
+            set { _lstItems = value; }
+        } 
+
     }
 }

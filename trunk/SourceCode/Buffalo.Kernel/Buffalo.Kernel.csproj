@@ -95,6 +95,7 @@
     <Compile Include="Replacer\ReplaceCollection.cs" />
     <Compile Include="Replacer\ReplaceItem.cs" />
     <Compile Include="Replacer\ReplaceItemCollection.cs" />
+    <Compile Include="SourceCodeCompiler.cs" />
     <Compile Include="Win32\Enums.cs" />
     <Compile Include="Win32\Structs.cs" />
     <Compile Include="Win32\SystemInfo.cs" />

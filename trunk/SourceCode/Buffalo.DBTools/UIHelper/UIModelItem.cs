@@ -15,13 +15,13 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         /// <param name="dicCheckItem">选中项</param>
         /// <param name="belongProperty">所属属性</param>
-        public UIModelItem(Dictionary<string, bool> dicCheckItem, EntityParamField belongProperty) 
+        public UIModelItem(Dictionary<string, object> dicCheckItem, EntityParamField belongProperty) 
         {
             _dicCheckItem = dicCheckItem;
             _belongProperty = belongProperty;
         }
 
-        private Dictionary<string, bool> _dicCheckItem;
+        private Dictionary<string, object> _dicCheckItem;
 
         /// <summary>
         /// 获取是否选中项
@@ -30,13 +30,18 @@ namespace Buffalo.DBTools.UIHelper
         /// <returns></returns>
         public bool HasItem(string itemName) 
         {
-            bool ret = false;
+            object ret = false;
             if (_dicCheckItem.TryGetValue(itemName, out ret)) 
             {
-                return ret;
+                if(ret is bool)
+                {
+                    return (bool)ret;
+                }
             }
             return false;
         }
+
+        
 
         private EntityParamField _belongProperty;
         /// <summary>
