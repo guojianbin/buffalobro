@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <configItems>
+    <item  name="CanQuery" summary="查询条件"></item>
+    <item name="QueryDefault" summary="默认查询条件"></item>
+    <item name="CanAddNew" summary="可添加"></item>
+    <item name="CanEdit" summary="可编辑"></item>
+    <item name="SumType" summary="统计类型" select="总相加:sum,总条数:count,平均:avg"></item>
+  </configItems>
+
+  <models>
+    <project name="Web界面" namespace="{ProjectName}">
+      <item path="{ProjectPath}\webmodel.model" type="code" target="{ClassName}Query.aspx">
+        <item path="{ProjectPath}\webmodel.cs.model" type="code" target="{ClassName}Query.aspx.cs">
+        </item>
+      </item>
+    </project>
+  </models>
+</root>
