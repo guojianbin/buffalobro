@@ -70,6 +70,24 @@ namespace Buffalo.Kernel.NetClients
         }
 
         /// <summary>
+        /// 尝试打开NAT端口
+        /// </summary>
+        /// <param name="ip">ip地址</param>
+        /// <param name="data">数据</param>
+        /// <param name="type">数据类型</param>
+        /// <returns></returns>
+        public static NetConnection TryOpenNATPort(string ip, int port, byte[] data, ProtocolType type)
+        {
+
+            NetConnection conn = new NetConnection(ip, port, type);
+            conn.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+
+            conn.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+            conn.SendTo(data);
+            return conn;
+        }
+
+        /// <summary>
         /// 发送信息到指定位置
         /// </summary>
         /// <param name="ip"></param>

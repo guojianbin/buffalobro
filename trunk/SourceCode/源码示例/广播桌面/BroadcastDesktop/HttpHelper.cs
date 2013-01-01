@@ -36,7 +36,7 @@ namespace BroadcastDesktop
                                 int end = tmp.IndexOf("]", star + 1);
                                 if (star < end)
                                 {
-                                    string ip = tmp.Substring(star + 1, end - star - 1);
+                                    string ip = tmp.Substring(star, end - star );
                                     return ip;
                                 }
                             }

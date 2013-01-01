@@ -91,7 +91,15 @@ namespace Buffalo.Kernel
                         info.Description = da.Description;
                     }
                 }
-               
+                objs = field.GetCustomAttributes(typeof(DisplayNameAttribute), false);
+                if (objs != null)
+                {
+                    if (objs.Length > 0)
+                    {
+                        DisplayNameAttribute da = objs[0] as DisplayNameAttribute;
+                        info.DisplayName = da.DisplayName;
+                    }
+                }
                 
                 info.FieldName = field.Name;
                 if (objType.IsEnum)

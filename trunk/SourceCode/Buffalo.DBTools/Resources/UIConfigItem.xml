@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
   <configItems>
-    <item  name="CanQuery" summary="查询条件"></item>
-    <item name="QueryDefault" summary="默认查询条件"></item>
-    <item name="CanAddNew" summary="可添加"></item>
-    <item name="CanEdit" summary="可编辑"></item>
-    <item name="SumType" summary="统计类型" select="总相加:sum,总条数:count,平均:avg"></item>
+    <item type="check"  name="CanQuery" summary="查询条件"></item>
+    <item type="check" name="QueryDefault" summary="默认查询条件"></item>
+    <item type="check" name="CanAddNew" summary="可添加"></item>
+    <item type="check" name="CanEdit" summary="可编辑"></item>
+    <item type="combo" name="SumType" summary="统计类型" select="总相加:sum,总条数:count,平均:avg,自定义:custom"></item>
+    <item type="text" name="CustomCount" summary="自定义统计"></item>
   </configItems>
 
   <models>

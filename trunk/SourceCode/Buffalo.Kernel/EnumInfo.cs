@@ -34,5 +34,14 @@ namespace Buffalo.Kernel
             get { return description; }
             set { description = value; }
         }
+        private string _displayName;
+        /// <summary>
+        /// 获取[DisplayName("显示名")]的内容
+        /// </summary>
+        public string DisplayName
+        {
+            get { return _displayName; }
+            set { _displayName = value; }
+        }
     }
 }

@@ -42,6 +42,7 @@ namespace Buffalo.Kernel.FastReflection.ClassInfos
         /// 获取类型的实体
         /// </summary>
         /// <param name="typeName">类型名</param>
+        /// <param name="args">构造函数参数</param>
         /// <returns></returns>
         public ProxyObject GetObjectInstance(string typeName,params object[] args) 
         {

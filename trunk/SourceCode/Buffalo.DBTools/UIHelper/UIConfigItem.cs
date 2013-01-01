@@ -73,6 +73,7 @@ namespace Buffalo.DBTools.UIHelper
                 item.Name = cnode.Attributes["name"] != null ? cnode.Attributes["name"].InnerText : "";
                 item.Summary = cnode.Attributes["summary"] != null ? cnode.Attributes["summary"].InnerText : "";
                 item.Items = GetValueItems(cnode);
+                item.Type=
                 _configItems.Add(item);
             }
         }

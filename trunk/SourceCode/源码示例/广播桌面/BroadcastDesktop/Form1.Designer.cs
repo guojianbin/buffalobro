@@ -43,10 +43,11 @@
             this.gpSetting = new System.Windows.Forms.GroupBox();
             this.btnCopy = new System.Windows.Forms.Button();
             this.gpIP = new System.Windows.Forms.GroupBox();
+            this.btnGetIP = new System.Windows.Forms.Button();
             this.txtInternetIP = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnCopyInternet = new System.Windows.Forms.Button();
-            this.btnGetIP = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nupPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupFPS)).BeginInit();
             this.gpSetting.SuspendLayout();
@@ -188,6 +189,7 @@
             // 
             // gpSetting
             // 
+            this.gpSetting.Controls.Add(this.button1);
             this.gpSetting.Controls.Add(this.cmbQty);
             this.gpSetting.Controls.Add(this.label4);
             this.gpSetting.Controls.Add(this.cmbIP);
@@ -231,6 +233,16 @@
             this.gpIP.TabStop = false;
             this.gpIP.Text = "地址";
             // 
+            // btnGetIP
+            // 
+            this.btnGetIP.Location = new System.Drawing.Point(300, 19);
+            this.btnGetIP.Name = "btnGetIP";
+            this.btnGetIP.Size = new System.Drawing.Size(50, 23);
+            this.btnGetIP.TabIndex = 20;
+            this.btnGetIP.Text = "获取";
+            this.btnGetIP.UseVisualStyleBackColor = true;
+            this.btnGetIP.Click += new System.EventHandler(this.btnGetIP_Click);
+            // 
             // txtInternetIP
             // 
             this.txtInternetIP.Location = new System.Drawing.Point(93, 20);
@@ -258,15 +270,15 @@
             this.btnCopyInternet.UseVisualStyleBackColor = true;
             this.btnCopyInternet.Click += new System.EventHandler(this.btnCopyInternet_Click);
             // 
-            // btnGetIP
+            // button1
             // 
-            this.btnGetIP.Location = new System.Drawing.Point(300, 19);
-            this.btnGetIP.Name = "btnGetIP";
-            this.btnGetIP.Size = new System.Drawing.Size(50, 23);
-            this.btnGetIP.TabIndex = 20;
-            this.btnGetIP.Text = "获取";
-            this.btnGetIP.UseVisualStyleBackColor = true;
-            this.btnGetIP.Click += new System.EventHandler(this.btnGetIP_Click);
+            this.button1.Location = new System.Drawing.Point(339, 47);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(63, 23);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "NAT端口";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
@@ -314,6 +326,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnCopyInternet;
         private System.Windows.Forms.Button btnGetIP;
+        private System.Windows.Forms.Button button1;
     }
 }
 

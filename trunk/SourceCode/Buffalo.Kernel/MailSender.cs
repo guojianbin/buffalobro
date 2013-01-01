@@ -4,6 +4,9 @@ using System.Text;
 using System.Net.Mail;
 namespace Buffalo.Kernel
 {
+    /// <summary>
+    /// ÓÊ¼ş·¢ËÍÀà
+    /// </summary>
     public class MailSender
     {
         private static string mailSource = null;
