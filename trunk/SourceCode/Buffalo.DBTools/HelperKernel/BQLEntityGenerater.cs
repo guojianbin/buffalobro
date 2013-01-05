@@ -248,7 +248,7 @@ namespace Buffalo.DBTools.HelperKernel
                     sbRelation.Append("        /// </summary>\n");
                     bool isGeneric = false;
                     string type = null;
-                    if (GenericInfo.ContainsKey(targetType))
+                    if (GenericInfo!=null && GenericInfo.ContainsKey(targetType))
                     {
                         type = targetType;
                         isGeneric = true;
