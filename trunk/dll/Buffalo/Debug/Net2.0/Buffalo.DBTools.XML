@@ -1936,19 +1936,6 @@
             生成BQL数据层
             </summary>
         </member>
-        <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.SourceCodeCompiler">
-            <summary>
-            源码编译器
-            </summary>
-        </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.SourceCodeCompiler.DoCompiler(System.String,System.String,System.Collections.Generic.List{System.String},System.Text.StringBuilder)">
-            <summary>
-            编译
-            </summary>
-            <param name="code">代码</param>
-            <param name="errorMessage">错误信息</param>
-            <returns></returns>
-        </member>
         <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.ExpressionType">
             <summary>
             表达式类型
@@ -2250,6 +2237,19 @@
             填充配置项
             </summary>
             <param name="node"></param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.GetItemType(System.Xml.XmlNode)">
+            <summary>
+            获取项类型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.GetValueItems(System.Xml.XmlNode)">
+            <summary>
+            获取值类型项
+            </summary>
+            <param name="cnode"></param>
+            <returns></returns>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIConfigItem.ConfigItems">
             <summary>
@@ -2821,6 +2821,31 @@
             说明
             </summary>
         </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ConfigItem.Type">
+            <summary>
+            项类型
+            </summary>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.ConfigItemType">
+            <summary>
+            项类型
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.ConfigItemType.Check">
+            <summary>
+            选择框
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.ConfigItemType.Combo">
+            <summary>
+            下拉框
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.ConfigItemType.Text">
+            <summary>
+            文本框
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.ROMHelper.DBEntityInfo">
             <summary>
             数据库到实体的信息
@@ -3176,7 +3201,7 @@
             UI需要的信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.#ctor(System.Collections.Generic.Dictionary{System.String,System.Boolean},Buffalo.DBTools.HelperKernel.EntityParamField)">
+        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.#ctor(System.Collections.Generic.Dictionary{System.String,System.Object},Buffalo.DBTools.HelperKernel.EntityParamField)">
             <summary>
             UI信息
             </summary>

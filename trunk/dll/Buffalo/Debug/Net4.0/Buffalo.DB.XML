@@ -1421,6 +1421,38 @@
             判断是否有排序
             </summary>
         </member>
+        <member name="T:Buffalo.DB.PropertyAttributes.SequenceAttributes">
+            <summary>
+            序列标识
+            </summary>
+        </member>
+        <member name="F:Buffalo.DB.PropertyAttributes.SequenceAttributes._propertyName">
+            <summary>
+            属性名
+            </summary>
+        </member>
+        <member name="F:Buffalo.DB.PropertyAttributes.SequenceAttributes._sequenceName">
+            <summary>
+            序列名
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.PropertyAttributes.SequenceAttributes.#ctor(System.String,System.String)">
+            <summary>
+            序列标识
+            </summary>
+            <param name="propertyName"></param>
+            <param name="sequenceName"></param>
+        </member>
+        <member name="P:Buffalo.DB.PropertyAttributes.SequenceAttributes.PropertyName">
+            <summary>
+            属性名
+            </summary>
+        </member>
+        <member name="P:Buffalo.DB.PropertyAttributes.SequenceAttributes.SequenceName">
+            <summary>
+            序列名
+            </summary>
+        </member>
         <member name="T:Buffalo.DB.EntityInfos.PropertyInfoCollection">
             <summary>
             属性信息集合
@@ -10485,38 +10517,6 @@
             </summary>
             <param name="entityName">实体名</param>
             <returns></returns>
-        </member>
-        <member name="T:Buffalo.DB.PropertyAttributes.SequenceAttributes">
-            <summary>
-            序列标识
-            </summary>
-        </member>
-        <member name="F:Buffalo.DB.PropertyAttributes.SequenceAttributes._propertyName">
-            <summary>
-            属性名
-            </summary>
-        </member>
-        <member name="F:Buffalo.DB.PropertyAttributes.SequenceAttributes._sequenceName">
-            <summary>
-            序列名
-            </summary>
-        </member>
-        <member name="M:Buffalo.DB.PropertyAttributes.SequenceAttributes.#ctor(System.String,System.String)">
-            <summary>
-            序列标识
-            </summary>
-            <param name="propertyName"></param>
-            <param name="sequenceName"></param>
-        </member>
-        <member name="P:Buffalo.DB.PropertyAttributes.SequenceAttributes.PropertyName">
-            <summary>
-            属性名
-            </summary>
-        </member>
-        <member name="P:Buffalo.DB.PropertyAttributes.SequenceAttributes.SequenceName">
-            <summary>
-            序列名
-            </summary>
         </member>
     </members>
 </doc>
