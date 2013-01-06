@@ -671,6 +671,11 @@
             注释[Description("内容")]的内容
             </summary>
         </member>
+        <member name="P:Buffalo.Kernel.EnumInfo.DisplayName">
+            <summary>
+            获取[DisplayName("显示名")]的内容
+            </summary>
+        </member>
         <member name="M:Buffalo.Kernel.EnumUnit.AddValue(System.Int32,System.Int32)">
             <summary>
             在属性集合添加一个属性
@@ -1125,6 +1130,7 @@
             获取类型的实体
             </summary>
             <param name="typeName">类型名</param>
+            <param name="args">构造函数参数</param>
             <returns></returns>
         </member>
         <member name="P:Buffalo.Kernel.FastReflection.ClassInfos.ProxyAssembly.Assembly">
@@ -1881,6 +1887,11 @@
             获取在获取锁时是否发生等待超时
             </summary>
         </member>
+        <member name="T:Buffalo.Kernel.MailSender">
+            <summary>
+            邮件发送类
+            </summary>
+        </member>
         <member name="M:Buffalo.Kernel.MailSender.SendMail(System.String,System.String,System.String)">
             <summary>
             发送邮件
@@ -2004,6 +2015,15 @@
             <param name="ip"></param>
             <param name="port"></param>
             <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.NetClients.NetConnection.TryOpenNATPort(System.String,System.Int32,System.Byte[],System.Net.Sockets.ProtocolType)">
+            <summary>
+            尝试打开NAT端口
+            </summary>
+            <param name="ip">ip地址</param>
+            <param name="data">数据</param>
+            <param name="type">数据类型</param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.Kernel.NetClients.NetConnection.SendTo(System.String)">
