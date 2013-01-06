@@ -60,19 +60,16 @@ namespace Buffalo.DBTools.UIHelper
         /// 选择框
         /// </summary>
         [Description("选择框")]
-        [DisplayName("check")]
         Check,
         /// <summary>
         /// 下拉框
         /// </summary>
         [Description("下拉框")]
-        [DisplayName("combo")]
         Combo,
         /// <summary>
         /// 文本框
         /// </summary>
         [Description("文本框")]
-        [DisplayName("text")]
         Text
     }
 }

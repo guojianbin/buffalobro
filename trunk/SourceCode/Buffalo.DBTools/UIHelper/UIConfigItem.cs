@@ -73,9 +73,35 @@ namespace Buffalo.DBTools.UIHelper
                 item.Name = cnode.Attributes["name"] != null ? cnode.Attributes["name"].InnerText : "";
                 item.Summary = cnode.Attributes["summary"] != null ? cnode.Attributes["summary"].InnerText : "";
                 item.Items = GetValueItems(cnode);
-                item.Type=
+                item.Type = GetItemType(cnode);
                 _configItems.Add(item);
             }
+        }
+        /// <summary>
+        /// 获取项类型
+        /// </summary>
+        /// <returns></returns>
+        private ConfigItemType GetItemType(XmlNode cnode) 
+        {
+            XmlAttribute att = cnode.Attributes["type"];
+            if (att == null)
+            {
+                return ConfigItemType.Text;
+            }
+            string type = att.InnerText;
+            if (type.Equals("check",StringComparison.CurrentCultureIgnoreCase)) 
+            {
+                return ConfigItemType.Check;
+            }
+            if (type.Equals("combo", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return ConfigItemType.Combo;
+            }
+            if (type.Equals("text", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return ConfigItemType.Text;
+            }
+            return ConfigItemType.Text;
         }
 
         /// <summary>

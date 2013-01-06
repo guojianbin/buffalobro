@@ -100,3 +100,4 @@ E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Release\Buffalo.Perm
 E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Release\Buffalo.Permissions.dll
 E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Release\Buffalo.Permissions.pdb
 D:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.XML
+E:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.XML
