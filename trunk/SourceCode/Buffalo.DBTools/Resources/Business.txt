@@ -14,7 +14,7 @@ namespace <%=BusinessNamespace%>
     /// </summary>
     public class <%=BusinessClassName%>Base<T>: <%=BaseBusinessClass%><T> where T:<%=ClassName%>,new()
     {
-        //业务代码请尽量在此编写
+        //如果此实体需要被继承则在此写的业务方法能在子类的业务类中使用
     }
 <%#IF TableName%>
     
@@ -27,7 +27,7 @@ namespace <%=BusinessNamespace%>
         {
             
         }
-        //本类只是用作实例化，在此写的业务操作将不能在子业务类中被继承
+        
     }
 <%#ENDIF%>
 }
