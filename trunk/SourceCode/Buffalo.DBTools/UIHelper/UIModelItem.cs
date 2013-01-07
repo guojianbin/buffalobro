@@ -41,7 +41,20 @@ namespace Buffalo.DBTools.UIHelper
             return false;
         }
 
-        
+        /// <summary>
+        /// ªÒ»°÷µ
+        /// </summary>
+        /// <param name="itemName"></param>
+        /// <returns></returns>
+        public string GetValue(string itemName) 
+        {
+            object ret = false;
+            if (_dicCheckItem.TryGetValue(itemName, out ret))
+            {
+                return ret.ToString();
+            }
+            return null;
+        }
 
         private EntityParamField _belongProperty;
         /// <summary>
