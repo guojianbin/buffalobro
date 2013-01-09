@@ -47,6 +47,12 @@
     <Compile Include="DataGridViewEx\DataGridViewImageButtomColumn.cs" />
     <Compile Include="DataGridViewEx\DataGridViewPercentCell.cs" />
     <Compile Include="DataGridViewEx\DataGridViewPercentColumn.cs" />
+    <Compile Include="Editors\TextBoxEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\TextBoxEditor.Designer.cs">
+      <DependentUpon>TextBoxEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="PagingBar\MediumPagingBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -63,6 +69,10 @@
     <Compile Include="Properties\Resources.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Editors\TextBoxEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TextBoxEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PagingBar\MediumPagingBar.resx">
       <DependentUpon>MediumPagingBar.cs</DependentUpon>
       <SubType>Designer</SubType>

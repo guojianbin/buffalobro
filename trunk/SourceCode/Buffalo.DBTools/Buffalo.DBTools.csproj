@@ -314,6 +314,10 @@
       <Project>{48492BAD-6312-4A80-A660-C0DA04957227}</Project>
       <Name>Buffalo.Win32Kernel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Buffalo.WinFormsControl\Buffalo.WinFormsControl.csproj">
+      <Project>{E7808223-2E0F-44C3-A39D-26CF22A9D946}</Project>
+      <Name>Buffalo.WinFormsControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\ClassDiagram.txt" />
