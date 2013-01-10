@@ -68,7 +68,7 @@ namespace Buffalo.Kernel.Defaults
         /// 整型默认值
         /// </summary>
         public static readonly int DefaultInt = Int32.MinValue;
-        
+
         /// <summary>
         /// 双精度默认值
         /// </summary>
@@ -77,7 +77,7 @@ namespace Buffalo.Kernel.Defaults
         /// 浮点型默认值
         /// </summary>
         public static readonly float DefaultFloat = float.MinValue;
-        
+
         /// <summary>
         /// Decimal默认值
         /// </summary>
@@ -110,7 +110,7 @@ namespace Buffalo.Kernel.Defaults
         /// <returns></returns>
         public static string ValueToString(object value, string formatString)
         {
-            if (value is IFormattable) 
+            if (value is IFormattable)
             {
                 IFormattable fom = (IFormattable)value;
                 return fom.ToString(formatString, null);
@@ -144,6 +144,15 @@ namespace Buffalo.Kernel.Defaults
                 return 0;
             }
             return 0;
+        }
+        /// <summary>
+        /// 获取类型的默认值
+        /// </summary>
+        /// <param name="targetType"></param>
+        /// <returns></returns>
+        public static object DefaultForType(Type targetType)
+        {
+            return targetType.IsValueType ? Activator.CreateInstance(targetType) : null;
         }
     }
 }

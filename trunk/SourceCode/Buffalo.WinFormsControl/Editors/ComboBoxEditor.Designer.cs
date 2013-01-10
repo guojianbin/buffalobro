@@ -1,6 +1,6 @@
 ﻿namespace Buffalo.WinFormsControl.Editors
 {
-    partial class TextBoxEditor
+    partial class ComboBoxEditor
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -31,7 +31,7 @@
             this.pnlLable = new System.Windows.Forms.Panel();
             this.labSummary = new System.Windows.Forms.Label();
             this.pnlValue = new System.Windows.Forms.Panel();
-            this.txtValue = new System.Windows.Forms.TextBox();
+            this.cmbValue = new System.Windows.Forms.ComboBox();
             this.pnlLable.SuspendLayout();
             this.pnlValue.SuspendLayout();
             this.SuspendLayout();
@@ -57,7 +57,7 @@
             // 
             // pnlValue
             // 
-            this.pnlValue.Controls.Add(this.txtValue);
+            this.pnlValue.Controls.Add(this.cmbValue);
             this.pnlValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlValue.Location = new System.Drawing.Point(50, 0);
             this.pnlValue.Name = "pnlValue";
@@ -65,15 +65,15 @@
             this.pnlValue.TabIndex = 1;
             this.pnlValue.Resize += new System.EventHandler(this.pnlValue_Resize);
             // 
-            // txtValue
+            // cmbValue
             // 
-            this.txtValue.Location = new System.Drawing.Point(3, 2);
-            this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(144, 21);
-            this.txtValue.TabIndex = 0;
-            this.txtValue.TextChanged += new System.EventHandler(this.txtValue_TextChanged);
+            this.cmbValue.FormattingEnabled = true;
+            this.cmbValue.Location = new System.Drawing.Point(3, 2);
+            this.cmbValue.Name = "cmbValue";
+            this.cmbValue.Size = new System.Drawing.Size(144, 20);
+            this.cmbValue.TabIndex = 0;
             // 
-            // TextBoxEditor
+            // ComboBoxEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -81,12 +81,10 @@
             this.Controls.Add(this.pnlLable);
             this.MaximumSize = new System.Drawing.Size(500, 25);
             this.MinimumSize = new System.Drawing.Size(200, 25);
-            this.Name = "TextBoxEditor";
+            this.Name = "ComboBoxEditor";
             this.Size = new System.Drawing.Size(200, 25);
-            this.Load += new System.EventHandler(this.TextBoxEditor_Load);
             this.pnlLable.ResumeLayout(false);
             this.pnlValue.ResumeLayout(false);
-            this.pnlValue.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -96,6 +94,6 @@
         private System.Windows.Forms.Panel pnlLable;
         private System.Windows.Forms.Label labSummary;
         private System.Windows.Forms.Panel pnlValue;
-        private System.Windows.Forms.TextBox txtValue;
+        private System.Windows.Forms.ComboBox cmbValue;
     }
 }

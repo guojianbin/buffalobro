@@ -11,14 +11,14 @@ namespace Buffalo.WinFormsControl.Editors
     /// <summary>
     /// ÎÄ±¾¿òµÄ±à¼­Æ÷
     /// </summary>
-    public partial class TextBoxEditor : EditorBase
+    public partial class ComboBoxEditor : EditorBase
     {
-        public TextBoxEditor()
+        public ComboBoxEditor()
         {
             InitializeComponent();
         }
 
-        private void TextBoxEditor_Load(object sender, EventArgs e)
+        private void ComboBoxEditor_Load(object sender, EventArgs e)
         {
             
         }

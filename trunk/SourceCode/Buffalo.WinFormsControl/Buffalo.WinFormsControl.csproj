@@ -47,11 +47,26 @@
     <Compile Include="DataGridViewEx\DataGridViewImageButtomColumn.cs" />
     <Compile Include="DataGridViewEx\DataGridViewPercentCell.cs" />
     <Compile Include="DataGridViewEx\DataGridViewPercentColumn.cs" />
+    <Compile Include="Editors\EditorBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Editors\TextBoxEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Editors\TextBoxEditor.Designer.cs">
       <DependentUpon>TextBoxEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CheckBoxEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\CheckBoxEditor.Designer.cs">
+      <DependentUpon>CheckBoxEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ComboBoxEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\ComboBoxEditor.Designer.cs">
+      <DependentUpon>ComboBoxEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="PagingBar\MediumPagingBar.cs">
       <SubType>UserControl</SubType>
@@ -73,6 +88,14 @@
       <SubType>Designer</SubType>
       <DependentUpon>TextBoxEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\CheckBoxEditor.resx">
+      <DependentUpon>CheckBoxEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\ComboBoxEditor.resx">
+      <DependentUpon>ComboBoxEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="PagingBar\MediumPagingBar.resx">
       <DependentUpon>MediumPagingBar.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -92,6 +115,10 @@
     <Content Include="Resources\Previous.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Buffalo.Kernel\Buffalo.Kernel.csproj">
+      <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
+      <Name>Buffalo.Kernel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Buffalo.Win32Kernel\Buffalo.Win32Kernel.csproj">
       <Project>{48492BAD-6312-4A80-A660-C0DA04957227}</Project>
       <Name>Buffalo.Win32Kernel</Name>

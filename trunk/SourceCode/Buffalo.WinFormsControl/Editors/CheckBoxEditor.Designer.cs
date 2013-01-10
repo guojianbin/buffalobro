@@ -1,6 +1,6 @@
 ﻿namespace Buffalo.WinFormsControl.Editors
 {
-    partial class TextBoxEditor
+    partial class CheckBoxEditor
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -31,7 +31,7 @@
             this.pnlLable = new System.Windows.Forms.Panel();
             this.labSummary = new System.Windows.Forms.Label();
             this.pnlValue = new System.Windows.Forms.Panel();
-            this.txtValue = new System.Windows.Forms.TextBox();
+            this.chkValue = new System.Windows.Forms.CheckBox();
             this.pnlLable.SuspendLayout();
             this.pnlValue.SuspendLayout();
             this.SuspendLayout();
@@ -39,10 +39,10 @@
             // pnlLable
             // 
             this.pnlLable.Controls.Add(this.labSummary);
-            this.pnlLable.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlLable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlLable.Location = new System.Drawing.Point(0, 0);
             this.pnlLable.Name = "pnlLable";
-            this.pnlLable.Size = new System.Drawing.Size(50, 25);
+            this.pnlLable.Size = new System.Drawing.Size(77, 25);
             this.pnlLable.TabIndex = 0;
             // 
             // labSummary
@@ -50,40 +50,41 @@
             this.labSummary.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labSummary.Location = new System.Drawing.Point(0, 0);
             this.labSummary.Name = "labSummary";
-            this.labSummary.Size = new System.Drawing.Size(50, 25);
+            this.labSummary.Size = new System.Drawing.Size(77, 25);
             this.labSummary.TabIndex = 0;
             this.labSummary.Text = "标签";
             this.labSummary.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // pnlValue
             // 
-            this.pnlValue.Controls.Add(this.txtValue);
-            this.pnlValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlValue.Location = new System.Drawing.Point(50, 0);
+            this.pnlValue.Controls.Add(this.chkValue);
+            this.pnlValue.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlValue.Location = new System.Drawing.Point(77, 0);
             this.pnlValue.Name = "pnlValue";
-            this.pnlValue.Size = new System.Drawing.Size(150, 25);
+            this.pnlValue.Size = new System.Drawing.Size(23, 25);
             this.pnlValue.TabIndex = 1;
-            this.pnlValue.Resize += new System.EventHandler(this.pnlValue_Resize);
             // 
-            // txtValue
+            // chkValue
             // 
-            this.txtValue.Location = new System.Drawing.Point(3, 2);
-            this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(144, 21);
-            this.txtValue.TabIndex = 0;
-            this.txtValue.TextChanged += new System.EventHandler(this.txtValue_TextChanged);
+            this.chkValue.AutoSize = true;
+            this.chkValue.Location = new System.Drawing.Point(5, 6);
+            this.chkValue.Name = "chkValue";
+            this.chkValue.Size = new System.Drawing.Size(15, 14);
+            this.chkValue.TabIndex = 0;
+            this.chkValue.UseVisualStyleBackColor = true;
+            this.chkValue.CheckedChanged += new System.EventHandler(this.chkValue_CheckedChanged);
             // 
-            // TextBoxEditor
+            // CheckBoxEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.pnlValue);
             this.Controls.Add(this.pnlLable);
+            this.Controls.Add(this.pnlValue);
             this.MaximumSize = new System.Drawing.Size(500, 25);
-            this.MinimumSize = new System.Drawing.Size(200, 25);
-            this.Name = "TextBoxEditor";
-            this.Size = new System.Drawing.Size(200, 25);
-            this.Load += new System.EventHandler(this.TextBoxEditor_Load);
+            this.MinimumSize = new System.Drawing.Size(100, 25);
+            this.Name = "CheckBoxEditor";
+            this.Size = new System.Drawing.Size(100, 25);
+            this.Load += new System.EventHandler(this.CheckBoxEditor_Load);
             this.pnlLable.ResumeLayout(false);
             this.pnlValue.ResumeLayout(false);
             this.pnlValue.PerformLayout();
@@ -96,6 +97,6 @@
         private System.Windows.Forms.Panel pnlLable;
         private System.Windows.Forms.Label labSummary;
         private System.Windows.Forms.Panel pnlValue;
-        private System.Windows.Forms.TextBox txtValue;
+        private System.Windows.Forms.CheckBox chkValue;
     }
 }

@@ -11,49 +11,47 @@ namespace Buffalo.WinFormsControl.Editors
     /// <summary>
     /// 文本框的编辑器
     /// </summary>
-    public partial class TextBoxEditor : EditorBase
+    public partial class CheckBoxEditor : EditorBase
     {
-        public TextBoxEditor()
+        public CheckBoxEditor()
         {
             InitializeComponent();
         }
 
-        private void TextBoxEditor_Load(object sender, EventArgs e)
+        private void CheckBoxEditor_Load(object sender, EventArgs e)
         {
             
         }
 
-        private void pnlValue_Resize(object sender, EventArgs e)
-        {
-            int width = pnlValue.Width - 4;
-            if (width > 0) 
-            {
-                txtValue.Width = width;
-            }
-        }
-        public override string  Text
-        {
-	        get 
-	        { 
-		         return txtValue.Text;
-	        }
-	          set 
-	        { 
-		        txtValue.Text = value;
-	        }
-        }
+
         /// <summary>
-        /// 标签宽度
+        /// 是否选中
         /// </summary>
-        public int LableWidth 
+        public bool Checked 
         {
             get 
             {
-                return pnlLable.Width;
+                return chkValue.Checked;
             }
             set 
             {
-                pnlLable.Width = value;
+                chkValue.Checked = value;
+            }
+        }
+        /// <summary>
+        /// 值
+        /// </summary>
+        public override object Value
+        {
+            get
+            {
+                return Checked;
+            }
+            set
+            {
+
+                Checked = Convert.ToBoolean(value);
+
             }
         }
 
@@ -86,13 +84,10 @@ namespace Buffalo.WinFormsControl.Editors
                 labSummary.Text = value;
             }
         }
-
-        
-        private void txtValue_TextChanged(object sender, EventArgs e)
+        private void chkValue_CheckedChanged(object sender, EventArgs e)
         {
-            DoValueChange(sender, txtValue.Text);
+            DoValueChange(sender,chkValue.Checked);
         }
-
 
 
     }
