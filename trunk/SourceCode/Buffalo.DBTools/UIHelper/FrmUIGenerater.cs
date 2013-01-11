@@ -77,5 +77,10 @@ namespace Buffalo.DBTools.UIHelper
             return null;
 
         }
+
+        private void FrmUIGenerater_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace Buffalo.WinFormsControl.Editors
     /// <summary>
     /// ÎÄ±¾¿òµÄ±à¼­Æ÷
     /// </summary>
+    [ToolboxItem(true)]
     public partial class CheckBoxEditor : EditorBase
     {
         public CheckBoxEditor()

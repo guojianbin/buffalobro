@@ -5,12 +5,14 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using Buffalo.Win32Kernel;
 
 namespace Buffalo.WinFormsControl.Editors
 {
     /// <summary>
     /// 文本框的编辑器
     /// </summary>
+    [ToolboxItem(true)]
     public partial class ComboBoxEditor : EditorBase
     {
         public ComboBoxEditor()
@@ -28,19 +30,34 @@ namespace Buffalo.WinFormsControl.Editors
             int width = pnlValue.Width - 4;
             if (width > 0) 
             {
-                txtValue.Width = width;
+                cmbValue.Width = width;
             }
         }
         public override string  Text
         {
 	        get 
-	        { 
-		         return txtValue.Text;
+	        {
+                return cmbValue.Text;
 	        }
-	          set 
-	        { 
-		        txtValue.Text = value;
+	        set 
+	        {
+                cmbValue.Text = value;
 	        }
+        }
+
+        /// <summary>
+        /// 值
+        /// </summary>
+        public override object Value
+        {
+            get
+            {
+                return cmbValue.SelectedValue;
+            }
+            set
+            {
+                cmbValue.SelectedValue=value;
+            }
         }
         /// <summary>
         /// 标签宽度
@@ -87,12 +104,21 @@ namespace Buffalo.WinFormsControl.Editors
             }
         }
 
-        
-        private void txtValue_TextChanged(object sender, EventArgs e)
+        private void cmbValue_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DoValueChange(sender, txtValue.Text);
+            DoValueChange(sender, cmbValue.SelectedValue);
         }
 
+        /// <summary>
+        /// 绑定值
+        /// </summary>
+        /// <param name="lstItem"></param>
+        public void BindValue(List<ComboBoxItem> lstItem) 
+        {
+            cmbValue.DisplayMember = "Text";
+            cmbValue.ValueMember = "Tag";
+            cmbValue.DataSource = lstItem;
+        }
 
 
     }

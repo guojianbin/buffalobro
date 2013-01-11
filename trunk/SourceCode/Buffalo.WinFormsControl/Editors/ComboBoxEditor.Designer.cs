@@ -72,6 +72,7 @@
             this.cmbValue.Name = "cmbValue";
             this.cmbValue.Size = new System.Drawing.Size(144, 20);
             this.cmbValue.TabIndex = 0;
+            this.cmbValue.SelectedIndexChanged += new System.EventHandler(this.cmbValue_SelectedIndexChanged);
             // 
             // ComboBoxEditor
             // 

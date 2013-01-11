@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using Buffalo.Kernel.Defaults;
+using System.ComponentModel;
+
 
 namespace Buffalo.WinFormsControl.Editors
 {
     public delegate void ValueChangeHandle(object sender,object oldValue,object newValue);
+    [ToolboxItem(false)]
     public class EditorBase:UserControl
     {
         public ValueChangeHandle OnValueChange;
