@@ -1150,6 +1150,13 @@
             <param name="val2">值2</param>
             <returns>-1为val1&lt;val2,0为val1=val2,1为val1&gt;val2</returns>
         </member>
+        <member name="M:Buffalo.Kernel.Defaults.DefaultValue.DefaultForType(System.Type)">
+            <summary>
+            获取类型的默认值
+            </summary>
+            <param name="targetType"></param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.Kernel.CSVReader.ReaderRow">
             <summary>
             读取行
@@ -3247,6 +3254,19 @@
             </summary>
             <param name="toEncrypt">要加密的数据</param>
             <param name="pwd">密码(32字节数组)</param>
+            <returns></returns>
+        </member>
+        <member name="T:Buffalo.Kernel.SourceCodeCompiler">
+            <summary>
+            源码编译器
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.SourceCodeCompiler.DoCompiler(System.String,System.String,System.Collections.Generic.List{System.String},System.Text.StringBuilder)">
+            <summary>
+            编译
+            </summary>
+            <param name="code">代码</param>
+            <param name="errorMessage">错误信息</param>
             <returns></returns>
         </member>
     </members>

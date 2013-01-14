@@ -337,6 +337,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem.DoFillInfo(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem,Buffalo.DB.BQLCommon.BQLConditionCommon.KeyWordInfomation)">
+            <summary>
+            执行填充信息操作
+            </summary>
+            <param name="value">要执行的值</param>
+            <param name="info">信息</param>
+        </member>
         <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem.FormatValueType(System.ValueType)">
             <summary>
             格式化值类型的值
