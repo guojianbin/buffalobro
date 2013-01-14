@@ -1620,6 +1620,49 @@
               查找类似 XML 的本地化字符串。
             </summary>
         </member>
+        <member name="T:Buffalo.DBTools.ClassDesignerInfo">
+            <summary>
+            类图信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.ClassDesignerInfo.GetClassDesignerPath">
+            <summary>
+            获取类图所在路径
+            </summary>
+            <param name="docView"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.ClassDesignerInfo.GetNameSpace">
+            <summary>
+            获取命名空间
+            </summary>
+            <param name="docView">类设计图</param>
+            <param name="project">工程</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.ClassDesignerInfo.#ctor(Microsoft.VisualStudio.Modeling.Diagrams.Diagram,EnvDTE.Project,Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.ClassDesignerDocView)">
+            <summary>
+            类图信息
+            </summary>
+            <param name="selectedDiagram"></param>
+            <param name="currentProject"></param>
+            <param name="selectDocView"></param>
+        </member>
+        <member name="P:Buffalo.DBTools.ClassDesignerInfo.SelectedDiagram">
+            <summary>
+            选中的关系图
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.ClassDesignerInfo.CurrentProject">
+            <summary>
+            当前项目
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.ClassDesignerInfo.SelectDocView">
+            <summary>
+            选择的文档
+            </summary>
+        </member>
         <member name="F:Buffalo.DBTools.FrmDBCreate.components">
             <summary>
             必需的设计器变量。
@@ -1635,11 +1678,6 @@
             <summary>
             设计器支持所需的方法 - 不要
             使用代码编辑器修改此方法的内容。
-            </summary>
-        </member>
-        <member name="F:Buffalo.DBTools.FrmDBCreate._selectDocView">
-            <summary>
-            选中的文档视图
             </summary>
         </member>
         <member name="F:Buffalo.DBTools.FrmDBCreate._lstSql">
@@ -1670,19 +1708,9 @@
             选中的类
             </summary>
         </member>
-        <member name="P:Buffalo.DBTools.FrmDBCreate.SelectedDiagram">
+        <member name="P:Buffalo.DBTools.FrmDBCreate.DesignerInfo">
             <summary>
-            选中的关系图
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.FrmDBCreate.CurrentProject">
-            <summary>
-            当前项目
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.FrmDBCreate.SelectDocView">
-            <summary>
-            选中的文档视图
+            类设计图信息
             </summary>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ICodeOutputer.GetCode(System.Collections.Generic.Queue{Buffalo.DBTools.UIHelper.ModelLoader.ExpressionItem})">
@@ -1703,13 +1731,6 @@
             检测文件
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.GetConfigName">
-            <summary>
-            生成文件名
-            </summary>
-            <param name="curProject"></param>
-            <param name="curDiagram"></param>
-        </member>
         <member name="F:Buffalo.DBTools.UIHelper.FrmUIGenerater.components">
             <summary>
             必需的设计器变量。
@@ -1727,14 +1748,9 @@
             使用代码编辑器修改此方法的内容。
             </summary>
         </member>
-        <member name="P:Buffalo.DBTools.UIHelper.FrmUIGenerater.CurrentProject">
+        <member name="P:Buffalo.DBTools.UIHelper.FrmUIGenerater.DesignerInfo">
             <summary>
-            当前项目
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.FrmUIGenerater.SelectDocView">
-            <summary>
-            选择的文档
+            类设计图信息
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.FrmUIGenerater.SelectedClass">
@@ -1823,9 +1839,9 @@
             表信息
             </summary>
         </member>
-        <member name="P:Buffalo.DBTools.HelperKernel.GrneraterBase.CurrentProject">
+        <member name="P:Buffalo.DBTools.HelperKernel.GrneraterBase.DesignerInfo">
             <summary>
-            当前项目
+            类设计图信息
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.HelperKernel.GrneraterBase.EntityBaseTypeName">
@@ -1936,19 +1952,6 @@
             生成BQL数据层
             </summary>
         </member>
-        <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.SourceCodeCompiler">
-            <summary>
-            源码编译器
-            </summary>
-        </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.SourceCodeCompiler.DoCompiler(System.String,System.String,System.Collections.Generic.List{System.String},System.Text.StringBuilder)">
-            <summary>
-            编译
-            </summary>
-            <param name="code">代码</param>
-            <param name="errorMessage">错误信息</param>
-            <returns></returns>
-        </member>
         <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.ExpressionType">
             <summary>
             表达式类型
@@ -2037,15 +2040,15 @@
             using Buffalo.DB.PropertyAttributes;
             namespace &lt;%=BQLEntityNamespace%&gt;
             {
-                public partial class &lt;%=DBName%&gt;
+            &lt;%#IF TableName%&gt;
+            
+                public partial class &lt;%=DBName%&gt; 
                 {
                     private static &lt;%=DBName%&gt;_&lt;%=ClassName%&gt; _&lt;%=ClassName%&gt; = new &lt;%=DBName%&gt;_&lt;%=ClassName%&gt;();
                 
                     public static &lt;%=DBName%&gt;_&lt;%=ClassName%&gt; &lt;%=ClassName%&gt;
                     {
-                        get
-                        {
-               [字符串的其余部分被截断]&quot;; 的本地化字符串。
+                         [字符串的其余部分被截断]&quot;; 的本地化字符串。
              </summary>
         </member>
         <member name="P:Buffalo.DBTools.Models.Business">
@@ -2064,10 +2067,9 @@
                 /// &lt;summary&gt;
                 ///  &lt;%=Summary%&gt;业务层
                 /// &lt;/summary&gt;
-                public class &lt;%=BusinessClassName%&gt;: &lt;%=BaseBusinessClass%&gt;
+                public class &lt;%=BusinessClassName%&gt;Base&lt;T&gt;: &lt;%=BaseBusinessClass%&gt;&lt;T&gt; where T:&lt;%=ClassName%&gt;,new()
                 {
-                    public &lt;%=ClassName%&gt;Business()
-                   [字符串的其余部分被截断]&quot;; 的本地化字符串。
+                     [字符串的其余部分被截断]&quot;; 的本地化字符串。
              </summary>
         </member>
         <member name="P:Buffalo.DBTools.Models.ClassDiagram">
@@ -2117,7 +2119,7 @@
                 public partial class &lt;%=ClassName%&gt;: &lt;%=EntityBaseType%&gt;
                 {
             &lt;%=EntityFields%&gt;
-                    
+            
             &lt;%=EntityRelations%&gt;
             
             &lt;%=EntityContext%&gt;
@@ -2147,6 +2149,20 @@
             
             
              的本地化字符串。
+             </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.Models.UIConfigItem">
+             <summary>
+               查找类似 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+            &lt;root&gt;
+              &lt;configItems&gt;
+                &lt;item type=&quot;check&quot;  name=&quot;CanQuery&quot; summary=&quot;查询条件&quot;&gt;&lt;/item&gt;
+                &lt;item type=&quot;check&quot; name=&quot;QueryDefault&quot; summary=&quot;默认查询条件&quot;&gt;&lt;/item&gt;
+                &lt;item type=&quot;check&quot; name=&quot;CanAddNew&quot; summary=&quot;可添加&quot;&gt;&lt;/item&gt;
+                &lt;item type=&quot;check&quot; name=&quot;CanEdit&quot; summary=&quot;可编辑&quot;&gt;&lt;/item&gt;
+                &lt;item type=&quot;combo&quot; name=&quot;SumType&quot; summary=&quot;统计类型&quot; select=&quot;总相加:sum,总条数:count,平均:avg,自定义:custom&quot;&gt;&lt;/item&gt;
+                &lt;item type=&quot;text&quot; name=&quot;CustomCount&quot; summary=&quot;自定义统计&quot;&gt;&lt;/item&gt;
+              &lt;/configItems&gt; [字符串的其余部分被截断]&quot;; 的本地化字符串。
              </summary>
         </member>
         <member name="P:Buffalo.DBTools.Models.UserEntity">
@@ -2239,17 +2255,36 @@
             UI配置信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.#ctor(System.Xml.XmlDocument)">
+        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.#ctor(System.Xml.XmlDocument,Buffalo.DBTools.ClassDesignerInfo)">
             <summary>
             UI配置信息
             </summary>
             <param name="config">配置的XML</param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.FillProjectItems(System.Xml.XmlNode)">
+            <summary>
+            填充项目项
+            </summary>
+            <param name="node"></param>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.FillConfigItems(System.Xml.XmlNode)">
             <summary>
             填充配置项
             </summary>
             <param name="node"></param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.GetItemType(System.Xml.XmlNode)">
+            <summary>
+            获取项类型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.GetValueItems(System.Xml.XmlNode)">
+            <summary>
+            获取值类型项
+            </summary>
+            <param name="cnode"></param>
+            <returns></returns>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIConfigItem.ConfigItems">
             <summary>
@@ -2259,6 +2294,11 @@
         <member name="P:Buffalo.DBTools.UIHelper.UIConfigItem.Projects">
             <summary>
             所属工程
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIConfigItem.DesignerInfo">
+            <summary>
+            类设计图信息
             </summary>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.LinkOutputer.GetCode(System.Collections.Generic.Queue{Buffalo.DBTools.UIHelper.ModelLoader.ExpressionItem},System.String)">
@@ -2321,19 +2361,9 @@
             刷新选中状态
             </summary>
         </member>
-        <member name="P:Buffalo.DBTools.FrmAllTables.SelectDocView">
+        <member name="P:Buffalo.DBTools.FrmAllTables.DesignerInfo">
             <summary>
-            选择的文档
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.FrmAllTables.SelectedDiagram">
-            <summary>
-            选中的关系图
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.FrmAllTables.CurrentProject">
-            <summary>
-            当前项目
+            类设计图信息
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.FrmAllTables.DbInfo">
@@ -2347,6 +2377,11 @@
         </member>
         <member name="M:Buffalo.DBTools.Connect.#ctor">
             <summary>实现外接程序对象的构造函数。请将您的初始化代码置于此方法内。</summary>
+        </member>
+        <member name="M:Buffalo.DBTools.Connect.GetDesignerInfo">
+            <summary>
+            类设计图信息
+            </summary>
         </member>
         <member name="M:Buffalo.DBTools.Connect.IsCommand(System.String,System.String)">
             <summary>
@@ -2490,7 +2525,7 @@
             <param name="errorMessage">如果出错此为信息</param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DBTools.HelperKernel.EntityRemoveHelper.RemoveFromProject(System.String,EnvDTE.Project)">
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityRemoveHelper.RemoveFromProject(System.String,Buffalo.DBTools.ClassDesignerInfo)">
             <summary>
             从项目中删除文件
             </summary>
@@ -2622,19 +2657,9 @@
             选中的类
             </summary>
         </member>
-        <member name="P:Buffalo.DBTools.FrmClassDesigner.SelectedDiagram">
+        <member name="P:Buffalo.DBTools.FrmClassDesigner.DesignerInfo">
             <summary>
-            选中的关系图
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.FrmClassDesigner.CurrentProject">
-            <summary>
-            当前项目
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.FrmClassDesigner.SelectDocView">
-            <summary>
-            选择的文档
+            类设计图信息
             </summary>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.Compiler.CompilerPart">
@@ -2821,20 +2846,37 @@
             说明
             </summary>
         </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ConfigItem.Type">
+            <summary>
+            项类型
+            </summary>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.ConfigItemType">
+            <summary>
+            项类型
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.ConfigItemType.Check">
+            <summary>
+            选择框
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.ConfigItemType.Combo">
+            <summary>
+            下拉框
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.ConfigItemType.Text">
+            <summary>
+            文本框
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.ROMHelper.DBEntityInfo">
             <summary>
             数据库到实体的信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.GetNameSpace(Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.ClassDesignerDocView,EnvDTE.Project)">
-            <summary>
-            获取命名空间
-            </summary>
-            <param name="docView">类设计图</param>
-            <param name="project">工程</param>
-            <returns></returns>
-        </member>
-        <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.#ctor(System.String,Buffalo.DB.DataBaseAdapter.DBTableInfo,Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.ClassDesignerDocView,EnvDTE.Project,Buffalo.DBTools.HelperKernel.DBConfigInfo)">
+        <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.#ctor(System.String,Buffalo.DB.DataBaseAdapter.DBTableInfo,Buffalo.DBTools.ClassDesignerInfo,Buffalo.DBTools.HelperKernel.DBConfigInfo)">
             <summary>
             实体信息
             </summary>
@@ -2845,7 +2887,7 @@
             初始化类信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.GetRealFileName(Buffalo.DB.DataBaseAdapter.DBTableInfo,Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.ClassDesignerDocView)">
+        <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.GetRealFileName(Buffalo.DB.DataBaseAdapter.DBTableInfo,Buffalo.DBTools.ClassDesignerInfo)">
             <summary>
             获取实体的文件名
             </summary>
@@ -2928,11 +2970,6 @@
             生成扩展类代码文件
             </summary>
         </member>
-        <member name="P:Buffalo.DBTools.ROMHelper.DBEntityInfo.CurrentProject">
-            <summary>
-            当前工程
-            </summary>
-        </member>
         <member name="P:Buffalo.DBTools.ROMHelper.DBEntityInfo.CurrentDBConfigInfo">
             <summary>
             数据库配置信息
@@ -2941,6 +2978,11 @@
         <member name="P:Buffalo.DBTools.ROMHelper.DBEntityInfo.BelongTable">
             <summary>
             所属表
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.ROMHelper.DBEntityInfo.DesignerInfo">
+            <summary>
+            类设计图信息
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.ROMHelper.DBEntityInfo.FileName">
@@ -3084,21 +3126,14 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DBTools.HelperKernel.DBConfigInfo.GetClassDesignerPath(Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.ClassDesignerDocView)">
-            <summary>
-            获取类图所在路径
-            </summary>
-            <param name="docView"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Buffalo.DBTools.HelperKernel.DBConfigInfo.GetFileName(EnvDTE.Project,Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.ClassDesignerDocView)">
+        <member name="M:Buffalo.DBTools.HelperKernel.DBConfigInfo.GetFileName(Buffalo.DBTools.ClassDesignerInfo)">
             <summary>
             生成文件名
             </summary>
             <param name="curProject"></param>
             <param name="curDiagram"></param>
         </member>
-        <member name="M:Buffalo.DBTools.HelperKernel.DBConfigInfo.GetDbName(Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.ClassDesignerDocView)">
+        <member name="M:Buffalo.DBTools.HelperKernel.DBConfigInfo.GetDbName(Buffalo.DBTools.ClassDesignerInfo)">
             <summary>
             获取当前类图的库名
             </summary>
@@ -3111,7 +3146,7 @@
             </summary>
             <param name="path"></param>
         </member>
-        <member name="M:Buffalo.DBTools.HelperKernel.DBConfigInfo.LoadInfo(EnvDTE.Project,Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.ClassDesignerDocView)">
+        <member name="M:Buffalo.DBTools.HelperKernel.DBConfigInfo.LoadInfo(Buffalo.DBTools.ClassDesignerInfo)">
             <summary>
             加载数据库信息
             </summary>
@@ -3176,7 +3211,7 @@
             UI需要的信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.#ctor(System.Collections.Generic.Dictionary{System.String,System.Boolean},Buffalo.DBTools.HelperKernel.EntityParamField)">
+        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.#ctor(System.Collections.Generic.Dictionary{System.String,System.Object},Buffalo.DBTools.HelperKernel.EntityParamField)">
             <summary>
             UI信息
             </summary>
@@ -3188,6 +3223,13 @@
             获取是否选中项
             </summary>
             <param name="itemName">项名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.GetValue(System.String)">
+            <summary>
+            获取值
+            </summary>
+            <param name="itemName"></param>
             <returns></returns>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.BelongProperty">
@@ -3258,7 +3300,7 @@
             初始化数据库信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.#ctor(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType,EnvDTE.Project,Microsoft.VisualStudio.Modeling.Diagrams.Diagram)">
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.#ctor(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType,Buffalo.DBTools.ClassDesignerInfo)">
             <summary>
             初始化类配置
             </summary>
@@ -3277,7 +3319,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.GetEntityConfigByTable(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType,EnvDTE.Project,Microsoft.VisualStudio.Modeling.Diagrams.Diagram,Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.ClassDesignerDocView)">
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.GetEntityConfigByTable(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType,Buffalo.DBTools.ClassDesignerInfo)">
             <summary>
             更新类信息
             </summary>
@@ -3380,7 +3422,7 @@
             <param name="propertyName"></param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.GetEntity(Buffalo.DBTools.HelperKernel.EntityConfig,EnvDTE.Project,Microsoft.VisualStudio.Modeling.Diagrams.Diagram)">
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.GetEntity(Buffalo.DBTools.HelperKernel.EntityConfig,Buffalo.DBTools.ClassDesignerInfo)">
             <summary>
             获取类的自身和基类集合
             </summary>
@@ -3442,7 +3484,7 @@
             生成扩展类代码文件
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.GetProjectItemByFileName(EnvDTE.Project,System.String)">
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.GetProjectItemByFileName(Buffalo.DBTools.ClassDesignerInfo,System.String)">
             <summary>
             获取项目项
             </summary>
@@ -3486,24 +3528,14 @@
             映射属性
             </summary>
         </member>
-        <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.SelectDocView">
-            <summary>
-            选择的文档
-            </summary>
-        </member>
         <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.CurrentDBConfigInfo">
             <summary>
             数据库配置信息
             </summary>
         </member>
-        <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.CurrentDiagram">
+        <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.DesignerInfo">
             <summary>
-            当前类图
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.CurrentProject">
-            <summary>
-            当前工程
+            类设计图信息
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.ClassType">
@@ -3741,7 +3773,7 @@
             填充注释设置
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.FrmDBSetting.ShowConfig(EnvDTE.Project,Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.ClassDesignerDocView,System.String)">
+        <member name="M:Buffalo.DBTools.FrmDBSetting.ShowConfig(Buffalo.DBTools.ClassDesignerInfo,System.String)">
             <summary>
             显示配置框
             </summary>

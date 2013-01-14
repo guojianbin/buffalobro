@@ -773,6 +773,11 @@
             注释[Description("内容")]的内容
             </summary>
         </member>
+        <member name="P:Buffalo.Kernel.EnumInfo.DisplayName">
+            <summary>
+            获取[DisplayName("显示名")]的内容
+            </summary>
+        </member>
         <member name="M:Buffalo.Kernel.NetClients.NetListener.#ctor(System.Int32,System.ComponentModel.ISynchronizeInvoke)">
             <summary>
             网络监听器
@@ -859,6 +864,11 @@
         <member name="P:Buffalo.Kernel.FastReflection.ClassInfos.ClassInfoHandle.FieldInfo">
             <summary>
             获取字段的信息
+            </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.MailSender">
+            <summary>
+            邮件发送类
             </summary>
         </member>
         <member name="M:Buffalo.Kernel.MailSender.SendMail(System.String,System.String,System.String)">
@@ -1139,6 +1149,13 @@
             <param name="val1">值1</param>
             <param name="val2">值2</param>
             <returns>-1为val1&lt;val2,0为val1=val2,1为val1&gt;val2</returns>
+        </member>
+        <member name="M:Buffalo.Kernel.Defaults.DefaultValue.DefaultForType(System.Type)">
+            <summary>
+            获取类型的默认值
+            </summary>
+            <param name="targetType"></param>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.Kernel.CSVReader.ReaderRow">
             <summary>
@@ -2318,6 +2335,7 @@
             获取类型的实体
             </summary>
             <param name="typeName">类型名</param>
+            <param name="args">构造函数参数</param>
             <returns></returns>
         </member>
         <member name="P:Buffalo.Kernel.FastReflection.ClassInfos.ProxyAssembly.Assembly">
@@ -2799,6 +2817,15 @@
             <param name="content"></param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.Kernel.NetClients.NetConnection.TryOpenNATPort(System.String,System.Int32,System.Byte[],System.Net.Sockets.ProtocolType)">
+            <summary>
+            尝试打开NAT端口
+            </summary>
+            <param name="ip">ip地址</param>
+            <param name="data">数据</param>
+            <param name="type">数据类型</param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.Kernel.NetClients.NetConnection.SendTo(System.String)">
             <summary>
             发送信息到指定位置
@@ -3227,6 +3254,19 @@
             </summary>
             <param name="toEncrypt">要加密的数据</param>
             <param name="pwd">密码(32字节数组)</param>
+            <returns></returns>
+        </member>
+        <member name="T:Buffalo.Kernel.SourceCodeCompiler">
+            <summary>
+            源码编译器
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.SourceCodeCompiler.DoCompiler(System.String,System.String,System.Collections.Generic.List{System.String},System.Text.StringBuilder)">
+            <summary>
+            编译
+            </summary>
+            <param name="code">代码</param>
+            <param name="errorMessage">错误信息</param>
             <returns></returns>
         </member>
     </members>
