@@ -633,6 +633,13 @@
             <param name="val2">值2</param>
             <returns>-1为val1&lt;val2,0为val1=val2,1为val1&gt;val2</returns>
         </member>
+        <member name="M:Buffalo.Kernel.Defaults.DefaultValue.DefaultForType(System.Type)">
+            <summary>
+            获取类型的默认值
+            </summary>
+            <param name="targetType"></param>
+            <returns></returns>
+        </member>
         <member name="P:Buffalo.Kernel.Defaults.TypeItem.ItemType">
             <summary>
             数值类型
@@ -2691,6 +2698,19 @@
             <summary>
             集合中字符串最大的长度
             </summary>
+        </member>
+        <member name="T:Buffalo.Kernel.SourceCodeCompiler">
+            <summary>
+            源码编译器
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.SourceCodeCompiler.DoCompiler(System.String,System.String,System.Collections.Generic.List{System.String},System.Text.StringBuilder)">
+            <summary>
+            编译
+            </summary>
+            <param name="code">代码</param>
+            <param name="errorMessage">错误信息</param>
+            <returns></returns>
         </member>
         <member name="T:Buffalo.Kernel.SysEventLog">
             <summary>

@@ -1194,6 +1194,13 @@
             <param name="val2">值2</param>
             <returns>-1为val1&lt;val2,0为val1=val2,1为val1&gt;val2</returns>
         </member>
+        <member name="M:Buffalo.Kernel.Defaults.DefaultValue.DefaultForType(System.Type)">
+            <summary>
+            获取类型的默认值
+            </summary>
+            <param name="targetType"></param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.Kernel.CSVReader.ReaderRow">
             <summary>
             读取行
