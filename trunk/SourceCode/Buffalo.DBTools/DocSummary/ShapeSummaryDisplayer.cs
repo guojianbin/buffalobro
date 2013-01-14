@@ -35,7 +35,7 @@ namespace Buffalo.DBTools.DocSummary
             AssociationShape shape4 = null;
             bool flag = true;
 
-            DBConfigInfo dbInfo = DBConfigInfo.LoadInfo(conn.CurrentProject, conn.SelectDocView);
+            DBConfigInfo dbInfo = DBConfigInfo.LoadInfo(conn.GetDesignerInfo());
             SummaryShowItem showInfo = SummaryShowItem.All;
 
             if (dbInfo != null)

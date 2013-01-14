@@ -21,10 +21,10 @@ namespace Buffalo.DBTools.HelperKernel
             dmt = new DataAccessMappingConfig(entity);
         }
 
-        public Generate3Tier(DBEntityInfo entity,Project project)
-            : base(entity, project)
+        public Generate3Tier(DBEntityInfo entity,ClassDesignerInfo info)
+            : base(entity, info)
         {
-            dmt = new DataAccessMappingConfig(entity,project);
+            dmt = new DataAccessMappingConfig(entity, info);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(fileName);
+            EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;
         }
 
@@ -242,7 +242,7 @@ namespace Buffalo.DBTools.HelperKernel
                 }
                 dmt.AppendDal(DataAccessNamespace + "." + type + "." + ClassName + "DataAccess", DataAccessNamespace + ".IDataAccess.I" + ClassName + "DataAccess");
                 CodeFileHelper.SaveFile(fileName, codes);
-                EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(fileName);
+                EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
                 newit.Properties.Item("BuildAction").Value = 1;
             }
             dmt.SaveXML();
@@ -284,7 +284,7 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(fileName);
+            EnvDTE.ProjectItem newit =DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;
         }
 
@@ -327,7 +327,7 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(fileName);
+            EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;
         }
 

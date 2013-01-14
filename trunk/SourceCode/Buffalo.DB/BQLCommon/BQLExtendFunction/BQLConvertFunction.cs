@@ -35,8 +35,7 @@ namespace Buffalo.DB.BQLCommon.BQLExtendFunction
         }
         internal override void FillInfo(KeyWordInfomation info)
         {
-            
-                value.FillInfo(info);
+            BQLValueItem.DoFillInfo(value, info);
             
         }
 

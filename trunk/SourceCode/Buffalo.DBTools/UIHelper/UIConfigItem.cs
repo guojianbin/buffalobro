@@ -28,14 +28,24 @@ namespace Buffalo.DBTools.UIHelper
         {
             get { return _projects; }
         }
+        private ClassDesignerInfo _designerInfo;
 
+        /// <summary>
+        /// 类设计图信息
+        /// </summary>
+        public ClassDesignerInfo DesignerInfo
+        {
+            get { return _designerInfo; }
+            set { _designerInfo = value; }
+        }
         /// <summary>
         /// UI配置信息
         /// </summary>
         /// <param name="config">配置的XML</param>
-        public UIConfigItem(XmlDocument config) 
+        public UIConfigItem(XmlDocument config,ClassDesignerInfo desinfo) 
         {
-
+            _designerInfo = desinfo;
+            InitConfig(config);
         }
 
         private void InitConfig(XmlDocument config) 
@@ -52,7 +62,20 @@ namespace Buffalo.DBTools.UIHelper
                 {
                     FillConfigItems(node);
                 }
+                if (node.Name.Equals("models", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    FillConfigItems(node);
+                }
             }
+        }
+
+        /// <summary>
+        /// 填充项目项
+        /// </summary>
+        /// <param name="node"></param>
+        private void FillProjectItems(XmlNode node) 
+        {
+            
         }
 
         /// <summary>

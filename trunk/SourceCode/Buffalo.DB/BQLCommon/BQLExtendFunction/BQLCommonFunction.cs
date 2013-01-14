@@ -25,7 +25,7 @@ namespace Buffalo.DB.BQLCommon.BQLExtendFunction
         {
             foreach (BQLValueItem item in values) 
             {
-                item.FillInfo(info);
+                BQLValueItem.DoFillInfo(item, info);
             }
         }
 

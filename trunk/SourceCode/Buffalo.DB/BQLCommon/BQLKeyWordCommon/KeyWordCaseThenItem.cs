@@ -67,7 +67,8 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
 
         internal override void FillInfo(KeyWordInfomation info)
         {
-
+            BQLValueItem.DoFillInfo(thenValue, info);
+            BQLValueItem.DoFillInfo(whenValue, info);
         }
 
         internal override string DisplayValue(KeyWordInfomation info)

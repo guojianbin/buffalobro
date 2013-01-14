@@ -190,7 +190,7 @@ namespace Buffalo.DBTools.HelperKernel
             string fileName = dicName + entity.ClassName + ".BEM.xml";
             XmlDocument doc = ToXML(entity);
             SaveXML(fileName, doc);
-            EnvDTE.ProjectItem newit = entity.CurrentProject.ProjectItems.AddFromFile(fileName);
+            EnvDTE.ProjectItem newit = entity.DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 3;
         }
 
@@ -211,7 +211,7 @@ namespace Buffalo.DBTools.HelperKernel
             string fileName = dicName + entity.ClassName + ".BEM.xml";
             XmlDocument doc = ToXML(entity);
             SaveXML(fileName, doc);
-            EnvDTE.ProjectItem newit = entity.CurrentProject.ProjectItems.AddFromFile(fileName);
+            EnvDTE.ProjectItem newit = entity.DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 3;
         }
 

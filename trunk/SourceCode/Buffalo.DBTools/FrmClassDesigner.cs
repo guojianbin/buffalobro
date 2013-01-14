@@ -33,33 +33,44 @@ namespace Buffalo.DBTools
             get { return _selectedClass; }
             set { _selectedClass = value; }
         }
-        private Diagram _selectedDiagram = null;
+        //private Diagram _selectedDiagram = null;
+
+        ///// <summary>
+        ///// 选中的关系图
+        ///// </summary>
+        //public Diagram SelectedDiagram
+        //{
+        //    get { return _selectedDiagram; }
+        //    set { _selectedDiagram = value; }
+        //}
+        //private Project _currentProject;
+        ///// <summary>
+        ///// 当前项目
+        ///// </summary>
+        //public Project CurrentProject
+        //{
+        //    get { return _currentProject; }
+        //    set { _currentProject = value; }
+        //}
+        //ClassDesignerDocView _selectDocView;
+        ///// <summary>
+        ///// 选择的文档
+        ///// </summary>
+        //public ClassDesignerDocView SelectDocView
+        //{
+        //    get { return _selectDocView; }
+        //    set { _selectDocView = value; }
+        //}
+
+        private ClassDesignerInfo _designerInfo;
 
         /// <summary>
-        /// 选中的关系图
+        /// 类设计图信息
         /// </summary>
-        public Diagram SelectedDiagram
+        public ClassDesignerInfo DesignerInfo
         {
-            get { return _selectedDiagram; }
-            set { _selectedDiagram = value; }
-        }
-        private Project _currentProject;
-        /// <summary>
-        /// 当前项目
-        /// </summary>
-        public Project CurrentProject
-        {
-            get { return _currentProject; }
-            set { _currentProject = value; }
-        }
-        ClassDesignerDocView _selectDocView;
-        /// <summary>
-        /// 选择的文档
-        /// </summary>
-        public ClassDesignerDocView SelectDocView
-        {
-            get { return _selectDocView; }
-            set { _selectDocView = value; }
+            get { return _designerInfo; }
+            set { _designerInfo = value; }
         }
 
         IDBAdapter _ida;
@@ -73,8 +84,8 @@ namespace Buffalo.DBTools
             _relationCell = new GridViewComboBoxCell(gvMapping);
             gvField.AutoGenerateColumns = false;
             gvMapping.AutoGenerateColumns = false;
-            _config = new EntityConfig(SelectedClass.AssociatedType, CurrentProject, SelectedDiagram);
-            _config.SelectDocView = SelectDocView;
+            _config = new EntityConfig(SelectedClass.AssociatedType, DesignerInfo);
+            //_config.SelectDocView = SelectDocView;
             _config.InitDBConfig();
             _ida = _config.DbInfo.CreateDBInfo().CurrentDbAdapter;
             BindFieldInfos();

@@ -27,7 +27,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         }
         internal override void LoadInfo(KeyWordInfomation info)
         {
-            _query.FillInfo(info);
+            BQLValueItem.DoFillInfo(_query, info);
         }
         
         

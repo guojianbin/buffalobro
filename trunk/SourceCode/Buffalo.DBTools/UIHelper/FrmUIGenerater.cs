@@ -19,23 +19,15 @@ namespace Buffalo.DBTools.UIHelper
         {
             InitializeComponent();
         }
-        private Project _currentProject;
+        private ClassDesignerInfo _designerInfo;
+
         /// <summary>
-        /// 当前项目
+        /// 类设计图信息
         /// </summary>
-        public Project CurrentProject
+        public ClassDesignerInfo DesignerInfo
         {
-            get { return _currentProject; }
-            set { _currentProject = value; }
-        }
-        ClassDesignerDocView _selectDocView;
-        /// <summary>
-        /// 选择的文档
-        /// </summary>
-        public ClassDesignerDocView SelectDocView
-        {
-            get { return _selectDocView; }
-            set { _selectDocView = value; }
+            get { return _designerInfo; }
+            set { _designerInfo = value; }
         }
         private ClrTypeShape _selectedClass = null;
 
@@ -53,7 +45,7 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         private XmlDocument LoadConfig() 
         {
-            FileInfo file = new FileInfo(CurrentProject.FileName);
+            FileInfo file = new FileInfo(DesignerInfo.CurrentProject.FileName);
             string directory = file.DirectoryName;
             directory = directory+"\\.bmodels\\";
             if (!Directory.Exists(directory))
@@ -61,22 +53,18 @@ namespace Buffalo.DBTools.UIHelper
                 Directory.CreateDirectory(directory);
             }
             string xml = "UIConfigItem.xml";
-            return null;
+            string fileName = directory + xml;
+            if (!File.Exists(fileName)) 
+            {
+                File.WriteAllText(fileName, Models.UIConfigItem);
+            }
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(fileName);
+
+            return xmldoc;
         }
 
-        /// <summary>
-        /// 生成文件名
-        /// </summary>
-        /// <param name="curProject"></param>
-        /// <param name="curDiagram"></param>
-        public XmlDocument GetConfigName()
-        {
 
-
-
-            return null;
-
-        }
 
         private void FrmUIGenerater_Load(object sender, EventArgs e)
         {

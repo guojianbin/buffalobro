@@ -22,6 +22,13 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         }
         internal override void LoadInfo(KeyWordInfomation info)
         {
+            if (paramhandles != null && paramhandles.Count > 0) 
+            {
+                foreach (BQLParamHandle handle in paramhandles) 
+                {
+                    BQLValueItem.DoFillInfo(handle, info);
+                }
+            }
             info.HasGroup = true;
         }
         ///// <summary>

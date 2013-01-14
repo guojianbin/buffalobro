@@ -57,7 +57,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 
         internal override void FillInfo(KeyWordInfomation info)
         {
-            _arg.FillInfo(info);
+            BQLValueItem.DoFillInfo(_arg, info);
         }
     }
 }

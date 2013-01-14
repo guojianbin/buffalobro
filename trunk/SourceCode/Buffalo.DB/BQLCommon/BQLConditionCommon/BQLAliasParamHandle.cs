@@ -31,6 +31,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         internal override void FillInfo(KeyWordInfomation info)
         {
             //info.QueryParams[aliasName] = new ParamInfo(aliasName, aliasName, prmHandle.ValueDataType);
+            BQLValueItem.DoFillInfo(_prmHandle, info);
         }
 
         internal override string DisplayValue(KeyWordInfomation info)

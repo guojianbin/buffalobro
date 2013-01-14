@@ -25,33 +25,44 @@ namespace Buffalo.DBTools
         {
             InitializeComponent();
         }
-        ClassDesignerDocView _selectDocView;
-        /// <summary>
-        /// 选择的文档
-        /// </summary>
-        public ClassDesignerDocView SelectDocView
-        {
-            get { return _selectDocView; }
-            set { _selectDocView = value; }
-        }
-        private Diagram _selectedDiagram = null;
+        //ClassDesignerDocView _selectDocView;
+        ///// <summary>
+        ///// 选择的文档
+        ///// </summary>
+        //public ClassDesignerDocView SelectDocView
+        //{
+        //    get { return _selectDocView; }
+        //    set { _selectDocView = value; }
+        //}
+        //private Diagram _selectedDiagram = null;
+
+        ///// <summary>
+        ///// 选中的关系图
+        ///// </summary>
+        //public Diagram SelectedDiagram
+        //{
+        //    get { return _selectedDiagram; }
+        //    set { _selectedDiagram = value; }
+        //}
+        //private Project _currentProject;
+        ///// <summary>
+        ///// 当前项目
+        ///// </summary>
+        //public Project CurrentProject
+        //{
+        //    get { return _currentProject; }
+        //    set { _currentProject = value; }
+        //}
+
+        private ClassDesignerInfo _designerInfo;
 
         /// <summary>
-        /// 选中的关系图
+        /// 类设计图信息
         /// </summary>
-        public Diagram SelectedDiagram
+        public ClassDesignerInfo DesignerInfo
         {
-            get { return _selectedDiagram; }
-            set { _selectedDiagram = value; }
-        }
-        private Project _currentProject;
-        /// <summary>
-        /// 当前项目
-        /// </summary>
-        public Project CurrentProject
-        {
-            get { return _currentProject; }
-            set { _currentProject = value; }
+            get { return _designerInfo; }
+            set { _designerInfo = value; }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -70,7 +81,8 @@ namespace Buffalo.DBTools
             {
                 if (_dbInfo == null) 
                 {
-                    _dbInfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView, DBEntityInfo.GetNameSpace(SelectDocView, CurrentProject) + ".DataAccess");
+                    _dbInfo = FrmDBSetting.GetDBConfigInfo(DesignerInfo, 
+                        DesignerInfo.GetNameSpace() + ".DataAccess");
                     
 
                 }
@@ -155,7 +167,7 @@ namespace Buffalo.DBTools
                 DBTableInfo info = dr.DataBoundItem as DBTableInfo;
                 if (info != null) 
                 {
-                    string fileName = DBEntityInfo.GetRealFileName(info, SelectDocView);
+                    string fileName = DBEntityInfo.GetRealFileName(info, DesignerInfo);
                     try
                     {
                         if (File.Exists(fileName))
@@ -182,7 +194,7 @@ namespace Buffalo.DBTools
             DBTableInfo info = dr.DataBoundItem as DBTableInfo;
             if (info != null)
             {
-                string fileName = DBEntityInfo.GetRealFileName(info, SelectDocView);
+                string fileName = DBEntityInfo.GetRealFileName(info, DesignerInfo);
                 try
                 {
                     if (File.Exists(fileName))
@@ -219,17 +231,17 @@ namespace Buffalo.DBTools
             {
                 using (FrmProcess frmPro = FrmProcess.ShowProcess())
                 {
-                    string file = SelectDocView.DocData.FileName;
+                    string file = DesignerInfo.SelectDocView.DocData.FileName;
                     XmlDocument doc = DBEntityInfo.GetClassDiagram(file);
                     
                     frmPro.UpdateProgress(0, 10, "正在读取类信息");
                     List<DBTableInfo> lstGen = TableChecker.GetTableInfo(db, selection);
-                    string entityNamespace = DBEntityInfo.GetNameSpace(SelectDocView, CurrentProject);
+                    string entityNamespace = DesignerInfo.GetNameSpace();
                     for (int i = 0; i < lstGen.Count; i++)
                     {
                         frmPro.UpdateProgress(i, lstGen.Count, "正在生成");
 
-                        DBEntityInfo info = new DBEntityInfo(entityNamespace, lstGen[i], SelectDocView, CurrentProject, DbInfo);
+                        DBEntityInfo info = new DBEntityInfo(entityNamespace, lstGen[i], DesignerInfo, DbInfo);
                         info.GreanCode(doc);
                     }
                     //拷贝备份

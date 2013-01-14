@@ -108,6 +108,7 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ClassDesignerInfo.cs" />
     <Compile Include="CommandBarId.cs" />
     <Compile Include="CommandItems.cs" />
     <Compile Include="Connect.cs">
@@ -179,6 +180,28 @@
     <Compile Include="HelperKernel\TagManager.cs" />
     <Compile Include="Models.Designer.cs" />
     <Compile Include="ROMHelper\DBEntityInfo.cs" />
+    <Compile Include="UIHelper\ConfigItem.cs" />
+    <Compile Include="UIHelper\FileGenType.cs" />
+    <Compile Include="UIHelper\FrmUIGenerater.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIHelper\FrmUIGenerater.Designer.cs">
+      <DependentUpon>FrmUIGenerater.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIHelper\ModelLoader\CodeGeneration.cs" />
+    <Compile Include="UIHelper\ModelLoader\CodeOutputer.cs" />
+    <Compile Include="UIHelper\ModelLoader\CodesManger.cs" />
+    <Compile Include="UIHelper\ModelLoader\Compiler.cs" />
+    <Compile Include="UIHelper\ModelLoader\ExpressionItem.cs" />
+    <Compile Include="UIHelper\ModelLoader\ExpressionType.cs" />
+    <Compile Include="UIHelper\ModelLoader\ICodeOutputer.cs" />
+    <Compile Include="UIHelper\ModelLoader\LinkOutputer.cs" />
+    <Compile Include="UIHelper\ModelLoader\MethodOutputer.cs" />
+    <Compile Include="UIHelper\ModelLoader\ModelCompiler.cs" />
+    <Compile Include="UIHelper\ModelLoader\UsingOutputer.cs" />
+    <Compile Include="UIHelper\UIConfigItem.cs" />
+    <Compile Include="UIHelper\UIModelItem.cs" />
+    <Compile Include="UIHelper\UIProjectItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="EnvDTE100">
@@ -227,6 +250,9 @@
       <DependentUpon>FrmProcess.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Models.resx" />
+    <EmbeddedResource Include="UIHelper\FrmUIGenerater.resx">
+      <DependentUpon>FrmUIGenerater.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\BQLDataAccess.txt" />

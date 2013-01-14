@@ -39,41 +39,50 @@ namespace Buffalo.DBTools
             get { return _selectedClass; }
             set { _selectedClass = value; }
         }
-        private Diagram _selectedDiagram = null;
+        //private Diagram _selectedDiagram = null;
+
+        ///// <summary>
+        ///// 选中的关系图
+        ///// </summary>
+        //public Diagram SelectedDiagram
+        //{
+        //    get { return _selectedDiagram; }
+        //    set { _selectedDiagram = value; }
+        //}
+        //private Project _currentProject;
+        ///// <summary>
+        ///// 当前项目
+        ///// </summary>
+        //public Project CurrentProject
+        //{
+        //    get { return _currentProject; }
+        //    set { _currentProject = value; }
+        //}
+
+        private ClassDesignerInfo _designerInfo;
 
         /// <summary>
-        /// 选中的关系图
+        /// 类设计图信息
         /// </summary>
-        public Diagram SelectedDiagram
+        public ClassDesignerInfo DesignerInfo
         {
-            get { return _selectedDiagram; }
-            set { _selectedDiagram = value; }
-        }
-        private Project _currentProject;
-        /// <summary>
-        /// 当前项目
-        /// </summary>
-        public Project CurrentProject
-        {
-            get { return _currentProject; }
-            set { _currentProject = value; }
+            get { return _designerInfo; }
+            set { _designerInfo = value; }
         }
 
+        ///// <summary>
+        ///// 选中的文档视图
+        ///// </summary>
+        //private ClassDesignerDocView _selectDocView;
 
-
-        /// <summary>
-        /// 选中的文档视图
-        /// </summary>
-        private ClassDesignerDocView _selectDocView;
-
-        /// <summary>
-        /// 选中的文档视图
-        /// </summary>
-        public ClassDesignerDocView SelectDocView
-        {
-            get { return _selectDocView; }
-            set { _selectDocView = value; }
-        }
+        ///// <summary>
+        ///// 选中的文档视图
+        ///// </summary>
+        //public ClassDesignerDocView SelectDocView
+        //{
+        //    get { return _selectDocView; }
+        //    set { _selectDocView = value; }
+        //}
         private void FrmDBCreate_Load(object sender, EventArgs e)
         {
             if (SelectedClass != null) 
@@ -95,19 +104,19 @@ namespace Buffalo.DBTools
         {
             _lstSql = new List<string>();
             List<KeyWordTableParamItem> lstTable = new List<KeyWordTableParamItem>();
-            DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView,  "DataAccess.");
+            DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo(DesignerInfo,  "DataAccess.");
             DBInfo dbInfo = dbcinfo.CreateDBInfo();
 
             foreach (ClrClass curType in SelectedClass)
             {
-                EntityConfig entity = new EntityConfig(curType, CurrentProject, SelectedDiagram);
+                EntityConfig entity = new EntityConfig(curType, DesignerInfo);
 
                 if (string.IsNullOrEmpty(entity.TableName) || !entity.IsTable)
                 {
                     continue;
                 }
                 string typeName = null;
-                Stack<EntityConfig> stkConfig = EntityConfig.GetEntity(entity, CurrentProject, SelectedDiagram);
+                Stack<EntityConfig> stkConfig = EntityConfig.GetEntity(entity, DesignerInfo);
                 List<EntityParam> lstParam = new List<EntityParam>();
                 List<TableRelationAttribute> lstRelation = new List<TableRelationAttribute>();
                 string lastTableName = null;
@@ -173,7 +182,7 @@ namespace Buffalo.DBTools
             {
                 if (relation.IsToDB && relation.IsGenerate && relation.IsParent) 
                 {
-                    EntityConfig parent = new EntityConfig(relation.FInfo.MemberType, CurrentProject, SelectedDiagram);
+                    EntityConfig parent = new EntityConfig(relation.FInfo.MemberType, DesignerInfo);
                     if (parent == null)
                     {
                         continue;
@@ -196,7 +205,7 @@ namespace Buffalo.DBTools
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView, "");
+            DBConfigInfo dbcinfo = FrmDBSetting.GetDBConfigInfo(DesignerInfo, "");
             DBInfo dbInfo = dbcinfo.CreateDBInfo();
             rtbOutput.Text = "";
             if (_lstSql == null || _lstSql.Count == 0) 

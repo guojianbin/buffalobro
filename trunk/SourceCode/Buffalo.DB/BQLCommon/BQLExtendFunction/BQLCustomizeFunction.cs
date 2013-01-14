@@ -33,7 +33,13 @@ namespace Buffalo.DB.BQLCommon.BQLExtendFunction
 
         internal override void FillInfo(KeyWordInfomation info)
         {
-
+            if (_values != null && _values.Length > 0) 
+            {
+                foreach (BQLValueItem param in _values) 
+                {
+                    BQLValueItem.DoFillInfo(param, info);
+                }
+            }
         }
 
         internal override string DisplayValue(KeyWordInfomation info)

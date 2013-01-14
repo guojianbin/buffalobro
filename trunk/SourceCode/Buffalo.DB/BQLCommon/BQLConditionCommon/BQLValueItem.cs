@@ -220,6 +220,20 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         internal abstract string DisplayValue(KeyWordInfomation info);
 
         internal abstract void FillInfo(KeyWordInfomation info);
+
+        /// <summary>
+        /// 执行填充信息操作
+        /// </summary>
+        /// <param name="value">要执行的值</param>
+        /// <param name="info">信息</param>
+        public static void DoFillInfo(BQLValueItem value, KeyWordInfomation info) 
+        {
+            if (!CommonMethods.IsNull(value)) 
+            {
+                value.FillInfo(info);
+            }
+        }
+
         /// <summary>
         /// 格式化值类型的值
         /// </summary>

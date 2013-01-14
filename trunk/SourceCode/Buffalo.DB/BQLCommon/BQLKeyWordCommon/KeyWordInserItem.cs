@@ -53,7 +53,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         }
         internal override void LoadInfo(KeyWordInfomation info)
         {
-            tableHandle.FillInfo(info);
+            BQLValueItem.DoFillInfo(tableHandle, info);
         }
         internal override void Tran(KeyWordInfomation info)
         {

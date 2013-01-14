@@ -19,8 +19,8 @@ namespace Buffalo.DBTools.HelperKernel
         string _fileName = null;
 
 
-        public DataAccessMappingConfig(DBEntityInfo entity, Project project)
-            : base(entity, project)
+        public DataAccessMappingConfig(DBEntityInfo entity, ClassDesignerInfo info)
+            : base(entity, info)
         {
             Init();
         }
@@ -83,7 +83,7 @@ namespace Buffalo.DBTools.HelperKernel
             
             
             EntityMappingConfig.SaveXML(_fileName, _doc);
-            EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(_fileName);
+            EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(_fileName);
             newit.Properties.Item("BuildAction").Value = 3;
         }
 

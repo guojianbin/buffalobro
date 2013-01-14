@@ -165,8 +165,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         {
             if (info.AliasManager != null)
             {
-                _belongTable.FillInfo(info);
-                
+                BQLValueItem.DoFillInfo(_belongTable, info);
             }
         }
     }

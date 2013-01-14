@@ -87,7 +87,7 @@ namespace Buffalo.DBTools.DocSummary
                                     (0f + VSConfigManager.CurConfig.MemberLineHeight * (float)i),
                                     width, VSConfigManager.CurConfig.MemberSummaryHeight);
 
-                                DBConfigInfo dbInfo = DBConfigInfo.LoadInfo(_FromAddin.CurrentProject, _FromAddin.SelectDocView);
+                                DBConfigInfo dbInfo = DBConfigInfo.LoadInfo(_FromAddin.GetDesignerInfo());
 
                                 string curStr = null;
                                 float curX = 0f;

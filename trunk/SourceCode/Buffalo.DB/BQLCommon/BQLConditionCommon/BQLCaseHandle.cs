@@ -32,7 +32,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         //}
         internal override void FillInfo(KeyWordInfomation info)
         {
-            
+            BQLValueItem.DoFillInfo(caseItem, info);
         }
         internal override string DisplayValue(KeyWordInfomation info)
         {

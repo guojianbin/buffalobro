@@ -106,6 +106,7 @@
     <Compile Include="Replacer\ReplaceCollection.cs" />
     <Compile Include="Replacer\ReplaceItem.cs" />
     <Compile Include="Replacer\ReplaceItemCollection.cs" />
+    <Compile Include="SourceCodeCompiler.cs" />
     <Compile Include="SysEventLog.cs" />
     <Compile Include="UpdateModelUnit\ContorlDefaultPropertyInfo.cs" />
     <Compile Include="UpdateModelUnit\UpdateModelInfo.cs" />

@@ -25,7 +25,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
             for (int i = 0; i < parameters.Length; i++)
             {
                 BQLParamHandle prmHandle = parameters[i];
-                prmHandle.FillInfo(info);
+                BQLValueItem.DoFillInfo(prmHandle, info);
             }
         }
 

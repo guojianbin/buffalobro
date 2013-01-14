@@ -118,26 +118,17 @@ namespace Buffalo.DBTools.HelperKernel
             return info;
         }
 
-        /// <summary>
-        /// 获取类图所在路径
-        /// </summary>
-        /// <param name="docView"></param>
-        /// <returns></returns>
-        public static string GetClassDesignerPath(ClassDesignerDocView docView) 
-        {
-            FileInfo docFile = new FileInfo(docView.DocData.FileName);
-            return docFile.DirectoryName;
-        }
+
 
         /// <summary>
         /// 生成文件名
         /// </summary>
         /// <param name="curProject"></param>
         /// <param name="curDiagram"></param>
-        public static string GetFileName(Project curProject, ClassDesignerDocView docView) 
+        public static string GetFileName(ClassDesignerInfo info) 
         {
-            string dbName = GetDbName(docView);
-            string proFile = curProject.FileName;
+            string dbName = GetDbName(info);
+            string proFile = info.CurrentProject.FileName;
             FileInfo file = new FileInfo(proFile);
             string directory = file.DirectoryName;
             return directory + "\\" + dbName + ".xml";
@@ -149,9 +140,9 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         /// <param name="docView"></param>
         /// <returns></returns>
-        public static string GetDbName(ClassDesignerDocView docView) 
+        public static string GetDbName(ClassDesignerInfo info) 
         {
-            FileInfo docFile = new FileInfo(docView.DocData.FileName);
+            FileInfo docFile = new FileInfo(info.SelectDocView.DocData.FileName);
             string dbName = docFile.Name;
             int dot = dbName.IndexOf('.');
             if (dot > 0)
@@ -212,13 +203,13 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="curProject">当前工程</param>
         /// <param name="curDiagram">当前图</param>
         /// <returns></returns>
-        public static DBConfigInfo LoadInfo(Project curProject,ClassDesignerDocView docView) 
+        public static DBConfigInfo LoadInfo(ClassDesignerInfo info) 
         {
-            if (curProject == null || docView == null) 
+            if (info.CurrentProject == null || info.SelectDocView == null) 
             {
                 return null;
             }
-            string xmlFieName = GetFileName(curProject, docView);
+            string xmlFieName = GetFileName(info);
             DBConfigInfo ret = null;
             XmlDocument doc = EntityMappingConfig.NewXmlDocument();
             try

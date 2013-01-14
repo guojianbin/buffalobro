@@ -27,14 +27,14 @@ namespace Buffalo.DBTools
 
         private DBConfigInfo _info=new DBConfigInfo();
 
-        public static DBConfigInfo GetDBConfigInfo(Project curProject, ClassDesignerDocView docView,string dalNamespace) 
+        public static DBConfigInfo GetDBConfigInfo(ClassDesignerInfo info,string dalNamespace) 
         {
-            DBConfigInfo dbinfo = DBConfigInfo.LoadInfo(curProject, docView);
+            DBConfigInfo dbinfo = DBConfigInfo.LoadInfo(info);
             if (dbinfo == null)
             {
                 using (FrmDBSetting frmSetting = new FrmDBSetting())
                 {
-                    frmSetting.Info.DbName = DBConfigInfo.GetDbName(docView);
+                    frmSetting.Info.DbName = DBConfigInfo.GetDbName(info);
                     if (frmSetting.ShowDialog() != DialogResult.OK)
                     {
                         return null;
@@ -42,7 +42,7 @@ namespace Buffalo.DBTools
                     dbinfo = frmSetting.Info;
 
                     dbinfo.AppNamespace = dalNamespace+"."+dbinfo.DbType;
-                    dbinfo.FileName = DBConfigInfo.GetFileName(curProject, docView);
+                    dbinfo.FileName = DBConfigInfo.GetFileName(info);
                     dbinfo.SaveConfig(dbinfo.FileName);
                     StaticConnection.ClearCacheOperate(dbinfo.DbName);
                 }
@@ -128,9 +128,9 @@ namespace Buffalo.DBTools
         /// <param name="curProject"></param>
         /// <param name="docView"></param>
         /// <param name="dalNamespace"></param>
-        public static void ShowConfig(Project curProject, ClassDesignerDocView docView, string dalNamespace) 
+        public static void ShowConfig(ClassDesignerInfo desinfo, string dalNamespace) 
         {
-            DBConfigInfo dbinfo = DBConfigInfo.LoadInfo(curProject, docView);
+            DBConfigInfo dbinfo = DBConfigInfo.LoadInfo(desinfo);
 
             using (FrmDBSetting frmSetting = new FrmDBSetting())
             {
@@ -138,9 +138,9 @@ namespace Buffalo.DBTools
                 if (dbinfo == null)
                 {
                     dbinfo = new DBConfigInfo();
-                    dbinfo.DbName = DBConfigInfo.GetDbName(docView);
+                    dbinfo.DbName = DBConfigInfo.GetDbName(desinfo);
                     dbinfo.SummaryShow = SummaryShowItem.All;
-                    dbinfo.FileName = DBConfigInfo.GetFileName(curProject, docView);
+                    dbinfo.FileName = DBConfigInfo.GetFileName(desinfo);
 
                 }
                 frmSetting.Info= dbinfo;

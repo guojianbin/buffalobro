@@ -57,7 +57,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         {
             foreach (BQLParamHandle prm in parameters) 
             {
-                prm.FillInfo(info);
+                BQLValueItem.DoFillInfo(prm, info);
             }
 
         }

@@ -142,6 +142,9 @@
   <data name="IDataAccess" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resources\idataaccess.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="UIConfigItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\uiconfigitem.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="UserEntity" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resources\userentity.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

@@ -35,19 +35,28 @@ namespace Buffalo.DBTools.HelperKernel
             get { return _table; }
         }
 
-        private Project _currentProject;
+        //private Project _currentProject;
+
+        ///// <summary>
+        ///// 当前项目
+        ///// </summary>
+        //public Project CurrentProject 
+        //{
+        //    get 
+        //    {
+        //        return _currentProject;
+        //    }
+        //}
+        private ClassDesignerInfo _designerInfo;
 
         /// <summary>
-        /// 当前项目
+        /// 类设计图信息
         /// </summary>
-        public Project CurrentProject 
+        public ClassDesignerInfo DesignerInfo
         {
-            get 
-            {
-                return _currentProject;
-            }
+            get { return _designerInfo; }
+            set { _designerInfo = value; }
         }
-
         private string _entityBaseTypeName;
 
         /// <summary>
@@ -209,11 +218,11 @@ namespace Buffalo.DBTools.HelperKernel
             return baseType;
         }
 
-        public GrneraterBase(DBEntityInfo entity,Project curProject) 
+        public GrneraterBase(DBEntityInfo entity,ClassDesignerInfo info) 
         {
             _table = entity.ToTableInfo();
             _className = entity.ClassName;
-            _currentProject = curProject;
+            DesignerInfo = info;
             _entityBaseTypeName = GetBaseTypeName(entity.BaseType);
            
 
@@ -243,7 +252,7 @@ namespace Buffalo.DBTools.HelperKernel
             //_entity = entity;
             //_tableName = entity.TableName;
             _table = entity.ToTableInfo();
-            _currentProject = entity.CurrentProject;
+            DesignerInfo = entity.DesignerInfo;
             _entityBaseTypeName = GetBaseTypeName(entity.BaseTypeName);
 
             

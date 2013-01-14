@@ -45,15 +45,15 @@ namespace Buffalo.DBTools.HelperKernel
             get { return _eRelation; }
         }
 
-        ClassDesignerDocView _selectDocView;
-        /// <summary>
-        /// 选择的文档
-        /// </summary>
-        public ClassDesignerDocView SelectDocView
-        {
-            get { return _selectDocView; }
-            set { _selectDocView = value; }
-        }
+        //ClassDesignerDocView _selectDocView;
+        ///// <summary>
+        ///// 选择的文档
+        ///// </summary>
+        //public ClassDesignerDocView SelectDocView
+        //{
+        //    get { return _selectDocView; }
+        //    set { _selectDocView = value; }
+        //}
 
         private ClrType _classType;
 
@@ -62,8 +62,8 @@ namespace Buffalo.DBTools.HelperKernel
         private string _tableName;
         private string _className;
         private string _namespace;
-        private Project _currentProject;
-        private Diagram _currentDiagram;
+        //private Project _currentProject;
+        //private Diagram _currentDiagram;
         private DBConfigInfo _currentDBConfigInfo;
 
         /// <summary>
@@ -85,27 +85,36 @@ namespace Buffalo.DBTools.HelperKernel
         {
             if (_currentDBConfigInfo == null)
             {
-                _currentDBConfigInfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView, Namespace + ".DataAccess");
+                _currentDBConfigInfo = FrmDBSetting.GetDBConfigInfo(DesignerInfo, Namespace + ".DataAccess");
             }
         }
-        /// <summary>
-        /// 当前类图
-        /// </summary>
-        public Diagram CurrentDiagram
-        {
-            get { return _currentDiagram; }
-        }
+        ///// <summary>
+        ///// 当前类图
+        ///// </summary>
+        //public Diagram CurrentDiagram
+        //{
+        //    get { return _currentDiagram; }
+        //}
 
 
-        /// <summary>
-        /// 当前工程
-        /// </summary>
-        public Project CurrentProject
-        {
-            get { return _currentProject; }
+        ///// <summary>
+        ///// 当前工程
+        ///// </summary>
+        //public Project CurrentProject
+        //{
+        //    get { return _currentProject; }
             
-        }
+        //}
+        private ClassDesignerInfo _designerInfo;
 
+        /// <summary>
+        /// 类设计图信息
+        /// </summary>
+        public ClassDesignerInfo DesignerInfo
+        {
+            get { return _designerInfo; }
+            set { _designerInfo = value; }
+        }
         /// <summary>
         /// 关联类型
         /// </summary>
@@ -226,7 +235,7 @@ namespace Buffalo.DBTools.HelperKernel
             {
                 if (_dbInfo == null)
                 {
-                    _dbInfo = FrmDBSetting.GetDBConfigInfo(CurrentProject, SelectDocView, DBEntityInfo.GetNameSpace(SelectDocView, CurrentProject) + ".DataAccess");
+                    _dbInfo = FrmDBSetting.GetDBConfigInfo(DesignerInfo, DesignerInfo.GetNameSpace() + ".DataAccess");
 
 
                 }
@@ -257,7 +266,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         /// <param name="classShape">类图形</param>
         /// <param name="project">所属项目</param>
-        public EntityConfig(ClrType ctype, Project project, Diagram currentDiagram) 
+        public EntityConfig(ClrType ctype, ClassDesignerInfo info) 
         {
             
             //_classShape = classShape;
@@ -266,9 +275,9 @@ namespace Buffalo.DBTools.HelperKernel
             InitField();
             InitPropertys();
             InitMethods();
-            _currentProject = project;
-            _currentDiagram = currentDiagram;
-            
+            //_currentProject = project;
+            //_currentDiagram = currentDiagram;
+            _designerInfo = info;
         }
 
         /// <summary>
@@ -293,7 +302,7 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     try
                     {
-                        curType = new EntityConfig(curType.BaseType, CurrentProject, CurrentDiagram);
+                        curType = new EntityConfig(curType.BaseType, DesignerInfo);
                     }
                     catch
                     {
@@ -329,7 +338,7 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     try
                     {
-                        curType = new EntityConfig(curType.BaseType, CurrentProject, CurrentDiagram);
+                        curType = new EntityConfig(curType.BaseType, DesignerInfo);
                     }
                     catch
                     {
@@ -366,11 +375,12 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="project"></param>
         /// <param name="currentDiagram"></param>
         /// <returns></returns>
-        public static EntityConfig GetEntityConfigByTable(ClrType ctype, Project project, Diagram currentDiagram, ClassDesignerDocView selectDocView) 
+        public static EntityConfig GetEntityConfigByTable(ClrType ctype,
+           ClassDesignerInfo desinfo) 
         {
-            
-            EntityConfig entity = new EntityConfig(ctype, project, currentDiagram);
-            entity.SelectDocView = selectDocView;
+
+            EntityConfig entity = new EntityConfig(ctype, desinfo);
+            //entity.DesignerInfo.SelectDocView = selectDocView;
             if (string.IsNullOrEmpty(entity.TableName)) 
             {
                 return null;
@@ -913,7 +923,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <returns></returns>
         public EntityParamField GetParamInfoByPropertyName(string propertyName)
         {
-            Stack<EntityConfig> stkEntity = GetEntity(this, CurrentProject, CurrentDiagram);
+            Stack<EntityConfig> stkEntity = GetEntity(this, DesignerInfo);
             while (stkEntity.Count > 0)
             {
                 EntityConfig curEntity = stkEntity.Pop();
@@ -933,7 +943,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static Stack<EntityConfig> GetEntity(EntityConfig entity, Project curProject, Diagram selDiagram) 
+        public static Stack<EntityConfig> GetEntity(EntityConfig entity, ClassDesignerInfo info) 
         {
             Stack<EntityConfig> stkConfig = new Stack<EntityConfig>();
 
@@ -949,7 +959,7 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     break;
                 }
-                entity = new EntityConfig(curType, curProject, selDiagram);
+                entity = new EntityConfig(curType, info);
             }
             return stkConfig;
         }
@@ -1164,7 +1174,7 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem classItem = GetProjectItemByFileName(_currentProject, _cp.FileName);
+            EnvDTE.ProjectItem classItem = GetProjectItemByFileName(DesignerInfo, _cp.FileName);
             //DTEHelper.AddFileToProjectItem(item, NHBFilePath, 3);
             EnvDTE.ProjectItem newit = classItem.ProjectItems.AddFromFile(fileName);
             //EnvDTE.ProjectItem newit = _currentProject.ProjectItems.AddFromFile(fileName);
@@ -1178,8 +1188,9 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="project">项目</param>
         /// <param name="fileName">文件名</param>
         /// <returns></returns>
-        public static EnvDTE.ProjectItem GetProjectItemByFileName(Project project, string fileName)
+        public static EnvDTE.ProjectItem GetProjectItemByFileName(ClassDesignerInfo info, string fileName)
         {
+            Project project = info.CurrentProject;
             foreach (EnvDTE.ProjectItem item in project.ProjectItems)
             {
                 EnvDTE.ProjectItem res = GetProjectItemByFileName(item, fileName);

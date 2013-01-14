@@ -80,8 +80,10 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
 
             long starIndex = objPage.GetStarIndex() + 1;
             string rowNumberName = "[cur_rowNumber" + objPage.PagerIndex+"]";
-            //long endIndex = objCondition.PageSize * (objCondition.CurrentPage + 1);
-            sql.Append("select top " + objPage.PageSize + " * from(");
+            long topRec = objPage.GetStarIndex() + objPage.PageSize;
+
+            //sql.Append("select top " + objPage.PageSize + " * from(");
+            sql.Append("select * from(");
             string newOrderBy = null;
             if (objCondition.HasGroup)
             {
@@ -91,10 +93,10 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
             {
                 newOrderBy = orderBy;
             }
-            sql.Append("select row_number() over(order by " + newOrderBy + ") as " +
-                rowNumberName + "," );
-
-            
+            //sql.Append("select row_number() over(order by " + newOrderBy + ") as " +
+            //  rowNumberName + ",");
+            sql.Append("select top " + topRec + " row_number() over(order by " + newOrderBy + ") as " +
+                rowNumberName + ",");
 
             if (!objCondition.HasGroup)
             {

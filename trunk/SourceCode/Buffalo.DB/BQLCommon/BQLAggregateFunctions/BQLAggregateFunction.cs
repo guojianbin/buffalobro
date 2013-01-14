@@ -28,7 +28,7 @@ namespace Buffalo.DB.BQLCommon.BQLAggregateFunctions
         }
         internal override void FillInfo(KeyWordInfomation info)
         {
-            
+            BQLValueItem.DoFillInfo(param, info);
         }
 
         internal override string DisplayValue(KeyWordInfomation info)

@@ -15,7 +15,7 @@ namespace Buffalo.DBTools.HelperKernel
 
             //业务层
             string fileName = info.DirectoryName + "\\Business\\" + entity.ClassName + "Business.cs"; ;
-            RemoveFromProject(fileName, entity.CurrentProject);
+            RemoveFromProject(fileName, entity.DesignerInfo);
 
             //数据层
             string dicPath = info.DirectoryName + "\\DataAccess";
@@ -26,33 +26,33 @@ namespace Buffalo.DBTools.HelperKernel
                 string type = itype.Value.ToString();
                 string dalPath = dicPath + "\\" + type;
                 fileName = dalPath + "\\" + entity.ClassName + "DataAccess.cs";
-                RemoveFromProject(fileName, entity.CurrentProject);
+                RemoveFromProject(fileName, entity.DesignerInfo);
 
                 dalconfig.DeleteDal(dalconfig.DataAccessNamespace + "." + type + "." + entity.ClassName + "DataAccess");
             }
             dalconfig.SaveXML();
             string idalPath = dicPath + "\\IDataAccess";
             fileName = idalPath + "\\I" + entity.ClassName + "DataAccess.cs";
-            RemoveFromProject(fileName, entity.CurrentProject);
+            RemoveFromProject(fileName, entity.DesignerInfo);
             idalPath = dicPath + "\\Bql";
             fileName = idalPath + "\\" + entity.ClassName + "DataAccess.cs";
-            RemoveFromProject(fileName, entity.CurrentProject);
+            RemoveFromProject(fileName, entity.DesignerInfo);
             
             
 
             //删除BQLEntity
             fileName = info.DirectoryName + "\\BQLEntity\\" + entity.ClassName + ".cs";
-            RemoveFromProject(fileName, entity.CurrentProject);
+            RemoveFromProject(fileName, entity.DesignerInfo);
 
             //BEM.xml
             fileName = info.DirectoryName + "\\BEM\\" + entity.ClassName + ".BEM.xml";
-            RemoveFromProject(fileName, entity.CurrentProject);
+            RemoveFromProject(fileName, entity.DesignerInfo);
 
             //移除实体
             fileName = entity.FileName;
-            RemoveFromProject(fileName, entity.CurrentProject);
+            RemoveFromProject(fileName, entity.DesignerInfo);
             fileName = entity.FileName.Replace(".cs", ".extend.cs");
-            RemoveFromProject(fileName, entity.CurrentProject);
+            RemoveFromProject(fileName, entity.DesignerInfo);
         }
 
         /// <summary>
@@ -60,8 +60,9 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="project"></param>
-        private static void RemoveFromProject(string fileName, Project project) 
+        private static void RemoveFromProject(string fileName, ClassDesignerInfo info) 
         {
+            Project project = info.CurrentProject;
             FileInfo finfo = new FileInfo(project.FileName);
             fileName = fileName.Replace(finfo.DirectoryName, "");
             string[] strPart = fileName.Split(new char[] { '\\' });

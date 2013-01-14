@@ -46,8 +46,7 @@ namespace Buffalo.DB.BQLCommon
 
         internal override void FillInfo(KeyWordInfomation info)
         {
-            _sourceHandle.FillInfo(info);
-
+            BQLValueItem.DoFillInfo(_sourceHandle, info);
             if (_paramList != null)
             {
                 List<BQLValueItem> lst = new List<BQLValueItem>();
@@ -55,7 +54,7 @@ namespace Buffalo.DB.BQLCommon
                 {
                     BQLValueItem value = BQLValueItem.ToValueItem(item);
                     lst.Add(value);
-                    value.FillInfo(info);
+                    BQLValueItem.DoFillInfo(value, info);
                 }
                 _paramList = lst;
             }

@@ -22,16 +22,16 @@ namespace Buffalo.DBTools.ROMHelper
     /// </summary>
     public class DBEntityInfo
     {
-        private Project _currentProject;
+        //private Project _currentProject;
 
-        /// <summary>
-        /// 当前工程
-        /// </summary>
-        public Project CurrentProject
-        {
-            get { return _currentProject; }
+        ///// <summary>
+        ///// 当前工程
+        ///// </summary>
+        //public Project CurrentProject
+        //{
+        //    get { return _currentProject; }
 
-        }
+        //}
         private DBConfigInfo _currentDBConfigInfo;
 
         /// <summary>
@@ -54,11 +54,22 @@ namespace Buffalo.DBTools.ROMHelper
             get { return _belongTable; }
         }
 
-        ClassDesignerDocView _docView;
+        //ClassDesignerDocView _docView;
 
-        public ClassDesignerDocView DocView
+        //public ClassDesignerDocView DocView
+        //{
+        //    get { return _docView; }
+        //}
+
+        private ClassDesignerInfo _designerInfo;
+
+        /// <summary>
+        /// 类设计图信息
+        /// </summary>
+        public ClassDesignerInfo DesignerInfo
         {
-            get { return _docView; }
+            get { return _designerInfo; }
+            set { _designerInfo = value; }
         }
 
         private string _fileName;
@@ -70,23 +81,7 @@ namespace Buffalo.DBTools.ROMHelper
             get { return _fileName; }
         }
 
-        /// <summary>
-        /// 获取命名空间
-        /// </summary>
-        /// <param name="docView">类设计图</param>
-        /// <param name="project">工程</param>
-        /// <returns></returns>
-        public static string GetNameSpace(ClassDesignerDocView docView, Project project) 
-        {
-            FileInfo docFile = new FileInfo(docView.DocData.FileName);
-            FileInfo projectFile = new FileInfo(project.FileName);
-            string dic = docFile.Directory.Name.Replace(projectFile.Directory.Name, "");
-            string ret = dic.Replace("\\", ".");
-            
-            ret = project.Name + "." + ret;
-            ret = ret.Trim('.');
-            return ret;
-        }
+
 
 
 
@@ -94,13 +89,14 @@ namespace Buffalo.DBTools.ROMHelper
         /// 实体信息
         /// </summary>
         /// <param name="belong">所属的数据库信息</param>
-        public DBEntityInfo(string entityNamespace, DBTableInfo belong, ClassDesignerDocView docView,
-            Project currentProject,  DBConfigInfo currentDBConfigInfo) 
+        public DBEntityInfo(string entityNamespace, DBTableInfo belong, 
+            ClassDesignerInfo designerInfo, DBConfigInfo currentDBConfigInfo) 
         {
             _belongTable = belong;
             _entityNamespace = entityNamespace;
-            _docView = docView;
-            _currentProject = currentProject;
+            //_docView = docView;
+            //_currentProject = currentProject;
+            _designerInfo = designerInfo;
             _currentDBConfigInfo = currentDBConfigInfo;
             InitInfo();
             //_tiers = tiers;
@@ -113,7 +109,7 @@ namespace Buffalo.DBTools.ROMHelper
         {
             _className = EntityFieldBase.ToPascalName(_belongTable.Name);
 
-            _fileName = GetRealFileName(_belongTable,_docView);
+            _fileName = GetRealFileName(_belongTable, DesignerInfo);
         }
         /// <summary>
         /// 获取实体的文件名
@@ -121,10 +117,10 @@ namespace Buffalo.DBTools.ROMHelper
         /// <param name="table">实体表信息</param>
         /// <param name="doc">文档信息</param>
         /// <returns></returns>
-        public static string GetRealFileName(DBTableInfo table, ClassDesignerDocView doc) 
+        public static string GetRealFileName(DBTableInfo table, ClassDesignerInfo designerInfo) 
         {
             string className = EntityFieldBase.ToPascalName(table.Name);
-            FileInfo docfile = new FileInfo(doc.DocData.FileName);
+            FileInfo docfile = new FileInfo(designerInfo.SelectDocView.DocData.FileName);
             return docfile.DirectoryName + "\\" + className + ".cs";
         }
 
@@ -201,16 +197,16 @@ namespace Buffalo.DBTools.ROMHelper
                 }
             }
             CodeFileHelper.SaveFile(FileName, codes);
-            EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(FileName);
+            EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(FileName);
             newit.Properties.Item("BuildAction").Value = 1;
             
             GenerateExtendCode();
 
-            BQLEntityGenerater bqlEntity = new BQLEntityGenerater(this,CurrentProject);
+            BQLEntityGenerater bqlEntity = new BQLEntityGenerater(this,DesignerInfo);
             GenerateExtendCode();
             if (_currentDBConfigInfo.Tier == 3)
             {
-                Generate3Tier g3t = new Generate3Tier(this, CurrentProject);
+                Generate3Tier g3t = new Generate3Tier(this, DesignerInfo);
                 g3t.GenerateBusiness();
                 if (!string.IsNullOrEmpty(this._belongTable.Name))
                 {
@@ -338,7 +334,7 @@ namespace Buffalo.DBTools.ROMHelper
             XmlNode typeIdentifierNode = doc.CreateElement("TypeIdentifier");
             classNode.AppendChild(typeIdentifierNode);
             XmlNode fileNameNode = doc.CreateElement("FileName");
-            string basePath=DBConfigInfo.GetClassDesignerPath(DocView);
+            string basePath = DesignerInfo.GetClassDesignerPath();
             fileNameNode.InnerText = FileName.Replace(basePath,"").TrimStart('\\');
             typeIdentifierNode.AppendChild(fileNameNode);
             XmlNode hashCodeNode = doc.CreateElement("HashCode");
@@ -694,7 +690,7 @@ namespace Buffalo.DBTools.ROMHelper
             }
             CodeFileHelper.SaveFile(fileName, codes);
 
-            EnvDTE.ProjectItem classItem =EntityConfig.GetProjectItemByFileName(_currentProject, FileName);
+            EnvDTE.ProjectItem classItem = EntityConfig.GetProjectItemByFileName(DesignerInfo, FileName);
             EnvDTE.ProjectItem newit = classItem.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 3;
             //EnvDTE.ProjectItem newit = _currentProject.ProjectItems.AddFromFile(fileName);

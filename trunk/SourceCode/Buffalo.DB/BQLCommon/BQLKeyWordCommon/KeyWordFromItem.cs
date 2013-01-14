@@ -182,7 +182,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         {
             foreach (BQLTableHandle tab in _tables) 
             {
-                tab.FillInfo(info);
+                BQLValueItem.DoFillInfo(tab, info);
             }
         }
 

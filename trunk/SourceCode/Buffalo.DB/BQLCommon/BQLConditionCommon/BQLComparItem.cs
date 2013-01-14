@@ -28,12 +28,11 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         
         internal override void FillInfo(KeyWordInfomation info)
         {
-            foreach (BQLValueItem value in parameters) 
+            foreach (BQLValueItem value in parameters)
             {
-                if (!CommonMethods.IsNull(value))
-                {
-                    value.FillInfo(info);
-                }
+
+                BQLValueItem.DoFillInfo(value, info);
+
             }
         }
 

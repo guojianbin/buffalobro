@@ -13,8 +13,8 @@ namespace Buffalo.DBTools.HelperKernel
     /// </summary>
     public class BQLEntityGenerater:GrneraterBase
     {
-        public BQLEntityGenerater(DBEntityInfo config, Project project)
-            : base(config, project)
+        public BQLEntityGenerater(DBEntityInfo config, ClassDesignerInfo info)
+            : base(config, info)
         {
         } 
 
@@ -50,7 +50,7 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(fileName);
+            EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;
         }
 
@@ -137,7 +137,7 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             }
             CodeFileHelper.SaveFile(fileName, codes);
-            EnvDTE.ProjectItem newit = CurrentProject.ProjectItems.AddFromFile(fileName);
+            EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;
         }
         /// <summary>
