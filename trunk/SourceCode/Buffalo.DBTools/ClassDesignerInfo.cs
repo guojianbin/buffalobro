@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.Modeling.Diagrams;
 using EnvDTE;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 using System.IO;
+using Buffalo.DBTools.HelperKernel;
 
 namespace Buffalo.DBTools
 {
@@ -48,6 +49,9 @@ namespace Buffalo.DBTools
             FileInfo docFile = new FileInfo(SelectDocView.DocData.FileName);
             return docFile.DirectoryName;
         }
+
+
+
 
         /// <summary>
         /// 获取命名空间

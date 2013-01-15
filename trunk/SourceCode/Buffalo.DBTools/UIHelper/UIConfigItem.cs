@@ -64,7 +64,7 @@ namespace Buffalo.DBTools.UIHelper
                 }
                 if (node.Name.Equals("models", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    FillConfigItems(node);
+                    FillProjectItems(node);
                 }
             }
         }
@@ -75,7 +75,35 @@ namespace Buffalo.DBTools.UIHelper
         /// <param name="node"></param>
         private void FillProjectItems(XmlNode node) 
         {
-            
+            _projects = new List<UIProjectItem>();
+            foreach (XmlNode projectNode in node.ChildNodes) 
+            {
+                if (!projectNode.Name.Equals("project", StringComparison.CurrentCultureIgnoreCase)) 
+                {
+                    continue;
+                }
+                UIProjectItem item = new UIProjectItem();
+                XmlAttribute att = projectNode.Attributes["name"];
+            }
+        }
+
+
+        /// <summary>
+        /// 格式化参数名字
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public static string FormatParameter(string parameter, ClassDesignerInfo classInfo, EntityConfig entityInfo)
+        {
+            string projectName = classInfo.CurrentProject.Name;
+            FileInfo projectFile = new FileInfo(classInfo.CurrentProject.FileName);
+            string projectPath = projectFile.Directory.Name;
+
+            string ret = parameter;
+            ret = ret.Replace("{ProjectName}", projectName);
+            ret = ret.Replace("{ProjectPath}", projectPath);
+            ret = ret.Replace("{ClassName}", entityInfo.ClassName);
+            return ret;
         }
 
         /// <summary>
