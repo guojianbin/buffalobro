@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using Buffalo.DBTools.HelperKernel;
+using System.IO;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -20,11 +21,11 @@ namespace Buffalo.DBTools.UIHelper
             get { return _configItems; }
         }
 
-        private List<UIProjectItem> _projects;
+        private List<UIProject> _projects;
         /// <summary>
         /// 所属工程
         /// </summary>
-        public List<UIProjectItem> Projects
+        public List<UIProject> Projects
         {
             get { return _projects; }
         }
@@ -75,15 +76,51 @@ namespace Buffalo.DBTools.UIHelper
         /// <param name="node"></param>
         private void FillProjectItems(XmlNode node) 
         {
-            _projects = new List<UIProjectItem>();
+            _projects = new List<UIProject>();
             foreach (XmlNode projectNode in node.ChildNodes) 
             {
                 if (!projectNode.Name.Equals("project", StringComparison.CurrentCultureIgnoreCase)) 
                 {
                     continue;
                 }
-                UIProjectItem item = new UIProjectItem();
+                UIProject objProject = new UIProject();
                 XmlAttribute att = projectNode.Attributes["name"];
+                if (att != null) 
+                {
+                    objProject.Name = att.InnerText;
+                }
+                att = projectNode.Attributes["namespace"];
+                if (att != null)
+                {
+                    objProject.Namespace = att.InnerText;
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// 填充项目项
+        /// </summary>
+        /// <param name="node"></param>
+        private void FillProjectItem(XmlNode node,List<UIProjectItem> items) 
+        {
+            foreach (XmlNode projectNode in node.ChildNodes)
+            {
+                if (!projectNode.Name.Equals("item", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    continue;
+                }
+                UIProjectItem item = new UIProjectItem();
+                XmlAttribute att = projectNode.Attributes["path"];
+                if (att != null)
+                {
+                    item.ModelPath = att.InnerText;
+                }
+                att = projectNode.Attributes["type"];
+                if (att == null)
+                {
+                    item.ModelPath = att.InnerText;
+                }
             }
         }
 
@@ -93,7 +130,8 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public static string FormatParameter(string parameter, ClassDesignerInfo classInfo, EntityConfig entityInfo)
+        public static string FormatParameter(string parameter, ClassDesignerInfo classInfo, 
+            EntityConfig entityInfo)
         {
             string projectName = classInfo.CurrentProject.Name;
             FileInfo projectFile = new FileInfo(classInfo.CurrentProject.FileName);

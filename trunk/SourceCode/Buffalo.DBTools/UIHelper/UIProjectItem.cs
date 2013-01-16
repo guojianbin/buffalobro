@@ -35,5 +35,15 @@ namespace Buffalo.DBTools.UIHelper
         {
             get { return _targetPath; }
         }
+
+        private List<UIProjectItem> _childItems=new List<UIProjectItem>();
+
+        /// <summary>
+        /// 项目子项
+        /// </summary>
+        public List<UIProjectItem> ChildItems
+        {
+            get { return _childItems; }
+        }
     }
 }
