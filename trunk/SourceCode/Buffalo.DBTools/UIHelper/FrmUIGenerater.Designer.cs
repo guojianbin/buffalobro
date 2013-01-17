@@ -35,10 +35,10 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.gvMember = new System.Windows.Forms.DataGridView();
-            this.ColCheck = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -114,19 +114,6 @@
             this.gvMember.Size = new System.Drawing.Size(184, 426);
             this.gvMember.TabIndex = 0;
             // 
-            // ColCheck
-            // 
-            this.ColCheck.HeaderText = "";
-            this.ColCheck.Name = "ColCheck";
-            this.ColCheck.Width = 50;
-            // 
-            // ColName
-            // 
-            this.ColName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColName.HeaderText = "属性";
-            this.ColName.Name = "ColName";
-            this.ColName.ReadOnly = true;
-            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.HeaderText = "";
@@ -139,6 +126,21 @@
             this.dataGridViewTextBoxColumn2.HeaderText = "属性";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // ColCheck
+            // 
+            this.ColCheck.HeaderText = "";
+            this.ColCheck.Name = "ColCheck";
+            this.ColCheck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColCheck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColCheck.Width = 50;
+            // 
+            // ColName
+            // 
+            this.ColName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColName.HeaderText = "属性";
+            this.ColName.Name = "ColName";
+            this.ColName.ReadOnly = true;
             // 
             // FrmUIGenerater
             // 
@@ -166,11 +168,11 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView gvMember;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColCheck;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColCheck;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
 
     }
 }

@@ -40,6 +40,15 @@ namespace Buffalo.DBTools.UIHelper
             set { _selectedClass = value; }
         }
 
+        private UIConfigItem _config;
+        /// <summary>
+        /// 配置信息
+        /// </summary>
+        public UIConfigItem Config
+        {
+            get { return _config; }
+        }
+
         /// <summary>
         /// 检测文件
         /// </summary>
@@ -64,11 +73,18 @@ namespace Buffalo.DBTools.UIHelper
             return xmldoc;
         }
 
-
+        /// <summary>
+        /// 加载信息
+        /// </summary>
+        private void LoadInfo() 
+        {
+            XmlDocument doc = LoadConfig();
+            _config = new UIConfigItem(doc, DesignerInfo);
+        }
 
         private void FrmUIGenerater_Load(object sender, EventArgs e)
         {
-
+            LoadInfo();
         }
     }
 }

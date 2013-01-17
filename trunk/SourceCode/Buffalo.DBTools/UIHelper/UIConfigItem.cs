@@ -94,7 +94,7 @@ namespace Buffalo.DBTools.UIHelper
                 {
                     objProject.Namespace = att.InnerText;
                 }
-
+                FillProjectItem(projectNode, objProject.LstItems);
             }
         }
 
@@ -119,9 +119,41 @@ namespace Buffalo.DBTools.UIHelper
                 att = projectNode.Attributes["type"];
                 if (att == null)
                 {
-                    item.ModelPath = att.InnerText;
+                    item.GenType = GetGenType(att.InnerText);
+                }
+                att = projectNode.Attributes["target"];
+                if (att != null)
+                {
+                    item.TargetPath = att.InnerText;
+                }
+                items.Add(item);
+                if (projectNode.ChildNodes.Count > 0) 
+                {
+                    FillProjectItem(projectNode, items);
                 }
             }
+        }
+
+        /// <summary>
+        /// 获取生成类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private FileGenType GetGenType(string type) 
+        {
+            if (type.Equals("code", StringComparison.CurrentCultureIgnoreCase)) 
+            {
+                return FileGenType.Code;
+            }
+            if (type.Equals("resource", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return FileGenType.Resource;
+            }
+            if (type.Equals("file", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return FileGenType.File;
+            }
+            return FileGenType.Code;
         }
 
 

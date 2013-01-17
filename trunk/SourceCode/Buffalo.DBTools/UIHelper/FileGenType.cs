@@ -16,6 +16,10 @@ namespace Buffalo.DBTools.UIHelper
         /// <summary>
         /// 嵌入资源
         /// </summary>
-        Resource
+        Resource,
+        /// <summary>
+        /// 普通文件
+        /// </summary>
+        File
     }
 }
