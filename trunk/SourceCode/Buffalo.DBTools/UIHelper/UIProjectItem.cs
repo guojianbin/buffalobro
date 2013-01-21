@@ -16,6 +16,7 @@ namespace Buffalo.DBTools.UIHelper
         public string ModelPath
         {
             get { return _modelPath; }
+            set { _modelPath = value; }
         }
 
         private FileGenType _genType;
@@ -25,6 +26,7 @@ namespace Buffalo.DBTools.UIHelper
         public FileGenType GenType
         {
             get { return _genType; }
+            set { _genType = value; }
         }
 
         private string _targetPath;
@@ -34,6 +36,7 @@ namespace Buffalo.DBTools.UIHelper
         public string TargetPath
         {
             get { return _targetPath; }
+            set { _targetPath = value; }
         }
 
         private List<UIProjectItem> _childItems=new List<UIProjectItem>();

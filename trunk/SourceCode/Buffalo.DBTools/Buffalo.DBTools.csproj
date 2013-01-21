@@ -169,6 +169,7 @@
     </Compile>
     <Compile Include="GridViewComboBoxCell.cs" />
     <Compile Include="HelperKernel\BQLEntityGenerater.cs" />
+    <Compile Include="HelperKernel\ClrClassInfo.cs" />
     <Compile Include="HelperKernel\CodeFile.cs" />
     <Compile Include="HelperKernel\ComboBoxItemCollection.cs" />
     <Compile Include="HelperKernel\DataTypeInfos.cs" />

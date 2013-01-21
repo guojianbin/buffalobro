@@ -111,6 +111,7 @@
             this.gvMember.Name = "gvMember";
             this.gvMember.RowHeadersVisible = false;
             this.gvMember.RowTemplate.Height = 23;
+            this.gvMember.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gvMember.Size = new System.Drawing.Size(184, 426);
             this.gvMember.TabIndex = 0;
             // 
@@ -129,6 +130,7 @@
             // 
             // ColCheck
             // 
+            this.ColCheck.DataPropertyName = "IsGenerate";
             this.ColCheck.HeaderText = "";
             this.ColCheck.Name = "ColCheck";
             this.ColCheck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -138,6 +140,7 @@
             // ColName
             // 
             this.ColName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColName.DataPropertyName = "PropertyName";
             this.ColName.HeaderText = "属性";
             this.ColName.Name = "ColName";
             this.ColName.ReadOnly = true;

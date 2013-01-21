@@ -26,6 +26,7 @@ namespace Buffalo.DBTools
         Command commandDBSet = null;
         Command commandEntityUpdate = null;
         Command commandRemove = null;
+        Command commandUI = null;
         object[] _contextGUIDS = null;
 
         public CommandItems() 
@@ -94,6 +95,7 @@ namespace Buffalo.DBTools
             commandDBAll = AddToCommand("BuffaloDBCreateAll", "生成数据库", "生成数据库", true, 577);
             commandDBSet = AddToCommand("BuffaloDBSet", "设置参数", "设置数据库和生成参数", true, 611);
             commandEntityUpdate = AddToCommand("BuffaloUpdateEntityByDB", "更新实体", "把数据库的新字段更新到实体", true, 524);
+            commandUI = AddToCommand("BuffaloUI", "界面UI", "按照模版生成界面UI", true, 333);
             //将对应于该命令的控件添加到类菜单
             if ((commandEntityTools != null) && (calssComm != null))
             {
@@ -103,6 +105,7 @@ namespace Buffalo.DBTools
                 commandCreater.AddControl(commandEntityTools, 2);
                 commandEntityUpdate.AddControl(commandEntityTools, 3);
                 commandRemove.AddControl(commandEntityTools, 4);
+                commandUI.AddControl(commandEntityTools, 5);
             }
             //将对应于该命令的控件添加到总类图菜单
             if ((commandDB != null) && (designerComm != null))
@@ -160,6 +163,11 @@ namespace Buffalo.DBTools
             {
                 commandEntityUpdate.Delete();
                 commandEntityUpdate = null;
+            }
+            if (commandUI != null)
+            {
+                commandUI.Delete();
+                commandUI = null;
             }
             if (_applicationObject != null && commandDB != null)
             {

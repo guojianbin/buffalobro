@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Buffalo.DBTools.HelperKernel;
+using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -10,18 +11,35 @@ namespace Buffalo.DBTools.UIHelper
     /// </summary>
     public class UIModelItem
     {
+        private ClrProperty _belongProperty;
+
         /// <summary>
         /// UI信息
         /// </summary>
         /// <param name="dicCheckItem">选中项</param>
         /// <param name="belongProperty">所属属性</param>
-        public UIModelItem(Dictionary<string, object> dicCheckItem, EntityParamField belongProperty) 
+        public UIModelItem( ClrProperty belongProperty) 
         {
-            _dicCheckItem = dicCheckItem;
             _belongProperty = belongProperty;
         }
+        /// <summary>
+        /// UI信息
+        /// </summary>
+        public UIModelItem()
+        {
+        }
+        private Dictionary<string, object> _dicCheckItem=new Dictionary<string,object>();
 
-        private Dictionary<string, object> _dicCheckItem;
+        /// <summary>
+        /// 选中的项
+        /// </summary>
+        internal Dictionary<string, object> CheckItem 
+        {
+            get 
+            {
+                return _dicCheckItem;
+            }
+        }
 
         /// <summary>
         /// 获取是否选中项
@@ -55,14 +73,42 @@ namespace Buffalo.DBTools.UIHelper
             }
             return null;
         }
-
-        private EntityParamField _belongProperty;
+        private bool _isGenerate;
         /// <summary>
-        /// 所属属性
+        /// 是否生成
         /// </summary>
-        public EntityParamField BelongProperty
+        public bool IsGenerate
         {
-            get { return _belongProperty; }
+            get { return _isGenerate; }
+            set { _isGenerate = value; }
+        }
+        /// <summary>
+        /// 对应的字段类型
+        /// </summary>
+        public string FieldType
+        {
+            get { return _belongProperty.MemberTypeShortName; }
+        }
+        /// <summary>
+        /// 注释
+        /// </summary>
+        public string Summary
+        {
+            get { return _belongProperty.DocSummary; }
+        }
+        /// <summary>
+        /// 类型名
+        /// </summary>
+        public string TypeName
+        {
+            get { return _belongProperty.MemberTypeShortName; }
+        }
+        /// <summary>
+        /// 对应的属性名
+        /// </summary>
+        public string PropertyName
+        {
+            get { return _belongProperty.Name; }
         }
     }
 }

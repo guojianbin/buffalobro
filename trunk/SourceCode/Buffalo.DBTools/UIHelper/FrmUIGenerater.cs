@@ -10,6 +10,8 @@ using EnvDTE;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Xml;
+using Buffalo.DBTools.HelperKernel;
+using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -27,7 +29,11 @@ namespace Buffalo.DBTools.UIHelper
         public ClassDesignerInfo DesignerInfo
         {
             get { return _designerInfo; }
-            set { _designerInfo = value; }
+            set 
+            { 
+                _designerInfo = value;
+                
+            }
         }
         private ClrTypeShape _selectedClass = null;
 
@@ -37,8 +43,16 @@ namespace Buffalo.DBTools.UIHelper
         public ClrTypeShape SelectedClass
         {
             get { return _selectedClass; }
-            set { _selectedClass = value; }
+            set
+            { 
+                _selectedClass = value;
+               
+            }
         }
+
+        
+
+       
 
         private UIConfigItem _config;
         /// <summary>
@@ -48,6 +62,30 @@ namespace Buffalo.DBTools.UIHelper
         {
             get { return _config; }
         }
+
+
+        private void BindItems() 
+        {
+            if (_selectedClass == null || _designerInfo == null)
+            {
+                return;
+            }
+            XmlDocument doc = LoadConfig();
+            _config = new UIConfigItem(doc, DesignerInfo);
+            
+            List<UIModelItem> lstItems = new List<UIModelItem>();
+            List<ClrProperty> lstProperty = EntityConfig.GetAllMember<ClrProperty>(_selectedClass.AssociatedType, true);
+            foreach (ClrProperty property in lstProperty) 
+            {
+                UIModelItem item = new UIModelItem(property);
+                lstItems.Add(item);
+
+                
+            }
+            gvMember.DataSource = lstItems;
+        }
+
+        
 
         /// <summary>
         /// ¼ì²âÎÄ¼þ
@@ -78,12 +116,12 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         private void LoadInfo() 
         {
-            XmlDocument doc = LoadConfig();
-            _config = new UIConfigItem(doc, DesignerInfo);
+            BindItems();
         }
 
         private void FrmUIGenerater_Load(object sender, EventArgs e)
         {
+            gvMember.AutoGenerateColumns = false;
             LoadInfo();
         }
     }
