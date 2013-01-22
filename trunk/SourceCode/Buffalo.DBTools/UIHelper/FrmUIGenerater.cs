@@ -79,13 +79,16 @@ namespace Buffalo.DBTools.UIHelper
             {
                 UIModelItem item = new UIModelItem(property);
                 lstItems.Add(item);
-
-                
             }
             gvMember.DataSource = lstItems;
         }
 
-        
+
+        private void CreateItems() 
+        {
+            List<ConfigItem> lstItem = _config.ConfigItems;
+
+        }
 
         /// <summary>
         /// ¼ì²âÎÄ¼þ
