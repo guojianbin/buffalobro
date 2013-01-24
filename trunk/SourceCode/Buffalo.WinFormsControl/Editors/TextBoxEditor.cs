@@ -43,52 +43,15 @@ namespace Buffalo.WinFormsControl.Editors
 		        txtValue.Text = value;
 	        }
         }
-        /// <summary>
-        /// 标签宽度
-        /// </summary>
-        public int LableWidth 
-        {
-            get 
-            {
-                return pnlLable.Width;
-            }
-            set 
-            {
-                pnlLable.Width = value;
-            }
-        }
 
-        /// <summary>
-        /// 标签字体
-        /// </summary>
-        public Font LableFont
+        public override Label Lable
         {
             get
             {
-                return labSummary.Font;
-            }
-            set
-            {
-                labSummary.Font=value;
+                return labSummary;
             }
         }
 
-        /// <summary>
-        /// 标签内容
-        /// </summary>
-        public string LableText
-        {
-            get 
-            {
-                return labSummary.Text;
-            }
-            set 
-            {
-                labSummary.Text = value;
-            }
-        }
-
-        
         private void txtValue_TextChanged(object sender, EventArgs e)
         {
             DoValueChange(sender, txtValue.Text);

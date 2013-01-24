@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using Buffalo.Kernel.Defaults;
 using System.ComponentModel;
+using System.Drawing;
 
 
 namespace Buffalo.WinFormsControl.Editors
@@ -12,7 +13,7 @@ namespace Buffalo.WinFormsControl.Editors
     [ToolboxItem(false)]
     public class EditorBase:UserControl
     {
-        public ValueChangeHandle OnValueChange;
+        public event ValueChangeHandle OnValueChange;
 
         private string _bindPropertyName;
         /// <summary>
@@ -22,6 +23,54 @@ namespace Buffalo.WinFormsControl.Editors
         {
             get { return _bindPropertyName; }
             set { _bindPropertyName = value; }
+        }
+        /// <summary>
+        /// ±êÇ©ÄÚÈÝ
+        /// </summary>
+        public virtual string LableText
+        {
+            get
+            {
+                return Lable.Text;
+            }
+            set
+            {
+                Lable.Text = value;
+            }
+        }
+        public virtual Font LableFont
+        {
+            get
+            {
+                return Lable.Font;
+            }
+            set
+            {
+                Lable.Font = value;
+            }
+        }
+
+        public virtual Color LableForeColor
+        {
+            get
+            {
+                return Lable.ForeColor;
+            }
+            set
+            {
+                Lable.ForeColor = value;
+            }
+        }
+        
+        
+
+        public virtual Label Lable
+        {
+            get 
+            { 
+                return null; 
+            }
+            
         }
 
         /// <summary>

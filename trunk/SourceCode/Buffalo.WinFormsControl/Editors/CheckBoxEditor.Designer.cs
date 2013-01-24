@@ -31,7 +31,7 @@
             this.pnlLable = new System.Windows.Forms.Panel();
             this.labSummary = new System.Windows.Forms.Label();
             this.pnlValue = new System.Windows.Forms.Panel();
-            this.chkValue = new System.Windows.Forms.CheckBox();
+            this.chkValue = new Buffalo.WinFormsControl.Editors.OnOffCheckBox();
             this.pnlLable.SuspendLayout();
             this.pnlValue.SuspendLayout();
             this.SuspendLayout();
@@ -42,7 +42,7 @@
             this.pnlLable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlLable.Location = new System.Drawing.Point(0, 0);
             this.pnlLable.Name = "pnlLable";
-            this.pnlLable.Size = new System.Drawing.Size(77, 25);
+            this.pnlLable.Size = new System.Drawing.Size(102, 25);
             this.pnlLable.TabIndex = 0;
             // 
             // labSummary
@@ -50,7 +50,7 @@
             this.labSummary.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labSummary.Location = new System.Drawing.Point(0, 0);
             this.labSummary.Name = "labSummary";
-            this.labSummary.Size = new System.Drawing.Size(77, 25);
+            this.labSummary.Size = new System.Drawing.Size(102, 25);
             this.labSummary.TabIndex = 0;
             this.labSummary.Text = "标签";
             this.labSummary.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -59,20 +59,20 @@
             // 
             this.pnlValue.Controls.Add(this.chkValue);
             this.pnlValue.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlValue.Location = new System.Drawing.Point(77, 0);
+            this.pnlValue.Location = new System.Drawing.Point(102, 0);
             this.pnlValue.Name = "pnlValue";
-            this.pnlValue.Size = new System.Drawing.Size(23, 25);
+            this.pnlValue.Size = new System.Drawing.Size(58, 25);
             this.pnlValue.TabIndex = 1;
             // 
             // chkValue
             // 
-            this.chkValue.AutoSize = true;
-            this.chkValue.Location = new System.Drawing.Point(5, 6);
+            this.chkValue.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.chkValue.Location = new System.Drawing.Point(4, 1);
+            this.chkValue.MaximumSize = new System.Drawing.Size(51, 23);
+            this.chkValue.MinimumSize = new System.Drawing.Size(51, 23);
             this.chkValue.Name = "chkValue";
-            this.chkValue.Size = new System.Drawing.Size(15, 14);
+            this.chkValue.Size = new System.Drawing.Size(51, 23);
             this.chkValue.TabIndex = 0;
-            this.chkValue.UseVisualStyleBackColor = true;
-            this.chkValue.CheckedChanged += new System.EventHandler(this.chkValue_CheckedChanged);
             // 
             // CheckBoxEditor
             // 
@@ -83,11 +83,10 @@
             this.MaximumSize = new System.Drawing.Size(500, 25);
             this.MinimumSize = new System.Drawing.Size(100, 25);
             this.Name = "CheckBoxEditor";
-            this.Size = new System.Drawing.Size(100, 25);
+            this.Size = new System.Drawing.Size(160, 25);
             this.Load += new System.EventHandler(this.CheckBoxEditor_Load);
             this.pnlLable.ResumeLayout(false);
             this.pnlValue.ResumeLayout(false);
-            this.pnlValue.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -97,6 +96,6 @@
         private System.Windows.Forms.Panel pnlLable;
         private System.Windows.Forms.Label labSummary;
         private System.Windows.Forms.Panel pnlValue;
-        private System.Windows.Forms.CheckBox chkValue;
+        private OnOffCheckBox chkValue;
     }
 }

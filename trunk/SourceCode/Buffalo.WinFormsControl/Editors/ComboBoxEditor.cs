@@ -59,20 +59,7 @@ namespace Buffalo.WinFormsControl.Editors
                 cmbValue.SelectedValue=value;
             }
         }
-        /// <summary>
-        /// 标签宽度
-        /// </summary>
-        public int LableWidth 
-        {
-            get 
-            {
-                return pnlLable.Width;
-            }
-            set 
-            {
-                pnlLable.Width = value;
-            }
-        }
+        
 
         /// <summary>
         /// 标签字体
@@ -81,28 +68,37 @@ namespace Buffalo.WinFormsControl.Editors
         {
             get
             {
-                return labSummary.Font;
+                return cmbValue.Font;
             }
             set
             {
-                labSummary.Font=value;
+                cmbValue.Font = value;
             }
         }
 
-        /// <summary>
-        /// 标签内容
-        /// </summary>
-        public string LableText
+        public override Color ForeColor
         {
-            get 
+            get
             {
-                return labSummary.Text;
+                return cmbValue.ForeColor;
             }
-            set 
+            set
             {
-                labSummary.Text = value;
+                cmbValue.ForeColor = value;
             }
         }
+
+
+        public override Label Lable
+        {
+            get
+            {
+                return labSummary;
+            }
+        }
+
+
+        
 
         private void cmbValue_SelectedIndexChanged(object sender, EventArgs e)
         {

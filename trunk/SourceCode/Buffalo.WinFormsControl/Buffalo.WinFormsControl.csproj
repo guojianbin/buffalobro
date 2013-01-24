@@ -50,6 +50,12 @@
     <Compile Include="Editors\EditorBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Editors\OnOffCheckBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\OnOffCheckBox.Designer.cs">
+      <DependentUpon>OnOffCheckBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\TextBoxEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -81,9 +87,17 @@
       <DependentUpon>PagingBar.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Editors\OnOffCheckBox.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OnOffCheckBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\TextBoxEditor.resx">
       <SubType>Designer</SubType>
       <DependentUpon>TextBoxEditor.cs</DependentUpon>
@@ -106,12 +120,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Home.png" />
     <Content Include="Resources\Last.png" />
     <Content Include="Resources\Next.png" />
+    <Content Include="Resources\off.png" />
+    <None Include="Resources\off1.png" />
+    <Content Include="Resources\on.png" />
+    <None Include="Resources\on1.png" />
     <Content Include="Resources\Previous.png" />
   </ItemGroup>
   <ItemGroup>

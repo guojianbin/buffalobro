@@ -23,7 +23,14 @@ namespace Buffalo.WinFormsControl.Editors
         {
             
         }
-
+        /// <summary>
+        /// 按钮样式类型
+        /// </summary>
+        public OnOffButtonType OnOffType
+        {
+            get { return chkValue.OnOffType; }
+            set { chkValue.OnOffType = value; }
+        }
 
         /// <summary>
         /// 是否选中
@@ -56,35 +63,16 @@ namespace Buffalo.WinFormsControl.Editors
             }
         }
 
-        /// <summary>
-        /// 标签字体
-        /// </summary>
-        public Font LableFont
+
+        public override Label Lable
         {
             get
             {
-                return labSummary.Font;
-            }
-            set
-            {
-                labSummary.Font=value;
+                return labSummary;
             }
         }
 
-        /// <summary>
-        /// 标签内容
-        /// </summary>
-        public string LableText
-        {
-            get 
-            {
-                return labSummary.Text;
-            }
-            set 
-            {
-                labSummary.Text = value;
-            }
-        }
+        
         private void chkValue_CheckedChanged(object sender, EventArgs e)
         {
             DoValueChange(sender,chkValue.Checked);
