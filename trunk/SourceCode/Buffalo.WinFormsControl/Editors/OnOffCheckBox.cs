@@ -88,7 +88,11 @@ namespace Buffalo.WinFormsControl.Editors
         public OnOffButtonType OnOffType
         {
             get { return _onOffType; }
-            set { _onOffType = value; }
+            set 
+            { 
+                _onOffType = value;
+                RefreashDisplay();
+            }
         }
 
         /// <summary>
@@ -100,14 +104,7 @@ namespace Buffalo.WinFormsControl.Editors
             {
                 return;
             }
-            if (_checkState == CheckState.Checked)
-            {
-                pbDisplay.Image = Buffalo.WinFormsControl.Properties.Resources.on;
-            }
-            else
-            {
-                pbDisplay.Image = Buffalo.WinFormsControl.Properties.Resources.off;
-            }
+            pbDisplay.Image = GetImage();
 
         }
 

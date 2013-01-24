@@ -29,7 +29,11 @@ namespace Buffalo.WinFormsControl.Editors
         public OnOffButtonType OnOffType
         {
             get { return chkValue.OnOffType; }
-            set { chkValue.OnOffType = value; }
+            set 
+            { 
+                chkValue.OnOffType = value;
+
+            }
         }
 
         /// <summary>
