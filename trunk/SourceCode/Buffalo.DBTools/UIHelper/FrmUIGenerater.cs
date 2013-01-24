@@ -12,6 +12,8 @@ using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Xml;
 using Buffalo.DBTools.HelperKernel;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
+using Buffalo.WinFormsControl.Editors;
+using Buffalo.Kernel.FastReflection;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -50,7 +52,7 @@ namespace Buffalo.DBTools.UIHelper
             }
         }
 
-        
+        private object _currentEntity;
 
        
 
@@ -83,11 +85,82 @@ namespace Buffalo.DBTools.UIHelper
             gvMember.DataSource = lstItems;
         }
 
-
+        /// <summary>
+        /// 创建控件
+        /// </summary>
         private void CreateItems() 
         {
             List<ConfigItem> lstItem = _config.ConfigItems;
+            tabPanel.ColumnCount = 2;
+            tabPanel.RowCount = (int)Math.Ceiling((double)lstItem.Count / (double)2);
+            tabPanel.RowStyles.Clear();
+            tabPanel.ColumnStyles.Clear();
+            AddCellStyle();
+            for (int i = 0; i < lstItem.Count; i++) 
+            {
+                Control ctr = NewItem(lstItem[i]);
+                int col = i % 2;
+                int row = i / 2;
+                tabPanel.Controls.Add(ctr, col, row);
+                tabPanel.Controls.SetChildIndex(ctr, i);
+                
+                    ctr.Dock = DockStyle.Left;
+                
+            }
+        }
+        /// <summary>
+        /// 添加单元格样式
+        /// </summary>
+        private void AddCellStyle()
+        {
+            tabPanel.RowStyles.Add(new ColumnStyle(SizeType.AutoSize));
+            tabPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        }
+        private Control NewItem(ConfigItem item) 
+        {
+            EditorBase editor = null;
+            switch (item.Type) 
+            {
+                case ConfigItemType.Check:
+                    CheckBoxEditor cbe = new CheckBoxEditor();
+                    editor = cbe;
+                    cbe.OnOffType = OnOffButtonType.Oblongrectangle;
+                    break;
+                case ConfigItemType.Combo:
+                    editor = new ComboBoxEditor();
+                    break;
+                case ConfigItemType.Text:
+                    editor = new TextBoxEditor();
+                    break;
+                default:
+                    editor = new TextBoxEditor();
+                    break;
+            }
+            editor.BindPropertyName = item.Name;
+            editor.LableText = item.Summary;
+            editor.LableFont = new Font(editor.LableFont.FontFamily, 9, FontStyle.Bold);
+            
+            editor.OnValueChange += new ValueChangeHandle(editor_OnValueChange);
+            return editor;
+        }
 
+        void editor_OnValueChange(object sender, object oldValue, object newValue)
+        {
+            EditorBase editor = sender as EditorBase;
+            if (editor == null) 
+            {
+                return;
+            }
+            if(_currentEntity==null)
+            {
+                return;
+            }
+            PropertyInfoHandle handle = FastValueGetSet.GetPropertyInfoHandle(editor.BindPropertyName, _currentEntity.GetType());
+            if(handle==null || handle.HasSetHandle==null)
+            {
+                return;
+            }
+            handle.SetValue(_currentEntity,editor.Value);
         }
 
         /// <summary>
@@ -126,6 +199,7 @@ namespace Buffalo.DBTools.UIHelper
         {
             gvMember.AutoGenerateColumns = false;
             LoadInfo();
+            CreateItems();
         }
     }
 }

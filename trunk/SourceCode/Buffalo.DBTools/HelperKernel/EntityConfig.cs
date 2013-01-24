@@ -275,6 +275,7 @@ namespace Buffalo.DBTools.HelperKernel
             InitField();
             InitPropertys();
             InitMethods();
+            FillBaseTypeGenericArgs(ctype, _lstGenericArgs);
             //_currentProject = project;
             //_currentDiagram = currentDiagram;
             _designerInfo = info;
@@ -435,12 +436,49 @@ namespace Buffalo.DBTools.HelperKernel
             {
                 typeName = col[0].Name;
                 ClrType baseType = col[0].ClrType;
-
+                
                 return baseType;
             }
 
             return null;
             
+        }
+
+        /// <summary>
+        /// 填充基类的传入泛型参数
+        /// </summary>
+        private static void FillBaseTypeGenericArgs(ClrType ctype, List<string> lstArgs)
+        {
+            if (EntityConfig.IsSystemType(ctype))
+            {
+                return;
+            }
+            InheritanceTypeRefMoveableCollection col = ctype.InheritanceTypeRefs;
+            if (col != null && col.Count > 0)
+            {
+                string args = col[0].TypeArguments;
+                if (!string.IsNullOrEmpty(args))
+                {
+                    GetBaseTypeGenericArgs(args, lstArgs);
+                }
+            }
+            
+        }
+
+        /// <summary>
+        /// 基类的传入泛型参数
+        /// </summary>
+        /// <param name="args">参数</param>
+        /// <param name="lstArgs">参数集合</param>
+        /// <returns></returns>
+        private static void GetBaseTypeGenericArgs(string args,List<string> lstArgs) 
+        {
+            string genericParam = args.Trim('<', '>', ' ');
+            string[] itemParts = genericParam.Split(',');
+            foreach (string strItem in itemParts)
+            {
+                lstArgs.Add(strItem);
+            }
         }
 
         /// <summary>
@@ -470,7 +508,7 @@ namespace Buffalo.DBTools.HelperKernel
             _lstSource = CodeFileHelper.ReadFile(FileName);
             if (ctype.Generic) 
             {
-                InitGeneric(ctype);
+                InitGeneric(ctype,_dicGenericInfo);
             }
         }
         Dictionary<string, List<string>> _dicGenericInfo = new Dictionary<string, List<string>>();
@@ -481,15 +519,25 @@ namespace Buffalo.DBTools.HelperKernel
         {
             get { return _dicGenericInfo; }
         }
+
+        List<string> _lstGenericArgs = new List<string>();
+        /// <summary>
+        /// 对泛型父类的传入值
+        /// </summary>
+        public List<string> GenericArgs
+        {
+            get { return _lstGenericArgs; }
+        }
+
         /// <summary>
         /// 初始化泛型信息
         /// </summary>
         /// <param name="ctype">类型</param>
-        private void InitGeneric(ClrType ctype) 
+        internal static void InitGeneric(ClrType ctype, Dictionary<string, List<string>> dicGenericInfo) 
         {
             string headCode = ctype.OuterText.DeclarationOuterText.Substring(0, ctype.OuterText.DeclarationHeaderLength);
             string genericParameters = ctype.TypeParameters;
-            AppendGenericParam(genericParameters);
+            AppendGenericParam(genericParameters, dicGenericInfo);
             List<int> lstIndex = new List<int>();
             string tag=" where ";
             int curIndex = 0;
@@ -526,7 +574,7 @@ namespace Buffalo.DBTools.HelperKernel
                     }
                     
                 }
-                AppendToKeys(code);
+                AppendToKeys(code,dicGenericInfo);
             }
             
         }
@@ -534,13 +582,13 @@ namespace Buffalo.DBTools.HelperKernel
         /// 添加泛型信息
         /// </summary>
         /// <param name="genericParam"></param>
-        private void AppendGenericParam(string genericParam) 
+        private static void AppendGenericParam(string genericParam, Dictionary<string, List<string>> dicGenericInfo) 
         {
             genericParam = genericParam.Trim('<', '>', ' ');
             string[] itemParts = genericParam.Split(',');
             foreach (string strItem in itemParts)
             {
-                _dicGenericInfo[strItem.Trim()] = null;
+                dicGenericInfo[strItem.Trim()] = null;
             }
         }
 
@@ -548,7 +596,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// 加到泛型集合
         /// </summary>
         /// <param name="code"></param>
-        private void AppendToKeys(string code) 
+        private static void AppendToKeys(string code, Dictionary<string, List<string>> dicGenericInfo) 
         {
             code = code.Replace("\r\n", "");
             code = code.Replace("\r", "");
@@ -569,7 +617,7 @@ namespace Buffalo.DBTools.HelperKernel
                 lstItem.Add(strItem.Trim());
             }
 
-            _dicGenericInfo[key] = lstItem;
+            dicGenericInfo[key] = lstItem;
         }
 
         /// <summary>

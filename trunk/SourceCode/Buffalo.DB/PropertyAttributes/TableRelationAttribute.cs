@@ -39,17 +39,38 @@ namespace Buffalo.DB.PropertyAttributes
         /// <param name="targetTableType">目标对象类型</param>
         /// <param name="isParent">是否主表属性</param>
         public TableRelationAttribute(string fieldName,string name, string sourceTable, string targetTable,
-            string sourceParam, string targetParam, string propertyName, bool isParent) 
+            string sourceName, string targetName, string propertyName, bool isParent) 
         {
             _fieldName = fieldName;
             _propertyName = propertyName;
             _sourceTable = sourceTable;
-            _sourceName = sourceParam;
+            _sourceName = sourceName;
             _targetTable = targetTable;
-            _targetName = targetParam;
+            _targetName = targetName;
 
             _isParent = isParent;
         }
+
+        /// <summary>
+        ///  关联映射信息
+        /// </summary>
+        /// <param name="fieldName">对应字段</param>
+        /// <param name="propertyName">属性</param>
+        /// <param name="sourcePropertyName">源对象属性</param>
+        /// <param name="targetPropertyName">目标属性</param>
+        /// <param name="isParent">是否主表属性</param>
+        /// <param name="?"></param>
+        public TableRelationAttribute(string fieldName,
+            string propertyName, string sourcePropertyName, string targetPropertyName, bool isParent)
+        {
+            _fieldName = fieldName;
+            _propertyName = propertyName;
+            _sourceName = sourcePropertyName;
+            _targetName = targetPropertyName;
+            _isParent = isParent;
+            _isToDB = false;
+        }
+
         private string _description;
 
         /// <summary>

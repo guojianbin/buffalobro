@@ -5,6 +5,7 @@ using System.IO;
 using Buffalo.DB.PropertyAttributes;
 using Buffalo.DBTools.ROMHelper;
 using EnvDTE;
+using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -105,8 +106,13 @@ namespace Buffalo.DBTools.HelperKernel
                         tmp = tmp.Replace("<%=BQLEntityNamespace%>", BQLEntityNamespace);
                         tmp = tmp.Replace("<%=Summary%>", Table.Description);
                         tmp = tmp.Replace("<%=DBName%>", DBName);
-
-                        tmp = tmp.Replace("<%=BQLEntityBaseType%>", baseType);
+                        string args = GetBastGenericArgs();
+                        string realbasetype = baseType;
+                        if (!string.IsNullOrEmpty(args)) 
+                        {
+                            realbasetype += "<" + args + ">";
+                        }
+                        tmp = tmp.Replace("<%=BQLEntityBaseType%>", realbasetype);
                         tmp = tmp.Replace("<%=DataAccessNamespace%>", DataAccessNamespace);
 
                         string className = ClassName ;
@@ -140,6 +146,53 @@ namespace Buffalo.DBTools.HelperKernel
             EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 1;
         }
+
+        /// <summary>
+        /// 获取基类的泛型参数
+        /// </summary>
+        /// <returns></returns>
+        private string GetBastGenericArgs() 
+        {
+            if (GenericArgs == null || GenericArgs.Count <= 0) 
+            {
+                return null;
+            }
+            List<ClrClass> lstcls = Connect.GetAllClass(DesignerInfo.SelectedDiagram);
+            Dictionary<string, ClrClass> dic = new Dictionary<string, ClrClass>();
+            StringBuilder sbType=new StringBuilder();
+            foreach (ClrClass cls in lstcls) 
+            {
+                sbType.Append(cls.OwnerNamespace.Name);
+                if (sbType.Length > 0)
+                {
+                    sbType.Append(".");
+                }
+                sbType.Append(cls.Name);
+                dic[sbType.ToString()] = cls;
+                sbType.Remove(0, sbType.Length);
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (string str in GenericArgs) 
+            {
+                ClrClass curClass = null;
+
+                if (dic.TryGetValue(str,out curClass))
+                {
+                    sb.Append("DB_" + curClass.Name);
+                }
+                else 
+                {
+                    sb.Append("BQLEntityParamHandle");
+                }
+                sb.Append(",");
+            }
+            if (sb.Length > 0) 
+            {
+                sb.Remove(sb.Length - 1, 1);
+            }
+            return sb.ToString();
+        }
+
         /// <summary>
         /// 获取泛型字符串
         /// </summary>

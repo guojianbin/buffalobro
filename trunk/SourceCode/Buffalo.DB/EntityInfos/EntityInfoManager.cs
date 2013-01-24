@@ -112,6 +112,26 @@ namespace Buffalo.DB.EntityInfos
             
             Type baseType = type.BaseType;
             
+            List<TableRelationAttribute> lstSetAtt = new List<TableRelationAttribute>();
+            List<EntityParam> lstepAtt = new List<EntityParam>();
+            object[] attRels = type.GetCustomAttributes(false);
+            foreach (object objAtt in attRels) 
+            {
+                TableRelationAttribute tr = objAtt as TableRelationAttribute;
+                if (tr != null) 
+                {
+                    lstSetAtt.Add(tr);
+                    continue;
+                }
+                EntityParam ep = objAtt as EntityParam;
+                if (ep != null)
+                {
+                    lstepAtt.Add(ep);
+                    continue;
+                }
+            }
+
+
             while (baseType != null && !IsSysBaseType(baseType)) //Ìî³ä¸¸ÀàÅäÖÃ
             {
                 EntityConfigInfo config = null;
@@ -128,9 +148,10 @@ namespace Buffalo.DB.EntityInfos
                 {
                     stkXml.Push(config.ConfigXML);
                 }
+                
                 baseType = baseType.BaseType;
             }
-
+            
 
             while (stkXml.Count > 0)
             {
@@ -139,7 +160,16 @@ namespace Buffalo.DB.EntityInfos
                 FillPropertyInfo(doc, dicParam);
                 FillRelationInfo(doc, dicRelation);
             }
-            
+
+            foreach (TableRelationAttribute tra in lstSetAtt) 
+            {
+                dicRelation[tra.FieldName] = tra;
+            }
+
+            foreach (EntityParam ep in lstepAtt)
+            {
+                dicParam[ep.FieldName] = ep;
+            }
         }
 
         /// <summary>
@@ -405,6 +435,8 @@ namespace Buffalo.DB.EntityInfos
                 }
 
             }
+
+
             
 
             if (dicNotFoundParam.Count > 0 || dicNotFoundRelation.Count > 0) 

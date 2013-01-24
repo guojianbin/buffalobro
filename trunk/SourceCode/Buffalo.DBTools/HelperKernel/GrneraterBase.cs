@@ -179,7 +179,14 @@ namespace Buffalo.DBTools.HelperKernel
             get { return _dbConfig; }
             set { _dbConfig = value; }
         }
-
+        List<string> _lstGenericArgs =null;
+        /// <summary>
+        /// 对泛型父类的传入值
+        /// </summary>
+        public List<string> GenericArgs
+        {
+            get { return _lstGenericArgs; }
+        }
         Dictionary<string, List<string>> _dicGenericInfo;
         /// <summary>
         /// 泛型信息
@@ -188,7 +195,14 @@ namespace Buffalo.DBTools.HelperKernel
         {
             get { return _dicGenericInfo; }
         }
-
+        Dictionary<string, List<string>> _dicBaseGenericInfo;
+        /// <summary>
+        /// 泛型信息
+        /// </summary>
+        public Dictionary<string, List<string>> BaseGenericInfo
+        {
+            get { return _dicGenericInfo; }
+        }
         /// <summary>
         /// 获取基类短名
         /// </summary>
@@ -247,7 +261,7 @@ namespace Buffalo.DBTools.HelperKernel
             return name.Replace(" ", "_");
         }
 
-        public GrneraterBase(EntityConfig entity) 
+        public GrneraterBase(EntityConfig entity)
         {
             //_entity = entity;
             //_tableName = entity.TableName;
@@ -255,7 +269,7 @@ namespace Buffalo.DBTools.HelperKernel
             DesignerInfo = entity.DesignerInfo;
             _entityBaseTypeName = GetBaseTypeName(entity.BaseTypeName);
 
-            
+
             _entityBaseTypeShortName = GetBaseTypeShortName(entity.BaseTypeName);
             _entityFileName = entity.FileName;
             _entityNamespace = entity.Namespace;
@@ -267,6 +281,9 @@ namespace Buffalo.DBTools.HelperKernel
             _DBName = entity.CurrentDBConfigInfo.DbName;
             _dbConfig = entity.CurrentDBConfigInfo;
             _dicGenericInfo = entity.GenericInfo;
+
+            _lstGenericArgs = entity.GenericArgs;
+
         }
 
         

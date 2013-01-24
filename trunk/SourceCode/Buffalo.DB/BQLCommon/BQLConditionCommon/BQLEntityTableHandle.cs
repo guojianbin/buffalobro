@@ -7,6 +7,7 @@ using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.BQLCommon.IdentityInfos;
 using Buffalo.Kernel;
 using System.Data;
+using Buffalo.Kernel.Defaults;
 
 namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 {
@@ -148,14 +149,48 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         {
             get
             {
-                BQLEntityParamHandle prm = null;
-                if (_dicParam.TryGetValue(propertyName, out prm))
+                BQLEntityParamHandle prm = FindParamHandle(propertyName);
+
+                if (!CommonMethods.IsNull(prm)) 
                 {
                     return prm;
                 }
+
                 return base[propertyName, type];
             }
         }
+
+        /// <summary>
+        /// 查找实体属性
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        protected BQLEntityParamHandle FindParamHandle(string propertyName) 
+        {
+            BQLEntityParamHandle prm = null;
+            if (_dicParam.TryGetValue(propertyName, out prm))
+            {
+                return prm;
+            }
+            return null;
+        }
+        /// <summary>
+        /// 判断是否系统类型
+        /// </summary>
+        /// <param name="objType"></param>
+        /// <returns></returns>
+        private static bool IsSysBaseType(Type objType)
+        {
+            if (objType == null || objType == typeof(BQLTableHandle) || objType==typeof(object))
+            {
+                return true;
+            }
+            
+            return false;
+        }
+
+
+
         internal override void FillInfo(KeyWordInfomation info)
         {
             if (info.DBInfo.CurrentDbAdapter.IsSaveIdentityParam)
