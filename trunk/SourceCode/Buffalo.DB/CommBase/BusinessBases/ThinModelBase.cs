@@ -63,9 +63,19 @@ namespace Buffalo.DB.CommBase.BusinessBases
         {
             DataAccessSetBase dal = GetBaseDataAccess();
 
-            return dal.DoInsert(this, fillPrimaryKey);
+            return dal.DoInsert(this,null, fillPrimaryKey);
         }
+        /// <summary>
+        /// 保存实体并填充ID
+        /// </summary>
+        /// <param name="fillPrimaryKey">是否填充实体</param>
+        /// <returns></returns>
+        public virtual int Insert(ValueSetList setList, bool fillPrimaryKey)
+        {
+            DataAccessSetBase dal = GetBaseDataAccess();
 
+            return dal.DoInsert(this, setList, fillPrimaryKey);
+        }
         /// <summary>
         /// 更新实体
         /// </summary>
@@ -82,7 +92,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
                     throw new Exception("主键:"+epPk.PropertyName+"的值不能为空");
                 }
             }
-            return dal.Update(this, null, optimisticConcurrency);
+            return dal.Update(this, null,null, optimisticConcurrency);
         }
         /// <summary>
         /// 更新实体

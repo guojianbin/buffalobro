@@ -8,6 +8,7 @@ using Buffalo.DB.BQLCommon.BQLExtendFunction;
 using Buffalo.DB.DBFunction;
 using Buffalo.DB.BQLCommon.BQLConditions;
 using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
+using Buffalo.DB.DataBaseAdapter;
 
 namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 {
@@ -408,6 +409,34 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         {
             return base.Equals(obj);
         }
-        
+        private static KeyWordInfomation _putKeyInfo = GetPutKeyInfo();
+
+        /// <summary>
+        /// 获取信息
+        /// </summary>
+        /// <returns></returns>
+        private static KeyWordInfomation GetPutKeyInfo() 
+        {
+            KeyWordInfomation info = new KeyWordInfomation();
+            info.Infos = new BQLInfos();
+            info.ParamList = null;
+            info.OutPutModle = true;
+            return info;
+        }
+
+        /// <summary>
+        /// 获取默认的Key信息
+        /// </summary>
+        /// <returns></returns>
+        internal static KeyWordInfomation GetKeyInfo() 
+        {
+            _putKeyInfo.DBInfo = DataAccessLoader.GetFristDBInfo();
+            return _putKeyInfo;
+        }
+
+        public override string ToString()
+        {
+            return DisplayValue(GetKeyInfo());
+        }
     }
 }

@@ -4,6 +4,10 @@ using System.Text;
 using System.Data;
 using System.ComponentModel;
 using System.Collections;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
+using Buffalo.DB.CommBase.DataAccessBases;
+using Buffalo.Kernel;
+using Buffalo.Kernel.Defaults;
 namespace Buffalo.DB.QueryConditions
 {
     /// <summary>
@@ -212,5 +216,29 @@ namespace Buffalo.DB.QueryConditions
                 return propertyName;
             }
         }
+
+        public override string ToString()
+        {
+            BQLValueItem qvalue = value1 as BQLValueItem;
+            if (!CommonMethods.IsNull(qvalue))
+            {
+                return qvalue.DisplayValue(BQLValueItem.GetKeyInfo());
+            }
+            else 
+            {
+                string pName = propertyName;
+                
+                DbType dbType =DbType.AnsiString ;
+                if (value1 != null) 
+                {
+                    dbType = DefaultType.ToDbType(value1.GetType());
+                }
+                return DataAccessCommon.FormatScorp(this, null, pName, dbType, 0, null);
+            }
+
+            return base.ToString();
+        }
+
+        
     }
 }

@@ -31,10 +31,18 @@ namespace Buffalo.WinFormsControl.Editors
         {
             get
             {
+                if (Lable == null) 
+                {
+                    return "";
+                }
                 return Lable.Text;
             }
             set
             {
+                if (Lable == null)
+                {
+                    return;
+                }
                 Lable.Text = value;
             }
         }
@@ -42,22 +50,45 @@ namespace Buffalo.WinFormsControl.Editors
         {
             get
             {
+                if (Lable == null)
+                {
+                    return this.Font;
+                }
                 return Lable.Font;
             }
             set
             {
+                if (Lable == null)
+                {
+                    return;
+                }
                 Lable.Font = value;
             }
         }
-
+        /// <summary>
+        /// ±êÇ©¿í¶È
+        /// </summary>
+        public virtual int LableWidth
+        {
+            get { return 0; }
+            set { }
+        }
         public virtual Color LableForeColor
         {
             get
             {
+                if (Lable == null)
+                {
+                    return this.ForeColor;
+                }
                 return Lable.ForeColor;
             }
             set
             {
+                if (Lable == null)
+                {
+                    return ;
+                }
                 Lable.ForeColor = value;
             }
         }

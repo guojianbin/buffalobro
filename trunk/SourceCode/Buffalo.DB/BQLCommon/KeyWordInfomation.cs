@@ -142,6 +142,17 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             }
         }
 
+
+        private bool _outPutModle=false;
+        /// <summary>
+        /// 输出信息模式
+        /// </summary>
+        public bool OutPutModle
+        {
+            get { return _outPutModle; }
+            set { _outPutModle = value; }
+        }
+
         #region ICloneable 成员
 
         public object Clone()
@@ -152,6 +163,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             //info._isPage = this._isShowTableName;
             info._paramList = _paramList;
             info._dbInfo = this._dbInfo;
+            info.OutPutModle = this.OutPutModle;
             return info;
         }
 

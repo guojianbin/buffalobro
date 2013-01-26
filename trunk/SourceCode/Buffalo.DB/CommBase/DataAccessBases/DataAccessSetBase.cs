@@ -8,6 +8,7 @@ using Buffalo.DB.BQLCommon;
 using Buffalo.DB.EntityInfos;
 using Buffalo.Kernel.Defaults;
 using Buffalo.DB.CommBase.BusinessBases;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 
 namespace Buffalo.DB.CommBase.DataAccessBases
 {
@@ -51,9 +52,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// </summary>
         /// <param name="obj">修改的对象</param>
         /// <param name="scopeList">条件列表</param>
+        /// <param name="setList">Set值列表</param>
         /// <param name="optimisticConcurrency">是否进行并发控制</param>
         /// <returns></returns>
-        public int Update(EntityBase obj, ScopeList scopeList, bool optimisticConcurrency)
+        public int Update(EntityBase obj, ScopeList scopeList,ValueSetList setList, bool optimisticConcurrency)
         {
             StringBuilder sql = new StringBuilder(500);
             ParamList list = new ParamList();
@@ -62,6 +64,9 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             Type type = EntityInfo.EntityType;
             List<VersionInfo> lstVersionInfo = null;
             int index = 0;
+
+            KeyWordInfomation keyinfo = BQLValueItem.GetKeyInfo().Clone() as KeyWordInfomation;
+            keyinfo.ParamList = list;
             ///读取属性别名
             foreach (EntityPropertyInfo info in EntityInfo.PropertyInfo)
             {
@@ -89,16 +94,24 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                         {
                             if (obj._dicUpdateProperty___ == null || obj._dicUpdateProperty___.Count == 0)
                             {
-                                if (DefaultType.IsDefaultValue(curValue))
-                                {
+                                //if (DefaultType.IsDefaultValue(curValue))
+                                //{
                                     continue;
-                                }
+                                //}
                             }
                             else if (!obj._dicUpdateProperty___.ContainsKey(info.PropertyName))
                             {
                                 continue;
                             }
-
+                            if (setList != null) 
+                            {
+                                BQLValueItem bvalue = null;
+                                if(setList.TryGetValue(info.PropertyName,out bvalue))
+                                {
+                                    
+                                    continue;
+                                }
+                            }
                             sql.Append(",");
                             sql.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
                             sql.Append("=");
@@ -133,7 +146,18 @@ namespace Buffalo.DB.CommBase.DataAccessBases
 
 
             }
-
+            foreach (KeyValuePair<string, BQLValueItem> kvp in setList) 
+            {
+                EntityPropertyInfo epinfo = EntityInfo.PropertyInfo[kvp.Key];
+                if (epinfo == null) 
+                {
+                    throw new Exception("实体:"+EntityInfo.EntityType.FullName+"  找不到属性:" + kvp.Key);
+                }
+                sql.Append(",");
+                sql.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(epinfo.ParamName));
+                sql.Append("=");
+                sql.Append(kvp.Value.DisplayValue(keyinfo));
+            }
             where.Append(DataAccessCommon.FillCondition(EntityInfo, list, scopeList));
             if (sql.Length <= 0)
             {
@@ -323,7 +347,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <param name="obj">要插入的对象</param>
         /// <param name="fillIdentity">是否要填充刚插入的实体的ID</param>
         /// <returns></returns>
-        protected internal int DoInsert(EntityBase obj, bool fillIdentity)
+        protected internal int DoInsert(EntityBase obj,ValueSetList setList, bool fillIdentity)
         {
             StringBuilder sqlParams = new StringBuilder(1000);
             StringBuilder sqlValues = new StringBuilder(1000);
@@ -332,7 +356,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             string svalue = null;
             
             List<EntityPropertyInfo> identityInfo = new List<EntityPropertyInfo>();
-            
+
+            KeyWordInfomation keyinfo = BQLValueItem.GetKeyInfo().Clone() as KeyWordInfomation;
+            keyinfo.ParamList = list;
+
             foreach (EntityPropertyInfo info in EntityInfo.PropertyInfo)
             {
                 //EntityPropertyInfo info = enums.Current.Value;
@@ -391,10 +418,27 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                         continue;
                     }
                 }
+                else if (setList != null)
+                {
+
+                    BQLValueItem bvalue = null;
+                    if (setList.TryGetValue(info.PropertyName, out bvalue))
+                    {
+                        
+                        sqlParams.Append(",");
+                        sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
+                        sqlValues.Append(",");
+                        sqlValues.Append(bvalue.DisplayValue(keyinfo));
+                        continue;
+                    }
+                    
+                }
                 else if (curValue == null)
                 {
                     continue;
                 }
+                
+
                 DBParameter prmValue = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
                 sqlParams.Append(",");
                 sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));

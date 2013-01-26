@@ -44,6 +44,17 @@ namespace Buffalo.WinFormsControl.Editors
 	        }
         }
 
+        public override int LableWidth
+        {
+            get
+            {
+                return pnlLable.Width;
+            }
+            set
+            {
+                pnlLable.Width = value;
+            }
+        }
         public override Label Lable
         {
             get
@@ -52,9 +63,33 @@ namespace Buffalo.WinFormsControl.Editors
             }
         }
 
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (txtValue.Multiline) 
+            {
+                txtValue.Height = this.Height - 4;
+            }
+        }
+
+        /// <summary>
+        /// 是否支持多行
+        /// </summary>
+        public bool Multiline 
+        {
+            get 
+            {
+                return txtValue.Multiline;
+            }
+            set 
+            {
+                txtValue.Multiline = value;
+            }
+        }
+
         private void txtValue_TextChanged(object sender, EventArgs e)
         {
-            DoValueChange(sender, txtValue.Text);
+            DoValueChange( txtValue.Text);
         }
 
 

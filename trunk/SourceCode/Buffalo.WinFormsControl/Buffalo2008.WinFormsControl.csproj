@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E7808223-2E0F-44C3-A39D-26CF22A9D946}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -60,6 +60,33 @@
     <Compile Include="DataGridViewEx\DataGridViewImageButtomColumn.cs" />
     <Compile Include="DataGridViewEx\DataGridViewPercentCell.cs" />
     <Compile Include="DataGridViewEx\DataGridViewPercentColumn.cs" />
+    <Compile Include="Editors\CheckBoxEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\CheckBoxEditor.Designer.cs">
+      <DependentUpon>CheckBoxEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ComboBoxEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\ComboBoxEditor.Designer.cs">
+      <DependentUpon>ComboBoxEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\EditorBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\OnOffCheckBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\OnOffCheckBox.Designer.cs">
+      <DependentUpon>OnOffCheckBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\TextBoxEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\TextBoxEditor.Designer.cs">
+      <DependentUpon>TextBoxEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="PagingBar\MediumPagingBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -76,6 +103,18 @@
     <Compile Include="Properties\Resources.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Editors\CheckBoxEditor.resx">
+      <DependentUpon>CheckBoxEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\ComboBoxEditor.resx">
+      <DependentUpon>ComboBoxEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\OnOffCheckBox.resx">
+      <DependentUpon>OnOffCheckBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\TextBoxEditor.resx">
+      <DependentUpon>TextBoxEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PagingBar\MediumPagingBar.resx">
       <DependentUpon>MediumPagingBar.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -95,10 +134,24 @@
     <Content Include="Resources\Previous.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Buffalo.Kernel\Buffalo2008.Kernel.csproj">
+      <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
+      <Name>Buffalo2008.Kernel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Buffalo.Win32Kernel\Buffalo2008.Win32Kernel.csproj">
       <Project>{48492BAD-6312-4A80-A660-C0DA04957227}</Project>
       <Name>Buffalo2008.Win32Kernel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Editors\TextBoxEditor.cs~RF1977d61.TMP" />
+    <None Include="Editors\TextBoxEditor.Designer.cs~RF18a4feb.TMP" />
+    <None Include="Editors\TextBoxEditor.Designer.cs~RF193cca9.TMP" />
+    <None Include="Editors\TextBoxEditor.Designer.cs~RF871dee.TMP" />
+    <None Include="Editors\TextBoxEditor.resx~RF871e3c.TMP" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataGridViewPercent\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

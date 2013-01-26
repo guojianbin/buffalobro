@@ -61,6 +61,23 @@
     <Compile Include="DataGridViewEx\DataGridViewImageButtomColumn.cs" />
     <Compile Include="DataGridViewEx\DataGridViewPercentCell.cs" />
     <Compile Include="DataGridViewEx\DataGridViewPercentColumn.cs" />
+    <Compile Include="Editors\CheckBoxEditor.cs" />
+    <Compile Include="Editors\CheckBoxEditor.Designer.cs">
+      <DependentUpon>CheckBoxEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ComboBoxEditor.cs" />
+    <Compile Include="Editors\ComboBoxEditor.Designer.cs">
+      <DependentUpon>ComboBoxEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\EditorBase.cs" />
+    <Compile Include="Editors\OnOffCheckBox.cs" />
+    <Compile Include="Editors\OnOffCheckBox.Designer.cs">
+      <DependentUpon>OnOffCheckBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\TextBoxEditor.cs" />
+    <Compile Include="Editors\TextBoxEditor.Designer.cs">
+      <DependentUpon>TextBoxEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="PagingBar\MediumPagingBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -77,6 +94,18 @@
     <Compile Include="Properties\Resources.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Editors\CheckBoxEditor.resx">
+      <DependentUpon>CheckBoxEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\ComboBoxEditor.resx">
+      <DependentUpon>ComboBoxEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\OnOffCheckBox.resx">
+      <DependentUpon>OnOffCheckBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\TextBoxEditor.resx">
+      <DependentUpon>TextBoxEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PagingBar\MediumPagingBar.resx">
       <DependentUpon>MediumPagingBar.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -104,6 +133,16 @@
       <Project>{48492bad-6312-4a80-a660-c0da04957227}</Project>
       <Name>Buffalo2012.Win32Kernel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Editors\TextBoxEditor.cs~RF1977d61.TMP" />
+    <None Include="Editors\TextBoxEditor.Designer.cs~RF18a4feb.TMP" />
+    <None Include="Editors\TextBoxEditor.Designer.cs~RF193cca9.TMP" />
+    <None Include="Editors\TextBoxEditor.Designer.cs~RF871dee.TMP" />
+    <None Include="Editors\TextBoxEditor.resx~RF871e3c.TMP" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataGridViewPercent\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

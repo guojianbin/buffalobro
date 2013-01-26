@@ -60,7 +60,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         internal override string DisplayValue(KeyWordInfomation info)
         {
             //string ret = null;
-            if (info.ParamList != null && _valueDbType != DbType.Object) 
+            if (info.ParamList != null && _valueDbType != DbType.Object && !info.OutPutModle) 
             {
                 
                 

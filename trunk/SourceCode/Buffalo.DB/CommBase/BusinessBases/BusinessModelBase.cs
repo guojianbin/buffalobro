@@ -77,73 +77,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
             }
         }
 
-        #region ConcurrencyUpdate
-
-        ///// <summary>
-        ///// 并发更新
-        ///// </summary>
-        ///// <param name="entity">对象</param>
-        ///// <returns>大于0:更新完毕,小于0:更新失败</returns>
-        //public virtual object ConcurrencyUpdate(T entity)
-        //{
-        //    DataAccessModel<T> entityDao = new DataAccessModel<T>();
-        //    object ret = null;
-        //    ret = Exists(entity);
-        //    if (ret != null)
-        //    {
-        //        return ret;
-        //    }
-
-        //    ret = OnUpdateing(entity, null);
-        //    if (ret != null)
-        //    {
-        //        return ret;
-        //    }
-        //    _affectedRows = entityDao.ConcurrencyUpdate(entity);
-        //    ret = OnUpdated();
-        //    return ret;
-
-        //}
-
         
-
-        ///// <summary>
-        ///// 批量并发更新
-        ///// </summary>
-        ///// <param name="entity">对象</param>
-        ///// <returns>大于0:更新完毕,小于0:更新失败</returns>
-        //public virtual object ConcurrencyUpdate(List<T> lst)
-        //{
-
-        //    DataAccessModel<T> entityDao = new DataAccessModel<T>();
-        //    object ret = null;
-
-        //    foreach (T entity in lst)
-        //    {
-
-        //        ret = Exists(entity);
-        //        if (ret != null)
-        //        {
-        //            continue;
-        //        }
-        //        ret = OnUpdateing(entity, null);
-        //        if (ret != null)
-        //        {
-        //            continue;
-        //        }
-
-        //        _affectedRows += entityDao.ConcurrencyUpdate(entity);
-        //        ret = OnUpdated();
-
-        //    }
-
-        //    return ret;
-
-        //}
-
-        
-
-        #endregion
 
 
 
@@ -193,7 +127,52 @@ namespace Buffalo.DB.CommBase.BusinessBases
             return ret;
 
         }
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="entity">对象</param>
+        /// <param name="scorpList">范围更新的列表</param>
+        /// <param name="lstValue">set实体</param>
+        /// <param name="optimisticConcurrency">并发控制</param>
+        /// <returns></returns>
+        public virtual object Update(T entity, ScopeList scorpList, ValueSetList lstValue, bool optimisticConcurrency)
+        {
+            DataAccessModel<T> entityDao = new DataAccessModel<T>();
 
+            object ret = Exists(entity);
+            if (ret != null)
+            {
+                return ret;
+            }
+
+            _affectedRows = entityDao.Update(entity, scorpList, lstValue, optimisticConcurrency);
+
+
+            return ret;
+
+        }
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="entity">对象</param>
+        /// <param name="scorpList">范围更新的列表</param>
+        /// <returns>大于0:更新完毕,小于0:更新失败</returns>
+        public virtual object Update(T entity, ScopeList scorpList, ValueSetList lstValue)
+        {
+            DataAccessModel<T> entityDao = new DataAccessModel<T>();
+
+            object ret = Exists(entity);
+            if (ret != null)
+            {
+                return ret;
+            }
+
+            _affectedRows = entityDao.Update(entity, scorpList, lstValue, false);
+
+
+            return ret;
+
+        }
         /// <summary>
         /// 批量更新
         /// </summary>
@@ -287,7 +266,25 @@ namespace Buffalo.DB.CommBase.BusinessBases
 
             return ret;
         }
+        /// 插入一条数据
+        /// </summary>
+        /// <param name="entity">对象</param>
+        /// <returns>大于0:插入完毕,小于0:插入失败</returns>
+        public virtual object Insert(T entity,ValueSetList setList, bool fillIdentity)
+        {
 
+            DataAccessModel<T> entityDao = new DataAccessModel<T>();
+
+            object ret = Exists(entity);
+            if (ret != null)
+            {
+                return ret;
+            }
+
+            _affectedRows = entityDao.Insert(entity, setList, fillIdentity);
+
+            return ret;
+        }
         
         /// <summary>
         /// 插入一组数据

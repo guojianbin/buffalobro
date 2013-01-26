@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Buffalo.DBTools.HelperKernel;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
+using System.Xml;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -82,6 +83,42 @@ namespace Buffalo.DBTools.UIHelper
             get { return _isGenerate; }
             set { _isGenerate = value; }
         }
+
+        /// <summary>
+        /// 写到XML节点
+        /// </summary>
+        /// <param name="node"></param>
+        public void WriteNode(XmlNode node) 
+        {
+            XmlDocument doc=node.OwnerDocument;
+            XmlAttribute att = doc.CreateAttribute("name");
+            att.InnerText = PropertyName;
+            node.Attributes.Append(att);
+
+            foreach (KeyValuePair<string, object> kvp in _dicCheckItem) 
+            {
+                XmlNode inode = doc.CreateElement("item");
+                att = doc.CreateAttribute("name");
+                att.InnerText = kvp.Key;
+                inode.Attributes.Append(att);
+
+                string value = null;
+                if (kvp.Value is bool)
+                {
+                    value = (bool)kvp.Value ? "1" : "0";
+                }
+                else 
+                {
+                    value = kvp.Value as string;
+                }
+                att = doc.CreateAttribute("value");
+                att.InnerText = value;
+                inode.Attributes.Append(att);
+                node.AppendChild(inode);
+            }
+
+        }
+
         /// <summary>
         /// 对应的字段类型
         /// </summary>

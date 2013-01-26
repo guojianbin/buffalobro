@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 using Buffalo.DB.BQLCommon.BQLConditionCommon;
+using Buffalo.Kernel;
 
 namespace Buffalo.DB.QueryConditions
 {
@@ -56,6 +57,18 @@ namespace Buffalo.DB.QueryConditions
             {
                 _orderHandle = value;
             }
+        }
+        public override string ToString()
+        {
+            if (_propertyName!=null) 
+            {
+                return _propertyName +" "+ _sortType.ToString();
+            }
+            if (!CommonMethods.IsNull(OrderHandle)) 
+            {
+                return OrderHandle.ToString();
+            }
+            return base.ToString();
         }
     }
 }

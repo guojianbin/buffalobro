@@ -21,6 +21,15 @@ namespace Buffalo.DBTools.UIHelper
             get { return _configItems; }
         }
 
+        private List<ConfigItem> _classItems;
+        /// <summary>
+        /// 类预设项
+        /// </summary>
+        public List<ConfigItem> ClassItems
+        {
+            get { return _classItems; }
+        }
+
         private List<UIProject> _projects;
         /// <summary>
         /// 所属工程
@@ -61,11 +70,18 @@ namespace Buffalo.DBTools.UIHelper
             {
                 if (node.Name.Equals("configItems", StringComparison.CurrentCultureIgnoreCase)) 
                 {
-                    FillConfigItems(node);
+                    _configItems=FillConfigItems(node);
+                    continue;
                 }
                 if (node.Name.Equals("models", StringComparison.CurrentCultureIgnoreCase))
                 {
                     FillProjectItems(node);
+                    continue;
+                }
+                if (node.Name.Equals("classItems", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    _classItems = FillConfigItems(node);
+                    continue;
                 }
             }
         }
@@ -89,12 +105,8 @@ namespace Buffalo.DBTools.UIHelper
                 {
                     objProject.Name = att.InnerText;
                 }
-                att = projectNode.Attributes["namespace"];
-                if (att != null)
-                {
-                    objProject.Namespace = att.InnerText;
-                }
                 FillProjectItem(projectNode, objProject.LstItems);
+                _projects.Add(objProject);
             }
         }
 
@@ -106,31 +118,35 @@ namespace Buffalo.DBTools.UIHelper
         {
             foreach (XmlNode projectNode in node.ChildNodes)
             {
-                if (!projectNode.Name.Equals("item", StringComparison.CurrentCultureIgnoreCase))
+                if (projectNode.Name.Equals("item", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    continue;
+
+
+                    UIProjectItem item = new UIProjectItem();
+                    XmlAttribute att = projectNode.Attributes["path"];
+                    if (att != null)
+                    {
+                        item.ModelPath = att.InnerText;
+                    }
+                    att = projectNode.Attributes["type"];
+                    if (att == null)
+                    {
+                        item.GenType = GetGenType(att.InnerText);
+                    }
+                    att = projectNode.Attributes["target"];
+                    if (att != null)
+                    {
+                        item.TargetPath = att.InnerText;
+                    }
+                    items.Add(item);
+                    if (projectNode.ChildNodes.Count > 0)
+                    {
+                        FillProjectItem(projectNode, items);
+                    }
                 }
-                UIProjectItem item = new UIProjectItem();
-                XmlAttribute att = projectNode.Attributes["path"];
-                if (att != null)
-                {
-                    item.ModelPath = att.InnerText;
-                }
-                att = projectNode.Attributes["type"];
-                if (att == null)
-                {
-                    item.GenType = GetGenType(att.InnerText);
-                }
-                att = projectNode.Attributes["target"];
-                if (att != null)
-                {
-                    item.TargetPath = att.InnerText;
-                }
-                items.Add(item);
-                if (projectNode.ChildNodes.Count > 0) 
-                {
-                    FillProjectItem(projectNode, items);
-                }
+
+
+
             }
         }
 
@@ -180,9 +196,9 @@ namespace Buffalo.DBTools.UIHelper
         /// 填充配置项
         /// </summary>
         /// <param name="node"></param>
-        private void FillConfigItems(XmlNode node) 
+        internal static List<ConfigItem> FillConfigItems(XmlNode node) 
         {
-            _configItems = new List<ConfigItem>(node.ChildNodes.Count);
+            List<ConfigItem>  configItems = new List<ConfigItem>(node.ChildNodes.Count);
 
             foreach (XmlNode cnode in node.ChildNodes)
             {
@@ -195,14 +211,15 @@ namespace Buffalo.DBTools.UIHelper
                 item.Summary = cnode.Attributes["summary"] != null ? cnode.Attributes["summary"].InnerText : "";
                 item.Items = GetValueItems(cnode);
                 item.Type = GetItemType(cnode);
-                _configItems.Add(item);
+                configItems.Add(item);
             }
+            return configItems;
         }
         /// <summary>
         /// 获取项类型
         /// </summary>
         /// <returns></returns>
-        private ConfigItemType GetItemType(XmlNode cnode) 
+        private static ConfigItemType GetItemType(XmlNode cnode) 
         {
             XmlAttribute att = cnode.Attributes["type"];
             if (att == null)
@@ -222,6 +239,10 @@ namespace Buffalo.DBTools.UIHelper
             {
                 return ConfigItemType.Text;
             }
+            if (type.Equals("mtext", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return ConfigItemType.MText;
+            }
             return ConfigItemType.Text;
         }
 
@@ -230,7 +251,7 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         /// <param name="cnode"></param>
         /// <returns></returns>
-        private List<ComboBoxItem> GetValueItems(XmlNode cnode) 
+        private static List<ComboBoxItem> GetValueItems(XmlNode cnode) 
         {
             XmlAttribute att = cnode.Attributes["select"];
             if (att == null) 

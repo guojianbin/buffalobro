@@ -52,6 +52,23 @@ namespace Buffalo.DB.DataBaseAdapter
             return ret;
         }
 
+        /// <summary>
+        /// 获取随机一个数据库信息
+        /// </summary>
+        /// <returns></returns>
+        internal static DBInfo GetFristDBInfo() 
+        {
+            if (_dicDBInfo == null)
+            {
+                return null;
+            }
+            foreach (KeyValuePair<string, DBInfo> kvp in _dicDBInfo) 
+            {
+                return kvp.Value;
+            }
+            return null;
+        }
+
         #region 初始化配置
         /// <summary>
         /// 添加数据库信息

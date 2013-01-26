@@ -23,36 +23,17 @@ namespace Buffalo.DBTools.UIHelper
         {
             InitializeComponent();
         }
-        private ClassDesignerInfo _designerInfo;
-
+        private EntityInfo _curEntityInfo;
         /// <summary>
-        /// 类设计图信息
+        /// 当前实体的信息
         /// </summary>
-        public ClassDesignerInfo DesignerInfo
+        public EntityInfo CurEntityInfo
         {
-            get { return _designerInfo; }
-            set 
-            { 
-                _designerInfo = value;
-                
-            }
-        }
-        private ClrTypeShape _selectedClass = null;
-
-        /// <summary>
-        /// 选中的类
-        /// </summary>
-        public ClrTypeShape SelectedClass
-        {
-            get { return _selectedClass; }
-            set
-            { 
-                _selectedClass = value;
-               
-            }
+            get { return _curEntityInfo; }
+            set { _curEntityInfo = value; }
         }
 
-        private object _currentEntity;
+        //private object _currentEntity;
 
        
 
@@ -68,21 +49,24 @@ namespace Buffalo.DBTools.UIHelper
 
         private void BindItems() 
         {
-            if (_selectedClass == null || _designerInfo == null)
+            if (_curEntityInfo==null)
             {
                 return;
             }
             XmlDocument doc = LoadConfig();
-            _config = new UIConfigItem(doc, DesignerInfo);
-            
-            List<UIModelItem> lstItems = new List<UIModelItem>();
-            List<ClrProperty> lstProperty = EntityConfig.GetAllMember<ClrProperty>(_selectedClass.AssociatedType, true);
-            foreach (ClrProperty property in lstProperty) 
-            {
-                UIModelItem item = new UIModelItem(property);
-                lstItems.Add(item);
-            }
+            _config = new UIConfigItem(doc, _curEntityInfo.DesignerInfo);
+
+
+
+            List<UIModelItem> lstItems = _curEntityInfo.Propertys;
             gvMember.DataSource = lstItems;
+            BindProjects();
+        }
+
+        private void BindProjects() 
+        {
+            List<UIProject> lstPorject = _config.Projects;
+            gvProject.DataSource = lstPorject;
         }
 
         /// <summary>
@@ -104,7 +88,7 @@ namespace Buffalo.DBTools.UIHelper
                 tabPanel.Controls.Add(ctr, col, row);
                 tabPanel.Controls.SetChildIndex(ctr, i);
                 
-                    ctr.Dock = DockStyle.Left;
+                ctr.Dock = DockStyle.Left;
                 
             }
         }
@@ -131,6 +115,8 @@ namespace Buffalo.DBTools.UIHelper
                     break;
                 case ConfigItemType.Text:
                     editor = new TextBoxEditor();
+                    
+                    
                     break;
                 default:
                     editor = new TextBoxEditor();
@@ -139,7 +125,8 @@ namespace Buffalo.DBTools.UIHelper
             editor.BindPropertyName = item.Name;
             editor.LableText = item.Summary;
             editor.LableFont = new Font(editor.LableFont.FontFamily, 9, FontStyle.Bold);
-            
+            editor.LableWidth=80;
+            editor.Width = 230;
             editor.OnValueChange += new ValueChangeHandle(editor_OnValueChange);
             return editor;
         }
@@ -151,16 +138,27 @@ namespace Buffalo.DBTools.UIHelper
             {
                 return;
             }
-            if(_currentEntity==null)
+            if(_currentItem==null)
             {
                 return;
             }
-            PropertyInfoHandle handle = FastValueGetSet.GetPropertyInfoHandle(editor.BindPropertyName, _currentEntity.GetType());
-            if(handle==null || handle.HasSetHandle==null)
+            _currentItem.CheckItem[editor.BindPropertyName] = editor.Value;
+            
+        }
+
+        private string _modelPath;
+        /// <summary>
+        /// 模版根目录
+        /// </summary>
+        private string ModelPath 
+        {
+            get 
             {
-                return;
+                FileInfo file = new FileInfo(_curEntityInfo.DesignerInfo.CurrentProject.FileName);
+                string directory = file.DirectoryName;
+                directory = directory + "\\.bmodels\\";
+                return directory;
             }
-            handle.SetValue(_currentEntity,editor.Value);
         }
 
         /// <summary>
@@ -168,9 +166,7 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         private XmlDocument LoadConfig() 
         {
-            FileInfo file = new FileInfo(DesignerInfo.CurrentProject.FileName);
-            string directory = file.DirectoryName;
-            directory = directory+"\\.bmodels\\";
+            string directory = ModelPath;
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
@@ -198,8 +194,76 @@ namespace Buffalo.DBTools.UIHelper
         private void FrmUIGenerater_Load(object sender, EventArgs e)
         {
             gvMember.AutoGenerateColumns = false;
+            gvProject.AutoGenerateColumns = false;
             LoadInfo();
             CreateItems();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+        }
+
+        private UIModelItem _currentItem = null;
+
+        private void gvMember_CurrentCellChanged(object sender, EventArgs e)
+        {
+            if(gvMember.CurrentCell==null)
+            {
+
+                return;
+            }
+            _currentItem = gvMember.Rows[gvMember.CurrentCell.RowIndex].DataBoundItem as UIModelItem;
+            FillItemInfo();
+        }
+
+        /// <summary>
+        /// 填充信息
+        /// </summary>
+        private void FillItemInfo() 
+        {
+            StringBuilder sbInfo = new StringBuilder(200);
+            sbInfo.Append("   名称:");
+            sbInfo.Append(_currentItem.PropertyName);
+            sbInfo.Append("    ");
+            sbInfo.Append("   类型:");
+            sbInfo.Append(_currentItem.FieldType);
+            sbInfo.Append("   备注:");
+            sbInfo.Append(_currentItem.Summary);
+            labInfo.Text = sbInfo.ToString();
+        }
+
+        private void btnGen_Click(object sender, EventArgs e)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlNode root=doc.CreateElement("root");
+            doc.AppendChild(root);
+            List<UIModelItem> lst = gvMember.DataSource as List<UIModelItem>;
+            foreach (UIModelItem item in lst) 
+            {
+                if (!item.IsGenerate) 
+                {
+                    continue;
+                }
+                XmlNode inode = doc.CreateElement("modelitem");
+                root.AppendChild(inode);
+                item.WriteNode(inode);
+            }
+            string directory=ModelPath+"gencache\\";
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            string fileName=directory+"\\"+_curEntityInfo.FullName+".cache.xml";
+            doc.Save(fileName);
+        }
+
+        private void labInfo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
+
     }
 }

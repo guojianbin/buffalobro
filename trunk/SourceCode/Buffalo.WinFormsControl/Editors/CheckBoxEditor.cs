@@ -36,6 +36,19 @@ namespace Buffalo.WinFormsControl.Editors
             }
         }
 
+        public override int LableWidth
+        {
+            get
+            {
+                return pnlLable.Width;
+            }
+            set
+            {
+
+                pnlLable.Width = value;
+            }
+        }
+
         /// <summary>
         ///  «∑Ò—°÷–
         /// </summary>
@@ -79,7 +92,12 @@ namespace Buffalo.WinFormsControl.Editors
         
         private void chkValue_CheckedChanged(object sender, EventArgs e)
         {
-            DoValueChange(sender,chkValue.Checked);
+            
+        }
+
+        private void chkValue_CheckStateChanged(object sender, EventArgs e)
+        {
+            DoValueChange(chkValue.Checked);
         }
 
 

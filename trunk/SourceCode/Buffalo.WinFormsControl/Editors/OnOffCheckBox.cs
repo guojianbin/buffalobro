@@ -61,17 +61,17 @@ namespace Buffalo.WinFormsControl.Editors
         {
             get
             {
-                return _checkState == CheckState.Checked;
+                return CheckState == CheckState.Checked;
             }
             set
             {
                 if (value)
                 {
-                    _checkState = CheckState.Checked;
+                    CheckState = CheckState.Checked;
                 }
                 else
                 {
-                    _checkState = CheckState.Unchecked;
+                    CheckState = CheckState.Unchecked;
                 }
                 if (CheckedChanged != null)
                 {
@@ -132,6 +132,7 @@ namespace Buffalo.WinFormsControl.Editors
             }
         }
 
+        
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);

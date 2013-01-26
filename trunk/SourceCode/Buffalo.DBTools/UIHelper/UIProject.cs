@@ -19,16 +19,6 @@ namespace Buffalo.DBTools.UIHelper
             set { _name = value; }
         }
 
-        private string _namespace;
-        /// <summary>
-        /// ÃüÃû¿Õ¼ä
-        /// </summary>
-        public string Namespace
-        {
-            get { return _namespace; }
-            set { _namespace = value; }
-        }
-
         private List<UIProjectItem> _lstItems=new List<UIProjectItem>();
 
         /// <summary>

@@ -39,7 +39,7 @@
             // pnlLable
             // 
             this.pnlLable.Controls.Add(this.labSummary);
-            this.pnlLable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlLable.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlLable.Location = new System.Drawing.Point(0, 0);
             this.pnlLable.Name = "pnlLable";
             this.pnlLable.Size = new System.Drawing.Size(102, 25);
@@ -58,7 +58,7 @@
             // pnlValue
             // 
             this.pnlValue.Controls.Add(this.chkValue);
-            this.pnlValue.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlValue.Location = new System.Drawing.Point(102, 0);
             this.pnlValue.Name = "pnlValue";
             this.pnlValue.Size = new System.Drawing.Size(58, 25);
@@ -71,15 +71,17 @@
             this.chkValue.MaximumSize = new System.Drawing.Size(51, 23);
             this.chkValue.MinimumSize = new System.Drawing.Size(51, 23);
             this.chkValue.Name = "chkValue";
+            this.chkValue.OnOffType = Buffalo.WinFormsControl.Editors.OnOffButtonType.Quadrate;
             this.chkValue.Size = new System.Drawing.Size(51, 23);
             this.chkValue.TabIndex = 0;
+            this.chkValue.CheckStateChanged += new System.EventHandler(this.chkValue_CheckStateChanged);
             // 
             // CheckBoxEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.pnlLable);
             this.Controls.Add(this.pnlValue);
+            this.Controls.Add(this.pnlLable);
             this.MaximumSize = new System.Drawing.Size(500, 25);
             this.MinimumSize = new System.Drawing.Size(100, 25);
             this.Name = "CheckBoxEditor";

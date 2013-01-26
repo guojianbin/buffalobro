@@ -293,6 +293,7 @@
     <Compile Include="QueryConditions\SortType.cs" />
     <Compile Include="QueryConditions\UpdateCondition.cs" />
     <Compile Include="QueryConditions\AlterTableCondition.cs" />
+    <Compile Include="QueryConditions\ValueSetList.cs" />
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -11,6 +11,13 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
     {
         BQLTableHandle table;
         string paramName;
+        /// <summary>
+        /// ×Ö¶ÎÃû
+        /// </summary>
+        public string ParamName
+        {
+            get { return paramName; }
+        }
         public BQLOtherParamHandle(BQLTableHandle table, string paramName)
         {
             this.table = table;

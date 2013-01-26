@@ -169,6 +169,7 @@
     <Compile Include="Models.Designer.cs" />
     <Compile Include="ROMHelper\DBEntityInfo.cs" />
     <Compile Include="UIHelper\ConfigItem.cs" />
+    <Compile Include="UIHelper\EntityInfo.cs" />
     <Compile Include="UIHelper\FileGenType.cs" />
     <Compile Include="UIHelper\FrmUIGenerater.cs">
       <SubType>Form</SubType>
@@ -189,6 +190,7 @@
     <Compile Include="UIHelper\ModelLoader\UsingOutputer.cs" />
     <Compile Include="UIHelper\UIConfigItem.cs" />
     <Compile Include="UIHelper\UIModelItem.cs" />
+    <Compile Include="UIHelper\UIProject.cs" />
     <Compile Include="UIHelper\UIProjectItem.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -297,6 +299,10 @@
     <ProjectReference Include="..\Buffalo.Win32Kernel\Buffalo2008.Win32Kernel.csproj">
       <Project>{48492BAD-6312-4A80-A660-C0DA04957227}</Project>
       <Name>Buffalo2008.Win32Kernel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buffalo.WinFormsControl\Buffalo2008.WinFormsControl.csproj">
+      <Project>{E7808223-2E0F-44C3-A39D-26CF22A9D946}</Project>
+      <Name>Buffalo2008.WinFormsControl</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />

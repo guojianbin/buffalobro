@@ -45,6 +45,18 @@ namespace Buffalo.WinFormsControl.Editors
 	        }
         }
 
+        public override int LableWidth
+        {
+            get
+            {
+                return pnlLable.Width;
+            }
+            set
+            {
+                pnlLable.Width = value;
+            }
+        }
+
         /// <summary>
         /// ֵ
         /// </summary>
@@ -102,7 +114,7 @@ namespace Buffalo.WinFormsControl.Editors
 
         private void cmbValue_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DoValueChange(sender, cmbValue.SelectedValue);
+            DoValueChange(cmbValue.SelectedValue);
         }
 
         /// <summary>

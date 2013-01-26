@@ -70,6 +70,11 @@ namespace Buffalo.DBTools.UIHelper
         /// 文本框
         /// </summary>
         [Description("文本框")]
-        Text
+        Text,
+        /// <summary>
+        /// 多行文本框
+        /// </summary>
+        [Description("多行文本框")]
+        MText
     }
 }

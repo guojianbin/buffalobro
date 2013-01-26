@@ -200,6 +200,7 @@
     </Compile>
     <Compile Include="ROMHelper\DBEntityInfo.cs" />
     <Compile Include="UIHelper\ConfigItem.cs" />
+    <Compile Include="UIHelper\EntityInfo.cs" />
     <Compile Include="UIHelper\FileGenType.cs" />
     <Compile Include="UIHelper\FrmUIGenerater.cs">
       <SubType>Form</SubType>

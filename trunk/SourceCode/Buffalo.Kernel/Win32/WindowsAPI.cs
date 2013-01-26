@@ -457,6 +457,9 @@ namespace Buffalo.Kernel.Win32
           EnumWindowsCallBack enumCallback,
           int lParam
         );
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        internal static extern bool IsWindowVisible(IntPtr hWnd);
+
         [DllImport("user32.dll", EntryPoint = "EnumChildWindows")]
         public static extern int EnumChildWindows(
             IntPtr hWndParent,
