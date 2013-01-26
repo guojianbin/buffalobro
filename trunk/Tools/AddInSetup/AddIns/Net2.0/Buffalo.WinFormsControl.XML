@@ -29,6 +29,16 @@
             绑定的属性名
             </summary>
         </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.EditorBase.LableText">
+            <summary>
+            标签内容
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.EditorBase.LableWidth">
+            <summary>
+            标签宽度
+            </summary>
+        </member>
         <member name="P:Buffalo.WinFormsControl.Editors.EditorBase.Value">
             <summary>
             值
@@ -62,19 +72,9 @@
             值
             </summary>
         </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.ComboBoxEditor.LableWidth">
-            <summary>
-            标签宽度
-            </summary>
-        </member>
         <member name="P:Buffalo.WinFormsControl.Editors.ComboBoxEditor.LableFont">
             <summary>
             标签字体
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.ComboBoxEditor.LableText">
-            <summary>
-            标签内容
             </summary>
         </member>
         <member name="T:Buffalo.WinFormsControl.Editors.CheckBoxEditor">
@@ -99,6 +99,11 @@
             使用代码编辑器修改此方法的内容。
             </summary>
         </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.CheckBoxEditor.OnOffType">
+            <summary>
+            按钮样式类型
+            </summary>
+        </member>
         <member name="P:Buffalo.WinFormsControl.Editors.CheckBoxEditor.Checked">
             <summary>
             是否选中
@@ -107,16 +112,6 @@
         <member name="P:Buffalo.WinFormsControl.Editors.CheckBoxEditor.Value">
             <summary>
             值
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.CheckBoxEditor.LableFont">
-            <summary>
-            标签字体
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.CheckBoxEditor.LableText">
-            <summary>
-            标签内容
             </summary>
         </member>
         <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.HideComboBox">
@@ -318,19 +313,9 @@
             使用代码编辑器修改此方法的内容。
             </summary>
         </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.TextBoxEditor.LableWidth">
+        <member name="P:Buffalo.WinFormsControl.Editors.TextBoxEditor.Multiline">
             <summary>
-            标签宽度
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.TextBoxEditor.LableFont">
-            <summary>
-            标签字体
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.TextBoxEditor.LableText">
-            <summary>
-            标签内容
+            是否支持多行
             </summary>
         </member>
         <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.ShowTotle">
@@ -346,6 +331,68 @@
         <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.ValueForamt">
             <summary>
             值的格式化
+            </summary>
+        </member>
+        <member name="F:Buffalo.WinFormsControl.Editors.OnOffCheckBox.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.OnOffCheckBox.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.OnOffCheckBox.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.OnOffCheckBox.RefreashDisplay">
+            <summary>
+            刷新显示
+            </summary>
+        </member>
+        <member name="E:Buffalo.WinFormsControl.Editors.OnOffCheckBox.CheckedChanged">
+            <summary>
+            当 System.Windows.Forms.CheckBox.Checked 属性的值更改时发生。
+            </summary>
+        </member>
+        <member name="E:Buffalo.WinFormsControl.Editors.OnOffCheckBox.CheckStateChanged">
+            <summary>
+            当 System.Windows.Forms.CheckBox.CheckState 属性的值更改时发生。
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.OnOffCheckBox.CheckState">
+            <summary>
+            获取或设置 System.Windows.Forms.CheckBox 的状态。
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.OnOffCheckBox.Checked">
+            <summary>
+             获取或设置一个值，该值指示 System.Windows.Forms.CheckBox 是否处于选中状态。
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.OnOffCheckBox.OnOffType">
+            <summary>
+            按钮样式类型
+            </summary>
+        </member>
+        <member name="T:Buffalo.WinFormsControl.Editors.OnOffButtonType">
+            <summary>
+            按钮样式
+            </summary>
+        </member>
+        <member name="F:Buffalo.WinFormsControl.Editors.OnOffButtonType.Quadrate">
+            <summary>
+            方形
+            </summary>
+        </member>
+        <member name="F:Buffalo.WinFormsControl.Editors.OnOffButtonType.Oblongrectangle">
+            <summary>
+            椭圆形
             </summary>
         </member>
         <member name="T:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell">

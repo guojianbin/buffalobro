@@ -1174,6 +1174,19 @@
             是否已经读完
             </summary>
         </member>
+        <member name="T:Buffalo.Kernel.SourceCodeCompiler">
+            <summary>
+            源码编译器
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.SourceCodeCompiler.DoCompiler(System.String,System.String,System.Collections.Generic.List{System.String},System.Text.StringBuilder)">
+            <summary>
+            编译
+            </summary>
+            <param name="code">代码</param>
+            <param name="errorMessage">错误信息</param>
+            <returns></returns>
+        </member>
         <member name="T:Buffalo.Kernel.HttpServerModel.RequestProcessingHandle">
             <summary>
             请求处理委托
@@ -3254,19 +3267,6 @@
             </summary>
             <param name="toEncrypt">要加密的数据</param>
             <param name="pwd">密码(32字节数组)</param>
-            <returns></returns>
-        </member>
-        <member name="T:Buffalo.Kernel.SourceCodeCompiler">
-            <summary>
-            源码编译器
-            </summary>
-        </member>
-        <member name="M:Buffalo.Kernel.SourceCodeCompiler.DoCompiler(System.String,System.String,System.Collections.Generic.List{System.String},System.Text.StringBuilder)">
-            <summary>
-            编译
-            </summary>
-            <param name="code">代码</param>
-            <param name="errorMessage">错误信息</param>
             <returns></returns>
         </member>
     </members>

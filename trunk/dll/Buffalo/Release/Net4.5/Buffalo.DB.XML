@@ -142,6 +142,18 @@
             <param name="value1"></param>
             <param name="value2"></param>
         </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem.GetPutKeyInfo">
+            <summary>
+            获取信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem.GetKeyInfo">
+            <summary>
+            获取默认的Key信息
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem.ValueDbType">
             <summary>
             对应的数据库类型
@@ -636,6 +648,24 @@
             <param name="scorpList">范围更新的列表</param>
             <returns>大于0:更新完毕,小于0:更新失败</returns>
         </member>
+        <member name="M:Buffalo.DB.CommBase.BusinessBases.BusinessModelBase`1.Update(`0,Buffalo.DB.QueryConditions.ScopeList,Buffalo.DB.QueryConditions.ValueSetList,System.Boolean)">
+            <summary>
+            更新
+            </summary>
+            <param name="entity">对象</param>
+            <param name="scorpList">范围更新的列表</param>
+            <param name="lstValue">set实体</param>
+            <param name="optimisticConcurrency">并发控制</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.CommBase.BusinessBases.BusinessModelBase`1.Update(`0,Buffalo.DB.QueryConditions.ScopeList,Buffalo.DB.QueryConditions.ValueSetList)">
+            <summary>
+            更新
+            </summary>
+            <param name="entity">对象</param>
+            <param name="scorpList">范围更新的列表</param>
+            <returns>大于0:更新完毕,小于0:更新失败</returns>
+        </member>
         <member name="M:Buffalo.DB.CommBase.BusinessBases.BusinessModelBase`1.Update(System.Collections.Generic.List{`0})">
             <summary>
             批量更新
@@ -665,6 +695,7 @@
             <param name="entity">对象</param>
             <returns>大于0:插入完毕,小于0:插入失败</returns>
         </member>
+        <!-- 对于成员“M:Buffalo.DB.CommBase.BusinessBases.BusinessModelBase`1.Insert(`0,Buffalo.DB.QueryConditions.ValueSetList,System.Boolean)”忽略有格式错误的 XML 注释 -->
         <member name="M:Buffalo.DB.CommBase.BusinessBases.BusinessModelBase`1.Insert(System.Collections.Generic.List{`0},System.Boolean)">
             <summary>
             插入一组数据
@@ -972,6 +1003,13 @@
             <param name="fillPrimaryKey">是否填充实体</param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.CommBase.BusinessBases.ThinModelBase.Insert(Buffalo.DB.QueryConditions.ValueSetList,System.Boolean)">
+            <summary>
+            保存实体并填充ID
+            </summary>
+            <param name="fillPrimaryKey">是否填充实体</param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DB.CommBase.BusinessBases.ThinModelBase.Update(System.Boolean)">
             <summary>
             更新实体
@@ -1169,12 +1207,13 @@
             </summary>
             <typeparam name="T"></typeparam>
         </member>
-        <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessSetBase.Update(Buffalo.DB.CommBase.EntityBase,Buffalo.DB.QueryConditions.ScopeList,System.Boolean)">
+        <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessSetBase.Update(Buffalo.DB.CommBase.EntityBase,Buffalo.DB.QueryConditions.ScopeList,Buffalo.DB.QueryConditions.ValueSetList,System.Boolean)">
             <summary>
             修改记录
             </summary>
             <param name="obj">修改的对象</param>
             <param name="scopeList">条件列表</param>
+            <param name="setList">Set值列表</param>
             <param name="optimisticConcurrency">是否进行并发控制</param>
             <returns></returns>
         </member>
@@ -1195,7 +1234,7 @@
             <param name="val">当前值</param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessSetBase.DoInsert(Buffalo.DB.CommBase.EntityBase,System.Boolean)">
+        <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessSetBase.DoInsert(Buffalo.DB.CommBase.EntityBase,Buffalo.DB.QueryConditions.ValueSetList,System.Boolean)">
             <summary>
             进行插入操作
             </summary>
@@ -1391,7 +1430,23 @@
             <param name="optimisticConcurrency">是否进行并发控制</param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessBase`1.Update(`0,Buffalo.DB.QueryConditions.ScopeList,Buffalo.DB.QueryConditions.ValueSetList,System.Boolean)">
+            <summary>
+            修改记录
+            </summary>
+            <param name="obj">修改的对象</param>
+            <param name="scopeList">条件列表</param>
+            <param name="optimisticConcurrency">是否进行并发控制</param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessBase`1.Insert(`0,System.Boolean)">
+            <summary>
+            插入一个记录
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessBase`1.Insert(`0,Buffalo.DB.QueryConditions.ValueSetList,System.Boolean)">
             <summary>
             插入一个记录
             </summary>
@@ -2657,6 +2712,20 @@
             <param name="propertyName"></param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle.FindParamHandle(System.String)">
+            <summary>
+            查找实体属性
+            </summary>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle.IsSysBaseType(System.Type)">
+            <summary>
+            判断是否系统类型
+            </summary>
+            <param name="objType"></param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle.GetParamInfoHandle">
             <summary>
             获取对应的实体属性
@@ -2695,6 +2764,11 @@
         <member name="P:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLOrderByHandle.Param">
             <summary>
             项的属性
+            </summary>
+        </member>
+        <member name="P:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLOtherParamHandle.ParamName">
+            <summary>
+            字段名
             </summary>
         </member>
         <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLOtherTableHandle.GetParamInfoHandle">
@@ -4070,6 +4144,11 @@
             表映射管理器
             </summary>
         </member>
+        <member name="P:Buffalo.DB.BQLCommon.BQLConditionCommon.KeyWordInfomation.OutPutModle">
+            <summary>
+            输出信息模式
+            </summary>
+        </member>
         <member name="T:Buffalo.DB.DataBaseAdapter.ConfigInfo">
             <summary>
             配置信息
@@ -4127,6 +4206,12 @@
             获取数据库信息
             </summary>
             <param name="dbName">数据库名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.DataAccessLoader.GetFristDBInfo">
+            <summary>
+            获取随机一个数据库信息
+            </summary>
             <returns></returns>
         </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.DataAccessLoader.AppendDBInfo(Buffalo.DB.DataBaseAdapter.DBInfo)">
@@ -9255,6 +9340,17 @@
             <param name="targetTableType">目标对象类型</param>
             <param name="isParent">是否主表属性</param>
         </member>
+        <member name="M:Buffalo.DB.PropertyAttributes.TableRelationAttribute.#ctor(System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+             关联映射信息
+            </summary>
+            <param name="fieldName">对应字段</param>
+            <param name="propertyName">属性</param>
+            <param name="sourcePropertyName">源对象属性</param>
+            <param name="targetPropertyName">目标属性</param>
+            <param name="isParent">是否主表属性</param>
+            <param name="?"></param>
+        </member>
         <member name="M:Buffalo.DB.PropertyAttributes.TableRelationAttribute.CreateName">
             <summary>
             创建外键名称
@@ -10465,6 +10561,32 @@
             <summary>
             字段
             </summary>
+        </member>
+        <member name="T:Buffalo.DB.QueryConditions.ValueSetList">
+            <summary>
+            值设置集合
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.QueryConditions.ValueSetList.Add(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLParamHandle,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem)">
+            <summary>
+            添加一个Update设置
+            </summary>
+            <param name="parameter">字段</param>
+            <param name="valueItem">值</param>
+        </member>
+        <member name="M:Buffalo.DB.QueryConditions.ValueSetList.GetKey(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLParamHandle)">
+            <summary>
+            获取属性名
+            </summary>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.QueryConditions.ValueSetList.Add(System.String,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem)">
+            <summary>
+            添加一个Update设置
+            </summary>
+            <param name="propertyName">属性</param>
+            <param name="valueItem">值</param>
         </member>
         <member name="T:Buffalo.DB.Resource">
             <summary>
