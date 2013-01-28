@@ -38,8 +38,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tabPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.labInfo = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.gvMember = new System.Windows.Forms.DataGridView();
             this.ColCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -52,7 +50,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gvProject)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.panel5.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvMember)).BeginInit();
             this.panel6.SuspendLayout();
@@ -140,7 +137,6 @@
             // panel4
             // 
             this.panel4.Controls.Add(this.tabPanel);
-            this.panel4.Controls.Add(this.panel5);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(184, 0);
             this.panel4.Name = "panel4";
@@ -153,35 +149,13 @@
             this.tabPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tabPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tabPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabPanel.Location = new System.Drawing.Point(0, 23);
+            this.tabPanel.Location = new System.Drawing.Point(0, 0);
             this.tabPanel.Name = "tabPanel";
             this.tabPanel.RowCount = 2;
             this.tabPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.338028F));
             this.tabPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.66197F));
-            this.tabPanel.Size = new System.Drawing.Size(513, 385);
+            this.tabPanel.Size = new System.Drawing.Size(513, 408);
             this.tabPanel.TabIndex = 0;
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.labInfo);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(0, 0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(513, 23);
-            this.panel5.TabIndex = 1;
-            // 
-            // labInfo
-            // 
-            this.labInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labInfo.Font = new System.Drawing.Font("宋体", 12F);
-            this.labInfo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labInfo.Location = new System.Drawing.Point(0, 0);
-            this.labInfo.Name = "labInfo";
-            this.labInfo.Size = new System.Drawing.Size(513, 23);
-            this.labInfo.TabIndex = 0;
-            this.labInfo.Text = "  ";
-            this.labInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labInfo.Click += new System.EventHandler(this.labInfo_Click);
             // 
             // panel3
             // 
@@ -277,7 +251,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gvProject)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gvMember)).EndInit();
             this.panel6.ResumeLayout(false);
@@ -302,8 +275,6 @@
         private System.Windows.Forms.Button btnGen;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewButtonColumn colRefreash;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label labInfo;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.FlowLayoutPanel pnlClassConfig;
 

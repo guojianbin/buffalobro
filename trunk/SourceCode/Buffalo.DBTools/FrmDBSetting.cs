@@ -14,6 +14,7 @@ using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 using Buffalo.Kernel;
 using Buffalo.DBTools.DocSummary;
 using Buffalo.DB.CommBase;
+using Buffalo.Win32Kernel;
 
 namespace Buffalo.DBTools
 {

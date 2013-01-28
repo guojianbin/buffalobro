@@ -43,7 +43,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         ///<returns></returns>
         public int Update(T entity)
         {
-            return base.Update(entity, null, true);
+            return Update(entity, null,null, true);
         }
         ///<summary>
         ///修改记录
@@ -53,8 +53,22 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         ///<returns></returns>
         public int Update(T entity,ScopeList scopeList)
         {
-            return base.Update(entity, scopeList,false);
+            return Update(entity, scopeList,null,false);
         }
+
+        /// <summary>
+        /// 修改记录
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <param name="scopeList">范围更新的集合</param>
+        /// <param name="valueList">值集合</param>
+        /// <param name="optimisticConcurrency">是否并发</param>
+        /// <returns></returns>
+        public int Update(T entity, ScopeList scopeList, ValueSetList valueList, bool optimisticConcurrency) 
+        {
+            return base.Update(entity, scopeList, valueList, optimisticConcurrency);
+        }
+
         /// <summary>
         /// 插入记录
         /// </summary>

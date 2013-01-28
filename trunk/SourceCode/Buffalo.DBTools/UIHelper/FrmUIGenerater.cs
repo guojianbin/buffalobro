@@ -46,7 +46,9 @@ namespace Buffalo.DBTools.UIHelper
             get { return _config; }
         }
 
-
+        /// <summary>
+        /// 绑定属性信息
+        /// </summary>
         private void BindItems() 
         {
             if (_curEntityInfo==null)
@@ -62,11 +64,30 @@ namespace Buffalo.DBTools.UIHelper
             gvMember.DataSource = lstItems;
             BindProjects();
         }
-
+        /// <summary>
+        /// 绑定项目信息
+        /// </summary>
         private void BindProjects() 
         {
             List<UIProject> lstPorject = _config.Projects;
             gvProject.DataSource = lstPorject;
+        }
+
+        /// <summary>
+        /// 创建类级别信息
+        /// </summary>
+        private void CreateClassItem() 
+        {
+            List<ConfigItem> lstItem = _config.ClassItems;
+            pnlClassConfig.Controls.Clear();
+            for (int i = 0; i < lstItem.Count; i++)
+            {
+                Control ctr = NewItem(lstItem[i]);
+
+                pnlClassConfig.Controls.Add(ctr);
+                tabPanel.Controls.SetChildIndex(ctr, i);
+
+            }
         }
 
         /// <summary>
@@ -100,28 +121,16 @@ namespace Buffalo.DBTools.UIHelper
             tabPanel.RowStyles.Add(new ColumnStyle(SizeType.AutoSize));
             tabPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         }
+
+        /// <summary>
+        /// 创建新的设置项
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         private Control NewItem(ConfigItem item) 
         {
-            EditorBase editor = null;
-            switch (item.Type) 
-            {
-                case ConfigItemType.Check:
-                    CheckBoxEditor cbe = new CheckBoxEditor();
-                    editor = cbe;
-                    cbe.OnOffType = OnOffButtonType.Oblongrectangle;
-                    break;
-                case ConfigItemType.Combo:
-                    editor = new ComboBoxEditor();
-                    break;
-                case ConfigItemType.Text:
-                    editor = new TextBoxEditor();
-                    
-                    
-                    break;
-                default:
-                    editor = new TextBoxEditor();
-                    break;
-            }
+            EditorBase editor = item.GetEditor();
+            
             editor.BindPropertyName = item.Name;
             editor.LableText = item.Summary;
             editor.LableFont = new Font(editor.LableFont.FontFamily, 9, FontStyle.Bold);
@@ -197,6 +206,8 @@ namespace Buffalo.DBTools.UIHelper
             gvProject.AutoGenerateColumns = false;
             LoadInfo();
             CreateItems();
+            CreateClassItem();
+            this.Text = "UI界面生成-" + _curEntityInfo.ClassName;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -214,23 +225,6 @@ namespace Buffalo.DBTools.UIHelper
                 return;
             }
             _currentItem = gvMember.Rows[gvMember.CurrentCell.RowIndex].DataBoundItem as UIModelItem;
-            FillItemInfo();
-        }
-
-        /// <summary>
-        /// 填充信息
-        /// </summary>
-        private void FillItemInfo() 
-        {
-            StringBuilder sbInfo = new StringBuilder(200);
-            sbInfo.Append("   名称:");
-            sbInfo.Append(_currentItem.PropertyName);
-            sbInfo.Append("    ");
-            sbInfo.Append("   类型:");
-            sbInfo.Append(_currentItem.FieldType);
-            sbInfo.Append("   备注:");
-            sbInfo.Append(_currentItem.Summary);
-            labInfo.Text = sbInfo.ToString();
         }
 
         private void btnGen_Click(object sender, EventArgs e)

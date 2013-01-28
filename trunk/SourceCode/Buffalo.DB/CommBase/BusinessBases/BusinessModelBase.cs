@@ -91,17 +91,10 @@ namespace Buffalo.DB.CommBase.BusinessBases
         {
 
 
-            DataAccessModel<T> entityDao = new DataAccessModel<T>();
-
-            object ret = Exists(entity);
-            if (ret != null)
-            {
-                return ret;
-            }
-            _affectedRows = entityDao.Update(entity);
+           
 
 
-            return ret;
+            return Update(entity,new ScopeList(),null,false);
 
         }
 
@@ -113,18 +106,10 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns>大于0:更新完毕,小于0:更新失败</returns>
         public virtual object Update(T entity, ScopeList scorpList)
         {
-            DataAccessModel<T> entityDao = new DataAccessModel<T>();
-
-            object ret = Exists(entity);
-            if (ret != null)
-            {
-                return ret;
-            }
-
-            _affectedRows = entityDao.Update(entity, scorpList);
 
 
-            return ret;
+
+            return Update(entity,scorpList,null,false);
 
         }
         /// <summary>
@@ -159,18 +144,10 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns>大于0:更新完毕,小于0:更新失败</returns>
         public virtual object Update(T entity, ScopeList scorpList, ValueSetList lstValue)
         {
-            DataAccessModel<T> entityDao = new DataAccessModel<T>();
-
-            object ret = Exists(entity);
-            if (ret != null)
-            {
-                return ret;
-            }
-
-            _affectedRows = entityDao.Update(entity, scorpList, lstValue, false);
 
 
-            return ret;
+
+            return Update(entity, scorpList, lstValue, false);
 
         }
         /// <summary>
@@ -243,7 +220,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         public virtual object Insert(T entity)
         {
 
-            return Insert(entity,false);
+            return Insert(entity, null, false);
         }
 
         /// <summary>
@@ -254,17 +231,9 @@ namespace Buffalo.DB.CommBase.BusinessBases
         public virtual object Insert(T entity,bool fillIdentity)
         {
 
-            DataAccessModel<T> entityDao = new DataAccessModel<T>();
 
-            object ret = Exists(entity);
-            if (ret != null)
-            {
-                return ret;
-            }
 
-            _affectedRows = entityDao.Insert(entity, fillIdentity);
-
-            return ret;
+            return Insert(entity,null,fillIdentity);
         }
         /// 插入一条数据
         /// </summary>

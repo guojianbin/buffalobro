@@ -5,6 +5,7 @@ using System.Data;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using Buffalo.Kernel.Defaults;
 using Buffalo.DB.PropertyAttributes;
+using Buffalo.Win32Kernel;
 
 namespace Buffalo.DBTools.HelperKernel
 {

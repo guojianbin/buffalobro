@@ -113,7 +113,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public int UpdateByScope(T obj, ScopeList lstScope)
         {
-            return GetBaseContext().Update(obj, lstScope, false);
+            return GetBaseContext().Update(obj, lstScope,null, false);
         }
 
 

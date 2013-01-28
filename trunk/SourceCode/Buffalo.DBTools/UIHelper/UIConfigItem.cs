@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml;
 using Buffalo.DBTools.HelperKernel;
 using System.IO;
+using Buffalo.Win32Kernel;
 
 namespace Buffalo.DBTools.UIHelper
 {

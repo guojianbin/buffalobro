@@ -482,17 +482,6 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <param name="scopeList">条件列表</param>
         /// <param name="optimisticConcurrency">是否进行并发控制</param>
         /// <returns></returns>
-        public int Update(T obj, ScopeList scopeList, bool optimisticConcurrency) 
-        {
-            return base.Update(obj, scopeList,null, optimisticConcurrency);
-        }
-        /// <summary>
-        /// 修改记录
-        /// </summary>
-        /// <param name="obj">修改的对象</param>
-        /// <param name="scopeList">条件列表</param>
-        /// <param name="optimisticConcurrency">是否进行并发控制</param>
-        /// <returns></returns>
         public int Update(T obj, ScopeList scopeList,ValueSetList lstValue, bool optimisticConcurrency)
         {
             return base.Update(obj, scopeList,lstValue, optimisticConcurrency);

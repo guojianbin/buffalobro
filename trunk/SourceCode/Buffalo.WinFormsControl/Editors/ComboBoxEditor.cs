@@ -6,7 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using Buffalo.Win32Kernel;
-
+using Buffalo.Kernel;
 namespace Buffalo.WinFormsControl.Editors
 {
     /// <summary>

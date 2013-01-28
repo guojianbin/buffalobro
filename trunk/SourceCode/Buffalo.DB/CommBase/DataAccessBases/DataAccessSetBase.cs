@@ -108,7 +108,6 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                                 BQLValueItem bvalue = null;
                                 if(setList.TryGetValue(info.PropertyName,out bvalue))
                                 {
-                                    
                                     continue;
                                 }
                             }

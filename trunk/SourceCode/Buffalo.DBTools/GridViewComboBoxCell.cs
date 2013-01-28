@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Collections;
 using System.Drawing;
 using Buffalo.DBTools.HelperKernel;
+using Buffalo.Win32Kernel;
 
 namespace Buffalo.DBTools
 {

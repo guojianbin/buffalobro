@@ -5,6 +5,7 @@ using System.IO;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using Buffalo.DBTools.ROMHelper;
 using EnvDTE;
+using Buffalo.Win32Kernel;
 
 namespace Buffalo.DBTools.HelperKernel
 {

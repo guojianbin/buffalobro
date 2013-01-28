@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using Buffalo.Kernel;
 using EnvDTE;
+using Buffalo.Win32Kernel;
 
 namespace Buffalo.DBTools.HelperKernel
 {
