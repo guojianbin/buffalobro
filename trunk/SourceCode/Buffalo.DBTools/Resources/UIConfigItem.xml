@@ -10,6 +10,7 @@
     </configItems>
   <classItems>
     <item type="text" name="Namespace" summary="命名空间"></item>
+    <item type="mtext" name="Using" summary="引用"></item>
   </classItems>
   <models>
     <project name="Web界面">
