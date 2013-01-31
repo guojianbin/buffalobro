@@ -31,7 +31,12 @@ namespace Buffalo.WinFormsControl.Editors
             {
                 txtValue.Width = width;
             }
+            if (txtValue.Multiline)
+            {
+                txtValue.Height = this.Height - 30;
+            }
         }
+        
         public override string  Text
         {
 	        get 
@@ -66,10 +71,7 @@ namespace Buffalo.WinFormsControl.Editors
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            if (txtValue.Multiline) 
-            {
-                txtValue.Height = this.Height - 4;
-            }
+
         }
 
         /// <summary>
@@ -84,6 +86,22 @@ namespace Buffalo.WinFormsControl.Editors
             set 
             {
                 txtValue.Multiline = value;
+                if (txtValue.Multiline) 
+                {
+                    txtValue.ScrollBars = ScrollBars.Vertical;
+                }
+            }
+        }
+
+        public override object Value
+        {
+            get
+            {
+                return txtValue.Text;
+            }
+            set
+            {
+                txtValue.Text = value as string;
             }
         }
 

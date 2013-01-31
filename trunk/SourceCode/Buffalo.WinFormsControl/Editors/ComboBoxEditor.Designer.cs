@@ -67,6 +67,7 @@
             // 
             // cmbValue
             // 
+            this.cmbValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbValue.FormattingEnabled = true;
             this.cmbValue.Location = new System.Drawing.Point(3, 2);
             this.cmbValue.Name = "cmbValue";

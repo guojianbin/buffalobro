@@ -74,7 +74,20 @@ namespace Buffalo.WinFormsControl.Editors
             }
             set
             {
-
+                string str = value as string;
+                if (str!=null) 
+                {
+                    if (str == "1") 
+                    {
+                        Checked = true;
+                        return;
+                    }
+                    if (str == "0")
+                    {
+                        Checked = false;
+                        return;
+                    }
+                }
                 Checked = Convert.ToBoolean(value);
 
             }

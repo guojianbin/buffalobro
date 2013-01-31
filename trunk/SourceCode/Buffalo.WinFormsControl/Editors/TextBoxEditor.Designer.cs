@@ -47,7 +47,7 @@
             // 
             // labSummary
             // 
-            this.labSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labSummary.Dock = System.Windows.Forms.DockStyle.Top;
             this.labSummary.Location = new System.Drawing.Point(0, 0);
             this.labSummary.Name = "labSummary";
             this.labSummary.Size = new System.Drawing.Size(50, 25);
@@ -79,7 +79,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pnlValue);
             this.Controls.Add(this.pnlLable);
-            this.MaximumSize = new System.Drawing.Size(500, 25);
+            this.MaximumSize = new System.Drawing.Size(500, 500);
             this.MinimumSize = new System.Drawing.Size(200, 25);
             this.Name = "TextBoxEditor";
             this.Size = new System.Drawing.Size(200, 25);

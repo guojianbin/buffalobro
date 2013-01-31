@@ -46,6 +46,9 @@ namespace Buffalo.DBTools.UIHelper
             get { return _config; }
         }
 
+        private Dictionary<string, EditorBase> _classUIConfig = null;
+        private Dictionary<string, EditorBase> _propertyUIConfig = null;
+        #region 绑定信息
         /// <summary>
         /// 绑定属性信息
         /// </summary>
@@ -78,6 +81,7 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         private void CreateClassItem() 
         {
+            _classUIConfig = new Dictionary<string, EditorBase>();
             List<ConfigItem> lstItem = _config.ClassItems;
             pnlClassConfig.Controls.Clear();
             for (int i = 0; i < lstItem.Count; i++)
@@ -85,8 +89,9 @@ namespace Buffalo.DBTools.UIHelper
                 EditorBase editor = NewItem(lstItem[i]);
 
                 pnlClassConfig.Controls.Add(editor);
-                tabPanel.Controls.SetChildIndex(editor, i);
+                //tabPanel.Controls.SetChildIndex(editor, i);
                 editor.OnValueChange += new ValueChangeHandle(editorClass_OnValueChange);
+                _classUIConfig[editor.BindPropertyName] = editor;
             }
         }
         void editorClass_OnValueChange(object sender, object oldValue, object newValue)
@@ -105,9 +110,10 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         private void CreateItems() 
         {
+            _propertyUIConfig = new Dictionary<string, EditorBase>();
             List<ConfigItem> lstItem = _config.ConfigItems;
             tabPanel.ColumnCount = 2;
-            tabPanel.RowCount = (int)Math.Ceiling((double)lstItem.Count / (double)2);
+            tabPanel.RowCount = (int)Math.Ceiling((double)lstItem.Count / (double)2)+1;
             tabPanel.RowStyles.Clear();
             tabPanel.ColumnStyles.Clear();
             AddCellStyle();
@@ -120,7 +126,7 @@ namespace Buffalo.DBTools.UIHelper
                 tabPanel.Controls.SetChildIndex(editor, i);
                 editor.OnValueChange += new ValueChangeHandle(editor_OnValueChange);
                 editor.Dock = DockStyle.Left;
-                
+                _propertyUIConfig[editor.BindPropertyName] = editor;
             }
         }
         /// <summary>
@@ -145,7 +151,7 @@ namespace Buffalo.DBTools.UIHelper
             editor.LableText = item.Summary;
             editor.LableFont = new Font(editor.LableFont.FontFamily, 9, FontStyle.Bold);
             editor.LableWidth=80;
-            editor.Width = 230;
+            editor.Width = 250;
             
             return editor;
         }
@@ -162,45 +168,11 @@ namespace Buffalo.DBTools.UIHelper
                 return;
             }
             _currentItem.CheckItem[editor.BindPropertyName] = editor.Value;
-            
-        }
 
-        private string _modelPath;
-        /// <summary>
-        /// 模版根目录
-        /// </summary>
-        private string ModelPath 
-        {
-            get 
-            {
-                FileInfo file = new FileInfo(_curEntityInfo.DesignerInfo.CurrentProject.FileName);
-                string directory = file.DirectoryName;
-                directory = directory + "\\.bmodels\\";
-                return directory;
-            }
         }
+        #endregion
 
-        /// <summary>
-        /// 检测文件
-        /// </summary>
-        private XmlDocument LoadConfig() 
-        {
-            string directory = ModelPath;
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
-            string xml = "UIConfigItem.xml";
-            string fileName = directory + xml;
-            if (!File.Exists(fileName)) 
-            {
-                File.WriteAllText(fileName, Models.UIConfigItem);
-            }
-            XmlDocument xmldoc = new XmlDocument();
-            xmldoc.Load(fileName);
 
-            return xmldoc;
-        }
 
         /// <summary>
         /// 加载信息
@@ -217,9 +189,11 @@ namespace Buffalo.DBTools.UIHelper
             LoadInfo();
             CreateItems();
             CreateClassItem();
+            LoadClassItemCache();
+            BindUIModleInfo(_classUIConfig, _classInfo);
             this.Text = "UI界面生成-" + _curEntityInfo.ClassName;
 
-            _classInfo = new UIModelItem();
+           
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -243,6 +217,43 @@ namespace Buffalo.DBTools.UIHelper
         {
             SaveItemInfos();
             SaveClassItemInfo();
+        }
+        #region 保存和加载
+        private string _modelPath;
+        /// <summary>
+        /// 模版根目录
+        /// </summary>
+        private string ModelPath
+        {
+            get
+            {
+                FileInfo file = new FileInfo(_curEntityInfo.DesignerInfo.CurrentProject.FileName);
+                string directory = file.DirectoryName;
+                directory = directory + "\\.bmodels\\";
+                return directory;
+            }
+        }
+
+        /// <summary>
+        /// 检测文件
+        /// </summary>
+        private XmlDocument LoadConfig()
+        {
+            string directory = ModelPath;
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            string xml = "UIConfigItem.xml";
+            string fileName = directory + xml;
+            if (!File.Exists(fileName))
+            {
+                File.WriteAllText(fileName, Models.UIConfigItem);
+            }
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(fileName);
+
+            return xmldoc;
         }
 
         /// <summary>
@@ -273,6 +284,9 @@ namespace Buffalo.DBTools.UIHelper
             doc.Save(fileName);
         }
 
+        /// <summary>
+        /// 保存类信息
+        /// </summary>
         private void SaveClassItemInfo() 
         {
             XmlDocument doc = new XmlDocument();
@@ -310,6 +324,93 @@ namespace Buffalo.DBTools.UIHelper
             doc.Save(fileName);
         }
 
+        /// <summary>
+        /// 加载属性项信息
+        /// </summary>
+        private void LoadClassItemCache() 
+        {
+            _classInfo = new UIModelItem();
+            string fileName =ModelPath+ "\\classinfo.cache.xml";
+            if (!File.Exists(fileName)) 
+            {
+                return;
+            }
+            XmlDocument doc = new XmlDocument();
+            try
+            {
+                doc.Load(fileName);
+            }
+            catch { return; }
+            XmlNodeList nodes = doc.GetElementsByTagName("item");
+            foreach(XmlNode node in nodes ) 
+            {
+                
+                XmlAttribute attName = node.Attributes["name"];
+                XmlAttribute attValue = node.Attributes["value"];
+                if (attName != null && attValue!=null) 
+                {
+                    _classInfo.CheckItem[attName.InnerText] = attValue.InnerText;
+                }
+            }
+        }
+        /// <summary>
+        /// 加载属性项信息
+        /// </summary>
+        private void LoadItemCache(List<UIModelItem> lstItem)
+        {
+            string directory = ModelPath + "gencache\\";
+            string fileName = directory + "\\" + _curEntityInfo.FullName + ".cache.xml";
+
+            if (!File.Exists(fileName))
+            {
+                return;
+            }
+            XmlDocument doc = new XmlDocument();
+            try
+            {
+                doc.Load(fileName);
+            }
+            catch { return; }
+            XmlNodeList nodes = doc.GetElementsByTagName("item");
+            foreach (XmlNode node in nodes)
+            {
+
+                XmlAttribute attName = node.Attributes["name"];
+                XmlAttribute attValue = node.Attributes["value"];
+                if (attName != null && attValue != null)
+                {
+                    _classInfo.CheckItem[attName.InnerText] = attValue.InnerText;
+                }
+            }
+        }
+        /// <summary>
+        /// 绑定UI信息
+        /// </summary>
+        /// <param name="dicControl"></param>
+        /// <param name="item"></param>
+        private void BindUIModleInfo(Dictionary<string, EditorBase> dicControl, UIModelItem item) 
+        {
+            
+            Dictionary<string, object> dic=item.CheckItem;
+
+            List<EditorBase> lstEditor = new List<EditorBase>(dicControl.Count);
+            foreach (KeyValuePair<string, EditorBase> kvp in dicControl) 
+            {
+                lstEditor.Add(kvp.Value);
+            }
+            object value=null;
+            foreach (EditorBase editor in lstEditor) 
+            {
+                string key = editor.BindPropertyName;
+                if (item.CheckItem.TryGetValue(key, out value)) 
+                {
+                    editor.Value = value;
+                }
+            }
+
+        }
+
+        #endregion
         private void labInfo_Click(object sender, EventArgs e)
         {
 

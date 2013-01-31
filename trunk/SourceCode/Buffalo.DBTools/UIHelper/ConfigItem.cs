@@ -69,7 +69,7 @@ namespace Buffalo.DBTools.UIHelper
                 case ConfigItemType.MText:
                     TextBoxEditor mtxt = new TextBoxEditor();
                     mtxt.Multiline = true;
-                    mtxt.Height = 50;
+                    mtxt.Height = 80;
                     return mtxt;
                 default:
                     TextBoxEditor txt = new TextBoxEditor();
