@@ -28,5 +28,21 @@ namespace Buffalo.DBTools.UIHelper
         {
             get { return _lstItems; }
         }
+
+        /// <summary>
+        /// Éú³É´úÂë
+        /// </summary>
+        /// <returns></returns>
+        public string GenerateCode(EntityInfo entityInfo, UIConfigItem classConfig,
+            List<UIModelItem> selectPropertys) 
+        {
+            foreach (UIProjectItem pitem in _lstItems) 
+            {
+                string mPath = UIConfigItem.FormatParameter(pitem.ModelPath, entityInfo);
+                string tPath = UIConfigItem.FormatParameter(pitem.TargetPath, entityInfo);
+
+            }
+        }
+
     }
 }

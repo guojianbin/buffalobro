@@ -47,8 +47,8 @@ namespace Buffalo.Kernel.FastReflection.ClassInfos
             Dictionary<string, FieldInfoHandle> dicField = new Dictionary<string, FieldInfoHandle>();
             
             //属性信息句柄
-            PropertyInfo[] destproper = type.GetProperties(FastValueGetSet.allBindingFlags);
-            FieldInfo[] allField = type.GetFields(FastValueGetSet.allBindingFlags);
+            PropertyInfo[] destproper = type.GetProperties(FastValueGetSet.AllBindingFlags);
+            FieldInfo[] allField = type.GetFields(FastValueGetSet.AllBindingFlags);
             //int index = 0;
             ///读取属性别名
             foreach (PropertyInfo pinf in destproper)

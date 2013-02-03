@@ -42,16 +42,18 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             get { return _sbMethod; }
         }
 
-        public string ToCode() 
+        public static const string CompilerNamespace = "Buffalo.DBTools.UIHelper.ModelLoaderItems";
+
+        public string ToCode(string className) 
         {
             StringBuilder sbCode = new StringBuilder(65535);
             //using
             GetUsingCode(sbCode);
-            
 
-            sbCode.AppendLine("namespace Buffalo.DBTools.UIHelper.ModelLoaderItems");
+
+            sbCode.AppendLine("namespace " + CompilerNamespace);
             sbCode.AppendLine("{");
-            sbCode.AppendLine("public class CompilerClass");
+            sbCode.AppendLine("public class "+className);
             sbCode.AppendLine("     {");
             //GetGreanMain(sbCode);
             GetGreanCode(sbCode);
@@ -80,7 +82,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// </summary>
         private void GetGreanCode(StringBuilder sbCode) 
         {
-            sbCode.AppendLine("public string DoCompiler(string className)");
+            sbCode.AppendLine("public string DoCompiler(EntityInfo Entity, UIConfigItem ClassConfig,List<UIModelItem> SelectedPropertys)");
             sbCode.AppendLine("{");
             sbCode.AppendLine(" StringBuilder SystemOut = new StringBuilder(65535);");
             sbCode.AppendLine(Code.ToString());

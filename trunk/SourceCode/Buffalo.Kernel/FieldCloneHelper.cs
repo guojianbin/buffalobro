@@ -69,7 +69,7 @@ namespace Buffalo.Kernel
 
                 while (currentType != null)
                 {
-                    FieldInfo[] fInfos = currentType.GetFields(FastValueGetSet.allBindingFlags);
+                    FieldInfo[] fInfos = currentType.GetFields(FastValueGetSet.AllBindingFlags);
                     foreach (FieldInfo finfo in fInfos)
                     {
 

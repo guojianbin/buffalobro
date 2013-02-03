@@ -31,7 +31,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// <summary>
         /// 处理Script标签
         /// </summary>
-        private string TranScript() 
+        public string GetCode(string className) 
         {
             //string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>[^<]+)</[#]script>";
             string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>(.*?))</[#]script>";
@@ -71,29 +71,23 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                     man.Method.Append(str);
                 }
             }
-            return man.ToCode();
+            return man.ToCode(className);
         }
 
+
+
         /// <summary>
-        /// 获取编译运行后的代码
+        /// 获取编译后的类型
         /// </summary>
         /// <param name="errorMessage">如果出错此为信息</param>
         /// <returns></returns>
-        public string GetContent(StringBuilder errorMessage) 
+        public Type GetCompileType(string className, StringBuilder errorMessage)
         {
-            string code = TranScript();
+            string code = GetCode(className);
             string ret = null;
-            Type objType = SourceCodeCompiler.DoCompiler(code, "ModelCompilerItems.CompilerClass", man.Link, errorMessage);
-            if (objType != null) 
-            {
-                object comObject=Activator.CreateInstance(objType);
-                MethodInfo mi = objType.GetMethod("DoCompiler");
-                if (mi != null) 
-                {
-                    ret = mi.Invoke(comObject, new object[] {"NewClass1" }) as string;
-                }
-            }
-            return ret;
+            Type objType = SourceCodeCompiler.DoCompiler(code, CodesManger.CompilerNamespace+"."+className, man.Link, errorMessage);
+
+            return objType;
         }
     }
 }

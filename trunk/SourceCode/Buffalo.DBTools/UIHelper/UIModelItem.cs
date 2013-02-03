@@ -120,6 +120,32 @@ namespace Buffalo.DBTools.UIHelper
         }
 
         /// <summary>
+        /// 读取节点信息
+        /// </summary>
+        /// <param name="node">节点</param>
+        public void ReadItem(XmlNode node) 
+        {
+            string name=null;
+            string value=null;
+            foreach (XmlNode cnode in node.ChildNodes) 
+            {
+                XmlAttribute att = cnode.Attributes["name"];
+                if (att == null) 
+                {
+                    continue;
+                }
+                name = att.InnerText;
+                att = cnode.Attributes["value"];
+                if (att == null)
+                {
+                    continue;
+                }
+                value = att.InnerText;
+                _dicCheckItem[name] = value;
+            }
+        }
+
+        /// <summary>
         /// 对应的字段类型
         /// </summary>
         public string FieldType

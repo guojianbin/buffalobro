@@ -10,7 +10,7 @@ namespace Buffalo.Kernel.FastReflection
         private static Dictionary<string, FastInvokeHandler> dicMethod = new Dictionary<string, FastInvokeHandler>();
         private static Dictionary<string, PropertyInfoHandle> dicProperty = new Dictionary<string, PropertyInfoHandle>();//属性缓存
         private static IDictionary<string, CreateInstanceHandler> _invokerInstance = new Dictionary<string, CreateInstanceHandler>();
-        public const BindingFlags allBindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.SuppressChangeType | BindingFlags.Instance;
+        public const BindingFlags AllBindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.SuppressChangeType | BindingFlags.Instance;
         /// <summary>
         /// 获取属性的信息
         /// </summary>
@@ -45,7 +45,7 @@ namespace Buffalo.Kernel.FastReflection
         {
             FastInvokeHandler getHandle = GetGetMethodInfo(proName, type);
             FastInvokeHandler setHandle = GetSetMethodInfo(proName, type);
-            PropertyInfo pinf = type.GetProperty(proName, allBindingFlags);//获取子元素集合的属性
+            PropertyInfo pinf = type.GetProperty(proName, AllBindingFlags);//获取子元素集合的属性
             Type proType = null;
             if (pinf != null)
             {
@@ -63,7 +63,7 @@ namespace Buffalo.Kernel.FastReflection
         /// <returns></returns>
         public static FastInvokeHandler GetGetMethodInfo(string proName,Type type)
         {
-            MethodInfo methodInfo = type.GetMethod("get_" + proName,allBindingFlags);
+            MethodInfo methodInfo = type.GetMethod("get_" + proName,AllBindingFlags);
             if (methodInfo == null)
             {
                 return null;
@@ -84,7 +84,7 @@ namespace Buffalo.Kernel.FastReflection
         /// <returns></returns>
         public static FastInvokeHandler GetSetMethodInfo(string proName, Type type)
         {
-            MethodInfo methodInfo = type.GetMethod("set_" + proName, allBindingFlags);
+            MethodInfo methodInfo = type.GetMethod("set_" + proName, AllBindingFlags);
             if (methodInfo == null) 
             {
                 return null;
@@ -106,7 +106,7 @@ namespace Buffalo.Kernel.FastReflection
         /// <returns></returns>
         public static FastInvokeHandler GetCustomerMethodInfo(Type objectType,string methodName,Type[] parametersType)
         {
-            MethodInfo methodInfo = objectType.GetMethod(methodName, allBindingFlags, null, parametersType, null);
+            MethodInfo methodInfo = objectType.GetMethod(methodName, AllBindingFlags, null, parametersType, null);
             if (methodInfo != null)
             {
                 return GetCustomerMethodInfo(methodInfo);

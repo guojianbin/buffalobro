@@ -39,6 +39,13 @@ namespace Buffalo.DBTools.UIHelper
             set { _targetPath = value; }
         }
 
+        /// <summary>
+        /// 生成的代码缓存
+        /// </summary>
+        private Type _genCodeCache;
+
+        
+
         private List<UIProjectItem> _childItems=new List<UIProjectItem>();
 
         /// <summary>

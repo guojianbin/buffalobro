@@ -14,6 +14,7 @@ using Buffalo.DBTools.HelperKernel;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using Buffalo.WinFormsControl.Editors;
 using Buffalo.Kernel.FastReflection;
+using System.Security.AccessControl;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -186,9 +187,11 @@ namespace Buffalo.DBTools.UIHelper
         {
             gvMember.AutoGenerateColumns = false;
             gvProject.AutoGenerateColumns = false;
+            LoadItemCache();
             LoadInfo();
             CreateItems();
             CreateClassItem();
+            
             LoadClassItemCache();
             BindUIModleInfo(_classUIConfig, _classInfo);
             this.Text = "UI界面生成-" + _curEntityInfo.ClassName;
@@ -211,12 +214,25 @@ namespace Buffalo.DBTools.UIHelper
                 return;
             }
             _currentItem = gvMember.Rows[gvMember.CurrentCell.RowIndex].DataBoundItem as UIModelItem;
+            if (_propertyUIConfig != null && _currentItem != null)
+            {
+                BindUIModleInfo(_propertyUIConfig, _currentItem);
+            }
         }
 
         private void btnGen_Click(object sender, EventArgs e)
         {
             SaveItemInfos();
             SaveClassItemInfo();
+
+            if (gvProject.CurrentRow != null)
+            {
+                UIProject project = gvProject.CurrentRow.DataBoundItem as Project;
+                if (project != null) 
+                {
+                    
+                }
+            }
         }
         #region 保存和加载
         private string _modelPath;
@@ -279,6 +295,7 @@ namespace Buffalo.DBTools.UIHelper
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
+                File.SetAttributes(directory, FileAttributes.Hidden);
             }
             string fileName = directory + "\\" + _curEntityInfo.FullName + ".cache.xml";
             doc.Save(fileName);
@@ -356,10 +373,10 @@ namespace Buffalo.DBTools.UIHelper
         /// <summary>
         /// 加载属性项信息
         /// </summary>
-        private void LoadItemCache(List<UIModelItem> lstItem)
+        private void LoadItemCache()
         {
             string directory = ModelPath + "gencache\\";
-            string fileName = directory + "\\" + _curEntityInfo.FullName + ".cache.xml";
+            string fileName = directory + _curEntityInfo.FullName + ".cache.xml";
 
             if (!File.Exists(fileName))
             {
@@ -371,16 +388,31 @@ namespace Buffalo.DBTools.UIHelper
                 doc.Load(fileName);
             }
             catch { return; }
-            XmlNodeList nodes = doc.GetElementsByTagName("item");
+            XmlNodeList nodes = doc.GetElementsByTagName("modelitem");
+
+            
+
             foreach (XmlNode node in nodes)
             {
-
-                XmlAttribute attName = node.Attributes["name"];
-                XmlAttribute attValue = node.Attributes["value"];
-                if (attName != null && attValue != null)
+                XmlAttribute att=node.Attributes["name"];
+                if(att==null)
                 {
-                    _classInfo.CheckItem[attName.InnerText] = attValue.InnerText;
+                    continue;
                 }
+                string name=att.InnerText;
+                if(name==null)
+                {
+                    continue;
+                }
+                foreach (UIModelItem item in _curEntityInfo.Propertys) 
+                {
+                    if (item.PropertyName == name) 
+                    {
+                        item.ReadItem(node);
+                        item.IsGenerate = true;
+                    }
+                }
+                
             }
         }
         /// <summary>
@@ -402,13 +434,19 @@ namespace Buffalo.DBTools.UIHelper
             foreach (EditorBase editor in lstEditor) 
             {
                 string key = editor.BindPropertyName;
-                if (item.CheckItem.TryGetValue(key, out value)) 
+                if (item.CheckItem.TryGetValue(key, out value))
                 {
                     editor.Value = value;
+                }
+                else 
+                {
+                    editor.Reset();
                 }
             }
 
         }
+
+        
 
         #endregion
         private void labInfo_Click(object sender, EventArgs e)

@@ -93,6 +93,11 @@ namespace Buffalo.WinFormsControl.Editors
             }
         }
 
+        public override void Reset()
+        {
+            txtValue.Text = "";
+        }
+
         public override object Value
         {
             get

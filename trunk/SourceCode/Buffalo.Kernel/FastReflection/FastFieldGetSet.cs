@@ -54,7 +54,7 @@ namespace Buffalo.Kernel.FastReflection
         /// <returns></returns>
         public static GetFieldValueHandle GetGetValueHandle(Type objType, string fieldName)
         {
-            FieldInfo info = objType.GetField(fieldName, FastValueGetSet.allBindingFlags);
+            FieldInfo info = objType.GetField(fieldName, FastValueGetSet.AllBindingFlags);
             return GetGetValueHandle(info);
         }
 
@@ -93,7 +93,7 @@ namespace Buffalo.Kernel.FastReflection
         /// <returns></returns>
         public static SetFieldValueHandle GetSetValueHandle(Type objType, string fieldName)
         {
-            FieldInfo info = objType.GetField(fieldName, FastValueGetSet.allBindingFlags);
+            FieldInfo info = objType.GetField(fieldName, FastValueGetSet.AllBindingFlags);
             return GetSetValueHandle(info);
         }
     }

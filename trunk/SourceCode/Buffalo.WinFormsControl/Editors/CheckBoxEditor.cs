@@ -93,6 +93,10 @@ namespace Buffalo.WinFormsControl.Editors
             }
         }
 
+        public override void Reset()
+        {
+            Checked = false;
+        }
 
         public override Label Lable
         {

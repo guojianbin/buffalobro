@@ -390,7 +390,7 @@ namespace Buffalo.DB.EntityInfos
             FillNotFoundField(dicParamsInfo, dicRelationInfo, dicNotFoundParam, dicNotFoundRelation);
 
             //属性信息句柄
-            List<FieldInfoHandle> lstFields=FieldInfoHandle.GetFieldInfos(type, FastValueGetSet.allBindingFlags, true);
+            List<FieldInfoHandle> lstFields=FieldInfoHandle.GetFieldInfos(type, FastValueGetSet.AllBindingFlags, true);
             DataBaseOperate oper = db.DefaultOperate;
             
                 ///读取属性别名

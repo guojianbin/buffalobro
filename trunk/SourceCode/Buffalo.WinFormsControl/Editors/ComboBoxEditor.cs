@@ -71,7 +71,13 @@ namespace Buffalo.WinFormsControl.Editors
                 cmbValue.SelectedValue=value;
             }
         }
-        
+        public override void Reset()
+        {
+            if (cmbValue.Items.Count > 0) 
+            {
+                cmbValue.SelectedIndex = 0;
+            }
+        }
 
         /// <summary>
         /// ±êÇ©×ÖÌå

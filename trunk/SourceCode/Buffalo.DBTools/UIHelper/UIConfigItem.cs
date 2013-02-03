@@ -179,11 +179,11 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public static string FormatParameter(string parameter, ClassDesignerInfo classInfo, 
+        public static string FormatParameter(string parameter,
             EntityConfig entityInfo)
         {
-            string projectName = classInfo.CurrentProject.Name;
-            FileInfo projectFile = new FileInfo(classInfo.CurrentProject.FileName);
+            string projectName = entityInfo.DesignerInfo.CurrentProject.Name;
+            FileInfo projectFile = new FileInfo(entityInfo.DesignerInfo.CurrentProject.FileName);
             string projectPath = projectFile.Directory.Name;
 
             string ret = parameter;

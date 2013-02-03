@@ -66,6 +66,13 @@ namespace Buffalo.WinFormsControl.Editors
             }
         }
         /// <summary>
+        /// 重置值
+        /// </summary>
+        public virtual void Reset()
+        {
+
+        }
+        /// <summary>
         /// 标签宽度
         /// </summary>
         public virtual int LableWidth
