@@ -227,7 +227,7 @@ namespace Buffalo.DBTools.UIHelper
 
             if (gvProject.CurrentRow != null)
             {
-                UIProject project = gvProject.CurrentRow.DataBoundItem as Project;
+                UIProject project = gvProject.CurrentRow.DataBoundItem as UIProject;
                 if (project != null) 
                 {
                     

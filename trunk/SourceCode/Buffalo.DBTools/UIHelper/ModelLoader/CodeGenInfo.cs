@@ -23,7 +23,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
 
         public Type ClassType
         {
-            get { return classType; }
+            get { return _classType; }
         }
 
         private object _codeClass;

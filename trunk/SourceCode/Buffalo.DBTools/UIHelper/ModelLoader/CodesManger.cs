@@ -42,7 +42,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             get { return _sbMethod; }
         }
 
-        public static const string CompilerNamespace = "Buffalo.DBTools.UIHelper.ModelLoaderItems";
+        public const string CompilerNamespace = "Buffalo.DBTools.UIHelper.ModelLoaderItems";
 
         public string ToCode(string className) 
         {

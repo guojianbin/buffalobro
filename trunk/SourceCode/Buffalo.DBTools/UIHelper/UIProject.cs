@@ -34,7 +34,7 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         /// <returns></returns>
         public string GenerateCode(EntityInfo entityInfo, UIConfigItem classConfig,
-            List<UIModelItem> selectPropertys) 
+            List<UIModelItem> selectPropertys,UIProjectItem parent) 
         {
             foreach (UIProjectItem pitem in _lstItems) 
             {
@@ -42,6 +42,8 @@ namespace Buffalo.DBTools.UIHelper
                 string tPath = UIConfigItem.FormatParameter(pitem.TargetPath, entityInfo);
 
             }
+
+            return null;
         }
 
     }

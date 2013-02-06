@@ -145,17 +145,20 @@ namespace Buffalo.DB.CommBase.DataAccessBases
 
 
             }
-            foreach (KeyValuePair<string, BQLValueItem> kvp in setList) 
+            if (setList != null)
             {
-                EntityPropertyInfo epinfo = EntityInfo.PropertyInfo[kvp.Key];
-                if (epinfo == null) 
+                foreach (KeyValuePair<string, BQLValueItem> kvp in setList)
                 {
-                    throw new Exception("实体:"+EntityInfo.EntityType.FullName+"  找不到属性:" + kvp.Key);
+                    EntityPropertyInfo epinfo = EntityInfo.PropertyInfo[kvp.Key];
+                    if (epinfo == null)
+                    {
+                        throw new Exception("实体:" + EntityInfo.EntityType.FullName + "  找不到属性:" + kvp.Key);
+                    }
+                    sql.Append(",");
+                    sql.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(epinfo.ParamName));
+                    sql.Append("=");
+                    sql.Append(kvp.Value.DisplayValue(keyinfo));
                 }
-                sql.Append(",");
-                sql.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(epinfo.ParamName));
-                sql.Append("=");
-                sql.Append(kvp.Value.DisplayValue(keyinfo));
             }
             where.Append(DataAccessCommon.FillCondition(EntityInfo, list, scopeList));
             if (sql.Length <= 0)

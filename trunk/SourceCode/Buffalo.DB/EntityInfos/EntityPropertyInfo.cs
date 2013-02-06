@@ -54,6 +54,7 @@ namespace Buffalo.DB.EntityInfos
         public EntityParam ParamInfo
         {
             get { return _paramInfo; }
+            internal set { _paramInfo = value; }
         }
         /// <summary>
         /// ·µ»Ø¿½±´¸±±¾

@@ -180,7 +180,7 @@ namespace Buffalo.DBTools.UIHelper
         /// <param name="parameter"></param>
         /// <returns></returns>
         public static string FormatParameter(string parameter,
-            EntityConfig entityInfo)
+            EntityInfo entityInfo)
         {
             string projectName = entityInfo.DesignerInfo.CurrentProject.Name;
             FileInfo projectFile = new FileInfo(entityInfo.DesignerInfo.CurrentProject.FileName);

@@ -461,36 +461,63 @@ namespace Buffalo.DB.EntityInfos
                 throw new MissingFieldException(message.ToString());
             }
             classInfo.SetInfoHandles(dicPropertys, dicMapping);
-            FillSequenceInfo(type, classInfo);
+            FillAttributeInfo(type, classInfo);
             _dicClass[fullName] = classInfo;
         }
 
         /// <summary>
-        /// 填充
+        /// 填充特殊信息指定标签
         /// </summary>
         /// <param name="type"></param>
         /// <param name="dicParamsInfo"></param>
         /// <param name="tableAtt"></param>
-        private static void FillSequenceInfo(Type type,EntityInfoHandle classInfo) 
+        private static void FillAttributeInfo(Type type, EntityInfoHandle classInfo) 
         {
-            object[] atts = type.GetCustomAttributes(typeof(SequenceAttributes), true);
+            object[] atts = type.GetCustomAttributes(true);
             foreach (object objAtt in atts) 
             {
                 SequenceAttributes satt = objAtt as SequenceAttributes;
-                if (satt == null) 
+                if (satt != null)
                 {
+                    EntityPropertyInfo info = classInfo.PropertyInfo[satt.PropertyName];
+                    if (info == null)
+                    {
+                        throw new System.MissingMemberException("实体:" + classInfo.EntityType.FullName
+                            + "  ,不包含属性找不到属性:" + satt.PropertyName);
+                    }
+                    info.ParamInfo.SequenceName = satt.SequenceName;
                     continue;
                 }
 
-                EntityPropertyInfo info = classInfo.PropertyInfo[satt.PropertyName];
-                if (info == null) 
+                EntityParam ep = objAtt as EntityParam;
+                if (ep != null)
                 {
-                    throw new System.MissingMemberException("实体:" + classInfo.EntityType.FullName
-                        + "  ,不包含属性找不到属性:" + satt.PropertyName);
+                    EntityPropertyInfo info = classInfo.PropertyInfo[ep.PropertyName];
+                    if (info == null)
+                    {
+                        throw new System.MissingMemberException("实体:" + classInfo.EntityType.FullName
+                            + "  ,不包含属性找不到属性:" + ep.PropertyName);
+                    }
+                    info.ParamInfo = ep;
+                    continue;
                 }
-                info.ParamInfo.SequenceName = satt.SequenceName;
+
+                TableRelationAttribute tra = objAtt as TableRelationAttribute;
+                if (tra != null)
+                {
+                    EntityMappingInfo info = classInfo.MappingInfo[tra.PropertyName];
+                    if (info == null)
+                    {
+                        throw new System.MissingMemberException("实体:" + classInfo.EntityType.FullName
+                            + "  ,不包含属性找不到属性:" + tra.PropertyName);
+                    }
+                    info.MappingInfo = tra;
+                    continue;
+                }
             }
         }
+
+    
 
         /// <summary>
         /// 获取某个方法的属性

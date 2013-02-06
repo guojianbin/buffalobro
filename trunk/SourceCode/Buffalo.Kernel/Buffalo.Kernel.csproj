@@ -78,7 +78,6 @@
     <Compile Include="HttpServerModel\ReuqestParamCollection.cs" />
     <Compile Include="HttpServerModel\ServerModel.cs" />
     <Compile Include="IniSettings.cs" />
-    <Compile Include="KeyList.cs" />
     <Compile Include="Lock.cs" />
     <Compile Include="MailSender.cs" />
     <Compile Include="MassBase.cs" />

@@ -35,6 +35,7 @@ namespace Buffalo.DB.EntityInfos
         public TableRelationAttribute MappingInfo
         {
             get { return _mappingInfo; }
+            internal set { _mappingInfo = value; }
         }
         /// <summary>
         /// ¿½±´¸±±¾
