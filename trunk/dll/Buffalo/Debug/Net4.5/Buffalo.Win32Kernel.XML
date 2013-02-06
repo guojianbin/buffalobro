@@ -4,19 +4,19 @@
         <name>Buffalo.Win32Kernel</name>
     </assembly>
     <members>
-        <member name="T:Buffalo.Win32Kernel.ComboBoxItem">
+        <member name="P:Buffalo.Win32Kernel.ComboBoxItem.Tag">
             <summary>
-            ComboBox的项
+            附加信息
+            </summary>
+        </member>
+        <member name="P:Buffalo.Win32Kernel.ComboBoxItem.Value">
+            <summary>
+            值
             </summary>
         </member>
         <member name="P:Buffalo.Win32Kernel.ComboBoxItem.Text">
             <summary>
-            要显示的文本
-            </summary>
-        </member>
-        <member name="P:Buffalo.Win32Kernel.ComboBoxItem.Tag">
-            <summary>
-            值
+            显示文本
             </summary>
         </member>
         <member name="T:Buffalo.Win32Kernel.DataGridViewUnit.BindingCollection`1">

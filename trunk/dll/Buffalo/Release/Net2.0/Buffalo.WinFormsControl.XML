@@ -9,6 +9,11 @@
             文本框的编辑器
             </summary>
         </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.EditorBase.Reset">
+            <summary>
+            重置值
+            </summary>
+        </member>
         <member name="M:Buffalo.WinFormsControl.Editors.EditorBase.DoValueChange(System.Object,System.Object)">
             <summary>
             引发值改变事件

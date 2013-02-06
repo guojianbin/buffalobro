@@ -4,6 +4,121 @@
         <name>Buffalo.WinFormsControl</name>
     </assembly>
     <members>
+        <member name="M:Buffalo.WinFormsControl.Editors.EditorBase.Reset">
+            <summary>
+            重置值
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.EditorBase.DoValueChange(System.Object,System.Object)">
+            <summary>
+            引发值改变事件
+            </summary>
+            <param name="sender"></param>
+            <param name="oldValue"></param>
+            <param name="newValue"></param>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.EditorBase.DoValueChange(System.Object)">
+            <summary>
+            引发值改变事件
+            </summary>
+            <param name="oldValue"></param>
+            <param name="newValue"></param>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.EditorBase.BindPropertyName">
+            <summary>
+            绑定的属性名
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.EditorBase.LableText">
+            <summary>
+            标签内容
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.EditorBase.LableWidth">
+            <summary>
+            标签宽度
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.EditorBase.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="T:Buffalo.WinFormsControl.Editors.ComboBoxEditor">
+            <summary>
+            文本框的编辑器
+            </summary>
+        </member>
+        <member name="F:Buffalo.WinFormsControl.Editors.ComboBoxEditor.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.ComboBoxEditor.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.ComboBoxEditor.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.ComboBoxEditor.BindValue(System.Collections.Generic.List{Buffalo.Win32Kernel.ComboBoxItem})">
+            <summary>
+            绑定值
+            </summary>
+            <param name="lstItem"></param>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.ComboBoxEditor.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.ComboBoxEditor.LableFont">
+            <summary>
+            标签字体
+            </summary>
+        </member>
+        <member name="T:Buffalo.WinFormsControl.Editors.CheckBoxEditor">
+            <summary>
+            文本框的编辑器
+            </summary>
+        </member>
+        <member name="F:Buffalo.WinFormsControl.Editors.CheckBoxEditor.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.CheckBoxEditor.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.CheckBoxEditor.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.CheckBoxEditor.OnOffType">
+            <summary>
+            按钮样式类型
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.CheckBoxEditor.Checked">
+            <summary>
+            是否选中
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.CheckBoxEditor.Value">
+            <summary>
+            值
+            </summary>
+        </member>
         <member name="M:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxColumn.HideComboBox">
             <summary>
             隐藏ComboBox
@@ -181,6 +296,33 @@
               重写当前线程的 CurrentUICulture 属性。
             </summary>
         </member>
+        <member name="T:Buffalo.WinFormsControl.Editors.TextBoxEditor">
+            <summary>
+            文本框的编辑器
+            </summary>
+        </member>
+        <member name="F:Buffalo.WinFormsControl.Editors.TextBoxEditor.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.TextBoxEditor.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.TextBoxEditor.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.TextBoxEditor.Multiline">
+            <summary>
+            是否支持多行
+            </summary>
+        </member>
         <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.ShowTotle">
             <summary>
             是否在值后边显示总数
@@ -194,136 +336,6 @@
         <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewPercentColumn.ValueForamt">
             <summary>
             值的格式化
-            </summary>
-        </member>
-        <member name="T:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell">
-            <summary>
-            扩展的Checkbox单元格
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell.SelectValue">
-            <summary>
-            选中的值
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell.BelongColumn">
-            <summary>
-            所属列
-            </summary>
-        </member>
-        <member name="T:Buffalo.WinFormsControl.Editors.CheckBoxEditor">
-            <summary>
-            文本框的编辑器
-            </summary>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.Editors.EditorBase.DoValueChange(System.Object,System.Object)">
-            <summary>
-            引发值改变事件
-            </summary>
-            <param name="sender"></param>
-            <param name="oldValue"></param>
-            <param name="newValue"></param>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.Editors.EditorBase.DoValueChange(System.Object)">
-            <summary>
-            引发值改变事件
-            </summary>
-            <param name="oldValue"></param>
-            <param name="newValue"></param>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.EditorBase.BindPropertyName">
-            <summary>
-            绑定的属性名
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.EditorBase.LableText">
-            <summary>
-            标签内容
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.EditorBase.LableWidth">
-            <summary>
-            标签宽度
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.EditorBase.Value">
-            <summary>
-            值
-            </summary>
-        </member>
-        <member name="F:Buffalo.WinFormsControl.Editors.CheckBoxEditor.components">
-            <summary> 
-            必需的设计器变量。
-            </summary>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.Editors.CheckBoxEditor.Dispose(System.Boolean)">
-            <summary> 
-            清理所有正在使用的资源。
-            </summary>
-            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.Editors.CheckBoxEditor.InitializeComponent">
-            <summary> 
-            设计器支持所需的方法 - 不要
-            使用代码编辑器修改此方法的内容。
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.CheckBoxEditor.OnOffType">
-            <summary>
-            按钮样式类型
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.CheckBoxEditor.Checked">
-            <summary>
-            是否选中
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.CheckBoxEditor.Value">
-            <summary>
-            值
-            </summary>
-        </member>
-        <member name="T:Buffalo.WinFormsControl.Editors.ComboBoxEditor">
-            <summary>
-            文本框的编辑器
-            </summary>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.Editors.ComboBoxEditor.BindValue(System.Collections.Generic.List{Buffalo.Win32Kernel.ComboBoxItem})">
-            <summary>
-            绑定值
-            </summary>
-            <param name="lstItem"></param>
-        </member>
-        <member name="F:Buffalo.WinFormsControl.Editors.ComboBoxEditor.components">
-            <summary> 
-            必需的设计器变量。
-            </summary>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.Editors.ComboBoxEditor.Dispose(System.Boolean)">
-            <summary> 
-            清理所有正在使用的资源。
-            </summary>
-            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.Editors.ComboBoxEditor.InitializeComponent">
-            <summary> 
-            设计器支持所需的方法 - 不要
-            使用代码编辑器修改此方法的内容。
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.ComboBoxEditor.Value">
-            <summary>
-            值
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.ComboBoxEditor.LableFont">
-            <summary>
-            标签字体
-            </summary>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.Editors.OnOffCheckBox.RefreashDisplay">
-            <summary>
-            刷新显示
             </summary>
         </member>
         <member name="F:Buffalo.WinFormsControl.Editors.OnOffCheckBox.components">
@@ -341,6 +353,11 @@
             <summary> 
             设计器支持所需的方法 - 不要
             使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.OnOffCheckBox.RefreashDisplay">
+            <summary>
+            刷新显示
             </summary>
         </member>
         <member name="E:Buffalo.WinFormsControl.Editors.OnOffCheckBox.CheckedChanged">
@@ -383,31 +400,19 @@
             椭圆形
             </summary>
         </member>
-        <member name="T:Buffalo.WinFormsControl.Editors.TextBoxEditor">
+        <member name="T:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell">
             <summary>
-            文本框的编辑器
+            扩展的Checkbox单元格
             </summary>
         </member>
-        <member name="F:Buffalo.WinFormsControl.Editors.TextBoxEditor.components">
-            <summary> 
-            必需的设计器变量。
-            </summary>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.Editors.TextBoxEditor.Dispose(System.Boolean)">
-            <summary> 
-            清理所有正在使用的资源。
-            </summary>
-            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.Editors.TextBoxEditor.InitializeComponent">
-            <summary> 
-            设计器支持所需的方法 - 不要
-            使用代码编辑器修改此方法的内容。
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.TextBoxEditor.Multiline">
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell.SelectValue">
             <summary>
-            是否支持多行
+            选中的值
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell.BelongColumn">
+            <summary>
+            所属列
             </summary>
         </member>
     </members>

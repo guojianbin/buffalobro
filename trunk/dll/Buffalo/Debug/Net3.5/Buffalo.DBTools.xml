@@ -225,6 +225,21 @@
             <param name="str"></param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.BindItems">
+            <summary>
+            绑定属性信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.BindProjects">
+            <summary>
+            绑定项目信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.CreateClassItem">
+            <summary>
+            创建类级别信息
+            </summary>
+        </member>
         <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.CreateItems">
             <summary>
             创建控件
@@ -235,20 +250,49 @@
             添加单元格样式
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.LoadConfig">
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.NewItem(Buffalo.DBTools.UIHelper.ConfigItem)">
             <summary>
-            检测文件
+            创建新的设置项
             </summary>
+            <param name="item"></param>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.LoadInfo">
             <summary>
             加载信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.FillItemInfo">
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.LoadConfig">
             <summary>
-            填充信息
+            检测文件
             </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.SaveItemInfos">
+            <summary>
+            保存项选择信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.SaveClassItemInfo">
+            <summary>
+            保存类信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.LoadClassItemCache">
+            <summary>
+            加载属性项信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.LoadItemCache">
+            <summary>
+            加载属性项信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.BindUIModleInfo(System.Collections.Generic.Dictionary{System.String,Buffalo.WinFormsControl.Editors.EditorBase},Buffalo.DBTools.UIHelper.UIModelItem)">
+            <summary>
+            绑定UI信息
+            </summary>
+            <param name="dicControl"></param>
+            <param name="item"></param>
         </member>
         <member name="F:Buffalo.DBTools.UIHelper.FrmUIGenerater.components">
             <summary>
@@ -820,7 +864,7 @@
             <param name="type"></param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.FormatParameter(System.String,Buffalo.DBTools.ClassDesignerInfo,Buffalo.DBTools.HelperKernel.EntityConfig)">
+        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.FormatParameter(System.String,Buffalo.DBTools.UIHelper.EntityInfo)">
             <summary>
             格式化参数名字
             </summary>
@@ -1078,14 +1122,14 @@
             </summary>
             <param name="content">模版内容</param>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.TranScript">
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.GetCode(System.String)">
             <summary>
             处理Script标签
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.GetContent(System.Text.StringBuilder)">
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.GetCompileType(System.String,System.Text.StringBuilder)">
             <summary>
-            获取编译运行后的代码
+            获取编译后的类型
             </summary>
             <param name="errorMessage">如果出错此为信息</param>
             <returns></returns>
@@ -1104,6 +1148,83 @@
             <param name="items"></param>
             <param name="name"></param>
             <returns></returns>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.EntityInfo">
+            <summary>
+            实体信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.EntityInfo.#ctor(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType,Buffalo.DBTools.ClassDesignerInfo)">
+            <summary>
+            初始化类配置
+            </summary>
+            <param name="classShape">类图形</param>
+            <param name="project">所属项目</param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.EntityInfo.InitPropertys">
+            <summary>
+            初始化属性
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.EntityInfo.FillClassInfo">
+            <summary>
+            填充类信息
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.FileName">
+            <summary>
+            文件名
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.DesignerInfo">
+            <summary>
+            类设计图信息
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.Namespace">
+            <summary>
+            命名空间
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.ClassName">
+            <summary>
+            类名
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.FullName">
+            <summary>
+            类全名
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.Summary">
+            <summary>
+            注释
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.BaseTypeName">
+            <summary>
+            基名称
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.ClassType">
+            <summary>
+            类类型
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.Propertys">
+            <summary>
+            属性集合
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.BaseType">
+            <summary>
+            基类 
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.GenericInfo">
+            <summary>
+            泛型信息
+            </summary>
         </member>
         <member name="T:Buffalo.DBTools.CodeFileHelper">
             <summary>
@@ -1178,21 +1299,6 @@
             </summary>
             <param name="name"></param>
             <returns></returns>
-        </member>
-        <member name="P:Buffalo.DBTools.HelperKernel.ComboBoxItem.Tag">
-            <summary>
-            附加信息
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.HelperKernel.ComboBoxItem.Value">
-            <summary>
-            值
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.HelperKernel.ComboBoxItem.Text">
-            <summary>
-            显示文本
-            </summary>
         </member>
         <member name="M:Buffalo.DBTools.FrmClassDesigner.FillDBRealType(System.Int32)">
             <summary>
@@ -1765,6 +1871,27 @@
             是否生成所有数据层
             </summary>
         </member>
+        <member name="T:Buffalo.DBTools.UIHelper.UIProject">
+            <summary>
+            项目项
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIProject.GenerateCode(Buffalo.DBTools.UIHelper.EntityInfo,Buffalo.DBTools.UIHelper.UIConfigItem,System.Collections.Generic.List{Buffalo.DBTools.UIHelper.UIModelItem},Buffalo.DBTools.UIHelper.UIProjectItem)">
+            <summary>
+            生成代码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIProject.Name">
+            <summary>
+            项目名
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIProject.LstItems">
+            <summary>
+            项目项
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.UIHelper.UIModelItem">
             <summary>
             UI需要的信息
@@ -1801,6 +1928,12 @@
             写到XML节点
             </summary>
             <param name="node"></param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.ReadItem(System.Xml.XmlNode)">
+            <summary>
+            读取节点信息
+            </summary>
+            <param name="node">节点</param>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.CheckItem">
             <summary>
@@ -2281,6 +2414,11 @@
             UI工程项
             </summary>
         </member>
+        <member name="F:Buffalo.DBTools.UIHelper.UIProjectItem._genCodeCache">
+            <summary>
+            生成的代码缓存
+            </summary>
+        </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIProjectItem.ModelPath">
             <summary>
             模版路径
@@ -2530,98 +2668,6 @@
         <member name="F:Buffalo.DBTools.DocSummary.SummaryShowItem.All">
             <summary>
             所有
-            </summary>
-        </member>
-        <member name="T:Buffalo.DBTools.UIHelper.EntityInfo">
-            <summary>
-            实体信息
-            </summary>
-        </member>
-        <member name="M:Buffalo.DBTools.UIHelper.EntityInfo.#ctor(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType,Buffalo.DBTools.ClassDesignerInfo)">
-            <summary>
-            初始化类配置
-            </summary>
-            <param name="classShape">类图形</param>
-            <param name="project">所属项目</param>
-        </member>
-        <member name="M:Buffalo.DBTools.UIHelper.EntityInfo.InitPropertys">
-            <summary>
-            初始化属性
-            </summary>
-        </member>
-        <member name="M:Buffalo.DBTools.UIHelper.EntityInfo.FillClassInfo">
-            <summary>
-            填充类信息
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.FileName">
-            <summary>
-            文件名
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.DesignerInfo">
-            <summary>
-            类设计图信息
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.Namespace">
-            <summary>
-            命名空间
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.ClassName">
-            <summary>
-            类名
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.FullName">
-            <summary>
-            类全名
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.Summary">
-            <summary>
-            注释
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.BaseTypeName">
-            <summary>
-            基名称
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.ClassType">
-            <summary>
-            类类型
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.Propertys">
-            <summary>
-            属性集合
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.BaseType">
-            <summary>
-            基类 
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.GenericInfo">
-            <summary>
-            泛型信息
-            </summary>
-        </member>
-        <member name="T:Buffalo.DBTools.UIHelper.UIProject">
-            <summary>
-            项目项
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.UIProject.Name">
-            <summary>
-            项目名
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.UIProject.LstItems">
-            <summary>
-            项目项
             </summary>
         </member>
     </members>

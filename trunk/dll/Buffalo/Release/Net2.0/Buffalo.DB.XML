@@ -806,15 +806,6 @@
             <param name="scopeList">查询信息</param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessBase`1.Update(`0,Buffalo.DB.QueryConditions.ScopeList,System.Boolean)">
-            <summary>
-            修改记录
-            </summary>
-            <param name="obj">修改的对象</param>
-            <param name="scopeList">条件列表</param>
-            <param name="optimisticConcurrency">是否进行并发控制</param>
-            <returns></returns>
-        </member>
         <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessBase`1.Update(`0,Buffalo.DB.QueryConditions.ScopeList,Buffalo.DB.QueryConditions.ValueSetList,System.Boolean)">
             <summary>
             修改记录
@@ -5623,6 +5614,16 @@
              <param name="scopeList">范围更新的集合</param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessModel`1.Update(`0,Buffalo.DB.QueryConditions.ScopeList,Buffalo.DB.QueryConditions.ValueSetList,System.Boolean)">
+            <summary>
+            修改记录
+            </summary>
+            <param name="entity">实体</param>
+            <param name="scopeList">范围更新的集合</param>
+            <param name="valueList">值集合</param>
+            <param name="optimisticConcurrency">是否并发</param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessModel`1.Insert(`0,System.Boolean)">
             <summary>
             插入记录
@@ -10303,9 +10304,9 @@
             <param name="type">类型</param>
             <returns>如果已经初始化过侧返回false</returns>
         </member>
-        <member name="M:Buffalo.DB.EntityInfos.EntityInfoManager.FillSequenceInfo(System.Type,Buffalo.DB.EntityInfos.EntityInfoHandle)">
+        <member name="M:Buffalo.DB.EntityInfos.EntityInfoManager.FillAttributeInfo(System.Type,Buffalo.DB.EntityInfos.EntityInfoHandle)">
             <summary>
-            填充
+            填充特殊信息指定标签
             </summary>
             <param name="type"></param>
             <param name="dicParamsInfo"></param>
