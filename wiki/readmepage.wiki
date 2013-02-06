@@ -1,0 +1,17 @@
+生成器插件视频示例：
+
+
+[http://code.google.com/p/buffalobro/downloads/detail?name=%E5%AE%89%E8%A3%85.exe&can=2&q=#makechanges 安装插件]
+
+[http://code.google.com/p/buffalobro/downloads/detail?name=%E5%BA%93%E5%88%B0%E7%B1%BB.exe&can=2&q=#makechanges 库到类]
+
+[http://code.google.com/p/buffalobro/downloads/detail?name=%E7%B1%BB%E5%88%B0%E5%BA%931.exe&can=2&q=#makechanges 类到库1]
+
+[http://code.google.com/p/buffalobro/downloads/detail?name=%E7%B1%BB%E5%88%B0%E5%BA%932.exe&can=2&q=#makechanges 类到库2]
+
+[http://code.google.com/p/buffalobro/downloads/detail?name=%E7%B1%BB%E5%88%B0%E5%BA%933.exe&can=2&q=#makechanges 类到库3]
+
+[http://code.google.com/p/buffalobro/downloads/detail?name=Winform%E9%83%A8%E7%BD%B2.exe&can=2&q=#makechanges 部署到Winform项目]
+
+
+[http://code.google.com/p/buffalobro/downloads/detail?name=Web%E9%83%A8%E7%BD%B2.exe&can=2&q=#makechanges 部署到Web]
