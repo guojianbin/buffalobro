@@ -1,0 +1,9 @@
+E:\CSharpTest\MoveDataLink\MoveDataLink\bin\Debug\MoveDataLink.exe
+E:\CSharpTest\MoveDataLink\MoveDataLink\bin\Debug\MoveDataLink.pdb
+E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\ResolveAssemblyReference.cache
+E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.FrmDefault.resources
+E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.FrmMain.resources
+E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.Properties.Resources.resources
+E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.csproj.GenerateResource.Cache
+E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.exe
+E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.pdb
