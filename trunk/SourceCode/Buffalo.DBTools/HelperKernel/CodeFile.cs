@@ -32,35 +32,74 @@ namespace Buffalo.DBTools
         /// <returns></returns>
         public static void SaveFile(string fileName, List<string> content)
         {
+            Encoding fileEncoding = GetFileEncoding(fileName);
 
-            FileInfo fInfo = new FileInfo(fileName);
-            if (!fInfo.Directory.Exists) 
-            {
-                Directory.CreateDirectory(fInfo.DirectoryName);
-            }
-            Encoding fileEncoding = DefaultEncoding;
-            
-            if(File.Exists(fileName))
-            {
-                string bakName=fileName + ".bak";
-                if(File.Exists(bakName))
-                {
-                    File.Delete(bakName);
-                }
-                fileEncoding = FileEncodingInfo.GetEncodingType(fileName,false);
-                if (fileEncoding == null) 
-                {
-                    fileEncoding=DefaultEncoding;
-                }
-                File.Move(fileName, bakName);
-
-            }
+            BackupFile(fileName);
             using (StreamWriter writer = new StreamWriter(fileName, false, fileEncoding))
             {
                 foreach (string str in content)
                 {
                     writer.WriteLine(str);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 获取文件编码
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private static Encoding GetFileEncoding(string fileName) 
+        {
+            Encoding fileEncoding = DefaultEncoding;
+            fileEncoding = FileEncodingInfo.GetEncodingType(fileName, false);
+            if (fileEncoding == null)
+            {
+                fileEncoding = DefaultEncoding;
+            }
+            return fileEncoding;
+        }
+
+        /// <summary>
+        /// 备份文件
+        /// </summary>
+        /// <param name="fileName"></param>
+        private static void BackupFile(string fileName) 
+        {
+            FileInfo fInfo = new FileInfo(fileName);
+            if (!fInfo.Directory.Exists)
+            {
+                Directory.CreateDirectory(fInfo.DirectoryName);
+            }
+            
+
+            if (File.Exists(fileName))
+            {
+                string bakName = fileName + ".bak";
+                if (File.Exists(bakName))
+                {
+                    File.Delete(bakName);
+                }
+               
+                File.Move(fileName, bakName);
+
+            }
+        }
+
+        /// <summary>
+        /// 保存文件
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static void SaveFile(string fileName, string content)
+        {
+            Encoding fileEncoding = GetFileEncoding(fileName);
+            BackupFile(fileName);
+            using (StreamWriter writer = new StreamWriter(fileName, false, fileEncoding))
+            {
+
+                writer.WriteLine(content);
+                
             }
         }
 

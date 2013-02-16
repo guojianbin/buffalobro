@@ -19,11 +19,11 @@ namespace Buffalo.DBTools.UIHelper
             set { _modelPath = value; }
         }
 
-        private FileGenType _genType;
+        private BuildAction _genType;
         /// <summary>
         /// 生成类型
         /// </summary>
-        public FileGenType GenType
+        public BuildAction GenType
         {
             get { return _genType; }
             set { _genType = value; }

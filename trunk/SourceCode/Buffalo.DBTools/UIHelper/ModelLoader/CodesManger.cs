@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Buffalo.Kernel;
 
 namespace Buffalo.DBTools.UIHelper.ModelLoader
 {
@@ -41,9 +42,14 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         {
             get { return _sbMethod; }
         }
-
+        /// <summary>
+        /// 编译的命名空间
+        /// </summary>
         public const string CompilerNamespace = "Buffalo.DBTools.UIHelper.ModelLoaderItems";
-
+        /// <summary>
+        /// 编译函数的随机名
+        /// </summary>
+        public static readonly string DoCompilerName = "__"+CommonMethods.GuidToString(Guid.NewGuid());
         public string ToCode(string className) 
         {
             StringBuilder sbCode = new StringBuilder(65535);
@@ -53,14 +59,14 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
 
             sbCode.AppendLine("namespace " + CompilerNamespace);
             sbCode.AppendLine("{");
-            sbCode.AppendLine("public class "+className);
-            sbCode.AppendLine("     {");
+            sbCode.AppendLine("    public class " + className);
+            sbCode.AppendLine("    {");
             //GetGreanMain(sbCode);
             GetGreanCode(sbCode);
 
             sbCode.AppendLine(Method.ToString());
 
-            sbCode.AppendLine("     }");
+            sbCode.AppendLine("    }");
             sbCode.AppendLine("}");
             return sbCode.ToString();
         }
@@ -74,6 +80,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             sbCode.AppendLine("using System;");
             sbCode.AppendLine("using System.Collections.Generic;");
             sbCode.AppendLine("using System.Text;");
+            sbCode.AppendLine("using Buffalo.GeneratorInfo;");
             sbCode.AppendLine(Using.ToString());
         }
 
@@ -82,12 +89,14 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// </summary>
         private void GetGreanCode(StringBuilder sbCode) 
         {
-            sbCode.AppendLine("public string DoCompiler(EntityInfo Entity, UIConfigItem ClassConfig,List<UIModelItem> SelectedPropertys)");
-            sbCode.AppendLine("{");
-            sbCode.AppendLine(" StringBuilder SystemOut = new StringBuilder(65535);");
+            sbCode.AppendLine("        public string " + DoCompilerName + "(object entity, object selectedPropertys)");
+            sbCode.AppendLine("        {");
+            sbCode.AppendLine("            GeneratorEntity Entity=entity as GeneratorEntity;");
+            sbCode.AppendLine("            List<GenerateItem> SelectedPropertys=selectedPropertys as List<GenerateItem>;");
+            sbCode.AppendLine("            StringBuilder SystemOut = new StringBuilder(65535);");
             sbCode.AppendLine(Code.ToString());
-            sbCode.AppendLine("return SystemOut.ToString();");
-            sbCode.AppendLine("}");
+            sbCode.AppendLine("            return SystemOut.ToString();");
+            sbCode.AppendLine("        }");
         }
 
         ///// <summary>

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Buffalo.DBTools.UIHelper.ModelLoader;
+using EnvDTE;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -29,21 +31,95 @@ namespace Buffalo.DBTools.UIHelper
             get { return _lstItems; }
         }
 
+         /// <summary>
+        /// 生成代码
+        /// </summary>
+        /// <param name="entityInfo">实体信息</param>
+        /// <param name="classConfig">UI配置信息</param>
+        /// <param name="selectPropertys">选中需要生成的属性信息</param>
+        /// <returns></returns>
+        public void GenerateCode(EntityInfo entityInfo, UIConfigItem classConfig, List<UIModelItem> selectPropertys, UIModelItem classInfo)
+        {
+            GenerateCode(entityInfo, classConfig, selectPropertys,classInfo, _lstItems, null);
+        }
+
+        /// <summary>
+        /// 清空项目的编译缓存
+        /// </summary>
+        public void ClearCache(EntityInfo entityInfo)
+        {
+            ClearCache(entityInfo, _lstItems);
+        }
+        /// <summary>
+        /// 清空项目的编译缓存
+        /// </summary>
+        public void ClearCache(EntityInfo entityInfo, List<UIProjectItem> lstItem) 
+        {
+            foreach (UIProjectItem pitem in lstItem)
+            {
+                string mPath = UIConfigItem.FormatParameter(pitem.ModelPath, entityInfo);
+                CodeGenCache.DeleteGenerationer(mPath);
+                if (pitem.ChildItems != null && pitem.ChildItems.Count > 0)
+                {
+                    ClearCache(entityInfo, pitem.ChildItems);
+                }
+            }
+        }
+
         /// <summary>
         /// 生成代码
         /// </summary>
+        /// <param name="entityInfo">实体信息</param>
+        /// <param name="classConfig">UI配置信息</param>
+        /// <param name="selectPropertys">选中需要生成的属性信息</param>
+        /// <param name="lstItem">UI项目项</param>
+        /// <param name="parentItem">父项</param>
         /// <returns></returns>
-        public string GenerateCode(EntityInfo entityInfo, UIConfigItem classConfig,
-            List<UIModelItem> selectPropertys,UIProjectItem parent) 
+        private void GenerateCode(EntityInfo entityInfo, UIConfigItem classConfig,
+            List<UIModelItem> selectPropertys,UIModelItem classInfo,List<UIProjectItem> lstItem,ProjectItem parentItem) 
         {
-            foreach (UIProjectItem pitem in _lstItems) 
+
+
+            foreach (UIProjectItem pitem in lstItem) 
             {
                 string mPath = UIConfigItem.FormatParameter(pitem.ModelPath, entityInfo);
                 string tPath = UIConfigItem.FormatParameter(pitem.TargetPath, entityInfo);
-
+                CodeGenInfo info=CodeGenCache.GetGenerationer(mPath);
+                string content=info.Invoke(entityInfo, classConfig, selectPropertys,classInfo);
+                ProjectItem item = SaveItem(tPath, entityInfo, content, pitem.GenType, parentItem);
+                if (pitem.ChildItems != null && pitem.ChildItems.Count > 0) 
+                {
+                    GenerateCode(entityInfo, classConfig, selectPropertys,classInfo, pitem.ChildItems, item);
+                }
             }
 
-            return null;
+            
+        }
+
+        /// <summary>
+        /// 保存文件
+        /// </summary>
+        /// <param name="fileName">文件路径</param>
+        /// <param name="entityInfo"></param>
+        /// <param name="content"></param>
+        /// <param name="baction"></param>
+        /// <returns></returns>
+        private ProjectItem SaveItem(string fileName, EntityInfo entityInfo,
+            string content, BuildAction baction, ProjectItem parentItem) 
+        {
+            CodeFileHelper.SaveFile(fileName, content);
+            EnvDTE.ProjectItem newit = null;
+            if (parentItem != null)
+            {
+                newit = parentItem.ProjectItems.AddFromFile(fileName);
+                newit.Properties.Item("BuildAction").Value = (int)baction;
+            }
+            else 
+            {
+                newit = entityInfo.DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
+                newit.Properties.Item("BuildAction").Value = (int)baction;
+            }
+            return newit;
         }
 
     }

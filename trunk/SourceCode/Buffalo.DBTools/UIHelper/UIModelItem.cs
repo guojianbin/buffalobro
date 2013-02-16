@@ -4,6 +4,8 @@ using System.Text;
 using Buffalo.DBTools.HelperKernel;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using System.Xml;
+using Buffalo.GeneratorInfo;
+using Buffalo.WinFormsControl.Editors;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -19,7 +21,7 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         /// <param name="dicCheckItem">选中项</param>
         /// <param name="belongProperty">所属属性</param>
-        public UIModelItem( ClrProperty belongProperty) 
+        public UIModelItem(ClrProperty belongProperty) 
         {
             _belongProperty = belongProperty;
         }
@@ -92,7 +94,14 @@ namespace Buffalo.DBTools.UIHelper
         {
             XmlDocument doc=node.OwnerDocument;
             XmlAttribute att = doc.CreateAttribute("name");
-            att.InnerText = PropertyName;
+            if (_belongProperty != null)
+            {
+                att.InnerText = PropertyName;
+            }
+            else 
+            {
+                att.InnerText = "";
+            }
             node.Attributes.Append(att);
 
             foreach (KeyValuePair<string, object> kvp in _dicCheckItem) 
@@ -123,14 +132,15 @@ namespace Buffalo.DBTools.UIHelper
         /// 读取节点信息
         /// </summary>
         /// <param name="node">节点</param>
-        public void ReadItem(XmlNode node) 
+        public void ReadItem(XmlNode node,Dictionary<string, ConfigItem> dicConfig) 
         {
             string name=null;
-            string value=null;
-            foreach (XmlNode cnode in node.ChildNodes) 
+            object value=null;
+            ConfigItem item = null;
+            foreach (XmlNode cnode in node.ChildNodes)
             {
                 XmlAttribute att = cnode.Attributes["name"];
-                if (att == null) 
+                if (att == null)
                 {
                     continue;
                 }
@@ -141,6 +151,18 @@ namespace Buffalo.DBTools.UIHelper
                     continue;
                 }
                 value = att.InnerText;
+                if (dicConfig.TryGetValue(name, out item))
+                {
+                    if (item.Type == ConfigItemType.Check)
+                    {
+                        bool bvalue = false;
+                        if (!bool.TryParse(att.InnerText, out bvalue))
+                        {
+                            bvalue = att.InnerText == "1";
+                        }
+                        value = bvalue;
+                    }
+                }
                 _dicCheckItem[name] = value;
             }
         }
@@ -150,7 +172,12 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         public string FieldType
         {
-            get { return _belongProperty.MemberTypeShortName; }
+            get
+            {
+
+                return _belongProperty.MemberTypeShortName;
+
+            }
         }
         /// <summary>
         /// 注释
@@ -172,6 +199,24 @@ namespace Buffalo.DBTools.UIHelper
         public string PropertyName
         {
             get { return _belongProperty.Name; }
+        }
+
+        /// <summary>
+        /// 输出成GeneratItem类
+        /// </summary>
+        /// <returns></returns>
+        public GenerateItem ToGeneratItem() 
+        {
+            GenerateItem item = null;
+            if (_belongProperty == null)
+            {
+                item = new GenerateItem(_dicCheckItem, "", "", "", "");
+            }
+            else
+            {
+                item = new GenerateItem(_dicCheckItem, FieldType, Summary, TypeName, PropertyName);
+            }
+            return item;
         }
     }
 }

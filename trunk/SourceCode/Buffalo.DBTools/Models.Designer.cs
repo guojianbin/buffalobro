@@ -198,6 +198,33 @@ namespace Buffalo.DBTools {
         }
         
         /// <summary>
+        ///   查找类似 &lt;#script type=&quot;linked&quot;&gt;
+        ///{BasePath}\dll\Buffalo.Kernel.dll
+        ///&lt;/#script&gt;
+        ///
+        ///&lt;#script type=&quot;using&quot;&gt;
+        ///using Buffalo.Kernel;
+        ///&lt;/#script&gt;
+        ///
+        ///&lt;#script type=&quot;code&quot;&gt;
+        ///using System;
+        ///using System.Collections.Generic;
+        ///using System.Text;
+        ///&lt;#=Entity.GetValue(&quot;Using&quot;)#&gt;
+        ///namespace &lt;#=Entity.GetValue(&quot;Namespace&quot;)#&gt;
+        ///{
+        ///	public class &lt;#=Entity.ClassName #&gt;DataView
+        ///	{
+        ///		&lt;# foreach(GenerateItem pro in SelectedPropertys ) {#&gt;
+        ///		private DataViewItem _&lt;#=GetFieldName(pro.PropertyName)#&gt;=new DataViewItem(&lt;#=GetParamString(pr [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string DataView {
+            get {
+                return ResourceManager.GetString("DataView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 using System;
         ///using System.Collections.Generic;
         ///using System.Text;
@@ -258,14 +285,16 @@ namespace Buffalo.DBTools {
         /// <summary>
         ///   查找类似 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;root&gt;
-        ///  &lt;configItems&gt;
-        ///    &lt;item type=&quot;check&quot;  name=&quot;CanQuery&quot; summary=&quot;查询条件&quot;&gt;&lt;/item&gt;
-        ///    &lt;item type=&quot;check&quot; name=&quot;QueryDefault&quot; summary=&quot;默认查询条件&quot;&gt;&lt;/item&gt;
-        ///    &lt;item type=&quot;check&quot; name=&quot;CanAddNew&quot; summary=&quot;可添加&quot;&gt;&lt;/item&gt;
-        ///    &lt;item type=&quot;check&quot; name=&quot;CanEdit&quot; summary=&quot;可编辑&quot;&gt;&lt;/item&gt;
-        ///    &lt;item type=&quot;combo&quot; name=&quot;SumType&quot; summary=&quot;统计类型&quot; select=&quot;总相加:sum,总条数:count,平均:avg,自定义:custom&quot;&gt;&lt;/item&gt;
-        ///    &lt;item type=&quot;text&quot; name=&quot;CustomCount&quot; summary=&quot;自定义统计&quot;&gt;&lt;/item&gt;
-        ///  &lt;/configItems&gt; [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///
+        ///    &lt;configItems&gt;
+        ///      &lt;item type=&quot;check&quot;  name=&quot;CanQuery&quot; summary=&quot;查询条件&quot;&gt;&lt;/item&gt;
+        ///      &lt;item type=&quot;check&quot; name=&quot;CanAddNew&quot; summary=&quot;可添加&quot;&gt;&lt;/item&gt;
+        ///      &lt;item type=&quot;check&quot; name=&quot;CanEdit&quot; summary=&quot;可编辑&quot;&gt;&lt;/item&gt;
+        ///      &lt;item type=&quot;combo&quot; name=&quot;SumType&quot; summary=&quot;统计类型&quot; select=&quot;无:None,总相加:Sum,总条数:Count,平均:Avg,自定义:Custom&quot;&gt;&lt;/item&gt;
+        ///      &lt;item type=&quot;mtext&quot; name=&quot;CustomCount&quot; summary=&quot;自定义统计&quot;&gt;&lt;/item&gt;
+        ///    &lt;/configItems&gt;
+        ///  &lt;classItems&gt;
+        ///    &lt;item type=&quot;text&quot; name= [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string UIConfigItem {
             get {

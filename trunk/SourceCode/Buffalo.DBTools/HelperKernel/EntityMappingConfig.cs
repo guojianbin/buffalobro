@@ -5,6 +5,7 @@ using System.Xml;
 using System.IO;
 using Buffalo.DB.PropertyAttributes;
 using Buffalo.DBTools.ROMHelper;
+using Buffalo.DBTools.UIHelper;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -191,7 +192,7 @@ namespace Buffalo.DBTools.HelperKernel
             XmlDocument doc = ToXML(entity);
             SaveXML(fileName, doc);
             EnvDTE.ProjectItem newit = entity.DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
-            newit.Properties.Item("BuildAction").Value = 3;
+            newit.Properties.Item("BuildAction").Value = (int)BuildAction.Resource;
         }
 
         /// <summary>
@@ -212,7 +213,7 @@ namespace Buffalo.DBTools.HelperKernel
             XmlDocument doc = ToXML(entity);
             SaveXML(fileName, doc);
             EnvDTE.ProjectItem newit = entity.DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
-            newit.Properties.Item("BuildAction").Value = 3;
+            newit.Properties.Item("BuildAction").Value = (int)BuildAction.Resource;
         }
 
         /// <summary>

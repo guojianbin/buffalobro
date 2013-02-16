@@ -87,6 +87,7 @@
             this.gvProject.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gvProject.Size = new System.Drawing.Size(184, 71);
             this.gvProject.TabIndex = 1;
+            this.gvProject.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvProject_CellContentClick);
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -229,6 +230,8 @@
             // 
             // pnlClassConfig
             // 
+            this.pnlClassConfig.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlClassConfig.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlClassConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlClassConfig.Location = new System.Drawing.Point(0, 0);
             this.pnlClassConfig.Name = "pnlClassConfig";

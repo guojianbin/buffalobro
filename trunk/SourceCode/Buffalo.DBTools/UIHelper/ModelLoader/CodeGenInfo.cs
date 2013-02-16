@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Buffalo.Kernel.FastReflection;
 using System.Reflection;
+using Buffalo.GeneratorInfo;
+using System.CodeDom.Compiler;
 
 namespace Buffalo.DBTools.UIHelper.ModelLoader
 {
@@ -11,11 +13,23 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
     /// </summary>
     public class CodeGenInfo
     {
-        public CodeGenInfo(Type classType)
+        private string _code;
+        /// <summary>
+        /// Éú³É´úÂë
+        /// </summary>
+        public string Code
+        {
+            get { return _code; }
+        }
+
+
+        public CodeGenInfo(Type classType, string code)
         {
             _classType = classType;
             _codeClass = Activator.CreateInstance(_classType);
-            MethodInfo info=classType.GetMethod("DoCompiler",FastValueGetSet.AllBindingFlags);
+            
+
+            MethodInfo info = classType.GetMethod(CodesManger.DoCompilerName, FastValueGetSet.AllBindingFlags);
             _methodInfo = FastInvoke.GetMethodInvoker(info);
         }
 
@@ -36,10 +50,17 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// <param name="args"></param>
         /// <returns></returns>
         public string Invoke(EntityInfo entityInfo, UIConfigItem classConfig,
-            List<UIModelItem> selectPropertys) 
+            List<UIModelItem> selectPropertys, UIModelItem classInfo) 
         {
-            return _methodInfo.Invoke(_codeClass, new object[] { entityInfo, classConfig, selectPropertys }) as string;
+            GeneratorEntity entity = entityInfo.ToGeneratorEntity(classInfo);
+            List<GenerateItem> lst = new List<GenerateItem>(selectPropertys.Count);
+            foreach (UIModelItem item in selectPropertys) 
+            {
+                lst.Add(item.ToGeneratItem());
+            }
+            return _methodInfo.Invoke(_codeClass, new object[] { entity, lst }) as string;
         }
+        
 
     }
 }

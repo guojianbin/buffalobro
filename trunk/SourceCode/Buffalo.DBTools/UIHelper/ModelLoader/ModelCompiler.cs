@@ -50,6 +50,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                 {
                     LinkOutputer outputer = new LinkOutputer();
                     List<string> str = outputer.GetCode(queitem,_workspace);
+                    AddBuffaloLink(str);
                     man.Link.AddRange(str);
                 }
                 else if (type.Equals("using", StringComparison.CurrentCultureIgnoreCase)) 
@@ -74,6 +75,44 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             return man.ToCode(className);
         }
 
+        /// <summary>
+        /// 添加本项目的引用
+        /// </summary>
+        /// <param name="dll"></param>
+        private void AddBuffaloLink(List<string> dll) 
+        {
+            Assembly ass = null;
+
+            //ass = typeof(CodeGeneration).Assembly;
+            //string path = new Uri(ass.CodeBase).LocalPath;
+            //FileInfo info = new FileInfo(path);
+            //DirectoryInfo dic = info.Directory;
+            //FileInfo[] files = dic.GetFiles();
+            //foreach (FileInfo finfo in files) 
+            //{
+            //    string fpath = finfo.FullName;
+            //    if (fpath.LastIndexOf(".dll") >= 0) 
+            //    {
+            //        dll.Add(fpath);
+            //    }
+            //}
+            ass = typeof(Buffalo.GeneratorInfo.GenerateItem).Assembly;
+            string path=new Uri(ass.CodeBase).LocalPath;
+            dll.Add(path);
+            FileInfo file=new FileInfo(path);
+            string fileName=CommonMethods.GetBaseRoot(file.Name);
+            if (!File.Exists(fileName)) 
+            {
+                File.Copy(path, fileName);
+            }
+            //ass = typeof(Buffalo.DB.QueryConditions.ScopeList).Assembly;
+            //dll.Add(new Uri(ass.CodeBase).LocalPath);
+
+            //ass = typeof(CodeGeneration).Assembly;
+            //dll.Add(new Uri(ass.CodeBase).LocalPath);
+
+            
+        }
 
 
         /// <summary>
@@ -81,13 +120,14 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// </summary>
         /// <param name="errorMessage">如果出错此为信息</param>
         /// <returns></returns>
-        public Type GetCompileType(string className, StringBuilder errorMessage)
+        public CodeGenInfo GetCompileType(string className,StringBuilder codeCache, StringBuilder errorMessage)
         {
             string code = GetCode(className);
+            codeCache.Append(code);
             string ret = null;
-            Type objType = SourceCodeCompiler.DoCompiler(code, CodesManger.CompilerNamespace+"."+className, man.Link, errorMessage);
+            CodeGenInfo info = SourceCodeCompiler.DoCompiler(code, CodesManger.CompilerNamespace + "." + className, man.Link, errorMessage);
 
-            return objType;
+            return info;
         }
     }
 }

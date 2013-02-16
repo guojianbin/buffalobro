@@ -18,13 +18,13 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                 {
                     case ExpressionType.String:
                         FilterCode(item.Content);
-                        sbOut.Append("SystemOut.Append(\""+item.Content.ToString()+"\");\n");
+                        sbOut.Append("            SystemOut.Append(\"" + item.Content.ToString() + "\");\n");
                         break;
                     case ExpressionType.Code:
-                        sbOut.Append(item.Content.ToString() + "\n");
+                        sbOut.Append("            "+item.Content.ToString() + "\n");
                         break;
                     case ExpressionType.Express:
-                        sbOut.Append("SystemOut.Append(" + item.Content.ToString() + ");\n");
+                        sbOut.Append("            SystemOut.Append(" + item.Content.ToString() + ");\n");
                         break;
                     default:
                         break;

@@ -13,6 +13,10 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         private string _content;
         private int index = -1;
         Queue<ExpressionItem> _queitem = new Queue<ExpressionItem>();
+        /// <summary>
+        /// 代码块的标识
+        /// </summary>
+        private const char ScriptChar = '#';
 
         /// <summary>
         /// 代码树
@@ -63,7 +67,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         {
             if (MoveNext()) 
             {
-                if (CurrentChar == '?')
+                if (CurrentChar == ScriptChar)
                 {
                     _currentItem = new ExpressionItem();
                     _queitem.Enqueue(_currentItem);
@@ -119,7 +123,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                     }
                     _currentItem.Content.Append(CurrentChar);
                 }
-                else if (CurrentChar == '?')
+                else if (CurrentChar == ScriptChar)
                 {
                     if (stkChr.Count <= 0)
                     {
@@ -132,7 +136,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                             }
                             else
                             {
-                                _currentItem.Content.Append("?" + CurrentChar);
+                                _currentItem.Content.Append(ScriptChar + CurrentChar);
                             }
                         }
                     }

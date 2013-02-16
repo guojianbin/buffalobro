@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using Buffalo.DBTools.ROMHelper;
 using EnvDTE;
 using Buffalo.Win32Kernel;
+using Buffalo.DBTools.UIHelper;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -98,9 +99,10 @@ namespace Buffalo.DBTools.HelperKernel
                     }
                 }
             }
+            
             CodeFileHelper.SaveFile(fileName, codes);
             EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
-            newit.Properties.Item("BuildAction").Value = 1;
+            newit.Properties.Item("BuildAction").Value = (int)BuildAction.Code;
         }
 
         /// <summary>
@@ -244,7 +246,7 @@ namespace Buffalo.DBTools.HelperKernel
                 dmt.AppendDal(DataAccessNamespace + "." + type + "." + ClassName + "DataAccess", DataAccessNamespace + ".IDataAccess.I" + ClassName + "DataAccess");
                 CodeFileHelper.SaveFile(fileName, codes);
                 EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
-                newit.Properties.Item("BuildAction").Value = 1;
+                newit.Properties.Item("BuildAction").Value = (int)BuildAction.Code;
             }
             dmt.SaveXML();
         }
@@ -286,7 +288,7 @@ namespace Buffalo.DBTools.HelperKernel
             }
             CodeFileHelper.SaveFile(fileName, codes);
             EnvDTE.ProjectItem newit =DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
-            newit.Properties.Item("BuildAction").Value = 1;
+            newit.Properties.Item("BuildAction").Value = (int)BuildAction.Code;
         }
 
         /// <summary>
@@ -329,7 +331,7 @@ namespace Buffalo.DBTools.HelperKernel
             }
             CodeFileHelper.SaveFile(fileName, codes);
             EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
-            newit.Properties.Item("BuildAction").Value = 1;
+            newit.Properties.Item("BuildAction").Value = (int)BuildAction.Code;
         }
 
     }

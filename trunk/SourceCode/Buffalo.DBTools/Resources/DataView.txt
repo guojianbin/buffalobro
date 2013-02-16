@@ -1,0 +1,81 @@
+<#script type="linked">
+{BasePath}\dll\Buffalo.Kernel.dll
+</#script>
+
+<#script type="using">
+using Buffalo.Kernel;
+</#script>
+
+<#script type="code">
+using System;
+using System.Collections.Generic;
+using System.Text;
+<#=Entity.GetValue("Using")#>
+namespace <#=Entity.GetValue("Namespace")#>
+{
+	public class <#=Entity.ClassName #>DataView
+	{
+		<# foreach(GenerateItem pro in SelectedPropertys ) {#>
+		private DataViewItem _<#=GetFieldName(pro.PropertyName)#>=new DataViewItem(<#=GetParamString(pro)#>);
+		private DataViewItem <#=pro.PropertyName#>
+		{
+			get
+			{
+				return _<#=GetFieldName(pro.PropertyName)#>;
+			}
+			set
+			{
+				_<#=GetFieldName(pro.PropertyName)#>=value;
+			}
+		}
+		<#}#>
+		
+		
+		
+	}
+}
+</#script>
+
+<#script type="method">
+/// <summary>
+/// 获取字段名
+/// </summary>
+/// <param name="itemName">项名称</param>
+/// <returns></returns>
+public string GetFieldName(string name)
+{
+	string retName=name.Substring(0, 1).ToLower()+name.Substring(1, name.Length - 1);
+	return retName;
+	
+}
+
+/// <summary>
+/// 把属性信息转成初始化的参数信息
+/// </summary>
+/// <param name="pro">属性信息</param>
+/// <returns></returns>
+public string GetParamString(GenerateItem pro)
+{
+	StringBuilder sb=new StringBuilder();
+	sb.Append(pro.HasItem("CanQuery")?"true":"false");
+	sb.Append(",");
+	sb.Append(pro.HasItem("CanAddNew")?"true":"false");
+	sb.Append(",");
+	sb.Append(pro.HasItem("CanEdit")?"true":"false");
+	sb.Append(",\"");
+	sb.Append(pro.GetValue("SumType"));
+	sb.Append("\",\"");
+	sb.Append(pro.GetValue("CustomCount"));
+	sb.Append("\"");
+	return sb.ToString();
+}
+public string GetGUID()
+{
+	EnumInfo info=new EnumInfo();
+	return "";
+}
+public object GetGenerateItem()
+{
+	return new GenerateItem(null,null,null,null,null);
+}
+</#script>

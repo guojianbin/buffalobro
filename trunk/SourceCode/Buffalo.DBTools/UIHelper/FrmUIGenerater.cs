@@ -15,6 +15,8 @@ using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using Buffalo.WinFormsControl.Editors;
 using Buffalo.Kernel.FastReflection;
 using System.Security.AccessControl;
+using Buffalo.DBTools.UIHelper.ModelLoader;
+using System.Reflection;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -49,6 +51,9 @@ namespace Buffalo.DBTools.UIHelper
 
         private Dictionary<string, EditorBase> _classUIConfig = null;
         private Dictionary<string, EditorBase> _propertyUIConfig = null;
+
+        private Dictionary<string, ConfigItem> _configClassInfo = null;
+        private Dictionary<string, ConfigItem> _configItemInfo = null;
         #region 绑定信息
         /// <summary>
         /// 绑定属性信息
@@ -85,9 +90,12 @@ namespace Buffalo.DBTools.UIHelper
             _classUIConfig = new Dictionary<string, EditorBase>();
             List<ConfigItem> lstItem = _config.ClassItems;
             pnlClassConfig.Controls.Clear();
+            _configClassInfo = new Dictionary<string, ConfigItem>();
             for (int i = 0; i < lstItem.Count; i++)
             {
-                EditorBase editor = NewItem(lstItem[i]);
+                ConfigItem curItem=lstItem[i];
+                _configClassInfo[curItem.Name] = curItem;
+                EditorBase editor = NewItem(curItem);
 
                 pnlClassConfig.Controls.Add(editor);
                 //tabPanel.Controls.SetChildIndex(editor, i);
@@ -118,9 +126,12 @@ namespace Buffalo.DBTools.UIHelper
             tabPanel.RowStyles.Clear();
             tabPanel.ColumnStyles.Clear();
             AddCellStyle();
+            _configItemInfo = new Dictionary<string, ConfigItem>();
             for (int i = 0; i < lstItem.Count; i++) 
             {
-                EditorBase editor = NewItem(lstItem[i]);
+                ConfigItem curItem = lstItem[i];
+                _configItemInfo[curItem.Name] = curItem;
+                EditorBase editor = NewItem(curItem);
                 int col = i % 2;
                 int row = i / 2;
                 tabPanel.Controls.Add(editor, col, row);
@@ -187,11 +198,12 @@ namespace Buffalo.DBTools.UIHelper
         {
             gvMember.AutoGenerateColumns = false;
             gvProject.AutoGenerateColumns = false;
-            LoadItemCache();
             LoadInfo();
-            CreateItems();
             CreateClassItem();
+            CreateItems();
+            LoadItemCache();
             
+                        
             LoadClassItemCache();
             BindUIModleInfo(_classUIConfig, _classInfo);
             this.Text = "UI界面生成-" + _curEntityInfo.ClassName;
@@ -230,8 +242,22 @@ namespace Buffalo.DBTools.UIHelper
                 UIProject project = gvProject.CurrentRow.DataBoundItem as UIProject;
                 if (project != null) 
                 {
-                    
+                    try
+                    {
+                        project.GenerateCode(_curEntityInfo, _config, GetSelectedProperty(), _classInfo);
+                        this.Close();
+                    }
+                    catch (CompileException cex) 
+                    {
+                        FrmCompileResault.ShowCompileResault(cex.Code, cex.ToString());
+                    }
+                    //catch (Exception ex)
+                    //{
+                    //    FrmCompileResault.ShowCompileResault(null, ex.ToString());
+                    //    return;
+                    //}
                 }
+                
             }
         }
         #region 保存和加载
@@ -266,10 +292,36 @@ namespace Buffalo.DBTools.UIHelper
             {
                 File.WriteAllText(fileName, Models.UIConfigItem);
             }
+
+            string dvModel = directory + "DataView.model";
+            if (!File.Exists(dvModel))
+            {
+                File.WriteAllText(dvModel, Models.DataView);
+            }
+
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.Load(fileName);
 
             return xmldoc;
+        }
+
+        /// <summary>
+        /// 获取选中的项
+        /// </summary>
+        /// <returns></returns>
+        private List<UIModelItem> GetSelectedProperty() 
+        {
+            List<UIModelItem> lst = gvMember.DataSource as List<UIModelItem>;
+            List<UIModelItem> lstRet = new List<UIModelItem>(lst.Count);
+            foreach (UIModelItem item in lst)
+            {
+                if (!item.IsGenerate)
+                {
+                    continue;
+                }
+                lstRet.Add(item);
+            }
+            return lstRet;
         }
 
         /// <summary>
@@ -280,13 +332,10 @@ namespace Buffalo.DBTools.UIHelper
             XmlDocument doc = new XmlDocument();
             XmlNode root = doc.CreateElement("root");
             doc.AppendChild(root);
-            List<UIModelItem> lst = gvMember.DataSource as List<UIModelItem>;
+            List<UIModelItem> lst = GetSelectedProperty();
             foreach (UIModelItem item in lst)
             {
-                if (!item.IsGenerate)
-                {
-                    continue;
-                }
+
                 XmlNode inode = doc.CreateElement("modelitem");
                 root.AppendChild(inode);
                 item.WriteNode(inode);
@@ -310,32 +359,13 @@ namespace Buffalo.DBTools.UIHelper
             XmlNode root = doc.CreateElement("root");
             doc.AppendChild(root);
             Dictionary<string,object> div = _classInfo.CheckItem;
-            foreach (KeyValuePair<string, object> kvp in div)
-            {
-                XmlNode inode = doc.CreateElement("item");
-                XmlAttribute att = doc.CreateAttribute("name");
-                att.InnerText = kvp.Key;
-                inode.Attributes.Append(att);
-
-                string value = null;
-                if (kvp.Value is bool)
-                {
-                    value = (bool)kvp.Value ? "1" : "0";
-                }
-                else
-                {
-                    value = kvp.Value as string;
-                }
-                att = doc.CreateAttribute("value");
-                att.InnerText = value;
-                inode.Attributes.Append(att);
-                root.AppendChild(inode);
-            }
+            _classInfo.WriteNode(root);
 
             string directory = ModelPath + "\\";
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
+                File.SetAttributes(directory, FileAttributes.Hidden);
             }
             string fileName = directory + "\\classinfo.cache.xml";
             doc.Save(fileName);
@@ -358,17 +388,13 @@ namespace Buffalo.DBTools.UIHelper
                 doc.Load(fileName);
             }
             catch { return; }
-            XmlNodeList nodes = doc.GetElementsByTagName("item");
-            foreach(XmlNode node in nodes ) 
+            XmlNodeList nodes = doc.GetElementsByTagName("root");
+            if (nodes.Count <= 0) 
             {
-                
-                XmlAttribute attName = node.Attributes["name"];
-                XmlAttribute attValue = node.Attributes["value"];
-                if (attName != null && attValue!=null) 
-                {
-                    _classInfo.CheckItem[attName.InnerText] = attValue.InnerText;
-                }
+                return;
             }
+            _classInfo.ReadItem(nodes[0], _configClassInfo);
+            
         }
         /// <summary>
         /// 加载属性项信息
@@ -408,7 +434,7 @@ namespace Buffalo.DBTools.UIHelper
                 {
                     if (item.PropertyName == name) 
                     {
-                        item.ReadItem(node);
+                        item.ReadItem(node,_configItemInfo);
                         item.IsGenerate = true;
                     }
                 }
@@ -451,6 +477,22 @@ namespace Buffalo.DBTools.UIHelper
         #endregion
         private void labInfo_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void gvProject_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) 
+            {
+                return;
+            }
+            string colName = gvProject.Columns[e.ColumnIndex].Name;
+            if (colName == "colRefreash") 
+            {
+                UIProject item = gvProject.Rows[e.RowIndex].DataBoundItem as UIProject;
+                item.ClearCache(_curEntityInfo);
+            }
+
 
         }
 

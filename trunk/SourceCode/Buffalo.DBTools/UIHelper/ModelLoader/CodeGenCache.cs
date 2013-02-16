@@ -27,6 +27,24 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             }
             return ret;
         }
+
+        /// <summary>
+        /// 清空所有缓存
+        /// </summary>
+        public static void Clear() 
+        {
+            _dicCodeCache.Clear();
+        }
+
+        /// <summary>
+        /// 删除缓存
+        /// </summary>
+        /// <param name="path">缓存对应路径</param>
+        public static void DeleteGenerationer(string path) 
+        {
+            _dicCodeCache.Remove(path);
+        }
+
         private static int _classCount = 0;
         /// <summary>
         /// 生成生成器
@@ -41,12 +59,15 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             ModelCompiler compiler = new ModelCompiler(content, workspace);
             string className = "ModelCompilerClass" + _classCount;
             StringBuilder sbError=new StringBuilder();
-            Type classType=compiler.GetCompileType(className, sbError);
+            StringBuilder lastCodeCache = new StringBuilder();
+            CodeGenInfo info = compiler.GetCompileType(className, lastCodeCache, sbError);
             if (sbError.Length > 0) 
             {
-                throw new Exception("模版编译错误:\n" + sbError.Length);
+                CompileException ex=new CompileException("模版编译错误:\n" + sbError);
+                ex.Code = lastCodeCache.ToString();
+                throw ex;
             }
-            CodeGenInfo info = new CodeGenInfo(classType);
+            
             
             _classCount++;
             return info;

@@ -130,7 +130,7 @@ namespace Buffalo.WinFormsControl.Editors
         public void BindValue(List<ComboBoxItem> lstItem) 
         {
             cmbValue.DisplayMember = "Text";
-            cmbValue.ValueMember = "Tag";
+            cmbValue.ValueMember = "Value";
             cmbValue.DataSource = lstItem;
         }
 

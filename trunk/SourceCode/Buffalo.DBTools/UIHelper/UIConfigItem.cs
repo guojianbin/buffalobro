@@ -142,7 +142,7 @@ namespace Buffalo.DBTools.UIHelper
                     items.Add(item);
                     if (projectNode.ChildNodes.Count > 0)
                     {
-                        FillProjectItem(projectNode, items);
+                        FillProjectItem(projectNode, item.ChildItems);
                     }
                 }
 
@@ -156,21 +156,21 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        private FileGenType GetGenType(string type) 
+        private BuildAction GetGenType(string type) 
         {
             if (type.Equals("code", StringComparison.CurrentCultureIgnoreCase)) 
             {
-                return FileGenType.Code;
+                return BuildAction.Code;
             }
             if (type.Equals("resource", StringComparison.CurrentCultureIgnoreCase))
             {
-                return FileGenType.Resource;
+                return BuildAction.Resource;
             }
             if (type.Equals("file", StringComparison.CurrentCultureIgnoreCase))
             {
-                return FileGenType.File;
+                return BuildAction.File;
             }
-            return FileGenType.Code;
+            return BuildAction.Code;
         }
 
 
@@ -184,7 +184,7 @@ namespace Buffalo.DBTools.UIHelper
         {
             string projectName = entityInfo.DesignerInfo.CurrentProject.Name;
             FileInfo projectFile = new FileInfo(entityInfo.DesignerInfo.CurrentProject.FileName);
-            string projectPath = projectFile.Directory.Name;
+            string projectPath = projectFile.Directory.FullName;
 
             string ret = parameter;
             ret = ret.Replace("{ProjectName}", projectName);

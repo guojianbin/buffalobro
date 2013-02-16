@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using Buffalo.DBTools.HelperKernel;
+using Buffalo.GeneratorInfo;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -134,6 +135,7 @@ namespace Buffalo.DBTools.UIHelper
             get { return _dicGenericInfo; }
         }
 
+
         /// <summary>
         /// 初始化属性
         /// </summary>
@@ -166,6 +168,17 @@ namespace Buffalo.DBTools.UIHelper
             {
                 EntityConfig.InitGeneric(ctype, _dicGenericInfo);
             }
+        }
+
+        /// <summary>
+        /// 输出成GeneratorEntity
+        /// </summary>
+        /// <param name="classModelInfo"></param>
+        /// <returns></returns>
+        public GeneratorEntity ToGeneratorEntity(UIModelItem classModelInfo) 
+        {
+            GeneratorEntity entity = new GeneratorEntity(_fileName, _namespace, _className, _summary, _baseTypeName, _dicGenericInfo, classModelInfo.ToGeneratItem());
+            return entity;
         }
     }
 }
