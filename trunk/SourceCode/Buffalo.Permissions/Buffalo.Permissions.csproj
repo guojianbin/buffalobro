@@ -35,6 +35,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataViewInfo\DataViewer.cs" />
+    <Compile Include="DataViewInfo\DataItem.cs" />
+    <Compile Include="DataViewInfo\DataViewerSum.cs" />
     <Compile Include="PermissionManager.cs" />
     <Compile Include="PermissionContainer.cs" />
     <Compile Include="PermissionsInfo\BPBase.cs" />

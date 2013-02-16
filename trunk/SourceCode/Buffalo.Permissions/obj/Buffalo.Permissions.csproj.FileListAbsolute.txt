@@ -101,3 +101,14 @@ E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Release\Buffalo.Perm
 E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Release\Buffalo.Permissions.pdb
 D:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.XML
 E:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.XML
+E:\CSharpTest\BuffaloCode\SourceCode\Debug\2005\Buffalo.Permissions.dll
+E:\CSharpTest\BuffaloCode\SourceCode\Debug\2005\Buffalo.Permissions.pdb
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\ResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.PermissionsInfo.BEM.BPBase.BEM.xml
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.PermissionsInfo.BEM.BPGroup.BEM.xml
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.PermissionsInfo.BEM.BPSysModel.BEM.xml
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.PermissionsInfo.BEM.BPSysModelItem.BEM.xml
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.PermissionsInfo.BEM.BPGroupModelRight.BEM.xml
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.PermissionsInfo.BEM.BPGroupItemRight.BEM.xml
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.dll
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.pdb
