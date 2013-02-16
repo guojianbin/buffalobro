@@ -17,6 +17,10 @@ namespace Buffalo.Kernel
         public static Encoding GetEncodingType(string fileName,bool valNotBOM)
         {
             Encoding ret = null;
+            if (!File.Exists(fileName)) 
+            {
+                return ret;
+            }
             using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
             {
                 ret = GetEncodingType(fs,valNotBOM);
