@@ -38,9 +38,9 @@ namespace Buffalo.DBTools.UIHelper
         /// <param name="classConfig">UI配置信息</param>
         /// <param name="selectPropertys">选中需要生成的属性信息</param>
         /// <returns></returns>
-        public void GenerateCode(EntityInfo entityInfo, UIConfigItem classConfig, List<UIModelItem> selectPropertys, UIModelItem classInfo)
+        public void GenerateCode(EntityInfo entityInfo, UIConfigItem classConfig,Project selectedProject, List<UIModelItem> selectPropertys, UIModelItem classInfo)
         {
-            GenerateCode(entityInfo, classConfig, selectPropertys,classInfo, _lstItems, null);
+            GenerateCode(entityInfo, classConfig,selectedProject, selectPropertys,classInfo, _lstItems, null);
         }
 
         /// <summary>
@@ -48,23 +48,23 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         public void ClearCache(EntityInfo entityInfo)
         {
-            ClearCache(entityInfo, _lstItems);
+            CodeGenCache.Clear();
         }
-        /// <summary>
-        /// 清空项目的编译缓存
-        /// </summary>
-        public void ClearCache(EntityInfo entityInfo, List<UIProjectItem> lstItem) 
-        {
-            foreach (UIProjectItem pitem in lstItem)
-            {
-                string mPath = UIConfigItem.FormatParameter(pitem.ModelPath, entityInfo);
-                CodeGenCache.DeleteGenerationer(mPath);
-                if (pitem.ChildItems != null && pitem.ChildItems.Count > 0)
-                {
-                    ClearCache(entityInfo, pitem.ChildItems);
-                }
-            }
-        }
+        ///// <summary>
+        ///// 清空项目的编译缓存
+        ///// </summary>
+        //public void ClearCache(EntityInfo entityInfo, List<UIProjectItem> lstItem) 
+        //{
+        //    foreach (UIProjectItem pitem in lstItem)
+        //    {
+        //        string mPath = UIConfigItem.FormatParameter(pitem.ModelPath, entityInfo);
+        //        CodeGenCache.DeleteGenerationer(mPath);
+        //        if (pitem.ChildItems != null && pitem.ChildItems.Count > 0)
+        //        {
+        //            ClearCache(entityInfo, pitem.ChildItems);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// 生成代码
@@ -75,21 +75,21 @@ namespace Buffalo.DBTools.UIHelper
         /// <param name="lstItem">UI项目项</param>
         /// <param name="parentItem">父项</param>
         /// <returns></returns>
-        private void GenerateCode(EntityInfo entityInfo, UIConfigItem classConfig,
+        private void GenerateCode(EntityInfo entityInfo, UIConfigItem classConfig, Project selectedProject,
             List<UIModelItem> selectPropertys,UIModelItem classInfo,List<UIProjectItem> lstItem,ProjectItem parentItem) 
         {
 
 
             foreach (UIProjectItem pitem in lstItem) 
             {
-                string mPath = UIConfigItem.FormatParameter(pitem.ModelPath, entityInfo);
-                string tPath = UIConfigItem.FormatParameter(pitem.TargetPath, entityInfo);
+                string mPath = UIConfigItem.FormatParameter(pitem.ModelPath, entityInfo,selectedProject);
+                string tPath = UIConfigItem.FormatParameter(pitem.TargetPath, entityInfo, selectedProject);
                 CodeGenInfo info=CodeGenCache.GetGenerationer(mPath);
                 string content=info.Invoke(entityInfo, classConfig, selectPropertys,classInfo);
-                ProjectItem item = SaveItem(tPath, entityInfo, content, pitem.GenType, parentItem);
+                ProjectItem item = SaveItem(tPath, selectedProject, content, pitem.GenType, parentItem);
                 if (pitem.ChildItems != null && pitem.ChildItems.Count > 0) 
                 {
-                    GenerateCode(entityInfo, classConfig, selectPropertys,classInfo, pitem.ChildItems, item);
+                    GenerateCode(entityInfo, classConfig, selectedProject, selectPropertys, classInfo, pitem.ChildItems, item);
                 }
             }
 
@@ -104,7 +104,7 @@ namespace Buffalo.DBTools.UIHelper
         /// <param name="content"></param>
         /// <param name="baction"></param>
         /// <returns></returns>
-        private ProjectItem SaveItem(string fileName, EntityInfo entityInfo,
+        private ProjectItem SaveItem(string fileName, Project selectedProject,
             string content, BuildAction baction, ProjectItem parentItem) 
         {
             CodeFileHelper.SaveFile(fileName, content);
@@ -116,7 +116,7 @@ namespace Buffalo.DBTools.UIHelper
             }
             else 
             {
-                newit = entityInfo.DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
+                newit = selectedProject.ProjectItems.AddFromFile(fileName);
                 newit.Properties.Item("BuildAction").Value = (int)baction;
             }
             return newit;

@@ -38,7 +38,7 @@ namespace Buffalo.Permissions.DataViewInfo
         /// <param name="sumType">统计类型</param>
         /// <param name="customSum">自定义统计项</param>
         /// <returns>数据项</returns>
-        protected DataItem CreateDataItem(string propertyName,string propertyType,
+        protected DataItem CreateDataItem(string propertyName, Type propertyType,
             bool canView, bool canAdd, bool canEdit, 
             SumType sumType, BQLParamHandle customSum) 
         {

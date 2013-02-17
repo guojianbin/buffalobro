@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmUIGenerater));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.gvProject = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRefreash = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.cmbProjects = new Buffalo.WinFormsControl.Editors.ComboBoxEditor();
+            this.cmbModels = new Buffalo.WinFormsControl.Editors.ComboBoxEditor();
+            this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnGen = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -42,12 +42,12 @@
             this.gvMember = new System.Windows.Forms.DataGridView();
             this.ColCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.pnlClassConfig = new System.Windows.Forms.FlowLayoutPanel();
+            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gvProject)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -57,7 +57,9 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.gvProject);
+            this.panel1.Controls.Add(this.cmbProjects);
+            this.panel1.Controls.Add(this.cmbModels);
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.btnGen);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -66,44 +68,44 @@
             this.panel1.Size = new System.Drawing.Size(697, 71);
             this.panel1.TabIndex = 0;
             // 
-            // gvProject
+            // cmbProjects
             // 
-            this.gvProject.AllowUserToAddRows = false;
-            this.gvProject.AllowUserToDeleteRows = false;
-            this.gvProject.AllowUserToResizeColumns = false;
-            this.gvProject.AllowUserToResizeRows = false;
-            this.gvProject.BackgroundColor = System.Drawing.Color.White;
-            this.gvProject.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gvProject.ColumnHeadersVisible = false;
-            this.gvProject.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn3,
-            this.colRefreash});
-            this.gvProject.Dock = System.Windows.Forms.DockStyle.Left;
-            this.gvProject.Location = new System.Drawing.Point(0, 0);
-            this.gvProject.MultiSelect = false;
-            this.gvProject.Name = "gvProject";
-            this.gvProject.RowHeadersVisible = false;
-            this.gvProject.RowTemplate.Height = 23;
-            this.gvProject.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gvProject.Size = new System.Drawing.Size(184, 71);
-            this.gvProject.TabIndex = 1;
-            this.gvProject.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvProject_CellContentClick);
+            this.cmbProjects.BindPropertyName = null;
+            this.cmbProjects.LableFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmbProjects.LableForeColor = System.Drawing.SystemColors.WindowText;
+            this.cmbProjects.LableText = "输出代码:";
+            this.cmbProjects.LableWidth = 80;
+            this.cmbProjects.Location = new System.Drawing.Point(12, 43);
+            this.cmbProjects.MaximumSize = new System.Drawing.Size(500, 25);
+            this.cmbProjects.MinimumSize = new System.Drawing.Size(200, 25);
+            this.cmbProjects.Name = "cmbProjects";
+            this.cmbProjects.Size = new System.Drawing.Size(221, 25);
+            this.cmbProjects.TabIndex = 5;
+            this.cmbProjects.Value = null;
             // 
-            // dataGridViewTextBoxColumn3
+            // cmbModels
             // 
-            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Name";
-            this.dataGridViewTextBoxColumn3.HeaderText = "项目名";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.cmbModels.BindPropertyName = null;
+            this.cmbModels.LableFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmbModels.LableForeColor = System.Drawing.SystemColors.WindowText;
+            this.cmbModels.LableText = "方案:";
+            this.cmbModels.LableWidth = 80;
+            this.cmbModels.Location = new System.Drawing.Point(12, 12);
+            this.cmbModels.MaximumSize = new System.Drawing.Size(500, 25);
+            this.cmbModels.MinimumSize = new System.Drawing.Size(200, 25);
+            this.cmbModels.Name = "cmbModels";
+            this.cmbModels.Size = new System.Drawing.Size(221, 25);
+            this.cmbModels.TabIndex = 5;
+            this.cmbModels.Value = null;
             // 
-            // colRefreash
+            // button1
             // 
-            this.colRefreash.HeaderText = "刷新";
-            this.colRefreash.Name = "colRefreash";
-            this.colRefreash.Text = "刷新";
-            this.colRefreash.UseColumnTextForButtonValue = true;
-            this.colRefreash.Width = 80;
+            this.button1.Location = new System.Drawing.Point(239, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(56, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "重加载";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -206,19 +208,6 @@
             this.ColName.Name = "ColName";
             this.ColName.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn2.HeaderText = "属性";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
             // panel6
             // 
             this.panel6.Controls.Add(this.pnlClassConfig);
@@ -230,7 +219,7 @@
             // 
             // pnlClassConfig
             // 
-            this.pnlClassConfig.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlClassConfig.BackColor = System.Drawing.Color.Transparent;
             this.pnlClassConfig.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlClassConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlClassConfig.Location = new System.Drawing.Point(0, 0);
@@ -238,10 +227,35 @@
             this.pnlClassConfig.Size = new System.Drawing.Size(697, 59);
             this.pnlClassConfig.TabIndex = 0;
             // 
+            // dataGridViewCheckBoxColumn1
+            // 
+            this.dataGridViewCheckBoxColumn1.DataPropertyName = "IsGenerate";
+            this.dataGridViewCheckBoxColumn1.HeaderText = "";
+            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+            this.dataGridViewCheckBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewCheckBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewCheckBoxColumn1.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "PropertyName";
+            this.dataGridViewTextBoxColumn1.HeaderText = "";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn2.HeaderText = "属性";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
             // FrmUIGenerater
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(697, 538);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -251,7 +265,6 @@
             this.Text = "界面生成";
             this.Load += new System.EventHandler(this.FrmUIGenerater_Load);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gvProject)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
@@ -273,13 +286,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColCheck;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
-        private System.Windows.Forms.DataGridView gvProject;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnGen;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewButtonColumn colRefreash;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.FlowLayoutPanel pnlClassConfig;
+        private Buffalo.WinFormsControl.Editors.ComboBoxEditor cmbProjects;
+        private System.Windows.Forms.Button button1;
+        private Buffalo.WinFormsControl.Editors.ComboBoxEditor cmbModels;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
+
 
     }
 }

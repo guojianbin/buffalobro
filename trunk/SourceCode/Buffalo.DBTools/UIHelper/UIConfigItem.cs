@@ -5,6 +5,7 @@ using System.Xml;
 using Buffalo.DBTools.HelperKernel;
 using System.IO;
 using Buffalo.Win32Kernel;
+using EnvDTE;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -130,7 +131,7 @@ namespace Buffalo.DBTools.UIHelper
                         item.ModelPath = att.InnerText;
                     }
                     att = projectNode.Attributes["type"];
-                    if (att == null)
+                    if (att != null)
                     {
                         item.GenType = GetGenType(att.InnerText);
                     }
@@ -180,15 +181,21 @@ namespace Buffalo.DBTools.UIHelper
         /// <param name="parameter"></param>
         /// <returns></returns>
         public static string FormatParameter(string parameter,
-            EntityInfo entityInfo)
+            EntityInfo entityInfo,Project selectedProject)
         {
-            string projectName = entityInfo.DesignerInfo.CurrentProject.Name;
-            FileInfo projectFile = new FileInfo(entityInfo.DesignerInfo.CurrentProject.FileName);
-            string projectPath = projectFile.Directory.FullName;
+            string curProjectName = entityInfo.DesignerInfo.CurrentProject.Name;
+            FileInfo curProjectFile = new FileInfo(entityInfo.DesignerInfo.CurrentProject.FileName);
+            string curProjectPath = curProjectFile.Directory.FullName;
+
+            string selProjectName = selectedProject.Name;
+            FileInfo selProjectFile = new FileInfo(selectedProject.FileName);
+            string selProjectPath = selProjectFile.Directory.FullName;
 
             string ret = parameter;
-            ret = ret.Replace("{ProjectName}", projectName);
-            ret = ret.Replace("{ProjectPath}", projectPath);
+            ret = ret.Replace("{ProjectName}", curProjectName);
+            ret = ret.Replace("{ProjectPath}", curProjectPath);
+            ret = ret.Replace("{SelectProjectName}", selProjectName);
+            ret = ret.Replace("{SelectProjectPath}", selProjectPath);
             ret = ret.Replace("{ClassName}", entityInfo.ClassName);
             return ret;
         }

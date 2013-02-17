@@ -17,6 +17,7 @@ using Buffalo.Kernel.FastReflection;
 using System.Security.AccessControl;
 using Buffalo.DBTools.UIHelper.ModelLoader;
 using System.Reflection;
+using Buffalo.Win32Kernel;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -73,13 +74,36 @@ namespace Buffalo.DBTools.UIHelper
             gvMember.DataSource = lstItems;
             BindProjects();
         }
+
+        /// <summary>
+        /// 绑定项目集合
+        /// </summary>
+        public void BindTargetProjects(List<Project> lstProjects) 
+        {
+            List<ComboBoxItem> lst = new List<ComboBoxItem>();
+            foreach(Project objProject in lstProjects)
+            {
+                
+                ComboBoxItem item = new ComboBoxItem(objProject.Name, objProject);
+                lst.Add(item);
+            }
+            cmbProjects.BindValue(lst);
+        }
+
         /// <summary>
         /// 绑定项目信息
         /// </summary>
         private void BindProjects() 
         {
             List<UIProject> lstPorject = _config.Projects;
-            gvProject.DataSource = lstPorject;
+            List<ComboBoxItem> lst = new List<ComboBoxItem>();
+            foreach (UIProject objProject in lstPorject)
+            {
+
+                ComboBoxItem item = new ComboBoxItem(objProject.Name, objProject);
+                lst.Add(item);
+            }
+            cmbModels.BindValue(lst);
         }
 
         /// <summary>
@@ -197,7 +221,6 @@ namespace Buffalo.DBTools.UIHelper
         private void FrmUIGenerater_Load(object sender, EventArgs e)
         {
             gvMember.AutoGenerateColumns = false;
-            gvProject.AutoGenerateColumns = false;
             LoadInfo();
             CreateClassItem();
             CreateItems();
@@ -237,14 +260,15 @@ namespace Buffalo.DBTools.UIHelper
             SaveItemInfos();
             SaveClassItemInfo();
 
-            if (gvProject.CurrentRow != null)
+            if (cmbModels.Value!=null)
             {
-                UIProject project = gvProject.CurrentRow.DataBoundItem as UIProject;
+                UIProject project = cmbModels.Value as UIProject;
                 if (project != null) 
                 {
                     try
                     {
-                        project.GenerateCode(_curEntityInfo, _config, GetSelectedProperty(), _classInfo);
+                        Project selectedProject = cmbProjects.Value as Project;
+                        project.GenerateCode(_curEntityInfo, _config,selectedProject, GetSelectedProperty(), _classInfo);
                         this.Close();
                     }
                     catch (CompileException cex) 
@@ -480,20 +504,25 @@ namespace Buffalo.DBTools.UIHelper
 
         }
 
-        private void gvProject_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        //private void gvProject_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.RowIndex < 0) 
+        //    {
+        //        return;
+        //    }
+        //    string colName = gvProject.Columns[e.ColumnIndex].Name;
+        //    if (colName == "colRefreash") 
+        //    {
+        //        UIProject item = gvProject.Rows[e.RowIndex].DataBoundItem as UIProject;
+        //        item.ClearCache(_curEntityInfo);
+        //    }
+
+
+        //}
+
+        private void button1_Click(object sender, EventArgs e)
         {
-            if (e.RowIndex < 0) 
-            {
-                return;
-            }
-            string colName = gvProject.Columns[e.ColumnIndex].Name;
-            if (colName == "colRefreash") 
-            {
-                UIProject item = gvProject.Rows[e.RowIndex].DataBoundItem as UIProject;
-                item.ClearCache(_curEntityInfo);
-            }
-
-
+            
         }
 
         

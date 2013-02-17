@@ -59,7 +59,7 @@ namespace Buffalo.DBTools.UIHelper
                 case ConfigItemType.Check:
                     CheckBoxEditor cbe = new CheckBoxEditor();
                     
-                    cbe.OnOffType = OnOffButtonType.Oblongrectangle;
+                    cbe.OnOffType = OnOffButtonType.Quadrate;
                     return cbe;
                 case ConfigItemType.Combo:
                     

@@ -58,7 +58,15 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             {
                 lst.Add(item.ToGeneratItem());
             }
-            return _methodInfo.Invoke(_codeClass, new object[] { entity, lst }) as string;
+            try
+            {
+                string ret = _methodInfo.Invoke(_codeClass, new object[] { entity, lst }) as string;
+                return ret;
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
         }
         
 

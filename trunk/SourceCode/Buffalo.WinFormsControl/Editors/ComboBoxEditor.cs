@@ -68,6 +68,10 @@ namespace Buffalo.WinFormsControl.Editors
             }
             set
             {
+                if (value == null) 
+                {
+                    return;
+                }
                 cmbValue.SelectedValue=value;
             }
         }

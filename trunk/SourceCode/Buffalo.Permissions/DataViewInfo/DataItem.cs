@@ -109,10 +109,25 @@ namespace Buffalo.Permissions.DataViewInfo
     /// </summary>
     public enum SumType 
     {
+        /// <summary>
+        /// 无
+        /// </summary>
         None=1,
+        /// <summary>
+        /// 总和
+        /// </summary>
         Sum=2,
+        /// <summary>
+        /// 总条数
+        /// </summary>
         Count=3,
+        /// <summary>
+        /// 平均值
+        /// </summary>
         Avg=4,
+        /// <summary>
+        /// 自定义统计
+        /// </summary>
         Custom=5
     }
 }

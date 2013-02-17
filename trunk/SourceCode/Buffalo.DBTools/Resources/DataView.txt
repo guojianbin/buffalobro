@@ -1,23 +1,25 @@
 <#script type="linked">
-{BasePath}\dll\Buffalo.Kernel.dll
+
 </#script>
 
 <#script type="using">
-using Buffalo.Kernel;
+
 </#script>
 
 <#script type="code">
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Buffalo.Permissions.DataViewInfo;
+using Buffalo.DB.BQLCommon.BQLConditionCommon;
 <#=Entity.GetValue("Using")#>
 namespace <#=Entity.GetValue("Namespace")#>
 {
-	public class <#=Entity.ClassName #>DataView
+	public class <#=Entity.ClassName #>DataView:DataViewer
 	{
 		<# foreach(GenerateItem pro in SelectedPropertys ) {#>
-		private DataViewItem _<#=GetFieldName(pro.PropertyName)#>=new DataViewItem(<#=GetParamString(pro)#>);
-		private DataViewItem <#=pro.PropertyName#>
+		private DataItem _<#=GetFieldName(pro.PropertyName)#>=null;
+		private DataItem <#=pro.PropertyName#>
 		{
 			get
 			{
@@ -30,7 +32,17 @@ namespace <#=Entity.GetValue("Namespace")#>
 		}
 		<#}#>
 		
-		
+		/// <summary>
+        /// <#= Entity.Summary #>数据视图
+        /// </summary>
+        /// <param name="entityHandle">所属的实体信息</param>
+		public <#=Entity.ClassName #>DataView(BQLEntityTableHandle entityHandle)
+		:base(entityHandle)
+		{
+			<# foreach(GenerateItem pro in SelectedPropertys ) {#>
+			_<#=GetFieldName(pro.PropertyName)#>=CreateDataItem(<#=GetParamString(pro)#>);
+			<#}#>
+		}
 		
 	}
 }
@@ -38,7 +50,7 @@ namespace <#=Entity.GetValue("Namespace")#>
 
 <#script type="method">
 /// <summary>
-/// 获取字段名
+/// 获取字段吿
 /// </summary>
 /// <param name="itemName">项名称</param>
 /// <returns></returns>
@@ -57,25 +69,21 @@ public string GetFieldName(string name)
 public string GetParamString(GenerateItem pro)
 {
 	StringBuilder sb=new StringBuilder();
+	sb.Append("\""+pro.PropertyName+"\"");
+	sb.Append(",");
+	sb.Append("typeof("+pro.PropertyType+")");
+	sb.Append(",");
 	sb.Append(pro.HasItem("CanQuery")?"true":"false");
 	sb.Append(",");
 	sb.Append(pro.HasItem("CanAddNew")?"true":"false");
 	sb.Append(",");
 	sb.Append(pro.HasItem("CanEdit")?"true":"false");
-	sb.Append(",\"");
-	sb.Append(pro.GetValue("SumType"));
-	sb.Append("\",\"");
-	sb.Append(pro.GetValue("CustomCount"));
-	sb.Append("\"");
+	sb.Append(",");
+	string sumType=pro.GetValue("SumType");
+	sb.Append(string.IsNullOrEmpty(sumType)?"SumType.None":"SumType."+sumType);
+	sb.Append(",");
+	string customer=pro.GetValue("CustomCount");
+	sb.Append(string.IsNullOrEmpty(customer)?"null":customer);
 	return sb.ToString();
-}
-public string GetGUID()
-{
-	EnumInfo info=new EnumInfo();
-	return "";
-}
-public object GetGenerateItem()
-{
-	return new GenerateItem(null,null,null,null,null);
 }
 </#script>

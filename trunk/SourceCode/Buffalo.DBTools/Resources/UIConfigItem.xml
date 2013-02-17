@@ -19,7 +19,7 @@
         <item path="{ProjectPath}\webmodel.cs.model" type="code" target="{ClassName}Query.aspx.cs">
         </item>
       </item>-->
-      <item path="{ProjectPath}\.bmodels\DataView.model" type="code" target="{ProjectPath}\DataView\{ClassName}DataView.cs">
+      <item path="{ProjectPath}\.bmodels\DataView.model" type="code" target="{SelectProjectPath}\DataView\{ClassName}DataView.cs">
       </item>
     </project>
   </models>
