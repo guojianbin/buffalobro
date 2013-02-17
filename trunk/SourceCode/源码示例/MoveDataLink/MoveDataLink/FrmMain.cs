@@ -44,7 +44,8 @@ namespace MoveDataLink
             try
             {
                 CopyFolder(txtSource.Text, txtTarget.Text);
-                Directory.Delete(txtSource.Text);
+
+                Directory.Delete(txtSource.Text,true);
             }catch(Exception ex)
             {
                 MessageBox.Show(ex.ToString());

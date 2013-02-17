@@ -7,3 +7,5 @@ E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.Properties.Resour
 E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.csproj.GenerateResource.Cache
 E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.exe
 E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.pdb
+E:\CShareTest\Buffalobro\SourceCode\源码示例\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.exe
+E:\CShareTest\Buffalobro\SourceCode\源码示例\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.pdb
