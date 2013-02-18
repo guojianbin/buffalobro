@@ -245,7 +245,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <returns></returns>
         public static XmlDocument LoadXML(string path) 
         {
-            XmlDocument doc = NewXmlDocument();
+            XmlDocument doc = new XmlDocument();
             doc.Load(path);
             return doc;
         }

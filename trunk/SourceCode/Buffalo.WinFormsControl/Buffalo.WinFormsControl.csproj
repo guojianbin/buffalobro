@@ -130,8 +130,10 @@
     <Content Include="Resources\Next.png" />
     <Content Include="Resources\off.png" />
     <None Include="Resources\off1.png" />
+    <None Include="Resources\off2.png" />
     <Content Include="Resources\on.png" />
     <None Include="Resources\on1.png" />
+    <None Include="Resources\on2.png" />
     <Content Include="Resources\Previous.png" />
   </ItemGroup>
   <ItemGroup>

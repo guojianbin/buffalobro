@@ -95,6 +95,13 @@ namespace Buffalo.WinFormsControl.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap off2 {
+            get {
+                object obj = ResourceManager.GetObject("off2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap on {
             get {
                 object obj = ResourceManager.GetObject("on", resourceCulture);
@@ -105,6 +112,13 @@ namespace Buffalo.WinFormsControl.Properties {
         internal static System.Drawing.Bitmap on1 {
             get {
                 object obj = ResourceManager.GetObject("on1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap on2 {
+            get {
+                object obj = ResourceManager.GetObject("on2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

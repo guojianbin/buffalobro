@@ -73,6 +73,11 @@ namespace MoveDataLink
             path._path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)+"\\Google\\Chrome\\User Data\\Default\\Cache\\";
             path._summary = "google»º´æ";
             lstPath.Add(path);
+            path = new SpecialPath();
+            path._path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Google\\Chrome\\User Data\\Default\\Cache\\";
+            path._summary = "google»º´æ";
+            lstPath.Add(path);
+
             return lstPath;
         }
 

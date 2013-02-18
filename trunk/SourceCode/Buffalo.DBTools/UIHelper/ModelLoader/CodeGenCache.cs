@@ -17,12 +17,12 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// </summary>
         /// <param name="path">ÎÄ¼þÂ·¾¶</param>
         /// <returns></returns>
-        public static CodeGenInfo GetGenerationer(string path) 
+        public static CodeGenInfo GetGenerationer(string path, EntityInfo entityInfo) 
         {
             CodeGenInfo ret = null;
             if(!_dicCodeCache.TryGetValue(path,out ret))
             {
-                ret = CreateGenerationer(path);
+                ret = CreateGenerationer(path,entityInfo);
                 _dicCodeCache[path] = ret;
             }
             return ret;
@@ -51,12 +51,12 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private static CodeGenInfo CreateGenerationer(string path) 
+        private static CodeGenInfo CreateGenerationer(string path, EntityInfo entityInfo) 
         {
             FileInfo file = new FileInfo(path);
             string workspace = file.DirectoryName;
             string content=File.ReadAllText(path,Encoding.Default);
-            ModelCompiler compiler = new ModelCompiler(content, workspace);
+            ModelCompiler compiler = new ModelCompiler(content, entityInfo);
             string className = "ModelCompilerClass" + _classCount;
             StringBuilder sbError=new StringBuilder();
             StringBuilder lastCodeCache = new StringBuilder();

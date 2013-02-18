@@ -16,15 +16,15 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
 
         private CodesManger man = new CodesManger();
         private string _content;
-        private string _workspace;
+        EntityInfo _entityInfo;
         /// <summary>
         /// 模版到代码的转换器
         /// </summary>
         /// <param name="content">模版内容</param>
-        public ModelCompiler(string content,string workspace) 
+        public ModelCompiler(string content,EntityInfo entityInfo) 
         {
             _content = content;
-            _workspace = workspace;
+            _entityInfo = entityInfo;
         }
 
 
@@ -49,7 +49,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                 if (type.Equals("linked",StringComparison.CurrentCultureIgnoreCase)) 
                 {
                     LinkOutputer outputer = new LinkOutputer();
-                    List<string> str = outputer.GetCode(queitem,_workspace);
+                    List<string> str = outputer.GetCode(queitem,_entityInfo);
                     AddBuffaloLink(str);
                     man.Link.AddRange(str);
                 }

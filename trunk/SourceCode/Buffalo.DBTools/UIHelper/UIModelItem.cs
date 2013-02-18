@@ -97,12 +97,9 @@ namespace Buffalo.DBTools.UIHelper
             if (_belongProperty != null)
             {
                 att.InnerText = PropertyName;
+                node.Attributes.Append(att);
             }
-            else 
-            {
-                att.InnerText = "";
-            }
-            node.Attributes.Append(att);
+            
 
             foreach (KeyValuePair<string, object> kvp in _dicCheckItem) 
             {

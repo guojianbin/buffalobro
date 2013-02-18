@@ -50,6 +50,9 @@ namespace Buffalo.DBTools.UIHelper
             get { return _designerInfo; }
             set { _designerInfo = value; }
         }
+
+
+
         /// <summary>
         /// UI≈‰÷√–≈œ¢
         /// </summary>
@@ -68,6 +71,7 @@ namespace Buffalo.DBTools.UIHelper
                 return;
             }
             XmlNode root = roots[0];
+
             foreach (XmlNode node in root.ChildNodes) 
             {
                 if (node.Name.Equals("configItems", StringComparison.CurrentCultureIgnoreCase)) 

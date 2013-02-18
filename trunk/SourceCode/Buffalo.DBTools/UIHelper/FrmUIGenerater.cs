@@ -75,6 +75,8 @@ namespace Buffalo.DBTools.UIHelper
             BindProjects();
         }
 
+        private List<Project> _lstProjects;
+
         /// <summary>
         /// 绑定项目集合
         /// </summary>
@@ -87,6 +89,7 @@ namespace Buffalo.DBTools.UIHelper
                 ComboBoxItem item = new ComboBoxItem(objProject.Name, objProject);
                 lst.Add(item);
             }
+            _lstProjects = lstProjects;
             cmbProjects.BindValue(lst);
         }
 
@@ -353,9 +356,11 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         private void SaveItemInfos() 
         {
-            XmlDocument doc = new XmlDocument();
+            XmlDocument doc = EntityMappingConfig.NewXmlDocument();
             XmlNode root = doc.CreateElement("root");
             doc.AppendChild(root);
+
+            
             List<UIModelItem> lst = GetSelectedProperty();
             foreach (UIModelItem item in lst)
             {
@@ -379,9 +384,27 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         private void SaveClassItemInfo() 
         {
-            XmlDocument doc = new XmlDocument();
+            XmlDocument doc = EntityMappingConfig.NewXmlDocument();
             XmlNode root = doc.CreateElement("root");
             doc.AppendChild(root);
+
+            XmlAttribute attRoot = doc.CreateAttribute("model");
+            UIProject uproject = cmbModels.Value as UIProject;
+            if (uproject != null)
+            {
+                attRoot.InnerText = uproject.Name;
+                root.Attributes.Append(attRoot);
+            }
+
+            attRoot = doc.CreateAttribute("project");
+            Project project = cmbProjects.Value as Project;
+            if (project != null)
+            {
+                attRoot.InnerText = project.Name;
+                root.Attributes.Append(attRoot);
+            }
+
+
             Dictionary<string,object> div = _classInfo.CheckItem;
             _classInfo.WriteNode(root);
 
@@ -417,9 +440,46 @@ namespace Buffalo.DBTools.UIHelper
             {
                 return;
             }
-            _classInfo.ReadItem(nodes[0], _configClassInfo);
+            XmlNode nodeRoot = nodes[0];
+
+            XmlAttribute attRoot = nodeRoot.Attributes["model"];
+            if (attRoot != null) 
+            {
+                string mname=attRoot.InnerText;
+                if (!string.IsNullOrEmpty(mname))
+                {
+                    foreach (UIProject upro in _config.Projects)
+                    {
+                        if (upro.Name == mname)
+                        {
+                            cmbModels.Value = upro;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            attRoot = nodeRoot.Attributes["project"];
+            if (attRoot != null)
+            {
+                string pname = attRoot.InnerText;
+                if (!string.IsNullOrEmpty(pname))
+                {
+                    foreach (Project ipro in _lstProjects)
+                    {
+                        if (ipro.Name == pname)
+                        {
+                            cmbProjects.Value = ipro;
+                            break;
+                        }
+                    }
+                }
+            }
+            _classInfo.ReadItem(nodeRoot, _configClassInfo);
             
         }
+
+
         /// <summary>
         /// 加载属性项信息
         /// </summary>
@@ -520,9 +580,10 @@ namespace Buffalo.DBTools.UIHelper
 
         //}
 
-        private void button1_Click(object sender, EventArgs e)
+
+        private void btnReFreash_Click(object sender, EventArgs e)
         {
-            
+            CodeGenCache.Clear();
         }
 
         

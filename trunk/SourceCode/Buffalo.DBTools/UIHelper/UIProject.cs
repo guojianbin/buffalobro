@@ -84,7 +84,7 @@ namespace Buffalo.DBTools.UIHelper
             {
                 string mPath = UIConfigItem.FormatParameter(pitem.ModelPath, entityInfo,selectedProject);
                 string tPath = UIConfigItem.FormatParameter(pitem.TargetPath, entityInfo, selectedProject);
-                CodeGenInfo info=CodeGenCache.GetGenerationer(mPath);
+                CodeGenInfo info=CodeGenCache.GetGenerationer(mPath,entityInfo);
                 string content=info.Invoke(entityInfo, classConfig, selectPropertys,classInfo);
                 ProjectItem item = SaveItem(tPath, selectedProject, content, pitem.GenType, parentItem);
                 if (pitem.ChildItems != null && pitem.ChildItems.Count > 0) 

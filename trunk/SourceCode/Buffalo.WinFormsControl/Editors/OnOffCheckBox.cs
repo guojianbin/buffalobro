@@ -116,6 +116,10 @@ namespace Buffalo.WinFormsControl.Editors
                 {
                     case OnOffButtonType.Oblongrectangle:
                         return Buffalo.WinFormsControl.Properties.Resources.on1;
+                    case OnOffButtonType.Quadrate:
+                        return Buffalo.WinFormsControl.Properties.Resources.on;
+                    case OnOffButtonType.BlueOblongrectangle:
+                        return Buffalo.WinFormsControl.Properties.Resources.on2;
                     default:
                         return Buffalo.WinFormsControl.Properties.Resources.on;
                 }
@@ -126,6 +130,10 @@ namespace Buffalo.WinFormsControl.Editors
                 {
                     case OnOffButtonType.Oblongrectangle:
                         return Buffalo.WinFormsControl.Properties.Resources.off1;
+                    case OnOffButtonType.Quadrate:
+                        return Buffalo.WinFormsControl.Properties.Resources.off;
+                    case OnOffButtonType.BlueOblongrectangle:
+                        return Buffalo.WinFormsControl.Properties.Resources.off2;
                     default:
                         return Buffalo.WinFormsControl.Properties.Resources.off;
                 }
@@ -157,6 +165,10 @@ namespace Buffalo.WinFormsControl.Editors
         /// <summary>
         /// Õ÷‘≤–Œ
         /// </summary>
-        Oblongrectangle
+        Oblongrectangle,
+        /// <summary>
+        /// ¿∂…´Õ÷‘≤–Œ
+        /// </summary>
+        BlueOblongrectangle
     }
 }

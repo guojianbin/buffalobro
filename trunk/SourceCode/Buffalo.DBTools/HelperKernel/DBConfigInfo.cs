@@ -211,7 +211,7 @@ namespace Buffalo.DBTools.HelperKernel
             }
             string xmlFieName = GetFileName(info);
             DBConfigInfo ret = null;
-            XmlDocument doc = EntityMappingConfig.NewXmlDocument();
+            XmlDocument doc = new XmlDocument();
             try
             {
                 doc.Load(xmlFieName);

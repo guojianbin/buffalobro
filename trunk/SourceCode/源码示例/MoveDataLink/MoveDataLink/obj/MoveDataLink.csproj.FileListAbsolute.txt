@@ -9,3 +9,10 @@ E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.exe
 E:\CSharpTest\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.pdb
 E:\CShareTest\Buffalobro\SourceCode\源码示例\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.exe
 E:\CShareTest\Buffalobro\SourceCode\源码示例\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.pdb
+E:\CShareTest\Buffalobro\SourceCode\源码示例\MoveDataLink\MoveDataLink\bin\Debug\MoveDataLink.exe
+E:\CShareTest\Buffalobro\SourceCode\源码示例\MoveDataLink\MoveDataLink\bin\Debug\MoveDataLink.pdb
+E:\CShareTest\Buffalobro\SourceCode\源码示例\MoveDataLink\MoveDataLink\obj\Debug\ResolveAssemblyReference.cache
+E:\CShareTest\Buffalobro\SourceCode\源码示例\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.FrmDefault.resources
+E:\CShareTest\Buffalobro\SourceCode\源码示例\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.FrmMain.resources
+E:\CShareTest\Buffalobro\SourceCode\源码示例\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.Properties.Resources.resources
+E:\CShareTest\Buffalobro\SourceCode\源码示例\MoveDataLink\MoveDataLink\obj\Debug\MoveDataLink.csproj.GenerateResource.Cache

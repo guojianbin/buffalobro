@@ -24,7 +24,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// <param name="queitem"></param>
         /// <param name="modelPath">Ä£¿éÂ·¾¶</param>
         /// <returns></returns>
-        public List<string> GetCode(Queue<ExpressionItem> queitem,string modelPath)
+        public List<string> GetCode(Queue<ExpressionItem> queitem, EntityInfo entityInfo)
         {
             List<string> lst=new List<string>();
             while (queitem.Count > 0) 
@@ -37,7 +37,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                         lst.AddRange(item.Content.ToString().Split('\n'));
                         for (int i = 0; i < lst.Count; i++) 
                         {
-                            lst[i] = lst[i].Replace("{BasePath}", modelPath);
+                            lst[i]=UIConfigItem.FormatParameter(lst[i], entityInfo, entityInfo.DesignerInfo.CurrentProject);
                         }
                         break;
                     default:
