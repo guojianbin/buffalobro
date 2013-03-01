@@ -30,8 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmUIGenerater));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.cmbProjects = new Buffalo.WinFormsControl.Editors.ComboBoxEditor();
-            this.cmbModels = new Buffalo.WinFormsControl.Editors.ComboBoxEditor();
             this.btnReFreash = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnGen = new System.Windows.Forms.Button();
@@ -40,12 +38,14 @@
             this.tabPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.gvMember = new System.Windows.Forms.DataGridView();
-            this.ColCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.pnlClassConfig = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmbProjects = new Buffalo.WinFormsControl.Editors.ComboBoxEditor();
+            this.cmbModels = new Buffalo.WinFormsControl.Editors.ComboBoxEditor();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -63,40 +63,10 @@
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.btnGen);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 467);
+            this.panel1.Location = new System.Drawing.Point(0, 641);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(697, 71);
+            this.panel1.Size = new System.Drawing.Size(884, 71);
             this.panel1.TabIndex = 0;
-            // 
-            // cmbProjects
-            // 
-            this.cmbProjects.BindPropertyName = null;
-            this.cmbProjects.LableFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cmbProjects.LableForeColor = System.Drawing.SystemColors.WindowText;
-            this.cmbProjects.LableText = "输出代码:";
-            this.cmbProjects.LableWidth = 80;
-            this.cmbProjects.Location = new System.Drawing.Point(12, 43);
-            this.cmbProjects.MaximumSize = new System.Drawing.Size(500, 25);
-            this.cmbProjects.MinimumSize = new System.Drawing.Size(200, 25);
-            this.cmbProjects.Name = "cmbProjects";
-            this.cmbProjects.Size = new System.Drawing.Size(221, 25);
-            this.cmbProjects.TabIndex = 5;
-            this.cmbProjects.Value = null;
-            // 
-            // cmbModels
-            // 
-            this.cmbModels.BindPropertyName = null;
-            this.cmbModels.LableFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cmbModels.LableForeColor = System.Drawing.SystemColors.WindowText;
-            this.cmbModels.LableText = "方案:";
-            this.cmbModels.LableWidth = 80;
-            this.cmbModels.Location = new System.Drawing.Point(12, 12);
-            this.cmbModels.MaximumSize = new System.Drawing.Size(500, 25);
-            this.cmbModels.MinimumSize = new System.Drawing.Size(200, 25);
-            this.cmbModels.Name = "cmbModels";
-            this.cmbModels.Size = new System.Drawing.Size(221, 25);
-            this.cmbModels.TabIndex = 5;
-            this.cmbModels.Value = null;
             // 
             // btnReFreash
             // 
@@ -133,9 +103,9 @@
             this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 59);
+            this.panel2.Location = new System.Drawing.Point(0, 111);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(697, 408);
+            this.panel2.Size = new System.Drawing.Size(884, 530);
             this.panel2.TabIndex = 1;
             // 
             // panel4
@@ -144,7 +114,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(184, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(513, 408);
+            this.panel4.Size = new System.Drawing.Size(700, 530);
             this.panel4.TabIndex = 1;
             // 
             // tabPanel
@@ -158,7 +128,7 @@
             this.tabPanel.RowCount = 2;
             this.tabPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.338028F));
             this.tabPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.66197F));
-            this.tabPanel.Size = new System.Drawing.Size(513, 408);
+            this.tabPanel.Size = new System.Drawing.Size(700, 530);
             this.tabPanel.TabIndex = 0;
             // 
             // panel3
@@ -167,7 +137,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(184, 408);
+            this.panel3.Size = new System.Drawing.Size(184, 530);
             this.panel3.TabIndex = 0;
             // 
             // gvMember
@@ -188,26 +158,9 @@
             this.gvMember.RowHeadersVisible = false;
             this.gvMember.RowTemplate.Height = 23;
             this.gvMember.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gvMember.Size = new System.Drawing.Size(184, 408);
+            this.gvMember.Size = new System.Drawing.Size(184, 530);
             this.gvMember.TabIndex = 0;
             this.gvMember.CurrentCellChanged += new System.EventHandler(this.gvMember_CurrentCellChanged);
-            // 
-            // ColCheck
-            // 
-            this.ColCheck.DataPropertyName = "IsGenerate";
-            this.ColCheck.HeaderText = "";
-            this.ColCheck.Name = "ColCheck";
-            this.ColCheck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColCheck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.ColCheck.Width = 50;
-            // 
-            // ColName
-            // 
-            this.ColName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColName.DataPropertyName = "PropertyName";
-            this.ColName.HeaderText = "属性";
-            this.ColName.Name = "ColName";
-            this.ColName.ReadOnly = true;
             // 
             // panel6
             // 
@@ -215,17 +168,18 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(0, 0);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(697, 59);
+            this.panel6.Size = new System.Drawing.Size(884, 111);
             this.panel6.TabIndex = 2;
             // 
             // pnlClassConfig
             // 
+            this.pnlClassConfig.AutoScroll = true;
             this.pnlClassConfig.BackColor = System.Drawing.Color.Transparent;
             this.pnlClassConfig.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlClassConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlClassConfig.Location = new System.Drawing.Point(0, 0);
             this.pnlClassConfig.Name = "pnlClassConfig";
-            this.pnlClassConfig.Size = new System.Drawing.Size(697, 59);
+            this.pnlClassConfig.Size = new System.Drawing.Size(884, 111);
             this.pnlClassConfig.TabIndex = 0;
             // 
             // dataGridViewCheckBoxColumn1
@@ -245,6 +199,53 @@
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
+            // ColCheck
+            // 
+            this.ColCheck.DataPropertyName = "IsGenerate";
+            this.ColCheck.HeaderText = "";
+            this.ColCheck.Name = "ColCheck";
+            this.ColCheck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColCheck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColCheck.Width = 50;
+            // 
+            // ColName
+            // 
+            this.ColName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColName.DataPropertyName = "PropertyName";
+            this.ColName.HeaderText = "属性";
+            this.ColName.Name = "ColName";
+            this.ColName.ReadOnly = true;
+            // 
+            // cmbProjects
+            // 
+            this.cmbProjects.BindPropertyName = null;
+            this.cmbProjects.LableFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmbProjects.LableForeColor = System.Drawing.SystemColors.WindowText;
+            this.cmbProjects.LableText = "输出代码:";
+            this.cmbProjects.LableWidth = 80;
+            this.cmbProjects.Location = new System.Drawing.Point(12, 43);
+            this.cmbProjects.MaximumSize = new System.Drawing.Size(500, 25);
+            this.cmbProjects.MinimumSize = new System.Drawing.Size(200, 25);
+            this.cmbProjects.Name = "cmbProjects";
+            this.cmbProjects.Size = new System.Drawing.Size(221, 25);
+            this.cmbProjects.TabIndex = 5;
+            this.cmbProjects.Value = null;
+            // 
+            // cmbModels
+            // 
+            this.cmbModels.BindPropertyName = null;
+            this.cmbModels.LableFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmbModels.LableForeColor = System.Drawing.SystemColors.WindowText;
+            this.cmbModels.LableText = "方案:";
+            this.cmbModels.LableWidth = 80;
+            this.cmbModels.Location = new System.Drawing.Point(12, 12);
+            this.cmbModels.MaximumSize = new System.Drawing.Size(500, 25);
+            this.cmbModels.MinimumSize = new System.Drawing.Size(200, 25);
+            this.cmbModels.Name = "cmbModels";
+            this.cmbModels.Size = new System.Drawing.Size(221, 25);
+            this.cmbModels.TabIndex = 5;
+            this.cmbModels.Value = null;
+            // 
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -257,7 +258,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(697, 538);
+            this.ClientSize = new System.Drawing.Size(884, 712);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel6);

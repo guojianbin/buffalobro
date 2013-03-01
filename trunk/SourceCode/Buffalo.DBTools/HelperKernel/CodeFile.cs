@@ -22,9 +22,6 @@ namespace Buffalo.DBTools
 
 
 
-
-        
-
         /// <summary>
         /// 保存文件
         /// </summary>
@@ -32,8 +29,21 @@ namespace Buffalo.DBTools
         /// <returns></returns>
         public static void SaveFile(string fileName, List<string> content)
         {
-            Encoding fileEncoding = GetFileEncoding(fileName);
+            SaveFile(fileName, content, null);
+        }
+        
 
+        /// <summary>
+        /// 保存文件
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static void SaveFile(string fileName, List<string> content, Encoding fileEncoding)
+        {
+            if (fileEncoding == null)
+            {
+                fileEncoding = GetFileEncoding(fileName);
+            }
             BackupFile(fileName);
             using (StreamWriter writer = new StreamWriter(fileName, false, fileEncoding))
             {
@@ -85,7 +95,6 @@ namespace Buffalo.DBTools
 
             }
         }
-
         /// <summary>
         /// 保存文件
         /// </summary>
@@ -93,7 +102,20 @@ namespace Buffalo.DBTools
         /// <returns></returns>
         public static void SaveFile(string fileName, string content)
         {
-            Encoding fileEncoding = GetFileEncoding(fileName);
+            SaveFile(fileName, content, null);
+        }
+
+        /// <summary>
+        /// 保存文件
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static void SaveFile(string fileName, string content, Encoding fileEncoding)
+        {
+            if (fileEncoding == null)
+            {
+                fileEncoding = GetFileEncoding(fileName);
+            }
             BackupFile(fileName);
             using (StreamWriter writer = new StreamWriter(fileName, false, fileEncoding))
             {

@@ -71,6 +71,12 @@ namespace Buffalo.DBTools.UIHelper
 
 
             List<UIModelItem> lstItems = _curEntityInfo.Propertys;
+
+            foreach (UIModelItem item in lstItems) 
+            {
+                item.InitDefaultValue(_config.ConfigItems, CurEntityInfo, CurEntityInfo.DesignerInfo.CurrentProject);
+            }
+
             gvMember.DataSource = lstItems;
             BindProjects();
         }
@@ -424,6 +430,7 @@ namespace Buffalo.DBTools.UIHelper
         private void LoadClassItemCache() 
         {
             _classInfo = new UIModelItem();
+            _classInfo.InitDefaultValue(_config.ClassItems, CurEntityInfo, CurEntityInfo.DesignerInfo.CurrentProject);
             string fileName =ModelPath+ "\\classinfo.cache.xml";
             if (!File.Exists(fileName)) 
             {

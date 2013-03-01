@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Buffalo.DBTools.UIHelper.ModelLoader;
 using EnvDTE;
+using Buffalo.Kernel;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -78,7 +79,7 @@ namespace Buffalo.DBTools.UIHelper
         private void GenerateCode(EntityInfo entityInfo, UIConfigItem classConfig, Project selectedProject,
             List<UIModelItem> selectPropertys,UIModelItem classInfo,List<UIProjectItem> lstItem,ProjectItem parentItem) 
         {
-
+            Encoding fileEncoding = FileEncodingInfo.GetEncodingType(entityInfo.FileName, true);
 
             foreach (UIProjectItem pitem in lstItem) 
             {
@@ -86,7 +87,8 @@ namespace Buffalo.DBTools.UIHelper
                 string tPath = UIConfigItem.FormatParameter(pitem.TargetPath, entityInfo, selectedProject);
                 CodeGenInfo info=CodeGenCache.GetGenerationer(mPath,entityInfo);
                 string content=info.Invoke(entityInfo, classConfig, selectPropertys,classInfo);
-                ProjectItem item = SaveItem(tPath, selectedProject, content, pitem.GenType, parentItem);
+
+                ProjectItem item = SaveItem(tPath, selectedProject, content, pitem.GenType, parentItem, fileEncoding);
                 if (pitem.ChildItems != null && pitem.ChildItems.Count > 0) 
                 {
                     GenerateCode(entityInfo, classConfig, selectedProject, selectPropertys, classInfo, pitem.ChildItems, item);
@@ -105,9 +107,9 @@ namespace Buffalo.DBTools.UIHelper
         /// <param name="baction"></param>
         /// <returns></returns>
         private ProjectItem SaveItem(string fileName, Project selectedProject,
-            string content, BuildAction baction, ProjectItem parentItem) 
+            string content, BuildAction baction, ProjectItem parentItem,Encoding encoding) 
         {
-            CodeFileHelper.SaveFile(fileName, content);
+            CodeFileHelper.SaveFile(fileName, content, encoding);
             EnvDTE.ProjectItem newit = null;
             if (parentItem != null)
             {

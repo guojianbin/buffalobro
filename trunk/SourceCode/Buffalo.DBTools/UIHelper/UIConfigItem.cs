@@ -201,8 +201,14 @@ namespace Buffalo.DBTools.UIHelper
             ret = ret.Replace("{SelectProjectName}", selProjectName);
             ret = ret.Replace("{SelectProjectPath}", selProjectPath);
             ret = ret.Replace("{ClassName}", entityInfo.ClassName);
+            ret = ret.Replace("{ClassSummary}", entityInfo.Summary);
+            ret = ret.Replace("{ClassFullName}", entityInfo.FullName);
+            ret = ret.Replace("{ClassNamespace}", entityInfo.Namespace);
+            
             return ret;
         }
+
+        
 
         /// <summary>
         /// ÃÓ≥‰≈‰÷√œÓ
@@ -221,6 +227,7 @@ namespace Buffalo.DBTools.UIHelper
                 ConfigItem item = new ConfigItem();
                 item.Name = cnode.Attributes["name"] != null ? cnode.Attributes["name"].InnerText : "";
                 item.Summary = cnode.Attributes["summary"] != null ? cnode.Attributes["summary"].InnerText : "";
+                item.DefaultValue = cnode.Attributes["default"] != null ? cnode.Attributes["default"].InnerText : "";
                 item.Items = GetValueItems(cnode);
                 item.Type = GetItemType(cnode);
                 configItems.Add(item);

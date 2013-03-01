@@ -65,7 +65,15 @@ namespace Buffalo.DBTools.HelperKernel
         //private Project _currentProject;
         //private Diagram _currentDiagram;
         private DBConfigInfo _currentDBConfigInfo;
-
+        private Encoding _fileEncoding;
+        /// <summary>
+        /// 类文件编码
+        /// </summary>
+        public Encoding FileEncoding
+        {
+            get { return _fileEncoding; }
+            
+        }
         /// <summary>
         /// 数据库配置信息
         /// </summary>
@@ -506,6 +514,7 @@ namespace Buffalo.DBTools.HelperKernel
             _summary = ctype.DocSummary;
             _tableName =EntityFieldBase.ToCamelName(_className);
             _lstSource = CodeFileHelper.ReadFile(FileName);
+            _fileEncoding = FileEncodingInfo.GetEncodingType(_fileName, false);
             if (ctype.Generic) 
             {
                 InitGeneric(ctype,_dicGenericInfo);

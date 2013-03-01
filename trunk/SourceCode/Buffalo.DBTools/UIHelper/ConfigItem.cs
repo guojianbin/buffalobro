@@ -5,6 +5,7 @@ using Buffalo.DBTools.HelperKernel;
 using System.ComponentModel;
 using Buffalo.WinFormsControl.Editors;
 using Buffalo.Win32Kernel;
+using EnvDTE;
 
 
 
@@ -52,6 +53,21 @@ namespace Buffalo.DBTools.UIHelper
             set { _type = value; }
         }
 
+        private string _defaultValue;
+
+        /// <summary>
+        /// 默认值
+        /// </summary>
+        public string DefaultValue
+        {
+            get { return _defaultValue; }
+            set { _defaultValue = value; }
+        }
+
+        /// <summary>
+        /// 获取编辑框
+        /// </summary>
+        /// <returns></returns>
         public EditorBase GetEditor() 
         {
             switch (Type)
@@ -71,12 +87,32 @@ namespace Buffalo.DBTools.UIHelper
                     mtxt.Multiline = true;
                     mtxt.Height = 80;
                     return mtxt;
+                case ConfigItemType.Number:
+                    NumbericEditor ntxt = new NumbericEditor();
+                    return ntxt;
                 default:
                     TextBoxEditor txt = new TextBoxEditor();
 
                     return txt;
             }
         }
+
+        /// <summary>
+        /// 格式化默认项的值
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string FormatDefaultValue(ConfigItem item, 
+            EntityInfo entityInfo, Project selectedProject) 
+        {
+            string value = item.DefaultValue;
+            value = UIConfigItem.FormatParameter(value, entityInfo, selectedProject);
+            value = value.Replace("{ItemSummary}", item.Summary);
+            value = value.Replace("{ItemName}", item.Name);
+            return value;
+            
+        }
+
     }
 
     /// <summary>
@@ -103,6 +139,11 @@ namespace Buffalo.DBTools.UIHelper
         /// 多行文本框
         /// </summary>
         [Description("多行文本框")]
-        MText
+        MText,
+        /// <summary>
+        /// 数字框
+        /// </summary>
+        [Description("数字框")]
+        Number
     }
 }

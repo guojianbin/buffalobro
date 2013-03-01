@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using System.Xml;
 using Buffalo.GeneratorInfo;
 using Buffalo.WinFormsControl.Editors;
+using EnvDTE;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -31,6 +32,26 @@ namespace Buffalo.DBTools.UIHelper
         public UIModelItem()
         {
         }
+
+        /// <summary>
+        /// 初始化默认值
+        /// </summary>
+        /// <param name="collection"></param>
+        public void InitDefaultValue(IEnumerable<ConfigItem> collection,
+            EntityInfo entityInfo, Project selectedProject) 
+        {
+            foreach (ConfigItem citem in collection) 
+            {
+                string dvalue = citem.DefaultValue;
+                if (!string.IsNullOrEmpty(dvalue))
+                {
+                    dvalue = ConfigItem.FormatDefaultValue(citem, entityInfo, selectedProject);
+                    object value=ConvertValue(dvalue,citem);
+                    _dicCheckItem[citem.Name] = value;
+                }
+            }
+        }
+
         private Dictionary<string, object> _dicCheckItem=new Dictionary<string,object>();
 
         /// <summary>
@@ -147,21 +168,35 @@ namespace Buffalo.DBTools.UIHelper
                 {
                     continue;
                 }
-                value = att.InnerText;
                 if (dicConfig.TryGetValue(name, out item))
                 {
-                    if (item.Type == ConfigItemType.Check)
-                    {
-                        bool bvalue = false;
-                        if (!bool.TryParse(att.InnerText, out bvalue))
-                        {
-                            bvalue = att.InnerText == "1";
-                        }
-                        value = bvalue;
-                    }
+
+                    value = ConvertValue(att.InnerText, item);
+
+                    _dicCheckItem[name] = value;
                 }
-                _dicCheckItem[name] = value;
             }
+        }
+
+        /// <summary>
+        /// 转换值
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private static object ConvertValue(string value, ConfigItem item) 
+        {
+            object ret = value;
+            if (item.Type == ConfigItemType.Check)
+            {
+                bool bvalue = false;
+                if (!bool.TryParse(value, out bvalue))
+                {
+                    bvalue = value == "1";
+                }
+                ret = bvalue;
+            }
+            return ret;
         }
 
         /// <summary>
