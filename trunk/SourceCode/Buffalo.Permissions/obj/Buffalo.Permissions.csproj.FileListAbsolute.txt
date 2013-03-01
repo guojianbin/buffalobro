@@ -111,3 +111,4 @@ E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permi
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.PermissionsInfo.BEM.BPGroupItemRight.BEM.xml
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.dll
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.pdb
+E:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.XML

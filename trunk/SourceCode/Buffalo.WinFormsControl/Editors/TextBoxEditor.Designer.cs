@@ -96,6 +96,6 @@
         private System.Windows.Forms.Panel pnlLable;
         private System.Windows.Forms.Label labSummary;
         private System.Windows.Forms.Panel pnlValue;
-        private System.Windows.Forms.TextBox txtValue;
+        protected System.Windows.Forms.TextBox txtValue;
     }
 }

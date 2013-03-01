@@ -50,6 +50,9 @@
     <Compile Include="Editors\EditorBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Editors\NumbericEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Editors\OnOffCheckBox.cs">
       <SubType>UserControl</SubType>
     </Compile>

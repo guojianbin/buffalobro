@@ -26,6 +26,14 @@ namespace Buffalo.Permissions.DataViewInfo
         {
             get { return _propertyType; }
         }
+        private DataViewer _parent;
+        /// <summary>
+        /// 所属的视图类
+        /// </summary>
+        public DataViewer Parent
+        {
+            get { return _parent; }
+        }
         private bool _canView;
         /// <summary>
         /// 是否能查看
@@ -62,6 +70,17 @@ namespace Buffalo.Permissions.DataViewInfo
             get { return _sumType; }
             set { _sumType = value; }
         }
+
+        private string _summary;
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string Summary
+        {
+            get { return _summary; }
+            set { _summary = value; }
+        }
+
         private BQLParamHandle _customSum;
         /// <summary>
         /// 自定义统计类型(SumType=SumType.Custom)时候的统计表达式
@@ -70,6 +89,17 @@ namespace Buffalo.Permissions.DataViewInfo
         {
             get { return _customSum; }
             set { _customSum = value; }
+        }
+
+        private int _columnWidth;
+
+        /// <summary>
+        /// 列宽
+        /// </summary>
+        public int ColumnWidth
+        {
+            get { return _columnWidth; }
+            set { _columnWidth = value; }
         }
 
         /// <summary>
@@ -82,14 +112,17 @@ namespace Buffalo.Permissions.DataViewInfo
         /// <param name="canEdit">能编辑</param>
         /// <param name="sumType">统计类型</param>
         /// <param name="customSum">自定义统计项</param>
-        public DataItem(string propertyName, Type propertyType, bool canView, bool canAdd, bool canEdit, SumType sumType, BQLParamHandle customSum) 
-            :this(propertyName,propertyType)
+        public DataItem(string propertyName, Type propertyType, bool canView, bool canAdd, bool canEdit,
+            string summary, int columnWidth, SumType sumType, BQLParamHandle customSum, DataViewer parent) 
+            :this(propertyName,propertyType,parent)
         {
             _canAdd = canAdd;
             _canEdit = canEdit;
             _canView = canView;
             _customSum = customSum;
             _sumType = sumType;
+            _summary = summary;
+            _columnWidth = columnWidth;
         }
 
         /// <summary>
@@ -97,10 +130,11 @@ namespace Buffalo.Permissions.DataViewInfo
         /// </summary>
         /// <param name="propertyName">属性名</param>
         /// <param name="propertyType">属性类型</param>
-        public DataItem(string propertyName,Type propertyType) 
+        public DataItem(string propertyName, Type propertyType, DataViewer parent) 
         {
             _propertyName = propertyName;
             _propertyType = propertyType;
+            _parent = parent;
         }
     }
 
