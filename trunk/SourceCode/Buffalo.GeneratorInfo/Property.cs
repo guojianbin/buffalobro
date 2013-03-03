@@ -7,7 +7,7 @@ namespace Buffalo.GeneratorInfo
     /// <summary>
     /// 生成属性的项
     /// </summary>
-    public class GenerateItem
+    public class Property
     {
         /// <summary>
         /// 生成属性的项
@@ -17,7 +17,7 @@ namespace Buffalo.GeneratorInfo
         /// <param name="summary">注释</param>
         /// <param name="typeName">类型名</param>
         /// <param name="propertyName">对应的属性名</param>
-        public GenerateItem(Dictionary<string, object> dicCheckItem, string propertyType, 
+        public Property(Dictionary<string, object> dicCheckItem, string propertyType, 
             string summary, string typeName, string propertyName) 
         {
             _dicCheckItem = dicCheckItem;

@@ -32,8 +32,8 @@
     <DocumentationFile>..\Release\2005\Buffalo.GeneratorInfo.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GenerateItem.cs" />
-    <Compile Include="GeneratorEntity.cs" />
+    <Compile Include="Property.cs" />
+    <Compile Include="EntityInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
