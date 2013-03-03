@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<class TableName="scStudent" ClassName="TestPerLib.ScStudent" IsTable="1" BelongDB="School">
+  <property FieldName="_name" PropertyName="Name" DbType="AnsiString" Length="255" EntityPropertyType="1" ParamName="name" ReadOnly="0" />
+  <property FieldName="_age" PropertyName="Age" DbType="Int32" Length="0" EntityPropertyType="1" ParamName="age" ReadOnly="0" />
+</class>

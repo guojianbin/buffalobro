@@ -1,1 +1,25 @@
- 
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="微软雅黑" Size="9" />
+  <Class Name="TestPerLib.ScBase">
+    <Position X="1.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>ScBase.cs</FileName>
+      <HashCode>AAACAAAAEAAAAAAAAABAAAAAAAAAAABAAAAhAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestPerLib.ScClass">
+    <Position X="1" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>ScClass.cs</FileName>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestPerLib.ScStudent">
+    <Position X="3.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>ScStudent.cs</FileName>
+      <HashCode>AAAAIAAAAAAAAAAAAEAAAAQAAAAAAAgAACAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+</ClassDiagram>

@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Buffalo.DB.CommBase.BusinessBases;
+
+namespace TestPerLib
+{
+    public class ScBase : ThinModelBase
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        private int _id;
+        /// <summary>
+        /// 最后更新时间
+        /// </summary>
+        private DateTime _lastDate;
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        private DateTime _createDate;
+    }
+}

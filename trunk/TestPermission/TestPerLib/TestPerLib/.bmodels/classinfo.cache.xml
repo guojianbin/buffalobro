@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<root model="Web界面" project="TestPerLib">
+  <item name="CanQuery" value="1" />
+  <item name="CanAddNew" value="1" />
+  <item name="CanEdit" value="1" />
+  <item name="Namespace" value="TestPerLib" />
+</root>

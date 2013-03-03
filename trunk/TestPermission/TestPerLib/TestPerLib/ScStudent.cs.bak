@@ -1,0 +1,19 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace TestPerLib
+{
+    public class ScStudent:ScBase
+    {
+        /// <summary>
+        /// 学生名
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// 年龄
+        /// </summary>
+        private int _age;
+    }
+}
