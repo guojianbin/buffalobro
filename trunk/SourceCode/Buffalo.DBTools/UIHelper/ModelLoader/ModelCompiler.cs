@@ -96,15 +96,13 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             //        dll.Add(fpath);
             //    }
             //}
-            ass = typeof(Buffalo.GeneratorInfo.GenerateItem).Assembly;
+            ass = typeof(Buffalo.GeneratorInfo.Property).Assembly;
             string path=new Uri(ass.CodeBase).LocalPath;
             dll.Add(path);
             FileInfo file=new FileInfo(path);
             string fileName=CommonMethods.GetBaseRoot(file.Name);
-            if (!File.Exists(fileName)) 
-            {
-                File.Copy(path, fileName);
-            }
+
+            CommonMethods.CopyNewer(path, fileName);
             //ass = typeof(Buffalo.DB.QueryConditions.ScopeList).Assembly;
             //dll.Add(new Uri(ass.CodeBase).LocalPath);
 

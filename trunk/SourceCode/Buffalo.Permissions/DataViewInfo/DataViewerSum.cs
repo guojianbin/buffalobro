@@ -37,12 +37,12 @@ namespace Buffalo.Permissions.DataViewInfo
             BQLDbBase dao=new BQLDbBase(db);
 
             BQLCondition where=BQLCondition.TrueValue;
-            where = dao.FillCondition(where, dv.EntityHandle, lstScope);
+            where = dao.FillCondition(where, dv.GetEntityHandle(), lstScope);
 
             BQLQuery query=BQL.Select(lstParams.ToArray()).
-                From(dv.EntityHandle).Where(where);
+                From(dv.GetEntityHandle()).Where(where);
 
-            DataTable dtRet = new DataTable(dv.EntityHandle.GetEntityInfo().TableName + "Sum");
+            DataTable dtRet = new DataTable(dv.GetEntityHandle().GetEntityInfo().TableName + "Sum");
             FillColumns(dtRet, outputItem);
             dtRet.BeginLoadData();
             using (IDataReader reader = dao.QueryReader(query)) 
@@ -79,7 +79,7 @@ namespace Buffalo.Permissions.DataViewInfo
         /// <returns></returns>
         private static BQLParamHandle GetParam(DataItem item,DataViewer dv) 
         {
-            BQLParamHandle handle = dv.EntityHandle[item.PropertyName];
+            BQLParamHandle handle = dv.GetEntityHandle()[item.PropertyName];
             switch (item.SumType) 
             {
                 case SumType.Avg:

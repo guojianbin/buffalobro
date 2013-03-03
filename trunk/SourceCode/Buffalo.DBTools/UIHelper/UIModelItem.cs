@@ -237,16 +237,16 @@ namespace Buffalo.DBTools.UIHelper
         ///  ‰≥ˆ≥…GeneratItem¿‡
         /// </summary>
         /// <returns></returns>
-        public GenerateItem ToGeneratItem() 
+        public Buffalo.GeneratorInfo.Property ToGeneratItem() 
         {
-            GenerateItem item = null;
+            Buffalo.GeneratorInfo.Property item = null;
             if (_belongProperty == null)
             {
-                item = new GenerateItem(_dicCheckItem, "", "", "", "");
+                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, "", "", "", "");
             }
             else
             {
-                item = new GenerateItem(_dicCheckItem, FieldType, Summary, TypeName, PropertyName);
+                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, FieldType, Summary, TypeName, PropertyName);
             }
             return item;
         }

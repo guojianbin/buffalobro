@@ -175,9 +175,9 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         /// <param name="classModelInfo"></param>
         /// <returns></returns>
-        public GeneratorEntity ToGeneratorEntity(UIModelItem classModelInfo) 
+        public Buffalo.GeneratorInfo.EntityInfo ToGeneratorEntity(UIModelItem classModelInfo) 
         {
-            GeneratorEntity entity = new GeneratorEntity(_fileName, _namespace, _className, _summary, _baseTypeName, _dicGenericInfo, classModelInfo.ToGeneratItem());
+            Buffalo.GeneratorInfo.EntityInfo entity = new Buffalo.GeneratorInfo.EntityInfo(_fileName, _namespace, _className, _summary, _baseTypeName, _dicGenericInfo, classModelInfo.ToGeneratItem());
             return entity;
         }
     }

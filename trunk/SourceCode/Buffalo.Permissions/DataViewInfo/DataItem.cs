@@ -71,15 +71,6 @@ namespace Buffalo.Permissions.DataViewInfo
             set { _sumType = value; }
         }
 
-        private string _summary;
-        /// <summary>
-        /// 备注
-        /// </summary>
-        public string Summary
-        {
-            get { return _summary; }
-            set { _summary = value; }
-        }
 
         private BQLParamHandle _customSum;
         /// <summary>
@@ -91,16 +82,7 @@ namespace Buffalo.Permissions.DataViewInfo
             set { _customSum = value; }
         }
 
-        private int _columnWidth;
 
-        /// <summary>
-        /// 列宽
-        /// </summary>
-        public int ColumnWidth
-        {
-            get { return _columnWidth; }
-            set { _columnWidth = value; }
-        }
 
         /// <summary>
         /// 数据视图的数据项
@@ -113,7 +95,7 @@ namespace Buffalo.Permissions.DataViewInfo
         /// <param name="sumType">统计类型</param>
         /// <param name="customSum">自定义统计项</param>
         public DataItem(string propertyName, Type propertyType, bool canView, bool canAdd, bool canEdit,
-            string summary, int columnWidth, SumType sumType, BQLParamHandle customSum, DataViewer parent) 
+             SumType sumType, BQLParamHandle customSum, DataViewer parent) 
             :this(propertyName,propertyType,parent)
         {
             _canAdd = canAdd;
@@ -121,8 +103,7 @@ namespace Buffalo.Permissions.DataViewInfo
             _canView = canView;
             _customSum = customSum;
             _sumType = sumType;
-            _summary = summary;
-            _columnWidth = columnWidth;
+
         }
 
         /// <summary>

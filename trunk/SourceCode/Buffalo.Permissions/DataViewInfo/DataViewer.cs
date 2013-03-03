@@ -13,53 +13,43 @@ namespace Buffalo.Permissions.DataViewInfo
         /// <summary>
         /// 所属的类名
         /// </summary>
-        public string ClassName
+        public string GetClassName()
         {
-            get { return ClassType.FullName; }
+             return GetClassType().FullName; 
         }
         /// <summary>
         /// 所属的类类型
         /// </summary>
-        public Type ClassType
+        public Type GetClassType()
         {
-            get { return _entityHandle.GetEntityInfo().EntityType; }
+             return _entityHandle.GetEntityInfo().EntityType;
         }
         private bool _canView;
         /// <summary>
         /// 是否能查看
         /// </summary>
-        public bool CanView
+        public bool IsCanView()
         {
-            get { return _canView; }
-            set { _canView = value; }
+            return _canView; 
         }
         private bool _canAdd;
         /// <summary>
         /// 是否能添加
         /// </summary>
-        public bool CanAdd
+        public bool IsCanAdd()
         {
-            get { return _canAdd; }
-            set { _canAdd = value; }
+            return _canAdd; 
         }
         private bool _canEdit;
         /// <summary>
         /// 是否能编辑
         /// </summary>
-        public bool CanEdit
+        public bool IsCanEdit()
         {
-            get { return _canEdit; }
-            set { _canEdit = value; }
+            return _canEdit; 
+            
         }
-        private string _summary;
-        /// <summary>
-        /// 备注
-        /// </summary>
-        public string Summary
-        {
-            get { return _summary; }
-            set { _summary = value; }
-        }
+
 
 
         private List<DataItem> _lstDataItem = new List<DataItem>();
@@ -67,9 +57,9 @@ namespace Buffalo.Permissions.DataViewInfo
         /// <summary>
         /// 实体信息
         /// </summary>
-        public BQLEntityTableHandle EntityHandle
+        public BQLEntityTableHandle GetEntityHandle()
         {
-            get { return _entityHandle; }
+            return _entityHandle; 
         }
 
         /// <summary>
@@ -82,15 +72,14 @@ namespace Buffalo.Permissions.DataViewInfo
         /// <param name="summary">类注释</param>
         /// <param name="entityHandle">所属的实体信息</param>
         public DataViewer(BQLEntityTableHandle entityHandle, bool canView, bool canAdd,
-            bool canEdit,string summary) 
+            bool canEdit) 
         {
             _entityHandle = entityHandle;
-            _className = className;
 
             _canAdd = canAdd;
             _canEdit = canEdit;
             _canView = canView;
-            _summary = summary;
+
         }
         /// <summary>
         /// 创建视图数据项
@@ -103,11 +92,11 @@ namespace Buffalo.Permissions.DataViewInfo
         /// <param name="customSum">自定义统计项</param>
         /// <returns>数据项</returns>
         protected DataItem CreateDataItem(string propertyName, Type propertyType,
-            bool canView, bool canAdd, bool canEdit, string summary,int columnWidth,
+            bool canView, bool canAdd, bool canEdit,
             SumType sumType, BQLParamHandle customSum) 
         {
             DataItem item = new DataItem(propertyName,propertyType, canView, canAdd,
-                canEdit,summary,columnWidth, sumType, customSum,this);
+                canEdit,sumType, customSum,this);
             _lstDataItem.Add(item);
             return item;
         }
@@ -143,12 +132,11 @@ namespace Buffalo.Permissions.DataViewInfo
             }
         }
 
-        public int Count 
+        public int GetDataItemCount()
         {
-            get 
-            {
-                return _lstDataItem.Count;
-            }
+
+            return _lstDataItem.Count;
+
         }
 
         /// <summary>

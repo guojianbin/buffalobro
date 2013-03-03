@@ -52,8 +52,8 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         public string Invoke(EntityInfo entityInfo, UIConfigItem classConfig,
             List<UIModelItem> selectPropertys, UIModelItem classInfo) 
         {
-            GeneratorEntity entity = entityInfo.ToGeneratorEntity(classInfo);
-            List<GenerateItem> lst = new List<GenerateItem>(selectPropertys.Count);
+            Buffalo.GeneratorInfo.EntityInfo entity = entityInfo.ToGeneratorEntity(classInfo);
+            List<Property> lst = new List<Property>(selectPropertys.Count);
             foreach (UIModelItem item in selectPropertys) 
             {
                 lst.Add(item.ToGeneratItem());

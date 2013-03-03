@@ -91,6 +91,41 @@ namespace Buffalo.Kernel
             }
             return AppDomain.CurrentDomain.BaseDirectory;
         }
+
+        /// <summary>
+        /// 通过版本号判断拷贝文件
+        /// </summary>
+        /// <param name="source">源文件</param>
+        /// <param name="target">目标文件</param>
+        /// <returns></returns>
+        public static bool CopyNewer(string source, string target) 
+        {
+            if (!File.Exists(source)) 
+            {
+                return false;
+            }
+            string sourceVersion = null;
+            string targetVersion = null;
+            FileVersionInfo sourceVersionInfo = FileVersionInfo.GetVersionInfo(source);
+            sourceVersion=string.Format("{0}.{1}.{2}.{3}", sourceVersionInfo.FileMajorPart,
+                sourceVersionInfo.FileMinorPart, sourceVersionInfo.FileBuildPart,
+                sourceVersionInfo.FilePrivatePart);
+            if (File.Exists(target))
+            {
+                FileVersionInfo targetVersionInfo = FileVersionInfo.GetVersionInfo(target);
+                targetVersion = string.Format("{0}.{1}.{2}.{3}", targetVersionInfo.FileMajorPart,
+                targetVersionInfo.FileMinorPart, targetVersionInfo.FileBuildPart,
+                targetVersionInfo.FilePrivatePart);
+            }
+            if (sourceVersion != targetVersion) 
+            {
+                File.Copy(source, target, true);
+                return true;
+            }
+            return false;
+        }
+        
+
         /// <summary>
         /// 克隆
         /// </summary>

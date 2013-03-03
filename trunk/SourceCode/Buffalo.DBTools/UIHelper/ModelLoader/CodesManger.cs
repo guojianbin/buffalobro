@@ -63,7 +63,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             sbCode.AppendLine("    {");
             //GetGreanMain(sbCode);
             GetGreanCode(sbCode);
-
+            GetPropertyCode(sbCode);
             sbCode.AppendLine(Method.ToString());
 
             sbCode.AppendLine("    }");
@@ -91,12 +91,42 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         {
             sbCode.AppendLine("        public string " + DoCompilerName + "(object entity, object selectedPropertys)");
             sbCode.AppendLine("        {");
-            sbCode.AppendLine("            GeneratorEntity Entity=entity as GeneratorEntity;");
-            sbCode.AppendLine("            List<GenerateItem> SelectedPropertys=selectedPropertys as List<GenerateItem>;");
+            sbCode.AppendLine("            _entity=entity as EntityInfo;");
+            sbCode.AppendLine("            _selectedPropertys=selectedPropertys as List<Property>;");
+
             sbCode.AppendLine("            StringBuilder SystemOut = new StringBuilder(65535);");
             sbCode.AppendLine(Code.ToString());
             sbCode.AppendLine("            return SystemOut.ToString();");
             sbCode.AppendLine("        }");
+        }
+
+
+
+        /// <summary>
+        /// 获取属性代码
+        /// </summary>
+        private void GetPropertyCode(StringBuilder sbCode)
+        {
+
+            sbCode.AppendLine("        private EntityInfo _entity;");
+            sbCode.AppendLine("        public EntityInfo Entity");
+            sbCode.AppendLine("        {");
+            sbCode.AppendLine("            get ");
+            sbCode.AppendLine("            {");
+            sbCode.AppendLine("                return _entity;");
+            sbCode.AppendLine("            }");
+            sbCode.AppendLine("        }");
+
+            sbCode.AppendLine("        private List<Property> _selectedPropertys;");
+            sbCode.AppendLine("        public List<Property> SelectedPropertys");
+            sbCode.AppendLine("        {");
+            sbCode.AppendLine("            get ");
+            sbCode.AppendLine("            {");
+            sbCode.AppendLine("                return _selectedPropertys;");
+            sbCode.AppendLine("            }");
+            sbCode.AppendLine("        }");
+
+
         }
 
         ///// <summary>
