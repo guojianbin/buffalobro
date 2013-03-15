@@ -12,11 +12,11 @@ namespace Buffalo.WebControls.WebGridBinders
     public class GridViewBinder
     {
         /// <summary>
-        /// 根据DV给GridView创建列
+        /// 根据DV给GridView隐藏列
         /// </summary>
         /// <param name="dv"></param>
         /// <param name="gv"></param>
-        public static void CreateColumn(DataViewer dv,GridView gv) 
+        public static void HideColumn(DataViewer dv,GridView gv) 
         {
 
         }

@@ -30,7 +30,6 @@ namespace Buffalo.Permissions
             return ret>0;
         }
 
-
         /// <summary>
         /// ºÏ≤È»®œﬁ
         /// </summary>
