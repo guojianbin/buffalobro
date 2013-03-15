@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>无标题页</title>
+    <script language="javascript" type="text/javascript">
+    function GetDocObj() {
+
+        var openDocObj = null;
+       try {
+           // new ActiveXObject("SharePoint.OpenDocuments.3"); //for office 2007
+           openDocObj = new ActiveXObject("SharePoint.OpenDocuments.3");
+           return openDocObj;
+        }
+       catch (e) {
+            try {
+                openDocObj = new ActiveXObject("SharePoint.OpenDocuments.2");
+                return openDocObj;
+            }
+            catch (e) {
+
+                try {
+                    openDocObj = new ActiveXObject("SharePoint.OpenDocuments.1"); // 为了兼容Office XP，创建“SharePoint.OpenDocuments.1”
+                    return openDocObj;
+                }
+                catch (e) {
+                    alert("必须安装Office Xp以上版本！（Office XP、 Office 2003...)");
+                    // window.open(Url,"office","left=0,top=0,toolbar=yes, menubar=yes, scrollbars=yes, resizable=yes,location=yes, status=yes");
+                    //var myWindow = new ForceWindow(); 
+                    // myWindow.open(Url);
+                    return null;
+                }
+            }
+        }
+    }
+    function openDoc()
+    {
+    //var url="http://www.yellowsheepriver.com/training/kejian.ppt";
+        //var url="http://www.odr.org.cn/m-response.doc";
+        var url="E:\\CShareTest\\Buffalobro\\使用文档\\帮助.doc";
+        var openDocObj = GetDocObj(); 
+        
+        var res=openDocObj.ViewDocument(url);
+alert(res);
+
+
+    }
+</script>
+</head>
+<body>
+    <input id="Button1" type="button" value="button" onclick="openDoc()" />
+</body>
+</html>

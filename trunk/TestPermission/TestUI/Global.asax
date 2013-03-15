@@ -8,6 +8,8 @@
         info.DataaccessNamespace = new string[] { "Buffalo.Permissions.PermissionsInfo.DataAccess.Sql2K5" };
         Buffalo.DB.DataBaseAdapter.DataAccessLoader.AppendDBInfo(info);
         Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB.InitDB();
+        
+        
         // 在应用程序启动时运行的代码
     
     }

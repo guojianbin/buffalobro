@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\TestUI\", "..\TestUI\", "{0BC573DD-4570-47E4-BB98-823C5F9939E4}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "E:\...\TestUI\", "..\TestUI\", "{0BC573DD-4570-47E4-BB98-823C5F9939E4}"
 	ProjectSection(WebsiteProperties) = preProject
-		ProjectReferences = "{9B0043E4-883B-47BA-9A5A-5110C8583902}|Buffalo.DB.dll;{6EC04216-A422-4751-AA81-1211DCB10BAB}|Buffalo.Kernel.dll;{CBD39541-7A26-4C92-A369-0F2DF5D13030}|Buffalo.WebKernel.dll;{E9ACBB10-957B-49C5-B6A2-29A4C6D17DF7}|TestPerLib.dll;{867FB7C9-CBE1-4C5A-A487-DA7EC2B8CA93}|Buffalo.Permissions.dll;{533404A2-5255-478A-9F57-F4C37EBD6DBF}|Buffalo.WebControls.dll;"
+		ProjectReferences = "{9B0043E4-883B-47BA-9A5A-5110C8583902}|Buffalo.DB.dll;{6EC04216-A422-4751-AA81-1211DCB10BAB}|Buffalo.Kernel.dll;{CBD39541-7A26-4C92-A369-0F2DF5D13030}|Buffalo.WebKernel.dll;{533404A2-5255-478A-9F57-F4C37EBD6DBF}|Buffalo.WebControls.dll;{E9ACBB10-957B-49C5-B6A2-29A4C6D17DF7}|TestPerLib.dll;{867FB7C9-CBE1-4C5A-A487-DA7EC2B8CA93}|Buffalo.Permissions.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/TestUI"
 		Debug.AspNetCompiler.PhysicalPath = "..\TestUI\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\TestUI\"
