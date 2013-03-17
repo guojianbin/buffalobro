@@ -95,7 +95,7 @@ namespace Buffalo.DBTools
             commandDBAll = AddToCommand("BuffaloDBCreateAll", "生成数据库", "生成数据库", true, 577);
             commandDBSet = AddToCommand("BuffaloDBSet", "设置参数", "设置数据库和生成参数", true, 611);
             commandEntityUpdate = AddToCommand("BuffaloUpdateEntityByDB", "更新实体", "把数据库的新字段更新到实体", true, 524);
-            commandUI = AddToCommand("BuffaloUI", "界面UI", "按照模版生成界面UI", true, 333);
+            commandUI = AddToCommand("BuffaloUI", "界面生成", "按照Buffalo模版生成界面", true, 333);
             //将对应于该命令的控件添加到类菜单
             if ((commandEntityTools != null) && (calssComm != null))
             {

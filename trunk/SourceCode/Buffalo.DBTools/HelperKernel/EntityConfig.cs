@@ -698,7 +698,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        private bool IsManyOne(Member source) 
+        public static bool IsManyOne(Member source) 
         {
             DataTypeInfos info = EntityFieldBase.GetTypeInfo(source);
 

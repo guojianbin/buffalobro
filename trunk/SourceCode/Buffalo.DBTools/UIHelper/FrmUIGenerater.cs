@@ -284,11 +284,11 @@ namespace Buffalo.DBTools.UIHelper
                     {
                         FrmCompileResault.ShowCompileResault(cex.Code, cex.ToString());
                     }
-                    //catch (Exception ex)
-                    //{
-                    //    FrmCompileResault.ShowCompileResault(null, ex.ToString());
-                    //    return;
-                    //}
+                    catch (Exception ex)
+                    {
+                        FrmCompileResault.ShowCompileResault(null, ex.ToString());
+                        return;
+                    }
                 }
                 
             }

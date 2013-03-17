@@ -262,6 +262,10 @@ namespace Buffalo.DBTools.UIHelper
             {
                 return ConfigItemType.MText;
             }
+            if (type.Equals("number", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return ConfigItemType.Number;
+            }
             return ConfigItemType.Text;
         }
 

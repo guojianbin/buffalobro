@@ -27,6 +27,12 @@ namespace TestPerLib
                 OnPropertyUpdated("ClassName");
             }
         }
+
+        public override string ToString()
+        {
+            return ClassName;
+        }
+
         private static ModelContext<ScClass> _____baseContext=new ModelContext<ScClass>();
         /// <summary>
         /// 获取查询关联类

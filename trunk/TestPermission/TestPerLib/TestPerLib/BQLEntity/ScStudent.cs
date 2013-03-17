@@ -48,7 +48,28 @@ namespace TestPerLib.BQLEntity
                 return _age;
             }
          }
+        private BQLEntityParamHandle _classId = null;
+        /// <summary>
+        /// 所属班级ID
+        /// </summary>
+        public BQLEntityParamHandle ClassId
+        {
+            get
+            {
+                return _classId;
+            }
+         }
 
+        /// <summary>
+        /// 所属班级
+        /// </summary>
+        public School_ScClass BelongClass
+        {
+            get
+            {
+               return new School_ScClass(this,"BelongClass");
+            }
+         }
 
 
 		/// <summary>
@@ -71,6 +92,7 @@ namespace TestPerLib.BQLEntity
         {
             _name=CreateProperty("Name");
             _age=CreateProperty("Age");
+            _classId=CreateProperty("ClassId");
 
         }
         

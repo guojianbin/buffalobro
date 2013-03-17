@@ -22,7 +22,7 @@ namespace Buffalo.GeneratorInfo
         public EntityInfo(string fileName,string nameSpace, string className, string summary, string baseTypeName,
             Dictionary<string, List<string>> dicGenericInfo, Property model) 
         {
-            _fileName = fileName;
+            _fileName = fileName; 
             _baseTypeName = baseTypeName;
             _className = className;
             _dicGenericInfo = dicGenericInfo;

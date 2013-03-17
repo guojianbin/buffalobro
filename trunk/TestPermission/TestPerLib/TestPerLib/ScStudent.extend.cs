@@ -12,6 +12,15 @@ namespace TestPerLib
 	/// </summary>
 	public partial class ScStudent
 	{
-		
+        /// <summary>
+        /// ËùÊô°à¼¶Ãû
+        /// </summary>
+        public string BelongClassName
+        {
+            get 
+            {
+                return BelongClass.ClassName;
+            }
+        }
 	}
 }

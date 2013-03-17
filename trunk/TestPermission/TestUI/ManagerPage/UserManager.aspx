@@ -60,7 +60,23 @@ body {
   </tr>
   <tr>
     <td>
-        <asp:GridView ID="gvDisplay" runat="server">
+    <div>
+        <span runat="server" id="spnName">
+            <asp:Label ID="labName" runat="server" Text="名称"></asp:Label><asp:TextBox ID="txtName"
+                runat="server"></asp:TextBox>
+         </span>
+             <span runat="server" id="spnBelongClass">
+            <asp:Label ID="labBelongClass" runat="server" Text="班级:"></asp:Label><asp:TextBox ID="txtBelongClass"
+                runat="server"></asp:TextBox>
+         </span>   
+    </div>
+        <asp:GridView ID="gvDisplay" runat="server" AutoGenerateColumns="False">
+            <Columns>
+                <asp:BoundField DataField="Name" HeaderText="姓名" >
+                    <HeaderStyle CssClass="STYLE6" />
+                </asp:BoundField>
+                <asp:BoundField HeaderText="所属班级" />
+            </Columns>
         </asp:GridView>
         <div>共 页</div>
     </td>

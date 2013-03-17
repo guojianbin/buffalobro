@@ -50,6 +50,16 @@ namespace TestPerLib
                 OnPropertyUpdated("Age");
             }
         }
+        /// <summary>
+        /// 所属班级ID
+        /// </summary>
+        private int _classId;
+
+        /// <summary>
+        /// 所属班级
+        /// </summary>
+        private ScClass _belongClass;
+
         private static ModelContext<ScStudent> _____baseContext=new ModelContext<ScStudent>();
         /// <summary>
         /// 获取查询关联类
@@ -58,6 +68,43 @@ namespace TestPerLib
         public static ModelContext<ScStudent> GetContext() 
         {
             return _____baseContext;
+        }
+        /// <summary>
+        /// 所属班级ID
+        /// </summary>
+        public int ClassId
+        {
+            get
+            {
+                return _classId;
+            }
+            set
+            {
+                _classId=value;
+                OnPropertyUpdated("ClassId");
+            }
+        }
+
+
+
+        /// <summary>
+        /// 所属班级
+        /// </summary>
+        public ScClass BelongClass
+        {
+            get
+            {
+               if (_belongClass == null)
+               {
+                   FillParent("BelongClass");
+               }
+                return _belongClass;
+            }
+            set
+            {
+                _belongClass = value;
+                OnPropertyUpdated("BelongClass");
+            }
         }
     }
 }

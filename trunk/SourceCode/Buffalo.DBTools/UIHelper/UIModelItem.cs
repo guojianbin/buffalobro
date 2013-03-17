@@ -242,11 +242,24 @@ namespace Buffalo.DBTools.UIHelper
             Buffalo.GeneratorInfo.Property item = null;
             if (_belongProperty == null)
             {
-                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, "", "", "", "");
+                
+                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, "", "", "", "",false,false);
             }
             else
             {
-                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, FieldType, Summary, TypeName, PropertyName);
+                bool isEntity = false;
+                bool isEntityCollection = false;
+                bool isObject = EntityConfig.IsManyOne(_belongProperty);
+                if (isObject) 
+                {
+                    isEntity=true;
+
+                    if (_belongProperty.IsGenerated) 
+                    {
+                        isEntityCollection = true;
+                    }
+                }
+                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, FieldType, Summary, TypeName, PropertyName, isEntity, isEntityCollection);
             }
             return item;
         }
