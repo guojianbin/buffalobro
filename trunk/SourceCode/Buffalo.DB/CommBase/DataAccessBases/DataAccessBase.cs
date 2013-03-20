@@ -486,17 +486,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         {
             return base.Update(obj, scopeList,lstValue, optimisticConcurrency);
         }
-        /// <summary>
-        /// 插入一个记录
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public int Insert(T obj,bool fillIdentity)
-        {
-            int ret = -1;
-            ret = DoInsert(obj,null, fillIdentity);
-            return ret;
-        }
+
         /// <summary>
         /// 插入一个记录
         /// </summary>

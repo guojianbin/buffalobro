@@ -18,7 +18,7 @@ namespace Buffalo.DB.DataBaseAdapter
     /// <summary>
     /// 数据访问层的加载读取类
     /// </summary>
-    public class DataAccessLoader
+    public class ConfigModelLoader
     {
         
         private static Dictionary<string, Type> _dicLoaderConfig =null;//配置记录集合
@@ -322,28 +322,34 @@ namespace Buffalo.DB.DataBaseAdapter
             }
         }
 
+
+        private static List<Assembly> _modelAssembly = new List<Assembly>();
+
+        /// <summary>
+        /// 添加要处理的程序集
+        /// </summary>
+        /// <param name="ass">程序集</param>
+        public static void AppendModelAssembly(Assembly ass) 
+        {
+            
+            string key=ass.FullName;
+            foreach (Assembly curAss in _modelAssembly) 
+            {
+                string curKey = curAss.FullName;
+                if (key == curKey) 
+                {
+                    return;
+                }
+            }
+            _modelAssembly.Add(ass);
+        }
         /// <summary>
         /// 获取本模块下所有程序集
         /// </summary>
         /// <returns></returns>
         private static List<Assembly> GetAllAssembly() 
         {
-            string baseRoot = CommonMethods.GetBaseRoot();//本项目所在的路径
-            Assembly[] arrAss = AppDomain.CurrentDomain.GetAssemblies();
-            List<Assembly> lstAss = new List<Assembly>(arrAss.Length);
-            foreach (Assembly ass in arrAss)
-            {
-                try
-                {
-
-                    if (ass.Location.IndexOf(baseRoot) == 0) //如果此程序集所在的文件在本项目路径下则加到程序集字典
-                    {
-                        lstAss.Add(ass);
-                    }
-                }
-                catch { }
-            }
-            return lstAss;
+            return _modelAssembly;
         }
 
         #endregion

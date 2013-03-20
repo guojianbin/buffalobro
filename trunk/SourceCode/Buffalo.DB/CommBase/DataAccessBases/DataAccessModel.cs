@@ -76,7 +76,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <returns></returns>
         public new int Insert(T entity, bool fillIdentity)
         {
-            return base.Insert(entity, fillIdentity);
+            return base.Insert(entity,null, fillIdentity);
         }
 
         /// <summary>

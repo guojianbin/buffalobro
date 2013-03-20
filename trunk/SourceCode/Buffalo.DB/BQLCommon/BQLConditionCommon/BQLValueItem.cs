@@ -430,7 +430,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// <returns></returns>
         internal static KeyWordInfomation GetKeyInfo() 
         {
-            _putKeyInfo.DBInfo = DataAccessLoader.GetFristDBInfo();
+            _putKeyInfo.DBInfo = ConfigModelLoader.GetFristDBInfo();
             return _putKeyInfo;
         }
 

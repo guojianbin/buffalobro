@@ -34,6 +34,10 @@ namespace Buffalo.Permissions.DataViewInfo
                 lstParams.Add(GetParam(item,dv));
                 outputItem.Add(item);
             }
+            if (lstParams.Count <= 0) 
+            {
+                return new DataTable();
+            }
             BQLDbBase dao=new BQLDbBase(db);
 
             BQLCondition where=BQLCondition.TrueValue;
@@ -48,9 +52,13 @@ namespace Buffalo.Permissions.DataViewInfo
             using (IDataReader reader = dao.QueryReader(query)) 
             {
                 DataRow dr = dtRet.NewRow();
-                for (int i = 0; i < outputItem.Count; i++)
+                if (reader.Read())
                 {
-                    dr[i] = reader[i];
+                    for (int i = 0; i < outputItem.Count; i++)
+                    {
+                        dr[i] = reader[i];
+                        dtRet.Rows.Add(dr);
+                    }
                 }
             }
             dtRet.EndLoadData();

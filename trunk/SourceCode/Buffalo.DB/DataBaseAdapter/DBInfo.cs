@@ -280,7 +280,7 @@ namespace Buffalo.DB.DataBaseAdapter
             }
         }
 
-        
+
 
 
         private Dictionary<string, BQLEntityTableHandle> _dicTables = new Dictionary<string, BQLEntityTableHandle>();

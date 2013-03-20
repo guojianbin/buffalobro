@@ -35,14 +35,15 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// </summary>
         public static void InitDB() 
         {
-            //if (_isInit) 
+            //if (_isInit)
             //{
             //    return;
             //}
-            
-            DataAccessLoader.InitConfig();
-            _db = GetDB();
             Type type = typeof(T);
+            ConfigModelLoader.AppendModelAssembly(type.Assembly);
+            ConfigModelLoader.InitConfig();
+            _db = GetDB();
+            
             Type baseType=typeof(BQLEntityTableHandle);
             PropertyInfo[] infos = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
             foreach (PropertyInfo info in infos) 
@@ -123,8 +124,8 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 throw new Exception(cType.FullName+"类还没配置DataBaseAttribute标签");
             }
             string dbName=att.DataBaseName;
-            DataAccessLoader.InitConfig();
-            return DataAccessLoader.GetDBInfo(dbName);
+            ConfigModelLoader.InitConfig();
+            return ConfigModelLoader.GetDBInfo(dbName);
         }
     }
 }
