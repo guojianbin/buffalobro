@@ -4,7 +4,7 @@
 
     void Application_Start(object sender, EventArgs e) 
     {
-        Buffalo.DB.DataBaseAdapter.ConfigModelLoader.AppendModelAssembly(typeof(Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB).Assembly);
+        Buffalo.DB.DataBaseAdapter.DataAccessLoader.AppendModelAssembly(typeof(Buffalo.Permissions.PermissionsInfo.BQLEntity.PermissionDB).Assembly);
         
         TestPerLib.BQLEntity.School.InitDB();
 
