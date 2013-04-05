@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <class TableName="scStudent" ClassName="TestPerLib.ScStudent" IsTable="1" BelongDB="School">
-  <property FieldName="_name" PropertyName="Name" DbType="AnsiString" Length="255" EntityPropertyType="1" ParamName="name" ReadOnly="0" />
+  <property FieldName="_name" PropertyName="Name" DbType="AnsiString" Length="32" EntityPropertyType="1" ParamName="name" ReadOnly="0" />
   <property FieldName="_age" PropertyName="Age" DbType="Int32" Length="0" EntityPropertyType="1" ParamName="age" ReadOnly="0" />
   <property FieldName="_classId" PropertyName="ClassId" DbType="Int32" Length="0" EntityPropertyType="1" ParamName="classId" ReadOnly="0" />
-  <relation FieldName="_belongClass" PropertyName="BelongClass" SourceProperty="ClassId" TargetProperty="Id" IsToDB="1" IsParent="1" />
+  <relation FieldName="_belongClass" PropertyName="BelongClass" SourceProperty="ClassId" TargetProperty="Id" IsToDB="0" IsParent="1" />
 </class>
