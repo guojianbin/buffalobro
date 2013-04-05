@@ -22,13 +22,13 @@ namespace TestPerLib.BQLEntity
     }
 
     /// <summary>
-    ///  °à¼¶
+    ///  
     /// </summary>
-    public partial class School_ScClass : School_ScBase
+    public partial class School_ScClass : BQLEntityTableHandle
     {
         private BQLEntityParamHandle _className = null;
         /// <summary>
-        /// °à¼¶Ãû³Æ
+        /// 
         /// </summary>
         public BQLEntityParamHandle ClassName
         {
