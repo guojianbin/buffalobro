@@ -196,8 +196,10 @@ namespace Buffalo.DBTools.ROMHelper
                     codes.Add(tmp);
                 }
             }
-            CodeFileHelper.SaveFile(FileName, codes);
-            EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(FileName);
+            string eFile=GetEntityFileName(FileName);
+
+            CodeFileHelper.SaveFile(eFile, codes);
+            EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(eFile);
             newit.Properties.Item("BuildAction").Value = 1;
             
             GenerateExtendCode();
@@ -219,6 +221,22 @@ namespace Buffalo.DBTools.ROMHelper
             bqlEntity.GenerateBQLEntity();
             EntityMappingConfig.SaveXML(this);
             SetToDiagram(doc);
+        }
+
+        /// <summary>
+        /// 获取实体文件名
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private string GetEntityFileName(string fileName) 
+        {
+            string ret=fileName;
+            if (CurrentDBConfigInfo.EntityToDirectory) 
+            {
+                FileInfo info = new FileInfo(fileName);
+                ret = info.DirectoryName + "\\Entity\\" + info.Name;
+            }
+            return ret;
         }
 
         /// <summary>
@@ -335,7 +353,8 @@ namespace Buffalo.DBTools.ROMHelper
             classNode.AppendChild(typeIdentifierNode);
             XmlNode fileNameNode = doc.CreateElement("FileName");
             string basePath = DesignerInfo.GetClassDesignerPath();
-            fileNameNode.InnerText = FileName.Replace(basePath,"").TrimStart('\\');
+            string eFile = GetEntityFileName(FileName);
+            fileNameNode.InnerText = eFile.Replace(basePath, "").TrimStart('\\');
             typeIdentifierNode.AppendChild(fileNameNode);
             XmlNode hashCodeNode = doc.CreateElement("HashCode");
             string hashCode = "AAAAAAAAAIAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
@@ -664,7 +683,8 @@ namespace Buffalo.DBTools.ROMHelper
         /// </summary>
         private void GenerateExtendCode()
         {
-            FileInfo fileInfo = new FileInfo(FileName);
+            string eFileName = GetEntityFileName(FileName);
+            FileInfo fileInfo = new FileInfo(eFileName);
             string fileName = fileInfo.DirectoryName + "\\" + fileInfo.Name.Replace(".cs", ".extend.cs");
             if (File.Exists(fileName))
             {
@@ -688,9 +708,10 @@ namespace Buffalo.DBTools.ROMHelper
                     codes.Add(tmp);
                 }
             }
+            
             CodeFileHelper.SaveFile(fileName, codes);
 
-            EnvDTE.ProjectItem classItem = EntityConfig.GetProjectItemByFileName(DesignerInfo, FileName);
+            EnvDTE.ProjectItem classItem = EntityConfig.GetProjectItemByFileName(DesignerInfo, eFileName);
             EnvDTE.ProjectItem newit = classItem.ProjectItems.AddFromFile(fileName);
             newit.Properties.Item("BuildAction").Value = 3;
             //EnvDTE.ProjectItem newit = _currentProject.ProjectItems.AddFromFile(fileName);

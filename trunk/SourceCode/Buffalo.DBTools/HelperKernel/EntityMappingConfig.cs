@@ -20,7 +20,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="entity"></param>
         public static void LoadConfigInfo(EntityConfig entity) 
         {
-            FileInfo classFile = new FileInfo(entity.FileName);
+            FileInfo classFile = new FileInfo(entity.DesignerInfo.SelectDocView.DocData.FileName);
             string fileName = classFile.DirectoryName + "\\BEM\\" + entity.ClassName + ".BEM.xml";
             if (!File.Exists(fileName)) 
             {
@@ -182,7 +182,7 @@ namespace Buffalo.DBTools.HelperKernel
         {
 
             //string fileName = entity.FileName.Replace(entity.ClassName + ".cs", entity.ClassName + ".be.xml");
-            FileInfo classFile = new FileInfo(entity.FileName);
+            FileInfo classFile = new FileInfo(entity.DesignerInfo.SelectDocView.DocData.FileName);
             string dicName = classFile.DirectoryName + "\\BEM\\";
             if (!Directory.Exists(dicName))
             {
@@ -203,7 +203,7 @@ namespace Buffalo.DBTools.HelperKernel
         {
             
             //string fileName = entity.FileName.Replace(entity.ClassName + ".cs", entity.ClassName + ".be.xml");
-            FileInfo classFile = new FileInfo(entity.FileName);
+            FileInfo classFile = new FileInfo(entity.DesignerInfo.SelectDocView.DocData.FileName);
             string dicName = classFile.DirectoryName + "\\BEM\\";
             if (!Directory.Exists(dicName)) 
             {

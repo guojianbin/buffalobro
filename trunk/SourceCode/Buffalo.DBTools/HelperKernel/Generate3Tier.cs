@@ -35,7 +35,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="entity"></param>
         public void GenerateBusiness() 
         {
-            FileInfo info = new FileInfo(EntityFileName);
+            FileInfo info = new FileInfo(ClassDesignerFileName);
             
 
             string dicPath = info.DirectoryName + "\\Business";
@@ -202,10 +202,10 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="entity"></param>
         public void GenerateDataAccess()
         {
-            FileInfo info = new FileInfo(EntityFileName);
+            //FileInfo info = new FileInfo(EntityFileName);
 
 
-            string dicPath = info.DirectoryName + "\\DataAccess";
+            string dicPath = GenerateBasePath + "\\DataAccess";
             if (!Directory.Exists(dicPath))
             {
                 Directory.CreateDirectory(dicPath);
@@ -256,7 +256,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="entity"></param>
         public void GenerateIDataAccess() 
         {
-            FileInfo info = new FileInfo(EntityFileName);
+            FileInfo info = new FileInfo(ClassDesignerFileName);
             string dicPath = info.DirectoryName + "\\DataAccess";
             if (!Directory.Exists(dicPath))
             {
@@ -296,7 +296,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         public void GenerateBQLDataAccess() 
         {
-            FileInfo info = new FileInfo(EntityFileName);
+            FileInfo info = new FileInfo(ClassDesignerFileName);
             string dicPath = info.DirectoryName + "\\DataAccess";
             if (!Directory.Exists(dicPath))
             {

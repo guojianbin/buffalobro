@@ -381,7 +381,7 @@ namespace Buffalo.DB.EntityInfos
             Dictionary<string, EntityParam> dicParamsInfo = new Dictionary<string, EntityParam>();
             Dictionary<string, TableRelationAttribute> dicRelationInfo = new Dictionary<string, TableRelationAttribute>();
             FillEntityInfos(dicParamsInfo, dicRelationInfo, type, tableAtt, dicConfigs);
-            DBInfo db = ConfigModelLoader.GetDBInfo(tableAtt.BelongDB);
+            DBInfo db = DataAccessLoader.GetDBInfo(tableAtt.BelongDB);
             IDBAdapter idb = db.CurrentDbAdapter;
             EntityInfoHandle classInfo = new EntityInfoHandle(type, createrHandle, tableAtt.TableName, db);
 

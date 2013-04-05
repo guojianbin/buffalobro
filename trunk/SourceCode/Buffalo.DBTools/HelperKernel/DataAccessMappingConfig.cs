@@ -30,8 +30,8 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         private void Init() 
         {
-            FileInfo classFile = new FileInfo(EntityFileName);
-            string dicName = classFile.DirectoryName + "\\BEM\\";
+            //FileInfo classFile = new FileInfo(EntityFileName);
+            string dicName = GenerateBasePath + "\\BEM\\";
             if (!Directory.Exists(dicName))
             {
                 Directory.CreateDirectory(dicName);

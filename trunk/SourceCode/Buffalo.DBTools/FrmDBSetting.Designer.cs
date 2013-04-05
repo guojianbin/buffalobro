@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDBSetting));
             this.cmbType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,6 +43,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnModel = new System.Windows.Forms.Button();
             this.chkAllDal = new System.Windows.Forms.CheckBox();
+            this.chkEntityToDirectory = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,7 +69,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(2, 43);
+            this.label2.Location = new System.Drawing.Point(2, 62);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(71, 12);
             this.label2.TabIndex = 2;
@@ -74,7 +77,7 @@
             // 
             // rtbConnstr
             // 
-            this.rtbConnstr.Location = new System.Drawing.Point(78, 40);
+            this.rtbConnstr.Location = new System.Drawing.Point(78, 59);
             this.rtbConnstr.Name = "rtbConnstr";
             this.rtbConnstr.Size = new System.Drawing.Size(265, 96);
             this.rtbConnstr.TabIndex = 3;
@@ -82,7 +85,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(78, 168);
+            this.btnTest.Location = new System.Drawing.Point(78, 187);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 23);
             this.btnTest.TabIndex = 4;
@@ -92,7 +95,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(159, 168);
+            this.btnOK.Location = new System.Drawing.Point(159, 187);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 5;
@@ -102,7 +105,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(268, 168);
+            this.btnCancel.Location = new System.Drawing.Point(268, 187);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 6;
@@ -122,7 +125,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(347, 40);
+            this.pictureBox1.Location = new System.Drawing.Point(344, 10);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(100, 204);
             this.pictureBox1.TabIndex = 8;
@@ -132,7 +135,7 @@
             // 
             this.clbSummary.ColumnWidth = 65;
             this.clbSummary.FormattingEnabled = true;
-            this.clbSummary.Location = new System.Drawing.Point(79, 141);
+            this.clbSummary.Location = new System.Drawing.Point(79, 160);
             this.clbSummary.MultiColumn = true;
             this.clbSummary.Name = "clbSummary";
             this.clbSummary.Size = new System.Drawing.Size(265, 20);
@@ -141,7 +144,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(2, 146);
+            this.label3.Location = new System.Drawing.Point(2, 165);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 12);
             this.label3.TabIndex = 10;
@@ -149,7 +152,7 @@
             // 
             // btnModel
             // 
-            this.btnModel.Location = new System.Drawing.Point(2, 58);
+            this.btnModel.Location = new System.Drawing.Point(2, 77);
             this.btnModel.Name = "btnModel";
             this.btnModel.Size = new System.Drawing.Size(68, 23);
             this.btnModel.TabIndex = 11;
@@ -160,19 +163,31 @@
             // chkAllDal
             // 
             this.chkAllDal.AutoSize = true;
-            this.chkAllDal.Location = new System.Drawing.Point(347, 12);
+            this.chkAllDal.Location = new System.Drawing.Point(260, 37);
             this.chkAllDal.Name = "chkAllDal";
             this.chkAllDal.Size = new System.Drawing.Size(84, 16);
             this.chkAllDal.TabIndex = 12;
             this.chkAllDal.Text = "所有数据层";
             this.chkAllDal.UseVisualStyleBackColor = true;
             // 
+            // chkEntityToDirectory
+            // 
+            this.chkEntityToDirectory.AutoSize = true;
+            this.chkEntityToDirectory.Location = new System.Drawing.Point(79, 37);
+            this.chkEntityToDirectory.Name = "chkEntityToDirectory";
+            this.chkEntityToDirectory.Size = new System.Drawing.Size(156, 16);
+            this.chkEntityToDirectory.TabIndex = 13;
+            this.chkEntityToDirectory.Text = "实体保存到Entity文件夹";
+            this.toolTip1.SetToolTip(this.chkEntityToDirectory, "库到类模式下，实体将会放到Entity中");
+            this.chkEntityToDirectory.UseVisualStyleBackColor = true;
+            // 
             // FrmDBSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(444, 195);
+            this.ClientSize = new System.Drawing.Size(444, 215);
+            this.Controls.Add(this.chkEntityToDirectory);
             this.Controls.Add(this.clbSummary);
             this.Controls.Add(this.rtbConnstr);
             this.Controls.Add(this.chkAllDal);
@@ -188,9 +203,9 @@
             this.Controls.Add(this.pictureBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(460, 233);
+            this.MaximumSize = new System.Drawing.Size(460, 253);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(460, 233);
+            this.MinimumSize = new System.Drawing.Size(460, 253);
             this.Name = "FrmDBSetting";
             this.Text = "Buffalo助手--数据库设置";
             this.Load += new System.EventHandler(this.FrmDBSetting_Load);
@@ -215,5 +230,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnModel;
         private System.Windows.Forms.CheckBox chkAllDal;
+        private System.Windows.Forms.CheckBox chkEntityToDirectory;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

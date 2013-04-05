@@ -12,7 +12,7 @@ namespace Buffalo.DBTools.HelperKernel
     {
         public static void RemoveEntity(EntityConfig entity) 
         {
-            FileInfo info = new FileInfo(entity.FileName);
+            FileInfo info = new FileInfo(entity.DesignerInfo.SelectDocView.DocData.FileName);
 
             //ÒµÎñ²ã
             string fileName = info.DirectoryName + "\\Business\\" + entity.ClassName + "Business.cs"; ;

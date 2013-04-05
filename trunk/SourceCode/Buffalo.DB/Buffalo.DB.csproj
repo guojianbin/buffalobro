@@ -154,7 +154,7 @@
     <Compile Include="BQLCommon\KeyWordConver.cs" />
     <Compile Include="BQLCommon\KeyWordInfomation.cs" />
     <Compile Include="DataBaseAdapter\ConfigInfo.cs" />
-    <Compile Include="DataBaseAdapter\ConfigModelLoader.cs" />
+    <Compile Include="DataBaseAdapter\DataAccessLoader.cs" />
     <Compile Include="DataBaseAdapter\DBInfo.cs" />
     <Compile Include="DataBaseAdapter\DBTableInfo.cs" />
     <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\AdapterLoader.cs" />

@@ -22,7 +22,7 @@ namespace Buffalo.DB.BQLCommon
     /// </summary>
     public class BQLDbBase
     {
-        private DataBaseOperate oper;
+        private DataBaseOperate _oper;
 
         /// <summary>
         /// 数据层基类
@@ -30,7 +30,7 @@ namespace Buffalo.DB.BQLCommon
         ///  <param name="info">数据库信息</param>
         public BQLDbBase(DBInfo info)
         {
-            this.oper = info.DefaultOperate;
+            this._oper = info.DefaultOperate;
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Buffalo.DB.BQLCommon
         /// <param name="oper"></param>
         public BQLDbBase(DataBaseOperate oper) 
         {
-            this.oper = oper;
+            this._oper = oper;
             
         }
 
@@ -77,10 +77,10 @@ namespace Buffalo.DB.BQLCommon
             long ret = 0;
             Type eType = typeof(E);
             TableAliasNameManager aliasManager = new TableAliasNameManager(new BQLEntityTableHandle(EntityInfoManager.GetEntityHandle(typeof(E))));
-            BQLEntityTableHandle table = oper.DBInfo.FindTable(eType);
+            BQLEntityTableHandle table = _oper.DBInfo.FindTable(eType);
             if (CommonMethods.IsNull(table))
             {
-                oper.DBInfo.ThrowNotFondTable(eType);
+                _oper.DBInfo.ThrowNotFondTable(eType);
             }
 
             BQLCondition where = BQLCondition.TrueValue;
@@ -91,9 +91,9 @@ namespace Buffalo.DB.BQLCommon
 
             //if(lstScope.GroupBy
 
-            AbsCondition con = BQLKeyWordManager.ToCondition(bql, oper.DBInfo, aliasManager, true);
+            AbsCondition con = BQLKeyWordManager.ToCondition(bql, _oper.DBInfo, aliasManager, true);
             
-            using (IDataReader reader = oper.Query(con.GetSql(), con.DbParamList)) 
+            using (IDataReader reader = _oper.Query(con.GetSql(), con.DbParamList)) 
             {
                 if (reader.Read()) 
                 {
@@ -115,17 +115,17 @@ namespace Buffalo.DB.BQLCommon
             where E : EntityBase, new()
         {
             Type eType = typeof(E);
-            BQLEntityTableHandle table = oper.DBInfo.FindTable(eType);
+            BQLEntityTableHandle table = _oper.DBInfo.FindTable(eType);
             if (CommonMethods.IsNull(table)) 
             {
-                oper.DBInfo.ThrowNotFondTable(eType);
+                _oper.DBInfo.ThrowNotFondTable(eType);
             }
             BQLQuery BQL = GetSelectSql(lstScope, table);
             if (!lstScope.HasPage)
             {
                 return QueryList<E>(BQL,lstScope.ShowEntity);
             }
-            using (BatchAction ba = oper.StarBatchAction())
+            using (BatchAction ba = _oper.StarBatchAction())
             {
                 return QueryPageList<E>(BQL, lstScope.PageContent, lstScope.ShowEntity);
             }
@@ -181,12 +181,12 @@ namespace Buffalo.DB.BQLCommon
 
             if (lstScope.HasPage)
             {
-                using (BatchAction ba = oper.StarBatchAction())
+                using (BatchAction ba = _oper.StarBatchAction())
                 {
-                    return QueryDataSet(bql, lstScope.PageContent);
+                    return QueryDataSet(bql,null, lstScope.PageContent);
                 }
             }
-            return QueryDataSet(bql);
+            return QueryDataSet(bql, null);
         }
         /// <summary>
         /// 转成条件信息
@@ -197,12 +197,16 @@ namespace Buffalo.DB.BQLCommon
         /// <returns></returns>
         private AbsCondition ToCondition(BQLQuery BQL, IEnumerable<BQLEntityTableHandle> outPutTables, bool isPutPropertyName, Type entityType)
         {
-            TableAliasNameManager aliasManager = new TableAliasNameManager(new BQLEntityTableHandle(EntityInfoManager.GetEntityHandle(entityType)));
+            TableAliasNameManager aliasManager = null;
+            if (entityType != null) 
+            {
+                aliasManager = new TableAliasNameManager(new BQLEntityTableHandle(EntityInfoManager.GetEntityHandle(entityType)));
+            }
             if (outPutTables != null)
             {
                 FillOutPutTables(outPutTables, aliasManager);
             }
-            AbsCondition con = BQLKeyWordManager.ToCondition(BQL, oper.DBInfo, aliasManager, isPutPropertyName);
+            AbsCondition con = BQLKeyWordManager.ToCondition(BQL, _oper.DBInfo, aliasManager, isPutPropertyName);
             return con;
         }
         /// <summary>
@@ -229,15 +233,15 @@ namespace Buffalo.DB.BQLCommon
                 if (con.DbParamList != null)
                 {
                     con.PageContent = objPage;
-                    con.Oper = oper;
+                    con.Oper = _oper;
                     string sql = con.GetSql();
-                    reader = oper.Query(sql, con.DbParamList);
+                    reader = _oper.Query(sql, con.DbParamList);
                     
                 }
                 else
                 {
                     SelectCondition sCon = con as SelectCondition;
-                    reader = con.DBinfo.CurrentDbAdapter.Query(sCon.GetSelect(), objPage, oper);
+                    reader = con.DBinfo.CurrentDbAdapter.Query(sCon.GetSelect(), objPage, _oper);
                 }
                 retlist = LoadFromReader<E>(con.AliasManager, reader);
             }
@@ -258,21 +262,21 @@ namespace Buffalo.DB.BQLCommon
         {
             AbsCondition con = ToCondition(BQL, outPutTables, false, typeof(E));
             List<E> retlist = null;
-            using (BatchAction ba = oper.StarBatchAction())
+            using (BatchAction ba = _oper.StarBatchAction())
             {
                 IDataReader reader = null;
                 try
                 {
-                    con.Oper = oper;
+                    con.Oper = _oper;
 
                     if (con.DbParamList != null)
                     {
-                        reader = oper.Query(con.GetSql(), con.DbParamList);
+                        reader = _oper.Query(con.GetSql(), con.DbParamList);
                     }
                     else
                     {
                         SelectCondition sCon = con as SelectCondition;
-                        reader = con.DBinfo.CurrentDbAdapter.Query(sCon.GetSelect(), con.PageContent, oper);
+                        reader = con.DBinfo.CurrentDbAdapter.Query(sCon.GetSelect(), con.PageContent, _oper);
                     }
                     retlist = LoadFromReader<E>(con.AliasManager, reader);
                 }
@@ -362,10 +366,10 @@ namespace Buffalo.DB.BQLCommon
         public DataSet SelectDataSet<E>(ScopeList lstScope) 
         {
             Type eType = typeof(E);
-            BQLEntityTableHandle table = oper.DBInfo.FindTable(eType);
+            BQLEntityTableHandle table = _oper.DBInfo.FindTable(eType);
             if (CommonMethods.IsNull(table))
             {
-                oper.DBInfo.ThrowNotFondTable(eType);
+                _oper.DBInfo.ThrowNotFondTable(eType);
             }
            // List<BQLParamHandle> lstParams = GetParam(table, lstScope);
            // BQLCondition where = BQLCondition.TrueValue;
@@ -388,7 +392,7 @@ namespace Buffalo.DB.BQLCommon
             {
                 return QueryDataSet<E>(BQL);
             }
-            using (BatchAction ba = oper.StarBatchAction())
+            using (BatchAction ba = _oper.StarBatchAction())
             {
                 return QueryDataSet<E>(BQL, lstScope.PageContent);
             }
@@ -399,20 +403,20 @@ namespace Buffalo.DB.BQLCommon
         /// 执行sql语句，分页返回DataSet
         /// </summary>
         /// <param name="BQL">sql语句</param>
-        public DataSet QueryDataSet(BQLQuery BQL)
+        public DataSet QueryDataSet(BQLQuery BQL,Type tableType)
         {
-            AbsCondition con = BQLKeyWordManager.ToCondition(BQL, oper.DBInfo,null,true);
+            AbsCondition con = ToCondition(BQL, null, true, tableType);
             DataSet ds = null;
 
-            con.Oper = oper;
+            con.Oper = _oper;
             if (con.DbParamList != null)
             {
-                ds = oper.QueryDataSet(con.GetSql(), con.DbParamList);
+                ds = _oper.QueryDataSet(con.GetSql(), con.DbParamList);
             }
             else
             {
                 SelectCondition sCon = con as SelectCondition;
-                DataTable dt = con.DBinfo.CurrentDbAdapter.QueryDataTable(sCon.GetSelect(), sCon.PageContent, oper, null);
+                DataTable dt = con.DBinfo.CurrentDbAdapter.QueryDataTable(sCon.GetSelect(), sCon.PageContent, _oper, null);
                 dt.TableName = "newTable";
                 ds = new DataSet();
                 ds.Tables.Add(dt);
@@ -426,18 +430,18 @@ namespace Buffalo.DB.BQLCommon
         /// <param name="BQL">sql语句</param>
         public DataSet QueryDataSet<E>(BQLQuery BQL)
         {
-            AbsCondition con = ToCondition(BQL, new BQLEntityTableHandle[] { }, true, typeof(E));
+            AbsCondition con = ToCondition(BQL, null, true, typeof(E));
             DataSet ds = null;
 
-            con.Oper = oper;
+            con.Oper = _oper;
             if (con.DbParamList != null)
             {
-                ds = oper.QueryDataSet(con.GetSql(), con.DbParamList);
+                ds = _oper.QueryDataSet(con.GetSql(), con.DbParamList);
             }
             else
             {
                 SelectCondition sCon = con as SelectCondition;
-                DataTable dt = con.DBinfo.CurrentDbAdapter.QueryDataTable(sCon.GetSelect(), sCon.PageContent, oper, null);
+                DataTable dt = con.DBinfo.CurrentDbAdapter.QueryDataTable(sCon.GetSelect(), sCon.PageContent, _oper, null);
                 dt.TableName = "newTable";
                 ds = new DataSet();
                 ds.Tables.Add(dt);
@@ -453,21 +457,21 @@ namespace Buffalo.DB.BQLCommon
         public DataSet QueryDataSet<E>(BQLQuery BQL, PageContent objPage)
         {
 
-            AbsCondition con = ToCondition(BQL, new BQLEntityTableHandle[] { }, true, typeof(E));
+            AbsCondition con = ToCondition(BQL,null, true, typeof(E));
             DataSet ds = null;
-            using (BatchAction ba = oper.StarBatchAction())
+            using (BatchAction ba = _oper.StarBatchAction())
             {
                 if (con.DbParamList != null)
                 {
                     con.PageContent = objPage;
-                    con.Oper = oper;
+                    con.Oper = _oper;
                     string sql = con.GetSql();
-                    ds = oper.QueryDataSet(sql, con.DbParamList);
+                    ds = _oper.QueryDataSet(sql, con.DbParamList);
                 }
                 else
                 {
                     SelectCondition sCon = con as SelectCondition;
-                    DataTable dt = con.DBinfo.CurrentDbAdapter.QueryDataTable(sCon.GetSelect(), objPage, oper, null);
+                    DataTable dt = con.DBinfo.CurrentDbAdapter.QueryDataTable(sCon.GetSelect(), objPage, _oper, null);
                     dt.TableName = "newTable";
                     ds = new DataSet();
                     ds.Tables.Add(dt);
@@ -481,23 +485,23 @@ namespace Buffalo.DB.BQLCommon
         /// </summary>
         /// <param name="BQL">sql语句</param>
         /// <param name="objPage">分页对象</param>
-        public DataSet QueryDataSet(BQLQuery bql, PageContent objPage)
+        public DataSet QueryDataSet(BQLQuery bql,Type tableType, PageContent objPage)
         {
-            AbsCondition con = BQLKeyWordManager.ToCondition(bql, oper.DBInfo,null,true);
+            AbsCondition con = ToCondition(bql, null, true, tableType);
             DataSet ds = null;
-            using (BatchAction ba = oper.StarBatchAction())
+            using (BatchAction ba = _oper.StarBatchAction())
             {
                 if (con.DbParamList != null)
                 {
                     con.PageContent = objPage;
-                    con.Oper = oper;
+                    con.Oper = _oper;
                     string sql = con.GetSql();
-                    ds = oper.QueryDataSet(sql, con.DbParamList);
+                    ds = _oper.QueryDataSet(sql, con.DbParamList);
                 }
                 else
                 {
                     SelectCondition sCon = con as SelectCondition;
-                    DataTable dt = con.DBinfo.CurrentDbAdapter.QueryDataTable(sCon.GetSelect(), objPage, oper, null);
+                    DataTable dt = con.DBinfo.CurrentDbAdapter.QueryDataTable(sCon.GetSelect(), objPage, _oper, null);
                     dt.TableName = "newTable";
                     ds = new DataSet();
                     ds.Tables.Add(dt);
@@ -514,14 +518,14 @@ namespace Buffalo.DB.BQLCommon
         /// <param name="tableType">表对应的实体类型</param>
         public IDataReader QueryReader(ScopeList lstScope, PageContent objPage,Type tableType)
         {
-            BQLEntityTableHandle table = oper.DBInfo.FindTable(tableType);
+            BQLEntityTableHandle table = _oper.DBInfo.FindTable(tableType);
             if (CommonMethods.IsNull(table))
             {
-                oper.DBInfo.ThrowNotFondTable(tableType);
+                _oper.DBInfo.ThrowNotFondTable(tableType);
             }
             
             BQLQuery BQL = GetSelectSql(lstScope, table);
-            return QueryReader(BQL, objPage);
+            return QueryReader(BQL, objPage, tableType);
         }
 
         /// <summary>
@@ -529,16 +533,25 @@ namespace Buffalo.DB.BQLCommon
         /// </summary>
         /// <param name="BQL">sql语句</param>
         /// <param name="objPage">分页对象</param>
-        public IDataReader QueryReader(BQLQuery BQL, PageContent objPage)
+        /// <param name="tableType">表对应的实体类型</param>
+        public IDataReader QueryReader(BQLQuery BQL, PageContent objPage, Type tableType)
         {
-            AbsCondition con = BQLKeyWordManager.ToCondition(BQL, oper.DBInfo, null,true);
+            AbsCondition con = null;
+            if (tableType == null)
+            {
+                con = BQLKeyWordManager.ToCondition(BQL, _oper.DBInfo, null, true);
+            }
+            else 
+            {
+                con = ToCondition(BQL, new BQLEntityTableHandle[] { },true,tableType);
+            }
             con.PageContent = objPage;
             IDataReader reader = null;
 
             con.PageContent = objPage;
-            con.Oper = oper;
+            con.Oper = _oper;
             string sql = con.GetSql();
-            reader = oper.Query(sql, con.DbParamList);
+            reader = _oper.Query(sql, con.DbParamList);
 
             return reader;
         }
@@ -549,14 +562,14 @@ namespace Buffalo.DB.BQLCommon
         /// <param name="objPage">分页对象</param>
         public IDataReader QueryReader(ScopeList lstScope, Type tableType)
         {
-            BQLEntityTableHandle table = oper.DBInfo.FindTable(tableType);
+            BQLEntityTableHandle table = _oper.DBInfo.FindTable(tableType);
             if (CommonMethods.IsNull(table))
             {
-                oper.DBInfo.ThrowNotFondTable(tableType);
+                _oper.DBInfo.ThrowNotFondTable(tableType);
             }
             
             BQLQuery BQL = GetSelectSql(lstScope, table);
-            return QueryReader(BQL);
+            return QueryReader(BQL,null);
         }
 
         /// <summary>
@@ -564,12 +577,14 @@ namespace Buffalo.DB.BQLCommon
         /// </summary>
         /// <param name="sql">sql语句</param>
         /// <param name="objPage">分页对象</param>
-        public IDataReader QueryReader(BQLQuery BQL)
+        public IDataReader QueryReader(BQLQuery BQL, Type tableType)
         {
-            AbsCondition con = BQLKeyWordManager.ToCondition(BQL, oper.DBInfo, null,true);
+           
+             AbsCondition con = ToCondition(BQL, null, true, tableType);
+            
             IDataReader reader = null;
-            con.Oper = oper;
-            reader = oper.Query(con.GetSql(), con.DbParamList);
+            con.Oper = _oper;
+            reader = _oper.Query(con.GetSql(), con.DbParamList);
 
             return reader;
         }
@@ -581,10 +596,10 @@ namespace Buffalo.DB.BQLCommon
         /// <param name="BQL">sql语句</param>
         public int ExecuteCommand(BQLQuery BQL)
         {
-            AbsCondition con = BQLKeyWordManager.ToCondition(BQL, oper.DBInfo, null, true);
+            AbsCondition con = BQLKeyWordManager.ToCondition(BQL, _oper.DBInfo, null, true);
             int ret = -1;
-            con.Oper = oper;
-            ret = oper.Execute(con.GetSql(), con.DbParamList);
+            con.Oper = _oper;
+            ret = _oper.Execute(con.GetSql(), con.DbParamList);
             return ret;
         }
         
@@ -597,10 +612,10 @@ namespace Buffalo.DB.BQLCommon
             where E : EntityBase, new() 
         {
             Type eType = typeof(E);
-            BQLEntityTableHandle table = oper.DBInfo.FindTable(eType);
+            BQLEntityTableHandle table = _oper.DBInfo.FindTable(eType);
             if (CommonMethods.IsNull(table))
             {
-                oper.DBInfo.ThrowNotFondTable(eType);
+                _oper.DBInfo.ThrowNotFondTable(eType);
             }
             List<BQLParamHandle> lstParams = new List<BQLParamHandle>();
             lstParams.Add(table[table.GetEntityInfo().PrimaryProperty[0].PropertyName]);
@@ -622,15 +637,15 @@ namespace Buffalo.DB.BQLCommon
         public bool ExistsRecord<E>(BQLQuery BQL)
             where E : EntityBase, new()
         {
-            TableAliasNameManager aliasManager = new TableAliasNameManager(new BQLEntityTableHandle(EntityInfoManager.GetEntityHandle(typeof(E))));
-            AbsCondition con = BQLKeyWordManager.ToCondition(BQL, oper.DBInfo, aliasManager, true);
+            Type tableType = typeof(E);
+            AbsCondition con = ToCondition(BQL, null, true, tableType);
             string sql = con.DBinfo.CurrentDbAdapter.GetTopSelectSql(con as SelectCondition, 1);
             bool exists = false;
             IDataReader reader = null;
             try
             {
-                con.Oper = oper;
-                reader = oper.Query(sql, con.DbParamList);
+                con.Oper = _oper;
+                reader = _oper.Query(sql, con.DbParamList);
                 exists = reader.Read();
             }
             finally
@@ -651,10 +666,10 @@ namespace Buffalo.DB.BQLCommon
             where E : EntityBase, new()
         {
             Type eType = typeof(E);
-            BQLEntityTableHandle table = oper.DBInfo.FindTable(eType);
+            BQLEntityTableHandle table = _oper.DBInfo.FindTable(eType);
             if (CommonMethods.IsNull(table))
             {
-                oper.DBInfo.ThrowNotFondTable(eType);
+                _oper.DBInfo.ThrowNotFondTable(eType);
             }
             List<BQLParamHandle> lstParams = GetParam(table, lstScope);
             BQLCondition where = BQLCondition.TrueValue;
@@ -675,15 +690,18 @@ namespace Buffalo.DB.BQLCommon
         public E GetUnique<E>(BQLQuery BQL)
             where E : EntityBase, new()
         {
+            Type tableType = typeof(E);
+            TableAliasNameManager aliasManager = new TableAliasNameManager(new BQLEntityTableHandle(EntityInfoManager.GetEntityHandle(tableType)));
             
-            TableAliasNameManager aliasManager = new TableAliasNameManager(new BQLEntityTableHandle(EntityInfoManager.GetEntityHandle(typeof(E))));
-            AbsCondition con = BQLKeyWordManager.ToCondition(BQL, oper.DBInfo, aliasManager,false);
+
+            AbsCondition con = BQLKeyWordManager.ToCondition(BQL, _oper.DBInfo, aliasManager, true);
+
             string sql = con.DBinfo.CurrentDbAdapter.GetTopSelectSql(con as SelectCondition, 1);
             E ret = default(E);
-            IDataReader reader = oper.Query(sql, con.DbParamList);
+            IDataReader reader = _oper.Query(sql, con.DbParamList);
             try
             {
-                con.Oper = oper;
+                con.Oper = _oper;
                 bool hasValue=true;
                 if (reader.Read())
                 {

@@ -4,6 +4,7 @@ using System.Text;
 using EnvDTE;
 using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 using Buffalo.DBTools.ROMHelper;
+using System.IO;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -69,6 +70,30 @@ namespace Buffalo.DBTools.HelperKernel
                 return _entityBaseTypeName;
             }
         }
+
+        /// <summary>
+        /// 类图文件
+        /// </summary>
+        public string ClassDesignerFileName 
+        {
+            get 
+            {
+                return DesignerInfo.SelectDocView.DocData.FileName;
+            }
+        }
+
+        /// <summary>
+        /// 需要生成到的路径目录
+        /// </summary>
+        public string GenerateBasePath 
+        {
+            get
+            {
+                FileInfo classFile = new FileInfo(ClassDesignerFileName);
+                return classFile.DirectoryName;
+            }
+        }
+
         private string _entityBaseTypeShortName;
 
         /// <summary>

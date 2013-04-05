@@ -88,6 +88,9 @@ namespace Buffalo.DBTools
             
         }
 
+        /// <summary>
+        /// Ìî³ä±à¼­Ïî
+        /// </summary>
         private void FillEdit() 
         {
             if (_info != null) 
@@ -102,6 +105,7 @@ namespace Buffalo.DBTools
                 }
                 rtbConnstr.Text = _info.ConnectionString;
                 chkAllDal.Checked = _info.IsAllDal;
+                chkEntityToDirectory.Checked = _info.EntityToDirectory;
             }
         }
         /// <summary>
@@ -244,6 +248,7 @@ namespace Buffalo.DBTools
             _info.DbType = dbType;
             _info.SummaryShow = SummaryItem;
             _info.IsAllDal = chkAllDal.Checked;
+            _info.EntityToDirectory = chkEntityToDirectory.Checked;
             _info.Tier = Convert.ToInt32(tier);
             return true;
         }

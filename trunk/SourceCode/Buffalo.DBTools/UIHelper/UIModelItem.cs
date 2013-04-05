@@ -225,6 +225,15 @@ namespace Buffalo.DBTools.UIHelper
         {
             get { return _belongProperty.MemberTypeShortName; }
         }
+
+        /// <summary>
+        /// 类型的完整名
+        /// </summary>
+        public string TypeFullName 
+        {
+            get { return _belongProperty.MemberTypeName; }
+        }
+
         /// <summary>
         /// 对应的属性名
         /// </summary>
@@ -243,23 +252,14 @@ namespace Buffalo.DBTools.UIHelper
             if (_belongProperty == null)
             {
                 
-                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, "", "", "", "",false,false);
+                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, "", "", "", "");
             }
             else
             {
-                bool isEntity = false;
-                bool isEntityCollection = false;
-                bool isObject = EntityConfig.IsManyOne(_belongProperty);
-                if (isObject) 
-                {
-                    isEntity=true;
+               
 
-                    if (_belongProperty.IsGenerated) 
-                    {
-                        isEntityCollection = true;
-                    }
-                }
-                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, FieldType, Summary, TypeName, PropertyName, isEntity, isEntityCollection);
+                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, FieldType,
+                    Summary, TypeName, PropertyName);
             }
             return item;
         }

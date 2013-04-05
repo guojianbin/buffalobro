@@ -40,8 +40,8 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             //    return;
             //}
             Type type = typeof(T);
-            ConfigModelLoader.AppendModelAssembly(type.Assembly);
-            ConfigModelLoader.InitConfig();
+            DataAccessLoader.AppendModelAssembly(type.Assembly);
+            DataAccessLoader.InitConfig();
             _db = GetDB();
             
             Type baseType=typeof(BQLEntityTableHandle);
@@ -124,8 +124,8 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 throw new Exception(cType.FullName+"类还没配置DataBaseAttribute标签");
             }
             string dbName=att.DataBaseName;
-            ConfigModelLoader.InitConfig();
-            return ConfigModelLoader.GetDBInfo(dbName);
+            DataAccessLoader.InitConfig();
+            return DataAccessLoader.GetDBInfo(dbName);
         }
     }
 }

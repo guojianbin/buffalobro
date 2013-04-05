@@ -186,6 +186,7 @@
     <Compile Include="HelperKernel\GrneraterBase.cs" />
     <Compile Include="HelperKernel\DataAccessMappingConfig.cs" />
     <Compile Include="HelperKernel\TagManager.cs" />
+    <Compile Include="HelperKernel\ToolConfig.cs" />
     <Compile Include="Models.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

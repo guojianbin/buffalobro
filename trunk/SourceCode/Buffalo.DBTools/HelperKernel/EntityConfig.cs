@@ -276,7 +276,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <param name="project">ËùÊôÏîÄ¿</param>
         public EntityConfig(ClrType ctype, ClassDesignerInfo info) 
         {
-            
+            _designerInfo = info;
             //_classShape = classShape;
             _classType = ctype;
             FillClassInfo();
@@ -286,7 +286,7 @@ namespace Buffalo.DBTools.HelperKernel
             FillBaseTypeGenericArgs(ctype, _lstGenericArgs);
             //_currentProject = project;
             //_currentDiagram = currentDiagram;
-            _designerInfo = info;
+            
         }
 
         /// <summary>

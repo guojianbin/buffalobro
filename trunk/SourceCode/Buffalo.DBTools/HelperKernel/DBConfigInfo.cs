@@ -75,7 +75,7 @@ namespace Buffalo.DBTools.HelperKernel
             set { _fileName = value; }
         }
 
-        private int _tier;
+        private int _tier=1;
 
         /// <summary>
         /// 层数
@@ -86,7 +86,7 @@ namespace Buffalo.DBTools.HelperKernel
             set { _tier = value; }
         }
 
-        private SummaryShowItem _summaryShow;
+        private SummaryShowItem _summaryShow=SummaryShowItem.All;
 
         /// <summary>
         /// 显示方式
@@ -97,7 +97,7 @@ namespace Buffalo.DBTools.HelperKernel
             set { _summaryShow = value; }
         }
 
-        private bool _isAllDal;
+        private bool _isAllDal=false;
 
         /// <summary>
         /// 是否生成所有数据层
@@ -106,6 +106,16 @@ namespace Buffalo.DBTools.HelperKernel
         {
             get { return _isAllDal; }
             set { _isAllDal = value; }
+        }
+
+        private bool _entityToDirectory=false;
+        /// <summary>
+        /// 实体是否放到Entity文件夹中
+        /// </summary>
+        public bool EntityToDirectory
+        {
+            get { return _entityToDirectory; }
+            set { _entityToDirectory = value; }
         }
 
         /// <summary>
@@ -134,7 +144,20 @@ namespace Buffalo.DBTools.HelperKernel
             return directory + "\\" + dbName + ".xml";
 
         }
+        /// <summary>
+        /// 生成配置的文件名
+        /// </summary>
+        /// <param name="curProject"></param>
+        /// <param name="curDiagram"></param>
+        public static string GetConfigFileName(ClassDesignerInfo info)
+        {
+            string dbName = GetDbName(info);
+            string proFile = info.CurrentProject.FileName;
+            FileInfo file = new FileInfo(proFile);
+            string directory = file.DirectoryName;
+            return directory + "\\" + dbName + ".config.xml";
 
+        }
         /// <summary>
         /// 获取当前类图的库名
         /// </summary>
@@ -182,21 +205,46 @@ namespace Buffalo.DBTools.HelperKernel
             att.InnerText = this.DbName;
             configNode.Attributes.Append(att);
 
-            att = doc.CreateAttribute("tier");
+            
+
+            EntityMappingConfig.SaveXML(path, doc);
+            SaveConfigInfo(path);
+        }
+
+        /// <summary>
+        /// 保存配置信息
+        /// </summary>
+        private void SaveConfigInfo(string path) 
+        {
+            XmlDocument doc = EntityMappingConfig.NewXmlDocument();
+            XmlNode configNode = doc.CreateElement("config");
+            doc.AppendChild(configNode);
+
+            XmlAttribute att = doc.CreateAttribute("tier");
             att.InnerText = this.Tier.ToString();
             configNode.Attributes.Append(att);
 
             att = doc.CreateAttribute("isAllDal");
-            att.InnerText = this.IsAllDal?"1":"0";
+            att.InnerText = this.IsAllDal ? "1" : "0";
             configNode.Attributes.Append(att);
 
             att = doc.CreateAttribute("summary");
             att.InnerText = ((int)this.SummaryShow).ToString();
             configNode.Attributes.Append(att);
 
-            EntityMappingConfig.SaveXML(path, doc);
-        }
+            att = doc.CreateAttribute("entityToDirectory");
+            att.InnerText = this.EntityToDirectory ? "1" : "0";
+            configNode.Attributes.Append(att);
 
+            int last = path.LastIndexOf(".xml");
+            string savePath = path;
+            if (last > 0)
+            {
+                savePath = path.Substring(0, last);
+                savePath += ".config.xml";
+            }
+            EntityMappingConfig.SaveXML(savePath, doc);
+        }
         /// <summary>
         /// 加载数据库信息
         /// </summary>
@@ -216,6 +264,7 @@ namespace Buffalo.DBTools.HelperKernel
             {
                 doc.Load(xmlFieName);
                 ret = LoadInfo(doc);
+                LoadConfig(info, ret);
                 ret.FileName = xmlFieName;
             }
             catch 
@@ -265,41 +314,69 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     info.DbName = att.InnerText;
                 }
-                att = config.Attributes["tier"];
-                if (att != null)
-                {
-                    int tier = 1;
-                    if (int.TryParse(att.InnerText,out tier))
-                    {
-                        info.Tier = Convert.ToInt32(att.InnerText);
-                    }
-                    else 
-                    {
-                        info.Tier = 3;
-                    }
-                }
-
-                att = config.Attributes["isAllDal"];
-                if (att != null)
-                {
-                    info.IsAllDal = (att.InnerText == "1");
-                }
-                att = config.Attributes["summary"];
-                if (att != null)
-                {
-                    int summary = (int)SummaryShowItem.All;
-                    if (int.TryParse(att.InnerText, out summary))
-                    {
-                        info.SummaryShow = (SummaryShowItem)summary;
-                    }
-                    else
-                    {
-                        info.SummaryShow = SummaryShowItem.All;
-                    }
-                }
+                
                 return info;
             }
             return null;
         }
+        /// <summary>
+        /// 加载其他配置信息
+        /// </summary>
+        /// <param name="info"></param>
+        private static void LoadConfig(ClassDesignerInfo cdinfo,DBConfigInfo info) 
+        {
+            XmlDocument doc = new XmlDocument();
+            try
+            {
+                doc.Load(GetConfigFileName(cdinfo));
+                XmlNodeList lstConfig = doc.GetElementsByTagName("config");
+                if (lstConfig.Count > 0)
+                {
+                    XmlNode config = lstConfig[0];
+                    XmlAttribute att = att = config.Attributes["tier"];
+                    if (att != null)
+                    {
+                        int tier = 1;
+                        if (int.TryParse(att.InnerText, out tier))
+                        {
+                            info.Tier = Convert.ToInt32(att.InnerText);
+                        }
+                        else
+                        {
+                            info.Tier = 3;
+                        }
+                    }
+
+                    att = config.Attributes["isAllDal"];
+                    if (att != null)
+                    {
+                        info.IsAllDal = (att.InnerText == "1");
+                    }
+                    att = config.Attributes["entityToDirectory"];
+                    if (att != null)
+                    {
+                        info.EntityToDirectory = (att.InnerText == "1");
+                    }
+                    att = config.Attributes["summary"];
+                    if (att != null)
+                    {
+                        int summary = (int)SummaryShowItem.All;
+                        if (int.TryParse(att.InnerText, out summary))
+                        {
+                            info.SummaryShow = (SummaryShowItem)summary;
+                        }
+                        else
+                        {
+                            info.SummaryShow = SummaryShowItem.All;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
     }
 }

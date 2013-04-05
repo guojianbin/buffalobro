@@ -18,7 +18,7 @@ namespace Buffalo.GeneratorInfo
         /// <param name="typeName">类型名</param>
         /// <param name="propertyName">对应的属性名</param>
         public Property(Dictionary<string, object> dicCheckItem, string propertyType, 
-            string summary, string typeName, string propertyName,bool isEntity,bool isEntityCollection) 
+            string summary, string typeName, string propertyName) 
         {
             _dicCheckItem = dicCheckItem;
             _propertyName = propertyName;
@@ -117,22 +117,6 @@ namespace Buffalo.GeneratorInfo
         public string PropertyName
         {
             get { return _propertyName; }
-        }
-        private bool _isEntity;
-        /// <summary>
-        /// 是否关联实体
-        /// </summary>
-        public bool IsEntity
-        {
-            get { return _isEntity; }
-        }
-        private bool _isEntityCollection;
-        /// <summary>
-        /// 是否关联实体集合
-        /// </summary>
-        public bool IsEntityCollection
-        {
-            get { return _isEntityCollection; }
         }
     }
 }
