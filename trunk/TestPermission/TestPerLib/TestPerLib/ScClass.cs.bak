@@ -9,8 +9,30 @@ using System.Data;
 using Buffalo.DB.CommBase.BusinessBases;
 namespace TestPerLib
 {
-    public class ScClass
+    public partial class ScClass:ScBase
     {
         private string _className;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ClassName
+        {
+            get
+            {
+                return _className;
+            }
+            set
+            {
+                _className=value;
+                OnPropertyUpdated("ClassName");
+            }
+        }
+
+        public override string ToString()
+        {
+            return ClassName;
+        }
+
+
     }
 }

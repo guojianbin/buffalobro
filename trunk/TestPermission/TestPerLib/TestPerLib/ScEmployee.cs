@@ -1,72 +1,76 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Buffalo.DB.CommBase.BusinessBases;
 
 using Buffalo.DB.CommBase;
 using Buffalo.Kernel.Defaults;
 using Buffalo.DB.PropertyAttributes;
 using System.Data;
+using Buffalo.DB.CommBase.BusinessBases;
 namespace TestPerLib
 {
-    public partial class ScBase : EntityBase
+    /// <summary>
+    /// 登陆员工
+    /// </summary>
+    public partial class ScEmployee:ScBase
     {
         /// <summary>
-        /// ID
+        /// 登录名称
         /// </summary>
-        private int _id;
+        private string _name;
         /// <summary>
-        /// 最后更新时间
+        /// 真实名称
         /// </summary>
-        private DateTime _lastDate;
+        private string _realName;
         /// <summary>
-        /// 创建时间
+        /// 密码
         /// </summary>
-        private DateTime _createDate;
+        private string _password;
         /// <summary>
-        /// ID
+        /// 登录名称
         /// </summary>
-        public int Id
+        public string Name
         {
             get
             {
-                return _id;
+                return _name;
             }
             set
             {
-                _id=value;
-                OnPropertyUpdated("Id");
+                _name=value;
+                OnPropertyUpdated("Name");
             }
         }
         /// <summary>
-        /// 最后更新时间
+        /// 真实名称
         /// </summary>
-        public DateTime LastDate
+        public string RealName
         {
             get
             {
-                return _lastDate;
+                return _realName;
             }
             set
             {
-                _lastDate=value;
-                OnPropertyUpdated("LastDate");
+                _realName=value;
+                OnPropertyUpdated("RealName");
             }
         }
         /// <summary>
-        /// 创建时间
+        /// 密码
         /// </summary>
-        public DateTime CreateDate
+        public string Password
         {
             get
             {
-                return _createDate;
+                return _password;
             }
             set
             {
-                _createDate=value;
-                OnPropertyUpdated("CreateDate");
+                _password=value;
+                OnPropertyUpdated("Password");
             }
         }
+
     }
 }

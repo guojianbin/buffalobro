@@ -8,9 +8,9 @@ namespace TestPerLib
 {
 	
 	/// <summary>
-	///  
+	///  µÇÂ½Ô±¹¤
 	/// </summary>
-	public partial class ScStudent
+	public partial class ScEmployee
 	{
 		
 	}

@@ -35,10 +35,13 @@
   <ItemGroup>
     <Compile Include="BQLEntity\ScBase.cs" />
     <Compile Include="BQLEntity\ScClass.cs" />
+    <Compile Include="BQLEntity\ScEmployee.cs" />
     <Compile Include="BQLEntity\School.cs" />
-    <Compile Include="BQLEntity\ScStudent.cs" />
-    <Compile Include="DataView\ScClassDataView.cs" />
-    <Compile Include="DataView\ScStudentDataView.cs" />
+    <Compile Include="Business\ScBaseBusiness.cs" />
+    <Compile Include="Business\ScClassBusiness.cs" />
+    <Compile Include="DataAccess\Bql\ScClassDataAccess.cs" />
+    <Compile Include="DataAccess\IDataAccess\IScClassDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K5\ScClassDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScBase.cs" />
     <Compile Include="ScBase.extend.cs">
@@ -48,13 +51,26 @@
     <Compile Include="ScClass.extend.cs">
       <DependentUpon>ScClass.cs</DependentUpon>
     </Compile>
-    <Compile Include="ScStudent.cs" />
-    <Compile Include="ScStudent.extend.cs">
-      <DependentUpon>ScStudent.cs</DependentUpon>
+    <Compile Include="ScEmployee.cs" />
+    <Compile Include="ScEmployee.extend.cs">
+      <DependentUpon>ScEmployee.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="School.cd" />
+    <Compile Include="BQLEntity\ScStudent.cs" />
+    <Compile Include="Business\ScEmployeeBusiness.cs" />
+    <Compile Include="Business\ScStudentBusiness.cs" />
+    <Compile Include="DataAccess\Bql\ScEmployeeDataAccess.cs" />
+    <Compile Include="DataAccess\Bql\ScStudentDataAccess.cs" />
+    <Compile Include="DataAccess\IDataAccess\IScEmployeeDataAccess.cs" />
+    <Compile Include="DataAccess\IDataAccess\IScStudentDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K5\ScEmployeeDataAccess.cs" />
+    <Compile Include="DataAccess\Sql2K5\ScStudentDataAccess.cs" />
+    <Compile Include="ScStudent.cs" />
+    <Compile Include="ScStudent.extend.cs">
+      <DependentUpon>ScStudent.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SourceCode\Buffalo.DB\Buffalo.DB.csproj">
@@ -85,7 +101,16 @@
     <EmbeddedResource Include="BEM\ScClass.BEM.xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="BEM\School.BDM.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BEM\ScEmployee.BEM.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="BEM\ScStudent.BEM.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entity\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,17 +9,24 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TestPerLib.ScClass">
-    <Position X="1" Y="3.25" Width="1.5" />
+    <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>ScClass.cs</FileName>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAAEAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestPerLib.ScEmployee">
+    <Position X="5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>ScEmployee.cs</FileName>
+      <HashCode>AAQAIAAAAAEAAAAAACAAAAQAAAAAAAACACAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="TestPerLib.ScStudent">
-    <Position X="3.75" Y="3.25" Width="1.5" />
+    <Position X="3.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>ScStudent.cs</FileName>
-      <HashCode>AAAAIAAAAAAAAAAAAEAAAAQAAAAAAAgAACAAAAAAAAA=</HashCode>
+      <HashCode>gAAAIAAgAAAAAAAAAEAIAAQAAAAAAAgAACAAAAABAAA=</HashCode>
     </TypeIdentifier>
   </Class>
 </ClassDiagram>

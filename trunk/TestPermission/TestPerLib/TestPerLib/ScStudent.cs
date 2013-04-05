@@ -59,16 +59,6 @@ namespace TestPerLib
         /// 所属班级
         /// </summary>
         private ScClass _belongClass;
-
-        private static ModelContext<ScStudent> _____baseContext=new ModelContext<ScStudent>();
-        /// <summary>
-        /// 获取查询关联类
-        /// </summary>
-        /// <returns></returns>
-        public static ModelContext<ScStudent> GetContext() 
-        {
-            return _____baseContext;
-        }
         /// <summary>
         /// 所属班级ID
         /// </summary>
@@ -106,5 +96,6 @@ namespace TestPerLib
                 OnPropertyUpdated("BelongClass");
             }
         }
+
     }
 }

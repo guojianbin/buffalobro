@@ -33,14 +33,6 @@ namespace TestPerLib
             return ClassName;
         }
 
-        private static ModelContext<ScClass> _____baseContext=new ModelContext<ScClass>();
-        /// <summary>
-        /// 获取查询关联类
-        /// </summary>
-        /// <returns></returns>
-        public static ModelContext<ScClass> GetContext() 
-        {
-            return _____baseContext;
-        }
+
     }
 }
