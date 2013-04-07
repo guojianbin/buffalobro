@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7A6773F7-7D53-4DF1-8BF4-D1E6634DB61B}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ClassDesignerInfo.cs" />
+    <Compile Include="CommandBar.Designer.cs" />
     <Compile Include="CommandBarId.cs" />
     <Compile Include="CommandItems.cs" />
     <Compile Include="Connect.cs">
@@ -168,25 +169,34 @@
     <Compile Include="HelperKernel\TagManager.cs" />
     <Compile Include="Models.Designer.cs" />
     <Compile Include="ROMHelper\DBEntityInfo.cs" />
+    <Compile Include="UIHelper\BuildAction.cs" />
     <Compile Include="UIHelper\ConfigItem.cs" />
     <Compile Include="UIHelper\EntityInfo.cs" />
-    <Compile Include="UIHelper\FileGenType.cs" />
+    <Compile Include="UIHelper\FrmCompileResault.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIHelper\FrmCompileResault.Designer.cs">
+      <DependentUpon>FrmCompileResault.cs</DependentUpon>
+    </Compile>
     <Compile Include="UIHelper\FrmUIGenerater.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UIHelper\FrmUIGenerater.Designer.cs">
       <DependentUpon>FrmUIGenerater.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIHelper\ModelLoader\CodeGenCache.cs" />
     <Compile Include="UIHelper\ModelLoader\CodeGeneration.cs" />
+    <Compile Include="UIHelper\ModelLoader\CodeGenInfo.cs" />
     <Compile Include="UIHelper\ModelLoader\CodeOutputer.cs" />
     <Compile Include="UIHelper\ModelLoader\CodesManger.cs" />
-    <Compile Include="UIHelper\ModelLoader\Compiler.cs" />
+    <Compile Include="UIHelper\ModelLoader\CompileException.cs" />
     <Compile Include="UIHelper\ModelLoader\ExpressionItem.cs" />
     <Compile Include="UIHelper\ModelLoader\ExpressionType.cs" />
     <Compile Include="UIHelper\ModelLoader\ICodeOutputer.cs" />
     <Compile Include="UIHelper\ModelLoader\LinkOutputer.cs" />
     <Compile Include="UIHelper\ModelLoader\MethodOutputer.cs" />
     <Compile Include="UIHelper\ModelLoader\ModelCompiler.cs" />
+    <Compile Include="UIHelper\ModelLoader\SourceCodeCompiler.cs" />
     <Compile Include="UIHelper\ModelLoader\UsingOutputer.cs" />
     <Compile Include="UIHelper\UIConfigItem.cs" />
     <Compile Include="UIHelper\UIModelItem.cs" />
@@ -267,6 +277,9 @@
     <EmbeddedResource Include="Models.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UIHelper\FrmCompileResault.resx">
+      <DependentUpon>FrmCompileResault.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UIHelper\FrmUIGenerater.resx">
       <DependentUpon>FrmUIGenerater.cs</DependentUpon>
     </EmbeddedResource>
@@ -291,6 +304,10 @@
     <ProjectReference Include="..\Buffalo.DB\Buffalo2008.DB.csproj">
       <Project>{9B0043E4-883B-47BA-9A5A-5110C8583902}</Project>
       <Name>Buffalo2008.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buffalo.GeneratorInfo\Buffalo2008.GeneratorInfo.csproj">
+      <Project>{6320C7DC-D4AE-4EA5-A2AB-B08B59062868}</Project>
+      <Name>Buffalo2008.GeneratorInfo</Name>
     </ProjectReference>
     <ProjectReference Include="..\Buffalo.Kernel\Buffalo2008.Kernel.csproj">
       <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>

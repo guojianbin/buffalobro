@@ -19,6 +19,7 @@ using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.DBCheckers;
 using Buffalo.DBTools.ROMHelper;
+using Buffalo.DBTools.UIHelper;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -1236,7 +1237,7 @@ namespace Buffalo.DBTools.HelperKernel
             EnvDTE.ProjectItem newit = classItem.ProjectItems.AddFromFile(fileName);
             //EnvDTE.ProjectItem newit = _currentProject.ProjectItems.AddFromFile(fileName);
             
-            newit.Properties.Item("BuildAction").Value = 1;
+            newit.Properties.Item("BuildAction").Value = (int)BuildAction.Code;
         }
 
         /// <summary>

@@ -146,6 +146,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ClassDesignerInfo.cs" />
+    <Compile Include="CommandBar.Designer.cs" />
     <Compile Include="CommandBarId.cs" />
     <Compile Include="CommandItems.cs" />
     <Compile Include="Connect.cs">
@@ -217,23 +218,34 @@
     <Compile Include="HelperKernel\TagManager.cs" />
     <Compile Include="Models.Designer.cs" />
     <Compile Include="ROMHelper\DBEntityInfo.cs" />
+    <Compile Include="UIHelper\BuildAction.cs" />
     <Compile Include="UIHelper\ConfigItem.cs" />
     <Compile Include="UIHelper\EntityInfo.cs" />
-    <Compile Include="UIHelper\FileGenType.cs" />
-    <Compile Include="UIHelper\FrmUIGenerater.cs" />
+    <Compile Include="UIHelper\FrmCompileResault.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIHelper\FrmCompileResault.Designer.cs">
+      <DependentUpon>FrmCompileResault.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIHelper\FrmUIGenerater.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UIHelper\FrmUIGenerater.Designer.cs">
       <DependentUpon>FrmUIGenerater.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIHelper\ModelLoader\CodeGenCache.cs" />
     <Compile Include="UIHelper\ModelLoader\CodeGeneration.cs" />
+    <Compile Include="UIHelper\ModelLoader\CodeGenInfo.cs" />
     <Compile Include="UIHelper\ModelLoader\CodeOutputer.cs" />
     <Compile Include="UIHelper\ModelLoader\CodesManger.cs" />
-    <Compile Include="UIHelper\ModelLoader\Compiler.cs" />
+    <Compile Include="UIHelper\ModelLoader\CompileException.cs" />
     <Compile Include="UIHelper\ModelLoader\ExpressionItem.cs" />
     <Compile Include="UIHelper\ModelLoader\ExpressionType.cs" />
     <Compile Include="UIHelper\ModelLoader\ICodeOutputer.cs" />
     <Compile Include="UIHelper\ModelLoader\LinkOutputer.cs" />
     <Compile Include="UIHelper\ModelLoader\MethodOutputer.cs" />
     <Compile Include="UIHelper\ModelLoader\ModelCompiler.cs" />
+    <Compile Include="UIHelper\ModelLoader\SourceCodeCompiler.cs" />
     <Compile Include="UIHelper\ModelLoader\UsingOutputer.cs" />
     <Compile Include="UIHelper\UIConfigItem.cs" />
     <Compile Include="UIHelper\UIModelItem.cs" />
@@ -258,6 +270,9 @@
       <DependentUpon>FrmProcess.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Models.resx" />
+    <EmbeddedResource Include="UIHelper\FrmCompileResault.resx">
+      <DependentUpon>FrmCompileResault.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UIHelper\FrmUIGenerater.resx">
       <DependentUpon>FrmUIGenerater.cs</DependentUpon>
     </EmbeddedResource>
@@ -282,6 +297,10 @@
     <ProjectReference Include="..\Buffalo.DB\Buffalo2012.DB.csproj">
       <Project>{9b0043e4-883b-47ba-9a5a-5110c8583902}</Project>
       <Name>Buffalo2012.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buffalo.GeneratorInfo\Buffalo2012.GeneratorInfo.csproj">
+      <Project>{6320c7dc-d4ae-4ea5-a2ab-b08b59062868}</Project>
+      <Name>Buffalo2012.GeneratorInfo</Name>
     </ProjectReference>
     <ProjectReference Include="..\Buffalo.Kernel\Buffalo2012.Kernel.csproj">
       <Project>{6ec04216-a422-4751-aa81-1211dcb10bab}</Project>

@@ -6,6 +6,7 @@ using System.IO;
 using Buffalo.DB.PropertyAttributes;
 using Buffalo.DBTools.ROMHelper;
 using EnvDTE;
+using Buffalo.DBTools.UIHelper;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -84,7 +85,7 @@ namespace Buffalo.DBTools.HelperKernel
             
             EntityMappingConfig.SaveXML(_fileName, _doc);
             EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(_fileName);
-            newit.Properties.Item("BuildAction").Value = 3;
+            newit.Properties.Item("BuildAction").Value = (int)BuildAction.Resource;
         }
 
         

@@ -6,6 +6,7 @@ using Buffalo.DB.PropertyAttributes;
 using Buffalo.DBTools.ROMHelper;
 using EnvDTE;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
+using Buffalo.DBTools.UIHelper;
 
 namespace Buffalo.DBTools.HelperKernel
 {
@@ -52,7 +53,7 @@ namespace Buffalo.DBTools.HelperKernel
             }
             CodeFileHelper.SaveFile(fileName, codes);
             EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
-            newit.Properties.Item("BuildAction").Value = 1;
+            newit.Properties.Item("BuildAction").Value = (int)BuildAction.Code;
         }
 
         /// <summary>
@@ -144,7 +145,7 @@ namespace Buffalo.DBTools.HelperKernel
             }
             CodeFileHelper.SaveFile(fileName, codes);
             EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
-            newit.Properties.Item("BuildAction").Value = 1;
+            newit.Properties.Item("BuildAction").Value = (int)BuildAction.Code;
         }
 
         /// <summary>

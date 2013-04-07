@@ -13,6 +13,7 @@ using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 using System.Xml;
 using Buffalo.DB.CommBase;
 using Buffalo.DB.CommBase.BusinessBases;
+using Buffalo.DBTools.UIHelper;
 
 
 namespace Buffalo.DBTools.ROMHelper
@@ -200,7 +201,7 @@ namespace Buffalo.DBTools.ROMHelper
 
             CodeFileHelper.SaveFile(eFile, codes);
             EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(eFile);
-            newit.Properties.Item("BuildAction").Value = 1;
+            newit.Properties.Item("BuildAction").Value = (int)BuildAction.Code;
             
             GenerateExtendCode();
 
@@ -713,7 +714,7 @@ namespace Buffalo.DBTools.ROMHelper
 
             EnvDTE.ProjectItem classItem = EntityConfig.GetProjectItemByFileName(DesignerInfo, eFileName);
             EnvDTE.ProjectItem newit = classItem.ProjectItems.AddFromFile(fileName);
-            newit.Properties.Item("BuildAction").Value = 3;
+            newit.Properties.Item("BuildAction").Value = (int)BuildAction.Code;
             //EnvDTE.ProjectItem newit = _currentProject.ProjectItems.AddFromFile(fileName);
             //newit.Properties.Item("BuildAction").Value = 1;
         }
