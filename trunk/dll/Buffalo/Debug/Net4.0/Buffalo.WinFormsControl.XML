@@ -400,6 +400,11 @@
             椭圆形
             </summary>
         </member>
+        <member name="F:Buffalo.WinFormsControl.Editors.OnOffButtonType.BlueOblongrectangle">
+            <summary>
+            蓝色椭圆形
+            </summary>
+        </member>
         <member name="T:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell">
             <summary>
             扩展的Checkbox单元格
@@ -413,6 +418,28 @@
         <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExComboBoxCell.BelongColumn">
             <summary>
             所属列
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.NumbericEditor.IsCorrect(System.String)">
+            <summary>
+            验证值是否符合规范
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.NumbericEditor.Max">
+            <summary>
+            可输入的最大值
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.NumbericEditor.Min">
+            <summary>
+            可输入的最小值
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.NumbericEditor.DecimalPlaces">
+            <summary>
+            小数位数(小于0则表示无规定)
             </summary>
         </member>
     </members>

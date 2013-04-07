@@ -536,6 +536,100 @@
             此组的子项权限
             </summary>
         </member>
+        <member name="T:Buffalo.Permissions.DataViewInfo.DataItem">
+            <summary>
+            数据视图的数据项
+            </summary>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataItem.#ctor(System.String,System.Type,System.Boolean,System.Boolean,System.Boolean,Buffalo.Permissions.DataViewInfo.SumType,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLParamHandle,Buffalo.Permissions.DataViewInfo.DataViewer)">
+            <summary>
+            数据视图的数据项
+            </summary>
+            <param name="propertyName">属性名</param>
+            <param name="propertyType">属性类型</param>
+            <param name="canView">能查看</param>
+            <param name="canAdd">能添加</param>
+            <param name="canEdit">能编辑</param>
+            <param name="sumType">统计类型</param>
+            <param name="customSum">自定义统计项</param>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataItem.#ctor(System.String,System.Type,Buffalo.Permissions.DataViewInfo.DataViewer)">
+            <summary>
+            数据视图的数据项
+            </summary>
+            <param name="propertyName">属性名</param>
+            <param name="propertyType">属性类型</param>
+        </member>
+        <member name="P:Buffalo.Permissions.DataViewInfo.DataItem.PropertyName">
+            <summary>
+            属性名
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.DataViewInfo.DataItem.PropertyType">
+            <summary>
+            属性类型
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.DataViewInfo.DataItem.Parent">
+            <summary>
+            所属的视图类
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.DataViewInfo.DataItem.CanView">
+            <summary>
+            是否能查看
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.DataViewInfo.DataItem.CanAdd">
+            <summary>
+            是否能添加
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.DataViewInfo.DataItem.CanEdit">
+            <summary>
+            是否能编辑
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.DataViewInfo.DataItem.SumType">
+            <summary>
+            统计类型
+            </summary>
+        </member>
+        <member name="P:Buffalo.Permissions.DataViewInfo.DataItem.CustomSum">
+            <summary>
+            自定义统计类型(SumType=SumType.Custom)时候的统计表达式
+            </summary>
+        </member>
+        <member name="T:Buffalo.Permissions.DataViewInfo.SumType">
+            <summary>
+            统计类型
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.DataViewInfo.SumType.None">
+            <summary>
+            无
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.DataViewInfo.SumType.Sum">
+            <summary>
+            总和
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.DataViewInfo.SumType.Count">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.DataViewInfo.SumType.Avg">
+            <summary>
+            平均值
+            </summary>
+        </member>
+        <member name="F:Buffalo.Permissions.DataViewInfo.SumType.Custom">
+            <summary>
+            自定义统计
+            </summary>
+        </member>
         <member name="T:Buffalo.Permissions.PermissionsInfo.BPGroupItemRight">
             <summary>
              模块子项权限
@@ -654,6 +748,99 @@
             来自外部系统的表名
             </summary>
         </member>
+        <member name="T:Buffalo.Permissions.DataViewInfo.DataViewer">
+            <summary>
+            数据视图
+            </summary>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewer.GetClassName">
+            <summary>
+            所属的类名
+            </summary>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewer.GetClassType">
+            <summary>
+            所属的类类型
+            </summary>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewer.IsCanView">
+            <summary>
+            是否能查看
+            </summary>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewer.IsCanAdd">
+            <summary>
+            是否能添加
+            </summary>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewer.IsCanEdit">
+            <summary>
+            是否能编辑
+            </summary>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewer.GetEntityHandle">
+            <summary>
+            实体信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewer.#ctor(Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            数据视图
+            </summary>
+            <param name="entityHandle">类类型</param>
+            <param name="canView">是否能查看</param>
+            <param name="canAdd">是否能添加</param>
+            <param name="canEdit">是否能编辑</param>
+            <param name="summary">类注释</param>
+            <param name="entityHandle">所属的实体信息</param>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewer.CreateDataItem(System.String,System.Type,System.Boolean,System.Boolean,System.Boolean,Buffalo.Permissions.DataViewInfo.SumType,Buffalo.DB.BQLCommon.BQLConditionCommon.BQLParamHandle)">
+            <summary>
+            创建视图数据项
+            </summary>
+            <param name="propertyName">属性名</param>
+            <param name="canView">能查看</param>
+            <param name="canAdd">能添加</param>
+            <param name="canEdit">能编辑</param>
+            <param name="sumType">统计类型</param>
+            <param name="customSum">自定义统计项</param>
+            <returns>数据项</returns>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewer.Remove(System.Int32)">
+            <summary>
+            根据索引删除项
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewer.Remove(System.String)">
+            <summary>
+            根据属性名删除项
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewer.FindDataItemIndex(System.String)">
+            <summary>
+            查找视图项的索引
+            </summary>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Buffalo.Permissions.DataViewInfo.DataViewer.Item(System.Int32)">
+            <summary>
+            返回视图数据项
+            </summary>
+            <param name="index">索引</param>
+            <returns></returns>
+        </member>
+        <member name="P:Buffalo.Permissions.DataViewInfo.DataViewer.Item(System.String)">
+            <summary>
+            返回视图数据项
+            </summary>
+            <param name="propertyName">属性名</param>
+            <returns></returns>
+        </member>
         <member name="T:Buffalo.Permissions.PermissionsInfo.BPModelItemRight">
             <summary>
             子模块权限
@@ -767,6 +954,31 @@
             <summary>
             项权限
             </summary>
+        </member>
+        <member name="T:Buffalo.Permissions.DataViewInfo.DataViewerSum">
+            <summary>
+            视图的统计类
+            </summary>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewerSum.GetSumQuery(Buffalo.Permissions.DataViewInfo.DataViewer,Buffalo.DB.QueryConditions.ScopeList,Buffalo.DB.DataBaseAdapter.DBInfo)">
+            <summary>
+            获取统计的查询语句
+            </summary>
+            <param name="dv"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewerSum.FillColumns(System.Data.DataTable,System.Collections.Generic.List{Buffalo.Permissions.DataViewInfo.DataItem})">
+            <summary>
+            填充列
+            </summary>
+            <param name="dtRet"></param>
+            <param name="outputItem"></param>
+        </member>
+        <member name="M:Buffalo.Permissions.DataViewInfo.DataViewerSum.GetParam(Buffalo.Permissions.DataViewInfo.DataItem,Buffalo.Permissions.DataViewInfo.DataViewer)">
+            <summary>
+            获取查询的统计字段
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Buffalo.Permissions.PermissionManager">
             <summary>

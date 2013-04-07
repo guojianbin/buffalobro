@@ -284,6 +284,18 @@
             子项(已选中)的CSS名
             </summary>
         </member>
+        <member name="T:Buffalo.WebControls.WebGridBinders.GridViewBinder">
+            <summary>
+            GridView绑定器
+            </summary>
+        </member>
+        <member name="M:Buffalo.WebControls.WebGridBinders.GridViewBinder.HideColumn(Buffalo.Permissions.DataViewInfo.DataViewer,System.Web.UI.WebControls.GridView)">
+            <summary>
+            根据DV给GridView隐藏列
+            </summary>
+            <param name="dv"></param>
+            <param name="gv"></param>
+        </member>
         <member name="P:Buffalo.WebControls.GroupControlLib.GroupItem.ItemContorl">
             <summary>
             控件

@@ -1731,6 +1731,11 @@
             绑定属性信息
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.BindTargetProjects(System.Collections.Generic.List{EnvDTE.Project})">
+            <summary>
+            绑定项目集合
+            </summary>
+        </member>
         <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.BindProjects">
             <summary>
             绑定项目信息
@@ -1767,6 +1772,12 @@
             <summary>
             检测文件
             </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.GetSelectedProperty">
+            <summary>
+            获取选中的项
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.FrmUIGenerater.SaveItemInfos">
             <summary>
@@ -1850,6 +1861,30 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmCompileResault.ShowCompileResault(System.String,System.String)">
+            <summary>
+            显示编译结果
+            </summary>
+            <param name="code"></param>
+            <param name="error"></param>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.FrmCompileResault.components">
+            <summary>
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmCompileResault.Dispose(System.Boolean)">
+            <summary>
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.FrmCompileResault.InitializeComponent">
+            <summary>
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.HelperKernel.TagManager">
             <summary>
             标记标签管理
@@ -1916,6 +1951,16 @@
         <member name="P:Buffalo.DBTools.HelperKernel.GrneraterBase.EntityBaseTypeName">
             <summary>
             实体的基类
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.GrneraterBase.ClassDesignerFileName">
+            <summary>
+            类图文件
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.GrneraterBase.GenerateBasePath">
+            <summary>
+            需要生成到的路径目录
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.HelperKernel.GrneraterBase.EntityBaseTypeShortName">
@@ -2030,6 +2075,19 @@
             <summary>
             生成BQL数据层
             </summary>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.SourceCodeCompiler">
+            <summary>
+            源码编译器
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.SourceCodeCompiler.DoCompiler(System.String,System.String,System.Collections.Generic.List{System.String},System.Text.StringBuilder)">
+            <summary>
+            编译
+            </summary>
+            <param name="code">代码</param>
+            <param name="errorMessage">错误信息</param>
+            <returns></returns>
         </member>
         <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.ExpressionType">
             <summary>
@@ -2180,6 +2238,29 @@
                     public &lt;%=ClassName%&gt;DataAccess(DataBaseOperate oper):  [字符串的其余部分被截断]&quot;; 的本地化字符串。
              </summary>
         </member>
+        <member name="P:Buffalo.DBTools.Models.DataView">
+             <summary>
+               查找类似 &lt;#script type=&quot;linked&quot;&gt;
+            {BasePath}\dll\Buffalo.Kernel.dll
+            &lt;/#script&gt;
+            
+            &lt;#script type=&quot;using&quot;&gt;
+            using Buffalo.Kernel;
+            &lt;/#script&gt;
+            
+            &lt;#script type=&quot;code&quot;&gt;
+            using System;
+            using System.Collections.Generic;
+            using System.Text;
+            &lt;#=Entity.GetValue(&quot;Using&quot;)#&gt;
+            namespace &lt;#=Entity.GetValue(&quot;Namespace&quot;)#&gt;
+            {
+            	public class &lt;#=Entity.ClassName #&gt;DataView
+            	{
+            		&lt;# foreach(GenerateItem pro in SelectedPropertys ) {#&gt;
+            		private DataViewItem _&lt;#=GetFieldName(pro.PropertyName)#&gt;=new DataViewItem(&lt;#=GetParamString(pr [字符串的其余部分被截断]&quot;; 的本地化字符串。
+             </summary>
+        </member>
         <member name="P:Buffalo.DBTools.Models.Entity">
              <summary>
                查找类似 using System;
@@ -2234,14 +2315,16 @@
              <summary>
                查找类似 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
             &lt;root&gt;
-              &lt;configItems&gt;
-                &lt;item type=&quot;check&quot;  name=&quot;CanQuery&quot; summary=&quot;查询条件&quot;&gt;&lt;/item&gt;
-                &lt;item type=&quot;check&quot; name=&quot;QueryDefault&quot; summary=&quot;默认查询条件&quot;&gt;&lt;/item&gt;
-                &lt;item type=&quot;check&quot; name=&quot;CanAddNew&quot; summary=&quot;可添加&quot;&gt;&lt;/item&gt;
-                &lt;item type=&quot;check&quot; name=&quot;CanEdit&quot; summary=&quot;可编辑&quot;&gt;&lt;/item&gt;
-                &lt;item type=&quot;combo&quot; name=&quot;SumType&quot; summary=&quot;统计类型&quot; select=&quot;总相加:sum,总条数:count,平均:avg,自定义:custom&quot;&gt;&lt;/item&gt;
-                &lt;item type=&quot;text&quot; name=&quot;CustomCount&quot; summary=&quot;自定义统计&quot;&gt;&lt;/item&gt;
-              &lt;/configItems&gt; [字符串的其余部分被截断]&quot;; 的本地化字符串。
+            
+                &lt;configItems&gt;
+                  &lt;item type=&quot;check&quot;  name=&quot;CanQuery&quot; summary=&quot;查询条件&quot;&gt;&lt;/item&gt;
+                  &lt;item type=&quot;check&quot; name=&quot;CanAddNew&quot; summary=&quot;可添加&quot;&gt;&lt;/item&gt;
+                  &lt;item type=&quot;check&quot; name=&quot;CanEdit&quot; summary=&quot;可编辑&quot;&gt;&lt;/item&gt;
+                  &lt;item type=&quot;combo&quot; name=&quot;SumType&quot; summary=&quot;统计类型&quot; select=&quot;无:None,总相加:Sum,总条数:Count,平均:Avg,自定义:Custom&quot;&gt;&lt;/item&gt;
+                  &lt;item type=&quot;mtext&quot; name=&quot;CustomCount&quot; summary=&quot;自定义统计&quot;&gt;&lt;/item&gt;
+                &lt;/configItems&gt;
+              &lt;classItems&gt;
+                &lt;item type=&quot;text&quot; name= [字符串的其余部分被截断]&quot;; 的本地化字符串。
              </summary>
         </member>
         <member name="P:Buffalo.DBTools.Models.UserEntity">
@@ -2365,7 +2448,7 @@
             <param name="type"></param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.FormatParameter(System.String,Buffalo.DBTools.UIHelper.EntityInfo)">
+        <member name="M:Buffalo.DBTools.UIHelper.UIConfigItem.FormatParameter(System.String,Buffalo.DBTools.UIHelper.EntityInfo,EnvDTE.Project)">
             <summary>
             格式化参数名字
             </summary>
@@ -2411,7 +2494,7 @@
             类设计图信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.LinkOutputer.GetCode(System.Collections.Generic.Queue{Buffalo.DBTools.UIHelper.ModelLoader.ExpressionItem},System.String)">
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.LinkOutputer.GetCode(System.Collections.Generic.Queue{Buffalo.DBTools.UIHelper.ModelLoader.ExpressionItem},Buffalo.DBTools.UIHelper.EntityInfo)">
             <summary>
             获取代码
             </summary>
@@ -2556,6 +2639,11 @@
             当前项目
             </summary>
         </member>
+        <member name="P:Buffalo.DBTools.Connect.AllProjects">
+            <summary>
+            获取所有项目
+            </summary>
+        </member>
         <member name="P:Buffalo.DBTools.Connect.SelectedShapes">
             <summary>
             选中的图形
@@ -2617,7 +2705,7 @@
             模版到代码的转换器
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.#ctor(System.String,System.String)">
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.#ctor(System.String,Buffalo.DBTools.UIHelper.EntityInfo)">
             <summary>
             模版到代码的转换器
             </summary>
@@ -2628,12 +2716,28 @@
             处理Script标签
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.GetCompileType(System.String,System.Text.StringBuilder)">
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.AddBuffaloLink(System.Collections.Generic.List{System.String})">
+            <summary>
+            添加本项目的引用
+            </summary>
+            <param name="dll"></param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.GetCompileType(System.String,System.Text.StringBuilder,System.Text.StringBuilder)">
             <summary>
             获取编译后的类型
             </summary>
             <param name="errorMessage">如果出错此为信息</param>
             <returns></returns>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.CompileException">
+            <summary>
+            编译错误的异常
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.CompileException.Code">
+            <summary>
+            生成代码
+            </summary>
         </member>
         <member name="M:Buffalo.DBTools.HelperKernel.EntityRemoveHelper.RemoveFromProject(System.String,Buffalo.DBTools.ClassDesignerInfo)">
             <summary>
@@ -2671,6 +2775,13 @@
             <summary>
             填充类信息
             </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.EntityInfo.ToGeneratorEntity(Buffalo.DBTools.UIHelper.UIModelItem)">
+            <summary>
+            输出成GeneratorEntity
+            </summary>
+            <param name="classModelInfo"></param>
+            <returns></returns>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.EntityInfo.FileName">
             <summary>
@@ -2738,6 +2849,40 @@
             </summary>
         </member>
         <member name="M:Buffalo.DBTools.CodeFileHelper.SaveFile(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            保存文件
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.CodeFileHelper.SaveFile(System.String,System.Collections.Generic.List{System.String},System.Text.Encoding)">
+            <summary>
+            保存文件
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.CodeFileHelper.GetFileEncoding(System.String)">
+            <summary>
+            获取文件编码
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.CodeFileHelper.BackupFile(System.String)">
+            <summary>
+            备份文件
+            </summary>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:Buffalo.DBTools.CodeFileHelper.SaveFile(System.String,System.String)">
+            <summary>
+            保存文件
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.CodeFileHelper.SaveFile(System.String,System.String,System.Text.Encoding)">
             <summary>
             保存文件
             </summary>
@@ -2834,35 +2979,14 @@
             类设计图信息
             </summary>
         </member>
-        <member name="F:Buffalo.DBTools.UIHelper.ModelLoader.Compiler.ScriptChar">
+        <member name="F:Buffalo.DBTools.UIHelper.ModelLoader.CodesManger.CompilerNamespace">
             <summary>
-            代码块的标识
+            编译的命名空间
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.Compiler.CompilerPart">
+        <member name="F:Buffalo.DBTools.UIHelper.ModelLoader.CodesManger.DoCompilerName">
             <summary>
-            处理代码块
-            </summary>
-        </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.Compiler.CompilerCode">
-            <summary>
-            解释代码块
-            </summary>
-        </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.Compiler.MoveNext">
-            <summary>
-            移动到下一个字符
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.Compiler.ExpressionItems">
-            <summary>
-            代码树
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.Compiler.CurrentChar">
-            <summary>
-            当前字符
+            编译函数的随机名
             </summary>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodesManger.GetUsingCode(System.Text.StringBuilder)">
@@ -2874,6 +2998,11 @@
         <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodesManger.GetGreanCode(System.Text.StringBuilder)">
             <summary>
             获取生成的代码
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodesManger.GetPropertyCode(System.Text.StringBuilder)">
+            <summary>
+            获取属性代码
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.CodesManger.Link">
@@ -2899,6 +3028,11 @@
         <member name="T:Buffalo.DBTools.UIHelper.ModelLoader.CodeGeneration">
             <summary>
             代码生成
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.ModelLoader.CodeGeneration.ScriptChar">
+            <summary>
+            代码块的标识
             </summary>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeGeneration.CompilerPart">
@@ -3013,6 +3147,19 @@
             可选项
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ConfigItem.GetEditor">
+            <summary>
+            获取编辑框
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ConfigItem.FormatDefaultValue(Buffalo.DBTools.UIHelper.ConfigItem,Buffalo.DBTools.UIHelper.EntityInfo,EnvDTE.Project)">
+            <summary>
+            格式化默认项的值
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
         <member name="P:Buffalo.DBTools.UIHelper.ConfigItem.Name">
             <summary>
             名字
@@ -3026,6 +3173,11 @@
         <member name="P:Buffalo.DBTools.UIHelper.ConfigItem.Type">
             <summary>
             项类型
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ConfigItem.DefaultValue">
+            <summary>
+            默认值
             </summary>
         </member>
         <member name="T:Buffalo.DBTools.UIHelper.ConfigItemType">
@@ -3051,6 +3203,11 @@
         <member name="F:Buffalo.DBTools.UIHelper.ConfigItemType.MText">
             <summary>
             多行文本框
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.ConfigItemType.Number">
+            <summary>
+            数字框
             </summary>
         </member>
         <member name="T:Buffalo.DBTools.ROMHelper.DBEntityInfo">
@@ -3083,6 +3240,13 @@
             </summary>
             <param name="code">代码行</param>
             <param name="tiers">层数</param>
+        </member>
+        <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.GetEntityFileName(System.String)">
+            <summary>
+            获取实体文件名
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.DBTools.ROMHelper.DBEntityInfo.SetToDiagram(System.Xml.XmlDocument)">
             <summary>
@@ -3185,6 +3349,11 @@
         <member name="P:Buffalo.DBTools.ROMHelper.DBEntityInfo.BaseType">
             <summary>
             基类
+            </summary>
+        </member>
+        <member name="T:Buffalo.DBTools.HelperKernel.ToolConfig">
+            <summary>
+            生成工具的配置读写器
             </summary>
         </member>
         <member name="T:Buffalo.DBTools.HelperKernel.EntityFieldBase">
@@ -3315,6 +3484,13 @@
             <param name="curProject"></param>
             <param name="curDiagram"></param>
         </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.DBConfigInfo.GetConfigFileName(Buffalo.DBTools.ClassDesignerInfo)">
+            <summary>
+            生成配置的文件名
+            </summary>
+            <param name="curProject"></param>
+            <param name="curDiagram"></param>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.DBConfigInfo.GetDbName(Buffalo.DBTools.ClassDesignerInfo)">
             <summary>
             获取当前类图的库名
@@ -3327,6 +3503,11 @@
             保存
             </summary>
             <param name="path"></param>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.DBConfigInfo.SaveConfigInfo(System.String)">
+            <summary>
+            保存配置信息
+            </summary>
         </member>
         <member name="M:Buffalo.DBTools.HelperKernel.DBConfigInfo.LoadInfo(Buffalo.DBTools.ClassDesignerInfo)">
             <summary>
@@ -3342,6 +3523,12 @@
             </summary>
             <param name="doc"></param>
             <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.DBConfigInfo.LoadConfig(Buffalo.DBTools.ClassDesignerInfo,Buffalo.DBTools.HelperKernel.DBConfigInfo)">
+            <summary>
+            加载其他配置信息
+            </summary>
+            <param name="info"></param>
         </member>
         <member name="P:Buffalo.DBTools.HelperKernel.DBConfigInfo.DbName">
             <summary>
@@ -3388,15 +3575,49 @@
             是否生成所有数据层
             </summary>
         </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.DBConfigInfo.EntityToDirectory">
+            <summary>
+            实体是否放到Entity文件夹中
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.UIHelper.UIProject">
             <summary>
             项目项
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.UIProject.GenerateCode(Buffalo.DBTools.UIHelper.EntityInfo,Buffalo.DBTools.UIHelper.UIConfigItem,System.Collections.Generic.List{Buffalo.DBTools.UIHelper.UIModelItem},Buffalo.DBTools.UIHelper.UIProjectItem)">
+        <member name="M:Buffalo.DBTools.UIHelper.UIProject.GenerateCode(Buffalo.DBTools.UIHelper.EntityInfo,Buffalo.DBTools.UIHelper.UIConfigItem,EnvDTE.Project,System.Collections.Generic.List{Buffalo.DBTools.UIHelper.UIModelItem},Buffalo.DBTools.UIHelper.UIModelItem)">
             <summary>
             生成代码
             </summary>
+            <param name="entityInfo">实体信息</param>
+            <param name="classConfig">UI配置信息</param>
+            <param name="selectPropertys">选中需要生成的属性信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIProject.ClearCache(Buffalo.DBTools.UIHelper.EntityInfo)">
+            <summary>
+            清空项目的编译缓存
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIProject.GenerateCode(Buffalo.DBTools.UIHelper.EntityInfo,Buffalo.DBTools.UIHelper.UIConfigItem,EnvDTE.Project,System.Collections.Generic.List{Buffalo.DBTools.UIHelper.UIModelItem},Buffalo.DBTools.UIHelper.UIModelItem,System.Collections.Generic.List{Buffalo.DBTools.UIHelper.UIProjectItem},EnvDTE.ProjectItem)">
+            <summary>
+            生成代码
+            </summary>
+            <param name="entityInfo">实体信息</param>
+            <param name="classConfig">UI配置信息</param>
+            <param name="selectPropertys">选中需要生成的属性信息</param>
+            <param name="lstItem">UI项目项</param>
+            <param name="parentItem">父项</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIProject.SaveItem(System.String,EnvDTE.Project,System.String,Buffalo.DBTools.UIHelper.BuildAction,EnvDTE.ProjectItem,System.Text.Encoding)">
+            <summary>
+            保存文件
+            </summary>
+            <param name="fileName">文件路径</param>
+            <param name="entityInfo"></param>
+            <param name="content"></param>
+            <param name="baction"></param>
             <returns></returns>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIProject.Name">
@@ -3426,6 +3647,12 @@
             UI信息
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.InitDefaultValue(System.Collections.Generic.IEnumerable{Buffalo.DBTools.UIHelper.ConfigItem},Buffalo.DBTools.UIHelper.EntityInfo,EnvDTE.Project)">
+            <summary>
+            初始化默认值
+            </summary>
+            <param name="collection"></param>
+        </member>
         <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.HasItem(System.String)">
             <summary>
             获取是否选中项
@@ -3446,11 +3673,25 @@
             </summary>
             <param name="node"></param>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.ReadItem(System.Xml.XmlNode)">
+        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.ReadItem(System.Xml.XmlNode,System.Collections.Generic.Dictionary{System.String,Buffalo.DBTools.UIHelper.ConfigItem})">
             <summary>
             读取节点信息
             </summary>
             <param name="node">节点</param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.ConvertValue(System.String,Buffalo.DBTools.UIHelper.ConfigItem)">
+            <summary>
+            转换值
+            </summary>
+            <param name="value"></param>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.ToGeneratItem">
+            <summary>
+            输出成GeneratItem类
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.CheckItem">
             <summary>
@@ -3475,6 +3716,11 @@
         <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.TypeName">
             <summary>
             类型名
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.TypeFullName">
+            <summary>
+            类型的完整名
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.PropertyName">
@@ -3786,6 +4032,11 @@
             映射属性
             </summary>
         </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.FileEncoding">
+            <summary>
+            类文件编码
+            </summary>
+        </member>
         <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.CurrentDBConfigInfo">
             <summary>
             数据库配置信息
@@ -3961,14 +4212,25 @@
             模版编译缓存
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeGenCache.GetGenerationer(System.String)">
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeGenCache.GetGenerationer(System.String,Buffalo.DBTools.UIHelper.EntityInfo)">
             <summary>
             根据文件路径获取生成器
             </summary>
             <param name="path">文件路径</param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeGenCache.CreateGenerationer(System.String)">
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeGenCache.Clear">
+            <summary>
+            清空所有缓存
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeGenCache.DeleteGenerationer(System.String)">
+            <summary>
+            删除缓存
+            </summary>
+            <param name="path">缓存对应路径</param>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeGenCache.CreateGenerationer(System.String,Buffalo.DBTools.UIHelper.EntityInfo)">
             <summary>
             生成生成器
             </summary>
@@ -4060,6 +4322,11 @@
             初始化数据库类型
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.FrmDBSetting.FillEdit">
+            <summary>
+            填充编辑项
+            </summary>
+        </member>
         <member name="M:Buffalo.DBTools.FrmDBSetting.FillSummary">
             <summary>
             填充注释设置
@@ -4104,26 +4371,6 @@
         <member name="P:Buffalo.DBTools.FrmDBSetting.SummaryItem">
             <summary>
             设置注释选中状态
-            </summary>
-        </member>
-        <member name="T:Buffalo.DBTools.UIHelper.FileGenType">
-            <summary>
-            文件生成类型
-            </summary>
-        </member>
-        <member name="F:Buffalo.DBTools.UIHelper.FileGenType.Code">
-            <summary>
-            代码
-            </summary>
-        </member>
-        <member name="F:Buffalo.DBTools.UIHelper.FileGenType.Resource">
-            <summary>
-            嵌入资源
-            </summary>
-        </member>
-        <member name="F:Buffalo.DBTools.UIHelper.FileGenType.File">
-            <summary>
-            普通文件
             </summary>
         </member>
         <member name="T:Buffalo.DBTools.DocSummary.VSConfig.VS2010Config">
@@ -4186,12 +4433,37 @@
             代码生成的信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeGenInfo.Invoke(Buffalo.DBTools.UIHelper.EntityInfo,Buffalo.DBTools.UIHelper.UIConfigItem,System.Collections.Generic.List{Buffalo.DBTools.UIHelper.UIModelItem})">
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.CodeGenInfo.Invoke(Buffalo.DBTools.UIHelper.EntityInfo,Buffalo.DBTools.UIHelper.UIConfigItem,System.Collections.Generic.List{Buffalo.DBTools.UIHelper.UIModelItem},Buffalo.DBTools.UIHelper.UIModelItem)">
             <summary>
             运行编译函数并返回结果
             </summary>
             <param name="args"></param>
             <returns></returns>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.ModelLoader.CodeGenInfo.Code">
+            <summary>
+            生成代码
+            </summary>
+        </member>
+        <member name="T:Buffalo.DBTools.UIHelper.BuildAction">
+            <summary>
+            文件生成类型
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.BuildAction.Code">
+            <summary>
+            代码
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.BuildAction.Resource">
+            <summary>
+            嵌入资源
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.BuildAction.File">
+            <summary>
+            普通文件
+            </summary>
         </member>
         <member name="T:Buffalo.DBTools.DocSummary.SummaryShowItem">
             <summary>

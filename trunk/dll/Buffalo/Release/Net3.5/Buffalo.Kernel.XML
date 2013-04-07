@@ -48,6 +48,14 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.Kernel.CommonMethods.CopyNewer(System.String,System.String)">
+            <summary>
+            通过版本号判断拷贝文件
+            </summary>
+            <param name="source">源文件</param>
+            <param name="target">目标文件</param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.Kernel.CommonMethods.Clone(System.Object)">
             <summary>
             克隆
@@ -1174,19 +1182,6 @@
             是否已经读完
             </summary>
         </member>
-        <member name="T:Buffalo.Kernel.SourceCodeCompiler">
-            <summary>
-            源码编译器
-            </summary>
-        </member>
-        <member name="M:Buffalo.Kernel.SourceCodeCompiler.DoCompiler(System.String,System.String,System.Collections.Generic.List{System.String},System.Text.StringBuilder)">
-            <summary>
-            编译
-            </summary>
-            <param name="code">代码</param>
-            <param name="errorMessage">错误信息</param>
-            <returns></returns>
-        </member>
         <member name="T:Buffalo.Kernel.HttpServerModel.RequestProcessingHandle">
             <summary>
             请求处理委托
@@ -1261,6 +1256,12 @@
             <param name="valNotBOM">是否验证没BOM的</param>
             <returns>文件的编码类型</returns>
         </member>
+        <member name="M:Buffalo.Kernel.FileEncodingInfo.InitEncodingHead">
+            <summary>
+            初始化信息
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.Kernel.FileEncodingInfo.GetEncodingType(System.IO.Stream,System.Boolean)">
             <summary>
             通过给定的文件流，判断文件的编码类型
@@ -1268,12 +1269,20 @@
             <param name="fs">文件流</param>
             <returns>文件的编码类型</returns>
         </member>
-        <member name="M:Buffalo.Kernel.FileEncodingInfo.IsEncoding(System.Byte[],System.Byte[])">
+        <member name="M:Buffalo.Kernel.FileEncodingInfo.GetEncoding(System.Byte[])">
             <summary>
             是否此编码
             </summary>
             <param name="buffer">内容</param>
             <param name="headContent">文件头内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.FileEncodingInfo.IsHeadEqual(System.Byte[],System.Byte[])">
+            <summary>
+            判断是否标识头相等
+            </summary>
+            <param name="fileHead">文件的标识头</param>
+            <param name="encodingHead">编码的标识头</param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.Kernel.FileEncodingInfo.IsUTF8Bytes(System.Byte[])">
@@ -1282,6 +1291,18 @@
             </summary>
             <param name="data"></param>
             <returns></returns>
+        </member>
+        <member name="T:Buffalo.Kernel.EncodingHead">
+            <summary>
+            编码头信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.EncodingHead.#ctor(System.Byte[],System.Text.Encoding)">
+            <summary>
+            编码头跟编码的对应信息
+            </summary>
+            <param name="head">编码头</param>
+            <param name="encoding">编码</param>
         </member>
         <member name="T:Buffalo.Kernel.FastReflection.PropertyInfoHandle">
             <summary>

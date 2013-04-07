@@ -204,6 +204,55 @@
             标签字体
             </summary>
         </member>
+        <member name="T:Buffalo.WinFormsControl.Editors.TextBoxEditor">
+            <summary>
+            文本框的编辑器
+            </summary>
+        </member>
+        <member name="F:Buffalo.WinFormsControl.Editors.TextBoxEditor.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.TextBoxEditor.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.TextBoxEditor.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.TextBoxEditor.Multiline">
+            <summary>
+            是否支持多行
+            </summary>
+        </member>
+        <member name="M:Buffalo.WinFormsControl.Editors.NumbericEditor.IsCorrect(System.String)">
+            <summary>
+            验证值是否符合规范
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.NumbericEditor.Max">
+            <summary>
+            可输入的最大值
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.NumbericEditor.Min">
+            <summary>
+            可输入的最小值
+            </summary>
+        </member>
+        <member name="P:Buffalo.WinFormsControl.Editors.NumbericEditor.DecimalPlaces">
+            <summary>
+            小数位数(小于0则表示无规定)
+            </summary>
+        </member>
         <member name="M:Buffalo.WinFormsControl.Editors.OnOffCheckBox.RefreashDisplay">
             <summary>
             刷新显示
@@ -266,31 +315,9 @@
             椭圆形
             </summary>
         </member>
-        <member name="T:Buffalo.WinFormsControl.Editors.TextBoxEditor">
+        <member name="F:Buffalo.WinFormsControl.Editors.OnOffButtonType.BlueOblongrectangle">
             <summary>
-            文本框的编辑器
-            </summary>
-        </member>
-        <member name="F:Buffalo.WinFormsControl.Editors.TextBoxEditor.components">
-            <summary> 
-            必需的设计器变量。
-            </summary>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.Editors.TextBoxEditor.Dispose(System.Boolean)">
-            <summary> 
-            清理所有正在使用的资源。
-            </summary>
-            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
-        </member>
-        <member name="M:Buffalo.WinFormsControl.Editors.TextBoxEditor.InitializeComponent">
-            <summary> 
-            设计器支持所需的方法 - 不要
-            使用代码编辑器修改此方法的内容。
-            </summary>
-        </member>
-        <member name="P:Buffalo.WinFormsControl.Editors.TextBoxEditor.Multiline">
-            <summary>
-            是否支持多行
+            蓝色椭圆形
             </summary>
         </member>
         <member name="M:Buffalo.WinFormsControl.PagingBar.MediumPagingBar.DoPageIndexChange(System.Object,System.Int64)">
