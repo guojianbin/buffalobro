@@ -22,6 +22,12 @@ public class ScPageBase : PageBase<ScEmployee>
         //
     }
 
+    protected override void OnLoad(EventArgs e)
+    {
+        
+        base.OnLoad(e);
+    }
+
     /// <summary>
     /// 获取数据的行数
     /// </summary>

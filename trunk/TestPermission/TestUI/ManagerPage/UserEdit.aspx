@@ -20,15 +20,27 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div style=" text-align:center">
-    <table style=" border-width:1px; border-style:solid; width:600px">
+    <div style="font-size:12px; text-align:center">
+    <table style=" border-width:1px; border-style:solid; width:500px">
     <tr>
         <td colspan="2" style=" text-align:center; background-color:#d3eaef">用户编辑</td>
     </tr>
         <tr>
-            <td class="lab">用户名:</td>
+            <td class="lab">学生名:</td>
             <td class="txt">
                 <asp:TextBox ID="txtName" runat="server"></asp:TextBox></td>
+        </tr>
+        <tr>
+            <td class="lab">所属班级:</td>
+            <td class="txt">
+                <asp:DropDownList ID="ddlClass" runat="server">
+                </asp:DropDownList></td>
+        </tr>
+        <tr>
+            <td class="lab" colspan="2" style="text-align:center">
+                <asp:Button ID="btnSave" runat="server" Text="保存" OnClick="btnSave_Click" />
+                <input id="btnRev" type="button" value="返回" />
+            </td>
         </tr>
     </table>
     </div>

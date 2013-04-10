@@ -98,7 +98,7 @@ function showdivDialog(id)
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="所属班级">
                     <ItemTemplate>
-                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("BelongClassName") %>'></asp:Label>
+                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("BelongClass") %>'></asp:Label>
                     </ItemTemplate>
                     <FooterTemplate>
                         
