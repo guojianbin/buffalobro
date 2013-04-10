@@ -859,7 +859,8 @@ namespace Buffalo.Kernel.Win32
     TTS_NOPREFIX            = 0x02,
     TTS_NOANIMATE           = 0x10,
     TTS_NOFADE              = 0x20,
-    TTS_BALLOON             = 0x40
+    TTS_BALLOON             = 0x40,
+    TTS_CLOSE             = 0x80
   }
 
   public enum ToolTipMsg

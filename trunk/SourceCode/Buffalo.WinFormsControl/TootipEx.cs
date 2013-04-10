@@ -34,7 +34,11 @@ namespace Buffalo.WinFormsControl
                     style |= (int)ToolTipStyles.TTS_BALLOON;
                     IsBalloon = false;
                 }
-                
+                if (ShowAlways) 
+                {
+                    style |= (int)ToolTipStyles.TTS_ALWAYSTIP;
+                    ShowAlways = false;
+                }
                 CreateParams ret=base.CreateParams;
                 ret.Style = ret.Style | style;
                 return ret;
