@@ -12,6 +12,8 @@ using TestPerLib;
 using TestPerLib.Business;
 using System.Collections.Generic;
 using Buffalo.DB.QueryConditions;
+using System.Text;
+using TestPerLib.BQLEntity;
 
 public partial class ManagerPage_UserEdit : ScPageBase
 {
@@ -20,6 +22,8 @@ public partial class ManagerPage_UserEdit : ScPageBase
         if (!Page.IsPostBack)
         {
             FillBelongClass();
+            string id = Request["id"];
+            LoadInfo(id);
         }
 
     }
@@ -43,9 +47,19 @@ public partial class ManagerPage_UserEdit : ScPageBase
     /// 把实体内容加载到界面
     /// </summary>
     /// <param name="objStudent"></param>
-    private void LoadInfo(ScStudent objStudent) 
+    private void LoadInfo(string id) 
     {
+        ScStudentBusiness bo=new ScStudentBusiness();
+        ScopeList lstScope=new ScopeList();
+        lstScope.Add(School.ScStudent.Id==id);
+        ScStudent obj = bo.GetUnique(lstScope);
+        if (obj.Id > 0)
+        {
+            ViewState["Id"] = obj.Id;
 
+            txtName.Text = obj.Name;
+            ddlClass.SelectedValue = obj.ClassId.ToString();
+        }
     }
 
     /// <summary>
@@ -68,7 +82,10 @@ public partial class ManagerPage_UserEdit : ScPageBase
         ScStudent obj = new ScStudent();
         FillInfo(obj);
         ScStudentBusiness bo = new ScStudentBusiness();
-        bo.Insert(obj);
+        bo.Save(obj);
         Alert("保存完毕");
+
+
+
     }
 }
