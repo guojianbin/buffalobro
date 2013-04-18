@@ -84,9 +84,11 @@ public partial class ManagerPage_UserManager : ScPageBase
         ScClassBusiness bo=new ScClassBusiness();
         ScopeList lstScope=new ScopeList();
         List<ScClass> lstClass = bo.SelectList(lstScope);
+        ListItem item = new ListItem("全部", "");
+        ddlBelongClass.Items.Add(item);
         foreach (ScClass objClass in lstClass) 
         {
-            ListItem item=new ListItem(objClass.ClassName,objClass.Id.ToString());
+            item=new ListItem(objClass.ClassName,objClass.Id.ToString());
             ddlBelongClass.Items.Add(item);
         }
     }
@@ -96,8 +98,23 @@ public partial class ManagerPage_UserManager : ScPageBase
     /// </summary>
     private void SaveCondition() 
     {
-        ViewState["vs_Name"] = txtName.Text;
-        ViewState["vs_BelongClass"] = ddlBelongClass.SelectedValue;
+        if (!string.IsNullOrEmpty(txtName.Text))
+        {
+            ViewState["vstate_Name"] = txtName.Text;
+        }
+        else
+        {
+            ViewState.Remove("vstate_Name");
+        }
+
+        if (!string.IsNullOrEmpty(ddlBelongClass.SelectedValue))
+        {
+            ViewState["vstate_BelongClass"] = ddlBelongClass.SelectedValue;
+        }
+        else 
+        {
+            ViewState.Remove("vstate_BelongClass");
+        }
     }
 
     /// <summary>
@@ -106,44 +123,30 @@ public partial class ManagerPage_UserManager : ScPageBase
     /// <param name="lstScope"></param>
     private void FillCondition(ScopeList lstScope) 
     {
-        string vsName=ViewState["vs_Name"] as string;
+        string vsName=ViewState["vstate_Name"] as string;
         if (!string.IsNullOrEmpty(vsName)) 
         {
             lstScope.Add(School.ScStudent.Name.Like(vsName));
         }
-        string vsBelongClass = ViewState["vs_BelongClass"] as string;
+        string vsBelongClass = ViewState["vstate_BelongClass"] as string;
         if (!string.IsNullOrEmpty(vsBelongClass))
         {
             lstScope.Add(School.ScStudent.BelongClass.Id == Convert.ToInt32(vsBelongClass));
         }
     }
-
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        //ScClassBusiness boClass = new ScClassBusiness();
-        //List<ScClass> lstClass = new List<ScClass>();
-        //for (int i = 0; i < 5; i++) 
-        //{
-        //    ScClass objClass = new ScClass();
-        //    objClass.ClassName = "班级" + (i+1);
-        //    boClass.Save(objClass);
-        //    lstClass.Add(objClass);
-        //}
-
-        //ScStudentBusiness suBo = new ScStudentBusiness();
-        //Random rnd=new Random();
-        //for (int i = 0; i < 200; i++) 
-        //{
-        //    ScStudent obj = new ScStudent();
-        //    obj.BelongClass = lstClass[rnd.Next(lstClass.Count)];
-        //    obj.Name = "学生" + (i+1);
-        //    obj.Age = 10 + rnd.Next(2);
-        //    suBo.Save(obj);
-        //}
-    }
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         SaveCondition();
         Bind();
+    }
+    protected void gvDisplay_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "DoDelete") 
+        {
+            int id = Convert.ToInt32(e.CommandArgument);
+            ScStudentBusiness bo = new ScStudentBusiness();
+            bo.DeleteById(id);
+            Alert("删除完毕");
+        }
     }
 }

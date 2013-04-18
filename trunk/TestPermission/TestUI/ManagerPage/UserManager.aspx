@@ -27,6 +27,14 @@ function showdivDialog(id)
 {
     tb_show('明细', "UserEdit.aspx?id="+id+"&keepThis=true&amp;TB_iframe=true&amp;height=460&amp;width=950", false);
 }
+
+function refreashDisplay()
+{
+    if(btnGo!=null)
+    {
+        btnGo.click();
+    }
+}
 </script>
 </head>
 <body>
@@ -45,7 +53,9 @@ function showdivDialog(id)
                 <td width="94%" valign="bottom" style="height: 19px"><span style="color:White">管理人员基本信息列表</span></td>
               </tr>
             </table></td>
-            <td style="height: 31px"><div align="right"><span class="STYLE1">&nbsp;&nbsp;&nbsp;<img src="../images/add.gif" width="10" height="10" /> 添加   &nbsp;
+            <td style="height: 31px"><div align="right"><span class="STYLE1">&nbsp;&nbsp;&nbsp;
+            <a href="javascript:showdivDialog('')">
+            <img alt="add" src="../images/add.gif" width="10" height="10" /> 添加</a>   &nbsp;
                <span> &nbsp;</span></div></td>
           </tr>
         </table></td>
@@ -66,11 +76,11 @@ function showdivDialog(id)
                  <asp:Button ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click" /></span></div>
         <asp:GridView ID="gvDisplay" runat="server" AutoGenerateColumns="False"
          Width="100%" ShowFooter="True" HeaderStyle-BackColor="#d3eaef" 
-         RowStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center">
+         RowStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center" OnRowCommand="gvDisplay_RowCommand">
             <Columns>
             <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:Label ID="Label2" runat="server" Text='<%#GetDataIndex(Container.DataItemIndex,pb.CurrentPage) %>'></asp:Label>
+                        <asp:Label ID="labRowIndex" runat="server" Text='<%#GetDataIndex(Container.DataItemIndex,pb.CurrentPage) %>'></asp:Label>
                     </ItemTemplate>
                     
                     <FooterTemplate>
@@ -91,7 +101,7 @@ function showdivDialog(id)
                     </ItemTemplate>
                     
                         <FooterTemplate>
-                        <asp:Label ID="Label2" runat="server" Text='<%#GetSum("Age") %>'></asp:Label>
+                        <asp:Label ID="labSum" runat="server" Text='<%#GetSum("Age") %>'></asp:Label>
                         
                     </FooterTemplate>
                     
@@ -106,7 +116,7 @@ function showdivDialog(id)
                 </asp:TemplateField>
                 <asp:TemplateField ShowHeader="False">
                     <ItemTemplate>
-                        <a href="javascript:void(0);" onclick="showdivDialog();">编辑</a>
+                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# "javascript:showdivDialog("+Eval("Id") +");"%>'>编辑</asp:HyperLink>
                     </ItemTemplate>
                     <ItemStyle Width="50px" />
                 </asp:TemplateField>
@@ -114,7 +124,7 @@ function showdivDialog(id)
                     <ItemTemplate>
                     <span onclick="return confirm('是否删除此项？')">
                         <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="false" CommandName="DoDelete"
-                            Text="删除"></asp:LinkButton></span>
+                            Text="删除" CommandArgument='<%# Bind("Id") %>'></asp:LinkButton></span>
                     </ItemTemplate>
                     <ItemStyle Width="50px" />
                 </asp:TemplateField>

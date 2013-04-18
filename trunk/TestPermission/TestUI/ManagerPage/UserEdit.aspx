@@ -17,10 +17,17 @@
         }
         
     </style>
+    <script language="javascript" type="text/javascript">
+        function closeFrm()
+        {
+            parent.window.tb_remove();
+            parent.window.refreashDisplay();
+        }
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div style="font-size:12px; text-align:center">
+    <div style="font-size:12px; text-align:center;">
     <table style=" border-width:1px; border-style:solid; width:500px">
     <tr>
         <td colspan="2" style=" text-align:center; background-color:#d3eaef">用户编辑</td>
@@ -39,7 +46,7 @@
         <tr>
             <td class="lab" colspan="2" style="text-align:center">
                 <asp:Button ID="btnSave" runat="server" Text="保存" OnClick="btnSave_Click" />
-                <input id="btnRev" type="button" value="返回" />
+                <input id="btnRev" type="button" value="返回" onclick="closeFrm();" />
             </td>
         </tr>
     </table>

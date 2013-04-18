@@ -53,7 +53,7 @@ public partial class ManagerPage_UserEdit : ScPageBase
         ScopeList lstScope=new ScopeList();
         lstScope.Add(School.ScStudent.Id==id);
         ScStudent obj = bo.GetUnique(lstScope);
-        if (obj.Id > 0)
+        if (obj!=null)
         {
             ViewState["Id"] = obj.Id;
 

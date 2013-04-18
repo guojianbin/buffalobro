@@ -1,4 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="PagingBar.ascx.cs" Inherits="PagingBar" %>
+
 <div style="font-size:9pt; margin-top:3px">共[<SPAN   
 id="lblCP" runat="server">0</SPAN>]条记录 &nbsp;<asp:LinkButton ID="btnFirsh" runat="server" CausesValidation="False" OnClick="btnFirsh_Click"
         Text="首页"></asp:LinkButton>&nbsp;&nbsp;<asp:LinkButton id="btnUp" onclick="btnUp_Click" Text="上一页" runat="server" CausesValidation="False"></asp:LinkButton> 
@@ -11,3 +12,6 @@ id="lblCP" runat="server">0</SPAN>]条记录 &nbsp;<asp:LinkButton ID="btnFirsh" ru
          <asp:Button ID="btnGo" onclick="btnGo_Click" runat="server" CausesValidation="False" Width="0px"/>
     </div>
     </div>
+    <script language="javascript" type="text/javascript">
+        btnGo=document.getElementById("<%=btnGo.ClientID %>");
+    </script>
