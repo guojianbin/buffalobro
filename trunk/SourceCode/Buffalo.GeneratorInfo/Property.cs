@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Data;
 
 namespace Buffalo.GeneratorInfo
 {
@@ -17,15 +18,39 @@ namespace Buffalo.GeneratorInfo
         /// <param name="summary">注释</param>
         /// <param name="typeName">类型名</param>
         /// <param name="propertyName">对应的属性名</param>
-        public Property(Dictionary<string, object> dicCheckItem, string propertyType, 
-            string summary, string typeName, string propertyName) 
+        /// <param name="dbInfo">属性的关联数据库信息</param>
+        /// <param name="relInfo">关联信息</param>
+        public Property(Dictionary<string, object> dicCheckItem, string propertyType,
+            string summary, string typeName, string propertyName,
+            TableInfo tableInfo, RelationInfo relInfo) 
         {
             _dicCheckItem = dicCheckItem;
             _propertyName = propertyName;
             _propertyType = propertyType;
             _summary = summary;
             _typeName=typeName;
+            _tableInfo = tableInfo;
+            _relInfo = relInfo;
+        }
+        private TableInfo _tableInfo;
+        /// <summary>
+        /// 属性的关联数据库信息
+        /// </summary>
+        public TableInfo TableInfo 
+        {
+            get 
+            {
+                return _tableInfo;
+            }
+        }
 
+        private RelationInfo _relInfo;
+        /// <summary>
+        /// 关联信息
+        /// </summary>
+        public RelationInfo RelInfo
+        {
+            get { return _relInfo; }
         }
 
         private Dictionary<string, object> _dicCheckItem = null;

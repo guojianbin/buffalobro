@@ -27,7 +27,6 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         }
 
 
-
         /// <summary>
         /// 是否记录自增长字段作手动处理
         /// </summary>

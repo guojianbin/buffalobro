@@ -9,14 +9,14 @@ using Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers;
 
 namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 {
-    public class KeyWordInfomation:ICloneable
+    public class KeyWordInfomation : ICloneable
     {
-        public KeyWordInfomation() 
+        public KeyWordInfomation()
         {
-            
+
         }
 
-        
+
         //private QueryParamCollection queryParams = new QueryParamCollection();
         //private AliasCollection alias = new AliasCollection();
         private List<IdentityInfo> _identityInfos = new List<IdentityInfo>();
@@ -38,7 +38,18 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 _hasGroup = value;
             }
         }
-       
+
+        private int _primaryKeys;
+
+
+        /// <summary>
+        /// 主键数
+        /// </summary>
+        public int PrimaryKeys
+        {
+            get { return _primaryKeys; }
+            set { _primaryKeys = value; }
+        }
         private bool _isWhere = false;
 
         /// <summary>
@@ -55,11 +66,11 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// </summary>
         public AbsCondition Condition
         {
-            set {_condition=value; }
+            set { _condition = value; }
             get { return _condition; }
         }
 
-        private BQLInfos _infos=null;
+        private BQLInfos _infos = null;
         /// <summary>
         /// 输出设置
         /// </summary>
@@ -138,12 +149,12 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             }
             set
             {
-                _aliasManager=value;
+                _aliasManager = value;
             }
         }
 
 
-        private bool _outPutModle=false;
+        private bool _outPutModle = false;
         /// <summary>
         /// 输出信息模式
         /// </summary>

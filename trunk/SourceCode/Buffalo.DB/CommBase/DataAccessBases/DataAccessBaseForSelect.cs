@@ -33,15 +33,15 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         {
             Oper = StaticConnection.GetDefaultOperate<T>();
         }
-        /// <summary>
-        /// 根据条件查找实体
-        /// </summary>
-        /// <param name="lstScope">条件</param>
-        /// <returns></returns>
-        public virtual new T GetUnique(ScopeList lstScope)
-        {
-            return base.GetUnique(lstScope);
-        }
+        ///// <summary>
+        ///// 根据条件查找实体
+        ///// </summary>
+        ///// <param name="lstScope">条件</param>
+        ///// <returns></returns>
+        //public virtual new T GetUnique(ScopeList lstScope)
+        //{
+        //    return base.GetUnique(lstScope);
+        //}
         /// <summary>
         /// 根据主键查找实体
         /// </summary>

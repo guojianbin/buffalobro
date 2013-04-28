@@ -4,6 +4,8 @@ using System.Text;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 using Buffalo.DBTools.HelperKernel;
 using Buffalo.GeneratorInfo;
+using Buffalo.Kernel;
+using Buffalo.DB.PropertyAttributes;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -142,10 +144,31 @@ namespace Buffalo.DBTools.UIHelper
         private void InitPropertys() 
         {
             lstProperty = new List<UIModelItem>();
+            
+
             List<ClrProperty> lstClrProperty = EntityConfig.GetAllMember<ClrProperty>(_classType, true);
+            EntityConfig entity = new EntityConfig(_classType, DesignerInfo);
             foreach (ClrProperty property in lstClrProperty) 
             {
                 UIModelItem item = new UIModelItem(property);
+
+
+                EntityParamField finfo=entity.EParamFields.FindByPropertyName(item.PropertyName);
+                if (finfo != null)
+                {
+                    bool isPK = EnumUnit.ContainerValue((int)finfo.EntityPropertyType, EntityPropertyType.PrimaryKey);
+                    TableInfo tinfo = new TableInfo(isPK, finfo.ParamName, finfo.Length, finfo.ReadOnly, finfo.DbType);
+                    item.TabInfo = tinfo;
+                }
+                else 
+                {
+                    EntityRelationItem rel = entity.ERelation.FindByPropertyName(item.PropertyName);
+                    RelationInfo rinfo = new RelationInfo(rel.TargetProperty, rel.SourceProperty, rel.IsParent, rel.FieldType);
+                    item.RelInfo = rinfo;
+                }
+
+
+
                 lstProperty.Add(item);
             }
         }
@@ -177,7 +200,9 @@ namespace Buffalo.DBTools.UIHelper
         /// <returns></returns>
         public Buffalo.GeneratorInfo.EntityInfo ToGeneratorEntity(UIModelItem classModelInfo) 
         {
-            Buffalo.GeneratorInfo.EntityInfo entity = new Buffalo.GeneratorInfo.EntityInfo(_fileName, _namespace, _className, _summary, _baseTypeName, _dicGenericInfo, classModelInfo.ToGeneratItem());
+            Buffalo.GeneratorInfo.EntityInfo entity = new Buffalo.GeneratorInfo.EntityInfo(_fileName,
+                _namespace, _className, _summary,
+                _baseTypeName, _dicGenericInfo, classModelInfo.ToGeneratItem());
             return entity;
         }
     }

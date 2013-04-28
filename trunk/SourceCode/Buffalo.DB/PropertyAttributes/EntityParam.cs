@@ -223,15 +223,20 @@ namespace Buffalo.DB.PropertyAttributes
 
             bool isPrimary = EnumUnit.ContainerValue((int)_propertyType, (int)EntityPropertyType.PrimaryKey);
             bool isAutoIdentity = EnumUnit.ContainerValue((int)_propertyType, (int)EntityPropertyType.Identity);
-
+            bool allowNULL = _allowNull & (!isPrimary);
             //if (isPrimary)
             //{
             //    sb.Append(" primary key ");
             //}
             //else
             //{
-            
-                if (_allowNull && !isPrimary)
+            if (isPrimary && info.PrimaryKeys==1)
+            {
+                sb.Append(" PRIMARY KEY ");
+            }
+            else
+            {
+                if (allowNULL)
                 {
                     sb.Append("NULL ");
                 }
@@ -239,7 +244,7 @@ namespace Buffalo.DB.PropertyAttributes
                 {
                     sb.Append("NOT NULL ");
                 }
-            
+            }
             //}
             if (isAutoIdentity && TableChecker.IsIdentityType(SqlType))
             {

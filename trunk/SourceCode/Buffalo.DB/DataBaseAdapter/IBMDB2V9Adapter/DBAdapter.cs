@@ -25,6 +25,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
                 return false;
             }
         }
+
         /// <summary>
         /// 是否记录自增长字段作手动处理
         /// </summary>

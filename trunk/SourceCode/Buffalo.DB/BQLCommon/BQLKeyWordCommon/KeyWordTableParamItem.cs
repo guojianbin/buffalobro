@@ -165,9 +165,16 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
 
             foreach (EntityParam item in _tparams)
             {
+                if (item.IsPrimaryKey) 
+                {
+                    info.PrimaryKeys++;
+                }
+            }
+            foreach (EntityParam item in _tparams)
+            {
                 sb.Append(item.DisplayInfo(info, TableName) + ",");
 
-                if (item.IsPrimaryKey)
+                if (item.IsPrimaryKey && info.PrimaryKeys > 1)
                 {
                     sbPkstr.Append(info.DBInfo.CurrentDbAdapter.FormatParam(item.ParamName) + ",");
                 }

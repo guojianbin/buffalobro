@@ -35,7 +35,8 @@
     <Compile Include="Property.cs" />
     <Compile Include="EntityInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RelationalInfo.cs" />
+    <Compile Include="TableInfo.cs" />
+    <Compile Include="RelationInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">

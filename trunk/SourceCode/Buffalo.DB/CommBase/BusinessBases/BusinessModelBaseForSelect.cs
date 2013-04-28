@@ -74,18 +74,8 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public T GetEntityById(object id)
         {
-            ScopeList lstScope = new ScopeList();
-            PrimaryKeyInfo info = id as PrimaryKeyInfo;
-            if (info == null)
-            {
-                lstScope.AddEqual(_curEntityInfo.PrimaryProperty[0].PropertyName, id);
-            }
-            else
-            {
-                info.FillScope(_curEntityInfo.PrimaryProperty, lstScope, true);
-            }
-            OnSelect(lstScope);
-            return GetUnique(lstScope);
+            DataAccessBaseForSelect<T> dao = new DataAccessBaseForSelect<T>();
+            return dao.GetEntityById(id);
         }
 
 
@@ -128,11 +118,19 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public T GetUnique(ScopeList lstScope)
         {
-            OnSelect(lstScope);
-            DataAccessBaseForSelect<T> entityDao = new DataAccessBaseForSelect<T>();
-            T ret = null;
-            ret = entityDao.GetUnique(lstScope);
-            return ret;
+            //OnSelect(lstScope);
+            //DataAccessBaseForSelect<T> entityDao = new DataAccessBaseForSelect<T>();
+            //T ret = null;
+
+            //ret = entityDao.GetUnique(lstScope);
+            lstScope.PageContent.PageSize = 1;
+            lstScope.PageContent.CurrentPage = 0;
+            List<T> lst = SelectList(lstScope);
+            if (lst.Count > 0) 
+            {
+                return lst[0];
+            }
+            return null;
         }
         #region SelectByAll
         

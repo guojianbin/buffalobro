@@ -9,6 +9,9 @@ using Buffalo.Win32Kernel;
 
 namespace Buffalo.DBTools.HelperKernel
 {
+    /// <summary>
+    /// 字段属性信息
+    /// </summary>
     public class EntityParamField : EntityFieldBase
     {
         
@@ -21,7 +24,12 @@ namespace Buffalo.DBTools.HelperKernel
         private bool _readonly;
 
 
-       
+       /// <summary>
+        /// 字段属性信息
+       /// </summary>
+       /// <param name="cp">字段代码位置</param>
+       /// <param name="fInfo">字段信息</param>
+       /// <param name="belongEntity">所属实体</param>
         public EntityParamField(CodeElementPosition cp,ClrField fInfo,EntityConfig belongEntity) 
         {
             _cp = cp;

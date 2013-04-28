@@ -65,6 +65,9 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// </summary>
         /// <returns></returns>
         IDbCommand GetCommand();
+
+
+
         /// <summary>
         /// 获取SQL连接
         /// </summary>

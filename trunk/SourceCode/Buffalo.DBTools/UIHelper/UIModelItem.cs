@@ -7,6 +7,7 @@ using System.Xml;
 using Buffalo.GeneratorInfo;
 using Buffalo.WinFormsControl.Editors;
 using EnvDTE;
+using Buffalo.Kernel;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -31,6 +32,25 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         public UIModelItem()
         {
+        }
+        private RelationInfo _relInfo;
+        /// <summary>
+        /// 关联信息
+        /// </summary>
+        public RelationInfo RelInfo
+        {
+            get { return _relInfo; }
+            set { _relInfo = value; }
+        }
+
+        private TableInfo _tabInfo;
+        /// <summary>
+        /// 表信息
+        /// </summary>
+        public TableInfo TabInfo
+        {
+            get { return _tabInfo; }
+            set { _tabInfo = value; }
         }
 
         /// <summary>
@@ -206,9 +226,7 @@ namespace Buffalo.DBTools.UIHelper
         {
             get
             {
-
                 return _belongProperty.MemberTypeShortName;
-
             }
         }
         /// <summary>
@@ -242,6 +260,8 @@ namespace Buffalo.DBTools.UIHelper
             get { return _belongProperty.Name; }
         }
 
+
+
         /// <summary>
         /// 输出成GeneratItem类
         /// </summary>
@@ -252,14 +272,12 @@ namespace Buffalo.DBTools.UIHelper
             if (_belongProperty == null)
             {
                 
-                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, "", "", "", "");
+                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, "", "", "", "",null,null);
             }
             else
             {
-               
-
                 item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, FieldType,
-                    Summary, TypeName, PropertyName);
+                    Summary, TypeName, PropertyName, _tabInfo, _relInfo);
             }
             return item;
         }

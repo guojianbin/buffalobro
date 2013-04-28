@@ -392,7 +392,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
 
         public string DBIdentity(string tableName, string paramName)
         {
-            return "AUTOINCREMENT";
+            return " AUTOINCREMENT";
         }
 
         public string DBTypeToSQL(DbType dbType, long length)

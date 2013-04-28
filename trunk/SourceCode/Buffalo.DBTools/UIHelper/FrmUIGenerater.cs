@@ -346,12 +346,15 @@ namespace Buffalo.DBTools.UIHelper
         {
             List<UIModelItem> lst = gvMember.DataSource as List<UIModelItem>;
             List<UIModelItem> lstRet = new List<UIModelItem>(lst.Count);
+
+            EntityConfig entity = new EntityConfig(CurEntityInfo.ClassType, CurEntityInfo.DesignerInfo);
             foreach (UIModelItem item in lst)
             {
                 if (!item.IsGenerate)
                 {
                     continue;
                 }
+
                 lstRet.Add(item);
             }
             return lstRet;

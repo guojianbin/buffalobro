@@ -19,7 +19,8 @@ namespace Buffalo.GeneratorInfo
         /// <param name="baseTypeName">基类名</param>
         /// <param name="dicGenericInfo">泛型信息</param>
         /// <param name="model">可选项信息</param>
-        public EntityInfo(string fileName,string nameSpace, string className, string summary, string baseTypeName,
+        public EntityInfo(string fileName,string nameSpace, string className, 
+            string summary, string baseTypeName,
             Dictionary<string, List<string>> dicGenericInfo, Property model) 
         {
             _fileName = fileName; 

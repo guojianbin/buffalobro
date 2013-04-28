@@ -12,7 +12,22 @@ namespace Buffalo.DBTools.HelperKernel
             this.Sort(new FieldComparer<EntityRelationItem>());
         }
 
-
+        /// <summary>
+        /// 通过属性名查找映射属性信息
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public EntityRelationItem FindByPropertyName(string propertyName)
+        {
+            foreach (EntityRelationItem rel in this)
+            {
+                if (rel.PropertyName == propertyName)
+                {
+                    return rel;
+                }
+            }
+            return null;
+        }
 
     }
 

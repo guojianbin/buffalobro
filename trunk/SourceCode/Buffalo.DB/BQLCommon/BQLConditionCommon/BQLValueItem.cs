@@ -33,6 +33,12 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         //}
 
         /// <summary>
+        /// 通知函数符号另一端的字段的数值类型
+        /// </summary>
+        /// <param name="type"></param>
+        internal virtual void ShowDbType(DbType type) { }
+
+        /// <summary>
         /// 给字段定义一个别名
         /// </summary>
         /// <param name="asName">别名</param>
@@ -295,26 +301,37 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 return;
             }
             DbType type = DbType.Object;
-            if (value1.ValueDbType != DbType.Object) 
+            if (value1.ValueDbType != value2.ValueDbType) 
             {
-                type = value1.ValueDbType;
+                if (value1.ValueDbType != DbType.Object) 
+                {
+                    value2.ShowDbType(value1.ValueDbType);
+                } 
+                else if (value2.ValueDbType != DbType.Object) 
+                {
+                    value1.ShowDbType(value2.ValueDbType);
+                }
             }
-            if (value2.ValueDbType != DbType.Object)
-            {
-                type = value2.ValueDbType;
-            }
+            //if (value1.ValueDbType != DbType.Object) 
+            //{
+            //    type = value1.ValueDbType;
+            //}
+            //if (value2.ValueDbType != DbType.Object)
+            //{
+            //    type = value2.ValueDbType;
+            //}
 
-            if (type != DbType.Object) 
-            {
-                if (value1.ValueDbType == DbType.Object) 
-                {
-                    value1.ValueDbType = type;
-                }
-                if (value2.ValueDbType == DbType.Object)
-                {
-                    value2.ValueDbType = type;
-                }
-            }
+            //if (type != DbType.Object) 
+            //{
+            //    if (value1.ValueDbType == DbType.Object) 
+            //    {
+            //        value1.ValueDbType = type;
+            //    }
+            //    if (value2.ValueDbType == DbType.Object)
+            //    {
+            //        value2.ValueDbType = type;
+            //    }
+            //}
         }
 
         public static BQLOperatorHandle operator +(BQLValueItem handle, object value)
