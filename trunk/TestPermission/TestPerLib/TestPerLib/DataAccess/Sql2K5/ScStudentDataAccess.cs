@@ -20,6 +20,8 @@ namespace TestPerLib.DataAccess.Sql2K5
         public ScStudentDataAccess(): base()
         {
         }
+
+
     }
 }
 
