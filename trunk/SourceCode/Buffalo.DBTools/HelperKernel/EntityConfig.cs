@@ -1168,7 +1168,44 @@ namespace Buffalo.DBTools.HelperKernel
             }
             return false;
         }
+       
 
+        /// <summary>
+        /// 通过属性名查找属性配置信息
+        /// </summary>
+        /// <param name="stkEntity">实体集合</param>
+        /// <param name="propertyName">属性</param>
+        /// <returns></returns>
+        public static EntityParamField FindParamInfoByName(Stack<EntityConfig> stkEntity,string propertyName) 
+        {
+            foreach (EntityConfig entity in stkEntity) 
+            {
+                EntityParamField param = entity.EParamFields.FindByPropertyName(propertyName);
+                if (param != null) 
+                {
+                    return param;
+                }
+            }
+            return null;
+        }
+        /// <summary>
+        /// 通过属性名查找映射属性配置信息
+        /// </summary>
+        /// <param name="stkEntity">实体集合</param>
+        /// <param name="propertyName">映射属性</param>
+        /// <returns></returns>
+        public static EntityRelationItem FindRelInfoByName(Stack<EntityConfig> stkEntity, string propertyName)
+        {
+            foreach (EntityConfig entity in stkEntity)
+            {
+                EntityRelationItem rel = entity.ERelation.FindByPropertyName(propertyName);
+                if (rel != null)
+                {
+                    return rel;
+                }
+            }
+            return null;
+        }
         /// <summary>
         /// 所需的using
         /// </summary>

@@ -105,10 +105,10 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                 return;
             }
             dll.Add(path);
-            file=new FileInfo(path);
-            string fileName=CommonMethods.GetBaseRoot(file.Name);
+            //file=new FileInfo(path);
+            //string fileName=CommonMethods.GetBaseRoot(file.Name);
 
-            CommonMethods.CopyNewer(path, fileName);
+            //CommonMethods.CopyNewer(path, fileName);
             //ass = typeof(Buffalo.DB.QueryConditions.ScopeList).Assembly;
             //dll.Add(new Uri(ass.CodeBase).LocalPath);
 

@@ -6,6 +6,7 @@ using Buffalo.DBTools.HelperKernel;
 using Buffalo.GeneratorInfo;
 using Buffalo.Kernel;
 using Buffalo.DB.PropertyAttributes;
+using System.Data;
 
 namespace Buffalo.DBTools.UIHelper
 {
@@ -148,23 +149,27 @@ namespace Buffalo.DBTools.UIHelper
 
             List<ClrProperty> lstClrProperty = EntityConfig.GetAllMember<ClrProperty>(_classType, true);
             EntityConfig entity = new EntityConfig(_classType, DesignerInfo);
+            Stack<EntityConfig> stkEntity = EntityConfig.GetEntity(entity, DesignerInfo);
             foreach (ClrProperty property in lstClrProperty) 
             {
                 UIModelItem item = new UIModelItem(property);
 
 
-                EntityParamField finfo=entity.EParamFields.FindByPropertyName(item.PropertyName);
+                EntityParamField finfo = EntityConfig.FindParamInfoByName(stkEntity,item.PropertyName);
                 if (finfo != null)
                 {
-                    bool isPK = EnumUnit.ContainerValue((int)finfo.EntityPropertyType, EntityPropertyType.PrimaryKey);
-                    TableInfo tinfo = new TableInfo(isPK, finfo.ParamName, finfo.Length, finfo.ReadOnly, finfo.DbType);
+                    bool isPK = EnumUnit.ContainerValue((int)finfo.EntityPropertyType, (int)EntityPropertyType.PrimaryKey);
+                    TableInfo tinfo = new TableInfo(isPK, finfo.ParamName, finfo.Length, finfo.ReadOnly, (DbType)EnumUnit.GetEnumInfoByName(typeof(DbType), finfo.DbType).Value);
                     item.TabInfo = tinfo;
                 }
                 else 
                 {
-                    EntityRelationItem rel = entity.ERelation.FindByPropertyName(item.PropertyName);
-                    RelationInfo rinfo = new RelationInfo(rel.TargetProperty, rel.SourceProperty, rel.IsParent, rel.FieldType);
-                    item.RelInfo = rinfo;
+                    EntityRelationItem rel = EntityConfig.FindRelInfoByName(stkEntity, item.PropertyName);
+                    if (rel != null)
+                    {
+                        RelationInfo rinfo = new RelationInfo(rel.TargetProperty, rel.SourceProperty, rel.IsParent, rel.FieldType);
+                        item.RelInfo = rinfo;
+                    }
                 }
 
 
@@ -172,6 +177,8 @@ namespace Buffalo.DBTools.UIHelper
                 lstProperty.Add(item);
             }
         }
+
+
 
         /// <summary>
         /// ÃÓ≥‰¿‡–≈œ¢
