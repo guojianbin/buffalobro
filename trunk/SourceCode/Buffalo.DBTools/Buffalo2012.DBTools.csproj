@@ -233,6 +233,7 @@
     <Compile Include="UIHelper\FrmUIGenerater.Designer.cs">
       <DependentUpon>FrmUIGenerater.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIHelper\InitBaseCode.cs" />
     <Compile Include="UIHelper\ModelLoader\CodeGenCache.cs" />
     <Compile Include="UIHelper\ModelLoader\CodeGeneration.cs" />
     <Compile Include="UIHelper\ModelLoader\CodeGenInfo.cs" />
