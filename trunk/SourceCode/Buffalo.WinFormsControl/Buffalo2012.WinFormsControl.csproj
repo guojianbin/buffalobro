@@ -61,20 +61,33 @@
     <Compile Include="DataGridViewEx\DataGridViewImageButtomColumn.cs" />
     <Compile Include="DataGridViewEx\DataGridViewPercentCell.cs" />
     <Compile Include="DataGridViewEx\DataGridViewPercentColumn.cs" />
-    <Compile Include="Editors\CheckBoxEditor.cs" />
+    <Compile Include="Editors\CheckBoxEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Editors\CheckBoxEditor.Designer.cs">
       <DependentUpon>CheckBoxEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\ComboBoxEditor.cs" />
+    <Compile Include="Editors\ComboBoxEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Editors\ComboBoxEditor.Designer.cs">
       <DependentUpon>ComboBoxEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\EditorBase.cs" />
-    <Compile Include="Editors\OnOffCheckBox.cs" />
+    <Compile Include="Editors\EditorBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\NumbericEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\OnOffCheckBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Editors\OnOffCheckBox.Designer.cs">
       <DependentUpon>OnOffCheckBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\TextBoxEditor.cs" />
+    <Compile Include="Editors\TextBoxEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Editors\TextBoxEditor.Designer.cs">
       <DependentUpon>TextBoxEditor.cs</DependentUpon>
     </Compile>
