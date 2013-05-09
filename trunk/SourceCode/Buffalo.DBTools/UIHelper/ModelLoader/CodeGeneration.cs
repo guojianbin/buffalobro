@@ -105,7 +105,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             {
                 if (CurrentChar == '\"') 
                 {
-                    if (stkChr.Count > 0 && (stkChr.Peek() == '\"' || stkChr.Peek() == '\\'))
+                    if (stkChr.Count > 0 && (stkChr.Peek() == '\"'))
                     {
                         stkChr.Pop();
                     }
@@ -117,11 +117,14 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                 }
                 else if (CurrentChar == '\\') 
                 {
-                    if (stkChr.Count > 0 && (stkChr.Peek() == '\"'))//ÔÚ×Ö·û´®Àï±ß
-                    {
-                        stkChr.Push('\\');
-                    }
                     _currentItem.Content.Append(CurrentChar);
+                    if (stkChr.Count > 0 && (stkChr.Peek() == '\"'))
+                    {
+                        if (MoveNext())
+                        {
+                            _currentItem.Content.Append(CurrentChar);
+                        }
+                    }
                 }
                 else if (CurrentChar == ScriptChar)
                 {

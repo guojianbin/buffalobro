@@ -167,7 +167,7 @@ namespace Buffalo.DBTools.UIHelper
                     EntityRelationItem rel = EntityConfig.FindRelInfoByName(stkEntity, item.PropertyName);
                     if (rel != null)
                     {
-                        RelationInfo rinfo = new RelationInfo(rel.TargetProperty, rel.SourceProperty, rel.IsParent, rel.FieldType);
+                        RelationInfo rinfo = new RelationInfo(rel.TargetProperty, rel.SourceProperty, rel.IsParent, rel.TypeName,rel.TypeFullName);
                         item.RelInfo = rinfo;
                     }
                 }

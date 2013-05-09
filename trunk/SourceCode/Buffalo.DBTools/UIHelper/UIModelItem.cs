@@ -218,17 +218,6 @@ namespace Buffalo.DBTools.UIHelper
             }
             return ret;
         }
-
-        /// <summary>
-        /// 对应的字段类型
-        /// </summary>
-        public string FieldType
-        {
-            get
-            {
-                return _belongProperty.MemberTypeShortName;
-            }
-        }
         /// <summary>
         /// 注释
         /// </summary>
@@ -276,7 +265,7 @@ namespace Buffalo.DBTools.UIHelper
             }
             else
             {
-                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, FieldType,
+                item = new Buffalo.GeneratorInfo.Property(_dicCheckItem, TypeFullName,
                     Summary, TypeName, PropertyName, _tabInfo, _relInfo);
             }
             return item;

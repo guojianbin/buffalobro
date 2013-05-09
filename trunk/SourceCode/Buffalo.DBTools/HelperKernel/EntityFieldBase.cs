@@ -54,14 +54,6 @@ namespace Buffalo.DBTools.HelperKernel
         {
             get { return _belongEntity; }
         }
-
-        /// <summary>
-        /// 对应的字段类型
-        /// </summary>
-        public string FieldType
-        {
-            get { return _fInfo.MemberTypeShortName; }
-        }
         /// <summary>
         /// 注释
         /// </summary>
@@ -90,7 +82,13 @@ namespace Buffalo.DBTools.HelperKernel
         {
             get { return _fInfo.MemberTypeShortName; }
         }
-
+        /// <summary>
+        /// 类型全名
+        /// </summary>
+        public virtual string TypeFullName
+        {
+            get { return _fInfo.MemberTypeName; }
+        }
         /// <summary>
         /// 把名字转成帕斯卡命名法
         /// </summary>

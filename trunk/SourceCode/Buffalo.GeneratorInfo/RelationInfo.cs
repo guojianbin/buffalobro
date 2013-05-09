@@ -16,14 +16,16 @@ namespace Buffalo.GeneratorInfo
         /// <param name="targetName">目标实体的属性名</param>
         /// <param name="sourceName">本实体的关联属性</param>
         /// <param name="isParent">是否主表属性</param>
-        /// <param name="type">关联属性的数值类型</param>
+        /// <param name="sourceType">源属性的类型</param>
+        /// <param name="sourceTypeFullName">源属性的类型全名</param>
         public RelationInfo(string targetName,
-            string sourceName, bool isParent, string type) 
+            string sourceName, bool isParent, string sourceType,string sourceTypeFullName) 
         {
             _targetName = targetName;
             _sourceName = sourceName;
             _isParent = IsParent;
-            _type = type;
+            _sourceType = sourceType;
+            _sourceTypeFullName = sourceTypeFullName;
         }
         
         private string _targetName;
@@ -45,16 +47,23 @@ namespace Buffalo.GeneratorInfo
             get { return _sourceName; }
         }
 
-        private string _type;
+        private string _sourceType;
         /// <summary>
         /// 关联属性的数值类型
         /// </summary>
-        public string Type
+        public string SourceType
         {
-            get { return _type; }
+            get { return _sourceType; }
         }
 
-
+        private string _sourceTypeFullName;
+        /// <summary>
+        /// 关联属性的数值类型全名
+        /// </summary>
+        public string SourceTypeFullName
+        {
+            get { return _sourceTypeFullName; }
+        }
         private bool _isParent;
         /// <summary>
         /// 是否主表属性

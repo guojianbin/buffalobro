@@ -14,19 +14,19 @@ namespace Buffalo.GeneratorInfo
         /// 生成属性的项
         /// </summary>
         /// <param name="dicCheckItem">选中的项</param>
-        /// <param name="propertyType">对应的字段类型</param>
+        /// <param name="typeFullName">对应的字段类型全名</param>
         /// <param name="summary">注释</param>
         /// <param name="typeName">类型名</param>
         /// <param name="propertyName">对应的属性名</param>
         /// <param name="dbInfo">属性的关联数据库信息</param>
         /// <param name="relInfo">关联信息</param>
-        public Property(Dictionary<string, object> dicCheckItem, string propertyType,
+        public Property(Dictionary<string, object> dicCheckItem, string typeFullName,
             string summary, string typeName, string propertyName,
             TableInfo tableInfo, RelationInfo relInfo) 
         {
             _dicCheckItem = dicCheckItem;
             _propertyName = propertyName;
-            _propertyType = propertyType;
+            _typeFullName = typeFullName;
             _summary = summary;
             _typeName=typeName;
             _tableInfo = tableInfo;
@@ -104,14 +104,14 @@ namespace Buffalo.GeneratorInfo
             }
             return false;
         }
-        private string _propertyType;
+        private string _typeFullName;
 
         /// <summary>
         /// 对应的字段类型
         /// </summary>
-        public string PropertyType
+        public string TypeFullName
         {
-            get { return _propertyType; }
+            get { return _typeFullName; }
             
         }
 
