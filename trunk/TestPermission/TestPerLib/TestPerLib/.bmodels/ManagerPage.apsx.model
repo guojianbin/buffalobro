@@ -1,0 +1,246 @@
+<#script type="linked">
+
+</#script>
+
+<#script type="using">
+
+</#script>
+
+<#script type="code">
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="UserManager.aspx.cs" Inherits="ManagerPage_UserManager" %>
+
+<%@ Register Src="../WebPageNumberBar/PagingBar.ascx" TagName="PagingBar" TagPrefix="uc1" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>无标题页</title>
+    <link type="text/css" href="../css/thickbox.css" rel="stylesheet" />	
+	<script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui-1.7.2.custom.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-contextmenu-r2.js"></script>
+	<script src="../js/thickbox.js" type="text/javascript"></script>
+    <style type="text/css">
+<!--
+body {
+	margin-left: 3px;
+	margin-top: 0px;
+	margin-right: 3px;
+	margin-bottom: 0px;
+}
+
+-->
+</style>
+<script type="text/javascript">
+function showdivDialog(id)
+{
+    tb_show('明细', "UserEdit.aspx?id="+id+"&keepThis=true&amp;TB_iframe=true&amp;height=460&amp;width=950", false);
+}
+
+function refreashDisplay()
+{
+    if(btnGo!=null)
+    {
+        btnGo.click();
+    }
+}
+</script>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div style="font-size:12px">
+    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="24" bgcolor="#353c44"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td style="height: 31px"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="6%" valign="bottom" style="height: 19px"><div align="center">
+                <img src="../images/tb.gif" width="14" height="14" /></div></td>
+                <td width="94%" valign="bottom" style="height: 19px"><span style="color:White">管理人员基本信息列表</span></td>
+              </tr>
+            </table></td>
+            <td style="height: 31px"><div align="right"><span class="STYLE1">&nbsp;&nbsp;&nbsp;
+            <a href="javascript:showdivDialog('')">
+            <img alt="add" src="../images/add.gif" width="10" height="10" /> 添加</a>   &nbsp;
+               <span> &nbsp;</span></div></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>
+    <div>
+        <span runat="server" id="spnName">
+		
+		<#
+			foreach(Property pro in SelectedPropertys)
+			{
+				if(pro.HasItem("CanQuery")){
+				
+				SystemOut.Append(GetSearchControl(pro)+"\n");
+				
+				}
+			}
+		#>
+		
+                 <asp:Button ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click" /></span></div>
+        <asp:GridView ID="gvDisplay" runat="server" AutoGenerateColumns="False"
+         Width="100%" ShowFooter="True" HeaderStyle-BackColor="#d3eaef" 
+         RowStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center" OnRowCommand="gvDisplay_RowCommand">
+            <Columns>
+            <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:Label ID="labRowIndex" runat="server" Text='<%#GetDataIndex(Container.DataItemIndex,pb.CurrentPage) %>'></asp:Label>
+                    </ItemTemplate>
+                    
+                    <FooterTemplate>
+                        Σ
+                    </FooterTemplate>
+                <ItemStyle Width="20px" />
+				</asp:TemplateField>
+				<#
+			foreach(Property pro in SelectedPropertys)
+			{
+				if(pro.HasItem("CanQuery"))
+				{
+				#>
+                
+                <asp:TemplateField HeaderText="<#=pro.Summary#>">
+                    <ItemTemplate>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("<#=pro.PropertyName#>") %>'></asp:Label>
+                    </ItemTemplate>
+                
+				<FooterTemplate>
+					<#if(pro.GetValue("SumType")!="None")
+					{#>
+                        <asp:Label ID="labSum" runat="server" Text='<%#GetSum("<#=pro.PropertyName#>") %>'></asp:Label>
+                  <#}#>
+                    </FooterTemplate>
+				</asp:TemplateField>
+					<#
+				}
+			}
+					#>
+					
+                
+                <asp:TemplateField ShowHeader="False">
+                    <ItemTemplate>
+                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# "javascript:showdivDialog("+Eval("Id") +");"%>'>编辑</asp:HyperLink>
+                    </ItemTemplate>
+                    <ItemStyle Width="50px" />
+                </asp:TemplateField>
+                <asp:TemplateField ShowHeader="False">
+                    <ItemTemplate>
+                    <span onclick="return confirm('是否删除此项？')">
+                        <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="false" CommandName="DoDelete"
+                            Text="删除" CommandArgument='<%# Bind("Id") %>'></asp:LinkButton></span>
+                    </ItemTemplate>
+                    <ItemStyle Width="50px" />
+                </asp:TemplateField>
+            </Columns>
+            <RowStyle HorizontalAlign="Center" />
+            <FooterStyle HorizontalAlign="Center" />
+            <HeaderStyle BackColor="#D3EAEF" />
+        </asp:GridView>
+        
+        
+        
+        <div>
+            <uc1:PagingBar ID="pb" runat="server" /></div>
+    </td>
+  </tr>
+  
+</table>
+</div>
+    </form>
+</body>
+</html>
+
+</#script>
+
+<#script type="method">
+
+
+
+/// <summary>
+/// 获取查询控件
+/// </summary>
+/// <param name="pro">属性</param>
+/// <returns></returns>
+public string GetSearchControl(Property pro)
+{
+	if(pro.RelInfo!=null)
+	{
+		return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\">"+
+		"</asp:Label><asp:DropDownList ID=\"ddl"+pro.PropertyName+"\" runat=\"server\"></asp:DropDownList>";
+	}
+	string type=pro.TypeName;
+	if(type=="string")
+	{
+		return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
+		"<asp:TextBox ID=\"txt"+pro.PropertyName+"\"runat=\"server\"></asp:TextBox>";
+	}
+	return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
+		"<asp:TextBox ID=\"txt"+pro.PropertyName+"\"runat=\"server\"></asp:TextBox>";
+}
+
+/// <summary>
+/// 获取字段名
+/// </summary>
+/// <param name="itemName"></param>
+/// <returns></returns>
+public string GetFieldName(string name)
+{
+	string retName=name.Substring(0, 1).ToLower()+name.Substring(1, name.Length - 1);
+	return retName;
+	
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="pro"></param>
+/// <returns></returns>
+public string GetClassString()
+{
+	StringBuilder sb=new StringBuilder();
+	sb.Append(Entity.HasItem("CanQuery")?"true":"false");
+	sb.Append(",");
+	sb.Append(Entity.HasItem("CanAddNew")?"true":"false");
+	sb.Append(",");
+	sb.Append(Entity.HasItem("CanEdit")?"true":"false");
+	return sb.ToString();
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="pro"></param>
+/// <returns></returns>
+public string GetParamString(Property pro)
+{
+	StringBuilder sb=new StringBuilder();
+	sb.Append("\""+pro.PropertyName+"\"");
+	sb.Append(",");
+	sb.Append("typeof("+pro.TypeName+")");
+	sb.Append(",");
+	sb.Append(pro.HasItem("CanQuery")?"true":"false");
+	sb.Append(",");
+	sb.Append(pro.HasItem("CanAddNew")?"true":"false");
+	sb.Append(",");
+	sb.Append(pro.HasItem("CanEdit")?"true":"false");
+	sb.Append(",");
+	string sumType=pro.GetValue("SumType");
+	sb.Append(string.IsNullOrEmpty(sumType)?"SumType.None":"SumType."+sumType);
+	sb.Append(",");
+	string customer=pro.GetValue("CustomCount");
+	sb.Append(string.IsNullOrEmpty(customer)?"null":customer);
+	return sb.ToString();
+}
+</#script>

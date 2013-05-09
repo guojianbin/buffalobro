@@ -3,6 +3,7 @@
 
     <configItems>
       <item type="check"  name="CanQuery" summary="查询条件" default="1"></item>
+      <item type="check" name="CanView" summary="可查看" default="1"></item>
       <item type="check" name="CanAddNew" summary="可添加" default="1"></item>
       <item type="check" name="CanEdit" summary="可编辑" default="1"></item>
       <item type="combo" name="SumType" summary="统计类型" select="无:None,总相加:Sum,总条数:Count,平均:Avg,自定义:Custom"></item>
@@ -24,6 +25,10 @@
         </item>
       </item>-->
       <item path="{ProjectPath}\.bmodels\DataView.model" type="code" target="{SelectProjectPath}\DataView\{ClassName}DataView.cs">
+        
+      </item>
+      <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.model" type="code" target="{SelectProjectPath}\ManagerPage\{ClassName}ManagerPage.aspx">
+
       </item>
     </project>
   </models>

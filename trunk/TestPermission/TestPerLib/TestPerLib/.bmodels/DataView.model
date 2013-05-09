@@ -87,7 +87,7 @@ public string GetParamString(Property pro)
 	StringBuilder sb=new StringBuilder();
 	sb.Append("\""+pro.PropertyName+"\"");
 	sb.Append(",");
-	sb.Append("typeof("+pro.PropertyType+")");
+	sb.Append("typeof("+pro.TypeName+")");
 	sb.Append(",");
 	sb.Append(pro.HasItem("CanQuery")?"true":"false");
 	sb.Append(",");
