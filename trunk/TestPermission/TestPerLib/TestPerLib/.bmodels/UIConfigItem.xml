@@ -24,10 +24,10 @@
         <item path="{ProjectPath}\webmodel.cs.model" type="code" target="{ClassName}Query.aspx.cs">
         </item>
       </item>-->
-      <item path="{ProjectPath}\.bmodels\DataView.model" type="code" target="{SelectProjectPath}\DataView\{ClassName}DataView.cs">
+      <item path="{ProjectPath}\.bmodels\DataView.bm" type="code" target="{SelectProjectPath}\DataView\{ClassName}DataView.cs">
         
       </item>
-      <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.model" type="code" target="{SelectProjectPath}\ManagerPage\{ClassName}ManagerPage.aspx">
+      <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.bm" type="code" target="{SelectProjectPath}\ManagerPage\{ClassName}ManagerPage.aspx">
 
       </item>
     </project>

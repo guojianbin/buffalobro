@@ -6,48 +6,6 @@
 
 </#script>
 
-<#script type="code">
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Buffalo.Permissions.DataViewInfo;
-using Buffalo.DB.BQLCommon.BQLConditionCommon;
-<#=Entity.GetValue("Using")#>
-namespace <#=Entity.GetValue("Namespace")#>.DataView
-{
-	public class <#=Entity.ClassName #>DataView:DataViewer
-	{
-		<# foreach(Property pro in SelectedPropertys ) {#>
-		private DataItem _<#=GetFieldName(pro.PropertyName)#>=null;
-		private DataItem <#=pro.PropertyName#>
-		{
-			get
-			{
-				return _<#=GetFieldName(pro.PropertyName)#>;
-			}
-			set
-			{
-				_<#=GetFieldName(pro.PropertyName)#>=value;
-			}
-		}
-		<#}#>
-		
-		/// <summary>
-        /// <#= Entity.Summary #>
-        /// </summary>
-        /// <param name="entityHandle"></param>
-		public <#=Entity.ClassName #>DataView(BQLEntityTableHandle entityHandle)
-		:base(entityHandle,<#=GetClassString()#>)
-		{
-			<# foreach(Property pro in SelectedPropertys ) {#>
-			_<#=GetFieldName(pro.PropertyName)#>=CreateDataItem(<#=GetParamString(pro)#>);
-			<#}#>
-		}
-		
-	}
-}
-</#script>
-
 <#script type="method">
 /// <summary>
 /// »ñÈ¡×Ö¶ÎÃû
