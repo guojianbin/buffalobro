@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Buffalo.Kernel;
 
 namespace Buffalo.DBTools.UIHelper.ModelLoader
 {
@@ -55,8 +56,21 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         {
             FileInfo file = new FileInfo(path);
             string workspace = file.DirectoryName;
-            string content=File.ReadAllText(path,Encoding.Default);
-            ModelCompiler compiler = new ModelCompiler(content, entityInfo);
+            Encoding encoding = CodeFileHelper.GetFileEncoding(path);
+            string content = File.ReadAllText(path, encoding);
+            string backCodePath=path+"c";
+            string backCode=null;
+            if (File.Exists(backCodePath))
+            {
+                encoding = CodeFileHelper.GetFileEncoding(backCodePath);
+                backCode = File.ReadAllText(backCodePath, encoding);
+            }
+            if (backCode == null) 
+            {
+                backCode = content;
+                content = null;
+            }
+            ModelCompiler compiler = new ModelCompiler(content, backCode, entityInfo);
             string className = "ModelCompilerClass" + _classCount;
             StringBuilder sbError=new StringBuilder();
             StringBuilder lastCodeCache = new StringBuilder();

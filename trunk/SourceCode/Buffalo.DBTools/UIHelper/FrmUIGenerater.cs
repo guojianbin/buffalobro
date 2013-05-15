@@ -326,7 +326,7 @@ namespace Buffalo.DBTools.UIHelper
                 File.WriteAllText(fileName, Models.UIConfigItem);
             }
 
-            string dvModel = directory + "DataView.model";
+            string dvModel = directory + "DataView.bm";
             if (!File.Exists(dvModel))
             {
                 File.WriteAllText(dvModel, Models.DataView);

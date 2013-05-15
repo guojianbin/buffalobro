@@ -79,7 +79,7 @@ namespace Buffalo.DBTools.UIHelper
         private void GenerateCode(EntityInfo entityInfo, UIConfigItem classConfig, Project selectedProject,
             List<UIModelItem> selectPropertys,UIModelItem classInfo,List<UIProjectItem> lstItem,ProjectItem parentItem) 
         {
-            Encoding fileEncoding = FileEncodingInfo.GetEncodingType(entityInfo.FileName, true);
+            Encoding fileEncoding = CodeFileHelper.GetFileEncoding(entityInfo.FileName);
 
             foreach (UIProjectItem pitem in lstItem) 
             {

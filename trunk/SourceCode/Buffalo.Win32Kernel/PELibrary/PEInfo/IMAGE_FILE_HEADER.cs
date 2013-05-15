@@ -15,17 +15,17 @@ namespace Buffalo.Win32Kernel.PELibrary.PEInfo
         /// <summary>
         /// uintel 80386  处理器以上
         /// </summary>
-        uintel80386 = 0x14c,
+        Intel80386 = 0x14c,
 
         /// <summary>
         /// uintel 80486  处理器以上
         /// </summary>
-        uintel80486 = 0x14d,
+        Intel80486 = 0x14d,
 
         /// <summary>
         /// uintel奔腾处理器以上
         /// </summary>
-        uintelPentium = 0x14e,
+        IntelPentium = 0x14e,
 
         /// <summary>
         /// R3000(MIPS)处理器，big endian
@@ -55,7 +55,15 @@ namespace Buffalo.Win32Kernel.PELibrary.PEInfo
         /// <summary>
         /// IBM Power PC，little endian
         /// </summary>
-        IBMPowerPCLittleEndian = 0x1f0
+        IBMPowerPCLittleEndian = 0x1f0,
+        /// <summary>
+        /// 安腾
+        /// </summary>
+        Itanium=0x0200,
+        /// <summary>
+        /// X64位
+        /// </summary>
+        X64=0x8664
     }
 
     public struct IMAGE_FILE_HEADER

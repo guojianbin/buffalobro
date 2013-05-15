@@ -59,7 +59,7 @@ namespace Buffalo.DBTools
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        private static Encoding GetFileEncoding(string fileName) 
+        public static Encoding GetFileEncoding(string fileName) 
         {
             Encoding fileEncoding = DefaultEncoding;
             fileEncoding = FileEncodingInfo.GetEncodingType(fileName, false);

@@ -515,7 +515,7 @@ namespace Buffalo.DBTools.HelperKernel
             _summary = ctype.DocSummary;
             _tableName =EntityFieldBase.ToCamelName(_className);
             _lstSource = CodeFileHelper.ReadFile(FileName);
-            _fileEncoding = FileEncodingInfo.GetEncodingType(_fileName, false);
+            _fileEncoding = CodeFileHelper.GetFileEncoding(_fileName);
             if (ctype.Generic) 
             {
                 InitGeneric(ctype,_dicGenericInfo);

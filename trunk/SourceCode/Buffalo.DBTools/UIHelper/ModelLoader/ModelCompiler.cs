@@ -15,16 +15,20 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
     {
 
         private CodesManger man = new CodesManger();
-        private string _content;
+        private string _content;//model文件内容
         EntityInfo _entityInfo;
+        private string _backCode;//model.cs文件内容
         /// <summary>
         /// 模版到代码的转换器
         /// </summary>
-        /// <param name="content">模版内容</param>
-        public ModelCompiler(string content,EntityInfo entityInfo) 
+        /// <param name="content">model文本内容</param>
+        /// <param name="backCode">后台代码</param>
+        /// <param name="entityInfo">实体信息</param>
+        public ModelCompiler(string content, string backCode, EntityInfo entityInfo) 
         {
             _content = content;
             _entityInfo = entityInfo;
+            _backCode = backCode;
         }
 
 
@@ -33,9 +37,9 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// </summary>
         public string GetCode(string className) 
         {
-            //string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>[^<]+)</[#]script>";
+            //解释Model.cs信息
             string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>(.*?))</[#]script>";
-            MatchCollection matches = new Regex(strRef).Matches(_content);
+            MatchCollection matches = new Regex(strRef).Matches(_backCode);
             foreach (Match ma in matches)
             {
                 if (ma.Groups["type"] == null) 
@@ -59,7 +63,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                     string str = outputer.GetCode(queitem);
                     man.Using.Append(str);
                 }
-                else if (type.Equals("code", StringComparison.CurrentCultureIgnoreCase))
+                else if (_content==null && type.Equals("code", StringComparison.CurrentCultureIgnoreCase))
                 {
                     CodeOutputer outputer = new CodeOutputer();
                     string str = outputer.GetCode(queitem);
@@ -72,7 +76,26 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                     man.Method.Append(str);
                 }
             }
+            //解释Model信息
+            if (_content != null)
+            {
+                man.Code.Append(GetContentCode(_content));
+            }
             return man.ToCode(className);
+        }
+
+        /// <summary>
+        /// 获取内容的代码
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private string GetContentCode(string content) 
+        {
+            CodeGeneration com = new CodeGeneration(content);
+            Queue<ExpressionItem> queitem = com.ExpressionItems;
+            CodeOutputer outputer = new CodeOutputer();
+            string str = outputer.GetCode(queitem);
+            return str;
         }
 
         /// <summary>
