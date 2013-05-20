@@ -65,7 +65,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// </summary>
         private void CompilerPart() 
         {
-            if (MoveNext()) 
+            while (MoveNext()) 
             {
                 if (CurrentChar == ScriptChar)
                 {
@@ -87,11 +87,17 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                         
                         _currentItem = null;
                     }
-
+                    break;
                 }
-                else 
+                else if (CurrentChar == '<') 
+                {
+                    _currentItem.Content.Append("<");
+                    continue;
+                }
+                else
                 {
                     _currentItem.Content.Append("<" + CurrentChar);
+                    break;
                 }
             }
         }

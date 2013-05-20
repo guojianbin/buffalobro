@@ -207,7 +207,8 @@ namespace Buffalo.DBTools.UIHelper
         /// <returns></returns>
         public Buffalo.GeneratorInfo.EntityInfo ToGeneratorEntity(UIModelItem classModelInfo) 
         {
-            Buffalo.GeneratorInfo.EntityInfo entity = new Buffalo.GeneratorInfo.EntityInfo(_fileName,
+            string dbName = DBConfigInfo.GetDbName(DesignerInfo);
+            Buffalo.GeneratorInfo.EntityInfo entity = new Buffalo.GeneratorInfo.EntityInfo(dbName, _fileName,
                 _namespace, _className, _summary,
                 _baseTypeName, _dicGenericInfo, classModelInfo.ToGeneratItem());
             return entity;

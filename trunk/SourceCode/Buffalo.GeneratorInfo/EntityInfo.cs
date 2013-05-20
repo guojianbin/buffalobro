@@ -12,6 +12,7 @@ namespace Buffalo.GeneratorInfo
         /// <summary>
         /// 要生成实体信息
         /// </summary>
+        /// <param name="dbName">数据库名</param>
         /// <param name="fileName">类文件名</param>
         /// <param name="nameSpace">命名空间</param>
         /// <param name="className">类名</param>
@@ -19,10 +20,11 @@ namespace Buffalo.GeneratorInfo
         /// <param name="baseTypeName">基类名</param>
         /// <param name="dicGenericInfo">泛型信息</param>
         /// <param name="model">可选项信息</param>
-        public EntityInfo(string fileName,string nameSpace, string className, 
+        public EntityInfo(string dbName, string fileName, string nameSpace, string className, 
             string summary, string baseTypeName,
             Dictionary<string, List<string>> dicGenericInfo, Property model) 
         {
+            _dbName = dbName;
             _fileName = fileName; 
             _baseTypeName = baseTypeName;
             _className = className;
@@ -33,6 +35,14 @@ namespace Buffalo.GeneratorInfo
             _summary = summary;
         }
 
+        private string _dbName;
+        /// <summary>
+        /// 类图名
+        /// </summary>
+        public string DBName
+        {
+            get { return _dbName; }
+        }
 
         private string _fileName;
         /// <summary>
