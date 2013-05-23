@@ -8,6 +8,25 @@
 
 <#script type="method">
 /// <summary>
+/// 获取属性控件的值的属性
+/// </summary>
+/// <param name="pro">属性</param>
+/// <returns></returns>
+public string GetControlValueProperty(Property pro)
+{
+	string type=pro.TypeName;
+	if(type=="string")
+	{
+		return "Text";
+	}
+	if(pro.RelInfo!=null)
+	{
+		return "SelectedValue";
+	}
+	return "Text";
+}
+
+/// <summary>
 /// 获取查询控件
 /// </summary>
 /// <param name="pro">属性</param>

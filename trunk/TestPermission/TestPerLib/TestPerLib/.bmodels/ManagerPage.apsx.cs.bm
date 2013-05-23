@@ -16,14 +16,20 @@ using <#=Entity.GetValue("Namespace")#>.Business;
 using <#=Entity.GetValue("Namespace")#>.DataView;
 using <#=Entity.GetValue("Namespace")#>.BQLEntity;
 
-public partial class ManagerPage_UserManager : ScPageBase
+public partial class ManagerPage_<#=Entity.ClassName #>Manager : ScPageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack) 
         {
             Bind();
-            BindBelongClass();
+			<#foreach(Property pro in SelectedPropertys)
+			{
+				if(pro.RelInfo!=null)
+				{#>
+				Bind<#=pro.PropertyName#>();
+				<#}
+			}#>
         }
         pb.OnPageIndexChange += new Buffalo.WebKernel.WebCommons.PagerCommon.PageIndexChange(pb_OnPageIndexChange);
     }
@@ -31,7 +37,6 @@ public partial class ManagerPage_UserManager : ScPageBase
     void pb_OnPageIndexChange(object sender, long currentIndex)
     {
         Bind();
-        System.IO.MemoryStream ms;
         
     }
 
@@ -64,58 +69,65 @@ public partial class ManagerPage_UserManager : ScPageBase
     /// </summary>
     private void Bind() 
     {
-        ScStudentBusiness bo=new ScStudentBusiness();
+        <#=Entity.ClassName #>Business bo=new <#=Entity.ClassName #>Business();
         ScopeList lstScope=new ScopeList();
         FillCondition(lstScope);
         lstScope.PageContent.PageSize = 10;
         lstScope.PageContent.CurrentPage =pb.CurrentPage;
-        List<ScStudent> lst=bo.SelectList(lstScope);
-        dtSum = DataViewerSum.GetSumQuery(new ScStudentDataView(), lstScope, School.GetDBinfo());
+        List<<#=Entity.ClassName #>> lst=bo.SelectList(lstScope);
+        dtSum = DataViewerSum.GetSumQuery(new <#=Entity.ClassName #>DataView(), lstScope, <#=Entity.DBName #>.GetDBinfo());
         gvDisplay.DataSource = lst;
         gvDisplay.DataBind();
         pb.DataSource = lstScope.PageContent;
     }
-
+	
+	<#foreach(Property pro in SelectedPropertys)
+	{
+		if(pro.RelInfo!=null)
+		{
+	#>
+	
     /// <summary>
     /// 绑定所属套餐
     /// </summary>
-    private void BindBelongClass() 
+    private void Bind<#=pro.PropertyName#>() 
     {
-        ddlBelongClass.Items.Clear();
-        ScClassBusiness bo=new ScClassBusiness();
+        ddl<#=pro.PropertyName#>.Items.Clear();
+        <#=pro.RelInfo.SourceType#>Business bo=new <#=pro.RelInfo.SourceType#>Business();
         ScopeList lstScope=new ScopeList();
-        List<ScClass> lstClass = bo.SelectList(lstScope);
+        List<<#=pro.RelInfo.SourceType#>> lst<#=pro.RelInfo.SourceType#> = bo.SelectList(lstScope);
         ListItem item = new ListItem("全部", "");
-        ddlBelongClass.Items.Add(item);
-        foreach (ScClass objClass in lstClass) 
+        ddl<#=pro.PropertyName#>.Items.Add(item);
+        foreach (<#=pro.RelInfo.SourceType#> obj<#=pro.RelInfo.SourceType#> in lst<#=pro.RelInfo.SourceType#>) 
         {
-            item=new ListItem(objClass.ClassName,objClass.Id.ToString());
-            ddlBelongClass.Items.Add(item);
+            item=new ListItem(obj<#=pro.RelInfo.SourceType#>.ToString(),obj<#=pro.RelInfo.SourceType#>.<#=pro.RelInfo.TargetName#>.ToString());
+            ddl<#=pro.PropertyName#>.Items.Add(item);
         }
     }
-
+	<#
+		}
+	}#>
     /// <summary>
     /// 保存条件
     /// </summary>
     private void SaveCondition() 
     {
-        if (!string.IsNullOrEmpty(txtName.Text))
+		<#foreach(Property pro in SelectedPropertys)
+		{
+		#>
+		
+        if (!string.IsNullOrEmpty(txt<#=pro.PropertyName#>.<#=GetControlValueProperty(pro)#>))
         {
-            ViewState["vstate_Name"] = txtName.Text;
+            ViewState["vstate_<#=pro.PropertyName#>"] = txt<#=pro.PropertyName#>.<#=GetControlValueProperty(pro)#>;
         }
         else
         {
-            ViewState.Remove("vstate_Name");
+            ViewState.Remove("vstate_<#=pro.PropertyName#>");
         }
-
-        if (!string.IsNullOrEmpty(ddlBelongClass.SelectedValue))
-        {
-            ViewState["vstate_BelongClass"] = ddlBelongClass.SelectedValue;
-        }
-        else 
-        {
-            ViewState.Remove("vstate_BelongClass");
-        }
+		<#
+		}
+		#>
+        
     }
 
     /// <summary>

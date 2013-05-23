@@ -1,5 +1,5 @@
 
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="UserManager.aspx.cs" Inherits="ManagerPage_UserManager" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="<#=Entity.ClassName #>Manager.aspx.cs" Inherits="ManagerPage_<#=Entity.ClassName #>Manager" %>
 
 <%@ Register Src="../WebPageNumberBar/PagingBar.ascx" TagName="PagingBar" TagPrefix="uc1" %>
 

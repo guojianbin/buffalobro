@@ -19,16 +19,12 @@
   </classItems>
   <models>
     <project name="Web界面">
-      <!--
-      <item path="{ProjectPath}\webmodel.model" type="code" target="{ClassName}Query.aspx">
-        <item path="{ProjectPath}\webmodel.cs.model" type="code" target="{ClassName}Query.aspx.cs">
-        </item>
-      </item>-->
-      <item path="{ProjectPath}\.bmodels\DataView.bm" type="code" target="{SelectProjectPath}\DataView\{ClassName}DataView.cs">
-        
+      <item path="{ProjectPath}\.bmodels\DataView.bm" type="none" target="{SelectProjectPath}\App_Code\DataView\{ClassName}DataView.cs">
       </item>
-      <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.bm" type="code" target="{SelectProjectPath}\ManagerPage\{ClassName}ManagerPage.aspx">
+      <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.bm" type="none" target="{SelectProjectPath}\ManagerPage\{ClassName}ManagerPage.aspx">
+        <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.cs.bm" type="none" target="{SelectProjectPath}\ManagerPage\{ClassName}ManagerPage.aspx.cs">
 
+        </item>
       </item>
     </project>
   </models>
