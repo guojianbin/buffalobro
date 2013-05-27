@@ -236,17 +236,17 @@
             不知名处理器
             </summary>
         </member>
-        <member name="F:Buffalo.Win32Kernel.PELibrary.PEInfo.MachineType.uintel80386">
+        <member name="F:Buffalo.Win32Kernel.PELibrary.PEInfo.MachineType.Intel80386">
             <summary>
             uintel 80386  处理器以上
             </summary>
         </member>
-        <member name="F:Buffalo.Win32Kernel.PELibrary.PEInfo.MachineType.uintel80486">
+        <member name="F:Buffalo.Win32Kernel.PELibrary.PEInfo.MachineType.Intel80486">
             <summary>
             uintel 80486  处理器以上
             </summary>
         </member>
-        <member name="F:Buffalo.Win32Kernel.PELibrary.PEInfo.MachineType.uintelPentium">
+        <member name="F:Buffalo.Win32Kernel.PELibrary.PEInfo.MachineType.IntelPentium">
             <summary>
             uintel奔腾处理器以上
             </summary>
@@ -279,6 +279,16 @@
         <member name="F:Buffalo.Win32Kernel.PELibrary.PEInfo.MachineType.IBMPowerPCLittleEndian">
             <summary>
             IBM Power PC，little endian
+            </summary>
+        </member>
+        <member name="F:Buffalo.Win32Kernel.PELibrary.PEInfo.MachineType.Itanium">
+            <summary>
+            安腾
+            </summary>
+        </member>
+        <member name="F:Buffalo.Win32Kernel.PELibrary.PEInfo.MachineType.X64">
+            <summary>
+            X64位
             </summary>
         </member>
         <member name="F:Buffalo.Win32Kernel.PELibrary.PEInfo.IMAGE_FILE_HEADER.Machine">

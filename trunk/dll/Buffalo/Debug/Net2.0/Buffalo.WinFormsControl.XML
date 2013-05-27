@@ -199,6 +199,11 @@
             <param name="num"></param>
             <returns></returns>
         </member>
+        <member name="P:Buffalo.WinFormsControl.TootipEx.HasClose">
+            <summary>
+            是否有关闭按钮
+            </summary>
+        </member>
         <member name="P:Buffalo.WinFormsControl.DataGridViewEx.DataGridViewExCheckBoxColumn.Enabled">
             <summary>
             可用

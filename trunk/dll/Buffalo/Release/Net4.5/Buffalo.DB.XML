@@ -14,6 +14,12 @@
             查询条件
             </summary>
         </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem.ShowDbType(System.Data.DbType)">
+            <summary>
+            通知函数符号另一端的字段的数值类型
+            </summary>
+            <param name="type"></param>
+        </member>
         <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem.As(System.String)">
             <summary>
             给字段定义一个别名
@@ -1534,13 +1540,6 @@
             <summary>
             只有Select语句的数据访问层模版
             </summary>
-        </member>
-        <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessBaseForSelect`1.GetUnique(Buffalo.DB.QueryConditions.ScopeList)">
-            <summary>
-            根据条件查找实体
-            </summary>
-            <param name="lstScope">条件</param>
-            <returns></returns>
         </member>
         <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessBaseForSelect`1.GetEntityById(System.Object)">
             <summary>
@@ -4107,6 +4106,11 @@
         <member name="P:Buffalo.DB.BQLCommon.BQLConditionCommon.KeyWordInfomation.HasGroup">
             <summary>
             是否有聚合语句
+            </summary>
+        </member>
+        <member name="P:Buffalo.DB.BQLCommon.BQLConditionCommon.KeyWordInfomation.PrimaryKeys">
+            <summary>
+            主键数
             </summary>
         </member>
         <member name="P:Buffalo.DB.BQLCommon.BQLConditionCommon.KeyWordInfomation.IsWhere">

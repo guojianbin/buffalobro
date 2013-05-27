@@ -2355,6 +2355,16 @@
             </summary>
             <param name="dia">图</param>
         </member>
+        <member name="T:Buffalo.DBTools.UIHelper.InitBaseCode">
+            <summary>
+            初始化基础dll
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.InitBaseCode.InitBaseDll">
+            <summary>
+            初始化基础dll
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.HelperKernel.BQLEntityGenerater">
             <summary>
             BQL实体生成
@@ -2705,16 +2715,25 @@
             模版到代码的转换器
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.#ctor(System.String,Buffalo.DBTools.UIHelper.EntityInfo)">
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.#ctor(System.String,System.String,Buffalo.DBTools.UIHelper.EntityInfo)">
             <summary>
             模版到代码的转换器
             </summary>
-            <param name="content">模版内容</param>
+            <param name="content">model文本内容</param>
+            <param name="backCode">后台代码</param>
+            <param name="entityInfo">实体信息</param>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.GetCode(System.String)">
             <summary>
             处理Script标签
             </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.GetContentCode(System.String)">
+            <summary>
+            获取内容的代码
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.ModelLoader.ModelCompiler.AddBuffaloLink(System.Collections.Generic.List{System.String})">
             <summary>
@@ -2752,6 +2771,13 @@
             </summary>
             <param name="items"></param>
             <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityRelationCollection.FindByPropertyName(System.String)">
+            <summary>
+            通过属性名查找映射属性信息
+            </summary>
+            <param name="propertyName"></param>
             <returns></returns>
         </member>
         <member name="T:Buffalo.DBTools.UIHelper.EntityInfo">
@@ -3441,11 +3467,6 @@
             所属实体
             </summary>
         </member>
-        <member name="P:Buffalo.DBTools.HelperKernel.EntityFieldBase.FieldType">
-            <summary>
-            对应的字段类型
-            </summary>
-        </member>
         <member name="P:Buffalo.DBTools.HelperKernel.EntityFieldBase.Summary">
             <summary>
             注释
@@ -3464,6 +3485,11 @@
         <member name="P:Buffalo.DBTools.HelperKernel.EntityFieldBase.TypeName">
             <summary>
             类型名
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.EntityFieldBase.TypeFullName">
+            <summary>
+            类型全名
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.HelperKernel.EntityFieldBase.PropertyTypeItems">
@@ -3693,6 +3719,16 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.RelInfo">
+            <summary>
+            关联信息
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.TabInfo">
+            <summary>
+            表信息
+            </summary>
+        </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.CheckItem">
             <summary>
             选中的项
@@ -3701,11 +3737,6 @@
         <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.IsGenerate">
             <summary>
             是否生成
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.FieldType">
-            <summary>
-            对应的字段类型
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.Summary">
@@ -3785,6 +3816,13 @@
             <summary>
             获取目标实体的信息集合
             </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityParamFieldCollection.FindByPropertyName(System.String)">
+            <summary>
+            通过属性名查找字段属性信息
+            </summary>
+            <param name="propertyName"></param>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.InitDBConfig">
             <summary>
@@ -3969,6 +4007,22 @@
             <summary>
             判断是否存在成员
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.FindParamInfoByName(System.Collections.Generic.Stack{Buffalo.DBTools.HelperKernel.EntityConfig},System.String)">
+            <summary>
+            通过属性名查找属性配置信息
+            </summary>
+            <param name="stkEntity">实体集合</param>
+            <param name="propertyName">属性</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.FindRelInfoByName(System.Collections.Generic.Stack{Buffalo.DBTools.HelperKernel.EntityConfig},System.String)">
+            <summary>
+            通过属性名查找映射属性配置信息
+            </summary>
+            <param name="stkEntity">实体集合</param>
+            <param name="propertyName">映射属性</param>
             <returns></returns>
         </member>
         <member name="F:Buffalo.DBTools.HelperKernel.EntityConfig._needUsing">
@@ -4237,6 +4291,19 @@
             <param name="path"></param>
             <returns></returns>
         </member>
+        <member name="T:Buffalo.DBTools.HelperKernel.EntityParamField">
+            <summary>
+            字段属性信息
+            </summary>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityParamField.#ctor(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.CodeElementPosition,Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrField,Buffalo.DBTools.HelperKernel.EntityConfig)">
+            <summary>
+            字段属性信息
+            </summary>
+            <param name="cp">字段代码位置</param>
+            <param name="fInfo">字段信息</param>
+            <param name="belongEntity">所属实体</param>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.EntityParamField.GetEntityParamInfo(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrField)">
             <summary>
             获取字段的配置信息
@@ -4450,19 +4517,24 @@
             文件生成类型
             </summary>
         </member>
+        <member name="F:Buffalo.DBTools.UIHelper.BuildAction.None">
+            <summary>
+            不做操作
+            </summary>
+        </member>
         <member name="F:Buffalo.DBTools.UIHelper.BuildAction.Code">
             <summary>
             代码
             </summary>
         </member>
-        <member name="F:Buffalo.DBTools.UIHelper.BuildAction.Resource">
-            <summary>
-            嵌入资源
-            </summary>
-        </member>
         <member name="F:Buffalo.DBTools.UIHelper.BuildAction.File">
             <summary>
             普通文件
+            </summary>
+        </member>
+        <member name="F:Buffalo.DBTools.UIHelper.BuildAction.Resource">
+            <summary>
+            嵌入资源
             </summary>
         </member>
         <member name="T:Buffalo.DBTools.DocSummary.SummaryShowItem">
