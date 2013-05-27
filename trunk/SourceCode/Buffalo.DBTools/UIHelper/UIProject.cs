@@ -109,17 +109,22 @@ namespace Buffalo.DBTools.UIHelper
         private ProjectItem SaveItem(string fileName, Project selectedProject,
             string content, BuildAction baction, ProjectItem parentItem,Encoding encoding) 
         {
+            
             CodeFileHelper.SaveFile(fileName, content, encoding);
             EnvDTE.ProjectItem newit = null;
             if (parentItem != null)
             {
                 newit = parentItem.ProjectItems.AddFromFile(fileName);
-                newit.Properties.Item("BuildAction").Value = (int)baction;
+
+                    newit.Properties.Item("BuildAction").Value = (int)baction;
+                
             }
             else 
             {
                 newit = selectedProject.ProjectItems.AddFromFile(fileName);
-                newit.Properties.Item("BuildAction").Value = (int)baction;
+
+                    newit.Properties.Item("BuildAction").Value = (int)baction;
+                
             }
             return newit;
         }

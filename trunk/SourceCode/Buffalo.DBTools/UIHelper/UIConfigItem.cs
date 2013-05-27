@@ -175,6 +175,10 @@ namespace Buffalo.DBTools.UIHelper
             {
                 return BuildAction.File;
             }
+            if (type.Equals("none", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return BuildAction.None;
+            }
             return BuildAction.Code;
         }
 
