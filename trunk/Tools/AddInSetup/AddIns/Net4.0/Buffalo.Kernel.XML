@@ -3290,29 +3290,5 @@
             <param name="pwd">密码(32字节数组)</param>
             <returns></returns>
         </member>
-        <member name="T:Buffalo.Kernel.Win32.ExWindow">
-            <summary>
-            视窗扩展类
-            </summary>
-        </member>
-        <member name="M:Buffalo.Kernel.Win32.ExWindow.#ctor(System.Int32)">
-            <summary>
-            视窗扩展类
-            </summary>
-            <param name="processId">进程ID</param>
-        </member>
-        <member name="M:Buffalo.Kernel.Win32.ExWindow.GetMainWindowHandle">
-            <summary>
-            获取显示窗体的句柄
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Buffalo.Kernel.Win32.ExWindow.SetParent(System.IntPtr,System.IntPtr)">
-            <summary>
-            设置父容器
-            </summary>
-            <param name="parentHandle"></param>
-            <param name="childHandle"></param>
-        </member>
     </members>
 </doc>
