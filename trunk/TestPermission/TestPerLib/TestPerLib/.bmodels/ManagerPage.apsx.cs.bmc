@@ -25,6 +25,25 @@ public string GetControlValueProperty(Property pro)
 	}
 	return "Text";
 }
+/// <summary>
+/// 获取查询条件
+/// </summary>
+/// <param name="pro">属性</param>
+/// <returns></returns>
+public string GetSearchCondition(Property pro,string value)
+{
+	if(pro.RelInfo!=null)
+	{
+		return "."+pro.RelInfo.SourceName+"=="+value;
+	}
+	string type=pro.TypeName;
+	if(type=="string")
+	{
+		return ".Like("+value+")";
+	}
+	
+	return "=="+value;
+}
 
 /// <summary>
 /// 获取查询控件
@@ -42,10 +61,10 @@ public string GetSearchControl(Property pro)
 	if(type=="string")
 	{
 		return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
-		"<asp:TextBox ID=\"txt"+pro.PropertyName+"\"runat=\"server\"></asp:TextBox>";
+		"<asp:TextBox ID=\"txt"+pro.PropertyName+"\" runat=\"server\"></asp:TextBox>";
 	}
 	return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
-		"<asp:TextBox ID=\"txt"+pro.PropertyName+"\"runat=\"server\"></asp:TextBox>";
+		"<asp:TextBox ID=\"txt"+pro.PropertyName+"\" runat=\"server\"></asp:TextBox>";
 }
 
 /// <summary>

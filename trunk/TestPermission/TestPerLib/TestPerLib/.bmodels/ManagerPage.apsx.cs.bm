@@ -114,6 +114,10 @@ public partial class ManagerPage_<#=Entity.ClassName #>Manager : ScPageBase
     {
 		<#foreach(Property pro in SelectedPropertys)
 		{
+			if(!pro.HasItem("CanQuery"))
+			{
+				continue;
+			}
 		#>
 		
         if (!string.IsNullOrEmpty(txt<#=pro.PropertyName#>.<#=GetControlValueProperty(pro)#>))
@@ -136,16 +140,22 @@ public partial class ManagerPage_<#=Entity.ClassName #>Manager : ScPageBase
     /// <param name="lstScope"></param>
     private void FillCondition(ScopeList lstScope) 
     {
-        string vsName=ViewState["vstate_Name"] as string;
-        if (!string.IsNullOrEmpty(vsName)) 
+		<#foreach(Property pro in SelectedPropertys)
+		{
+			if(!pro.HasItem("CanQuery"))
+			{
+				continue;
+			}
+		#>
+        string vs<#=pro.PropertyName#>=ViewState["vstate_<#=pro.PropertyName#>"] as string;
+        if (!string.IsNullOrEmpty(vs<#=pro.PropertyName#>)) 
         {
-            lstScope.Add(School.ScStudent.Name.Like(vsName));
+            lstScope.Add(School.ScStudent.<#=pro.PropertyName#><#=GetSearchCondition(pro,"vs"+pro.PropertyName)#>);
         }
-        string vsBelongClass = ViewState["vstate_BelongClass"] as string;
-        if (!string.IsNullOrEmpty(vsBelongClass))
-        {
-            lstScope.Add(School.ScStudent.BelongClass.Id == Convert.ToInt32(vsBelongClass));
-        }
+		<#
+		}
+		#>
+        
     }
     protected void btnSearch_Click(object sender, EventArgs e)
     {

@@ -21,8 +21,8 @@
     <project name="Web界面">
       <item path="{ProjectPath}\.bmodels\DataView.bm" type="none" target="{SelectProjectPath}\App_Code\DataView\{ClassName}DataView.cs">
       </item>
-      <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.bm" type="none" target="{SelectProjectPath}\ManagerPage\{ClassName}ManagerPage.aspx">
-        <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.cs.bm" type="none" target="{SelectProjectPath}\ManagerPage\{ClassName}ManagerPage.aspx.cs">
+      <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.bm" type="none" target="{SelectProjectPath}\ManagerPage\{ClassName}Manager.aspx">
+        <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.cs.bm" type="none" target="{SelectProjectPath}\ManagerPage\{ClassName}Manager.aspx.cs">
 
         </item>
       </item>

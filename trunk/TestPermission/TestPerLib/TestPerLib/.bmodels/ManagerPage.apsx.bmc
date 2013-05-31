@@ -17,16 +17,44 @@ public string GetSearchControl(Property pro)
 	if(pro.RelInfo!=null)
 	{
 		return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\">"+
-		"</asp:Label><asp:DropDownList ID=\"ddl"+pro.PropertyName+"\" runat=\"server\"></asp:DropDownList>";
+		"</asp:Label><asp:DropDownList ID=\""+GetSearchControlName(pro)+"\" runat=\"server\"></asp:DropDownList>";
 	}
 	string type=pro.TypeName;
 	if(type=="string")
 	{
 		return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
-		"<asp:TextBox ID=\"txt"+pro.PropertyName+"\"runat=\"server\"></asp:TextBox>";
+		"<asp:TextBox ID=\""+GetSearchControlName(pro)+"\" runat=\"server\"></asp:TextBox>";
+	}
+	if(type=="DateTime")
+	{
+		return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
+		"<cc1:KimSoftWebCalendar ID=\""+GetSearchControlName(pro)+"\" runat="server" />";
+	}
+	if(type=="bool")
+	{
+		return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
+		"<cc1:KimSoftWebCalendar ID=\""+GetSearchControlName(pro)+"\" runat="server" />";
 	}
 	return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
-		"<asp:TextBox ID=\"txt"+pro.PropertyName+"\"runat=\"server\"></asp:TextBox>";
+		"<asp:DropDownList ID=\""+GetSearchControlName(pro)+"\" runat=\"server\"></asp:DropDownList>"";
+}
+
+/// <summary>
+/// 获取查询控件的控件名
+/// </summary>
+/// <param name="pro">属性</param>
+/// <returns></returns>
+private string GetSearchControlName(Property pro)
+{
+	if(pro.RelInfo!=null)
+	{
+		return "ddl"+pro.PropertyName;
+	}
+	if(type=="bool")
+	{
+		return "ddl"+pro.PropertyName;
+	}
+	return "txt"+pro.PropertyName;
 }
 
 /// <summary>

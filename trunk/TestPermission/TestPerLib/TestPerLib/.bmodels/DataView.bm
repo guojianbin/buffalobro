@@ -34,6 +34,14 @@ namespace <#=Entity.GetValue("Namespace")#>.DataView
 			_<#=GetFieldName(pro.PropertyName)#>=CreateDataItem(<#=GetParamString(pro)#>);
 			<#}#>
 		}
-		
+				/// <summary>
+        /// <#= Entity.Summary #>
+        /// </summary>
+        /// <param name="entityHandle"></param>
+		public <#=Entity.ClassName #>DataView()
+		:this(<#=Entity.DBName #>)
+		{
+
+		}
 	}
 }
