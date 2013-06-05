@@ -1,7 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+/** 
+ * @原作者:benben
+ * @创建时间:2012-2-19 09:02
+ * @链接:http://www.189works.com/article-43203-1.html
+ * @说明:.NET IL动态代理创建
+*/
 namespace Buffalo.Kernel.ClassProxyBuilder
 {
     /// <summary>

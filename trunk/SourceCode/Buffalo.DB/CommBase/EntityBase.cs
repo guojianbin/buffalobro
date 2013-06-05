@@ -62,21 +62,26 @@ namespace Buffalo.DB.CommBase
                 _dicUpdateProperty___ = new Dictionary<string, bool>();
 
             }
+            _dicUpdateProperty___[propertyName] = true;
+        }
+
+        /// <summary>
+        /// 通知映射属性已经被修改
+        /// </summary>
+        /// <param name="propertyName"></param>
+        protected internal void OnMapPropertyUpdated(string propertyName) 
+        {
             EntityInfoHandle entityInfo = GetEntityInfo();
             UpdatePropertyInfo updateInfo = entityInfo.GetUpdatePropertyInfo(propertyName);
-            if (updateInfo != null) 
+            if (updateInfo != null)
             {
-                string updatePropertyName=updateInfo.UpdateProperty(this);
+                string updatePropertyName = updateInfo.UpdateProperty(this);
                 if (!string.IsNullOrEmpty(updatePropertyName))
                 {
                     _dicUpdateProperty___[updatePropertyName] = true;
                 }
             }
-
-            _dicUpdateProperty___[propertyName] = true;
         }
-
-        
 
         
         /// <summary>
