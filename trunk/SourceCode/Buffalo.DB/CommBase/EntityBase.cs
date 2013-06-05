@@ -55,7 +55,7 @@ namespace Buffalo.DB.CommBase
         /// 通知属性已经被修改
         /// </summary>
         /// <param name="propertyName"></param>
-        protected void OnPropertyUpdated(string propertyName) 
+        protected internal void OnPropertyUpdated(string propertyName) 
         {
             if (_dicUpdateProperty___ == null) 
             {
@@ -147,7 +147,7 @@ namespace Buffalo.DB.CommBase
         /// 填充子类
         /// </summary>
         /// <param name="propertyName"></param>
-        protected void FillChild(string propertyName)
+        protected virtual void FillChild(string propertyName)
         {
             MappingContorl.FillChildList(propertyName, this);
         }
@@ -156,7 +156,7 @@ namespace Buffalo.DB.CommBase
         /// 填充父类
         /// </summary>
         /// <param name="propertyName"></param>
-        protected void FillParent(string propertyName)
+        protected virtual void FillParent(string propertyName)
         {
             MappingContorl.FillParent(propertyName, this);
         }

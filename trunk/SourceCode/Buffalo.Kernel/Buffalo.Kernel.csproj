@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrayTypeConvert.cs" />
+    <Compile Include="ClassProxyBuilder\DefaultProxyBuilder.cs" />
+    <Compile Include="ClassProxyBuilder\IInterceptor.cs" />
     <Compile Include="CommonMethods.cs" />
     <Compile Include="CommonRegular.cs" />
     <Compile Include="CSVReader.cs" />

@@ -277,6 +277,7 @@
     <Compile Include="PropertyAttributes\TableAttribute.cs" />
     <Compile Include="PropertyAttributes\TableRelationAttribute.cs" />
     <Compile Include="PropertyAttributes\ViewRelationTables.cs" />
+    <Compile Include="ProxyBuilder\EntityProxyBuilder.cs" />
     <Compile Include="QueryConditions\AbsCondition.cs" />
     <Compile Include="QueryConditions\CreateTableCondition.cs" />
     <Compile Include="QueryConditions\DeleteCondition.cs" />

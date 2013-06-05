@@ -212,6 +212,9 @@ namespace Buffalo.DB.DataFillers
         {
             Type senderType = sender.GetType();//发送者类型
             EntityInfoHandle senderInfo = EntityInfoManager.GetEntityHandle(senderType);//获取发送类的信息
+            EntityMappingInfo mappingInfo = senderInfo.MappingInfo[propertyName];
+
+            
             IList baseList = sender.GetBaseList();//获取上一次查询的结果集合
             if (baseList == null) 
             {
@@ -219,7 +222,7 @@ namespace Buffalo.DB.DataFillers
                 baseList.Add(sender);
             }
             Dictionary<string, ArrayList> dicElement = new Dictionary<string, ArrayList>();
-            EntityMappingInfo mappingInfo = senderInfo.MappingInfo[propertyName];
+            
             if (mappingInfo != null)
             {
                 EntityPropertyInfo senderHandle = mappingInfo.SourceProperty;//本类的主键属性句柄
@@ -238,7 +241,10 @@ namespace Buffalo.DB.DataFillers
         /// <param name="fatherInfo">父表对应类的信息</param>
         /// <param name="dicElement">元素</param>
         /// <param name="mappingInfo">当前父表对应属性的映射信息</param>
-        private static void FillParent(IList pks, EntityInfoHandle fatherInfo, Dictionary<string, ArrayList> dicElement, EntityMappingInfo mappingInfo, string propertyName, EntityBase sender)
+        private static void FillParent(IList pks, EntityInfoHandle fatherInfo,
+            Dictionary<string, ArrayList> dicElement, EntityMappingInfo mappingInfo,
+            string propertyName, EntityBase sender)
+
         {
             DBInfo db = fatherInfo.DBInfo;
             if (pks.Count>0)
