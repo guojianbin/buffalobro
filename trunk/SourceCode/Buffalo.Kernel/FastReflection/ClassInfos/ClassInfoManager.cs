@@ -74,7 +74,7 @@ namespace Buffalo.Kernel.FastReflection.ClassInfos
                 SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(fInf);
                 if (getHandle != null || setHandle != null)
                 {
-                    FieldInfoHandle fieldInfo = new FieldInfoHandle(type, getHandle, setHandle, fInf.FieldType, fInf.Name);
+                    FieldInfoHandle fieldInfo = new FieldInfoHandle(type, getHandle, setHandle, fInf.FieldType, fInf.Name,fInf);
                     dicField.Add(fInf.Name, fieldInfo);
                 }
             }

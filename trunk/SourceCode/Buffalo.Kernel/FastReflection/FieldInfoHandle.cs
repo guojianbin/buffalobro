@@ -12,7 +12,9 @@ namespace Buffalo.Kernel.FastReflection
 
         private SetFieldValueHandle _setHandle;
 
-        
+        private FieldInfo _belongFieldInfo;
+
+
         protected Type _fieldType;
         protected string _fieldName;
         protected Type _belong;
@@ -24,15 +26,24 @@ namespace Buffalo.Kernel.FastReflection
         /// <param name="setHandle">set委托</param>
         /// <param name="fieldType">字段数据类型</param>
         /// <param name="fieldName">字段名</param>
-        public FieldInfoHandle(Type belong, GetFieldValueHandle getHandle, SetFieldValueHandle setHandle, Type fieldType, string fieldName)
+        /// <param name="belongFieldInfo">所属的字段反射信息</param>
+        public FieldInfoHandle(Type belong, GetFieldValueHandle getHandle,
+            SetFieldValueHandle setHandle, Type fieldType, string fieldName, FieldInfo belongFieldInfo)
         {
             this._getHandle = getHandle;
             this._setHandle = setHandle;
             this._fieldType = fieldType;
             this._fieldName = fieldName;
             this._belong = belong;
+            this._belongFieldInfo = belongFieldInfo;
         }
-
+        /// <summary>
+        /// 所属的字段反射信息
+        /// </summary>
+        public FieldInfo BelongFieldInfo
+        {
+            get { return _belongFieldInfo; }
+        }
         /// <summary>
         /// 字段所属的类
         /// </summary>
@@ -177,7 +188,7 @@ namespace Buffalo.Kernel.FastReflection
                 }
                 GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(info);
                 SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(info);
-                FieldInfoHandle handle = new FieldInfoHandle(objType, getHandle, setHandle, info.FieldType, info.Name);
+                FieldInfoHandle handle = new FieldInfoHandle(objType, getHandle, setHandle, info.FieldType, info.Name,info);
                 lstRet.Add(handle);
                 dicExists[info.Name] = true;
             }

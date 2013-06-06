@@ -75,7 +75,7 @@ namespace Buffalo.Kernel
 
                         GetFieldValueHandle getHandle=FastFieldGetSet.GetGetValueHandle(finfo);
                         SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finfo);
-                        FieldInfoHandle handle = new FieldInfoHandle(objType, getHandle, setHandle, finfo.FieldType, finfo.Name);
+                        FieldInfoHandle handle = new FieldInfoHandle(objType, getHandle, setHandle, finfo.FieldType, finfo.Name, finfo);
                         ret.Add(handle);
                         
                     }
