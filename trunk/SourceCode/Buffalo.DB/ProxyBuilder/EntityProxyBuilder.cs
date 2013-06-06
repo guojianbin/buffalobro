@@ -141,7 +141,7 @@ namespace Buffalo.DB.ProxyBuilder
             MethodInfo methodInfo = propertyInfo.GetSetMethod();
             if (!methodInfo.IsVirtual && !methodInfo.IsAbstract)
             {
-                throw new Exception("请把属性:" + propertyInfo.Name + "设置为virtual");
+                throw new Exception("请把类:" + classType .FullName+ " 的属性:" + propertyInfo.Name + " 设置为virtual");
             }
 
            

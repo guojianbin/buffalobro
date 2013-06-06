@@ -109,7 +109,7 @@ namespace Buffalo.DB.DataFillers
                     IList baseList = new ArrayList();//缓存的父列表
                     while (reader.Read())
                     {
-                        object obj = childInfo.CreateInstance();
+                        object obj = childInfo.CreateProxyInstance();
                         string fk = reader[mappingInfo.TargetProperty.ParamName].ToString();
                         List<object> curElementObjs = null;
 
@@ -309,7 +309,7 @@ namespace Buffalo.DB.DataFillers
                 foreach (object obj in curList)
                 {
                     //实例化父表元素对应类，并赋到集合里边以作初值
-                    object newObj = classInfo.CreateInstance();
+                    object newObj = classInfo.CreateProxyInstance();
                     mappingInfo.SetValue(obj, newObj);
 
                     //获取对应字段的值以返回做查询条件

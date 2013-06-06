@@ -114,7 +114,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
             
             if (objRet == null)
             {
-                objRet = Activator.CreateInstance(_entityInfo.EntityType) as EntityBase;
+                objRet = _entityInfo.CreateProxyInstance() as EntityBase;
                 
                 foreach (AliasReaderMapping readMapping in _lstReaderMapping)
                 {

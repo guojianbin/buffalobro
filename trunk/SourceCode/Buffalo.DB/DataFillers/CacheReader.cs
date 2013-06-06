@@ -154,7 +154,7 @@ namespace Buffalo.DB.DataFillers
             if (reader != null && !reader.IsClosed)
             {
                 List<EntityPropertyInfo> lstParamNames = GenerateCache(reader, entityInfo);
-                T ret = (T)entityInfo.CreateInstance();//实例化对象
+                T ret = (T)entityInfo.CreateProxyInstance();//实例化对象
                 FillObjectFromReader(reader, lstParamNames, ret, entityInfo.DBInfo);
                 return ret;
             }
@@ -172,7 +172,7 @@ namespace Buffalo.DB.DataFillers
             if (reader != null && !reader.IsClosed)
             {
                 List<EntityPropertyInfo> lstParamNames = GenerateCache(reader, entityInfo);
-                T ret = (T)entityInfo.CreateInstance();//实例化对象
+                T ret = (T)entityInfo.CreateProxyInstance();//实例化对象
                 FillObjectFromReader(reader, lstParamNames, ret, entityInfo.DBInfo);
                 return ret;
             }
@@ -205,7 +205,7 @@ namespace Buffalo.DB.DataFillers
                 List<EntityPropertyInfo> lstParamNames = GenerateCache(reader, entityInfo);
                 while (reader.Read())
                 {
-                    T obj = (T)entityInfo.CreateInstance();
+                    T obj = (T)entityInfo.CreateProxyInstance();
                     //T obj = (T)Activator.CreateInstance(type);//实例化对象
                     FillObjectFromReader(reader, lstParamNames, obj, entityInfo.DBInfo);
                     obj.SetBaseList(retLst);
@@ -253,7 +253,7 @@ namespace Buffalo.DB.DataFillers
                 
                 while (reader.Read())
                 {
-                    T obj = (T)entityInfo.CreateInstance();
+                    T obj = (T)entityInfo.CreateProxyInstance();
                     int curSize = 0;//获取当前值大小
                     FillObjectFromReader(reader, lstParamNames, obj, out curSize);
                     totleSize += curSize;//加到当前记录总大小里边

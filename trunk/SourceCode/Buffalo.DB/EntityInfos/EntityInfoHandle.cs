@@ -17,14 +17,15 @@ namespace Buffalo.DB.EntityInfos
     public class EntityInfoHandle 
     {
         
-        private Type entityType;
-        private string tableName;
+        private Type _entityType;
+        private string _tableName;
         //private string connectionKey;
-        private CreateInstanceHandler createInstanceHandler;
+        private CreateInstanceHandler _createInstanceHandler;
         private PropertyInfoCollection _propertyInfoHandles;
         private MappingInfoCollection _mappingInfoHandles;
         private List<EntityPropertyInfo> _primaryProperty;//主属性
         private DBInfo _dbInfo;
+        private CreateInstanceHandler _createProxyInstanceHandler;
         /// <summary>
         /// 类的信息
         /// </summary>
@@ -37,10 +38,10 @@ namespace Buffalo.DB.EntityInfos
         internal EntityInfoHandle(Type entityType, CreateInstanceHandler createInstanceHandler, 
              string tableName,  DBInfo db) 
         {
-            this.entityType = entityType;
-            this.createInstanceHandler = createInstanceHandler;
+            this._entityType = entityType;
+            this._createInstanceHandler = createInstanceHandler;
             
-            this.tableName = tableName;
+            this._tableName = tableName;
             //this.connectionKey = connectionKey;
             this._dbInfo = db;
         }
@@ -64,7 +65,8 @@ namespace Buffalo.DB.EntityInfos
         /// </summary>
         internal void InitProxyType(EntityProxyBuilder proxyBuilder) 
         {
-            _proxyType = proxyBuilder.CreateProxyType(entityType);
+            _proxyType = proxyBuilder.CreateProxyType(_entityType);
+            _createProxyInstanceHandler = FastInvoke.GetInstanceCreator(_proxyType);
         }
 
         /// <summary>
@@ -85,7 +87,7 @@ namespace Buffalo.DB.EntityInfos
         {
             get 
             {
-                return entityType;
+                return _entityType;
             }
         }
 
@@ -96,7 +98,7 @@ namespace Buffalo.DB.EntityInfos
         {
             get
             {
-                return tableName;
+                return _tableName;
             }
         }
         ///// <summary>
@@ -153,13 +155,24 @@ namespace Buffalo.DB.EntityInfos
         /// <returns></returns>
         public object CreateInstance() 
         {
-            if (createInstanceHandler != null) 
+            if (_createInstanceHandler != null) 
             {
-                return createInstanceHandler.Invoke();
+                return _createInstanceHandler.Invoke();
             }
             return null;
         }
-
+        /// <summary>
+        /// 返回此类型的代理类实例
+        /// </summary>
+        /// <returns></returns>
+        public object CreateProxyInstance()
+        {
+            if (_createProxyInstanceHandler != null)
+            {
+                return _createProxyInstanceHandler.Invoke();
+            }
+            return null;
+        }
         /// <summary>
         /// 主属性
         /// </summary>
