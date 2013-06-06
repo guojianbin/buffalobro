@@ -15,6 +15,7 @@ using Buffalo.DB.CommBase.BusinessBases;
 using System.Xml;
 using System.IO;
 using System.Data;
+using Buffalo.DB.ProxyBuilder;
 
 
 namespace Buffalo.DB.EntityInfos
@@ -316,19 +317,29 @@ namespace Buffalo.DB.EntityInfos
             }
         }
 
+        
+
         /// <summary>
         /// 初始化所有实体
         /// </summary>
         /// <param name="dicConfigs"></param>
         internal static void InitAllEntity(Dictionary<string, EntityConfigInfo> dicConfigs) 
         {
+            Queue<EntityInfoHandle> queEntitys = new Queue<EntityInfoHandle>();
             foreach (KeyValuePair<string, EntityConfigInfo> item in dicConfigs) 
             {
                 EntityConfigInfo info = item.Value;
                 if (info.Type != null)
                 {
-                    InitEntityPropertyInfos(info.Type, dicConfigs);
+                    queEntitys.Enqueue(InitEntityPropertyInfos(info.Type, dicConfigs));
                 }
+            }
+            EntityProxyBuilder proxyBuilder = new EntityProxyBuilder();
+            while (queEntitys.Count > 0) 
+            {
+                EntityInfoHandle handle = queEntitys.Dequeue();
+                handle.InitProxyType(proxyBuilder);
+                _dicClass[handle.ProxyType.FullName] = handle;
             }
         }
 
@@ -358,12 +369,12 @@ namespace Buffalo.DB.EntityInfos
         /// </summary>
         /// <param name="type">类型</param>
         /// <returns>如果已经初始化过侧返回false</returns>
-        private static void InitEntityPropertyInfos(Type type,
+        private static EntityInfoHandle InitEntityPropertyInfos(Type type,
             Dictionary<string, EntityConfigInfo> dicConfigs)
         {
             if (type == null)
             {
-                return;
+                return null;
             }
 
 
@@ -412,7 +423,10 @@ namespace Buffalo.DB.EntityInfos
                     //SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
                     if (finf.HasGetHandle || finf.HasSetHandle)
                     {
-                        EntityPropertyInfo entityProperty = new EntityPropertyInfo(classInfo, finf.GetHandle, finf.SetHandle, ep, finf.FieldType, finf.FieldName);
+                        PropertyInfo pinfo = type.GetProperty(ep.PropertyName);
+                        EntityPropertyInfo entityProperty = new EntityPropertyInfo(
+                            classInfo, finf.GetHandle,finf.SetHandle, ep, finf.FieldType, finf.FieldName,
+                            finf.BelongFieldInfo, pinfo);
                         dicPropertys.Add(proName, entityProperty);
                         dicNotFoundParam.Remove(finf.FieldName);
                     }
@@ -427,7 +441,10 @@ namespace Buffalo.DB.EntityInfos
                         tableMappingAtt.SetEntity(type, targetType);
                         //GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
                         //SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
-                        EntityMappingInfo entityMappingInfo = new EntityMappingInfo(type, finf.GetHandle, finf.SetHandle, tableMappingAtt, finf.FieldName, finf.FieldType);
+                        PropertyInfo pinfo = type.GetProperty(tableMappingAtt.PropertyName);
+                        EntityMappingInfo entityMappingInfo = new EntityMappingInfo(
+                            type, finf.GetHandle, finf.SetHandle, tableMappingAtt,
+                            finf.FieldName, finf.FieldType, finf.BelongFieldInfo, pinfo);
                         dicMapping.Add(tableMappingAtt.PropertyName, entityMappingInfo);
                         dicNotFoundRelation.Remove(finf.FieldName);
                     }
@@ -463,6 +480,7 @@ namespace Buffalo.DB.EntityInfos
             classInfo.SetInfoHandles(dicPropertys, dicMapping);
             FillAttributeInfo(type, classInfo);
             _dicClass[fullName] = classInfo;
+            return classInfo;
         }
 
         /// <summary>

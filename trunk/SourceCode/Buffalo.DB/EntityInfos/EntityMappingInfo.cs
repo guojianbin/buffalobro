@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Buffalo.DB.PropertyAttributes;
 using Buffalo.Kernel.FastReflection;
+using System.Reflection;
 
 namespace Buffalo.DB.EntityInfos
 {
@@ -13,7 +14,7 @@ namespace Buffalo.DB.EntityInfos
     {
         private TableRelationAttribute _mappingInfo;
 
-        
+        private PropertyInfo _belongPropertyInfo;
         /// <summary>
         /// 创建属性的信息类
         /// </summary>
@@ -24,10 +25,20 @@ namespace Buffalo.DB.EntityInfos
         /// <param name="fieldName">属性名</param>
         /// <param name="fieldType">属性类型</param>
         public EntityMappingInfo(Type belong, GetFieldValueHandle getHandle, SetFieldValueHandle setHandle,
-            TableRelationAttribute mappingInfo,string fieldName, Type fieldType)
-            : base(belong, getHandle, setHandle, fieldType, fieldName)
+            TableRelationAttribute mappingInfo, string fieldName, Type fieldType, FieldInfo belongFieldInfo, 
+            PropertyInfo belongPropertyInfo)
+
+            : base(belong, getHandle, setHandle, fieldType, fieldName, belongFieldInfo)
         {
             this._mappingInfo = mappingInfo;
+            this._belongPropertyInfo = belongPropertyInfo;
+        }
+        /// <summary>
+        /// 所属的属性信息
+        /// </summary>
+        public PropertyInfo BelongPropertyInfo
+        {
+            get { return _belongPropertyInfo; }
         }
         /// <summary>
         /// 映射信息
@@ -44,7 +55,8 @@ namespace Buffalo.DB.EntityInfos
         /// <returns></returns>
         public EntityMappingInfo Copy(Type belong) 
         {
-            EntityMappingInfo info = new EntityMappingInfo(belong, GetHandle, SetHandle, _mappingInfo, _fieldName, _fieldType);
+            EntityMappingInfo info = new EntityMappingInfo(
+                belong, GetHandle, SetHandle, _mappingInfo, _fieldName, _fieldType,BelongFieldInfo,BelongPropertyInfo);
             return info;
         }
 

@@ -4,6 +4,7 @@ using System.Text;
 using Buffalo.Kernel.FastReflection;
 using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.CommBase;
+using Buffalo.DB.ProxyBuilder;
 
 
 namespace Buffalo.DB.EntityInfos
@@ -56,6 +57,14 @@ namespace Buffalo.DB.EntityInfos
             this._propertyInfoHandles = new PropertyInfoCollection(propertyInfoHandles);
             this._mappingInfoHandles = new MappingInfoCollection(mappingInfoHandles);
             
+        }
+
+        /// <summary>
+        /// 初始化代理类
+        /// </summary>
+        internal void InitProxyType(EntityProxyBuilder proxyBuilder) 
+        {
+            _proxyType = proxyBuilder.CreateProxyType(entityType);
         }
 
         /// <summary>
@@ -124,6 +133,18 @@ namespace Buffalo.DB.EntityInfos
             }
         }
 
+        private Type _proxyType;
+        /// <summary>
+        /// 代理类
+        /// </summary>
+        public Type ProxyType
+        {
+            get 
+            { 
+
+                return _proxyType; 
+            }
+        }
         
 
         /// <summary>

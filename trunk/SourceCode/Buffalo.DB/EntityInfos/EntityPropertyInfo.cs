@@ -6,6 +6,7 @@ using System.Data;
 using Buffalo.DB.DataBaseAdapter;
 using Buffalo.Kernel.FastReflection;
 using Buffalo.Kernel.Commons;
+using System.Reflection;
 
 namespace Buffalo.DB.EntityInfos
 {
@@ -17,6 +18,8 @@ namespace Buffalo.DB.EntityInfos
         private EntityParam _paramInfo;
         private bool _readOnly;
         private EntityInfoHandle _belong;
+        private PropertyInfo _belongPropertyInfo;
+
 
         /// <summary>
         /// 创建属性的信息类
@@ -29,12 +32,21 @@ namespace Buffalo.DB.EntityInfos
         /// <param name="fieldName">字段名</param>
         /// <param name="sourceType">源字段类型</param>
         public EntityPropertyInfo(EntityInfoHandle belong, GetFieldValueHandle getHandle, SetFieldValueHandle setHandle,
-            EntityParam paramInfo, Type fieldType, string fieldName)
-            : base(belong.EntityType, getHandle, setHandle, fieldType, fieldName)
+            EntityParam paramInfo, Type fieldType, string fieldName, FieldInfo belongFieldInfo, PropertyInfo belongPropertyInfo)
+            : base(belong.EntityType, getHandle, setHandle, fieldType, fieldName, belongFieldInfo)
         {
             paramInfo.SqlType = belong.DBInfo.CurrentDbAdapter.ToCurrentDbType(paramInfo.SqlType);//转换成本数据库支持的数据类型
             this._paramInfo = paramInfo;
             _belong = belong;
+            _belongPropertyInfo = belongPropertyInfo;
+        }
+
+        /// <summary>
+        /// 所属的属性信息
+        /// </summary>
+        public PropertyInfo BelongPropertyInfo
+        {
+            get { return _belongPropertyInfo; }
         }
 
         /// <summary>
@@ -65,7 +77,7 @@ namespace Buffalo.DB.EntityInfos
         {
 
             EntityPropertyInfo info = new EntityPropertyInfo(belong, GetHandle,
-                SetHandle, _paramInfo, _fieldType, _fieldName);
+                SetHandle, _paramInfo, _fieldType, _fieldName,BelongFieldInfo,BelongPropertyInfo);
             return info;
         }
 
