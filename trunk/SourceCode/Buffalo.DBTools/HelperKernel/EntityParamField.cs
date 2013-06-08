@@ -163,7 +163,7 @@ namespace Buffalo.DBTools.HelperKernel
                 source.Add(spaces + "/// <summary>");
                 source.Add(spaces + "/// " + Summary);
                 source.Add(spaces + "/// </summary>");
-                string propertyText = spaces + "public " + TypeName + " " + PropertyName;
+                string propertyText = spaces + "public virtual " + TypeName + " " + PropertyName;
                 source.Add(propertyText);
                 source.Add(spaces + "{");
                 source.Add(spaces + "    get");
@@ -173,7 +173,7 @@ namespace Buffalo.DBTools.HelperKernel
                 source.Add(spaces + "    set");
                 source.Add(spaces + "    {");
                 source.Add(spaces + "        " + FieldName + "=value;");
-                source.Add(spaces + "        OnPropertyUpdated(\"" + PropertyName + "\");");
+                //source.Add(spaces + "        OnPropertyUpdated(\"" + PropertyName + "\");");
                 source.Add(spaces + "    }");
                 source.Add(spaces + "}");
             }

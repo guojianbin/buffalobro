@@ -25,15 +25,20 @@ namespace Buffalo.DB.ProxyBuilder
         AssemblyBuilder _assemblyBuilder;
         ModuleBuilder _moduleBuilder;
         string pnamespace = null;
-         MethodInfo _updateMethod = null;
-            MethodInfo _mapupdateMethod = null;
+        MethodInfo _updateMethod = null;
+        MethodInfo _mapupdateMethod = null;
         MethodInfo _fillChildMethod = null;
-            MethodInfo _fillParent = null;
-
+        MethodInfo _fillParent = null;
+        MethodInfo _getTypeMethod=null;
+        MethodInfo _getBaseTypeMethod = null;
+        /// <summary>
+        /// 接口类型
+        /// </summary>
+        private readonly static Type[] _entityInterface = new Type[] { typeof(IEntityProxy) };
         /// <summary>
         /// 代理建造类
         /// </summary>
-        public EntityProxyBuilder() 
+        public EntityProxyBuilder()
         {
             pnamespace = "BuffaloProxyBuilder";
             _assemblyName = new AssemblyName(pnamespace);
@@ -41,12 +46,15 @@ namespace Buffalo.DB.ProxyBuilder
                                                                             AssemblyBuilderAccess.RunAndSave);
             _moduleBuilder = _assemblyBuilder.DefineDynamicModule(pnamespace);
 
-            Type classType=typeof(EntityBase);
+            Type classType = typeof(EntityBase);
+            Type objectType = typeof(object);
+            Type typeType = typeof(Type);
             _updateMethod = classType.GetMethod("OnPropertyUpdated", FastValueGetSet.AllBindingFlags);
             _mapupdateMethod = classType.GetMethod("OnMapPropertyUpdated", FastValueGetSet.AllBindingFlags);
             _fillChildMethod = classType.GetMethod("FillChild", FastValueGetSet.AllBindingFlags);
-             _fillParent = classType.GetMethod("FillParent", FastValueGetSet.AllBindingFlags);
-
+            _fillParent = classType.GetMethod("FillParent", FastValueGetSet.AllBindingFlags);
+            _getTypeMethod = objectType.GetMethod("GetType", FastValueGetSet.AllBindingFlags);
+            _getBaseTypeMethod = typeType.GetMethod("get_BaseType", FastValueGetSet.AllBindingFlags);
         }
 
         /// <summary>
@@ -66,6 +74,7 @@ namespace Buffalo.DB.ProxyBuilder
             //_assemblyBuilder.Save("bac.dll");
             return aopType;
         }
+        
         /// <summary>
         /// 建造类
         /// </summary>
@@ -77,7 +86,8 @@ namespace Buffalo.DB.ProxyBuilder
             //定义类型
             TypeBuilder typeBuilder = moduleBuilder.DefineType(className,
                                                        TypeAttributes.Public | TypeAttributes.Sealed | TypeAttributes.Class,
-                                                       classType);
+                                                       classType, _entityInterface);
+            
             ////定义字段 _inspector
             //FieldBuilder inspectorFieldBuilder = typeBuilder.DefineField("_inspector", typeof(IInterceptor),
             //                                                    FieldAttributes.Public | FieldAttributes.InitOnly);
@@ -86,9 +96,33 @@ namespace Buffalo.DB.ProxyBuilder
 
             //构造方法
             BuildMethod(classType, typeBuilder);
+            BuildGetEntityType(typeBuilder);
             Type aopType = typeBuilder.CreateType();
             return aopType;
         }
+
+        static Type[] _getEntityTypeParameterTypes = new Type[] { };
+        /// <summary>
+        /// 创建获取实体类型的方法
+        /// </summary>
+        /// <param name="typeBuilder"></param>
+        private void BuildGetEntityType(TypeBuilder typeBuilder) 
+        {
+            
+            MethodBuilder methodBuilder = typeBuilder.DefineMethod("GetEntityType",
+                                                         MethodAttributes.Public | MethodAttributes.Virtual
+                                                         , typeof(Type)
+                                                         , _getEntityTypeParameterTypes);
+            ILGenerator il = methodBuilder.GetILGenerator();
+            LocalBuilder retVal = il.DeclareLocal(typeof(Type)); //result
+            il.Emit(OpCodes.Ldarg_0);//this
+            il.Emit(OpCodes.Call, _getTypeMethod);
+            il.Emit(OpCodes.Callvirt, _getBaseTypeMethod);
+            //il.Emit(OpCodes.Stloc, retVal);
+            //il.Emit(OpCodes.Ldloc, retVal);
+            il.Emit(OpCodes.Ret);
+        }
+
         /// <summary>
         /// 建方法
         /// </summary>
@@ -110,7 +144,7 @@ namespace Buffalo.DB.ProxyBuilder
                 FieldInfo finfo = mInfo.BelongFieldInfo;
                 if (mInfo.IsParent)
                 {
-
+                    
                     BuildEmit(classType, mInfo.BelongPropertyInfo, typeBuilder, _mapupdateMethod);
                     BuildMapEmit(classType, mInfo.BelongPropertyInfo, finfo, typeBuilder, _fillParent);
                 }
@@ -241,29 +275,33 @@ namespace Buffalo.DB.ProxyBuilder
 
             ILGenerator il = methodBuilder.GetILGenerator();
 
-            il.DeclareLocal(typeof(object)); //result 索引为0
-
+            LocalBuilder result = il.DeclareLocal(typeof(object)); //result 索引为0
             //if(字段==null){加载信息}
 
-            il.Emit(OpCodes.Ldarg_0);//this
-            
-            il.Emit(OpCodes.Ldfld, finfo);//获取字段值
-            il.Emit(OpCodes.Ldnull);//把null放到第二个位置
-            il.Emit(OpCodes.Ceq);//比较相等(相等则返回1，不想等则返回0)
-            il.Emit(OpCodes.Ldc_I4_0);//把数值0推送到栈
-            il.Emit(OpCodes.Ceq);//比较相等(相等则返回1，不想等则返回0)
-            //il.Emit(OpCodes.Stloc_1);
-            //il.Emit(OpCodes.Ldloc_1);
+            if (finfo.IsFamily || finfo.IsPublic)
+            {
+                Label falseLabel = il.DefineLabel();//不为null时候的跳转标签
+                il.Emit(OpCodes.Ldarg_0);//this
 
-            Label falseLabel = il.DefineLabel();//不为null时候的跳转标签
-            il.Emit(OpCodes.Brtrue_S, falseLabel);
-
-            //调用填充函数
-            il.Emit(OpCodes.Ldarg_0);//this
-            il.Emit(OpCodes.Ldstr, propertyInfo.Name);//参数propertyName
-            il.Emit(OpCodes.Callvirt, updateMethod);//调用updateMethod
-
-            il.MarkLabel(falseLabel);
+                il.Emit(OpCodes.Ldfld, finfo);//获取字段值
+                il.Emit(OpCodes.Ldnull);//把null放到第二个位置
+                il.Emit(OpCodes.Ceq);//比较相等(相等则返回1，不想等则返回0)
+                il.Emit(OpCodes.Ldc_I4_0);//把数值0推送到栈
+                il.Emit(OpCodes.Ceq);//比较相等(相等则返回1，不想等则返回0)
+                il.Emit(OpCodes.Brtrue_S, falseLabel);
+                //调用填充函数
+                il.Emit(OpCodes.Ldarg_0);//this
+                il.Emit(OpCodes.Ldstr, propertyInfo.Name);//参数propertyName
+                il.Emit(OpCodes.Callvirt, updateMethod);//调用updateMethod
+                il.MarkLabel(falseLabel);
+            }
+            else 
+            {
+                //调用填充函数
+                il.Emit(OpCodes.Ldarg_0);//this
+                il.Emit(OpCodes.Ldstr, propertyInfo.Name);//参数propertyName
+                il.Emit(OpCodes.Callvirt, updateMethod);//调用updateMethod
+            }
 
             //Call methodInfo
             il.Emit(OpCodes.Ldarg_0);
@@ -282,14 +320,14 @@ namespace Buffalo.DB.ProxyBuilder
                 il.Emit(OpCodes.Box, methodInfo.ReturnType);//对值类型装箱
             }
 
-            il.Emit(OpCodes.Stloc_0);
+            il.Emit(OpCodes.Stloc, result);
 
-            
+
 
             //result
             if (hasResult)
             {
-                il.Emit(OpCodes.Ldloc_0);//非void取出局部变量1 result
+                il.Emit(OpCodes.Ldloc, result);//非void取出局部变量1 result
                 if (methodInfo.ReturnType.IsValueType)
                 {
                     il.Emit(OpCodes.Unbox_Any, methodInfo.ReturnType);//对值类型拆箱
@@ -297,6 +335,8 @@ namespace Buffalo.DB.ProxyBuilder
             }
             il.Emit(OpCodes.Ret);
         }
+
+        
 
         private void BuildCtor(Type classType,  TypeBuilder typeBuilder)
         {

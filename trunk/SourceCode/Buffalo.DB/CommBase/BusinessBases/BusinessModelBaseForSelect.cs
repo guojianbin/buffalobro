@@ -125,6 +125,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
             //ret = entityDao.GetUnique(lstScope);
             lstScope.PageContent.PageSize = 1;
             lstScope.PageContent.CurrentPage = 0;
+            lstScope.PageContent.IsFillTotleRecords = false;
             List<T> lst = SelectList(lstScope);
             if (lst.Count > 0) 
             {

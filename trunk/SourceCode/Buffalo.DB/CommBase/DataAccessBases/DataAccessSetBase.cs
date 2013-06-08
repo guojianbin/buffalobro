@@ -416,36 +416,38 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                         sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
                         sqlValues.Append(",");
                         sqlValues.Append(prm.ValueName);
-                        
+
                         continue;
                     }
                 }
-                else if (setList != null)
+                else
                 {
-
                     BQLValueItem bvalue = null;
-                    if (setList.TryGetValue(info.PropertyName, out bvalue))
+                    if (setList != null && setList.TryGetValue(info.PropertyName, out bvalue))
                     {
-                        
                         sqlParams.Append(",");
                         sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
                         sqlValues.Append(",");
                         sqlValues.Append(bvalue.DisplayValue(keyinfo));
                         continue;
                     }
-                    
-                }
-                else if (curValue == null)
-                {
-                    continue;
+                    else if (curValue == null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        DBParameter prmValue = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
+                        sqlParams.Append(",");
+                        sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
+                        sqlValues.Append(",");
+                        sqlValues.Append(prmValue.ValueName);
+                    }
                 }
                 
+                
 
-                DBParameter prmValue = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
-                sqlParams.Append(",");
-                sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
-                sqlValues.Append(",");
-                sqlValues.Append(prmValue.ValueName);
+                
                 
             }
             if (sqlParams.Length > 0)

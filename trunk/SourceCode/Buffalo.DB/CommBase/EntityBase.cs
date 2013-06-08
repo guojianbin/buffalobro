@@ -71,6 +71,7 @@ namespace Buffalo.DB.CommBase
         /// <param name="propertyName"></param>
         protected internal void OnMapPropertyUpdated(string propertyName) 
         {
+
             EntityInfoHandle entityInfo = GetEntityInfo();
             UpdatePropertyInfo updateInfo = entityInfo.GetUpdatePropertyInfo(propertyName);
             if (updateInfo != null)
@@ -78,7 +79,7 @@ namespace Buffalo.DB.CommBase
                 string updatePropertyName = updateInfo.UpdateProperty(this);
                 if (!string.IsNullOrEmpty(updatePropertyName))
                 {
-                    _dicUpdateProperty___[updatePropertyName] = true;
+                    OnPropertyUpdated(updatePropertyName);
                 }
             }
         }
@@ -106,7 +107,7 @@ namespace Buffalo.DB.CommBase
         {
             if (_thisInfo == null)
             {
-                _thisInfo = EntityInfoManager.GetEntityHandle(this.GetType());
+                _thisInfo = EntityInfoManager.GetEntityHandle(CH.GetRealType(this));
             }
             return _thisInfo;
         }
@@ -188,7 +189,7 @@ namespace Buffalo.DB.CommBase
         /// <param name="reader"></param>
         public void LoadFromReader(IDataReader reader)
         {
-            EntityInfoHandle entityInfo = EntityInfoManager.GetEntityHandle(this.GetType());
+            EntityInfoHandle entityInfo = EntityInfoManager.GetEntityHandle(CH.GetRealType(this));
             CacheReader.FillInfoFromReader(reader, entityInfo, this);
         }
 

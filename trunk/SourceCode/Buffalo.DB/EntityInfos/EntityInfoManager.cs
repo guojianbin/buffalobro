@@ -35,6 +35,7 @@ namespace Buffalo.DB.EntityInfos
         /// <returns></returns>
         public static EntityInfoHandle GetEntityHandle(Type type,bool isThrowException)
         {
+            
             string fullName = type.FullName;
             EntityInfoHandle classHandle = null;
 

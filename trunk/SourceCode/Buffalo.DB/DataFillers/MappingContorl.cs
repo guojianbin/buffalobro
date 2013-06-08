@@ -55,17 +55,24 @@ namespace Buffalo.DB.DataFillers
         /// <param name="sender">发送者</param>
         public static void FillChildList(string propertyName, EntityBase sender)
         {
-            Type senderType = sender.GetType();//发送类的类型
+
+            Type senderType = CH.GetRealType(sender);//发送类的类型
+            EntityInfoHandle senderHandle = EntityInfoManager.GetEntityHandle(senderType);//获取发送类的信息
+            EntityMappingInfo mappingInfo = senderHandle.MappingInfo[propertyName];
+            if (mappingInfo.GetValue(sender) != null) 
+            {
+                return;
+            }
             Dictionary<string, List<object>> dicElement = new Dictionary<string, List<object>>();//根据
             ///获取本属性的映射信息
-            EntityInfoHandle senderHandle = EntityInfoManager.GetEntityHandle(senderType);//获取发送类的信息
+            
             IList baseList = sender.GetBaseList();
             if (baseList == null)
             {
                 baseList = new ArrayList();
                 baseList.Add(sender);
             }
-            EntityMappingInfo mappingInfo = senderHandle.MappingInfo[propertyName];
+            
             if (mappingInfo != null)
             {
                 EntityPropertyInfo pkHandle = mappingInfo.SourceProperty;//获取实体主键属性句柄
@@ -210,11 +217,14 @@ namespace Buffalo.DB.DataFillers
         /// <param name="sender">发送者</param>
         public static void FillParent(string propertyName, EntityBase sender)
         {
-            Type senderType = sender.GetType();//发送者类型
+            Type senderType =CH.GetRealType(sender);//发送者类型
             EntityInfoHandle senderInfo = EntityInfoManager.GetEntityHandle(senderType);//获取发送类的信息
             EntityMappingInfo mappingInfo = senderInfo.MappingInfo[propertyName];
 
-            
+            if (mappingInfo.GetValue(sender) != null) 
+            {
+                return;
+            }
             IList baseList = sender.GetBaseList();//获取上一次查询的结果集合
             if (baseList == null) 
             {
