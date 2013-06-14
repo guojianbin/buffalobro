@@ -41,19 +41,6 @@
             this.tbEntity = new System.Windows.Forms.TabControl();
             this.tpEntity = new System.Windows.Forms.TabPage();
             this.gvField = new System.Windows.Forms.DataGridView();
-            this.tpMapping = new System.Windows.Forms.TabPage();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.gvMapping = new System.Windows.Forms.DataGridView();
-            this.ColSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ColField = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPropertyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColTarget = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColIsToDB = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnGenCode = new System.Windows.Forms.Button();
             this.ColChecked = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ColFName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -64,6 +51,19 @@
             this.ColLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColPropertyType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColReadOnly = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.tpMapping = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.gvMapping = new System.Windows.Forms.DataGridView();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnGenCode = new System.Windows.Forms.Button();
+            this.ColSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColField = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPropertyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColTarget = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColIsToDB = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -214,125 +214,6 @@
             this.gvField.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvField_CellValueChanged);
             this.gvField.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.gvField_CellFormatting);
             // 
-            // tpMapping
-            // 
-            this.tpMapping.Controls.Add(this.panel4);
-            this.tpMapping.Location = new System.Drawing.Point(4, 22);
-            this.tpMapping.Name = "tpMapping";
-            this.tpMapping.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMapping.Size = new System.Drawing.Size(937, 413);
-            this.tpMapping.TabIndex = 1;
-            this.tpMapping.Text = "实体映射";
-            this.tpMapping.UseVisualStyleBackColor = true;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.gvMapping);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 3);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(931, 407);
-            this.panel4.TabIndex = 1;
-            // 
-            // gvMapping
-            // 
-            this.gvMapping.AllowUserToAddRows = false;
-            this.gvMapping.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gvMapping.BackgroundColor = System.Drawing.Color.White;
-            this.gvMapping.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gvMapping.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColSelect,
-            this.ColField,
-            this.colPropertyName,
-            this.colPType,
-            this.ColSource,
-            this.ColTarget,
-            this.ColIsToDB});
-            this.gvMapping.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gvMapping.Location = new System.Drawing.Point(0, 0);
-            this.gvMapping.MultiSelect = false;
-            this.gvMapping.Name = "gvMapping";
-            this.gvMapping.RowHeadersVisible = false;
-            this.gvMapping.RowTemplate.Height = 23;
-            this.gvMapping.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gvMapping.Size = new System.Drawing.Size(931, 407);
-            this.gvMapping.TabIndex = 1;
-            // 
-            // ColSelect
-            // 
-            this.ColSelect.DataPropertyName = "IsGenerate";
-            this.ColSelect.HeaderText = "选中";
-            this.ColSelect.Name = "ColSelect";
-            this.ColSelect.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColSelect.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // ColField
-            // 
-            this.ColField.DataPropertyName = "FieldName";
-            this.ColField.HeaderText = "变量名";
-            this.ColField.Name = "ColField";
-            // 
-            // colPropertyName
-            // 
-            this.colPropertyName.DataPropertyName = "PropertyName";
-            this.colPropertyName.HeaderText = "属性名";
-            this.colPropertyName.Name = "colPropertyName";
-            // 
-            // colPType
-            // 
-            this.colPType.DataPropertyName = "FieldType";
-            this.colPType.HeaderText = "变量类型";
-            this.colPType.Name = "colPType";
-            // 
-            // ColSource
-            // 
-            this.ColSource.DataPropertyName = "SourceProperty";
-            this.ColSource.HeaderText = "源实体属性";
-            this.ColSource.Name = "ColSource";
-            // 
-            // ColTarget
-            // 
-            this.ColTarget.DataPropertyName = "TargetProperty";
-            this.ColTarget.HeaderText = "目标实体属性";
-            this.ColTarget.Name = "ColTarget";
-            // 
-            // ColIsToDB
-            // 
-            this.ColIsToDB.DataPropertyName = "IsToDB";
-            this.ColIsToDB.HeaderText = "生成约束";
-            this.ColIsToDB.Name = "ColIsToDB";
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.btnClose);
-            this.panel3.Controls.Add(this.btnGenCode);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(3, 456);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(945, 36);
-            this.panel3.TabIndex = 25;
-            // 
-            // btnClose
-            // 
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(861, 6);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 24;
-            this.btnClose.Text = "关闭";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // btnGenCode
-            // 
-            this.btnGenCode.Location = new System.Drawing.Point(780, 6);
-            this.btnGenCode.Name = "btnGenCode";
-            this.btnGenCode.Size = new System.Drawing.Size(75, 23);
-            this.btnGenCode.TabIndex = 22;
-            this.btnGenCode.Text = "生成类";
-            this.btnGenCode.UseVisualStyleBackColor = true;
-            this.btnGenCode.Click += new System.EventHandler(this.btnGenCode_Click);
-            // 
             // ColChecked
             // 
             this.ColChecked.DataPropertyName = "IsGenerate";
@@ -399,6 +280,125 @@
             this.ColReadOnly.Name = "ColReadOnly";
             this.ColReadOnly.Width = 50;
             // 
+            // tpMapping
+            // 
+            this.tpMapping.Controls.Add(this.panel4);
+            this.tpMapping.Location = new System.Drawing.Point(4, 22);
+            this.tpMapping.Name = "tpMapping";
+            this.tpMapping.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMapping.Size = new System.Drawing.Size(937, 413);
+            this.tpMapping.TabIndex = 1;
+            this.tpMapping.Text = "实体映射";
+            this.tpMapping.UseVisualStyleBackColor = true;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.gvMapping);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(931, 407);
+            this.panel4.TabIndex = 1;
+            // 
+            // gvMapping
+            // 
+            this.gvMapping.AllowUserToAddRows = false;
+            this.gvMapping.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gvMapping.BackgroundColor = System.Drawing.Color.White;
+            this.gvMapping.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gvMapping.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColSelect,
+            this.ColField,
+            this.colPropertyName,
+            this.colPType,
+            this.ColSource,
+            this.ColTarget,
+            this.ColIsToDB});
+            this.gvMapping.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gvMapping.Location = new System.Drawing.Point(0, 0);
+            this.gvMapping.MultiSelect = false;
+            this.gvMapping.Name = "gvMapping";
+            this.gvMapping.RowHeadersVisible = false;
+            this.gvMapping.RowTemplate.Height = 23;
+            this.gvMapping.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gvMapping.Size = new System.Drawing.Size(931, 407);
+            this.gvMapping.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.btnClose);
+            this.panel3.Controls.Add(this.btnGenCode);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(3, 456);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(945, 36);
+            this.panel3.TabIndex = 25;
+            // 
+            // btnClose
+            // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(861, 6);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 24;
+            this.btnClose.Text = "关闭";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // btnGenCode
+            // 
+            this.btnGenCode.Location = new System.Drawing.Point(780, 6);
+            this.btnGenCode.Name = "btnGenCode";
+            this.btnGenCode.Size = new System.Drawing.Size(75, 23);
+            this.btnGenCode.TabIndex = 22;
+            this.btnGenCode.Text = "生成类";
+            this.btnGenCode.UseVisualStyleBackColor = true;
+            this.btnGenCode.Click += new System.EventHandler(this.btnGenCode_Click);
+            // 
+            // ColSelect
+            // 
+            this.ColSelect.DataPropertyName = "IsGenerate";
+            this.ColSelect.HeaderText = "选中";
+            this.ColSelect.Name = "ColSelect";
+            this.ColSelect.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColSelect.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // ColField
+            // 
+            this.ColField.DataPropertyName = "FieldName";
+            this.ColField.HeaderText = "变量名";
+            this.ColField.Name = "ColField";
+            // 
+            // colPropertyName
+            // 
+            this.colPropertyName.DataPropertyName = "PropertyName";
+            this.colPropertyName.HeaderText = "属性名";
+            this.colPropertyName.Name = "colPropertyName";
+            // 
+            // colPType
+            // 
+            this.colPType.DataPropertyName = "TypeName";
+            this.colPType.HeaderText = "变量类型";
+            this.colPType.Name = "colPType";
+            // 
+            // ColSource
+            // 
+            this.ColSource.DataPropertyName = "SourceProperty";
+            this.ColSource.HeaderText = "源实体属性";
+            this.ColSource.Name = "ColSource";
+            // 
+            // ColTarget
+            // 
+            this.ColTarget.DataPropertyName = "TargetProperty";
+            this.ColTarget.HeaderText = "目标实体属性";
+            this.ColTarget.Name = "ColTarget";
+            // 
+            // ColIsToDB
+            // 
+            this.ColIsToDB.DataPropertyName = "IsToDB";
+            this.ColIsToDB.HeaderText = "生成约束";
+            this.ColIsToDB.Name = "ColIsToDB";
+            // 
             // FrmClassDesigner
             // 
             this.AcceptButton = this.btnGenCode;
@@ -447,13 +447,6 @@
         private System.Windows.Forms.Button btnGenCode;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.DataGridView gvMapping;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ColSelect;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColField;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPropertyName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColTarget;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ColIsToDB;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColChecked;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColFName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColType;
@@ -464,6 +457,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLength;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPropertyType;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColReadOnly;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColSelect;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColField;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPropertyName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColTarget;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColIsToDB;
 
 
     }

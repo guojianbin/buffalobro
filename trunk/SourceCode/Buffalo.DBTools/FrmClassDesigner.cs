@@ -33,34 +33,6 @@ namespace Buffalo.DBTools
             get { return _selectedClass; }
             set { _selectedClass = value; }
         }
-        //private Diagram _selectedDiagram = null;
-
-        ///// <summary>
-        ///// 选中的关系图
-        ///// </summary>
-        //public Diagram SelectedDiagram
-        //{
-        //    get { return _selectedDiagram; }
-        //    set { _selectedDiagram = value; }
-        //}
-        //private Project _currentProject;
-        ///// <summary>
-        ///// 当前项目
-        ///// </summary>
-        //public Project CurrentProject
-        //{
-        //    get { return _currentProject; }
-        //    set { _currentProject = value; }
-        //}
-        //ClassDesignerDocView _selectDocView;
-        ///// <summary>
-        ///// 选择的文档
-        ///// </summary>
-        //public ClassDesignerDocView SelectDocView
-        //{
-        //    get { return _selectDocView; }
-        //    set { _selectDocView = value; }
-        //}
 
         private ClassDesignerInfo _designerInfo;
 
@@ -176,6 +148,7 @@ namespace Buffalo.DBTools
         {
             //_config.BaseType = txtBaseClass.Text;
             _config.TableName = txtTableName.Text;
+
             _config.GenerateCode();
             this.DialogResult = DialogResult.OK;
         }

@@ -256,6 +256,7 @@
     <Compile Include="DBFunction\DBCommonFunction.cs" />
     <Compile Include="DBFunction\DBConvertFunction.cs" />
     <Compile Include="DBFunction\DBMathFunction.cs" />
+    <Compile Include="EntityInfos\CH.cs" />
     <Compile Include="EntityInfos\EntityConfigInfo.cs" />
     <Compile Include="EntityInfos\EntityInfoHandle.cs" />
     <Compile Include="EntityInfos\EntityInfoManager.cs" />
@@ -286,6 +287,8 @@
     <Compile Include="PropertyAttributes\TableAttribute.cs" />
     <Compile Include="PropertyAttributes\TableRelationAttribute.cs" />
     <Compile Include="PropertyAttributes\ViewRelationTables.cs" />
+    <Compile Include="ProxyBuilder\EntityProxyBuilder.cs" />
+    <Compile Include="ProxyBuilder\IEntityProxy.cs" />
     <Compile Include="QueryConditions\AbsCondition.cs" />
     <Compile Include="QueryConditions\CreateTableCondition.cs" />
     <Compile Include="QueryConditions\DeleteCondition.cs" />

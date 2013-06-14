@@ -150,19 +150,8 @@ namespace Buffalo.DBTools.HelperKernel
                     string propertyText = spaces + "public virtual " + TypeName + " " + PropertyName;
                     source.Add(propertyText);
                     source.Add(spaces + "{");
-                    source.Add(spaces + "    get");
-                    source.Add(spaces + "    {");
-                    //source.Add(spaces + "       if (" + FieldName + " == null)");
-                    //source.Add(spaces + "       {");
-                    //source.Add(spaces + "           FillParent(\"" + PropertyName + "\");");
-                    //source.Add(spaces + "       }");
-                    source.Add(spaces + "        return " + FieldName + ";");
-                    source.Add(spaces + "    }");
-                    source.Add(spaces + "    set");
-                    source.Add(spaces + "    {");
-                    source.Add(spaces + "        " + FieldName + " = value;");
-                    //source.Add(spaces + "        OnPropertyUpdated(\"" + PropertyName + "\");");
-                    source.Add(spaces + "    }");
+                    source.Add(spaces + "    get{ return " + FieldName + "; }");
+                    source.Add(spaces + "    set{ " + FieldName + " = value; }");
                     source.Add(spaces + "}");
 
                 }
@@ -174,19 +163,8 @@ namespace Buffalo.DBTools.HelperKernel
                     string propertyText = spaces + "public virtual " + TypeName + " " + PropertyName;
                     source.Add(propertyText);
                     source.Add(spaces + "{");
-                    source.Add(spaces + "    get");
-                    source.Add(spaces + "    {");
-                    //source.Add(spaces + "       if (" + FieldName + " == null)");
-                    //source.Add(spaces + "       {");
-                    //source.Add(spaces + "           FillChild(\"" + PropertyName + "\");");
-                    //source.Add(spaces + "       }");
-                    source.Add(spaces + "        return " + FieldName + ";");
-                    source.Add(spaces + "    }");
-                    source.Add(spaces + "    set");
-                    source.Add(spaces + "    {");
-                    source.Add(spaces + "        " + FieldName + " = value;");
-                    //source.Add(spaces + "        OnPropertyUpdated(\"" + PropertyName + "\");");
-                    source.Add(spaces + "    }");
+                    source.Add(spaces + "    get{ return " + FieldName + "; }");
+                    source.Add(spaces + "    set{ " + FieldName + " = value; }");
                     source.Add(spaces + "}");
                 }
             }

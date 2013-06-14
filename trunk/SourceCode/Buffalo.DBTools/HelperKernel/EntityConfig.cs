@@ -501,6 +501,7 @@ namespace Buffalo.DBTools.HelperKernel
             _baseType = GetBaseClass(ctype,out _baseTypeName);
 
             _fileName = GetFileName(ctype, out _cp);
+            EnvDTE.ProjectItem classItem = GetProjectItemByFileName(DesignerInfo, _fileName);
             //foreach (CodeElementPosition cp in ctype.SourceCodePositions)
             //{
             //    if (cp.FileName.IndexOf(".extend.cs") <0)
@@ -857,6 +858,9 @@ namespace Buffalo.DBTools.HelperKernel
             List<string> lstTarget = new List<string>(_lstSource.Count);
             bool isUsing = true;
             Dictionary<string, bool> dicUsing = new Dictionary<string, bool>();
+
+            Dictionary<int, CodeElementPosition> dicNeedVirtual = NeedVirtual();
+
             for (int i = 0; i < _lstSource.Count; i++) 
             {
                 string str=_lstSource[i];
@@ -931,15 +935,88 @@ namespace Buffalo.DBTools.HelperKernel
                             dicUsing[str.Trim()] = true;
                         }
                     }
+                    if (dicNeedVirtual.ContainsKey(i+1))
+                    {
+                        str=VirtualProperty(str);
+                    }
+                    
                     lstTarget.Add(str);
                 }
             }
+
             CodeFileHelper.SaveFile(FileName, lstTarget);
             GenerateExtenCode();
             
 
         }
 
+        static string[] _modifier ={ "public ", "private ", "protected ", "internal ", 
+            "protected internal ", "internal protected " };
+
+
+        /// <summary>
+        /// Virtual属性
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private string VirtualProperty(string str)
+        {
+            StringBuilder ret = new StringBuilder();
+            if (str.IndexOf(" virtual ") < 0)
+            {
+                string space = CutSpace(str);
+                string newStr = str.TrimStart(' ','\t');
+                foreach(string mod in _modifier)
+                {
+                    if (newStr.StartsWith(mod)) 
+                    {
+                        ret.Append(space);
+                        ret.Append(mod);
+                        ret.Append("virtual ");
+                        ret.Append(newStr.Substring(mod.Length));
+
+                        return ret.ToString();
+                    }
+                }
+                ret.Append(space);
+                ret.Append("virtual ");
+                ret.Append(newStr);
+                return ret.ToString();
+            }
+            return str;
+
+        }
+            
+        /// <summary>
+        /// 获取需要Virtual的属性
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<int,CodeElementPosition> NeedVirtual() 
+        {
+            Dictionary<int, CodeElementPosition> lst = new Dictionary<int, CodeElementPosition>();
+            CodeElementPosition cp=null;
+            foreach (EntityParamField param in _eParamFields)
+            {
+                if (param.IsGenerate)
+                {
+                    if (_properties.TryGetValue(param.PropertyName, out cp)) 
+                    {
+                        lst[cp.StartLine]=cp;
+                    }
+                }
+            }
+            foreach (EntityRelationItem relation in _eRelation)
+            {
+                if (relation.IsGenerate)
+                {
+                    if (_properties.TryGetValue(relation.PropertyName, out cp))
+                    {
+                        lst[cp.StartLine] = cp;
+                    }
+                }
+            }
+            return lst;
+        }
 
         /// <summary>
         /// 添加到代码

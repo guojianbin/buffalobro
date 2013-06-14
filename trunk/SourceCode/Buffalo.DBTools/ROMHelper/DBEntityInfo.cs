@@ -387,19 +387,8 @@ namespace Buffalo.DBTools.ROMHelper
                 sb.AppendLine("        /// </summary>");
                 sb.AppendLine("        public virtual " + er.FieldTypeName + " " + er.PropertyName);
                 sb.AppendLine("        {");
-                sb.AppendLine("            get");
-                sb.AppendLine("            {");
-                //sb.AppendLine("               if (" + er.FieldName + " == null)");
-                //sb.AppendLine("               {");
-                //sb.AppendLine("                   FillParent(\"" + er.PropertyName + "\");");
-                //sb.AppendLine("               }");
-                sb.AppendLine("               return " + er.FieldName + ";");
-                sb.AppendLine("            }");
-                sb.AppendLine("            set");
-                sb.AppendLine("            {");
-                sb.AppendLine("               " + er.FieldName + " = value;");
-                //sb.AppendLine("               OnPropertyUpdated(\"" + er.PropertyName + "\");");
-                sb.AppendLine("            }");
+                sb.AppendLine("            get{ return " + er.FieldName + "; }");
+                sb.AppendLine("            set{ " + er.FieldName + " = value; }");
                 sb.AppendLine("        }");
             }
             else
@@ -419,19 +408,8 @@ namespace Buffalo.DBTools.ROMHelper
                 sb.AppendLine("        /// </summary>");
                 sb.AppendLine("        public virtual " + er.FieldTypeName + " " + er.PropertyName);
                 sb.AppendLine("        {");
-                sb.AppendLine("            get");
-                sb.AppendLine("            {");
-                //sb.AppendLine("               if (" + er.FieldName + " == null)");
-                //sb.AppendLine("               {");
-                //sb.AppendLine("                   FillChild(\"" + er.PropertyName + "\");");
-                //sb.AppendLine("               }");
-                sb.AppendLine("               return " + er.FieldName + ";");
-                sb.AppendLine("            }");
-                sb.AppendLine("            set");
-                sb.AppendLine("            {");
-                sb.AppendLine("               " + er.FieldName + " = value;");
-                //sb.AppendLine("               OnPropertyUpdated(\"" + er.PropertyName + "\");");
-                sb.AppendLine("            }");
+                sb.AppendLine("            get{ return " + er.FieldName + "; }");
+                sb.AppendLine("            set{ " + er.FieldName + " = value; }");
                 sb.AppendLine("        }");
             }
         }
@@ -477,15 +455,8 @@ namespace Buffalo.DBTools.ROMHelper
             sb.AppendLine("        ///</summary>");
             sb.AppendLine("        public virtual " + typeName + " " + prm.PropertyName + "");
             sb.AppendLine("        {");
-            sb.AppendLine("            get");
-            sb.AppendLine("            {");
-            sb.AppendLine("                return " + prm.FieldName + ";");
-            sb.AppendLine("            }");
-            sb.AppendLine("            set");
-            sb.AppendLine("            {");
-            sb.AppendLine("                " + prm.FieldName + "=value;");
-            //sb.AppendLine("                OnPropertyUpdated(\"" + prm.PropertyName + "\");");
-            sb.AppendLine("            }");
+            sb.AppendLine("            get{ return " + prm.FieldName + ";}");
+            sb.AppendLine("            set{ "+ prm.FieldName +"=value;}");
             sb.AppendLine("        }");
         }
 

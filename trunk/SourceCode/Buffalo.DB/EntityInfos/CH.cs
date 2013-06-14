@@ -50,7 +50,7 @@ namespace Buffalo.DB.EntityInfos
             IEntityProxy iep = obj as IEntityProxy;
             if (iep != null) 
             {
-                return iep.GetType();
+                return iep.GetEntityType();
             }
             return obj.GetType();
         }
