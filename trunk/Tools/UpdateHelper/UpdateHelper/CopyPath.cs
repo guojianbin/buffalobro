@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml;
 using System.IO;
 using System.Windows.Forms;
+using Buffalo.Kernel;
 
 namespace UpdateHelper
 {
@@ -73,7 +74,7 @@ namespace UpdateHelper
                 }
                 try
                 {
-                    File.Copy(file, tPath + "\\" + fInfo.Name, true);
+                    CommonMethods.CopyNewer(file,tPath + "\\" + fInfo.Name);
                 }
                 catch(Exception ex) 
                 {

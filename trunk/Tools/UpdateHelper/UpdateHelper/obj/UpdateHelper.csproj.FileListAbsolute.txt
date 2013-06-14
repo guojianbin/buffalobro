@@ -9,3 +9,15 @@ D:\CShareTest\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.exe
 D:\CShareTest\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.pdb
 D:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.exe
 D:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.pdb
+E:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.exe
+E:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.pdb
+E:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\bin\Debug\UpdateConfig.xml
+E:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\bin\Debug\UpdateHelper.exe
+E:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\bin\Debug\UpdateHelper.pdb
+E:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\bin\Debug\Buffalo.Kernel.dll
+E:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\bin\Debug\Buffalo.Kernel.pdb
+E:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\bin\Debug\Buffalo.Kernel.xml
+E:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\obj\Debug\ResolveAssemblyReference.cache
+E:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.FrmMain.resources
+E:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.Properties.Resources.resources
+E:\CShareTest\Buffalobro\Tools\UpdateHelper\UpdateHelper\obj\Debug\UpdateHelper.csproj.GenerateResource.Cache
