@@ -424,7 +424,7 @@ namespace Buffalo.DB.EntityInfos
                     //SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
                     if (finf.HasGetHandle || finf.HasSetHandle)
                     {
-                        PropertyInfo pinfo = type.GetProperty(ep.PropertyName);
+                        PropertyInfo pinfo = type.GetProperty(ep.PropertyName,FastValueGetSet.AllBindingFlags);
                         EntityPropertyInfo entityProperty = new EntityPropertyInfo(
                             classInfo, finf.GetHandle,finf.SetHandle, ep, finf.FieldType, finf.FieldName,
                             finf.BelongFieldInfo, pinfo);
@@ -442,7 +442,7 @@ namespace Buffalo.DB.EntityInfos
                         tableMappingAtt.SetEntity(type, targetType);
                         //GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(finf);
                         //SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(finf);
-                        PropertyInfo pinfo = type.GetProperty(tableMappingAtt.PropertyName);
+                        PropertyInfo pinfo = type.GetProperty(tableMappingAtt.PropertyName, FastValueGetSet.AllBindingFlags);
                         EntityMappingInfo entityMappingInfo = new EntityMappingInfo(
                             type, finf.GetHandle, finf.SetHandle, tableMappingAtt,
                             finf.FieldName, finf.FieldType, finf.BelongFieldInfo, pinfo);

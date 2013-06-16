@@ -20,7 +20,7 @@ namespace Buffalo.DB.CommBase
     public class EntityBase:ICloneable
     {
         private EntityInfoHandle _thisInfo = null;//当前类的信息
-        internal Dictionary<string, bool> _dicUpdateProperty___ = null;//记录被修改过值的属性
+        internal Dictionary<string, bool> _dicUpdateProperty___ = new Dictionary<string,bool>();//记录被修改过值的属性
 
         /// <summary>
         /// 修改过的属性名
@@ -55,13 +55,8 @@ namespace Buffalo.DB.CommBase
         /// 通知属性已经被修改
         /// </summary>
         /// <param name="propertyName"></param>
-        protected internal void OnPropertyUpdated(string propertyName) 
+        protected internal virtual void OnPropertyUpdated(string propertyName) 
         {
-            if (_dicUpdateProperty___ == null) 
-            {
-                _dicUpdateProperty___ = new Dictionary<string, bool>();
-
-            }
             _dicUpdateProperty___[propertyName] = true;
         }
 
@@ -69,7 +64,7 @@ namespace Buffalo.DB.CommBase
         /// 通知映射属性已经被修改
         /// </summary>
         /// <param name="propertyName"></param>
-        protected internal void OnMapPropertyUpdated(string propertyName) 
+        protected internal virtual void OnMapPropertyUpdated(string propertyName) 
         {
 
             EntityInfoHandle entityInfo = GetEntityInfo();
@@ -91,11 +86,6 @@ namespace Buffalo.DB.CommBase
         /// <param name="propertyName"></param>
         protected bool HasPropertyChange(string propertyName)
         {
-            if (_dicUpdateProperty___ == null)
-            {
-                return false;
-
-            }
             return _dicUpdateProperty___.ContainsKey(propertyName);
         }
 

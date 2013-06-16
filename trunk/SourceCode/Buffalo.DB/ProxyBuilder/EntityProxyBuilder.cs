@@ -172,7 +172,7 @@ namespace Buffalo.DB.ProxyBuilder
             TypeBuilder typeBuilder, MethodInfo updateMethod)
         {
 
-            MethodInfo methodInfo = propertyInfo.GetSetMethod();
+            MethodInfo methodInfo = propertyInfo.GetSetMethod(true);
             if (!methodInfo.IsVirtual && !methodInfo.IsAbstract)
             {
                 throw new Exception("请把类:" + classType .FullName+ " 的属性:" + propertyInfo.Name + " 设置为virtual");
@@ -249,7 +249,7 @@ namespace Buffalo.DB.ProxyBuilder
         private void BuildMapEmit(Type classType, PropertyInfo propertyInfo, FieldInfo finfo,
             TypeBuilder typeBuilder, MethodInfo updateMethod)
         {
-            MethodInfo methodInfo = propertyInfo.GetGetMethod();
+            MethodInfo methodInfo = propertyInfo.GetGetMethod(true);
             if (!methodInfo.IsVirtual && !methodInfo.IsAbstract)
             {
                 throw new Exception("请把属性:" + propertyInfo.Name + "设置为virtual");
