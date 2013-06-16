@@ -20,7 +20,7 @@ namespace Buffalo.DB.ProxyBuilder
 {
     public class EntityProxyBuilder
     {
-        private static readonly Type VoidType = Type.GetType("System.Void");
+        
         AssemblyName _assemblyName ;
         AssemblyBuilder _assemblyBuilder;
         ModuleBuilder _moduleBuilder;
@@ -188,7 +188,7 @@ namespace Buffalo.DB.ProxyBuilder
 
             Type[] parameterTypes = lstType.ToArray();
             int parameterLength = parameterTypes.Length;
-            bool hasResult = methodInfo.ReturnType != VoidType;
+            bool hasResult = methodInfo.ReturnType !=FastInvoke.VoidType;
 
             MethodBuilder methodBuilder = typeBuilder.DefineMethod(methodInfo.Name,
                                                          MethodAttributes.Public |
@@ -229,6 +229,7 @@ namespace Buffalo.DB.ProxyBuilder
             if (hasResult)
             {
                 il.Emit(OpCodes.Ldloc, retVal);//非void取出局部变量1 result
+                
                 if (methodInfo.ReturnType.IsValueType)
                 {
                     il.Emit(OpCodes.Unbox_Any, methodInfo.ReturnType);//对值类型拆箱
@@ -265,7 +266,7 @@ namespace Buffalo.DB.ProxyBuilder
 
             Type[] parameterTypes = lstType.ToArray();
             int parameterLength = parameterTypes.Length;
-            bool hasResult = methodInfo.ReturnType != VoidType;
+            bool hasResult = methodInfo.ReturnType != FastInvoke.VoidType;
 
             MethodBuilder methodBuilder = typeBuilder.DefineMethod(methodInfo.Name,
                                                          MethodAttributes.Public |

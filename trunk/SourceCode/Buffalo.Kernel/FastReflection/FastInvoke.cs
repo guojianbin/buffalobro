@@ -21,7 +21,7 @@ namespace Buffalo.Kernel.FastReflection
         /// 委托获取实体类对象
         /// </summary>
         /// <returns></returns>
-        
+        public static readonly Type VoidType = Type.GetType("System.Void");
         static object InvokeMethod(FastInvokeHandler invoke, object target, params object[] paramters)
         {
             return invoke(null, paramters);
@@ -71,7 +71,7 @@ namespace Buffalo.Kernel.FastReflection
                 il.EmitCall(OpCodes.Call, methodInfo, null);
             else
                 il.EmitCall(OpCodes.Callvirt, methodInfo, null);
-            if (methodInfo.ReturnType == typeof(void))
+            if (methodInfo.ReturnType == VoidType)
                 il.Emit(OpCodes.Ldnull);
             else
                 EmitBoxIfNeeded(il, methodInfo.ReturnType);
@@ -94,7 +94,7 @@ namespace Buffalo.Kernel.FastReflection
             return invoder;
         }
 
-        private static void EmitCastToReference(ILGenerator il, System.Type type)
+        internal static void EmitCastToReference(ILGenerator il, System.Type type)
         {
             if (type.IsValueType)
             {
@@ -106,7 +106,7 @@ namespace Buffalo.Kernel.FastReflection
             }
         }
 
-        private static void EmitBoxIfNeeded(ILGenerator il, System.Type type)
+        internal static void EmitBoxIfNeeded(ILGenerator il, System.Type type)
         {
             if (type.IsValueType)
             {

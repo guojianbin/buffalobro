@@ -70,6 +70,7 @@
     <Compile Include="FastReflection\ClassInfos\ProxyObject.cs" />
     <Compile Include="FastReflection\FastFieldGetSet.cs" />
     <Compile Include="FastReflection\FastInvoke.cs" />
+    <Compile Include="FastReflection\FastPropertyInvoke.cs" />
     <Compile Include="FastReflection\FastValueGetSet.cs" />
     <Compile Include="FastReflection\FieldInfoHandle.cs" />
     <Compile Include="FastReflection\PropertyInfoHandle.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Replacer\ReplaceItemCollection.cs" />
     <Compile Include="Win32\Enums.cs" />
     <Compile Include="Win32\ExWindow.cs" />
+    <Compile Include="Win32\PtrGeter.cs" />
     <Compile Include="Win32\Structs.cs" />
     <Compile Include="Win32\SystemInfo.cs" />
     <Compile Include="SmartSellMap\CombinationItem.cs" />
