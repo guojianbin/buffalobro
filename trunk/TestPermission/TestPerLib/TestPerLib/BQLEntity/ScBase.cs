@@ -45,6 +45,17 @@ namespace TestPerLib.BQLEntity
                 return _createDate;
             }
          }
+        private BQLEntityParamHandle _state = null;
+        /// <summary>
+        /// ״̬
+        /// </summary>
+        public BQLEntityParamHandle State
+        {
+            get
+            {
+                return _state;
+            }
+         }
 
 
 
@@ -69,6 +80,7 @@ namespace TestPerLib.BQLEntity
             _id=CreateProperty("Id");
             _lastDate=CreateProperty("LastDate");
             _createDate=CreateProperty("CreateDate");
+            _state=CreateProperty("State");
 
         }
         

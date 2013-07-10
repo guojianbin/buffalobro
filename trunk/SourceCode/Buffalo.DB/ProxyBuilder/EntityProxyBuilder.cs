@@ -132,10 +132,19 @@ namespace Buffalo.DB.ProxyBuilder
         private void BuildMethod(Type classType,  TypeBuilder typeBuilder)
         {
             EntityInfoHandle entityInfo = EntityInfoManager.GetEntityHandle(classType);
-           
+            MethodInfo method = null;
             foreach (EntityPropertyInfo pInfo in entityInfo.PropertyInfo) 
             {
-                BuildEmit(classType, pInfo.BelongPropertyInfo, typeBuilder, _updateMethod);
+                UpdatePropertyInfo updateInfo = entityInfo.GetUpdatePropertyInfo(pInfo.PropertyName);
+                if (updateInfo != null)
+                {
+                    method = _mapupdateMethod;//如果是关联属性则调用OnMapPropertyUpdated
+                }
+                else 
+                {
+                    method = _updateMethod;//如果是一般属性则调用OnPropertyUpdated通知
+                }
+                BuildEmit(classType, pInfo.BelongPropertyInfo, typeBuilder, method);
             }
             
 
@@ -145,12 +154,12 @@ namespace Buffalo.DB.ProxyBuilder
                 if (mInfo.IsParent)
                 {
                     
-                    BuildEmit(classType, mInfo.BelongPropertyInfo, typeBuilder, _mapupdateMethod);
-                    BuildMapEmit(classType, mInfo.BelongPropertyInfo, finfo, typeBuilder, _fillParent);
+                    BuildEmit(classType, mInfo.BelongPropertyInfo, typeBuilder, _mapupdateMethod);//创建set方法
+                    BuildMapEmit(classType, mInfo.BelongPropertyInfo, finfo, typeBuilder, _fillParent);//创建get方法
                 }
                 else 
                 {
-                    BuildMapEmit(classType, mInfo.BelongPropertyInfo, finfo, typeBuilder, _fillChildMethod);
+                    BuildMapEmit(classType, mInfo.BelongPropertyInfo, finfo, typeBuilder, _fillChildMethod);//创建get方法
                 }
 
             }

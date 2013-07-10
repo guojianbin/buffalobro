@@ -24,6 +24,10 @@ namespace TestPerLib
         /// </summary>
         private DateTime _createDate;
         /// <summary>
+        /// ״̬
+        /// </summary>
+        private int _state;
+        /// <summary>
         /// ID
         /// </summary>
         public int Id

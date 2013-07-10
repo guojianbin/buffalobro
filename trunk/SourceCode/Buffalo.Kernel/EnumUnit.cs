@@ -42,6 +42,36 @@ namespace Buffalo.Kernel
             return source == tmp;
         }
 
+        /// <summary>
+        /// 获取包含值的信息
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static List<EnumInfo> GetContainerValues(int value,Type enumType) 
+        {
+            List<EnumInfo> lstEnum = GetEnumInfos(enumType);
+
+            List<EnumInfo> ret = new List<EnumInfo>(lstEnum.Count);
+            foreach (EnumInfo info in lstEnum) 
+            {
+                if (ContainerValue(value, Convert.ToInt32(info.Value))) 
+                {
+                    ret.Add(info);
+                }
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 获取包含值的信息
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static List<EnumInfo> GetContainerValues(Enum value) 
+        {
+            return GetContainerValues(Convert.ToInt32(value), value.GetType());
+        }
+
 
         /// <summary>
         /// 获取本枚举里边所有属性的信息
@@ -90,35 +120,6 @@ namespace Buffalo.Kernel
         {
 
             return MassManager.GetInfoByName(enumType,name);
-        }
-
-        /// <summary>
-        /// 获取枚举字符串
-        /// </summary>
-        /// <param name="objEnum"></param>
-        /// <returns></returns>
-        public static string EnumString(Enum objEnum) 
-        {
-            StringBuilder sbTmp = new StringBuilder();
-            string typeName = objEnum.GetType().Name;
-            List<EnumInfo> dic = GetEnumInfos(objEnum.GetType());
-            foreach (EnumInfo kvp in dic) 
-            {
-                object value = kvp.Value;
-                if ((Convert.ToUInt32(objEnum) & (uint)value) == (uint)value) 
-                {
-                    sbTmp.Append(typeName);
-                    sbTmp.Append(".");
-                    sbTmp.Append(kvp.FieldName);
-                    sbTmp.Append("|");
-                }
-            }
-            
-            if (sbTmp.Length > 0) 
-            {
-                sbTmp.Remove(sbTmp.Length - 1, 1);
-            }
-            return sbTmp.ToString();
         }
     }
 }

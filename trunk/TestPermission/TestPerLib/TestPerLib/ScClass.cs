@@ -15,7 +15,7 @@ namespace TestPerLib
         /// <summary>
         /// 
         /// </summary>
-        public string ClassName
+        public virtual string ClassName
         {
             get
             {
@@ -24,7 +24,6 @@ namespace TestPerLib
             set
             {
                 _className=value;
-                OnPropertyUpdated("ClassName");
             }
         }
 

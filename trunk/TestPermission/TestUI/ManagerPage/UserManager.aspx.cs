@@ -63,16 +63,16 @@ public partial class ManagerPage_UserManager : ScPageBase
     /// </summary>
     private void Bind() 
     {
-        ScStudentBusiness bo=new ScStudentBusiness();
-        ScopeList lstScope=new ScopeList();
-        FillCondition(lstScope);
-        lstScope.PageContent.PageSize = 10;
-        lstScope.PageContent.CurrentPage =pb.CurrentPage;
-        List<ScStudent> lst=bo.SelectList(lstScope);
-        dtSum = DataViewerSum.GetSumQuery(new ScStudentDataView(), lstScope, School.GetDBinfo());
-        gvDisplay.DataSource = lst;
-        gvDisplay.DataBind();
-        pb.DataSource = lstScope.PageContent;
+        //ScStudentBusiness bo=new ScStudentBusiness();
+        //ScopeList lstScope=new ScopeList();
+        //FillCondition(lstScope);
+        //lstScope.PageContent.PageSize = 10;
+        //lstScope.PageContent.CurrentPage =pb.CurrentPage;
+        //List<ScStudent> lst=bo.SelectList(lstScope);
+        //dtSum = DataViewerSum.GetSumQuery(new ScStudentDataView(), lstScope, School.GetDBinfo());
+        //gvDisplay.DataSource = lst;
+        //gvDisplay.DataBind();
+        //pb.DataSource = lstScope.PageContent;
     }
 
     /// <summary>

@@ -29,7 +29,7 @@ namespace TestPerLib
         /// <summary>
         /// 登录名称
         /// </summary>
-        public string Name
+        public virtual string Name
         {
             get
             {
@@ -38,13 +38,12 @@ namespace TestPerLib
             set
             {
                 _name=value;
-                OnPropertyUpdated("Name");
             }
         }
         /// <summary>
         /// 真实名称
         /// </summary>
-        public string RealName
+        public virtual string RealName
         {
             get
             {
@@ -53,13 +52,13 @@ namespace TestPerLib
             set
             {
                 _realName=value;
-                OnPropertyUpdated("RealName");
+               
             }
         }
         /// <summary>
         /// 密码
         /// </summary>
-        public string Password
+        public virtual string Password
         {
             get
             {
@@ -68,9 +67,8 @@ namespace TestPerLib
             set
             {
                 _password=value;
-                OnPropertyUpdated("Password");
+                
             }
         }
-
     }
 }

@@ -281,10 +281,12 @@ namespace Buffalo.DB.DataFillers
                         {
                             foreach (object curObj in lst)
                             {
-                                object fatherObj = mappingInfo.GetValue(curObj);
-                                CacheReader.FillObjectFromReader(reader, lstParamNames, fatherObj, db);
-                                baseList.Add(fatherObj);
-                                (fatherObj as EntityBase).SetBaseList(baseList);
+                                object newObj = fatherInfo.CreateProxyInstance();
+                                //object fatherObj = mappingInfo.GetValue(curObj);
+                                mappingInfo.SetValue(curObj, newObj);
+                                CacheReader.FillObjectFromReader(reader, lstParamNames, newObj, db);
+                                baseList.Add(newObj);
+                                (newObj as EntityBase).SetBaseList(baseList);
                             }
 
                         }
@@ -319,8 +321,8 @@ namespace Buffalo.DB.DataFillers
                 foreach (object obj in curList)
                 {
                     //实例化父表元素对应类，并赋到集合里边以作初值
-                    object newObj = classInfo.CreateProxyInstance();
-                    mappingInfo.SetValue(obj, newObj);
+                    //object newObj = classInfo.CreateProxyInstance();
+                    //mappingInfo.SetValue(obj, newObj);
 
                     //获取对应字段的值以返回做查询条件
                     object curObj = senderHandle.GetValue(obj);

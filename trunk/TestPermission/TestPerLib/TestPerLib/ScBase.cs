@@ -24,9 +24,13 @@ namespace TestPerLib
         /// </summary>
         private DateTime _createDate;
         /// <summary>
+        /// 状态
+        /// </summary>
+        private int? _state;
+        /// <summary>
         /// ID
         /// </summary>
-        public int Id
+        public virtual int Id
         {
             get
             {
@@ -34,14 +38,14 @@ namespace TestPerLib
             }
             set
             {
+                
                 _id=value;
-                OnPropertyUpdated("Id");
             }
         }
         /// <summary>
         /// 最后更新时间
         /// </summary>
-        public DateTime LastDate
+        public virtual DateTime LastDate
         {
             get
             {
@@ -50,13 +54,12 @@ namespace TestPerLib
             set
             {
                 _lastDate=value;
-                OnPropertyUpdated("LastDate");
             }
         }
         /// <summary>
         /// 创建时间
         /// </summary>
-        public DateTime CreateDate
+        public virtual DateTime CreateDate
         {
             get
             {
@@ -65,7 +68,20 @@ namespace TestPerLib
             set
             {
                 _createDate=value;
-                OnPropertyUpdated("CreateDate");
+            }
+        }
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public virtual int? State
+        {
+            get
+            {
+                return _state;
+            }
+            set
+            {
+                _state=value;
             }
         }
     }

@@ -25,9 +25,7 @@ E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\System.D
 E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\IBM.Data.DB2.dll
 E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\Npgsql.dll
 E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\MySql.Data.dll
-E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\Buffalo.Kernel.pdb
 E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\Buffalo.Kernel.xml
-E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\Buffalo.DB.pdb
 E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\Buffalo.DB.xml
 E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\Buffalo.Permissions.pdb
 E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\Buffalo.Permissions.xml
@@ -44,3 +42,7 @@ E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\fr\Npgsq
 E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\ja\Npgsql.resources.dll
 E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\zh-CN\Npgsql.resources.dll
 E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\obj\Debug\TestPerLib.dll
+E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\obj\Debug\TestPerLib.BEM.School.BDM.xml
+E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\obj\Debug\TestPerLib.BEM.ScEmployee.BEM.xml
+E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\Buffalo.Kernel.pdb
+E:\CShareTest\Buffalobro\TestPermission\TestPerLib\TestPerLib\bin\Debug\Buffalo.DB.pdb

@@ -25,6 +25,7 @@ namespace TestPerLib.Business
             }
             setList.Add("LastDate", BQL.NowDate());
             setList.Add("CreateDate", BQL.NowDate());
+            entity.State = 1;
             return base.Insert(entity, setList, fillIdentity);
         }
 

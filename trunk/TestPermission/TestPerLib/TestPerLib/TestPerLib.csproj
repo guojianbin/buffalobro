@@ -58,9 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="School.cd" />
+    <None Include="App_Code\DataView\ScStudentDataView.cs" />
     <Compile Include="BQLEntity\ScStudent.cs" />
     <Compile Include="Business\ScEmployeeBusiness.cs" />
     <Compile Include="Business\ScStudentBusiness.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="DataAccess\Bql\ScEmployeeDataAccess.cs" />
     <Compile Include="DataAccess\Bql\ScStudentDataAccess.cs" />
     <Compile Include="DataAccess\IDataAccess\IScEmployeeDataAccess.cs" />
@@ -110,7 +112,9 @@
     <EmbeddedResource Include="BEM\ScStudent.BEM.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include=".bmodels\" />
     <Folder Include="Entity\" />
+    <Folder Include="ManagerPage\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

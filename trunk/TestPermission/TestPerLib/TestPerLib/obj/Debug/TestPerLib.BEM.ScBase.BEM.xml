@@ -3,4 +3,5 @@
   <property FieldName="_id" PropertyName="Id" DbType="Int32" Length="0" EntityPropertyType="10" ParamName="id" ReadOnly="0" />
   <property FieldName="_lastDate" PropertyName="LastDate" DbType="DateTime" Length="0" EntityPropertyType="1" ParamName="lastDate" ReadOnly="0" />
   <property FieldName="_createDate" PropertyName="CreateDate" DbType="DateTime" Length="0" EntityPropertyType="1" ParamName="createDate" ReadOnly="0" />
+  <property FieldName="_state" PropertyName="State" DbType="Int32" Length="0" EntityPropertyType="1" ParamName="state" ReadOnly="0" />
 </class>

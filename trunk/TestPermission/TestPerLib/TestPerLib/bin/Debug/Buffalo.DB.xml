@@ -237,6 +237,12 @@
             链式值类型基类
             </summary>
         </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem.ShowDbType(System.Data.DbType)">
+            <summary>
+            通知函数符号另一端的字段的数值类型
+            </summary>
+            <param name="type"></param>
+        </member>
         <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLValueItem.As(System.String)">
             <summary>
             给字段定义一个别名
@@ -813,13 +819,6 @@
             <param name="obj">修改的对象</param>
             <param name="scopeList">条件列表</param>
             <param name="optimisticConcurrency">是否进行并发控制</param>
-            <returns></returns>
-        </member>
-        <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessBase`1.Insert(`0,System.Boolean)">
-            <summary>
-            插入一个记录
-            </summary>
-            <param name="obj"></param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessBase`1.Insert(`0,Buffalo.DB.QueryConditions.ValueSetList,System.Boolean)">
@@ -1508,7 +1507,7 @@
             实体映射的属性信息
             </summary>
         </member>
-        <member name="M:Buffalo.DB.EntityInfos.EntityMappingInfo.#ctor(System.Type,Buffalo.Kernel.FastReflection.GetFieldValueHandle,Buffalo.Kernel.FastReflection.SetFieldValueHandle,Buffalo.DB.PropertyAttributes.TableRelationAttribute,System.String,System.Type)">
+        <member name="M:Buffalo.DB.EntityInfos.EntityMappingInfo.#ctor(System.Type,Buffalo.Kernel.FastReflection.GetFieldValueHandle,Buffalo.Kernel.FastReflection.SetFieldValueHandle,Buffalo.DB.PropertyAttributes.TableRelationAttribute,System.String,System.Type,System.Reflection.FieldInfo,System.Reflection.PropertyInfo)">
             <summary>
             创建属性的信息类
             </summary>
@@ -1525,6 +1524,11 @@
             </summary>
             <param name="belong">所属实体</param>
             <returns></returns>
+        </member>
+        <member name="P:Buffalo.DB.EntityInfos.EntityMappingInfo.BelongPropertyInfo">
+            <summary>
+            所属的属性信息
+            </summary>
         </member>
         <member name="P:Buffalo.DB.EntityInfos.EntityMappingInfo.MappingInfo">
             <summary>
@@ -2547,7 +2551,7 @@
             <param name="lstScope">条件集合</param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DB.BQLCommon.BQLDbBase.QueryDataSet(Buffalo.DB.BQLCommon.BQLKeyWordCommon.BQLQuery)">
+        <member name="M:Buffalo.DB.BQLCommon.BQLDbBase.QueryDataSet(Buffalo.DB.BQLCommon.BQLKeyWordCommon.BQLQuery,System.Type)">
             <summary>
             执行sql语句，分页返回DataSet
             </summary>
@@ -2566,7 +2570,7 @@
             <param name="BQL">sql语句</param>
             <param name="objPage">分页对象</param>
         </member>
-        <member name="M:Buffalo.DB.BQLCommon.BQLDbBase.QueryDataSet(Buffalo.DB.BQLCommon.BQLKeyWordCommon.BQLQuery,Buffalo.DB.QueryConditions.PageContent)">
+        <member name="M:Buffalo.DB.BQLCommon.BQLDbBase.QueryDataSet(Buffalo.DB.BQLCommon.BQLKeyWordCommon.BQLQuery,System.Type,Buffalo.DB.QueryConditions.PageContent)">
             <summary>
             执行sql语句，分页返回DataSet
             </summary>
@@ -2581,12 +2585,13 @@
             <param name="objPage">分页对象</param>
             <param name="tableType">表对应的实体类型</param>
         </member>
-        <member name="M:Buffalo.DB.BQLCommon.BQLDbBase.QueryReader(Buffalo.DB.BQLCommon.BQLKeyWordCommon.BQLQuery,Buffalo.DB.QueryConditions.PageContent)">
+        <member name="M:Buffalo.DB.BQLCommon.BQLDbBase.QueryReader(Buffalo.DB.BQLCommon.BQLKeyWordCommon.BQLQuery,Buffalo.DB.QueryConditions.PageContent,System.Type)">
             <summary>
             执行sql语句，分页返回Reader
             </summary>
             <param name="BQL">sql语句</param>
             <param name="objPage">分页对象</param>
+            <param name="tableType">表对应的实体类型</param>
         </member>
         <member name="M:Buffalo.DB.BQLCommon.BQLDbBase.QueryReader(Buffalo.DB.QueryConditions.ScopeList,System.Type)">
             <summary>
@@ -2595,7 +2600,7 @@
             <param name="sql">sql语句</param>
             <param name="objPage">分页对象</param>
         </member>
-        <member name="M:Buffalo.DB.BQLCommon.BQLDbBase.QueryReader(Buffalo.DB.BQLCommon.BQLKeyWordCommon.BQLQuery)">
+        <member name="M:Buffalo.DB.BQLCommon.BQLDbBase.QueryReader(Buffalo.DB.BQLCommon.BQLKeyWordCommon.BQLQuery,System.Type)">
             <summary>
             执行sql语句，返回Reader
             </summary>
@@ -3572,6 +3577,65 @@
             字段
             </summary>
         </member>
+        <member name="F:Buffalo.DB.ProxyBuilder.EntityProxyBuilder._entityInterface">
+            <summary>
+            接口类型
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.ProxyBuilder.EntityProxyBuilder.#ctor">
+            <summary>
+            代理建造类
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.ProxyBuilder.EntityProxyBuilder.CreateProxyType(System.Type)">
+            <summary>
+            建造代理类
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.ProxyBuilder.EntityProxyBuilder.BulidType(System.Type,System.Reflection.Emit.ModuleBuilder,System.String)">
+            <summary>
+            建造类
+            </summary>
+            <param name="classType"></param>
+            <param name="moduleBuilder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.ProxyBuilder.EntityProxyBuilder.BuildGetEntityType(System.Reflection.Emit.TypeBuilder)">
+            <summary>
+            创建获取实体类型的方法
+            </summary>
+            <param name="typeBuilder"></param>
+        </member>
+        <member name="M:Buffalo.DB.ProxyBuilder.EntityProxyBuilder.BuildMethod(System.Type,System.Reflection.Emit.TypeBuilder)">
+            <summary>
+            建方法
+            </summary>
+            <param name="classType"></param>
+            <param name="inspectorFieldBuilder"></param>
+            <param name="typeBuilder"></param>
+        </member>
+        <member name="M:Buffalo.DB.ProxyBuilder.EntityProxyBuilder.BuildEmit(System.Type,System.Reflection.PropertyInfo,System.Reflection.Emit.TypeBuilder,System.Reflection.MethodInfo)">
+            <summary>
+            创建IL
+            </summary>
+            <param name="classType"></param>
+            <param name="pInfo"></param>
+            <param name="typeBuilder"></param>
+            <param name="updateMethod"></param>
+            <param name="methodName"></param>
+        </member>
+        <member name="M:Buffalo.DB.ProxyBuilder.EntityProxyBuilder.BuildMapEmit(System.Type,System.Reflection.PropertyInfo,System.Reflection.FieldInfo,System.Reflection.Emit.TypeBuilder,System.Reflection.MethodInfo)">
+            <summary>
+            创建IL
+            </summary>
+            <param name="classType"></param>
+            <param name="pInfo"></param>
+            <param name="typeBuilder"></param>
+            <param name="updateMethod"></param>
+            <param name="methodName"></param>
+        </member>
         <member name="T:Buffalo.DB.EntityInfos.PrimaryKeyInfo">
             <summary>
             主键信息
@@ -4124,6 +4188,12 @@
             </summary>
             <param name="propertyName"></param>
         </member>
+        <member name="M:Buffalo.DB.CommBase.EntityBase.OnMapPropertyUpdated(System.String)">
+            <summary>
+            通知映射属性已经被修改
+            </summary>
+            <param name="propertyName"></param>
+        </member>
         <member name="M:Buffalo.DB.CommBase.EntityBase.HasPropertyChange(System.String)">
             <summary>
             通知属性已经被修改
@@ -4417,13 +4487,6 @@
             <summary>
             只有Select语句的数据访问层模版
             </summary>
-        </member>
-        <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessBaseForSelect`1.GetUnique(Buffalo.DB.QueryConditions.ScopeList)">
-            <summary>
-            根据条件查找实体
-            </summary>
-            <param name="lstScope">条件</param>
-            <returns></returns>
         </member>
         <member name="M:Buffalo.DB.CommBase.DataAccessBases.DataAccessBaseForSelect`1.GetEntityById(System.Object)">
             <summary>
@@ -6537,9 +6600,20 @@
             <param name="mappingInfoHandles">映射信息集合</param>
             <param name="baseListInfo">所属的基集合</param>
         </member>
+        <member name="M:Buffalo.DB.EntityInfos.EntityInfoHandle.InitProxyType(Buffalo.DB.ProxyBuilder.EntityProxyBuilder)">
+            <summary>
+            初始化代理类
+            </summary>
+        </member>
         <member name="M:Buffalo.DB.EntityInfos.EntityInfoHandle.CreateInstance">
             <summary>
             返回此类型的实例
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.EntityInfos.EntityInfoHandle.CreateProxyInstance">
+            <summary>
+            返回此类型的代理类实例
             </summary>
             <returns></returns>
         </member>
@@ -6582,10 +6656,40 @@
             <param name="propertyName">属性名</param>
             <returns></returns>
         </member>
+        <member name="P:Buffalo.DB.EntityInfos.EntityInfoHandle.ProxyType">
+            <summary>
+            代理类
+            </summary>
+        </member>
         <member name="P:Buffalo.DB.EntityInfos.EntityInfoHandle.PrimaryProperty">
             <summary>
             主属性
             </summary>
+        </member>
+        <member name="T:Buffalo.DB.EntityInfos.CH">
+            <summary>
+            代理类创建器
+            </summary>
+        </member>
+        <member name="M:Buffalo.DB.EntityInfos.CH.Create``1">
+            <summary>
+            创建代理类
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.EntityInfos.CH.Create(System.Type)">
+            <summary>
+            创建代理类
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.EntityInfos.CH.GetRealType(System.Object)">
+            <summary>
+            获取真正的类型
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.DB.DBCheckers.TableChecker.GetAllTables(Buffalo.DB.DataBaseAdapter.DBInfo)">
             <summary>
@@ -7290,7 +7394,7 @@
             实体的属性信息
             </summary>
         </member>
-        <member name="M:Buffalo.DB.EntityInfos.EntityPropertyInfo.#ctor(Buffalo.DB.EntityInfos.EntityInfoHandle,Buffalo.Kernel.FastReflection.GetFieldValueHandle,Buffalo.Kernel.FastReflection.SetFieldValueHandle,Buffalo.DB.PropertyAttributes.EntityParam,System.Type,System.String)">
+        <member name="M:Buffalo.DB.EntityInfos.EntityPropertyInfo.#ctor(Buffalo.DB.EntityInfos.EntityInfoHandle,Buffalo.Kernel.FastReflection.GetFieldValueHandle,Buffalo.Kernel.FastReflection.SetFieldValueHandle,Buffalo.DB.PropertyAttributes.EntityParam,System.Type,System.String,System.Reflection.FieldInfo,System.Reflection.PropertyInfo)">
             <summary>
             创建属性的信息类
             </summary>
@@ -7308,6 +7412,11 @@
             </summary>
             <param name="belong">新副本所属的实体</param>
             <returns></returns>
+        </member>
+        <member name="P:Buffalo.DB.EntityInfos.EntityPropertyInfo.BelongPropertyInfo">
+            <summary>
+            所属的属性信息
+            </summary>
         </member>
         <member name="P:Buffalo.DB.EntityInfos.EntityPropertyInfo.ReadOnly">
             <summary>
@@ -8861,6 +8970,12 @@
             </summary>
             <param name="doc"></param>
         </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.DataAccessLoader.AppendModelAssembly(System.Reflection.Assembly)">
+            <summary>
+            添加要处理的程序集
+            </summary>
+            <param name="ass">程序集</param>
+        </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.DataAccessLoader.GetAllAssembly">
             <summary>
             获取本模块下所有程序集
@@ -9852,6 +9967,11 @@
             是否有聚合语句
             </summary>
         </member>
+        <member name="P:Buffalo.DB.BQLCommon.BQLConditionCommon.KeyWordInfomation.PrimaryKeys">
+            <summary>
+            主键数
+            </summary>
+        </member>
         <member name="P:Buffalo.DB.BQLCommon.BQLConditionCommon.KeyWordInfomation.IsWhere">
             <summary>
             是否在输出条件中
@@ -10137,6 +10257,12 @@
             <summary>
             表名
             </summary>
+        </member>
+        <member name="M:Buffalo.DB.ProxyBuilder.IEntityProxy.GetEntityType">
+            <summary>
+            获取被代理的实体类型
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Buffalo.DB.ListExtends.ListXMLExtends.CollectValues(System.Collections.IEnumerable,System.String)">
             <summary>

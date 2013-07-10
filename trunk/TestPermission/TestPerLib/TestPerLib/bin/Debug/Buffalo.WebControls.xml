@@ -289,9 +289,9 @@
             GridView绑定器
             </summary>
         </member>
-        <member name="M:Buffalo.WebControls.WebGridBinders.GridViewBinder.CreateColumn(Buffalo.Permissions.DataViewInfo.DataViewer,System.Web.UI.WebControls.GridView)">
+        <member name="M:Buffalo.WebControls.WebGridBinders.GridViewBinder.HideColumn(Buffalo.Permissions.DataViewInfo.DataViewer,System.Web.UI.WebControls.GridView)">
             <summary>
-            根据DV给GridView创建列
+            根据DV给GridView隐藏列
             </summary>
             <param name="dv"></param>
             <param name="gv"></param>

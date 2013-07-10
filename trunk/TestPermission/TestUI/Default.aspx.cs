@@ -9,11 +9,14 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DataBaseAdapter;
+using Buffalo.Kernel.NetClients;
+using TestPerLib.Business;
+using TestPerLib;
 
 public partial class _Default : System.Web.UI.Page 
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+
     }
 }
