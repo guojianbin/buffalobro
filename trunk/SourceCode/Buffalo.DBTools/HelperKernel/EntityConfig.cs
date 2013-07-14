@@ -1032,20 +1032,26 @@ namespace Buffalo.DBTools.HelperKernel
 
             string strPropertie = "GetContext";
 
-            if (!ExistsMember<ClrField>( _classType,strField))
+            if (!ExistsMember<ClrField>( _classType,strField,false))
             {
                 lstTarget.Add("        private static ModelContext<" + ClassName + "> " + strField + "=new ModelContext<" + ClassName + ">();");
             }
 
-            if (!ExistsMember<ClrMethod>(_classType, strPropertie))
+            if (!ExistsMember<ClrMethod>(_classType, strPropertie, false))
             {
+                string hasNew = "";
+                if (ExistsMember<ClrMethod>(_classType, strPropertie, true)) 
+                {
+                    hasNew = "new ";
+                }
+
                 lstTarget.Add("        /// <summary>");
                 lstTarget.Add("        /// 获取查询关联类");
                 lstTarget.Add("        /// </summary>");
                 lstTarget.Add("        /// <returns></returns>");
-                lstTarget.Add("        public static ModelContext<" + ClassName + "> " + strPropertie + "() ");
+                lstTarget.Add("        public " + hasNew + "static ModelContext<" + ClassName + "> " + strPropertie + "() ");
                 lstTarget.Add("        {");
-                lstTarget.Add("            return " + strField + ";");
+                lstTarget.Add("            return " + ClassName + "." + strField + ";");
                 lstTarget.Add("        }");
             }
 
@@ -1201,31 +1207,43 @@ namespace Buffalo.DBTools.HelperKernel
             }
             
         }
-
+        /// <summary>
+        /// 判断是否存在成员
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="type"></param>
+        /// <param name="menberName"></param>
+        /// <returns></returns>
+        public static bool ExistsMember<T>(ClrType type, string menberName) where T : Member
+        {
+            return ExistsMember<T>(type, menberName, true);
+        }
         /// <summary>
         /// 判断是否存在成员
         /// </summary>
         /// <returns></returns>
-        public static bool ExistsMember<T>(ClrType type,string menberName) where T : Member
+        public static bool ExistsMember<T>(ClrType type,string menberName,bool checkBase) where T : Member
         {
             bool hasName = false;
 
             //检查基类
-            InheritanceTypeRefMoveableCollection col = type.InheritanceTypeRefs;
-            if (col != null && col.Count > 0)
+            if (checkBase)
             {
-                string baseType = col[0].TypeTypeName;
-                bool isBaseType = IsSystemTypeName(baseType);
-                if (!isBaseType)
+                InheritanceTypeRefMoveableCollection col = type.InheritanceTypeRefs;
+                if (col != null && col.Count > 0)
                 {
-                    ClrType btype = col[0].ClrType;
-                    if (btype != null)
+                    string baseType = col[0].TypeTypeName;
+                    bool isBaseType = IsSystemTypeName(baseType);
+                    if (!isBaseType)
                     {
-                        hasName=ExistsMember<T>(btype, menberName);
+                        ClrType btype = col[0].ClrType;
+                        if (btype != null)
+                        {
+                            hasName = ExistsMember<T>(btype, menberName);
+                        }
                     }
                 }
             }
-
             if (hasName) 
             {
                 return hasName;
