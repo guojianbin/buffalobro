@@ -21,14 +21,16 @@ namespace Buffalo.Kernel.FastReflection
         {
             string fullName = type.FullName + "." + proName;
             PropertyInfoHandle propertyHandle = null;
-            using (Lock objLock = new Lock(dicProperty))
-            {
+            
                 if (!dicProperty.TryGetValue(fullName, out propertyHandle))
                 {
-                    propertyHandle = GetPropertyInfoHandleWithOutCache(proName, type);
-                    dicProperty.Add(fullName, propertyHandle);
+                    using (Lock objLock = new Lock(dicProperty))
+                    {
+                        propertyHandle = GetPropertyInfoHandleWithOutCache(proName, type);
+                        dicProperty[fullName] = propertyHandle;
+                    }
                 }
-            }
+            
             return propertyHandle;
         }
 
@@ -149,19 +151,21 @@ namespace Buffalo.Kernel.FastReflection
             }
             string fullName = methodInfo.DeclaringType.FullName + "." + methodInfo.Name + "(" + ptypes + ")";
             FastInvokeHandler fastInvokerHandle = null;
-            using (Lock objLock = new Lock(dicMethod))
-            {
+            
                 if (!dicMethod.TryGetValue(fullName, out fastInvokerHandle))
                 {
                     if (methodInfo == null)
                     {
                         return null;
                     }
-                    FastInvokeHandler fastInvoker = FastInvoke.GetMethodInvoker(methodInfo);
-                    dicMethod.Add(fullName, fastInvoker);
-                    fastInvokerHandle = fastInvoker;
+                    using (Lock objLock = new Lock(dicMethod))
+                    {
+                        FastInvokeHandler fastInvoker = FastInvoke.GetMethodInvoker(methodInfo);
+                        dicMethod[fullName]=fastInvoker;
+                        fastInvokerHandle = fastInvoker;
+                    }
                 }
-            }
+            
             return fastInvokerHandle;
         }
 
@@ -212,14 +216,16 @@ namespace Buffalo.Kernel.FastReflection
         {
             CreateInstanceHandler create = null;
             string key = type.FullName;
-            using (Lock objLock = new Lock(_invokerInstance))
-            {
+            
                 if (!_invokerInstance.TryGetValue(key, out create))
                 {
-                    create = GetCreateInstanceHandlerWithOutCache(type);
-                    _invokerInstance.Add(key, create);
+                    using (Lock objLock = new Lock(_invokerInstance))
+                    {
+                        create = GetCreateInstanceHandlerWithOutCache(type);
+                        _invokerInstance.Add(key, create);
+                    }
                 }
-            }
+            
             return create;
         }
 

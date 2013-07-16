@@ -23,7 +23,7 @@ namespace TestPerLib
         /// <summary>
         /// 学生名
         /// </summary>
-        public string Name
+        public virtual string Name
         {
             get
             {
@@ -32,13 +32,12 @@ namespace TestPerLib
             set
             {
                 _name=value;
-                OnPropertyUpdated("Name");
             }
         }
         /// <summary>
         /// 年龄
         /// </summary>
-        public int Age
+        public virtual int Age
         {
             get
             {
@@ -47,7 +46,6 @@ namespace TestPerLib
             set
             {
                 _age=value;
-                OnPropertyUpdated("Age");
             }
         }
         /// <summary>
@@ -58,11 +56,11 @@ namespace TestPerLib
         /// <summary>
         /// 所属班级
         /// </summary>
-        private ScClass _belongClass;
+        private  ScClass _belongClass;
         /// <summary>
         /// 所属班级ID
         /// </summary>
-        public int ClassId
+        public virtual int ClassId
         {
             get
             {
@@ -71,7 +69,6 @@ namespace TestPerLib
             set
             {
                 _classId=value;
-                OnPropertyUpdated("ClassId");
             }
         }
 
@@ -80,30 +77,17 @@ namespace TestPerLib
         /// <summary>
         /// 所属班级
         /// </summary>
-        public ScClass BelongClass
+        public virtual ScClass BelongClass
         {
             get
             {
-               if (_belongClass == null)
-               {
-                   FillParent("BelongClass");
-               }
+
                 return _belongClass;
             }
             set
             {
                 _belongClass = value;
-                OnPropertyUpdated("BelongClass");
             }
-        }
-        private static ModelContext<ScStudent> _____baseContext=new ModelContext<ScStudent>();
-        /// <summary>
-        /// 获取查询关联类
-        /// </summary>
-        /// <returns></returns>
-        public static ModelContext<ScStudent> GetContext() 
-        {
-            return _____baseContext;
         }
     }
 }

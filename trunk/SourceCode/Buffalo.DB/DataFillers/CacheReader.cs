@@ -208,7 +208,7 @@ namespace Buffalo.DB.DataFillers
                     T obj = (T)entityInfo.CreateProxyInstance();
                     //T obj = (T)Activator.CreateInstance(type);//实例化对象
                     FillObjectFromReader(reader, lstParamNames, obj, entityInfo.DBInfo);
-                    obj.SetBaseList(retLst);
+                    //obj.SetBaseList(retLst);
                     retLst.Add(obj);
                 }
             }
@@ -257,7 +257,7 @@ namespace Buffalo.DB.DataFillers
                     int curSize = 0;//获取当前值大小
                     FillObjectFromReader(reader, lstParamNames, obj, out curSize);
                     totleSize += curSize;//加到当前记录总大小里边
-                    obj.SetBaseList(retLst);
+                    //obj.SetBaseList(retLst);
                     retLst.Add(obj);
                 }
             }

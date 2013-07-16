@@ -321,7 +321,7 @@ namespace Buffalo.DB.BQLCommon
                     if (!hasValue && value != null)
                     {
                         E obj = (E)value;
-                        obj.SetBaseList(lst);
+                        //obj.SetBaseList(lst);
                         lst.Add(obj);
                     }
                 }

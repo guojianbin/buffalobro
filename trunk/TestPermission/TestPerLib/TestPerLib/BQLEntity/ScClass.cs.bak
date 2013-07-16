@@ -24,7 +24,7 @@ namespace TestPerLib.BQLEntity
     /// <summary>
     ///  
     /// </summary>
-    public partial class School_ScClass : BQLEntityTableHandle
+    public partial class School_ScClass : School_ScBase
     {
         private BQLEntityParamHandle _className = null;
         /// <summary>

@@ -3946,7 +3946,7 @@
             </summary>
             <param name="sender">发送者</param>
         </member>
-        <member name="M:Buffalo.DB.DataFillers.MappingContorl.FillChilds(System.Collections.IList,Buffalo.DB.EntityInfos.EntityInfoHandle,Buffalo.DB.EntityInfos.EntityMappingInfo,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.Object}},Buffalo.DB.CommBase.EntityBase,System.String)">
+        <member name="M:Buffalo.DB.DataFillers.MappingContorl.FillChilds(System.Object,Buffalo.DB.EntityInfos.EntityInfoHandle,Buffalo.DB.EntityInfos.EntityMappingInfo,Buffalo.DB.CommBase.EntityBase,System.String)">
             <summary>
             填充字类列表
             </summary>
@@ -3979,7 +3979,7 @@
             </summary>
             <param name="sender">发送者</param>
         </member>
-        <member name="M:Buffalo.DB.DataFillers.MappingContorl.FillParent(System.Collections.IList,Buffalo.DB.EntityInfos.EntityInfoHandle,System.Collections.Generic.Dictionary{System.String,System.Collections.ArrayList},Buffalo.DB.EntityInfos.EntityMappingInfo,System.String,Buffalo.DB.CommBase.EntityBase)">
+        <member name="M:Buffalo.DB.DataFillers.MappingContorl.FillParent(System.Object,Buffalo.DB.EntityInfos.EntityInfoHandle,Buffalo.DB.EntityInfos.EntityMappingInfo,System.String,Buffalo.DB.CommBase.EntityBase)">
             <summary>
             填充字类列表
             </summary>
@@ -4170,16 +4170,6 @@
         <member name="M:Buffalo.DB.CommBase.EntityBase.GetChangedPropertyName">
             <summary>
             修改过的属性名
-            </summary>
-        </member>
-        <member name="M:Buffalo.DB.CommBase.EntityBase.GetBaseList">
-            <summary>
-            所属列表集合以便在延迟加载时候读出
-            </summary>
-        </member>
-        <member name="M:Buffalo.DB.CommBase.EntityBase.SetBaseList(System.Collections.IList)">
-            <summary>
-            所属列表集合以便在延迟加载时候读出
             </summary>
         </member>
         <member name="M:Buffalo.DB.CommBase.EntityBase.OnPropertyUpdated(System.String)">

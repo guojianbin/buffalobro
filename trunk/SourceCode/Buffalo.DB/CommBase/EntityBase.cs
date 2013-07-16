@@ -35,21 +35,21 @@ namespace Buffalo.DB.CommBase
             return pNames;
         }
 
-        private IList _baseListInfo;
-        /// <summary>
-        /// 所属列表集合以便在延迟加载时候读出
-        /// </summary>
-        internal IList GetBaseList()
-        {
-             return _baseListInfo;
-        }
-        /// <summary>
-        /// 所属列表集合以便在延迟加载时候读出
-        /// </summary>
-        internal void SetBaseList(IList lst)
-        {
-             _baseListInfo=lst;
-        }
+        //private IList _baseListInfo;
+        ///// <summary>
+        ///// 所属列表集合以便在延迟加载时候读出
+        ///// </summary>
+        //internal IList GetBaseList()
+        //{
+        //     return _baseListInfo;
+        //}
+        ///// <summary>
+        ///// 所属列表集合以便在延迟加载时候读出
+        ///// </summary>
+        //internal void SetBaseList(IList lst)
+        //{
+        //     _baseListInfo=lst;
+        //}
 
         /// <summary>
         /// 通知属性已经被修改

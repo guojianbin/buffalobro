@@ -63,22 +63,25 @@ namespace Buffalo.DB.DataFillers
             {
                 return;
             }
-            Dictionary<string, List<object>> dicElement = new Dictionary<string, List<object>>();//根据
+            //Dictionary<string, List<object>> dicElement = new Dictionary<string, List<object>>();//根据
             ///获取本属性的映射信息
             
-            IList baseList = sender.GetBaseList();
-            if (baseList == null)
-            {
-                baseList = new ArrayList();
-                baseList.Add(sender);
-            }
+            //IList baseList = sender.GetBaseList();
+            //if (baseList == null)
+            //{
+            //    baseList = new ArrayList();
+            //    baseList.Add(sender);
+            //}
             
             if (mappingInfo != null)
             {
                 EntityPropertyInfo pkHandle = mappingInfo.SourceProperty;//获取实体主键属性句柄
-                IList pks = CollectPks(baseList, pkHandle, mappingInfo, dicElement, senderHandle.DBInfo);
+                //IList pks = CollectPks(baseList, pkHandle, mappingInfo, dicElement, senderHandle.DBInfo);
+                object lst=Activator.CreateInstance(mappingInfo.FieldType) ;
+                mappingInfo.SetValue(sender, lst);
+                object pk = pkHandle.GetValue(sender);
                 EntityInfoHandle childHandle = mappingInfo.TargetProperty.BelongInfo;//获取子元素的信息
-                FillChilds(pks, childHandle, mappingInfo, dicElement,sender,propertyName);
+                FillChilds(pk, childHandle, mappingInfo,sender,propertyName);
             }
 
         }
@@ -90,18 +93,19 @@ namespace Buffalo.DB.DataFillers
         /// <param name="childHandle">子元素的信息句柄</param>
         /// <param name="mappingInfo">映射信息</param>
         /// <param name="dicElement">元素</param>
-        private static void FillChilds(IList pks, EntityInfoHandle childHandle, EntityMappingInfo mappingInfo, Dictionary<string, List<object>> dicElement, EntityBase sender,string propertyName)
+        private static void FillChilds(object pk, EntityInfoHandle childHandle, EntityMappingInfo mappingInfo,
+            EntityBase sender,string propertyName)
         {
             EntityInfoHandle childInfo = mappingInfo.TargetProperty.BelongInfo;
             DBInfo db = childInfo.DBInfo;
-            if (pks.Count>0)
-            {
+            //if (pks.Count>0)
+            //{
                 DataBaseOperate oper = childHandle.DBInfo.DefaultOperate;
                 BQLDbBase dao = new BQLDbBase(oper);
                 ScopeList lstScope = new ScopeList();
                 
                 sender.OnFillChild(propertyName, lstScope);
-                lstScope.AddIn(mappingInfo.TargetProperty.PropertyName, pks);
+                lstScope.AddEqual(mappingInfo.TargetProperty.PropertyName, pk);
 
 
                 IDataReader reader = dao.QueryReader(lstScope, childInfo.EntityType);
@@ -113,7 +117,8 @@ namespace Buffalo.DB.DataFillers
                     //获取子表的get列表
                     List<EntityPropertyInfo> lstParamNames = CacheReader.GenerateCache(reader, childInfo);//创建一个缓存数值列表
 
-                    IList baseList = new ArrayList();//缓存的父列表
+                    //IList baseList = new ArrayList();//缓存的父列表
+                    IList lst = (IList)mappingInfo.GetValue(sender);
                     while (reader.Read())
                     {
                         object obj = childInfo.CreateProxyInstance();
@@ -121,18 +126,18 @@ namespace Buffalo.DB.DataFillers
                         List<object> curElementObjs = null;
 
 
-                        if (dicElement.TryGetValue(fk, out curElementObjs))
-                        {
-                            foreach (object curElementObj in curElementObjs)
-                            {
-                                IList lst = (IList)mappingInfo.GetValue(curElementObj);
+                        //if (dicElement.TryGetValue(fk, out curElementObjs))
+                        //{
+                            //foreach (object curElementObj in curElementObjs)
+                            //{
+                                
                                 CacheReader.FillObjectFromReader(reader, lstParamNames, obj, db);
                                 lst.Add(obj);
-                                baseList.Add(obj);
-                                (obj as EntityBase).SetBaseList(baseList);
-                            }
+                                //baseList.Add(obj);
+                                //(obj as EntityBase).SetBaseList(baseList);
+                            //}
                             
-                        }
+                        //}
                     }
 
                 }
@@ -141,7 +146,7 @@ namespace Buffalo.DB.DataFillers
                     reader.Close();
                     oper.AutoClose();
                 }
-            }
+            //}
         }
 
 
@@ -163,7 +168,7 @@ namespace Buffalo.DB.DataFillers
             {
                 foreach (object obj in curList)
                 {
-                    //先给子列表赋空元素
+                    ////先给子列表赋空元素
                     object newObj = classInfo.Invoke();
                     mappingInfo.SetValue(obj, newObj);
 
@@ -225,21 +230,22 @@ namespace Buffalo.DB.DataFillers
             {
                 return;
             }
-            IList baseList = sender.GetBaseList();//获取上一次查询的结果集合
-            if (baseList == null) 
-            {
-                baseList = new ArrayList();
-                baseList.Add(sender);
-            }
-            Dictionary<string, ArrayList> dicElement = new Dictionary<string, ArrayList>();
+            //IList baseList = sender.GetBaseList();//获取上一次查询的结果集合
+            //if (baseList == null) 
+            //{
+            //    baseList = new ArrayList();
+            //    baseList.Add(sender);
+            //}
+            //Dictionary<string, ArrayList> dicElement = new Dictionary<string, ArrayList>();
             
             if (mappingInfo != null)
             {
                 EntityPropertyInfo senderHandle = mappingInfo.SourceProperty;//本类的主键属性句柄
 
-                IList pks = CollectFks(baseList, senderHandle, mappingInfo, dicElement, senderInfo.DBInfo);
+                //IList pks = CollectFks(baseList, senderHandle, mappingInfo, dicElement, senderInfo.DBInfo);
                 EntityInfoHandle fatherInfo =mappingInfo.TargetProperty.BelongInfo;
-                FillParent(pks, fatherInfo, dicElement, mappingInfo,propertyName,sender);
+                object pk = senderHandle.GetValue(sender);
+                FillParent(pk, fatherInfo, mappingInfo,propertyName,sender);
             }
 
         }
@@ -251,45 +257,45 @@ namespace Buffalo.DB.DataFillers
         /// <param name="fatherInfo">父表对应类的信息</param>
         /// <param name="dicElement">元素</param>
         /// <param name="mappingInfo">当前父表对应属性的映射信息</param>
-        private static void FillParent(IList pks, EntityInfoHandle fatherInfo,
-            Dictionary<string, ArrayList> dicElement, EntityMappingInfo mappingInfo,
-            string propertyName, EntityBase sender)
+        private static void FillParent(object pk, EntityInfoHandle fatherInfo,
+             EntityMappingInfo mappingInfo,string propertyName, EntityBase sender)
 
         {
             DBInfo db = fatherInfo.DBInfo;
-            if (pks.Count>0)
-            {
+            //if (pks.Count>0)
+            //{
                 DataBaseOperate oper = fatherInfo.DBInfo.DefaultOperate;
                 BQLDbBase dao = new BQLDbBase(oper);
                 ScopeList lstScope = new ScopeList();
 
                 sender.OnFillParent(propertyName, lstScope);
-                lstScope.AddIn(mappingInfo.TargetProperty.PropertyName, pks);
+                lstScope.AddEqual(mappingInfo.TargetProperty.PropertyName, pk);
                 IDataReader reader = dao.QueryReader(lstScope, fatherInfo.EntityType);
                 try
                 {
                     //获取子表的get列表
                     List<EntityPropertyInfo> lstParamNames = CacheReader.GenerateCache(reader, fatherInfo);//创建一个缓存数值列表
-                    IList baseList = new ArrayList();//缓存的父列表
-
+                    //IList baseList = new ArrayList();//缓存的父列表
+                    //string fk = reader[mappingInfo.TargetProperty.ParamName].ToString();
+                    
                     while (reader.Read())
                     {
                         //object obj = createrHandle();
-                        string fk = reader[mappingInfo.TargetProperty.ParamName].ToString();
-                        ArrayList lst = null;
-                        if (dicElement.TryGetValue(fk, out lst))
-                        {
-                            foreach (object curObj in lst)
-                            {
-                                object newObj = fatherInfo.CreateProxyInstance();
+                       
+                        //ArrayList lst = null;
+                        //if (dicElement.TryGetValue(fk, out lst))
+                        //{
+                            //foreach (object curObj in lst)
+                            //{
+                        object newObj = fatherInfo.CreateProxyInstance();
                                 //object fatherObj = mappingInfo.GetValue(curObj);
-                                mappingInfo.SetValue(curObj, newObj);
+                                mappingInfo.SetValue(sender, newObj);
                                 CacheReader.FillObjectFromReader(reader, lstParamNames, newObj, db);
-                                baseList.Add(newObj);
-                                (newObj as EntityBase).SetBaseList(baseList);
-                            }
+                                //baseList.Add(newObj);
+                                //(newObj as EntityBase).SetBaseList(baseList);
+                            //}
 
-                        }
+                        //}
                     }
 
                 }
@@ -298,7 +304,7 @@ namespace Buffalo.DB.DataFillers
                     reader.Close();
                     oper.AutoClose();
                 }
-            }
+            //}
         }
 
         

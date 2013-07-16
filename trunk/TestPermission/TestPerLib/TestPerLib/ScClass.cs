@@ -32,6 +32,14 @@ namespace TestPerLib
             return ClassName;
         }
 
-
+        protected List<ScStudent> _lstStudent;
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual List<ScStudent> LstStudent
+        {
+            get{ return _lstStudent; }
+            set{ _lstStudent = value; }
+        }
     }
 }
