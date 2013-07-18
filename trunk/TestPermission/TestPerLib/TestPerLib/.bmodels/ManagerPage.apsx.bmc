@@ -28,15 +28,15 @@ public string GetSearchControl(Property pro)
 	if(type=="DateTime")
 	{
 		return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
-		"<cc1:KimSoftWebCalendar ID=\""+GetSearchControlName(pro)+"\" runat="server" />";
+		"<cc1:KimSoftWebCalendar ID=\""+GetSearchControlName(pro)+"\" runat=\"server\" />";
 	}
 	if(type=="bool")
 	{
 		return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
-		"<cc1:KimSoftWebCalendar ID=\""+GetSearchControlName(pro)+"\" runat="server" />";
+		"<cc1:KimSoftWebCalendar ID=\""+GetSearchControlName(pro)+"\" runat=\"server\" />";
 	}
 	return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
-		"<asp:DropDownList ID=\""+GetSearchControlName(pro)+"\" runat=\"server\"></asp:DropDownList>"";
+		"<asp:DropDownList ID=\""+GetSearchControlName(pro)+"\" runat=\"server\"></asp:DropDownList>";
 }
 
 /// <summary>
@@ -50,7 +50,7 @@ private string GetSearchControlName(Property pro)
 	{
 		return "ddl"+pro.PropertyName;
 	}
-	if(type=="bool")
+	if(pro.TypeName=="bool")
 	{
 		return "ddl"+pro.PropertyName;
 	}

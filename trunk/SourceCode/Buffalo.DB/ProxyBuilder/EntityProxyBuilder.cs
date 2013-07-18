@@ -288,30 +288,48 @@ namespace Buffalo.DB.ProxyBuilder
             LocalBuilder result = il.DeclareLocal(typeof(object)); //result 索引为0
             //if(字段==null){加载信息}
 
-            if (finfo.IsFamily || finfo.IsPublic)
-            {
-                Label falseLabel = il.DefineLabel();//不为null时候的跳转标签
-                il.Emit(OpCodes.Ldarg_0);//this
+            //if (finfo.IsFamily || finfo.IsPublic)
+            //{
+            //    Label falseLabel = il.DefineLabel();//不为null时候的跳转标签
+            //    il.Emit(OpCodes.Ldarg_0);//this
 
-                il.Emit(OpCodes.Ldfld, finfo);//获取字段值
-                il.Emit(OpCodes.Ldnull);//把null放到第二个位置
-                il.Emit(OpCodes.Ceq);//比较相等(相等则返回1，不想等则返回0)
-                il.Emit(OpCodes.Ldc_I4_0);//把数值0推送到栈
-                il.Emit(OpCodes.Ceq);//比较相等(相等则返回1，不想等则返回0)
-                il.Emit(OpCodes.Brtrue_S, falseLabel);
-                //调用填充函数
-                il.Emit(OpCodes.Ldarg_0);//this
-                il.Emit(OpCodes.Ldstr, propertyInfo.Name);//参数propertyName
-                il.Emit(OpCodes.Callvirt, updateMethod);//调用updateMethod
-                il.MarkLabel(falseLabel);
-            }
-            else 
-            {
-                //调用填充函数
-                il.Emit(OpCodes.Ldarg_0);//this
-                il.Emit(OpCodes.Ldstr, propertyInfo.Name);//参数propertyName
-                il.Emit(OpCodes.Callvirt, updateMethod);//调用updateMethod
-            }
+            //    il.Emit(OpCodes.Ldfld, finfo);//获取字段值
+            //    il.Emit(OpCodes.Ldnull);//把null放到第二个位置
+            //    il.Emit(OpCodes.Ceq);//比较相等(相等则返回1，不想等则返回0)
+            //    il.Emit(OpCodes.Ldc_I4_0);//把数值0推送到栈
+            //    il.Emit(OpCodes.Ceq);//比较相等(相等则返回1，不想等则返回0)
+            //    il.Emit(OpCodes.Brtrue_S, falseLabel);
+            //    //调用填充函数
+            //    il.Emit(OpCodes.Ldarg_0);//this
+            //    il.Emit(OpCodes.Ldstr, propertyInfo.Name);//参数propertyName
+            //    il.Emit(OpCodes.Callvirt, updateMethod);//调用updateMethod
+            //    il.MarkLabel(falseLabel);
+            //}
+            //else 
+            //{
+            //    //调用填充函数
+            //    il.Emit(OpCodes.Ldarg_0);//this
+            //    il.Emit(OpCodes.Ldstr, propertyInfo.Name);//参数propertyName
+            //    il.Emit(OpCodes.Callvirt, updateMethod);//调用updateMethod
+            //}
+
+            
+            //if(base.属性==null){加载数据}
+            Label falseLabel = il.DefineLabel();//不为null时候的跳转标签
+            il.Emit(OpCodes.Ldarg_0);//this
+
+            il.Emit(OpCodes.Call, methodInfo);
+            il.Emit(OpCodes.Ldnull);//把null放到第二个位置
+            il.Emit(OpCodes.Ceq);//比较相等(相等则返回1，不想等则返回0)
+            il.Emit(OpCodes.Ldc_I4_0);//把数值0推送到栈
+            il.Emit(OpCodes.Ceq);//比较相等(相等则返回1，不想等则返回0)
+            il.Emit(OpCodes.Brtrue_S, falseLabel);
+            //调用填充函数
+            il.Emit(OpCodes.Ldarg_0);//this
+            il.Emit(OpCodes.Ldstr, propertyInfo.Name);//参数propertyName
+            il.Emit(OpCodes.Callvirt, updateMethod);//调用updateMethod
+            il.MarkLabel(falseLabel);
+
 
             //Call methodInfo
             il.Emit(OpCodes.Ldarg_0);
@@ -363,3 +381,57 @@ namespace Buffalo.DB.ProxyBuilder
         }
     }
 }
+
+//*************代理类其实就是生成一个该实体的子类，生成后的子类如下代码*****************
+
+//namespace BuffaloProxyBuilder
+//{
+//    public class User8765493877954906FE4576:User
+//    {
+//        public override string Name
+//        {
+//            get 
+//            {
+//                return base.Name;
+//            }
+//            set 
+//            {
+//                base.Name = value;
+//                OnPropertyUpdated("Name");
+//            }
+//        }
+
+//        public override ScClass BelongClass
+//        {
+//            get
+//            {
+//                if (base.BelongClass == null) 
+//                {
+//                    FillParent("BelongClass");
+//                }
+//                return base.BelongClass;
+//            }
+//            set
+//            {
+//                base.BelongClass = value;
+//                OnMapPropertyUpdated("BelongClass");
+//            }
+//        }
+
+//        public override List<ScScore> LstScore
+//        {
+//            get 
+//            {
+//                if (base.LstScore == null)
+//                {
+//                    FillChild("LstScore");
+//                }
+//                return base.LstScore;
+//            }
+//            set 
+//            {
+//                base.LstScore = value;
+//            }
+//        }
+//    }
+//}
