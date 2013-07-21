@@ -55,6 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BQLCommon\BQLConditionCommon\BQLConditionValueItem.cs" />
+    <Compile Include="BQLCommon\BQLConditionCommon\BQLConnectHandle.cs" />
+    <Compile Include="BQLCommon\BQLConditionCommon\OperatorPrecedenceUnit.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordCreateTableItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordTableParamItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAlterTableItem.cs" />
