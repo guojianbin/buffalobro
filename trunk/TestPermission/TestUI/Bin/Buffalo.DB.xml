@@ -8537,6 +8537,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Buffalo.DB.BQLCommon.BQLConditionCommon.OperatorPrecedenceUnit">
+            <summary>
+            运算符优先级处理类
+            </summary>
+        </member>
         <member name="T:Buffalo.DB.QueryConditions.ScopeType">
             <summary>
             查找条件类型

@@ -379,7 +379,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         }
         public static BQLComparItem operator &(BQLValueItem handle, BQLValueItem value)
         {
-            UnityDbType(handle, value);
+            //UnityDbType(handle, value);
             BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoAnd, new BQLValueItem[] { handle, value });
             return fHandle;
         }
