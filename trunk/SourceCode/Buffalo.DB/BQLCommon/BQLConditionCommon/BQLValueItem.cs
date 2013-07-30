@@ -339,6 +339,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             BQLValueItem oValue = ToValueItem(value);
             UnityDbType(handle, oValue);
             BQLOperatorHandle fHandle = new BQLOperatorHandle(FunctionManager.DoAdd, new BQLValueItem[] { handle, oValue });
+            fHandle.PriorityLevel = 6;
             return fHandle;
         }
         public static BQLOperatorHandle operator -(BQLValueItem handle, object value)
@@ -346,6 +347,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             BQLValueItem oValue = ToValueItem(value);
             UnityDbType(handle, oValue);
             BQLOperatorHandle fHandle = new BQLOperatorHandle(FunctionManager.DoSub, new BQLValueItem[] { handle, oValue });
+            fHandle.PriorityLevel = 6;
             return fHandle;
         }
         public static BQLOperatorHandle operator *(BQLValueItem handle, object value)
@@ -353,6 +355,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             BQLValueItem oValue = ToValueItem(value);
             UnityDbType(handle, oValue);
             BQLOperatorHandle fHandle = new BQLOperatorHandle(FunctionManager.DoMul, new BQLValueItem[] { handle, oValue });
+            fHandle.PriorityLevel = 7;
             return fHandle;
         }
         public static BQLOperatorHandle operator /(BQLValueItem handle, object value)
@@ -360,6 +363,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             BQLValueItem oValue = ToValueItem(value);
             UnityDbType(handle, oValue);
             BQLOperatorHandle fHandle = new BQLOperatorHandle(FunctionManager.DoDiv, new BQLValueItem[] { handle, oValue });
+            fHandle.PriorityLevel = 7;
             return fHandle;
         }
 
@@ -368,6 +372,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             BQLValueItem oValue = ToValueItem(value);
             UnityDbType(handle, oValue);
             BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoEqual, new BQLValueItem[] { handle, oValue });
+            fHandle.PriorityLevel = 1;
             return fHandle;
         }
         public static BQLComparItem operator !=(BQLValueItem handle, object value)
@@ -375,17 +380,20 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             BQLValueItem oValue = ToValueItem(value);
             UnityDbType(handle, oValue);
             BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoNotequal, new BQLValueItem[] { handle, oValue });
+            fHandle.PriorityLevel = 1;
             return fHandle;
         }
         public static BQLComparItem operator &(BQLValueItem handle, BQLValueItem value)
         {
             //UnityDbType(handle, value);
             BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoAnd, new BQLValueItem[] { handle, value });
+            fHandle.PriorityLevel = 3;
             return fHandle;
         }
         public static BQLComparItem operator |(BQLValueItem handle, BQLValueItem value)
         {
             BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoOr, new BQLValueItem[] { handle, value });
+            fHandle.PriorityLevel = 4;
             return fHandle;
         }
         public static BQLComparItem operator >(BQLValueItem handle, object value)
@@ -393,6 +401,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             BQLValueItem oValue = ToValueItem(value);
             UnityDbType(handle, oValue);
             BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoMore, new BQLValueItem[] { handle, oValue });
+            fHandle.PriorityLevel = 5;
             return fHandle;
         }
         public static BQLComparItem operator >=(BQLValueItem handle, object value)
@@ -400,6 +409,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             BQLValueItem oValue = ToValueItem(value);
             UnityDbType(handle, oValue);
             BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoMorethen, new BQLValueItem[] { handle, oValue });
+            fHandle.PriorityLevel = 5;
             return fHandle;
         }
         public static BQLComparItem operator <(BQLValueItem handle, object value)
@@ -407,6 +417,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             BQLValueItem oValue = ToValueItem(value);
             UnityDbType(handle, oValue);
             BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoLess, new BQLValueItem[] { handle, oValue });
+            fHandle.PriorityLevel = 5;
             return fHandle;
         }
         public static BQLComparItem operator <=(BQLValueItem handle, object value)
@@ -414,6 +425,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             BQLValueItem oValue = ToValueItem(value);
             UnityDbType(handle, oValue);
             BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoLessThen, new BQLValueItem[] { handle, oValue });
+            fHandle.PriorityLevel = 5;
             return fHandle;
         }
 

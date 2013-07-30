@@ -9,5 +9,6 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
     /// </summary>
     public class OperatorPrecedenceUnit
     {
+
     }
 }

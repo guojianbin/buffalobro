@@ -6,7 +6,7 @@ using Buffalo.Kernel;
 namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 {
 
-    public class BQLOperatorHandle:BQLParamHandle
+    public class BQLOperatorHandle : BQLParamHandle, IOperatorPriorityLevel
     {
         private DelOperatorHandle function;
         private BQLValueItem[] parameters;
@@ -46,5 +46,20 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 
             return null;
         }
+
+        #region IOperatorPriorityLevel 成员
+
+        private int _priorityLevel;
+        /// <summary>
+        /// 运算符优先级
+        /// </summary>
+        public int PriorityLevel
+        {
+            get { return _priorityLevel; }
+            internal set { _priorityLevel = value; }
+        }
+
+        
+        #endregion
     }
 }

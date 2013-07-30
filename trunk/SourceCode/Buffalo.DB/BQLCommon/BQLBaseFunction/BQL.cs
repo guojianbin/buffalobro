@@ -103,6 +103,7 @@ namespace Buffalo.DB.BQLCommon.BQLBaseFunction
         {
 
             BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoNot, new BQLValueItem[] { handle });
+            fHandle.PriorityLevel = 4;
             return fHandle;
         }
     
