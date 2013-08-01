@@ -38,8 +38,8 @@ namespace Buffalo.DBTools.DocSummary
             perentSummrytxt = HttpUtility.HtmlDecode(summrytxt);
             bool flag = false;
             this.Overrideheight = 0.15f;
-            //RectangleF rect = new RectangleF(this.summeryx, this.summeryy, ((float)parentShape.BoundingBox.Width) - (this.summeryx * 2f), this.Overrideheight);
-            RectangleF rect =RectangleD.ToRectangleF(parentShape.BoundingBox);
+            RectangleF rect = new RectangleF(this.summeryx, this.summeryy, ((float)parentShape.BoundingBox.Width) - (this.summeryx * 2f), this.Overrideheight);
+            //RectangleF rect =RectangleD.ToRectangleF(parentShape.BoundingBox);
             rect.X = 0.03f;
             if (!string.IsNullOrEmpty(perentSummrytxt))
             {
