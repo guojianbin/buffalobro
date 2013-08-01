@@ -9,6 +9,7 @@ using System.Collections;
 using Buffalo.DBTools.DocSummary.VSConfig;
 using Buffalo.DBTools.HelperKernel;
 using Buffalo.Kernel;
+using System.Web;
 /** 
 @author 
 @version 创建时间：2011-12-1
@@ -45,6 +46,7 @@ namespace Buffalo.DBTools.DocSummary
                         break;
                     }
                 }
+                float MemberLineHeight = (float)listField.GetItemHeight(parentShape);
                 if (listField != null)
                 {
                     int itemCount = compartment.GetItemCount(listField);
@@ -84,8 +86,8 @@ namespace Buffalo.DBTools.DocSummary
                                 
                                 
                                 e.Graphics.FillRectangle(this.BackBrush, 0f,
-                                    (0f + VSConfigManager.CurConfig.MemberLineHeight * (float)i),
-                                    width, VSConfigManager.CurConfig.MemberSummaryHeight);
+                                    (0f + MemberLineHeight * (float)i),
+                                    width, MemberLineHeight);
 
                                 DBConfigInfo dbInfo = DBConfigInfo.LoadInfo(_FromAddin.GetDesignerInfo());
 
@@ -96,7 +98,7 @@ namespace Buffalo.DBTools.DocSummary
                                     curStr = menberByName.Name;
                                     
                                     e.Graphics.DrawString(curStr, font, this.NameBrush, curX,
-                                        (0f + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                                        (0f + MemberLineHeight * (float)i + 0.02f));
                                     curX += e.Graphics.MeasureString(curStr, font).Width;
                                 }
                                 if (EnumUnit.ContainerValue((int)_summaryShowInfo, (int)SummaryShowItem.Summary))
@@ -109,9 +111,9 @@ namespace Buffalo.DBTools.DocSummary
                                     {
                                         curStr = "";
                                     }
-                                    curStr += menberByName.DocSummary;
+                                    curStr += HttpUtility.HtmlDecode(menberByName.DocSummary);
                                     e.Graphics.DrawString(curStr, font, this.SummaryBrush, curX,
-                                        (0f + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                                        (0f + MemberLineHeight * (float)i + 0.02f));
                                 }
                             }
                         }

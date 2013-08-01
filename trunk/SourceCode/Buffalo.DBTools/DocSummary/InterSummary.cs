@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.Modeling.Diagrams;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Web;
 /** 
 @author 
 @version 创建时间：2011-12-1
@@ -27,6 +28,7 @@ namespace Buffalo.DBTools.DocSummary
             base.DoPaint(e, parentShape);
             Font font = this.GetFont(e.View);
             string summrytxt = this.GetSummrytxt(parentShape);
+            summrytxt = HttpUtility.HtmlDecode(summrytxt);
             this.Overrideheight = 0.15f;
             RectangleF rect = new RectangleF(this.summeryx, this.summeryy, ((float)parentShape.BoundingBox.Width) - (this.summeryx * 2f), this.Overrideheight);
             LinearGradientBrush brush = new LinearGradientBrush(rect, Color.FromArgb(0xe7, 240, 220), Color.White, 0f);

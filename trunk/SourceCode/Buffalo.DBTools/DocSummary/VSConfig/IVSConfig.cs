@@ -3,22 +3,22 @@ namespace Buffalo.DBTools.DocSummary.VSConfig
 {
     public interface IVSConfig
     {
+        ///// <summary>
+        ///// 填充色的X
+        ///// </summary>
+        //float MemberLineHeight { get; }
         /// <summary>
         /// 填充色的X
         /// </summary>
-        float MemberLineHeight { get; }
-        /// <summary>
-        /// 行高
-        /// </summary>
         float MemberMarginX { get; }
-        /// <summary>
-        /// 离顶端的距离
-        /// </summary>
-        float MemberStartMargin { get; }
-        /// <summary>
-        /// 离顶端的距离
-        /// </summary>
-        float MemberSummaryHeight { get; }
+        ///// <summary>
+        ///// 离顶端的距离
+        ///// </summary>
+        //float MemberStartMargin { get; }
+        ///// <summary>
+        ///// 离顶端的距离
+        ///// </summary>
+        //float MemberSummaryHeight { get; }
 
 
         /// <summary>

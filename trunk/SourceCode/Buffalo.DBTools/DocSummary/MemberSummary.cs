@@ -9,6 +9,7 @@ using System.Collections;
 using Buffalo.DBTools.DocSummary.VSConfig;
 using Buffalo.DBTools.HelperKernel;
 using Buffalo.Kernel;
+using System.Web;
 /** 
 @author 
 @version 创建时间：2011-12-1
@@ -32,6 +33,7 @@ namespace Buffalo.DBTools.DocSummary
             base.DoPaint(e, parentShape);
             Font font = this.GetFont(e.View);
             CDCompartment compartment = parentShape as CDCompartment;
+            
             if (compartment != null)
             {
                 ListField listField = null;
@@ -43,19 +45,23 @@ namespace Buffalo.DBTools.DocSummary
                         break;
                     }
                 }
+                float MemberLineHeight = (float)listField.GetItemHeight(parentShape);
+                float MemberStartMargin = 0f;
+                float stringMargin = 0.02f;
                 if (listField != null)
                 {
                     int itemCount = compartment.GetItemCount(listField);
                     for (int i = 0; i < itemCount; i++)
                     {
                         ItemDrawInfo itemDrawInfo = new ItemDrawInfo();
-                        
+                        MemberStartMargin = (float)listField.GetItemRectangle(parentShape,i,0).Y;
                         compartment.GetItemDrawInfo(listField, i, itemDrawInfo);
                         if (itemDrawInfo.Disabled)
                         {
                             continue;
                         }
                         string[] strArray = itemDrawInfo.Text.Split(new char[] { ':', '(', '{', '<' });
+
                         Member menberByName = this.GetMenberByName(parentShape.ParentShape, strArray[0].Trim());
                         if ((menberByName == null))
                         {
@@ -95,12 +101,11 @@ namespace Buffalo.DBTools.DocSummary
 
                         float width = (float)bound.Width;
                         //float MemberStartMargin = 0.26f;
-                        //float MemberLineHeight = 0.19f;
+                        
                         
                         e.Graphics.FillRectangle(this.BackBrush, VSConfigManager.CurConfig.MemberMarginX,
-                            (VSConfigManager.CurConfig.MemberStartMargin +
-                            VSConfigManager.CurConfig.MemberLineHeight * (float)i), width,
-                            VSConfigManager.CurConfig.MemberSummaryHeight);
+                            MemberStartMargin, width,
+                            MemberLineHeight);
 
                         float curX=VSConfigManager.CurConfig.MemberMarginX;
                         
@@ -125,14 +130,14 @@ namespace Buffalo.DBTools.DocSummary
                             {
                                 curStr = "static";
                                 e.Graphics.DrawString(curStr, font, ModifierBrush, curX,
-                                    (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                                    MemberStartMargin + stringMargin);
                                 curX += e.Graphics.MeasureString(curStr, font).Width;
                             }
 
 
                             curStr = genericTypeName + " ";
                             e.Graphics.DrawString(curStr, font, this.VarBrush, curX,
-                                (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                                MemberStartMargin + stringMargin);
                             curX += e.Graphics.MeasureString(curStr, font).Width;
                         }
                         if (EnumUnit.ContainerValue((int)_summaryShowInfo, (int)SummaryShowItem.MemberName))
@@ -145,7 +150,7 @@ namespace Buffalo.DBTools.DocSummary
 
 
                             e.Graphics.DrawString(curStr, font, this.NameBrush, curX,
-                                (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                                MemberStartMargin + stringMargin);
                             curX += e.Graphics.MeasureString(curStr, font).Width;
 
                         }
@@ -159,9 +164,9 @@ namespace Buffalo.DBTools.DocSummary
                             {
                                 curStr = "";
                             }
-                            curStr += docSummary;
+                            curStr += HttpUtility.HtmlDecode(docSummary);
                             e.Graphics.DrawString(curStr, font, this.SummaryBrush, curX,
-                                (VSConfigManager.CurConfig.MemberStartMargin + VSConfigManager.CurConfig.MemberLineHeight * (float)i + 0.02f));
+                                MemberStartMargin + stringMargin);
                         }
                     }
                 }

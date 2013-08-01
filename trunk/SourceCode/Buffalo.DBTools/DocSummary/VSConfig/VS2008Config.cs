@@ -37,7 +37,7 @@ namespace Buffalo.DBTools.DocSummary.VSConfig
         {
             get 
             {
-                return 0.20f;
+                return 0.26f;
             }
         }
 

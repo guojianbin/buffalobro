@@ -7,6 +7,8 @@ using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner.PresentationModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using Buffalo.DBTools.DocSummary.VSConfig;
+using System.Xml;
+using System.Web;
 /** 
 @author 
 @version 创建时间：2011-12-1
@@ -32,9 +34,13 @@ namespace Buffalo.DBTools.DocSummary
             Font font = this.GetFont(e.View);
             string summrytxt = this.GetSummrytxt(parentShape);
             string perentSummrytxt = this.GetPerentSummrytxt(parentShape);
+            summrytxt = HttpUtility.HtmlDecode(summrytxt);
+            perentSummrytxt = HttpUtility.HtmlDecode(summrytxt);
             bool flag = false;
             this.Overrideheight = 0.15f;
-            RectangleF rect = new RectangleF(this.summeryx, this.summeryy, ((float)parentShape.BoundingBox.Width) - (this.summeryx * 2f), this.Overrideheight);
+            //RectangleF rect = new RectangleF(this.summeryx, this.summeryy, ((float)parentShape.BoundingBox.Width) - (this.summeryx * 2f), this.Overrideheight);
+            RectangleF rect =RectangleD.ToRectangleF(parentShape.BoundingBox);
+            rect.X = 0.03f;
             if (!string.IsNullOrEmpty(perentSummrytxt))
             {
                 flag = true;
@@ -43,11 +49,11 @@ namespace Buffalo.DBTools.DocSummary
             }
             LinearGradientBrush brush = new LinearGradientBrush(rect, Color.FromArgb(0xd4, 0xdd, 0xef), Color.White, 0f);
             e.Graphics.FillRectangle(brush, rect);
-            e.Graphics.DrawString("类:"+summrytxt, font, this.SumerBrush, this.summeryx + 0.05f, this.summeryy);
+            e.Graphics.DrawString("类:" + summrytxt, font, this.SumerBrush, this.summeryx + 0.05f, this.summeryy+0.03f);
             if (flag)
             {
                 Font font2 = this.GetFont(e.View);
-                e.Graphics.DrawString(perentSummrytxt, font2, this.PerentBrush, this.perentx + 0.05f, this.perenty);
+                e.Graphics.DrawString(perentSummrytxt, font2, this.PerentBrush, this.perentx + 0.05f, this.perenty + 0.03f);
             }
         }
 
