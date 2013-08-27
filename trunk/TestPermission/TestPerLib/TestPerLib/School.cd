@@ -12,7 +12,7 @@
     <Position X="0.5" Y="4" Width="1.5" />
     <TypeIdentifier>
       <FileName>ScClass.cs</FileName>
-      <HashCode>AAAAAAAAAACAAAAEAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAACACAAAAEAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="TestPerLib.ScEmployee">
@@ -34,13 +34,6 @@
     <TypeIdentifier>
       <FileName>Class1.cs</FileName>
       <HashCode>AAAAIAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TestPerLib.BpGroup">
-    <Position X="7.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>BpGroup.cs</FileName>
-      <HashCode>AAAAAAAAAIAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
 </ClassDiagram>

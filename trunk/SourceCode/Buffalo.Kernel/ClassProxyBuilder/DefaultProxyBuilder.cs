@@ -37,7 +37,7 @@ namespace Buffalo.Kernel.ClassProxyBuilder
                                                                             AssemblyBuilderAccess.RunAndSave);
             _moduleBuilder = _assemblyBuilder.DefineDynamicModule(classNamespace);
             _interceptorType = interceptorType;
-            _getDefaultMethod = _interceptorType.GetMethod("GetDefault");
+            //_getDefaultMethod = _interceptorType.GetMethod("GetDefault");
             _afterCallMethod = _interceptorType.GetMethod("AfterCall");
             _beforeCallMethod = _interceptorType.GetMethod("BeforeCall");
         }
@@ -55,8 +55,8 @@ namespace Buffalo.Kernel.ClassProxyBuilder
             {
                 className = classType.Namespace + ".ProxyClass";
             }
-            Type aopType = BulidType(classType, _moduleBuilder,className);
-            
+           
+            Type aopType = BulidType(classType, _moduleBuilder, className);
             return aopType;
         }
         /// <summary>
@@ -80,7 +80,7 @@ namespace Buffalo.Kernel.ClassProxyBuilder
             FieldBuilder inspectorFieldBuilder = typeBuilder.DefineField("_inspector", typeof(IInterceptor),
                                                                 FieldAttributes.Public | FieldAttributes.InitOnly);
             //构造函数
-            BuildCtor(classType, inspectorFieldBuilder, typeBuilder);
+            //BuildCtor(classType, inspectorFieldBuilder, typeBuilder);
 
             //构造方法
             BuildMethod(classType, inspectorFieldBuilder, typeBuilder);
@@ -247,13 +247,14 @@ namespace Buffalo.Kernel.ClassProxyBuilder
 
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Call, classType.GetConstructor(Type.EmptyTypes));//调用base的默认ctor
-            il.Emit(OpCodes.Ldarg_0);
+            //il.Emit(OpCodes.Ldarg_0);
             ////将typeof(classType)压入计算堆
             //il.Emit(OpCodes.Ldtoken, classType);
             //il.Emit(OpCodes.Call, typeof(Type).GetMethod("GetTypeFromHandle", new Type[] { typeof(RuntimeTypeHandle) }));
             //调用DefaultInterceptorFactory.Create(type)
-
+            LocalBuilder aopmessage=il.DeclareLocal(typeof(IInterceptor));
             il.Emit(OpCodes.Call, _getDefaultMethod);
+            il.Emit(OpCodes.Ldarg_0);
             //将结果保存到字段_inspector
             il.Emit(OpCodes.Stfld, inspectorFieldBuilder);
             il.Emit(OpCodes.Ret);

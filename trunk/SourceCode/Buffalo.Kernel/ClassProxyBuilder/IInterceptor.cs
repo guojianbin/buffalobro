@@ -29,5 +29,6 @@ namespace Buffalo.Kernel.ClassProxyBuilder
         /// <param name="returnValue">结果</param>
         /// <param name="correlationState">状态对象</param>
         void AfterCall(object obj, string operationName, object returnValue, object correlationState);
+        IInterceptor GetDefault();
     }
 }
