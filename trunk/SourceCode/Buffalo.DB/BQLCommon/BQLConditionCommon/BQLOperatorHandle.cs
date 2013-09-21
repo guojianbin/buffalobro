@@ -41,6 +41,10 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             DelOperatorHandle degFHandle = function;
             if (degFHandle != null)
             {
+                if (_priorityLevel > 0) 
+                {
+                    return degFHandle(this, info);
+                }
                 return "(" + degFHandle(this, info) + ")";
             }
 

@@ -29,7 +29,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         private static string OperatorFunction(BQLOperatorHandle fHandle, string connect, KeyWordInfomation info)
         {
             fHandle.ValueDbType = DbType.Double;
-            return CustomerConnectFunction(fHandle.GetParameters(), connect,info);
+            return CustomerConnectFunction(fHandle.GetParameters(), connect, info, fHandle.PriorityLevel);
         }
         /// <summary>
         /// 运算符函数
@@ -40,7 +40,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         private static string ConditionsFunction(BQLComparItem fHandle, string connect, KeyWordInfomation info)
         {
             fHandle.ValueDbType = DbType.Boolean;
-            return CustomerConnectFunction(fHandle.GetParameters(), connect, info);
+            return CustomerConnectFunction(fHandle.GetParameters(), connect, info, fHandle.PriorityLevel);
         }
         /// <summary>
         /// 进行加法运算
@@ -55,9 +55,10 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 
             if (IsStringDBType(item1.ValueDbType) || IsStringDBType(item2.ValueDbType)) //字符串拼合
             {
+
                 string value1 = item1.DisplayValue(info);
                 string value2 = item2.DisplayValue(info);
-
+                //if(OperatorPrecedenceUnit.LeftNeedBreak(
                 fHandle.ValueDbType = DbType.String;
                 return info.DBInfo.CurrentDbAdapter.ConcatString(value1, value2);
             }
@@ -65,7 +66,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             {
                 fHandle.ValueDbType = DbType.Double;
             }
-            return CustomerConnectFunction(fHandle.GetParameters(), "+",info);
+            return CustomerConnectFunction(fHandle.GetParameters(), "+", info, fHandle.PriorityLevel);
         }
 
         /// <summary>
@@ -214,8 +215,9 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// </summary>
         /// <param name="handle">函数</param>
         /// <param name="connect">连接符</param>
+        /// <param name="operLevel">优先级</param>
         /// <returns></returns>
-        private static string CustomerConnectFunction(BQLValueItem[] parameters, string connect, KeyWordInfomation info)
+        private static string CustomerConnectFunction(BQLValueItem[] parameters, string connect, KeyWordInfomation info, int operLevel)
         {
             //BQLValueItem[] parameters = fHandle.GetParameters();
             string values = "";
@@ -223,7 +225,8 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             {
                 BQLValueItem item = parameters[i];
 
-                values += item.DisplayValue(info);
+                //values += item.DisplayValue(info);
+                values += OperatorPrecedenceUnit.FillBreak(item, i == 0, operLevel, info);
                 if (i < parameters.Length - 1)
                 {
                     values += connect;

@@ -10,33 +10,80 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
     public class OperatorPrecedenceUnit
     {
         /// <summary>
-        /// 左边的数值是否需要加括号
+        /// 填充值的括号
         /// </summary>
-        /// <param name="left">左边数值</param>
-        /// <param name="operLevel">运算符优先级</param>
+        /// <param name="left">连接符左边</param>
+        /// <param name="isLeft">是否在运算符左边</param>
+        /// <param name="operLevel">当前符号优先级</param>
+        /// <param name="info">输出信息</param>
         /// <returns></returns>
-        public static bool LeftNeedBreak(IOperatorPriorityLevel left,int operLevel) 
+        public static string FillBreak(BQLValueItem value, bool isLeft, int operLevel, KeyWordInfomation info)
         {
-            if (left.PriorityLevel < operLevel) 
+            IOperatorPriorityLevel pl = value as IOperatorPriorityLevel;
+
+            if (pl == null)
             {
-                return true;
+                return value.DisplayValue(info);
             }
-            return false;
+
+            if ((isLeft && pl.PriorityLevel < operLevel)||
+                ((!isLeft) && pl.PriorityLevel <= operLevel)
+                )
+            {
+                return "(" + value.DisplayValue(info) + ")";
+            }
+            return value.DisplayValue(info);
+        }
+
+        
+
+        /// <summary>
+        /// 优先级数组
+        /// </summary>
+        private static int[] _arrPrecedence = InitPrecedence();
+        /// <summary>
+        /// 初始化优先级数组
+        /// </summary>
+        /// <returns></returns>
+        private static int[] InitPrecedence() 
+        {
+            int[] arr = new int[256];
+            arr[(int)'+'] = 6;
+            arr[(int)'-'] = 6;
+            arr[(int)'*'] = 7;
+            arr[(int)'/'] = 7;
+            arr[(int)'='] = 1;
+            arr[(int)'!'+128] = 1;//!=
+            arr[(int)'&'] = 3;
+            arr[(int)'|'] = 4;
+            arr[(int)'>'] = 5;
+            arr[(int)'>'+128] = 5;//>=
+            arr[(int)'<'] = 5;
+            arr[(int)'<'+128] = 5;//<=
+            return arr;
         }
 
         /// <summary>
-        /// 右边的数值是否需要加括号
+        /// 获取运算符优先级
         /// </summary>
-        /// <param name="right">右边数值</param>
-        /// <param name="operLevel">运算符优先级</param>
+        /// <param name="oper">运算符</param>
         /// <returns></returns>
-        public static bool RightNeedBreak(IOperatorPriorityLevel right, int operLevel)
+        public static int GetPrecedence(string oper) 
         {
-            if (right.PriorityLevel <= operLevel)
+            int index = 0;
+            if(string.IsNullOrEmpty(oper))
             {
-                return true;
+                return 0;
             }
-            return false;
+            if (oper.Length > 1)
+            {
+                index += 128;
+            }
+
+            index += (int)oper[0];
+            return _arrPrecedence[index];
+            
         }
+
     }
 }
