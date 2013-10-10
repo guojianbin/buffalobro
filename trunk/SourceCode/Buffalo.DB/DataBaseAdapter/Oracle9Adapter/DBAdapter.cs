@@ -165,9 +165,18 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <returns></returns>
         public string FreeTextLike(string paranName, string value)
         {
-            return " (contains(\"" + paranName + "\"," + value + ")>0)";
+            throw new NotImplementedException("Oracle不包含FreeText方法");
         }
-
+        /// <summary>
+        /// 返回全文检索的查询语句
+        /// </summary>
+        /// <param name="paranName"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public string ContainsLike(string paranName, string value)
+        {
+            return " (contains(" + paranName + "," + value + ")>0)";
+        }
         /// <summary>
         /// 游标分页
         /// </summary>

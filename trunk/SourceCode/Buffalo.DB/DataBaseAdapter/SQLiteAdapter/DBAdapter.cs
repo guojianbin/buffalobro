@@ -169,11 +169,20 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <param name="paranName"></param>
         /// <param name="value"></param>
         /// <returns></returns>
+        public string ContainsLike(string paranName, string value)
+        {
+            throw new NotImplementedException("SQLite不包含全文检索方法");
+        }
+        /// <summary>
+        /// 返回全文检索的查询语句
+        /// </summary>
+        /// <param name="paranName"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public string FreeTextLike(string paranName, string value)
         {
-            return " like '%" + value + "%'";
+            throw new NotImplementedException("SQLite不包含全文检索方法");
         }
-
         /// <summary>
         /// 游标分页
         /// </summary>

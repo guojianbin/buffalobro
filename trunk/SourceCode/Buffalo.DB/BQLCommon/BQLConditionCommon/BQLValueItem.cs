@@ -166,7 +166,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         {
             BQLValueItem oValue = BQLValueItem.ToValueItem(item);
             oValue.ValueDbType = this.ValueDbType;
-            return new BQLConditionItem(this, new BQLValueItem[] { oValue }, BQLConditionManager.DoLike);
+            return new BQLConditionItem(this, new BQLValueItem[] { oValue }, BQLConditionManager.DoFreeText);
         }
         /// <summary>
         /// 时间类型按指定格式转换到字符串

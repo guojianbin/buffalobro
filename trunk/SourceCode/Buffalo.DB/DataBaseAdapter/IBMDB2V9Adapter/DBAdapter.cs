@@ -210,11 +210,20 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <param name="paranName"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public string FreeTextLike(string paranName,string value) 
+        public string ContainsLike(string paranName, string value) 
         {
-            return " (CONTAINS(\"" + paranName + "\"," + value + ")>0)";
+            return " (CONTAINS(" + paranName + "," + value + ")>0)";
         }
-
+        /// <summary>
+        /// 返回全文检索的查询语句
+        /// </summary>
+        /// <param name="paranName"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public string FreeTextLike(string paranName, string value)
+        {
+            throw new NotImplementedException("DB2不包含FreeText方法");
+        }
         /// <summary>
         /// 游标分页
         /// </summary>

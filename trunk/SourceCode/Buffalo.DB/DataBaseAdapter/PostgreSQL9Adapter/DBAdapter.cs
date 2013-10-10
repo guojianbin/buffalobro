@@ -169,11 +169,20 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
         /// <param name="paranName"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public string FreeTextLike(string paranName,string value) 
+        public string ContainsLike(string paranName, string value) 
         {
             return " to_tsvector(" + paranName + ") @@ to_tsquery("+value+")";
         }
-
+        /// <summary>
+        /// 返回全文检索的查询语句
+        /// </summary>
+        /// <param name="paranName"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public string FreeTextLike(string paranName, string value)
+        {
+            throw new NotImplementedException("PostgreSQL不包含FreeText方法");
+        }
         /// <summary>
         /// 游标分页
         /// </summary>

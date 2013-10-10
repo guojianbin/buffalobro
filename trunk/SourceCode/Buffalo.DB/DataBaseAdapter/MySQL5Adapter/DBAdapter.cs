@@ -179,11 +179,20 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// <param name="paranName"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public string FreeTextLike(string paranName,string value) 
+        public string ContainsLike(string paranName, string value) 
         {
-            return " (MATCH(`" + paranName + "`) AGAINST("+value+"))";
+            return " (MATCH(" + paranName + ") AGAINST("+value+"))";
         }
-
+        /// <summary>
+        /// 返回全文检索的查询语句
+        /// </summary>
+        /// <param name="paranName"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public string FreeTextLike(string paranName, string value)
+        {
+            throw new NotImplementedException("MySQL不包含FreeText方法");
+        }
         /// <summary>
         /// 游标分页
         /// </summary>

@@ -379,9 +379,19 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <param name="paranName"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public string FreeTextLike(string paranName,string value) 
+        public string FreeTextLike(string param,string value) 
         {
-            return " (contains([" + paranName + "]," + value + "))";
+            return " (freetext(" + param + "," + value + "))";
+        }
+        /// <summary>
+        /// 返回全文检索的查询语句
+        /// </summary>
+        /// <param name="paranName"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public string ContainsLike(string paranName, string value)
+        {
+            return " (contains(" + paranName + "," + value + "))";
         }
         /// <summary>
         /// 获取当前时间

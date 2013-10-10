@@ -96,7 +96,25 @@ namespace Buffalo.DB.BQLCommon.BQLConditions
         internal static string DoContains(string source, string[] lstParam, DBInfo db)
         {
             IDBAdapter ida = db.CurrentDbAdapter;
-            return ida.FreeTextLike(source,lstParam[0]);
+            if (!source.Contains("*"))
+            {
+                source = ida.FormatParam(source);
+            }
+            return ida.ContainsLike(source,lstParam[0]);
+        }
+        /// <summary>
+        /// 全文检索的条件
+        /// </summary>
+        /// <param name="lstParam"></param>
+        /// <returns></returns>
+        internal static string DoFreeText(string source, string[] lstParam, DBInfo db)
+        {
+            IDBAdapter ida = db.CurrentDbAdapter;
+            if (!source.Contains("*")) 
+            {
+                source = ida.FormatParam ( source );
+            }
+            return ida.FreeTextLike(source, lstParam[0]);
         }
     }
 }

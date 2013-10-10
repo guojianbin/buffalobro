@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BQLCommon\BQLConditionCommon\BQLConditionValueItem.cs" />
+    <Compile Include="BQLCommon\BQLConditionCommon\IOperatorPriorityLevel.cs" />
+    <Compile Include="BQLCommon\BQLConditionCommon\OperatorPrecedenceUnit.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddPrimarykeyItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordCreateTableItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordTableParamItem.cs" />

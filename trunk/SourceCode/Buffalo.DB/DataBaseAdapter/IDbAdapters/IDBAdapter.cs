@@ -56,6 +56,13 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <returns></returns>
         string FreeTextLike(string paranName, string value);
         /// <summary>
+        /// 返回全文检索的查询语句
+        /// </summary>
+        /// <param name="paranName"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        string ContainsLike(string paranName, string value);
+        /// <summary>
         /// 获取SQL适配器
         /// </summary>
         /// <returns></returns>
