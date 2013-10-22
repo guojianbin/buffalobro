@@ -11,18 +11,18 @@ using System.Web.Caching;
 namespace Buffalo.DB.CacheManager
 {
     /// <summary>
-    /// 查询缓存类
+    /// 内存缓存类
     /// </summary>
     public class QueryCache
     {
-        private static Cache _cache = HttpRuntime.Cache;
+        private Cache _cache = HttpRuntime.Cache;
 
         /// <summary>
         /// 获取Sql的Key
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        private static string GetKeyBySql(string sql) 
+        private string GetKeyBySql(string sql) 
         {
             StringBuilder sbRet = new StringBuilder(sql.Length + 20);
             sbRet.Append("___SQL:");
@@ -35,11 +35,11 @@ namespace Buffalo.DB.CacheManager
         /// </summary>
         /// <param name="entityType"></param>
         /// <returns></returns>
-        private static string GetKeyByEntity(string typeName) 
+        private string GetKeyByEntity(string tableName) 
         {
-            StringBuilder sbRet = new StringBuilder(typeName.Length + 20);
+            StringBuilder sbRet = new StringBuilder(tableName.Length + 20);
             sbRet.Append("___Entity:");
-            sbRet.Append(typeName);
+            sbRet.Append(tableName);
             return sbRet.ToString();
         }
 
@@ -49,9 +49,9 @@ namespace Buffalo.DB.CacheManager
         /// <param name="sql">SQL语句</param>
         /// <param name="entityType">表对应的实体的类型</param>
         /// <returns></returns>
-        public static object GetData(string typeName,string sql)
+        public object GetData(string tableName, string sql)
         {
-            Hashtable hs = _cache[GetKeyByEntity(typeName)] as Hashtable;
+            Hashtable hs = _cache[GetKeyByEntity(tableName)] as Hashtable;
             if (hs == null) 
             {
                 return null;
@@ -65,9 +65,9 @@ namespace Buffalo.DB.CacheManager
         /// <param name="entityType">表对应的实体的类型</param>
         /// <param name="val">数据</param>
         /// <returns></returns>
-        public static void AppendData(string sql, string typeName, object val)
+        public void AppendData(string sql, string tableName, object val)
         {
-            string key=GetKeyByEntity(typeName);
+            string key = GetKeyByEntity(tableName);
             Hashtable hs = _cache[key] as Hashtable;
             if (hs == null) 
             {
@@ -82,9 +82,9 @@ namespace Buffalo.DB.CacheManager
         /// 根据实体清除对应的缓存
         /// </summary>
         /// <param name="entityType"></param>
-        public static void ClearCache(Type entityType)
+        public void ClearCache(string tableName)
         {
-            string fullName = entityType.FullName;
+            //string fullName = entityType.FullName;
             _cache.Remove(GetKeyByEntity(fullName));
             List<string> lstViewName = QueryViewConfig.GetViewList(fullName);
             if (lstViewName != null)//清空对应视图的缓存 

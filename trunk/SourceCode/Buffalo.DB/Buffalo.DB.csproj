@@ -68,6 +68,7 @@
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddParamItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddForeignkeyItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddPrimarykeyItem.cs" />
+    <Compile Include="CacheManager\MemChachReader.cs" />
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
     <Compile Include="CommBase\BusinessBases\BatchAction.cs" />
