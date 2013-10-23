@@ -35,6 +35,10 @@
     <DocumentationFile>..\Release\2005\Buffalo.DB.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=cec98615db04012e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dll\dll\Net2.0\Enyim.Caching.dll</HintPath>
+    </Reference>
     <Reference Include="IBM.Data.DB2, Version=9.0.0.2, Culture=neutral, PublicKeyToken=7c307b91aa13d208, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dll\dll\Net2.0\IBM.Data.DB2.dll</HintPath>
@@ -68,7 +72,11 @@
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddParamItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddForeignkeyItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddPrimarykeyItem.cs" />
+    <Compile Include="CacheManager\ICacheAdaper.cs" />
+    <Compile Include="CacheManager\MemCachedAdaper.cs" />
+    <Compile Include="CacheManager\Memcached\MemCachedClient.cs" />
     <Compile Include="CacheManager\MemChachReader.cs" />
+    <Compile Include="CacheManager\MemroyAdaper.cs" />
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
     <Compile Include="CommBase\BusinessBases\BatchAction.cs" />

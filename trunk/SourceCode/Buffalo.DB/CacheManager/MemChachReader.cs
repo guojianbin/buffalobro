@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
+using Buffalo.Kernel;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -35,6 +36,21 @@ namespace Buffalo.DB.CacheManager
         {
             _data = ds;
         }
+        //public MemChachReader(string xml)
+        //{
+        //    _data = CommonMethods.XMLToDataSet(xml, XmlReadMode.IgnoreSchema);
+        //}
+
+        /// <summary>
+        /// 把数据打包成字符串
+        /// </summary>
+        /// <returns></returns>
+        public string ExportXML() 
+        {
+            return CommonMethods.DataSetToXML(_data, XmlWriteMode.IgnoreSchema);
+        }
+
+        
 
         #region IDataReader 成员
 
@@ -60,16 +76,26 @@ namespace Buffalo.DB.CacheManager
 
         public bool NextResult()
         {
+            if (_data.Tables.Count < _currentIndex+2 ) 
+            {
+                return false;
+            }
             _currentIndex++;
             _currentData = _data.Tables[_currentIndex];
             _currentRowIndex = -1;
             _currentRow = null;
+            return true;
         }
 
         public bool Read()
         {
+            if (_currentData.Rows.Count < _currentRowIndex+2) 
+            {
+                return false;
+            }
             _currentRowIndex++;
             _currentRow = _currentData.Rows[_currentRowIndex];
+            return true;
         }
 
         public int RecordsAffected
@@ -97,7 +123,7 @@ namespace Buffalo.DB.CacheManager
         {
             get 
             {
-                _currentData.Columns.Count;
+                return _currentData.Columns.Count;
             }
         }
 
@@ -115,6 +141,7 @@ namespace Buffalo.DB.CacheManager
         {
             byte[] arr = (byte[])_currentRow[i];
             Array.Copy(arr, (int)fieldOffset, buffer, bufferoffset, length);
+            return length;
         }
 
         public char GetChar(int i)
@@ -125,7 +152,8 @@ namespace Buffalo.DB.CacheManager
         public long GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length)
         {
             char[] arr = (char[])_currentRow[i];
-            Array.Copy(arr, (int)fieldOffset, buffer, bufferoffset, length);
+            Array.Copy(arr, (int)bufferoffset, buffer, bufferoffset, length);
+            return length;
         }
 
         public IDataReader GetData(int i)
