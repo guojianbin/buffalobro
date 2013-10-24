@@ -235,7 +235,7 @@ namespace Buffalo.Kernel
         /// <param name="xml">xml字符串</param>
         /// <param name="mode">指定如何将 XML 数据和关系架构读入 System.Data.DataSet</param>
         /// <returns></returns>
-        private DataSet XMLToDataSet(string xml,XmlReadMode mode)
+        public static DataSet XMLToDataSet(string xml,XmlReadMode mode)
         {
             DataSet ds = new DataSet();
             using (MemoryStream stm = new MemoryStream())

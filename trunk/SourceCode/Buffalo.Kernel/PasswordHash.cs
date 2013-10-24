@@ -17,7 +17,7 @@ namespace Buffalo.Kernel
 
             return ToMD5String(Encoding.Default.GetBytes(str));
         }
-
+        private static MD5 md5Hash = MD5CryptoServiceProvider.Create();
         /// <summary>
         /// 对字符串进行MD5加密
         /// </summary>
@@ -25,8 +25,8 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static string ToMD5String(byte[] content)
         {
-            MD5 hash = MD5CryptoServiceProvider.Create();
-            byte[] retBytes = hash.ComputeHash(content);
+
+            byte[] retBytes = md5Hash.ComputeHash(content);
             return CommonMethods.BytesToHexString(retBytes);
         }
 
@@ -39,6 +39,7 @@ namespace Buffalo.Kernel
         {
             return ToSHA1String(Encoding.Default.GetBytes(str));
         }
+        private static SHA1 sha1Hash = SHA1CryptoServiceProvider.Create();
         /// <summary>
         /// 对字符串进行MD5加密
         /// </summary>
@@ -46,8 +47,8 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static string ToSHA1String(byte[] content)
         {
-            SHA1 hash = SHA1CryptoServiceProvider.Create();
-            byte[] retBytes = hash.ComputeHash(content);
+
+            byte[] retBytes = sha1Hash.ComputeHash(content);
             return CommonMethods.BytesToHexString(retBytes);
         }
 
