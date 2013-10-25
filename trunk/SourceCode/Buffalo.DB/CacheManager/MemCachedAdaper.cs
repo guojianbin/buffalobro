@@ -13,44 +13,37 @@ namespace Buffalo.DB.CacheManager
     public class MemCachedAdaper : ICacheAdaper
     {
         private MemCachedClient _client = null;
-        public MemCachedAdaper(string config) 
-        {
-            string[] strs=config.Split(':');
-            string ip=null;
-            uint port=0;
-            if (strs.Length > 0)
-            {
-                ip = strs[0];
-            }
-            if (strs.Length > 1) 
-            {
-                string strPort = strs[1];
-                uint.TryParse(strPort,out port);
-            }
-            if(port<=0)
-            {
-                port=11211;
-            }
 
+        /// <summary>
+        /// memcached的适配器
+        /// </summary>
+        /// <param name="connStr">连接字符串</param>
+        public MemCachedAdaper(string connStr) 
+        {
+            string conStrs=connStr.Split(':');
+
+            string ip = "127.0.0.1";
+            uint port = 11211;
+
+            if (connStr.Length > 0) 
+            {
+                ip = connStr[0];
+            }
+            if (connStr.Length > 1) 
+            {
+                port = Convert.ToUInt32(connStr[1]);
+            }
             _client = new MemCachedClient(ip, port);
         }
 
-
         #region ICacheAdaper 成员
 
-        public System.Data.DataSet GetData(string tableName, string sql)
+        public System.Data.DataSet GetData(string sql)
         {
-            string key=QueryCache.GetTableKeyName(tableName);
-            int value = Convert.ToInt32(_client.GetValue(key));
-            StringBuilder skey=new StringBuilder();
-            skey.Append("v");
-            skey.Append(value.ToString());
-            skey.Append(":");
-            skey.Append(sql);
-            string xml=_client
+            throw new Exception("The method or operation is not implemented.");
         }
 
-        public void RemoveBySQL(string tableName, string sql)
+        public void RemoveBySQL(string sql)
         {
             throw new Exception("The method or operation is not implemented.");
         }
@@ -60,7 +53,7 @@ namespace Buffalo.DB.CacheManager
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public bool SetData(string tableName, string sql, System.Data.DataSet ds)
+        public bool SetData(ICollection<string> tableNames, string sql, System.Data.DataSet ds)
         {
             throw new Exception("The method or operation is not implemented.");
         }
