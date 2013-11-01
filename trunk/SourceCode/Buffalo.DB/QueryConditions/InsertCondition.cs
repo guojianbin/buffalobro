@@ -68,7 +68,7 @@ namespace Buffalo.DB.QueryConditions
             get { return _condition; }
         }
 
-        public override string GetSql()
+        public override string GetSql(bool useCache)
         {
             StringBuilder sql = new StringBuilder();
             sql.Append("Insert into ");

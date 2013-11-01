@@ -34,7 +34,7 @@ namespace Buffalo.DB.QueryConditions
             get { return _updateSetValue; }
         }
 
-        public override string GetSql()
+        public override string GetSql(bool useCache)
         {
             StringBuilder sbRet = new StringBuilder(2000);
             sbRet.Append("update  ");

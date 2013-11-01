@@ -41,6 +41,28 @@ namespace Buffalo.DB.DbCommon
             return db.CurrentDbAdapter.FormatValueName(pName);
         }
 
+        //private Dictionary<string, bool> _tables;
+        ///// <summary>
+        ///// 本次语句关联的表
+        ///// </summary>
+        //public Dictionary<string, bool> Tables
+        //{
+        //    get { return _tables; }
+        //    internal set { _tables = value; }
+        //}
+        ///// <summary>
+        ///// 初始化缓存表信息
+        ///// </summary>
+        ///// <returns></returns>
+        //internal bool SetCacheTable(string tabelName) 
+        //{
+        //    if (_tables == null)
+        //    {
+        //        _tables = new Dictionary<string, bool>();
+        //    }
+        //    _tables[tabelName] = true;
+        //    return true;
+        //}
         /// <summary>
         /// 新的数据库值
         /// </summary>
@@ -117,27 +139,41 @@ namespace Buffalo.DB.DbCommon
 		{
             StringBuilder ret = new StringBuilder(500);
             comm.Parameters.Clear();
-#if DEBUG
-            bool isOutput=db.SqlOutputer.HasOutput;
-#endif
+
+
             for (int i = 0; i < this.Count; i++)
             {
                 DBParameter prm = this[i];
                 IDataParameter dPrm = GetParameter(prm,db);
                 comm.Parameters.Add(dPrm);
-#if DEBUG
-                if (isOutput)
+            }
+
+            if (db.SqlOutputer.HasOutput)
+            {
+                return GetParamString(db);
+            }
+
+            return null;
+		}
+        /// <summary>
+        /// 获取param里边的值的显示字符串
+        /// </summary>
+        /// <returns></returns>
+        internal string GetParamString(DBInfo db) 
+        {
+            StringBuilder ret = new StringBuilder(500);
+            for (int i = 0; i < this.Count; i++)
+            {
+                DBParameter prm = this[i];
+                IDataParameter dPrm = GetParameter(prm, db);
+                ret.Append(dPrm.ParameterName + "=" + DataAccessCommon.FormatValue(dPrm.Value, dPrm.DbType, db));
+                if (i < this.Count - 1)
                 {
-                    ret.Append(dPrm.ParameterName + "=" + DataAccessCommon.FormatValue(dPrm.Value, dPrm.DbType, db));
-                    if (i < this.Count - 1)
-                    {
-                        ret.Append(" , ");
-                    }
+                    ret.Append(" , ");
                 }
-#endif
             }
             return ret.ToString();
-		}
+        }
 
         /// <summary>
         /// 获取实际数据库的字段变量

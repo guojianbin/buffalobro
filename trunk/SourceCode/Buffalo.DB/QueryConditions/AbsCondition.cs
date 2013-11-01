@@ -25,11 +25,19 @@ namespace Buffalo.DB.QueryConditions
                 throw new Exception(_itemName + "语句没有条件");
             } 
         }
-        public virtual string GetSql() 
+        public virtual string GetSql(bool useCache) 
         {
             return null;
         }
-
+        Dictionary<string, bool> _cacheTables;
+        /// <summary>
+        /// 需要缓存的表
+        /// </summary>
+        public Dictionary<string, bool> CacheTables
+        {
+            get { return _cacheTables; }
+            set { _cacheTables = value; }
+        }
         protected DBInfo _dbInfo;
         public DBInfo DBinfo 
         {

@@ -6,6 +6,7 @@ using Buffalo.DB.MessageOutPuters;
 using System.Text;
 using Buffalo.DB.CommBase.BusinessBases;
 using System.Data.Common;
+using System.Collections.Generic;
 
 ///通用SQL Server访问类v1.2
 
@@ -293,12 +294,12 @@ namespace Buffalo.DB.DbCommon
                 {
                     try
                     {
-#if DEBUG
+
                         if (_db.SqlOutputer.HasOutput)
                         {
                             OutMessage("Closed DataBase");
                         }
-#endif
+
                         
                         _conn.Close();
                         
@@ -321,7 +322,7 @@ namespace Buffalo.DB.DbCommon
             }
             return true;
         }
-#if DEBUG
+
         /// <summary>
         /// 输出信息
         /// </summary>
@@ -330,7 +331,7 @@ namespace Buffalo.DB.DbCommon
         {
             _db.SqlOutputer.OutPut("BuffaloDB", messageType, messages);
         }
-#endif
+
         /// <summary>
         /// 按照标识位自动关闭连接
         /// </summary>
@@ -357,12 +358,11 @@ namespace Buffalo.DB.DbCommon
 		/// <returns>返回结果集</returns>
         public DataSet QueryDataSet(
 			string	sql,
-			ParamList paramList)
+            ParamList paramList, Dictionary<string, bool> cacheTables)
 		{
 
-            return QueryDataSet(sql, paramList, CommandType.Text);
+            return QueryDataSet(sql, paramList, CommandType.Text,cacheTables);
 		}
-		
 		
 
 
@@ -376,17 +376,26 @@ namespace Buffalo.DB.DbCommon
 		public DataSet QueryDataSet(
 			string	sql,
 			ParamList paramList,
-			CommandType queryCommandType
+			CommandType queryCommandType,
+            Dictionary<string, bool> cacheTables
 			)
 		{
-				
+            DataSet dataSet = null;
+            if (cacheTables != null && cacheTables.Count > 0)
+            {
+                dataSet = _db.QueryCache.GetDataSet(cacheTables, sql, paramList);
+                if (dataSet != null)
+                {
+                    return dataSet;
+                }
+            }
 			//若连接数据库失败抛出错误
 			if (!ConnectDataBase())
 			{
 				throw(new ApplicationException("没有建立数据库连接。"));
 			}
 			
-			DataSet dataSet = new DataSet();
+			dataSet = new DataSet();
 			_comm.CommandType = queryCommandType;
 			_comm.CommandText = sql;
             _sda = _dbAdapter.GetAdapter();
@@ -399,16 +408,22 @@ namespace Buffalo.DB.DbCommon
 
             try
             {
-#if DEBUG
+
                 if (_db.SqlOutputer.HasOutput)
                 {
                     OutMessage("DataSet" , sql, paramInfo);
                 }
-#endif
+
                 _sda.Fill(dataSet);
                 if (paramList != null)
                 {
                     paramList.ReturnParameterValue(_comm, _db);
+                }
+
+                if (cacheTables != null && cacheTables.Count > 0)
+                {
+                    _db.QueryCache.SetDataSet(dataSet, cacheTables, sql, paramList);
+
                 }
             }
             catch (Exception e)
@@ -425,6 +440,9 @@ namespace Buffalo.DB.DbCommon
             return dataSet;
 		}
 		#endregion
+
+
+
 		/// <summary>
 		/// 运行查询的方法，返回一个DataReader，适合小数据的读取
 		/// </summary>
@@ -433,9 +451,9 @@ namespace Buffalo.DB.DbCommon
 		/// <returns>返回DataReader</returns>
 		public IDataReader Query(
 			string	sql,
-			ParamList paramList)
+            ParamList paramList, Dictionary<string, bool> cachetables)
 		{
-			return Query(sql,paramList,CommandType.Text);
+			return Query(sql,paramList,CommandType.Text,cachetables);
 		}
 
 		/// <summary>
@@ -448,10 +466,21 @@ namespace Buffalo.DB.DbCommon
         public IDataReader Query(
 			string	sql,
 			ParamList paramList,
-			CommandType exeCommandType
+			CommandType exeCommandType,
+            Dictionary<string, bool> cacheTables
 			)
 		{
-				
+            IDataReader reader;
+
+            if (cacheTables != null && cacheTables.Count>0)
+            {
+                reader = _db.QueryCache.GetReader(cacheTables, sql, paramList);
+                if (reader != null)
+                {
+                    return reader;
+                }
+            }
+
 			//若连接数据库失败抛出错误
 			if (!ConnectDataBase())
 			{
@@ -463,22 +492,24 @@ namespace Buffalo.DB.DbCommon
 			_comm.CommandText = sql;
             _comm.Parameters.Clear();
             string paramInfo = null;
-			if(paramList!=null)
+            if (paramList != null)
 			{
                 paramInfo=paramList.Fill(_comm, _db);
 			}
-			IDataReader reader;
+			
+
+            
             try
             {
 
                 if ((_commitState == CommitState.AutoCommit) && !IsTran)
                 {
-#if DEBUG
+
                     if (_db.SqlOutputer.HasOutput)
                     {
                         OutMessage("AutoCloseReader" ,sql, paramInfo);
                     }
-#endif
+
                     reader = _comm.ExecuteReader(CommandBehavior.CloseConnection);
                     
                     _isConnected = false;
@@ -486,19 +517,27 @@ namespace Buffalo.DB.DbCommon
                 }
                 else 
                 {
-#if DEBUG
+
                     if (_db.SqlOutputer.HasOutput)
                     {
                         OutMessage("Reader" ,sql,paramInfo);
                     }
-#endif
+
                     reader = _comm.ExecuteReader();
                 }
                 if (paramList != null)
                 {
                     paramList.ReturnParameterValue(_comm, _db);
                 }
-                
+                if (cacheTables != null && cacheTables.Count > 0)
+                {
+                    IDataReader nreader=_db.QueryCache.SetReader(reader, cacheTables, sql, paramList);
+                    if (nreader != null)
+                    {
+                        reader.Close();
+                        reader = nreader;
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -529,12 +568,12 @@ namespace Buffalo.DB.DbCommon
             {
                 if (IsTran)
                 {
-#if DEBUG
+
                     if (_db.SqlOutputer.HasOutput)
                     {
                         OutMessage("RollbackTransation");
                     }
-#endif
+
                     _tran.Rollback();
                     _tran = null;
                     return true;
@@ -557,9 +596,9 @@ namespace Buffalo.DB.DbCommon
 		/// <returns>成功执行返回True</returns>
 		public int Execute(
 			string	sql,
-			ParamList paramList)
+            ParamList paramList, Dictionary<string, bool> cachetables)
 		{
-			return Execute(sql,paramList,CommandType.Text);
+			return Execute(sql,paramList,CommandType.Text,cachetables);
 		}
 
 		/// <summary>
@@ -572,7 +611,8 @@ namespace Buffalo.DB.DbCommon
 		public int Execute(
 			string	sql,
 			ParamList paramList,
-			CommandType exeCommandType)
+			CommandType exeCommandType,
+            Dictionary<string, bool> cacheTables)
 		{
 			
 			if (!ConnectDataBase())
@@ -593,17 +633,22 @@ namespace Buffalo.DB.DbCommon
 
             try
             {
-#if DEBUG
+
                 if (_db.SqlOutputer.HasOutput)
                 {
                     OutMessage("NonQuery" ,sql, paramInfo);
                 }
-#endif
+
                 ret = _comm.ExecuteNonQuery();
                 _lastAffectedRows = ret;
                 if (paramList != null && _comm.CommandType == CommandType.StoredProcedure)
                 {
                     paramList.ReturnParameterValue(_comm, _db);
+                }
+
+                if (cacheTables != null && cacheTables.Count > 0)
+                {
+                    _db.QueryCache.ClearTableCache(cacheTables);
                 }
             }
             catch (Exception e)
@@ -656,12 +701,12 @@ namespace Buffalo.DB.DbCommon
 
             if (!IsTran)
             {
-#if DEBUG
+
                 if (_db.SqlOutputer.HasOutput)
                 {
                     OutMessage("BeginTransation","Level=" + isolationLevel.ToString());
                 }
-#endif
+
                 _tran = _conn.BeginTransaction(isolationLevel);
                 _comm.Transaction = _tran;
                 
@@ -685,12 +730,12 @@ namespace Buffalo.DB.DbCommon
 
             try
             {
-#if DEBUG
+
                 if (_db.SqlOutputer.HasOutput)
                 {
                     OutMessage("CommitTransation");
                 }
-#endif
+
                 _tran.Commit();
                 _tran = null;
                 

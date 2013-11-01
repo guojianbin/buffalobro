@@ -94,7 +94,15 @@ namespace Buffalo.DB.QueryConditions
                 return _groupBy;
             }
         }
-
+        private bool _useCache;
+        /// <summary>
+        ///  «∑Ò π”√ª∫¥Ê
+        /// </summary>
+        public bool UseCache
+        {
+            get { return _useCache; }
+            set { _useCache = value; }
+        }
         private ShowEntityCollection _showEntity =null;
 
         /// <summary>

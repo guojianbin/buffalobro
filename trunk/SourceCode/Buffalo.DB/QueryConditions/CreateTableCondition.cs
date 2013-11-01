@@ -35,7 +35,7 @@ namespace Buffalo.DB.QueryConditions
             get { return _sqlParams; }
         }
 
-        public override string GetSql()
+        public override string GetSql(bool useCache)
         {
             IDBAdapter ida=_dbInfo.CurrentDbAdapter;
             StringBuilder sbRet = new StringBuilder();

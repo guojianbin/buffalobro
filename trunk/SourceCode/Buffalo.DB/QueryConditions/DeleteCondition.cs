@@ -29,7 +29,7 @@ namespace Buffalo.DB.QueryConditions
             get { return _condition; }
         }
 
-        public override string GetSql()
+        public override string GetSql(bool useCache)
         {
             StringBuilder sql = new StringBuilder(500);
             sql.Append("Delete from ");

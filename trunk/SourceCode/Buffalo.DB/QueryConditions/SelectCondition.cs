@@ -118,12 +118,12 @@ namespace Buffalo.DB.QueryConditions
 
 
 
-        public override string GetSql()
+        public override string GetSql(bool useCache)
         {
             string ret=null;
             if (_pageContente != null && _pageContente.PageSize > 0)
             {
-                ret = _dbInfo.CurrentDbAdapter.CreatePageSql(_paramList, _oper, this, _pageContente);
+                ret = _dbInfo.CurrentDbAdapter.CreatePageSql(_paramList, _oper, this, _pageContente, useCache);
             }
             else 
             {
