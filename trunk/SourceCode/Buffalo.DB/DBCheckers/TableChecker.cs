@@ -261,7 +261,7 @@ namespace Buffalo.DB.DBCheckers
                 dbInfo.DBStructure.OnCheckEvent(table, dbInfo, CheckEvent.TableBeginCreate,sql);
                 BQLQuery bql = BQL.CreateTable(table.TableName).Param(table.Params);
                 AbsCondition con = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
-                sql.Add(con.GetSql());
+                sql.Add(con.GetSql(false));
                 dbInfo.DBStructure.OnCheckEvent(table, dbInfo, CheckEvent.TableCreated, sql);
             }
         }
@@ -313,7 +313,7 @@ namespace Buffalo.DB.DBCheckers
             string sql = dbInfo.CurrentDbAdapter.GetTopSelectSql(con, 1);
             Dictionary<string, bool> dic = new Dictionary<string, bool>();
 
-            using (IDataReader reader = dbInfo.DefaultOperate.Query(sql, new Buffalo.DB.DbCommon.ParamList())) 
+            using (IDataReader reader = dbInfo.DefaultOperate.Query(sql, new Buffalo.DB.DbCommon.ParamList(),null)) 
             {
                 for (int i = 0; i < reader.FieldCount; i++) 
                 {
@@ -329,7 +329,7 @@ namespace Buffalo.DB.DBCheckers
                     dbInfo.DBStructure.OnCheckEvent(pInfo, dbInfo, CheckEvent.TablenBeginCheck, lstSql);
                     bql = BQL.AlterTable(tableName).AddParam(pInfo);
                     AbsCondition acon = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
-                    lstSql.Add(acon.GetSql());
+                    lstSql.Add(acon.GetSql(false));
                     dbInfo.DBStructure.OnCheckEvent(pInfo, dbInfo, CheckEvent.TableChecked, lstSql);
                 }
             }
@@ -366,7 +366,7 @@ namespace Buffalo.DB.DBCheckers
                     item.CreateName();
                     BQLQuery bql = BQL.AlterTable(table.TableName).AddForeignkey(item);
                     AbsCondition con = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
-                    lstSql.Add(con.GetSql());
+                    lstSql.Add(con.GetSql(false));
                     dbInfo.DBStructure.OnCheckEvent(table, dbInfo, CheckEvent.RelationChecked, lstSql);
                 }
             }

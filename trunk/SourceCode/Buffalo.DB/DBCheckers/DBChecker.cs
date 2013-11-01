@@ -33,7 +33,7 @@ namespace Buffalo.DB.DBCheckers
                 {
                     try
                     {
-                        int row = oper.Execute(sql, new Buffalo.DB.DbCommon.ParamList());
+                        int row = oper.Execute(sql, new Buffalo.DB.DbCommon.ParamList(),null);
                         resaults.Add("Ö´ÐÐÍê±Ï;");
                     }
                     catch (Exception ex)
