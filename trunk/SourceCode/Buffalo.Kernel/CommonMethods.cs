@@ -219,6 +219,8 @@ namespace Buffalo.Kernel
             }
             return ret;
         }
+        
+        /// <summary>
         /// <summary>
         /// 把DataSet打成XML字符串
         /// </summary>
@@ -257,6 +259,8 @@ namespace Buffalo.Kernel
 
             return XMLToDataSet(xml,XmlReadMode.ReadSchema);
         }
+
+        
         /// <summary>
         /// 反序列化结构体
         /// </summary>
