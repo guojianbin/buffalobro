@@ -10,6 +10,7 @@ using Buffalo.Kernel.Defaults;
 using Buffalo.DB.CommBase.BusinessBases;
 using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.ProxyBuilder;
+using Buffalo.DB.CacheManager;
 
 namespace Buffalo.DB.CommBase.DataAccessBases
 {
@@ -187,7 +188,11 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             con.Condition.Append(where);
 
             int ret = -1;
-            ret = ExecuteCommand(con.GetSql(), list, CommandType.Text);
+            Dictionary<string, bool> cacheTables = null;
+
+                cacheTables = _oper.DBInfo.QueryCache.CreateMap(EntityInfo.TableName);
+            
+                ret = ExecuteCommand(con.GetSql(true), list, CommandType.Text,  cacheTables);
             if (obj._dicUpdateProperty___ != null)
             {
                 obj._dicUpdateProperty___.Clear();
@@ -478,16 +483,22 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             con.SqlValues.Append(sqlValues.ToString());
             int ret = -1;
             con.DbParamList = list;
+
+            
             using (BatchAction ba = _oper.StarBatchAction())
             {
-                string sql = con.GetSql();
-                ret = ExecuteCommand(sql, list, CommandType.Text);
+                string sql = con.GetSql(true);
+                Dictionary<string, bool> cacheTables = null;
+
+                    cacheTables = _oper.DBInfo.QueryCache.CreateMap(EntityInfo.TableName);
+                
+                ret = ExecuteCommand(sql, list, CommandType.Text,cacheTables);
                 if (identityInfo.Count>0 && fillIdentity)
                 {
                     foreach (EntityPropertyInfo pkInfo in identityInfo)
                     {
                         sql = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentitySQL(pkInfo);
-                        using (IDataReader reader = _oper.Query(sql, new ParamList()))
+                        using (IDataReader reader = _oper.Query(sql, new ParamList(),null))
                         {
                             if (reader.Read())
                             {
@@ -545,10 +556,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                     }
                 }
             }
+            Dictionary<string, bool> cacheTables = null;
 
-
+                cacheTables = _oper.DBInfo.QueryCache.CreateMap(EntityInfo.TableName);
+            
             int ret = -1;
-            ret = ExecuteCommand(con.GetSql(), list, CommandType.Text);
+            ret = ExecuteCommand(con.GetSql(true), list, CommandType.Text, cacheTables);
 
             return ret;
         }
@@ -580,7 +593,11 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             }
             con.Condition.Append("1=1");
             con.Condition.Append(DataAccessCommon.FillCondition(EntityInfo, list, lstScope));
-            ret = ExecuteCommand(con.GetSql(), list, CommandType.Text);
+            Dictionary<string, bool> cacheTables = null;
+
+            cacheTables = _oper.DBInfo.QueryCache.CreateMap(EntityInfo.TableName);
+
+            ret = ExecuteCommand(con.GetSql(true), list, CommandType.Text, cacheTables);
             return ret;
 
         }
@@ -591,10 +608,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <param name="sql">sql语句</param>
         /// <param name="list">参数列表</param>
         /// <param name="commandType">命令类型</param>
-        public int ExecuteCommand(string sql, ParamList list, CommandType commandType)
+        /// <param name="tables">缓存关联的表</param>
+        public int ExecuteCommand(string sql, ParamList list, CommandType commandType, 
+            Dictionary<string, bool> cachetables)
         {
             int ret = -1;
-            ret = _oper.Execute(sql, list, commandType);
+            ret = _oper.Execute(sql, list, commandType,cachetables);
             return ret;
         }
 
@@ -604,10 +623,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <param name="sql">sql语句</param>
         /// <param name="list">参数列表</param>
         /// <param name="commandType">语句类型</param>
-        public DataSet QueryDataSet(string sql, ParamList list, CommandType commandType)
+        public DataSet QueryDataSet(string sql, ParamList list, CommandType commandType, Dictionary<string, bool> cachetables)
         {
             DataSet ds = null;
-            ds = _oper.QueryDataSet(sql, list, commandType);
+            ds = _oper.QueryDataSet(sql, list, commandType,cachetables);
             return ds;
         }
 
@@ -620,6 +639,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         public DataSet QueryDataSet(string sql, PageContent objPage)
         {
             DataSet ds = new DataSet();
+            
             DataTable retDt = EntityInfo.DBInfo.CurrentDbAdapter.QueryDataTable(sql, objPage, _oper, null);
             ds.Tables.Add(retDt);
             return ds;

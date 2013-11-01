@@ -32,6 +32,11 @@ namespace Buffalo.DB.DataFillers
         public static DataTable GenerateDataTable(IDataReader reader,string datatableName,bool isEmpty) 
         {
             DataTable dt = new DataTable();
+            if (!string.IsNullOrEmpty(datatableName))
+            {
+                dt.TableName = datatableName;
+            }
+            
             dt.BeginLoadData();
             int fieldCount = reader.FieldCount;
             for (int i = 0; i < fieldCount; i++) 
@@ -60,7 +65,26 @@ namespace Buffalo.DB.DataFillers
             dt.EndLoadData();
             return dt;
         }
-
+        /// <summary>
+        /// 根据Reader结构生成DataTable
+        /// </summary>
+        /// <param name="reader">Reader</param>
+        /// <param name="datatableName">数据表名</param>
+        /// <param name="isEmpty">是否生成空的DataTable</param>
+        /// <returns></returns>
+        public static DataSet GenerateDataSet(IDataReader reader, bool isEmpty)
+        {
+            
+            DataSet ds = new DataSet();
+            int index=0;
+            do
+            {
+                DataTable dt = GenerateDataTable(reader, "table" + index,isEmpty);
+                ds.Tables.Add(dt);
+            } while (reader.NextResult());
+            
+            return ds;
+        }
 
         /// <summary>
         /// 根据Reader结构和实体属性的映射生成空的DataTable

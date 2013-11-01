@@ -33,7 +33,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             //DataBaseOperate oper = info.DefaultOperate;
 
             List<DBTableInfo> lstName = new List<DBTableInfo>();
-            using (IDataReader reader = oper.Query(_sqlTables, lstParam))
+            using (IDataReader reader = oper.Query(_sqlTables, lstParam,null))
             {
                 while (reader.Read())
                 {
@@ -112,7 +112,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
 
             List<TableRelationAttribute> lst = new List<TableRelationAttribute>();
 
-            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam)) 
+            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam,null)) 
             {
                 while (reader.Read()) 
                 {
@@ -160,7 +160,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
 
             List<DBTableInfo> lst = new List<DBTableInfo>();
             Dictionary<string, DBTableInfo> dicTables = new Dictionary<string, DBTableInfo>();
-            using (IDataReader reader = oper.Query(sql.ToString(), new ParamList()))
+            using (IDataReader reader = oper.Query(sql.ToString(), new ParamList(),null))
             {
                
                 while (reader.Read())

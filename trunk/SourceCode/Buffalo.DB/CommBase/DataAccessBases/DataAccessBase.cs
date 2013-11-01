@@ -114,10 +114,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <param name="sql">sql语句</param>
         /// <param name="list">参数列表</param>
         /// <param name="commandType">语句类型</param>
-        public List<T> QueryList(string sql, ParamList list, CommandType commandType)
+        public List<T> QueryList(string sql, ParamList list, CommandType commandType, Dictionary<string, bool> cachetables)
         {
             List<T> retlist = null;
-            using (IDataReader reader = _oper.Query(sql, list, commandType))
+            using (IDataReader reader = _oper.Query(sql, list, commandType,cachetables))
             {
 
                 retlist = LoadFromReaderList(reader);
@@ -270,13 +270,13 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <param name="list">参数列表</param>
         /// <param name="scopeList">范围查找的集合</param>
         /// <returns></returns>
-        protected string GetSelectPageContant(ParamList list,  ScopeList scopeList)
+        protected string GetSelectPageContant(ParamList list, ScopeList scopeList)
         {
 
             SelectCondition condition = new SelectCondition(CurEntityInfo.DBInfo);
             condition.Oper = this._oper;
             condition.Tables.Append(CurEntityInfo.DBInfo.CurrentDbAdapter.FormatTableName(CurEntityInfo.TableName));
-            condition.SqlParams.Append(GetSelectParams(scopeList)) ;
+            condition.SqlParams.Append(GetSelectParams(scopeList));
             condition.Condition.Append("1=1");
             foreach (EntityPropertyInfo ep in CurEntityInfo.PrimaryProperty)
             {
@@ -285,11 +285,11 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             string conditionWhere = "";
 
             SortList sortList = scopeList.OrderBy;
-            
+
 
             if (scopeList != null)
             {
-                condition.Condition.Append(DataAccessCommon.FillCondition(CurEntityInfo,list, scopeList));
+                condition.Condition.Append(DataAccessCommon.FillCondition(CurEntityInfo, list, scopeList));
             }
 
             if (conditionWhere.Length > 0)
@@ -297,14 +297,14 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                 condition.Condition.Append(conditionWhere);
             }
             //排序方式
-            if (sortList != null && sortList.Count>0)
+            if (sortList != null && sortList.Count > 0)
             {
                 string orderBy = GetSortCondition(sortList);
                 if (orderBy != "")
                 {
-                    if (condition.Orders.Length>0)
+                    if (condition.Orders.Length > 0)
                     {
-                        condition.Orders.Append( "," + orderBy);
+                        condition.Orders.Append("," + orderBy);
                     }
                     else
                     {
@@ -315,7 +315,14 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             condition.PageContent = scopeList.PageContent;
             //throw new Exception("");
             condition.DbParamList = list;
-            return condition.GetSql();
+
+            //if (scopeList.UseCache)
+            //{
+
+            //    cachetables[CurEntityInfo.DBInfo.CurrentDbAdapter.FormatTableName(CurEntityInfo.TableName)]=true;
+            //}
+
+            return condition.GetSql(true);
         }
 
         
@@ -366,6 +373,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 condition.Orders.Append(orderBy);
             }
+            //if (scopeList.UseCache)
+            //{
+            //    cachetables[CurEntityInfo.DBInfo.CurrentDbAdapter.FormatTableName(CurEntityInfo.TableName)]=true;
+            //}
             condition.DbParamList = list;
             return condition;
         }
@@ -431,9 +442,13 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                 pkInfo.FillScope(CurEntityInfo.PrimaryProperty, lstScope, true);
             }
             sql.Append( DataAccessCommon.FillCondition(CurEntityInfo,list, lstScope));
-            
-            
-            using (IDataReader reader = _oper.Query(sql.ToString(), list))
+
+            Dictionary<string,bool> cacheTables=null;
+            if(lstScope.UseCache)
+            {
+                cacheTables = _oper.DBInfo.QueryCache.CreateMap(CurEntityInfo.TableName);
+            }
+            using (IDataReader reader = _oper.Query(sql.ToString(), list, cacheTables))
             {
                 if (reader.Read())
                 {
@@ -463,7 +478,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
 
             SelectCondition sc = GetSelectContant(list, scopeList, GetSelectParams(scopeList));
             sql = CurEntityInfo.DBInfo.CurrentDbAdapter.GetTopSelectSql(sc, 1);
-            using (IDataReader reader = _oper.Query(sql, list))
+            Dictionary<string,bool> cacheTables=null;
+            if(scopeList.UseCache)
+            {
+                cacheTables=_oper.DBInfo.QueryCache.CreateMap(CurEntityInfo.TableName);
+            }
+            using (IDataReader reader = _oper.Query(sql, list, cacheTables))
             {
                 if (reader.Read())
                 {
@@ -533,7 +553,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 if (objPage == null)//判断是否分页查询
                 {
-                    sql = GetSelectContant(list, scopeList, GetSelectParams(scopeList)).GetSql();
+                    sql = GetSelectContant(list, scopeList, GetSelectParams(scopeList)).GetSql(scopeList.UseCache);
                 }
                 else
                 {
@@ -542,8 +562,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
 
 
                 DataSet ds = null;
-
-                ds = _oper.QueryDataSet(sql, list, CommandType.Text);
+                Dictionary<string, bool> cacheTables = null;
+                if (scopeList.UseCache)
+                {
+                    cacheTables = _oper.DBInfo.QueryCache.CreateMap(CurEntityInfo.TableName);
+                }
+                ds = _oper.QueryDataSet(sql, list, CommandType.Text,cacheTables);
 
                 return ds;
             }
@@ -582,7 +606,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 if (!scopeList.HasPage)//判断是否分页查询
                 {
-                    sql = GetSelectContant(list, scopeList, GetSelectParams(scopeList)).GetSql();
+                    sql = GetSelectContant(list, scopeList, GetSelectParams(scopeList)).GetSql(scopeList.UseCache);
                 }
                 else
                 {
@@ -592,8 +616,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
 
                 List<T> retlist = null;
 
-
-                retlist = QueryList(sql, list, CommandType.Text);
+                Dictionary<string, bool> cacheTables = null;
+                if (scopeList.UseCache)
+                {
+                    cacheTables = _oper.DBInfo.QueryCache.CreateMap(CurEntityInfo.TableName);
+                }
+                retlist = QueryList(sql, list, CommandType.Text,cacheTables);
                 return retlist;
             }
         }
@@ -612,13 +640,17 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             }
             ParamList list = null;
                 list = new ParamList();
-            
-            string sql = GetSelectContant(list,scopeList, "count(*)").GetSql();
+
+            string sql = GetSelectContant(list,scopeList, "count(*)").GetSql(scopeList.UseCache);
             long count = 0;
-            
+            Dictionary<string,bool> cacheTables=null;
+            if(scopeList.UseCache)
+            {
+                cacheTables=_oper.DBInfo.QueryCache.CreateMap(CurEntityInfo.TableName);
+            }
             //try
             //{
-                using (IDataReader reader = _oper.Query(sql, list))
+                using (IDataReader reader = _oper.Query(sql, list,cacheTables))
                 {
                     if (reader.Read())
                     {
@@ -650,7 +682,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             SelectCondition sc = GetSelectContant(list, scopeList, CurEntityInfo.DBInfo.CurrentDbAdapter.FormatParam(CurEntityInfo.PrimaryProperty[0].ParamName));
             string sql = CurEntityInfo.DBInfo.CurrentDbAdapter.GetTopSelectSql(sc, 1);
             bool exists = false;
-            using (IDataReader reader = _oper.Query(sql, list))
+            Dictionary<string, bool> cacheTables = null;
+            if (scopeList.UseCache)
+            {
+                cacheTables = _oper.DBInfo.QueryCache.CreateMap(CurEntityInfo.TableName);
+            }
+            using (IDataReader reader = _oper.Query(sql, list,cacheTables))
             {
                 if (reader.Read())
                 {

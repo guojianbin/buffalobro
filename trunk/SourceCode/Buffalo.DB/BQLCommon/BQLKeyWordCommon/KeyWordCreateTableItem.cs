@@ -77,6 +77,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
                 info.ParamList = new Buffalo.DB.DbCommon.ParamList();
             }
             IDBAdapter idba = info.DBInfo.CurrentDbAdapter;
+            
             info.Condition.Tables.Append(idba.FormatTableName(_tableName));
             
         }

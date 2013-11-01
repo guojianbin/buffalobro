@@ -51,7 +51,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
                 sql += " and TABLE_NAME in(" + inTable + ")";
             }
 
-            using (IDataReader reader = oper.Query(sql, lstParam))
+            using (IDataReader reader = oper.Query(sql, lstParam, null))
             {
                 while (reader.Read())
                 {
@@ -108,7 +108,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
 
             List<TableRelationAttribute> lst = new List<TableRelationAttribute>();
 
-            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam))
+            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam, null))
             {
                 while (reader.Read())
                 {
@@ -154,7 +154,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
                 table.RelationItems = new List<TableRelationAttribute>();
             }
 
-            using (IDataReader reader = oper.Query(sql.ToString(), lstParam))
+            using (IDataReader reader = oper.Query(sql.ToString(), lstParam, null))
             {
 
                 while (reader.Read())

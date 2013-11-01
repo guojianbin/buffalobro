@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using Buffalo.DB.DataBaseAdapter;
 namespace Buffalo.DB.CacheManager
 {
     public interface ICacheAdaper
     {
-        System.Data.DataSet GetData(string sql);
-        void RemoveBySQL(string sql);
+        System.Data.DataSet GetData(IDictionary<string,bool> tableNames,string sql);
+        void RemoveBySQL(IDictionary<string, bool> tableNames,string sql);
         void RemoveByTableName(string tableName);
-        bool SetData(System.Collections.Generic.ICollection<string> tableNames, string sql, System.Data.DataSet ds);
+        bool SetData(IDictionary<string, bool> tableNames, string sql, System.Data.DataSet ds);
+        DBInfo Info{get;}
     }
 }

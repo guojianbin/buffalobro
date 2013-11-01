@@ -163,8 +163,10 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <param name="oper">连接对象</param>
         /// <param name="objCondition">条件对象</param>
         /// <param name="objPage">分页记录类</param>
+        /// <param name="cacheTables">需要缓存的表名</param>
         /// <returns></returns>
-        string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage);
+        string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition,
+            PageContent objPage, bool useCache);
         /// <summary>
         /// 游标分页
         /// </summary>

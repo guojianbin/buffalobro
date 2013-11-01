@@ -73,6 +73,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                     StringBuilder pkStr = new StringBuilder();
                     if (!string.IsNullOrEmpty(_aliasName))
                     {
+                        
                         pkStr.Append(info.DBInfo.CurrentDbAdapter.FormatTableName(_aliasName) + ".");
                     }
                     else
@@ -97,8 +98,11 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 qinfo.Condition = new SelectCondition(info.DBInfo);
                 qinfo.ParamList = info.ParamList;
                 KeyWordConver objCover = new KeyWordConver();
-                string sql = objCover.ToConver(_query, qinfo).GetSql();
-                
+                string sql = objCover.ToConver(_query, qinfo).GetSql(false);
+                foreach (KeyValuePair<string, bool> kvp in qinfo.ContainTables) 
+                {
+                    info.ContainTables[kvp.Key] = true;
+                }
                  result = "(" + sql + ")";
                 
             }

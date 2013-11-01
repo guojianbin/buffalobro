@@ -56,7 +56,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
 
             List<DBTableInfo> lstName = new List<DBTableInfo>();
             ///只能获取表名,其它的没用
-            using (IDataReader reader = oper.Query(sbSQL.ToString(), lstParam))
+            using (IDataReader reader = oper.Query(sbSQL.ToString(), lstParam,null))
             {
                 while (reader.Read())
                 {

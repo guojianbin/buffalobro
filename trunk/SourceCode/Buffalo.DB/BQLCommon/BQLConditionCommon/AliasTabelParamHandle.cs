@@ -36,6 +36,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 //        info.QueryParams[pinfo.PropertyName] = prmInfo;
                 //    }
                 //}
+                
                 resault = idba.FormatTableName(aliasTableName) + ".*";
             }
             else 
@@ -48,7 +49,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 resault = idba.FormatTableName(aliasTableName) + "." + idba.FormatParam(propertyName);
                 //this.valueDataType = prms[propertyName].DataValueType;
             }
-
+            
         }
         internal override void FillInfo(KeyWordInfomation info) 
         {

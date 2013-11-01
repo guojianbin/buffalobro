@@ -27,7 +27,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         public static IDataReader Query(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper)
         {
 
-            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql, objPage.MaxSelectRecords);
+            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql, objPage.MaxSelectRecords,null);
             long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
             objPage.TotlePage = totlePage;
             if (objPage.CurrentPage >= objPage.TotlePage - 1)
@@ -37,7 +37,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             IDataReader reader = null;
 
             string qsql = CutPageSqlCreater.GetCutPageSql(sql, objPage);
-            reader = oper.Query(qsql, lstParam);
+            reader = oper.Query(qsql, lstParam, null);
 
             return reader;
         }
@@ -52,7 +52,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <returns></returns>
         public static DataTable QueryDataTable(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper, Type curType)
         {
-            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql, objPage.MaxSelectRecords);
+            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql, objPage.MaxSelectRecords, null);
             long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
             objPage.TotlePage = totlePage;
             if (objPage.CurrentPage >= objPage.TotlePage - 1)
@@ -69,7 +69,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             try
             {
                 string qsql = CutPageSqlCreater.GetCutPageSql(sql, objPage);
-                reader = oper.Query(qsql, lstParam);
+                reader = oper.Query(qsql, lstParam, null);
                 
                 if (curType == null)
                 {

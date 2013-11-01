@@ -21,13 +21,13 @@ namespace Buffalo.DB.CommBase.BusinessBases
         {
             if (oper.CommitState == CommitState.AutoCommit)
             {
-#if DEBUG
+
                 IMessageOutputer outputer=oper.DBInfo.SqlOutputer.DefaultOutputer;
                 if ( outputer!= null) 
                 {
                     outputer.Output("BuffaloDB", "StarBatchAction", new string[] { });
                 }
-#endif
+
                 _state = oper.CommitState;
                 oper.CommitState = CommitState.UserCommit;
                 _oper = oper;
@@ -66,13 +66,13 @@ namespace Buffalo.DB.CommBase.BusinessBases
         {
             if (_oper!=null)
             {
-#if DEBUG
+
                 IMessageOutputer outputer=_oper.DBInfo.SqlOutputer.DefaultOutputer;
                 if (outputer != null)
                 {
                     outputer.Output("BuffaloDB", "EndBatchAction", new string[] { });
                 }
-#endif
+
                 _oper.CommitState = _state;
                 _oper.AutoClose();
             }

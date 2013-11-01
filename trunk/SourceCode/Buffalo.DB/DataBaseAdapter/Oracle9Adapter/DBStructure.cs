@@ -45,7 +45,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             }
             List<TableRelationAttribute> lst = new List<TableRelationAttribute>();
 
-            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam))
+            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam,null))
             {
                 while (reader.Read())
                 {
@@ -80,7 +80,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             }
             
             //ÃÓ≥‰±Ì
-            using (IDataReader reader = oper.Query(sql, lstParam))
+            using (IDataReader reader = oper.Query(sql, lstParam, null))
             {
                 while (reader.Read())
                 {
@@ -102,7 +102,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                 sql += " and user_views.VIEW_NAME in(" + inTable + ")";
             }
             //ÃÓ≥‰ ”Õº
-            using (IDataReader reader = oper.Query(sql, lstParam))
+            using (IDataReader reader = oper.Query(sql, lstParam, null))
             {
                 while (reader.Read())
                 {
@@ -152,7 +152,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                 table.RelationItems = new List<TableRelationAttribute>();
             }
 
-            using (IDataReader reader = oper.Query(sql.ToString(), new ParamList()))
+            using (IDataReader reader = oper.Query(sql.ToString(), new ParamList(), null))
             {
                 Dictionary<string, bool> dicPkNames = null;
                 while (reader.Read())
@@ -200,7 +200,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             }
             Dictionary<string, Dictionary<string, bool>> dic = new Dictionary<string, Dictionary<string, bool>>();
 
-            using (IDataReader reader = oper.Query(sql.ToString(), new ParamList()))
+            using (IDataReader reader = oper.Query(sql.ToString(), new ParamList(), null))
             {
 
                 while (reader.Read())

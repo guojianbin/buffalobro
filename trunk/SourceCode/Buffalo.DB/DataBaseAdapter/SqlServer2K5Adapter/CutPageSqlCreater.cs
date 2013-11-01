@@ -22,7 +22,8 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
         /// <param name="objCondition">条件对象</param>
         /// <param name="objPage">分页记录类</param>
         /// <returns></returns>
-        public static string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage)
+        public static string CreatePageSql(ParamList list, DataBaseOperate oper,
+            SelectCondition objCondition, PageContent objPage, bool useCache)
         {
             //if (objCondition.Condition == null || objCondition.Condition == "")//初始化查询条件
             //{
@@ -34,7 +35,8 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
             }
             if (objPage.IsFillTotleRecords)
             {
-                objPage.TotleRecords = GetTotleRecord(list, oper, objCondition,objPage);//获取总记录数
+                objPage.TotleRecords = GetTotleRecord(list, oper, objCondition,objPage,
+                    (useCache?objCondition.CacheTables:null));//获取总记录数
                 long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
                 objPage.TotlePage = totlePage;
                 if (objPage.CurrentPage >= objPage.TotlePage - 1)
@@ -137,7 +139,8 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
         /// <param name="part">查询条件</param>
         /// <param name="list">变量列表</param>
         /// <param name="oper">通用类</param>
-        private static long GetTotleRecord(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage)
+        private static long GetTotleRecord(ParamList list, DataBaseOperate oper,
+            SelectCondition objCondition, PageContent objPage,Dictionary<string,bool> cacheTables)
         {
             long totleRecords = 0;
             StringBuilder sql = new StringBuilder();
@@ -198,7 +201,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
 
                 }
             }
-            IDataReader reader = oper.Query(sql.ToString(), list);
+            IDataReader reader = oper.Query(sql.ToString(), list,cacheTables);
             try
             {
                 if (reader.Read())

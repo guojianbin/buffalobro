@@ -36,7 +36,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             IDataReader reader = null;
             try
             {
-                reader = oper.Query(sql, null);
+                reader = oper.Query(sql, null,null);
                 if (reader.Read())
                 {
                     hasProc = true;
@@ -44,7 +44,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                 reader.Close();
                 if (!hasProc)
                 {
-                    oper.Execute(GetProcCode(), null);
+                    oper.Execute(GetProcCode(), null,null);
                 }
             }
             finally
@@ -107,7 +107,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             IDataReader reader = null;
 
             InitProc(oper);
-            reader = oper.Query(ProcName, lstParams, CommandType.StoredProcedure);
+            reader = oper.Query(ProcName, lstParams, CommandType.StoredProcedure,null);
             if (reader.NextResult())//第二个结果集为查询记录数
             {
                 if (objPage.IsFillTotleRecords)
@@ -154,7 +154,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             try
             {
                 InitProc(oper);
-                reader = oper.Query(ProcName, lstParams, CommandType.StoredProcedure);
+                reader = oper.Query(ProcName, lstParams, CommandType.StoredProcedure,null);
                 if (reader.NextResult())//第二个结果集为查询结果
                 {
                     if (curType == null)

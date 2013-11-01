@@ -201,14 +201,16 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
                 for (int i = 0; i < _tables.Length; i++)
                 {
                     BQLTableHandle table = _tables[i];
-
-                    ret.Append(table.DisplayValue(info));
+                    string tableName = table.DisplayValue(info);
+                    ret.Append(tableName);
                     if (i < _tables.Length - 1)
                     {
                         ret.Append(",");
                     }
+                    
                 }
                 info.Condition.Tables.Append(ret.ToString());
+                
             }
             else 
             {

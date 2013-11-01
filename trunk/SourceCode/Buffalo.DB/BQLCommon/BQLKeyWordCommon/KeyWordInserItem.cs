@@ -66,7 +66,9 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
             {
                 info.ParamList = new Buffalo.DB.DbCommon.ParamList();
             }
-            info.Condition.Tables.Append(tableHandle.DisplayValue(info));
+            string tableName=tableHandle.DisplayValue(info);
+            
+            info.Condition.Tables.Append(tableName);
             
         
         }

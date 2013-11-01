@@ -50,7 +50,7 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
                 sql += " and table_name in(" + inTable + ")";
             }
 
-            using (IDataReader reader = oper.Query(sql, lstParam))
+            using (IDataReader reader = oper.Query(sql, lstParam,null))
             {
                 while (reader.Read())
                 {
@@ -100,7 +100,7 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
 
             List<TableRelationAttribute> lst = new List<TableRelationAttribute>();
 
-            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam))
+            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam, null))
             {
                 while (reader.Read())
                 {
@@ -146,7 +146,7 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
                 table.RelationItems = new List<TableRelationAttribute>();
             }
 
-            using (IDataReader reader = oper.Query(sql.ToString(), lstParam))
+            using (IDataReader reader = oper.Query(sql.ToString(), lstParam, null))
             {
 
                 while (reader.Read())

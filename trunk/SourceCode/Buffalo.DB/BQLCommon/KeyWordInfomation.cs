@@ -112,6 +112,15 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         //    }
         //}
 
+        private Dictionary<string, bool> _containTables=new Dictionary<string,bool>();
+        /// <summary>
+        /// °üº¬µÄ±í
+        /// </summary>
+        public Dictionary<string, bool> ContainTables
+        {
+            get { return _containTables; }
+        }
+
         protected ParamList _paramList = null;
         public ParamList ParamList
         {

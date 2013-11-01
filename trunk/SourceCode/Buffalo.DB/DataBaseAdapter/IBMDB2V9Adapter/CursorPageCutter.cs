@@ -24,10 +24,10 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <param name="objPage">分页对象</param>
         /// <param name="oper">数据库对象</param>
         /// <returns></returns>
-        public static IDataReader Query(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper)
+        public static IDataReader Query(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper,Dictionary<string,bool> cacheTables)
         {
 
-            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql, objPage.MaxSelectRecords);
+            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql, objPage.MaxSelectRecords,cacheTables);
             long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
             objPage.TotlePage = totlePage;
             if (objPage.CurrentPage >= objPage.TotlePage - 1)
@@ -37,7 +37,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             IDataReader reader = null;
 
             string qsql = GetCursorPageSql(sql, objPage);
-            reader = oper.Query(qsql, lstParam);
+            reader = oper.Query(qsql, lstParam,cacheTables);
 
             return reader;
         }
@@ -68,9 +68,11 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <param name="oper">数据库对象</param>
         /// <param name="curType">映射的实体类型(如果用回数据库的原列名，则此为null)</param>
         /// <returns></returns>
-        public static DataTable QueryDataTable(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper, Type curType)
+        public static DataTable QueryDataTable(string sql, ParamList lstParam, PageContent objPage,
+            DataBaseOperate oper, Type curType,Dictionary<string,bool> cacheTables)
         {
-            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql, objPage.MaxSelectRecords);
+            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql,
+                objPage.MaxSelectRecords,cacheTables);
             long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
             objPage.TotlePage = totlePage;
             if (objPage.CurrentPage >= objPage.TotlePage - 1)
@@ -87,7 +89,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             try
             {
                 string qsql = GetCursorPageSql(sql, objPage);
-                reader = oper.Query(qsql, lstParam);
+                reader = oper.Query(qsql, lstParam,cacheTables);
                 
                 if (curType == null)
                 {

@@ -252,7 +252,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                         "." + idba.FormatParam(pkep));
                 }
             }
-
+            info.ContainTables[_entityInfo.TableName] = true;
 
             return idba.FormatTableName(this._entityInfo.TableName);
 

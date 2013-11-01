@@ -48,6 +48,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
             AbsCondition con=conver.ToConver(item, info);
             con.AliasManager = info.AliasManager;
             con.DbParamList = info.ParamList;
+            con.CacheTables = info.ContainTables;
             return con;
         }
     }

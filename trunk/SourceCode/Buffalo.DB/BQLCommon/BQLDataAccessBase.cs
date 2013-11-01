@@ -48,20 +48,28 @@ namespace Buffalo.DB.BQLCommon
         /// </summary>
         /// <param name="BQL"></param>
         /// <returns></returns>
-        public virtual T GetUnique(BQLQuery BQL) 
+        public virtual T GetUnique(BQLQuery BQL,bool useCache) 
         {
-            return this.GetUnique<T>(BQL);
+            return this.GetUnique<T>(BQL,useCache);
         }
-
+        /// <summary>
+        /// 获取第一条记录
+        /// </summary>
+        /// <param name="BQL"></param>
+        /// <returns></returns>
+        public T GetUnique(BQLQuery BQL) 
+        {
+            return this.GetUnique<T>(BQL,false);
+        }
         /// <summary>
         /// 执行sql语句，分页返回List
         /// </summary>
         /// <param name="BQL">BQL</param>
         /// <param name="objPage">分页数据</param>
         /// <returns></returns>
-        public virtual List<T> QueryPageList(BQLQuery BQL, PageContent objPage)
+        public virtual List<T> QueryPageList(BQLQuery BQL, PageContent objPage,bool useCache)
         {
-            return QueryPageList<T>(BQL, objPage, null);
+            return QueryPageList<T>(BQL, objPage, null, useCache);
         }
         /// <summary>
         /// 执行sql语句，返回List
@@ -71,7 +79,7 @@ namespace Buffalo.DB.BQLCommon
         /// <returns></returns>
         public virtual List<T> QueryList(BQLQuery BQL)
         {
-            return QueryList<T>(BQL, null);
+            return QueryList<T>(BQL, null,false);
         }
 
         

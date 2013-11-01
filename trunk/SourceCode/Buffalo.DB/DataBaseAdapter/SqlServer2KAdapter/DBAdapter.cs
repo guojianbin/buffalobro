@@ -461,9 +461,9 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <param name="objCondition">条件对象</param>
         /// <param name="objPage">分页记录类</param>
         /// <returns></returns>
-        public virtual string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage) 
+        public virtual string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage,bool useCache) 
         {
-            return CutPageSqlCreater.CreatePageSql(list, oper, objCondition, objPage);
+            return CutPageSqlCreater.CreatePageSql(list, oper, objCondition, objPage,objCondition.CacheTables);
         }
 
 

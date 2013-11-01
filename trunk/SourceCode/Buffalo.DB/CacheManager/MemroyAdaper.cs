@@ -6,6 +6,7 @@ using System.Web;
 using System.Data;
 using System.Collections;
 using Buffalo.Kernel;
+using Buffalo.DB.DataBaseAdapter;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -14,13 +15,21 @@ namespace Buffalo.DB.CacheManager
     /// </summary>
     public class MemroyAdaper : ICacheAdaper 
     {
-        public MemroyAdaper() 
+        public MemroyAdaper(DBInfo info) 
         {
-            
+            _info = info;
         }
 
         private Cache _cache = HttpRuntime.Cache;
-        private Dictionary<string, List<string>> _dicTableToKey = new Dictionary<string, List<string>>();
+        private Hashtable _hsToKey = Hashtable.Synchronized(new Hashtable());
+        private DBInfo _info;
+        /// <summary>
+        /// 数据库信息
+        /// </summary>
+        public DBInfo Info
+        {
+            get { return _info; }
+        }
         /// <summary>
         /// 设置数据
         /// </summary>
@@ -28,30 +37,55 @@ namespace Buffalo.DB.CacheManager
         /// <param name="sql">SQL名</param>
         /// <param name="dt">数据</param>
         /// <returns></returns>
-        public bool SetData(ICollection<string> tableNames, string sql, DataSet ds) 
+        public  bool SetData(IDictionary<string, bool> tableNames, string sql, DataSet ds) 
         {
             string key = GetKey(sql);
-            List<string> sqlItems = null;
+            ArrayList sqlItems = null;
             //添加表对应的SQL语句值
-            foreach (string tableName in tableNames) 
+            foreach (KeyValuePair<string, bool> kvptableName in tableNames)
             {
-                if (!_dicTableToKey.TryGetValue(tableName, out sqlItems)) 
+                string tableName = kvptableName.Key;
+                sqlItems = _hsToKey[tableName] as ArrayList;
+                if (sqlItems == null)
                 {
-                    using (Lock objLock = new Lock(_dicTableToKey))
-                    {
-                        sqlItems = new List<string>();
-                        _dicTableToKey[tableName] = sqlItems;
-                    }
+
+                    sqlItems = ArrayList.Synchronized(new ArrayList());
+                    _hsToKey[tableName] = sqlItems;
+
                 }
-                using (Lock objLock = new Lock(sqlItems))
-                {
-                    sqlItems.Add(key);
-                }
+
+                sqlItems.Add(key);
+
             }
             _cache[key] = ds;
             return true;
         }
+        /// <summary>
+        /// 获取表名
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        private string GetTableName(string tableName)
+        {
+            StringBuilder sbInfo = new StringBuilder(tableName.Length + 10);
+            sbInfo.Append(_info.Name);
+            sbInfo.Append(".");
+            sbInfo.Append(tableName);
+            return sbInfo.ToString();
+        }
 
+        /// <summary>
+        /// 生成表名对应的Key
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <returns></returns>
+        private  string GetTableKeyName(string tableName)
+        {
+            StringBuilder sbRet = new StringBuilder(tableName.Length + 20);
+            sbRet.Append("___Table:");
+            sbRet.Append(GetTableName(tableName));
+            return sbRet.ToString();
+        }
         /// <summary>
         /// 通过SQL获取键
         /// </summary>
@@ -63,7 +97,7 @@ namespace Buffalo.DB.CacheManager
             sbKey.Append("BuffaloCache:");
             sbKey.Append(sql.Length );
             sbKey.Append(":");
-            sbKey.Append(PasswordHash.ToSHA1String(sql));
+            sbKey.Append(PasswordHash.ToMD5String(_info.Name+":"+sql));
             return sbKey.ToString();
         }
 
@@ -73,42 +107,44 @@ namespace Buffalo.DB.CacheManager
         /// <param name="sql">SQL语句</param>
         /// <param name="tableNames">表名集合</param>
         /// <returns></returns>
-        public DataSet GetData( string sql)
+        public  DataSet GetData(IDictionary<string, bool> tableNames, string sql)
         {
             string key = GetKey(sql);
-            return hs[key] as DataSet;
+            return _cache[key] as DataSet;
         }
 
         /// <summary>
         /// 通过SQL删除某项
         /// </summary>
         /// <param name="sql"></param>
-        public void RemoveBySQL( string sql) 
+        public  void RemoveBySQL(IDictionary<string, bool> tableNames,string sql) 
         {
             string key = GetKey(sql);
-            hs.Remove(key);
+            _cache.Remove(key);
+
         }
         /// <summary>
         /// 通过表名删除关联项
         /// </summary>
         /// <param name="sql"></param>
-        public void RemoveByTableName(string tableName)
+        public  void RemoveByTableName(string tableName)
         {
-            List<string> sqlItems = null;
-            if (_dicTableToKey.TryGetValue(tableName, out sqlItems))
+            ArrayList sqlItems = _hsToKey[tableName] as ArrayList;
+
+            if (sqlItems != null)
             {
-                if (sqlItems == null)
+
+
+                foreach (object okey in sqlItems)
                 {
-                    return;
-                }
-                using (Lock objLock = new Lock(sqlItems))
-                {
-                    foreach (string key in sqlItems)
+                    string key = okey as string;
+                    if (!string.IsNullOrEmpty(key))
                     {
                         _cache.Remove(key);
                     }
-                    sqlItems.Clear();
                 }
+                sqlItems.Clear();
+
             }
         }
     }

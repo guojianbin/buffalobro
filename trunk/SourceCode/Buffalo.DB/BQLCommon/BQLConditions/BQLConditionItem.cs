@@ -68,7 +68,7 @@ namespace Buffalo.DB.BQLCommon
                 {
                     KeyWordConver conver = new KeyWordConver();
                     KeyWordInfomation qInfo = info.Clone() as KeyWordInfomation;
-                    return "(" + _handle(_sourceHandle.DisplayValue(info), new string[] { conver.ToConver(_query, qInfo).GetSql() },info.DBInfo) + ")";
+                    return "(" + _handle(_sourceHandle.DisplayValue(info), new string[] { conver.ToConver(_query, qInfo).GetSql(false) },info.DBInfo) + ")";
                 }
                 else if (_paramList != null)
                 {

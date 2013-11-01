@@ -23,10 +23,10 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// <param name="objPage">分页对象</param>
         /// <param name="oper">数据库对象</param>
         /// <returns></returns>
-        public static IDataReader Query(string sql,ParamList lstParam, PageContent objPage,DataBaseOperate oper)
+        public static IDataReader Query(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper, Dictionary<string, bool> cacheTables)
         {
 
-            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql,objPage.MaxSelectRecords);
+            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql,objPage.MaxSelectRecords,cacheTables);
             long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
             objPage.TotlePage = totlePage;
             if (objPage.CurrentPage >= objPage.TotlePage - 1)
@@ -36,7 +36,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
             IDataReader reader = null;
             
                 string qsql = CutPageSqlCreater.GetCutPageSql(sql, objPage);
-                reader = oper.Query(qsql, lstParam);
+                reader = oper.Query(qsql, lstParam,cacheTables);
 
             return reader;
         }
@@ -51,7 +51,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// <returns></returns>
         public static DataTable QueryDataTable(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper, Type curType)
         {
-            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql,objPage.MaxSelectRecords);
+            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql, objPage.MaxSelectRecords,null);
             long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
             objPage.TotlePage = totlePage;
             if (objPage.CurrentPage >= objPage.TotlePage - 1)
@@ -68,7 +68,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
             try
             {
                 string qsql = CutPageSqlCreater.GetCutPageSql(sql, objPage);
-                reader = oper.Query(qsql, lstParam);
+                reader = oper.Query(qsql, lstParam, null);
                 
                 if (curType == null)
                 {

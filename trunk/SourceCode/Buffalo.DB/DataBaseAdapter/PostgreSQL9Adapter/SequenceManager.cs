@@ -72,7 +72,8 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
             int count = 0;
             try
             {
-                reader = oper.Query(sql, null);
+
+                reader = oper.Query(sql, null,null);
                 if (reader.Read())
                 {
                     count = Convert.ToInt32(reader[0]);

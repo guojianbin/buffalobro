@@ -7,6 +7,7 @@ using Buffalo.DB.MessageOutPuters;
 using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.CommBase;
 using Buffalo.DB.DBCheckers;
+using Buffalo.DB.CacheManager;
 
 namespace Buffalo.DB.DataBaseAdapter
 {
@@ -21,7 +22,29 @@ namespace Buffalo.DB.DataBaseAdapter
         private IConvertFunction _curConvertFunctions = null;
         private ICommonFunction _curCommonFunctions = null;
         private IDBStructure _curDBStructure = null;
+#if DEBUG
+        MessageOutput _sqlOutputer = new MessageOutput();
+#else
+        MessageOutput _sqlOutputer =null;
+#endif
+        private string _connectionString = null;
+        private string _dbType = null;
+        private QueryCache _cache;
 
+        public QueryCache QueryCache
+        {
+            get { return _cache; }
+        }
+
+        /// <summary>
+        /// 设置查询缓存
+        /// </summary>
+        /// <param name="ica"></param>
+        internal void SetQueryCache(ICacheAdaper ica) 
+        {
+            _cache = new QueryCache(this,ica);
+        }
+        
         private static Dictionary<string, IAdapterLoader> _dicAdapterLoaderName = InitAdapterLoaderName();
 
         /// <summary>
@@ -42,11 +65,7 @@ namespace Buffalo.DB.DataBaseAdapter
             return dic;
         }
 
-#if DEBUG
-        MessageOutput _sqlOutputer = new MessageOutput();
-#endif
-        private string _connectionString = null;
-        private string _dbType = null;
+
         //private Dictionary<string, string> _extendDatabaseConnection = null;
 
         public DBInfo(string dbName,string connectionString, 
@@ -56,6 +75,7 @@ namespace Buffalo.DB.DataBaseAdapter
             _dbType = dbType;
             _connectionString = connectionString;
             _dbName = dbName;
+            
             InitAdapters();
         }
 
@@ -136,7 +156,7 @@ namespace Buffalo.DB.DataBaseAdapter
             DataBaseOperate oper = new DataBaseOperate(this);
             return oper;
         }
-#if DEBUG
+
         /// <summary>
         /// 输出SQL语句的类
         /// </summary>
@@ -147,7 +167,7 @@ namespace Buffalo.DB.DataBaseAdapter
                 return _sqlOutputer;
             }
         }
-#endif
+
         /// <summary>
         /// 获取当前数据库的名字
         /// </summary>

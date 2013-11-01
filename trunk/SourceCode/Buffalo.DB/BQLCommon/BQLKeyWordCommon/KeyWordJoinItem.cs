@@ -35,8 +35,9 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
 
         internal override void Tran(KeyWordInfomation info)
         {
-            
-            string ret = " "+_keyWord + " join " + _tables[0].DisplayValue(info) + " on " + _condition.DisplayValue(info);
+            string table0 = _tables[0].DisplayValue(info);
+            string table1 = _condition.DisplayValue(info);
+            string ret = " " + _keyWord + " join " + table0 + " on " + table1;
             info.Condition.Tables.Append(ret);
         }
     }

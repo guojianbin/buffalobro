@@ -12,6 +12,7 @@ using Buffalo.DB.EntityInfos;
 using Buffalo.Kernel.FastReflection;
 using System.IO;
 using Buffalo.Kernel;
+using Buffalo.DB.CacheManager;
 
 namespace Buffalo.DB.DataBaseAdapter
 {
@@ -141,11 +142,15 @@ namespace Buffalo.DB.DataBaseAdapter
             string name = null;
             //string output = null;
             string[] attNames = null;
+            ICacheAdaper ica=null;
+            string cacheType = null;
+            string cacheConn = null;
             //Dictionary<string, string> extendDatabaseConnection = new Dictionary<string,string>();
             if (doc == null)
             {
                 throw new Exception("找不到配置文件");
             }
+
             XmlNodeList lstConfig = doc.GetElementsByTagName("config");
             if (lstConfig.Count > 0)
             {
@@ -185,7 +190,14 @@ namespace Buffalo.DB.DataBaseAdapter
                             }
                         }
                     }
-                    
+                    else if (att.Name.Equals("cache", StringComparison.CurrentCultureIgnoreCase)) 
+                    {
+                        cacheType = att.InnerText;
+                    }
+                    else if (att.Name.Equals("cacheConn", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        cacheConn = att.InnerText;
+                    }
                 }
             }
             else
@@ -193,7 +205,9 @@ namespace Buffalo.DB.DataBaseAdapter
                 throw new Exception("配置文件没有config节点");
             }
             
-            DBInfo info=new DBInfo(name, connectionString, dbType);
+            DBInfo info = new DBInfo(name, connectionString, dbType);
+            ica = QueryCache.GetCache(info,cacheType, cacheConn);
+            info.SetQueryCache(ica);
             info.DataaccessNamespace=attNames;
             return info;
         }

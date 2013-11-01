@@ -193,7 +193,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public IDataReader Query(string sql, PageContent objPage, DataBaseOperate oper)
         {
-            return CursorPageCutter.Query(sql, null, objPage, oper);
+            return CursorPageCutter.Query(sql, null, objPage, oper,null);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public DataTable QueryDataTable(string sql, PageContent objPage, DataBaseOperate oper, Type curType)
         {
-            return CursorPageCutter.QueryDataTable(sql, null, objPage, oper, curType);
+            return CursorPageCutter.QueryDataTable(sql, null, objPage, oper, curType, null);
         }
 
 
@@ -219,9 +219,10 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <param name="objPage">分页实体</param>
         /// <param name="oper">数据库链接</param>
         /// <returns></returns>
-        public IDataReader Query(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper)
+        public IDataReader Query(string sql, ParamList lstParam, PageContent objPage,
+            DataBaseOperate oper)
         {
-            return CursorPageCutter.Query(sql, lstParam, objPage, oper);
+            return CursorPageCutter.Query(sql, lstParam, objPage, oper,null);
         }
 
         /// <summary>
@@ -235,7 +236,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public DataTable QueryDataTable(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper, Type curType)
         {
-            return CursorPageCutter.QueryDataTable(sql, lstParam, objPage, oper, curType);
+            return CursorPageCutter.QueryDataTable(sql, lstParam, objPage, oper, curType, null);
         }
         /// <summary>
         /// 生成分页SQL语句
@@ -245,9 +246,10 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <param name="objCondition">条件对象</param>
         /// <param name="objPage">分页记录类</param>
         /// <returns></returns>
-        public virtual string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage)
+        public virtual string CreatePageSql(ParamList list, DataBaseOperate oper,
+            SelectCondition objCondition, PageContent objPage,bool useCache)
         {
-            return CutPageSqlCreater.CreatePageSql(list, oper, objCondition, objPage);
+            return CutPageSqlCreater.CreatePageSql(list, oper, objCondition, objPage,useCache);
         }
         /// <summary>
         /// 获取初始化计分函数的SQL语句

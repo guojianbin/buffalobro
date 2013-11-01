@@ -9,7 +9,7 @@ namespace Buffalo.DB.CacheManager
     /// <summary>
     /// 内存数据行读取器
     /// </summary>
-    public class MemChachReader : IDataReader
+    public class MemCacheReader : IDataReader
     {
         /// <summary>
         /// 数据
@@ -18,7 +18,7 @@ namespace Buffalo.DB.CacheManager
         /// <summary>
         /// 当前数据索引
         /// </summary>
-        private int _currentIndex = -1;
+        private int _currentIndex = 0;
         /// <summary>
         /// 当前数据表
         /// </summary>
@@ -26,15 +26,16 @@ namespace Buffalo.DB.CacheManager
         /// <summary>
         /// 当前数据表的索引
         /// </summary>
-        private int _currentRowIndex=0;
+        private int _currentRowIndex=-1;
         /// <summary>
         /// 当前行
         /// </summary>
         private DataRow _currentRow;
 
-        public MemChachReader(DataSet ds) 
+        public MemCacheReader(DataSet ds) 
         {
             _data = ds;
+            _currentData = _data.Tables[_currentIndex];
         }
         //public MemChachReader(string xml)
         //{

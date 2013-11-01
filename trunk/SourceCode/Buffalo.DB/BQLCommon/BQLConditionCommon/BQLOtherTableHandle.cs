@@ -55,6 +55,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         internal override string DisplayValue(KeyWordInfomation info)
         {
             IDBAdapter idba = info.DBInfo.CurrentDbAdapter;
+            info.ContainTables[tableName] = true;
             return idba.FormatTableName(tableName);
         }
 

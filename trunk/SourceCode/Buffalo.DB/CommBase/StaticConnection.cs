@@ -84,9 +84,11 @@ namespace Buffalo.DB.CommBase
             if (oper==null) 
             {
                 oper = new DataBaseOperate(db, true);
-#if DEBUG
-                Debug.WriteLine("SQLCommon.NewConnection:DB=" + db.Name);
-#endif
+
+                if (db.SqlOutputer.HasOutput)
+                {
+                    db.SqlOutputer.DefaultOutputer.Output("BuffaloDB", "CreateConnection", new string[] { "NewConnection" });
+                }
                 SetOperate(oper,key);
             }
             return oper;

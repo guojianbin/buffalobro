@@ -22,7 +22,8 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <param name="objCondition">条件对象</param>
         /// <param name="objPage">分页记录类</param>
         /// <returns></returns>
-        public static string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage)
+        public static string CreatePageSql(ParamList list, DataBaseOperate oper,
+            SelectCondition objCondition, PageContent objPage,bool useCache)
         {
 
             if (objPage.CurrentPage < 0 || objPage.PageSize <= 0)//初始化页数
@@ -32,7 +33,8 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             //string sql = objCondition.GetSelect();
             if (objPage.IsFillTotleRecords)
             {
-                objPage.TotleRecords = GetTotleRecord(list, oper, objCondition.GetSelect(), objPage.MaxSelectRecords);//获取总记录数
+                objPage.TotleRecords = GetTotleRecord(list, oper, objCondition.GetSelect(), 
+                    objPage.MaxSelectRecords,(useCache?objCondition.CacheTables:null));//获取总记录数
                 long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
                 objPage.TotlePage = totlePage;
                 if (objPage.CurrentPage >= objPage.TotlePage - 1)
@@ -108,7 +110,8 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <param name="part">查询条件</param>
         /// <param name="list">变量列表</param>
         /// <param name="oper">通用类</param>
-        public static long GetTotleRecord(ParamList list, DataBaseOperate oper,string sql,long maxRecords)
+        public static long GetTotleRecord(ParamList list, DataBaseOperate oper,string sql,
+            long maxRecords,Dictionary<string,bool> cacheTables)
         {
             long totleRecords = 0;
             StringBuilder tmpsql = new StringBuilder(5000);
@@ -129,7 +132,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
                 tmpsql.Append(sql);
                 tmpsql.Append(")");
             }
-            IDataReader reader = oper.Query(tmpsql.ToString(), list);
+            IDataReader reader = oper.Query(tmpsql.ToString(), list, cacheTables);
             try
             {
                 if (reader.Read())

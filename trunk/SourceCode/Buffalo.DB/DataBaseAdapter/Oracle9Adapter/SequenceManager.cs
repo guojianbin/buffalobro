@@ -76,7 +76,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             int count = 0;
             try
             {
-                reader = oper.Query(sql, null);
+                reader = oper.Query(sql, null,null);
                 if (reader.Read())
                 {
                     if (!reader.IsDBNull(0)) 

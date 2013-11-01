@@ -23,7 +23,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             List<DBTableInfo> lstName = new List<DBTableInfo>();
             ParamList lstParam = new ParamList();
             //Ìî³ä±í
-            using (IDataReader reader = oper.Query(_sqlTable, lstParam))
+            using (IDataReader reader = oper.Query(_sqlTable, lstParam,null))
             {
                 while (reader.Read())
                 {
@@ -66,7 +66,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
 
             List<TableRelationAttribute> lst = new List<TableRelationAttribute>();
 
-            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam)) 
+            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam,null)) 
             {
                 while (reader.Read()) 
                 {
@@ -116,7 +116,7 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
 
             List<DBTableInfo> lst = new List<DBTableInfo>();
             Dictionary<string, DBTableInfo> dicTables = new Dictionary<string, DBTableInfo>();
-            using (IDataReader reader = oper.Query(sql.ToString(), new ParamList()))
+            using (IDataReader reader = oper.Query(sql.ToString(), new ParamList(),null))
             {
 
                 while (reader.Read())
