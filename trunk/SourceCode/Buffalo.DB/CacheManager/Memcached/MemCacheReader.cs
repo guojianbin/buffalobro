@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using Buffalo.Kernel;
+using Buffalo.DB.CacheManager.Memcached;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -14,7 +15,7 @@ namespace Buffalo.DB.CacheManager
         /// <summary>
         /// 数据
         /// </summary>
-        private DataSet _data;
+        private MemDataSet _data;
         /// <summary>
         /// 当前数据索引
         /// </summary>
@@ -22,34 +23,24 @@ namespace Buffalo.DB.CacheManager
         /// <summary>
         /// 当前数据表
         /// </summary>
-        private DataTable _currentData;
-        /// <summary>
-        /// 当前数据表的索引
-        /// </summary>
-        private int _currentRowIndex=-1;
+        private MemDataTable _currentData;
+
         /// <summary>
         /// 当前行
         /// </summary>
         private DataRow _currentRow;
 
-        public MemCacheReader(DataSet ds) 
+        public MemCacheReader(MemDataSet ds) 
         {
             _data = ds;
             _currentData = _data.Tables[_currentIndex];
+            _currentData.Reset();
         }
         //public MemChachReader(string xml)
         //{
         //    _data = CommonMethods.XMLToDataSet(xml, XmlReadMode.IgnoreSchema);
         //}
 
-        /// <summary>
-        /// 把数据打包成字符串
-        /// </summary>
-        /// <returns></returns>
-        public string ExportXML() 
-        {
-            return CommonMethods.DataSetToXML(_data, XmlWriteMode.IgnoreSchema);
-        }
 
         
 
@@ -77,26 +68,14 @@ namespace Buffalo.DB.CacheManager
 
         public bool NextResult()
         {
-            if (_data.Tables.Count < _currentIndex+2 ) 
-            {
-                return false;
-            }
-            _currentIndex++;
-            _currentData = _data.Tables[_currentIndex];
-            _currentRowIndex = -1;
-            _currentRow = null;
+            _currentData.MoveNext();
             return true;
         }
 
         public bool Read()
         {
-            if (_currentData.Rows.Count < _currentRowIndex+2) 
-            {
-                return false;
-            }
-            _currentRowIndex++;
-            _currentRow = _currentData.Rows[_currentRowIndex];
-            return true;
+            return _currentData.MoveNext();
+            
         }
 
         public int RecordsAffected

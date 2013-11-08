@@ -132,18 +132,24 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             //}
             IDBAdapter idba = info.DBInfo.CurrentDbAdapter;
             StringBuilder sbRet = new StringBuilder();
+            BQLEntityTableHandle outputTable = _belongTable;
+            if (string.IsNullOrEmpty(entityInfo.TableName)) 
+            {
+                outputTable = info.FromTable;
+            }
             if (info.Infos.IsShowTableName)
             {
-                if (info.AliasManager != null && !CommonMethods.IsNull(_belongTable))
+                if (info.AliasManager != null && !CommonMethods.IsNull(outputTable))
                 {
-                    string aliasName = info.AliasManager.GetTableAliasName(_belongTable);
+                    
+                    string aliasName = info.AliasManager.GetTableAliasName(outputTable);
                     if (!string.IsNullOrEmpty(aliasName))
                     {
                         sbRet.Append(idba.FormatTableName(aliasName));
                         sbRet.Append(".");
                     }
                 }
-                else
+                else if(!string.IsNullOrEmpty(entityInfo.TableName))
                 {
                     sbRet.Append(idba.FormatTableName(entityInfo.TableName));
                     sbRet.Append(".");

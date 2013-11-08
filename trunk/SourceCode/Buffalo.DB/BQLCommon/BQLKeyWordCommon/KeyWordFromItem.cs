@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers;
+using Buffalo.Kernel;
 
 namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
 {
@@ -182,8 +183,18 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         {
             foreach (BQLTableHandle tab in _tables) 
             {
+
+                if (CommonMethods.IsNull(info.FromTable)) 
+                {
+                    BQLEntityTableHandle etab = tab as BQLEntityTableHandle;
+                    if (CommonMethods.IsNull(etab))
+                    {
+                        info.FromTable = etab;
+                    }
+                }
                 BQLValueItem.DoFillInfo(tab, info);
             }
+            
         }
 
         /// <summary>

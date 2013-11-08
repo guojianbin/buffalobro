@@ -740,6 +740,18 @@ namespace Memcached.ClientLibrary
 		}
 
         /// <summary>
+        /// 写入一个字节数组
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="expiry"></param>
+        /// <returns></returns>
+        public bool SetBytes(string key, object value, TimeSpan expiry)
+        {
+
+        }
+
+        /// <summary>
         /// 设置一个值类型
         /// </summary>
         /// <param name="value"></param>

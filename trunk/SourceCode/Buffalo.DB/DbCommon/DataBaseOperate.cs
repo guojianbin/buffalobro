@@ -529,6 +529,8 @@ namespace Buffalo.DB.DbCommon
                 {
                     paramList.ReturnParameterValue(_comm, _db);
                 }
+
+                //¶ÁÈë»º´æ
                 if (cacheTables != null && cacheTables.Count > 0)
                 {
                     IDataReader nreader=_db.QueryCache.SetReader(reader, cacheTables, sql, paramList);

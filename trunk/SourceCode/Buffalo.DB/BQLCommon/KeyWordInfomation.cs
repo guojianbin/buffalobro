@@ -89,7 +89,15 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             get { return _dbInfo; }
             set { _dbInfo = value; }
         }
-
+        private BQLEntityTableHandle _fromTable;
+        /// <summary>
+        /// From的第一个表
+        /// </summary>
+        public BQLEntityTableHandle FromTable
+        {
+            get { return _fromTable; }
+            set { _fromTable = value; }
+        }
         ///// <summary>
         ///// 查询显示的属性和字段的对应表
         ///// </summary>

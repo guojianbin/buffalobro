@@ -110,7 +110,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public DbConnection GetConnection(DBInfo db)
         {
-            DBInfoLocker.LockDB(db);//Ïß³ÌËø¶¨
+            
             DbConnection conn = new SQLiteConnection();
             return conn;
         }

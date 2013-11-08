@@ -10,6 +10,8 @@ namespace Buffalo.DB.CacheManager.Memcached
     /// </summary>
     public class MemDataTable:IEnumerable<MemDataItem>
     {
+
+
         private string _tableName;
         /// <summary>
         /// 表名
@@ -19,11 +21,18 @@ namespace Buffalo.DB.CacheManager.Memcached
             get { return _tableName; }
             set { _tableName = value; }
         }
-
+        private int _count;
+        /// <summary>
+        /// 记录数
+        /// </summary>
+        public int Count
+        {
+            get { return _count; }
+        }
 
         private List<DataColumn> _lstColumns=new List<DataColumn>();
 
-        public List<DataColumn> LstColumns
+        public List<DataColumn> Columns
         {
             get { return _lstColumns; }
         }
@@ -33,7 +42,7 @@ namespace Buffalo.DB.CacheManager.Memcached
         /// <summary>
         /// 第一条记录
         /// </summary>
-        public MemDataItem FristItem
+        protected internal MemDataItem FristItem
         {
             get { return _fristItem; }
         }
@@ -43,12 +52,19 @@ namespace Buffalo.DB.CacheManager.Memcached
         /// <summary>
         /// 最后一条记录
         /// </summary>
-        public MemDataItem Last
+        protected internal MemDataItem Last
         {
             get { return _last; }
-            set { _last = value; }
         }
+        private MemDataItem _current;
 
+        /// <summary>
+        /// 当前记录
+        /// </summary>
+        public MemDataItem Current
+        {
+            get { return _current; }
+        }
         /// <summary>
         /// 添加项
         /// </summary>
@@ -68,7 +84,51 @@ namespace Buffalo.DB.CacheManager.Memcached
                 _last.Next = item;
                 _last = item;
             }
+            _count++;
         }
+        /// <summary>
+        /// 移动到下一个
+        /// </summary>
+        /// <returns></returns>
+        public bool MoveNext() 
+        {
+            if (_current == null) 
+            {
+                _current = _fristItem;
+                
+            }
+            else if (_current.Next == null)
+            {
+                return false;
+            }
+            else 
+            {
+                _current = _current.Next;
+            }
+            if (_current == null) 
+            {
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// 重置行读取
+        /// </summary>
+        public void Reset() 
+        {
+            _current = null;
+        }
+        /// <summary>
+        /// 添加项数据
+        /// </summary>
+        /// <param name="item"></param>
+        public void AddItemData(IEnumerable<object> datas)
+        {
+            MemDataItem item = new MemDataItem();
+            item.AddRange(datas);
+            AddItem(item);
+        }
+
 
         #region IEnumerable<MemDataItem> 成员
 
