@@ -12,6 +12,8 @@ namespace Buffalo.DB.CacheManager
     /// </summary>
     public class MemCacheReader : IDataReader
     {
+        
+
         /// <summary>
         /// Êý¾Ý
         /// </summary>

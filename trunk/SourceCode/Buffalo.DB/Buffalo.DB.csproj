@@ -84,6 +84,8 @@
     <Compile Include="CacheManager\Memcached\MemDataSerialize.cs" />
     <Compile Include="CacheManager\Memcached\MemDataSet.cs" />
     <Compile Include="CacheManager\Memcached\MemDataTable.cs" />
+    <Compile Include="CacheManager\Memcached\MemTypeItem.cs" />
+    <Compile Include="CacheManager\Memcached\MemTypeManager.cs" />
     <Compile Include="CacheManager\MemroyAdaper.cs" />
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />

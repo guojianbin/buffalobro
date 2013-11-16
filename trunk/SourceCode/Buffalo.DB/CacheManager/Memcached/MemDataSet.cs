@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Data.Common;
+using System.IO;
 
 namespace Buffalo.DB.CacheManager.Memcached
 {
@@ -41,6 +42,7 @@ namespace Buffalo.DB.CacheManager.Memcached
             return ds;
         }
 
+       
 
 
         /// <summary>
@@ -78,3 +80,15 @@ namespace Buffalo.DB.CacheManager.Memcached
         }
     }
 }
+
+
+/*
+ *MemDataSet文件结构:
+ * MDATA+数据表数量(int)+数据表数据(MemDataTable)
+ *  MemDataTable结构：
+ *      列数+列信息(列名+列类型标识)
+ *      行数+行数据
+ *      行数据：
+ *          普通数据：是否空+数据
+ *          数组数据：是否空+长度+数据
+ */ 

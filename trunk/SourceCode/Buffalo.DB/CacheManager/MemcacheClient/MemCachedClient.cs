@@ -746,22 +746,12 @@ namespace Memcached.ClientLibrary
         /// <param name="value"></param>
         /// <param name="expiry"></param>
         /// <returns></returns>
-        public bool SetBytes(string key, object value, TimeSpan expiry)
-        {
-
-        }
-
-        /// <summary>
-        /// 设置一个值类型
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public bool SetValue(string key,object value,TimeSpan expiry) 
+        public bool SetBytes(string key, byte[] value, TimeSpan expiry)
         {
             if (expiry.TotalSeconds <= 0)
                 return true;
 
-            
+
 
             // get SockIO obj
             SockIO sock = SockIOPool.GetInstance(_poolName).GetSock(key, null);
@@ -779,7 +769,7 @@ namespace Memcached.ClientLibrary
             int length = 0;
             try
             {
-                val = UTF8Encoding.UTF8.GetBytes(value.ToString());
+                val = value;
                 length = val.Length;
             }
             catch (ArgumentException ex)
@@ -791,7 +781,7 @@ namespace Memcached.ClientLibrary
             }
             try
             {
-                string cmd =  "set " + key + " " + flags + " "
+                string cmd = "set " + key + " " + flags + " "
                     + GetExpirationTime(expiry) + " " + length + "\r\n";
                 sock.Write(UTF8Encoding.UTF8.GetBytes(cmd));
                 sock.Write(val, 0, length);
@@ -829,6 +819,24 @@ namespace Memcached.ClientLibrary
                 sock.Close();
 
             return false;
+        }
+
+        /// <summary>
+        /// 设置一个值类型
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetValue(string key, object value, TimeSpan expiry)
+        {
+            byte[] val = null;
+
+            val = value as byte[];
+            if (val == null)
+            {
+                val = UTF8Encoding.UTF8.GetBytes(value.ToString());
+            }
+
+            return SetBytes(key, val, expiry);
         }
 
 		/// <summary>
@@ -1055,6 +1063,58 @@ namespace Memcached.ClientLibrary
 		{
 			return Get(key, hashCode, false);
 		}
+
+        /// <summary>
+        /// 获取当前值的网络流
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashCode"></param>
+        /// <param name="asString"></param>
+        /// <returns></returns>
+        public SockIO GetValueStream(string key, object hashCode, bool asString) 
+        {
+            SockIO sock = SockIOPool.GetInstance(_poolName).GetSock(key, hashCode);
+	    
+			if(sock == null)
+				return null;
+
+			try 
+			{
+				string cmd = "get " + key + "\r\n";
+				
+
+				sock.Write(UTF8Encoding.UTF8.GetBytes(cmd));
+				sock.Flush();
+
+				// build empty map
+				// and fill it from server
+                //Hashtable hm = new Hashtable();
+                //LoadItems(sock, hm, asString);
+                string line = sock.ReadLine();
+                string[] info = line.Split(' ');
+                string key = info[1];
+                int flag = int.Parse(info[2], new NumberFormatInfo());
+                int length = int.Parse(info[3], new NumberFormatInfo());
+
+
+
+                return sock;
+
+			}
+			catch(IOException e) 
+			{
+					sock.TrueClose();
+				
+				sock = null;
+                throw e;
+			}
+
+			if(sock != null)
+				sock.Close();
+
+			return null;
+		
+        }
 
 		/// <summary>
 		/// Retrieve a key from the server, using a specific hash.

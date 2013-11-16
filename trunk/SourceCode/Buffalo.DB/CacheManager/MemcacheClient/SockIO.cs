@@ -38,6 +38,15 @@ namespace Memcached.ClientLibrary
         private String _host;
         private Socket _socket;
         private Stream _networkStream;
+        /// <summary>
+        /// 获取当前的网络流
+        /// </summary>
+        /// <returns></returns>
+        public Stream GetStream()
+        {
+           return _networkStream; 
+            
+        }
 
         private SockIO()
         {
