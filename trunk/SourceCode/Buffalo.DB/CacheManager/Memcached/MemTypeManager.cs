@@ -15,6 +15,8 @@ namespace Buffalo.DB.CacheManager.Memcached
         private static Dictionary<int, MemTypeItem> _dicMemTypeItem = null;
         private static Dictionary<string, MemTypeItem> _dicMemTypeItemByFullName = null;
 
+        private static bool _isInit=InitTypes();
+
         private static bool InitTypes()
         {
             _dicMemTypeItem = new Dictionary<int, MemTypeItem>();
@@ -31,17 +33,50 @@ namespace Buffalo.DB.CacheManager.Memcached
             AddItem<ulong>(7, ReadUInt64);
 
             AddItem<byte>(8, ReadByte);
-            AddItem<byte[]>(9, ReadBytes);
+            AddArrayItem<byte[]>(9, ReadBytes, WriteArray<byte[]>);
             AddItem<char>(10, ReadChar);
-            AddItem<char[]>(11, ReadChars);
+            AddArrayItem<char[]>(11, ReadChars, WriteArray<char[]>);
             AddItem<decimal>(12, ReadDecimal);
             AddItem<double>(13, ReadDouble);
             AddItem<sbyte>(14, ReadSByte);
             AddItem<float>(15, ReadSingle);
             //AddItem<string>(2, ReadString);
+            AddArrayItem<string>(16, ReadString, WriteString);
+            
+            
             return true;
         }
 
+        /// <summary>
+        /// 获取类型信息
+        /// </summary>
+        /// <param name="objType"></param>
+        /// <returns></returns>
+        public static MemTypeItem GetTypeInfo(Type objType) 
+        {
+            string key = objType.FullName;
+            MemTypeItem item = null;
+            if (_dicMemTypeItemByFullName.TryGetValue(key, out item)) 
+            {
+                return item;
+            }
+            return null;
+        }
+        /// <summary>
+        /// 根据类型ID获取类型信息
+        /// </summary>
+        /// <param name="typeID">类型ID</param>
+        /// <returns></returns>
+        public static MemTypeItem GetTypeByID(int typeID)
+        {
+            
+            MemTypeItem item = null;
+            if (_dicMemTypeItem.TryGetValue(typeID, out item))
+            {
+                return item;
+            }
+            return null;
+        }
         /// <summary>
         /// 添加项
         /// </summary>
@@ -50,12 +85,23 @@ namespace Buffalo.DB.CacheManager.Memcached
         /// <param name="readInfo">读取器</param>
         private static void AddItem<T>(int typeID, ReadInfo readInfo) 
         {
-            MemTypeItem item = new MemTypeItem(typeID, typeof(T), ReadBoolean, Write<T>);
+            MemTypeItem item = new MemTypeItem(typeID, typeof(T), readInfo, Write<T>);
             _dicMemTypeItem[typeID] = item;
             _dicMemTypeItemByFullName[item.ItemType.FullName] = item;
         }
 
-
+        /// <summary>
+        /// 添加项
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="typeID">分配的ID</param>
+        /// <param name="readInfo">读取器</param>
+        private static void AddArrayItem<T>(int typeID, ReadInfo readInfo,WriteInfo writeInfo)
+        {
+            MemTypeItem item = new MemTypeItem(typeID, typeof(T), readInfo, writeInfo);
+            _dicMemTypeItem[typeID] = item;
+            _dicMemTypeItemByFullName[item.ItemType.FullName] = item;
+        }
         public static object ReadBoolean(BinaryReader reader){return reader.ReadBoolean();}
 
         public static object ReadInt16(BinaryReader reader){return reader.ReadInt16();}

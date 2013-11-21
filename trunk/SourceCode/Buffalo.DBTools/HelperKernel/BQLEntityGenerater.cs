@@ -99,10 +99,10 @@ namespace Buffalo.DBTools.HelperKernel
                     }
                     else
                     {
-                        if (tag.CurrentTag == "TableName" && string.IsNullOrEmpty(Table.TableName)) 
-                        {
-                            continue;
-                        }
+                        //if (tag.CurrentTag == "TableName" && string.IsNullOrEmpty(Table.TableName)) 
+                        //{
+                        //    continue;
+                        //}
                         tmp = tmp.Replace("<%=EntityNamespace%>", EntityNamespace);
                         tmp = tmp.Replace("<%=BQLEntityNamespace%>", BQLEntityNamespace);
                         tmp = tmp.Replace("<%=Summary%>", Table.Description);

@@ -60,10 +60,39 @@ namespace Buffalo.DB.CacheManager.Memcached
             
             //写入列数
             bw.Write(dt.Columns.Count);
+            List<MemTypeItem> lstItem = new List<MemTypeItem>(dt.Columns.Count);//列的信息
+            MemTypeItem item = null;
             //写入列信息
             foreach (DataColumn col in dt.Columns) 
             {
-                //bw.Write(col.DataType.FullName
+                bw.Write(GetStringData(col.DataType.FullName));//列名
+
+                //列类型ID
+                item = MemTypeManager.GetTypeInfo(col.DataType);
+                if (item != null) 
+                {
+                    bw.Write(item.TypeID);
+                    lstItem.Add(item);
+                }
+            }
+
+            //行数
+            bw.Write(dt.Count);
+
+            //写入行数据
+            dt.Reset();
+            while (dt.MoveNext()) 
+            {
+                for (int i = 0; i < lstItem.Count; i++) 
+                {
+                    object value= dt.Current[i];
+                    if (value == null) 
+                    {
+                        bw.Write(true);
+                        continue;
+                    }
+                    lstItem[i].WriterHandle(bw, value);
+                }
             }
         }
 

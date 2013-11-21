@@ -122,7 +122,7 @@ namespace Buffalo.DBTools.HelperKernel
             dic["Sql2K5"] = "server={server};database={database};uid={username};pwd={pwd}";
             dic["Sql2K8"] = "server={server};database={database};uid={username};pwd={pwd}";
             dic["Oracle9"] = "server={server};user id={username};password={pwd}";
-            dic["MySQL5"] = "User ID={username};Password={pwd};Host={server};Port=3306;Database={database};";
+            dic["MySQL5"] = "User ID={username};Password={pwd};Host={server};Port=3306;Database={database};charset=utf8";
             dic["SQLite"] = "Data Source={databasePath}";
             dic["DB2v9"] = "server={server}:50000;DATABASE ={database};UID={username};PWD={pwd}";
             dic["Psql9"] = "Server={server};Port=5432;User Id={username};Password={pwd};Database={database}";
