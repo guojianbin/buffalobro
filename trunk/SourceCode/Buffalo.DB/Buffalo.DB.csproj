@@ -79,11 +79,7 @@
     <Compile Include="CacheManager\MemcacheClient\SockIOPool.cs" />
     <Compile Include="CacheManager\MemCachedAdaper.cs" />
     <Compile Include="CacheManager\Memcached\MemCacheReader.cs" />
-    <Compile Include="CacheManager\Memcached\MemDataEnumerator.cs" />
-    <Compile Include="CacheManager\Memcached\MemDataItem.cs" />
     <Compile Include="CacheManager\Memcached\MemDataSerialize.cs" />
-    <Compile Include="CacheManager\Memcached\MemDataSet.cs" />
-    <Compile Include="CacheManager\Memcached\MemDataTable.cs" />
     <Compile Include="CacheManager\Memcached\MemTypeItem.cs" />
     <Compile Include="CacheManager\Memcached\MemTypeManager.cs" />
     <Compile Include="CacheManager\MemroyAdaper.cs" />

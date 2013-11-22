@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Xml;
 
 namespace Buffalo.DB.CacheManager.Memcached
 {
@@ -165,9 +166,10 @@ namespace Buffalo.DB.CacheManager.Memcached
 
             return buffer;
         }
-        
 
-        public static object WriteString(BinaryWriter writer,object value)
+
+
+        public static void WriteString(BinaryWriter writer, object value)
         {
             string str = value as string;
             int len = 0;
@@ -180,8 +182,8 @@ namespace Buffalo.DB.CacheManager.Memcached
                 len = str.Length;
             }
             writer.Write(len);
-            byte[] buffer = reader.ReadBytes(len);
-            return MemDataSerialize.DefaultEncoding.GetString(buffer);
+            byte[] buffer = MemDataSerialize.DefaultEncoding.GetBytes(value as string);
+            writer.Write(buffer);
         }
 
         /// <summary>
@@ -190,13 +192,17 @@ namespace Buffalo.DB.CacheManager.Memcached
         /// <param name="writer">写入器</param>
         /// <param name="value">值</param>
         /// <returns></returns>
-        public static void WriteArray<T>(BinaryWriter writer, object value)
-            where T:System.Array
+        public static void WriteChars(BinaryWriter writer, object value)
+            
         {
-            writer.Write(value == null);//写入是否为空
-            T val = (T)value;
-            writer.Write(val.Length);
-            writer.Write(val);
+            char[] arr = value as char[];
+            if (arr == null) 
+            {
+                return;
+            }
+            writer.Write(arr == null);//写入是否为空
+            writer.Write(arr.Length);
+            writer.Write(arr);
         }
         /// <summary>
         /// 写入值
@@ -205,7 +211,7 @@ namespace Buffalo.DB.CacheManager.Memcached
         /// <param name="value">值</param>
         /// <returns></returns>
         public static void Write<T>(BinaryWriter writer, object value)
-        {
+        {   `
             writer.Write(value==null);//写入是否为空
             writer.Write((T)value);
         }

@@ -28,12 +28,12 @@ namespace Buffalo.DB.CacheManager.Memcached
         {
             return DefaultEncoding.GetBytes(data);
         }
-
+        #region 写入
         /// <summary>
-        /// MemDataSet数据写入成字节数组
+        /// 数据写入成字节数组
         /// </summary>
         /// <returns></returns>
-        public static byte[] MemDataSetToBytes(MemDataSet ds)
+        public static byte[] DataSetToBytes(DataSet ds)
         {
             byte[] ret = null;
             using (MemoryStream ms = new MemoryStream(5000))
@@ -42,19 +42,20 @@ namespace Buffalo.DB.CacheManager.Memcached
                 {
                     bw.Write(HeadData);
                     bw.Write(ds.Tables.Count);//写入表的数量
-                    foreach (MemDataTable dt in ds.Tables) 
+                    foreach (DataTable dt in ds.Tables) 
                     {
-
+                        WriteDataTable(dt, bw);
                     }
                 }
             }
         }
+
         /// <summary>
         /// 写入数据表信息
         /// </summary>
         /// <param name="dt"></param>
         /// <param name="bw"></param>
-        private static void WriteDataTable(MemDataTable dt, BinaryWriter bw) 
+        private static void WriteDataTable(DataTable dt, BinaryWriter bw) 
         {
             bw.Write(GetStringData(dt.TableName));
             
@@ -77,25 +78,70 @@ namespace Buffalo.DB.CacheManager.Memcached
             }
 
             //行数
-            bw.Write(dt.Count);
+            bw.Write(dt.Rows.Count);
 
-            //写入行数据
+            //写入数据
             dt.Reset();
-            while (dt.MoveNext()) 
+            foreach(DataRow row in dt.Rows)
             {
                 for (int i = 0; i < lstItem.Count; i++) 
                 {
-                    object value= dt.Current[i];
-                    if (value == null) 
+
+                    if (row.IsNull(i)) 
                     {
                         bw.Write(true);
                         continue;
                     }
+                    object value = row[i];
                     lstItem[i].WriterHandle(bw, value);
                 }
             }
         }
+        #endregion
 
+         /// <summary>
+        /// 把数据从流中加载出来
+        /// </summary>
+        /// <returns></returns>
+        public static DataSet LoadDataSet(Stream stm)
+        {
+            if (!IsHead(stm)) 
+            {
+                return null;
+            }
+            using (BinaryReader br = new BinaryReader(stm))
+            {
+                int tableCount = br.ReadInt32();
+                for (int i = 0; i < tableCount; i++) 
+                {
 
+                }
+            }
+        }
+
+        private static DataTable ReadDataTable(BinaryReader br) 
+        {
+            DataTable dt = new DataTable();
+
+        }
+
+        /// <summary>
+        /// 判断数据头是否对应
+        /// </summary>
+        /// <param name="stm"></param>
+        /// <returns></returns>
+        private static bool IsHead(Stream stm) 
+        {
+            byte[] head = new byte[HeadData.Length];
+            stm.Read(head, 0, head.Length);
+            for (int i = 0; i < head.Length; i++) 
+            {
+                if (head[i] != HeadData[i]) 
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

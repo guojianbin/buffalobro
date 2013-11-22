@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using Buffalo.Kernel;
-using Buffalo.DB.CacheManager.Memcached;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -12,12 +11,10 @@ namespace Buffalo.DB.CacheManager
     /// </summary>
     public class MemCacheReader : IDataReader
     {
-        
-
         /// <summary>
         /// 数据
         /// </summary>
-        private MemDataSet _data;
+        private DataSet _data;
         /// <summary>
         /// 当前数据索引
         /// </summary>
@@ -25,32 +22,42 @@ namespace Buffalo.DB.CacheManager
         /// <summary>
         /// 当前数据表
         /// </summary>
-        private MemDataTable _currentData;
-
+        private DataTable _currentData;
+        /// <summary>
+        /// 当前数据表的索引
+        /// </summary>
+        private int _currentRowIndex = -1;
         /// <summary>
         /// 当前行
         /// </summary>
         private DataRow _currentRow;
 
-        public MemCacheReader(MemDataSet ds) 
+        public MemCacheReader(DataSet ds)
         {
             _data = ds;
             _currentData = _data.Tables[_currentIndex];
-            _currentData.Reset();
         }
         //public MemChachReader(string xml)
         //{
         //    _data = CommonMethods.XMLToDataSet(xml, XmlReadMode.IgnoreSchema);
         //}
 
+        /// <summary>
+        /// 把数据打包成字符串
+        /// </summary>
+        /// <returns></returns>
+        public string ExportXML()
+        {
+            return CommonMethods.DataSetToXML(_data, XmlWriteMode.IgnoreSchema);
+        }
 
-        
+
 
         #region IDataReader 成员
 
         public void Close()
         {
-            
+
         }
 
         public int Depth
@@ -70,14 +77,26 @@ namespace Buffalo.DB.CacheManager
 
         public bool NextResult()
         {
-            _currentData.MoveNext();
+            if (_data.Tables.Count < _currentIndex + 2)
+            {
+                return false;
+            }
+            _currentIndex++;
+            _currentData = _data.Tables[_currentIndex];
+            _currentRowIndex = -1;
+            _currentRow = null;
             return true;
         }
 
         public bool Read()
         {
-            return _currentData.MoveNext();
-            
+            if (_currentData.Rows.Count < _currentRowIndex + 2)
+            {
+                return false;
+            }
+            _currentRowIndex++;
+            _currentRow = _currentData.Rows[_currentRowIndex];
+            return true;
         }
 
         public int RecordsAffected
@@ -94,7 +113,7 @@ namespace Buffalo.DB.CacheManager
 
         public void Dispose()
         {
-            
+
         }
 
         #endregion
@@ -103,7 +122,7 @@ namespace Buffalo.DB.CacheManager
 
         public int FieldCount
         {
-            get 
+            get
             {
                 return _currentData.Columns.Count;
             }
@@ -203,7 +222,7 @@ namespace Buffalo.DB.CacheManager
             for (int i = 0; i < _currentData.Columns.Count; i++)
             {
                 DataColumn col = _currentData.Columns[i];
-                if (col.ColumnName == name) 
+                if (col.ColumnName == name)
                 {
                     return i;
                 }
@@ -223,9 +242,9 @@ namespace Buffalo.DB.CacheManager
 
         public int GetValues(object[] values)
         {
-            for (int i = 0; i < _currentData.Columns.Count; i++) 
+            for (int i = 0; i < _currentData.Columns.Count; i++)
             {
-                if (i >= values.Length) 
+                if (i >= values.Length)
                 {
                     return values.Length;
                 }
@@ -249,7 +268,7 @@ namespace Buffalo.DB.CacheManager
 
         public object this[int i]
         {
-            get 
+            get
             {
                 return _currentRow[i];
             }

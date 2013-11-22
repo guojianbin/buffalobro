@@ -49,7 +49,7 @@ namespace Buffalo.Permissions.DataViewInfo
             DataTable dtRet = new DataTable(dv.GetEntityHandle().GetEntityInfo().TableName + "Sum");
             FillColumns(dtRet, outputItem);
             dtRet.BeginLoadData();
-            using (IDataReader reader = dao.QueryReader(query, dv.GetEntityHandle().GetEntityInfo().EntityType)) 
+            using (IDataReader reader = dao.QueryReader(query, dv.GetEntityHandle().GetEntityInfo().EntityType,false)) 
             {
                 DataRow dr = dtRet.NewRow();
                 if (reader.Read())
