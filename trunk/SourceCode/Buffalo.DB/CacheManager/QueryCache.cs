@@ -177,11 +177,7 @@ namespace Buffalo.DB.CacheManager
             {
                 return null;
             }
-            DbDataReader dreader = reader as DbDataReader;
-            if (dreader == null) 
-            {
-                return null;
-            }
+            DataSet ds = CacheReader.GenerateDataSet(reader, false);
             MemCacheReader mreader = new MemCacheReader(ds);
             SetDataSet(ds, tables, sql, lstParam);
             return mreader;

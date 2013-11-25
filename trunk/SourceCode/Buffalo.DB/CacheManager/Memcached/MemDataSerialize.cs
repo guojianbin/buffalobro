@@ -19,15 +19,7 @@ namespace Buffalo.DB.CacheManager.Memcached
         /// 数据头表示
         /// </summary>
         private static readonly byte[] HeadData = {77,68,65,84,65 };//MDATA
-        /// <summary>
-        /// 把字符串转成字节数组
-        /// </summary>
-        /// <param name="data">字符串</param>
-        /// <returns></returns>
-        private static byte[] GetStringData(string data) 
-        {
-            return DefaultEncoding.GetBytes(data);
-        }
+        
         #region 写入
         /// <summary>
         /// 数据写入成字节数组
@@ -47,7 +39,10 @@ namespace Buffalo.DB.CacheManager.Memcached
                         WriteDataTable(dt, bw);
                     }
                 }
+                ret = ms.ToArray();
             }
+            
+            return ret;
         }
 
         /// <summary>
@@ -57,7 +52,8 @@ namespace Buffalo.DB.CacheManager.Memcached
         /// <param name="bw"></param>
         private static void WriteDataTable(DataTable dt, BinaryWriter bw) 
         {
-            bw.Write(GetStringData(dt.TableName));
+
+            MemTypeManager.WriteString(bw, dt.TableName);
             
             //写入列数
             bw.Write(dt.Columns.Count);
@@ -66,7 +62,7 @@ namespace Buffalo.DB.CacheManager.Memcached
             //写入列信息
             foreach (DataColumn col in dt.Columns) 
             {
-                bw.Write(GetStringData(col.DataType.FullName));//列名
+                MemTypeManager.WriteString(bw,col.DataType.FullName);//列名
 
                 //列类型ID
                 item = MemTypeManager.GetTypeInfo(col.DataType);
@@ -89,7 +85,7 @@ namespace Buffalo.DB.CacheManager.Memcached
 
                     if (row.IsNull(i)) 
                     {
-                        bw.Write(true);
+                        lstItem[i].WriterHandle(bw, null);
                         continue;
                     }
                     object value = row[i];
@@ -114,7 +110,7 @@ namespace Buffalo.DB.CacheManager.Memcached
                 int tableCount = br.ReadInt32();
                 for (int i = 0; i < tableCount; i++) 
                 {
-
+                    ReadDataTable(br);
                 }
             }
         }
@@ -122,7 +118,7 @@ namespace Buffalo.DB.CacheManager.Memcached
         private static DataTable ReadDataTable(BinaryReader br) 
         {
             DataTable dt = new DataTable();
-
+            
         }
 
         /// <summary>
@@ -145,3 +141,13 @@ namespace Buffalo.DB.CacheManager.Memcached
         }
     }
 }
+/*
+ *文件结构:
+ * MDATA+数据表数量(int)+数据表数据(DataTable)
+ *  DataTable结构：
+ *      列数+列信息(列名+列类型标识)
+ *      行数+行数据
+ *      行数据：
+ *          普通数据：是否空+数据
+ *          数组数据：是否空+长度+数据
+ */
