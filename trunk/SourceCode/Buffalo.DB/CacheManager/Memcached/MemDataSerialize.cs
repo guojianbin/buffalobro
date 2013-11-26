@@ -105,12 +105,13 @@ namespace Buffalo.DB.CacheManager.Memcached
             {
                 return null;
             }
+            DataSet ds = new DataSet();
             using (BinaryReader br = new BinaryReader(stm))
             {
                 int tableCount = br.ReadInt32();
                 for (int i = 0; i < tableCount; i++) 
                 {
-                    ReadDataTable(br);
+                    ds.Tables.Add(ReadDataTable(br));
                 }
             }
         }
@@ -118,7 +119,16 @@ namespace Buffalo.DB.CacheManager.Memcached
         private static DataTable ReadDataTable(BinaryReader br) 
         {
             DataTable dt = new DataTable();
-            
+            dt.TableName=MemTypeManager.ReadString(br) as string;
+
+            int columnCount = MemTypeManager.ReadInt(br);//ÁÐÊý
+            string name=null;
+            int 
+            for (int i = 0; i < columnCount; i++) 
+            {
+                
+                dt.Columns.Add(
+            }
         }
 
         /// <summary>
