@@ -11,6 +11,7 @@ using Memcached.ClientLibrary;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Buffalo.DB.DataBaseAdapter;
+using Buffalo.DB.CacheManager.Memcached;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -128,70 +129,7 @@ namespace Buffalo.DB.CacheManager
             return pool;
         }
 
-        ///// <summary>
-        ///// 根据连接字符串创建线程池
-        ///// </summary>
-        ///// <param name="connStr"></param>
-        ///// <returns></returns>
-        //private MemCachedConnectPool CreatePool(string connStr) 
-        //{
-        //    string ip = "127.0.0.1";
-        //    uint port = 11211;
-        //    int maxSize=10;
-        //    string[] conStrs = connStr.Split(';');
-        //    string serverString = "server=";
-        //    string sizeString = "maxsize=";
-        //    string timeoutString = "timeout=";
-        //    string part = null;
-        //    foreach (string lpart in conStrs)
-        //    {
-        //        part = lpart.Trim();
-        //        if (part.IndexOf(serverString, StringComparison.CurrentCultureIgnoreCase) == 0)
-        //        {
-        //            string serverStr = part.Substring(serverString.Length);
-        //            string[] parts = serverStr.Split(':');
-        //            if (parts.Length > 0)
-        //            {
-        //                ip = parts[0].Trim();
-                        
-        //            }
-        //            if (parts.Length > 1)
-        //            {
-        //                if (!uint.TryParse(parts[1].Trim(), out port)) 
-        //                {
-        //                    throw new ArgumentException(parts[1].Trim() + "不是正确的端口号");
-        //                }
-        //            }
-        //        }
-        //        else if (part.IndexOf(sizeString, StringComparison.CurrentCultureIgnoreCase) == 0)
-        //        {
-        //            string maxsizeStr = part.Substring(sizeString.Length);
-        //            if (!int.TryParse(maxsizeStr, out maxSize)) 
-        //            {
-        //                throw new ArgumentException("最大连接数必须是1-"+MaxVersion+"的值");
-        //            }
-        //            if (maxSize<=0 || maxSize>=int.MaxValue)
-        //            {
-        //                throw new ArgumentException("最大连接数必须是1-" + MaxVersion + "的值");
-        //            }
-        //        }
-        //        else if (part.IndexOf(timeoutString, StringComparison.CurrentCultureIgnoreCase) == 0)
-        //        {
-        //            string timeoutStr = part.Substring(timeoutString.Length);
-        //            int mins = 30;
-        //            if (!int.TryParse(timeoutStr, out mins)) 
-        //            {
-        //                throw new ArgumentException("超时分钟数必须是1-9999的值");
-        //            }
-        //            if (mins <= 0 || mins >= 9999)
-        //            {
-        //                throw new ArgumentException("超时分钟数必须是1-9999的值");
-        //            }
-        //            _expiration = TimeSpan.FromMinutes((double)mins);
-        //        }
-        //    }
-            
-        //}
+        
 
         #region ICacheAdaper 成员
 
@@ -213,7 +151,7 @@ namespace Buffalo.DB.CacheManager
         
         public  System.Data.DataSet GetData(IDictionary<string, bool> tableNames, string sql)
         {
-            byte[] data = null;
+            
 
             MemcachedClient client = new MemcachedClient();
             client.PrimitiveAsString = true;
@@ -222,22 +160,37 @@ namespace Buffalo.DB.CacheManager
                 {
                     return null;
                 }
-                data = client.Get(key) as byte[];
 
-            
-            if (data==null || data.Length==0) 
-            {
-                return null;
-            }
-            try
-            {
-                DataSet dsRet = BytesToDataSet(data);
-                return dsRet;
-            }
-            catch 
-            {
+                SockIO sock = client.GetValueStream(key);
+                if (sock == null) 
+                {
+                    return null;
+                }
+                try
+                {
+                    
+                    DataSet dsRet = LoadDataSet(sock.GetStream());
+                    sock.ClearEndOfLine();
+                    return dsRet;
+                }
+                catch (IOException e)
+                {
+
+                    sock.TrueClose();
+
+                    sock = null;
+                }
+                catch
+                {
+                    
+                }
+                finally 
+                {
+                    if (sock != null)
+                        sock.Close();
+                }
                 
-            }
+            
             return null;
         }
 
@@ -355,7 +308,7 @@ namespace Buffalo.DB.CacheManager
             string key = GetKey(tableNames, sql, client, true);
             byte[] xml = DataSetToBytes(ds);
 
-            client.Set(key, xml, _expiration);
+            client.SetBytes(key, xml, _expiration);
             
             return true;
         }
@@ -368,19 +321,20 @@ namespace Buffalo.DB.CacheManager
         /// <param name="xml">xml字符串</param>
         /// <param name="mode">指定如何将 XML 数据和关系架构读入 System.Data.DataSet</param>
         /// <returns></returns>
-        private DataSet BytesToDataSet(byte[] data)
+        private DataSet LoadDataSet(Stream data)
         {
-            using (MemoryStream stm = new MemoryStream(data))
-            {
+           
                 try
                 {
-                    //stm.Write(data, 0, data.Length);
-                    DataSet ret = sfFormatter.Deserialize(stm) as DataSet;
-                    return ret;
+                    return MemDataSerialize.LoadDataSet(data);
+                    
                 }
-                catch { }
-                
-            }
+                catch(Exception ex) 
+                {
+
+                }
+               
+            
             return null;
         }
 
@@ -392,15 +346,14 @@ namespace Buffalo.DB.CacheManager
         /// <returns></returns>
         private byte[] DataSetToBytes(DataSet ds)
         {
-            byte[] ret = null;
-            
-            using (MemoryStream stm = new MemoryStream())
+            try
             {
-                sfFormatter.Serialize(stm, ds);
-               
-                ret = stm.ToArray();
+                byte[] ret = MemDataSerialize.DataSetToBytes(ds);
+
+                return ret;
             }
-            return ret;
+            catch { }
+            return null;
         }
 
     }

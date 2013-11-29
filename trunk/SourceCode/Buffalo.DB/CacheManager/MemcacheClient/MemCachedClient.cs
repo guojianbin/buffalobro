@@ -1071,9 +1071,9 @@ namespace Memcached.ClientLibrary
         /// <param name="hashCode"></param>
         /// <param name="asString"></param>
         /// <returns></returns>
-        public SockIO GetValueStream(string key, object hashCode, bool asString) 
+        public SockIO GetValueStream(string key) 
         {
-            SockIO sock = SockIOPool.GetInstance(_poolName).GetSock(key, hashCode);
+            SockIO sock = SockIOPool.GetInstance(_poolName).GetSock(key, null);
 	    
 			if(sock == null)
 				return null;
@@ -1086,24 +1086,27 @@ namespace Memcached.ClientLibrary
 				sock.Write(UTF8Encoding.UTF8.GetBytes(cmd));
 				sock.Flush();
 
-				// build empty map
-				// and fill it from server
-                //Hashtable hm = new Hashtable();
-                //LoadItems(sock, hm, asString);
                 string line = sock.ReadLine();
-                string[] info = line.Split(' ');
-                string key = info[1];
-                int flag = int.Parse(info[2], new NumberFormatInfo());
-                int length = int.Parse(info[3], new NumberFormatInfo());
+
+                if (line.StartsWith(VALUE))
+                {
+
+                    string[] info = line.Split(' ');
+                    string okey = info[1];
+                    int flag = int.Parse(info[2], new NumberFormatInfo());
+                    int length = int.Parse(info[3], new NumberFormatInfo());
 
 
 
-                return sock;
+                    return sock;
+                }
+                sock.Close();
+                return null;
 
 			}
 			catch(IOException e) 
 			{
-					sock.TrueClose();
+				sock.TrueClose();
 				
 				sock = null;
                 throw e;

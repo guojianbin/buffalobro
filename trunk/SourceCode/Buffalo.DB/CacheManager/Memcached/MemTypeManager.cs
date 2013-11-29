@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Xml;
+using Buffalo.Kernel;
 
 namespace Buffalo.DB.CacheManager.Memcached
 {
@@ -41,10 +42,11 @@ namespace Buffalo.DB.CacheManager.Memcached
             AddItem<double>(13, ReadDouble,WriteDouble);
             AddItem<sbyte>(14, ReadSByte,WriteSByte);
             AddItem<float>(15, ReadSingle,WriteSingle);
-            //AddItem<string>(2, ReadString);
+            
             AddItem<string>(16, ReadString, WriteString);
             
-            
+            AddItem<DateTime>(17, ReadDateTime, WriteDateTime);
+            AddItem<TimeSpan>(18, ReadTimeSpan, WriteTimeSpan);
             return true;
         }
 
@@ -127,6 +129,51 @@ namespace Buffalo.DB.CacheManager.Memcached
                 return;
             }
             writer.Write((short)value);
+        }
+        public static object ReadDateTime(BinaryReader reader)
+        {
+            bool isNull = reader.ReadBoolean();
+            if (isNull)
+            {
+                return null;
+            }
+            double time = reader.ReadDouble();
+            DateTime dt = CommonMethods.ConvertIntDateTime(time);
+            return dt;
+        }
+        public static void WriteDateTime(BinaryWriter writer, object value)
+        {
+            bool isNull = value == null;
+            writer.Write(isNull);//写入是否为空
+            if (isNull)
+            {
+                return;
+            }
+            double time = CommonMethods.ConvertDateTimeInt((DateTime)value);
+            writer.Write(time);
+        }
+        public static object ReadTimeSpan(BinaryReader reader)
+        {
+            bool isNull = reader.ReadBoolean();
+            if (isNull)
+            {
+                return null;
+            }
+            double time = reader.ReadDouble();
+            return TimeSpan.FromSeconds(time);
+            
+        }
+        public static void WriteTimeSpan(BinaryWriter writer, object value)
+        {
+            bool isNull = value == null;
+            writer.Write(isNull);//写入是否为空
+            if (isNull)
+            {
+                return;
+            }
+            TimeSpan ts = (TimeSpan)value;
+            double time = ts.TotalSeconds;
+            writer.Write(time);
         }
         public static object ReadInt(BinaryReader reader)
         {

@@ -259,7 +259,29 @@ namespace Buffalo.Kernel
 
             return XMLToDataSet(xml,XmlReadMode.ReadSchema);
         }
-
+        /// <summary>
+        /// 将Unix时间戳转换为DateTime类型时间
+        /// </summary>
+        /// <param name="d">double 型数字</param>
+        /// <returns>DateTime</returns>
+        public static System.DateTime ConvertIntDateTime(double d)
+        {
+            System.DateTime time = System.DateTime.MinValue;
+            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
+            time = startTime.AddSeconds(d);
+            return time;
+        }
+        /// <summary>
+        /// 将c# DateTime时间格式转换为Unix时间戳格式
+        /// </summary>
+        /// <param name="time">时间</param>
+        /// <returns>double</returns>
+        public static double ConvertDateTimeInt(System.DateTime time)
+        {
+            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
+            TimeSpan ts=time.Subtract(startTime);
+            return ts.TotalSeconds;
+        }
         
         /// <summary>
         /// 反序列化结构体

@@ -56,28 +56,32 @@ namespace Buffalo.DB.CacheManager.Memcached
             MemTypeManager.WriteString(bw, dt.TableName);
             
             //写入列数
-            bw.Write(dt.Columns.Count);
+            MemTypeManager.WriteInt(bw,dt.Columns.Count);
             List<MemTypeItem> lstItem = new List<MemTypeItem>(dt.Columns.Count);//列的信息
             MemTypeItem item = null;
             //写入列信息
             foreach (DataColumn col in dt.Columns) 
             {
-                MemTypeManager.WriteString(bw,col.DataType.FullName);//列名
+                MemTypeManager.WriteString(bw,col.ColumnName);//列名
 
                 //列类型ID
                 item = MemTypeManager.GetTypeInfo(col.DataType);
-                if (item != null) 
+                if (item != null)
                 {
-                    bw.Write(item.TypeID);
+                    MemTypeManager.WriteInt(bw, item.TypeID);
+                    lstItem.Add(item);
+                }
+                else 
+                {
                     lstItem.Add(item);
                 }
             }
 
             //行数
-            bw.Write(dt.Rows.Count);
+            MemTypeManager.WriteInt(bw,dt.Rows.Count);
 
             //写入数据
-            dt.Reset();
+            
             foreach(DataRow row in dt.Rows)
             {
                 for (int i = 0; i < lstItem.Count; i++) 
@@ -89,7 +93,13 @@ namespace Buffalo.DB.CacheManager.Memcached
                         continue;
                     }
                     object value = row[i];
-                    lstItem[i].WriterHandle(bw, value);
+                    if (lstItem[i] == null) 
+                    {
+                        continue;
+                    }
+                        lstItem[i].WriterHandle(bw, value);
+                    
+                    
                 }
             }
         }
@@ -106,14 +116,15 @@ namespace Buffalo.DB.CacheManager.Memcached
                 return null;
             }
             DataSet ds = new DataSet();
-            using (BinaryReader br = new BinaryReader(stm))
-            {
+            BinaryReader br = new BinaryReader(stm);
+            
                 int tableCount = br.ReadInt32();
                 for (int i = 0; i < tableCount; i++) 
                 {
                     ds.Tables.Add(ReadDataTable(br));
                 }
-            }
+            
+            return ds;
         }
 
         private static DataTable ReadDataTable(BinaryReader br) 
@@ -121,14 +132,39 @@ namespace Buffalo.DB.CacheManager.Memcached
             DataTable dt = new DataTable();
             dt.TableName=MemTypeManager.ReadString(br) as string;
 
-            int columnCount = MemTypeManager.ReadInt(br);//列数
+            int columnCount = (int)MemTypeManager.ReadInt(br);//列数
             string name=null;
-            int 
+            int typeCode=0;
+            List<MemTypeItem> lstItem = new List<MemTypeItem>(columnCount);//列的信息
             for (int i = 0; i < columnCount; i++) 
             {
-                
-                dt.Columns.Add(
+                name = MemTypeManager.ReadString(br) as string;
+                typeCode = (int)MemTypeManager.ReadInt(br);
+                MemTypeItem item=MemTypeManager.GetTypeByID(typeCode);
+                if (item != null)
+                {
+                    dt.Columns.Add(name, item.ItemType);
+                    lstItem.Add(item);
+                }
             }
+            int rows = (int)MemTypeManager.ReadInt(br);
+            dt.BeginLoadData();
+            for (int i = 0; i < rows; i++) 
+            {
+                DataRow dr = dt.NewRow();
+                for (int k=0;k<lstItem.Count;k++)
+                {
+                    MemTypeItem colItem = lstItem[k];
+                    object value = colItem.ReadHandle(br);
+                    if (value != null) 
+                    {
+                        dr[k] = value;
+                    }
+                }
+                dt.Rows.Add(dr);
+            }
+            dt.EndLoadData();
+            return dt;
         }
 
         /// <summary>

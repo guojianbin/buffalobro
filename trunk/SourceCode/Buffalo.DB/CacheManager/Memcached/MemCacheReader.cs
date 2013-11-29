@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using Buffalo.Kernel;
+using Buffalo.DB.CacheManager.Memcached;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -46,9 +47,9 @@ namespace Buffalo.DB.CacheManager
         /// 把数据打包成字符串
         /// </summary>
         /// <returns></returns>
-        public string ExportXML()
+        public byte[] Export()
         {
-            return CommonMethods.DataSetToXML(_data, XmlWriteMode.IgnoreSchema);
+            return MemDataSerialize.DataSetToBytes(_data);
         }
 
 
