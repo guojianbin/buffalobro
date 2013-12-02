@@ -277,6 +277,8 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             condition.Oper = this._oper;
             condition.Tables.Append(CurEntityInfo.DBInfo.CurrentDbAdapter.FormatTableName(CurEntityInfo.TableName));
             condition.SqlParams.Append(GetSelectParams(scopeList));
+            condition.CacheTables=new Dictionary<string,bool>();
+            condition.CacheTables[CurEntityInfo.TableName] = true;
             condition.Condition.Append("1=1");
             foreach (EntityPropertyInfo ep in CurEntityInfo.PrimaryProperty)
             {
@@ -348,6 +350,8 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             condition.Tables.Append(CurEntityInfo.DBInfo.CurrentDbAdapter.FormatTableName(CurEntityInfo.TableName));
 
             condition.Condition.Append("1=1");
+            condition.CacheTables = new Dictionary<string, bool>();
+            condition.CacheTables[CurEntityInfo.TableName] = true;
             if (scopeList != null)
             {
                 condition.Condition.Append(DataAccessCommon.FillCondition(CurEntityInfo,list, scopeList));

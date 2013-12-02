@@ -4,7 +4,7 @@ using System.Text;
 using System.Data;
 using System.IO;
 
-namespace Buffalo.DB.CacheManager.Memcached
+namespace MemcacheClient
 {
     /// <summary>
     /// 缓存数据序列化

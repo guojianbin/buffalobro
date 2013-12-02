@@ -41,6 +41,8 @@ namespace Memcached.ClientLibrary
 
 
     using Memcached.ClientLibrary;
+using System.Data;
+    using MemcacheClient;
 
 	/// <summary>
 	/// This is a C# client for the memcached server available from
@@ -52,7 +54,7 @@ namespace Memcached.ClientLibrary
 	/// Now pulls SockIO objects from SockIOPool, which is a connection pool.  The server failover
 	/// has also been moved into the SockIOPool class.
 	/// This pool needs to be initialized prior to the client working.  See javadocs from SockIOPool.
-	/// (This will have to be fixed for our C# version.  Most of this code is straight ported over from Java.)
+	/// (will have to be fixed for our C# version.  Most of this code is straight ported over from Java.)
 	/// </summary>
 	/// <example>
 	/// //***To create cache client object and set params:***
@@ -191,15 +193,21 @@ namespace Memcached.ClientLibrary
 		private bool _compressEnable;
 		private long _compressThreshold;
 		private string _defaultEncoding;
+        SockIOPool _pool;
 
-		// which pool to use
-		private string _poolName;
+        public SockIOPool Pool
+        {
+            get { return _pool; }
+        }
+        //// which pool to use
+        //private string _poolName;
 
 		/// <summary>
 		/// Creates a new instance of MemcachedClient.
 		/// </summary>
-		public MemcachedClient() 
+        public MemcachedClient(SockIOPool pool) 
 		{
+            _pool = pool;
 			Init();
 		}
 
@@ -214,18 +222,18 @@ namespace Memcached.ClientLibrary
 			_compressEnable = true;
 			_compressThreshold = COMPRESS_THRESH;
 			_defaultEncoding = "UTF-8";
-			_poolName = "default instance";
+            //_poolName = "default instance";
 		}
 
-		/// <summary>
-		/// Sets the pool that this instance of the client will use.
-		/// The pool must already be initialized or none of this will work.
-		/// </summary>
-        public string PoolName
-        {
-            get { return _poolName; }
-            set { _poolName = value; }
-        }
+        ///// <summary>
+        ///// Sets the pool that this instance of the client will use.
+        ///// The pool must already be initialized or none of this will work.
+        ///// </summary>
+        //public string PoolName
+        //{
+        //    get { return _poolName; }
+        //    set { _poolName = value; }
+        //}
 
 		/// <summary>
 		/// Enables storing primitive types as their string values. 
@@ -333,7 +341,7 @@ namespace Memcached.ClientLibrary
 			}
 
 			// get SockIO obj from hash or from key
-			SockIO sock = SockIOPool.GetInstance(_poolName).GetSock(key, hashCode);
+            SockIO sock = _pool.GetSock(key, hashCode);
 
 			// return false if unable to get SockIO obj
 			if(sock == null)
@@ -580,7 +588,7 @@ namespace Memcached.ClientLibrary
 			}
 
 			// get SockIO obj
-			SockIO sock = SockIOPool.GetInstance(_poolName).GetSock(key, hashCode);
+            SockIO sock = _pool.GetSock(key, hashCode);
 		
 			if(sock == null)
 				return false;
@@ -740,11 +748,24 @@ namespace Memcached.ClientLibrary
 		}
 
         /// <summary>
+        /// 保存DataSet
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="ds">DataSet</param>
+        /// <param name="expiry">过期时间</param>
+        /// <returns></returns>
+        public bool SetDataSet(string key, DataSet ds, TimeSpan expiry) 
+        {
+            byte[] data = MemDataSerialize.DataSetToBytes(ds);
+            return SetBytes(key, data, expiry);
+        }
+
+        /// <summary>
         /// 写入一个字节数组
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <param name="expiry"></param>
+        /// <param name="key">键</param>
+        /// <param name="value">数据</param>
+        /// <param name="expiry">过期时间</param>
         /// <returns></returns>
         public bool SetBytes(string key, byte[] value, TimeSpan expiry)
         {
@@ -754,7 +775,7 @@ namespace Memcached.ClientLibrary
 
 
             // get SockIO obj
-            SockIO sock = SockIOPool.GetInstance(_poolName).GetSock(key, null);
+            SockIO sock = _pool.GetSock(key, null);
             if (sock == null)
                 return false;
 
@@ -980,7 +1001,7 @@ namespace Memcached.ClientLibrary
 		{
 
 			// get SockIO obj for given cache key
-			SockIO sock = SockIOPool.GetInstance(_poolName).GetSock(key, hashCode);
+            SockIO sock = _pool.GetSock(key, hashCode);
 
 			if(sock == null)
 				return -1;
@@ -1065,26 +1086,24 @@ namespace Memcached.ClientLibrary
 		}
 
         /// <summary>
-        /// 获取当前值的网络流
+        /// 获取DataSet
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="hashCode"></param>
-        /// <param name="asString"></param>
+        /// <param name="key">键</param>
         /// <returns></returns>
-        public SockIO GetValueStream(string key) 
+        public DataSet GetDataSet(string key) 
         {
-            SockIO sock = SockIOPool.GetInstance(_poolName).GetSock(key, null);
-	    
-			if(sock == null)
-				return null;
+            SockIO sock = _pool.GetSock(key, null);
 
-			try 
-			{
-				string cmd = "get " + key + "\r\n";
-				
+            if (sock == null)
+                return null;
 
-				sock.Write(UTF8Encoding.UTF8.GetBytes(cmd));
-				sock.Flush();
+            try
+            {
+                string cmd = "get " + key + "\r\n";
+
+
+                sock.Write(UTF8Encoding.UTF8.GetBytes(cmd));
+                sock.Flush();
 
                 string line = sock.ReadLine();
 
@@ -1095,29 +1114,36 @@ namespace Memcached.ClientLibrary
                     string okey = info[1];
                     int flag = int.Parse(info[2], new NumberFormatInfo());
                     int length = int.Parse(info[3], new NumberFormatInfo());
-
-
-
-                    return sock;
+                    DataSet dsRet = MemDataSerialize.LoadDataSet(sock.GetStream());
+                    return dsRet;
                 }
-                sock.Close();
-                return null;
 
-			}
-			catch(IOException e) 
-			{
-				sock.TrueClose();
-				
-				sock = null;
+            }
+            catch (IOException e)
+            {
+                sock.TrueClose();
+
+                sock = null;
                 throw e;
-			}
+            }
+            catch (Exception ex)
+            {
+                sock.TrueClose();
 
-			if(sock != null)
-				sock.Close();
+                sock = null;
+                throw ex;
+            }
+            finally
+            {
+                if (sock != null)
+                {
+                    sock.Close();
+                }
+            }
 
-			return null;
-		
+            return null;
         }
+        
 
 		/// <summary>
 		/// Retrieve a key from the server, using a specific hash.
@@ -1136,43 +1162,38 @@ namespace Memcached.ClientLibrary
 		{
 
 			// get SockIO obj using cache key
-			SockIO sock = SockIOPool.GetInstance(_poolName).GetSock(key, hashCode);
+            SockIO sock = _pool.GetSock(key, hashCode);
 	    
 			if(sock == null)
 				return null;
 
-			try 
-			{
-				string cmd = "get " + key + "\r\n";
-				
-
-				sock.Write(UTF8Encoding.UTF8.GetBytes(cmd));
-				sock.Flush();
-
-				// build empty map
-				// and fill it from server
-				Hashtable hm = new Hashtable();
-				LoadItems(sock, hm, asString);
-
-				
-
-				// return the value for this key if we found it
-				// else return null 
-				sock.Close();
-				return hm[key];
-
-			}
-			catch(IOException e) 
-			{
-				// exception thrown
-				
+            try
+            {
+                string cmd = "get " + key + "\r\n";
 
 
-					sock.TrueClose();
-				
-				sock = null;
+                sock.Write(UTF8Encoding.UTF8.GetBytes(cmd));
+                sock.Flush();
+
+                // build empty map
+                // and fill it from server
+                Hashtable hm = new Hashtable();
+                LoadItems(sock, hm, asString);
+
+
+
+                // return the value for this key if we found it
+                // else return null 
+                sock.Close();
+                return hm[key];
+
+            }
+            catch (IOException e)
+            {
+                sock.TrueClose();
+                sock = null;
                 throw e;
-			}
+            }
 
 			if(sock != null)
 				sock.Close();
@@ -1296,7 +1317,7 @@ namespace Memcached.ClientLibrary
 					hash = hashCodes[i];
 
 				// get SockIO obj from cache key
-				SockIO sock = SockIOPool.GetInstance(_poolName).GetSock(keys[i], hash);
+                SockIO sock = _pool.GetSock(keys[i], hash);
 
 				if(sock == null)
 					continue;
@@ -1319,7 +1340,7 @@ namespace Memcached.ClientLibrary
 			foreach(string host in sockKeys.Keys) 
 			{
 				// get SockIO obj from hostname
-				SockIO sock = SockIOPool.GetInstance(_poolName).GetConnection(host);
+                SockIO sock = _pool.GetConnection(host);
 
 				try 
 				{
@@ -1357,6 +1378,9 @@ namespace Memcached.ClientLibrary
 			return ret;
 		}
     
+
+        
+
 		/// <summary>
 		/// This method loads the data from cache into a Hashtable.
 		/// 
@@ -1494,7 +1518,7 @@ namespace Memcached.ClientLibrary
 		public bool FlushAll(ArrayList servers) 
 		{
 			// get SockIOPool instance
-			SockIOPool pool = SockIOPool.GetInstance(_poolName);
+            SockIOPool pool = _pool;
 
 			// return false if unable to get SockIO obj
 			if(pool == null) 
@@ -1585,7 +1609,7 @@ namespace Memcached.ClientLibrary
 		{
 
 			// get SockIOPool instance
-			SockIOPool pool = SockIOPool.GetInstance(_poolName);
+            SockIOPool pool = _pool;
 
 			// return false if unable to get SockIO obj
 			if(pool == null) 

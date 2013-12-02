@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace Buffalo.DB.CacheManager.Memcached
+namespace MemcacheClient
 {
     
     /// <summary>

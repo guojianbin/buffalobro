@@ -109,15 +109,15 @@ namespace Memcached.ClientLibrary
             String[] ip = host.Split(':');
 
             // get socket: default is to use non-blocking connect
-            if (connectTimeout > 0)
-            {
-                _socket = GetSocket(ip[0], int.Parse(ip[1], new System.Globalization.NumberFormatInfo()), connectTimeout);
-            }
-            else
-            {
+            //if (connectTimeout > 0)
+            //{
+            //    _socket = GetSocket(ip[0], int.Parse(ip[1], new System.Globalization.NumberFormatInfo()), connectTimeout);
+            //}
+            //else
+            //{
                 _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 _socket.Connect(new IPEndPoint(IPAddress.Parse(ip[0]), int.Parse(ip[1], new System.Globalization.NumberFormatInfo())));
-            }
+            //}
 
             _networkStream = new BufferedStream(new NetworkStreamIgnoreSeek(_socket));
 

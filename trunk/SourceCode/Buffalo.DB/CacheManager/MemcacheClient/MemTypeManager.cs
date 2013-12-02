@@ -5,7 +5,7 @@ using System.IO;
 using System.Xml;
 using Buffalo.Kernel;
 
-namespace Buffalo.DB.CacheManager.Memcached
+namespace MemcacheClient
 {
     public delegate object ReadInfo(BinaryReader reader);
     public delegate void WriteInfo(BinaryWriter writer,object value);

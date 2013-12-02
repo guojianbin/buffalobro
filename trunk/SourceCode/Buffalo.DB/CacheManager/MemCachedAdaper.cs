@@ -11,7 +11,6 @@ using Memcached.ClientLibrary;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Buffalo.DB.DataBaseAdapter;
-using Buffalo.DB.CacheManager.Memcached;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -49,12 +48,17 @@ namespace Buffalo.DB.CacheManager
         /// <param name="connStr">连接字符串</param>
         public MemCachedAdaper(string connStr, DBInfo info) 
         {
-            _pool = CreatePool(connStr);
             _info = info;
+            _pool = CreatePool(connStr);
+            
         }
 
 
-
+        /// <summary>
+        /// 创建连接池
+        /// </summary>
+        /// <param name="connStr"></param>
+        /// <returns></returns>
         private SockIOPool CreatePool(string connStr) 
         {
             string ip = "127.0.0.1";
@@ -115,7 +119,7 @@ namespace Buffalo.DB.CacheManager
 
             string[] serviers ={ip+":"+port };
 
-            SockIOPool pool = SockIOPool.GetInstance();
+            SockIOPool pool = SockIOPool.GetInstance(_info.Name);
             pool.SetServers(serviers);
             pool.InitConnections = 1;
             pool.MinConnections = 1;
@@ -125,7 +129,9 @@ namespace Buffalo.DB.CacheManager
             pool.MaintenanceSleep = 30;
             pool.Failover = true;
             pool.Nagle = false;
+            
             pool.Initialize();
+            
             return pool;
         }
 
@@ -148,50 +154,27 @@ namespace Buffalo.DB.CacheManager
             ret.Sort();
             return ret;
         }
-        
-        public  System.Data.DataSet GetData(IDictionary<string, bool> tableNames, string sql)
+
+        public System.Data.DataSet GetData(IDictionary<string, bool> tableNames, string sql)
         {
-            
 
-            MemcachedClient client = new MemcachedClient();
+
+            MemcachedClient client = new MemcachedClient(_pool);
             client.PrimitiveAsString = true;
-                string key = GetKey(tableNames, sql,client,true);
-                if (string.IsNullOrEmpty(key)) 
-                {
-                    return null;
-                }
+            string sourceKey = null;
+            string key = GetKey(tableNames, sql, client, true,out sourceKey);
+            if (string.IsNullOrEmpty(key))
+            {
+                return null;
+            }
 
-                SockIO sock = client.GetValueStream(key);
-                if (sock == null) 
-                {
-                    return null;
-                }
-                try
-                {
-                    
-                    DataSet dsRet = LoadDataSet(sock.GetStream());
-                    sock.ClearEndOfLine();
-                    return dsRet;
-                }
-                catch (IOException e)
-                {
 
-                    sock.TrueClose();
 
-                    sock = null;
-                }
-                catch
-                {
-                    
-                }
-                finally 
-                {
-                    if (sock != null)
-                        sock.Close();
-                }
-                
-            
-            return null;
+            DataSet dsRet = client.GetDataSet(key);
+            OutPutMessage(QueryCache.CommandGetDataSet, sourceKey);
+            return dsRet;
+
+
         }
 
         /// <summary>
@@ -215,13 +198,14 @@ namespace Buffalo.DB.CacheManager
         /// <param name="sql">SQL</param>
         /// <param name="client">缓存信息</param>
         /// <param name="needCreateTableVer">是否需要创建表的键</param>
+        /// <param name="sourceKey">源键</param>
         /// <returns></returns>
         private string GetKey(IDictionary<string, bool> tableNames, string sql,
-            MemcachedClient client, bool needCreateTableVer)
+            MemcachedClient client, bool needCreateTableVer,out string sourceKey)
         {
             List<string> tables = GetSortTables(tableNames);
             StringBuilder sbSql = new StringBuilder(tables.Count * 10 + 200);
-
+            sourceKey = "";
             foreach (string tableName in tables)
             {
                 string key = GetTableName(tableName);
@@ -238,7 +222,7 @@ namespace Buffalo.DB.CacheManager
                         objVer = 1;
                     }
                 }
-                sbSql.Append(key);
+                sbSql.Append(tableName);
                 sbSql.Append(".");
                 sbSql.Append(objVer.ToString());
                 sbSql.Append(",");
@@ -253,108 +237,85 @@ namespace Buffalo.DB.CacheManager
             sbSql.Append(sbSql.Length.ToString());
             StringBuilder sbRet = new StringBuilder();
 
-            
-            sbRet.Append(PasswordHash.ToMD5String(sbSql.ToString()));
+            sourceKey = sbSql.ToString();
+            sbRet.Append(PasswordHash.ToMD5String(sourceKey));
             return sbRet.ToString();
         }
 
-        public  void RemoveBySQL(IDictionary<string, bool> tableNames,string sql)
+        public void RemoveBySQL(IDictionary<string, bool> tableNames, string sql)
         {
-            MemcachedClient client = new MemcachedClient();
+            MemcachedClient client = new MemcachedClient(_pool);
+            
             client.PrimitiveAsString = true;
-                string key = GetKey(tableNames, sql, client,false);
-                if (!string.IsNullOrEmpty(key))
-                {
-                    client.Delete(key);
-                }
-            
-            
+            string sourceKey = null;
+            string key = GetKey(tableNames, sql, client, false, out sourceKey);
+            if (!string.IsNullOrEmpty(key))
+            {
+                client.Delete(key);
+            }
+            OutPutMessage(QueryCache.CommandDeleteSQL, sql);
+
         }
         /// <summary>
         /// 最大版本号
         /// </summary>
         private const int MaxVersion = (int.MaxValue-1000) ;
-        public  void RemoveByTableName(string tableName)
+        /// <summary>
+        /// 根据表名删除缓存
+        /// </summary>
+        /// <param name="tableName"></param>
+        public void RemoveByTableName(string tableName)
         {
             //if (client.GetValue(tableName) == null) 
             //{
             //    //_client.Set(tableName,1,
             //}
             string key = GetTableName(tableName);
-            MemcachedClient client = new MemcachedClient();
+            MemcachedClient client = new MemcachedClient(_pool);
             client.PrimitiveAsString = true;
             object oval = client.Get(key);
-                int val = 0;
-                try 
-                {
-                    val = Convert.ToInt32(oval);
-                }
-                catch { }
-                if (val <= 0 || val >= MaxVersion)
-                {
-                    client.Set(key, 1, _expiration);
-                }
-                else
-                {
-                    client.Increment(key, 1);
-                }
-
+            int val = 0;
+            try
+            {
+                val = Convert.ToInt32(oval);
+            }
+            catch { }
+            if (val <= 0 || val >= MaxVersion)
+            {
+                client.Set(key, 1, _expiration);
+            }
+            else
+            {
+                client.Increment(key, 1);
+            }
+            OutPutMessage(QueryCache.CommandDeleteTable, tableName);
         }
-
+        /// <summary>
+        /// 保存数据
+        /// </summary>
+        /// <param name="tableNames"></param>
+        /// <param name="sql"></param>
+        /// <param name="ds"></param>
+        /// <returns></returns>
         public  bool SetData(IDictionary<string, bool> tableNames, string sql, System.Data.DataSet ds)
         {
-            MemcachedClient client = new MemcachedClient();
+            MemcachedClient client = new MemcachedClient(_pool);
             client.PrimitiveAsString = true;
-            string key = GetKey(tableNames, sql, client, true);
-            byte[] xml = DataSetToBytes(ds);
+            string sourceKey = null;
+            string key = GetKey(tableNames, sql, client, true,out sourceKey);
+            OutPutMessage(QueryCache.CommandSetDataSet, sourceKey);
+            return client.SetDataSet(key, ds, _expiration);
+        }
 
-            client.SetBytes(key, xml, _expiration);
-            
-            return true;
+        private void OutPutMessage(string type,string message) 
+        {
+            if (_info.SqlOutputer.HasOutput)
+            {
+                _info.SqlOutputer.DefaultOutputer.Output("Memcached", type, new string[] { message });
+            }
         }
 
         #endregion
-        BinaryFormatter sfFormatter = new BinaryFormatter();
-        /// <summary>
-        /// XML字符串转成DataSet
-        /// </summary>
-        /// <param name="xml">xml字符串</param>
-        /// <param name="mode">指定如何将 XML 数据和关系架构读入 System.Data.DataSet</param>
-        /// <returns></returns>
-        private DataSet LoadDataSet(Stream data)
-        {
-           
-                try
-                {
-                    return MemDataSerialize.LoadDataSet(data);
-                    
-                }
-                catch(Exception ex) 
-                {
-
-                }
-               
-            
-            return null;
-        }
-
-        /// <summary>
-        /// 把DataSet打成byte数组
-        /// </summary>
-        /// <param name="ds">要处理的DataSet</param>
-        /// <param name="mode">指定如何从 System.Data.DataSet 写入 XML 数据和关系架构</param>
-        /// <returns></returns>
-        private byte[] DataSetToBytes(DataSet ds)
-        {
-            try
-            {
-                byte[] ret = MemDataSerialize.DataSetToBytes(ds);
-
-                return ret;
-            }
-            catch { }
-            return null;
-        }
 
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using Buffalo.Kernel;
-using Buffalo.DB.CacheManager.Memcached;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -38,21 +37,6 @@ namespace Buffalo.DB.CacheManager
             _data = ds;
             _currentData = _data.Tables[_currentIndex];
         }
-        //public MemChachReader(string xml)
-        //{
-        //    _data = CommonMethods.XMLToDataSet(xml, XmlReadMode.IgnoreSchema);
-        //}
-
-        /// <summary>
-        /// 把数据打包成字符串
-        /// </summary>
-        /// <returns></returns>
-        public byte[] Export()
-        {
-            return MemDataSerialize.DataSetToBytes(_data);
-        }
-
-
 
         #region IDataReader 成员
 

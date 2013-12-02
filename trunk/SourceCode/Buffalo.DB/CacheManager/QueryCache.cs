@@ -20,6 +20,11 @@ namespace Buffalo.DB.CacheManager
     /// </summary>
     public class QueryCache
     {
+        internal const string CommandDeleteSQL = "DeleteSQL";
+        internal const string CommandDeleteTable = "DeleteTable";
+        internal const string CommandSetDataSet = "SetDataSet";
+        internal const string CommandGetDataSet = "GetDataSet";
+
         private DBInfo _db;
 
         /// <summary>

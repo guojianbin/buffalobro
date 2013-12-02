@@ -1,3 +1,17 @@
+using System;
+using System.Collections;
+using System.Globalization;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Resources;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading;
+using Memcached.ClientLibrary;
+
+
 /**
  * Memcached C# client, connection pool for Socket IO
  * Copyright (c) 2005
@@ -28,34 +42,9 @@
  *
  * @version 1.0
  */
-namespace Memcached.ClientLibrary
+namespace Redissharp
 {
-    using System;
-    using System.Collections;
-	using System.Globalization;
-    using System.IO;
-    using System.Net;
-    using System.Net.Sockets;
-	using System.Resources;
-    using System.Runtime.CompilerServices;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Threading;
 
-
-
-    ///<summary>
-    ///Hashing algorithms we can use
-    ///</summary>
-    public enum HashingAlgorithm
-    {
-        ///<summary>native String.hashCode() - fast (cached) but not compatible with other clients</summary>
-        Native = 0,
-        ///<summary>original compatibility hashing alg (works with other clients)</summary>
-        OldCompatibleHash = 1,
-        ///<summary>new CRC32 based compatibility hashing algorithm (fast and works with other clients)</summary>
-        NewCompatibleHash = 2
-    }
 
     /// <summary>
     /// This class is a connection pool for maintaning a pool of persistent connections
@@ -114,10 +103,10 @@ namespace Memcached.ClientLibrary
     /// 
     /// 
     /// //The easiest manner in which to initialize the pool is to set the servers and rely on defaults as in the first example.
-    /// //After pool is initialized, a client will request a SockIO object by calling getSock with the cache key
-    /// //The client must always close the SockIO object when finished, which will return the connection back to the pool.
-    /// //An example of retrieving a SockIO object:
-    /// SockIOPool.SockIO sock = SockIOPool.GetInstance().GetSock(key);
+    /// //After pool is initialized, a client will request a Socketobject by calling getSock with the cache key
+    /// //The client must always close the Socketobject when finished, which will return the connection back to the pool.
+    /// //An example of retrieving a Socketobject:
+    /// SockIOPool.Socketsock = SockIOPool.GetInstance().GetSock(key);
     /// try 
     /// {
     ///		sock.write("version\r\n");	
@@ -128,7 +117,7 @@ namespace Memcached.ClientLibrary
     /// finally { sock.Close();	}
     /// 
     ///	</example>
-    public class SockIOPool
+    public class SockPool
     {
         // logger
         //private static ILog Log = LogManager.GetLogger(typeof(SockIOPool));
@@ -172,12 +161,11 @@ namespace Memcached.ClientLibrary
         private Hashtable _busyPool;
 
         // empty constructor
-        protected SockIOPool() { }
-        ~SockIOPool() 
+        protected SockPool() { }
+        ~SockPool() 
         {
             Shutdown();
         }
-
         
         /// <summary>
         /// Factory to create/retrieve new pools given a unique poolName.
@@ -185,12 +173,12 @@ namespace Memcached.ClientLibrary
         /// <param name="poolName">unique name of the pool</param>
         /// <returns>instance of SockIOPool</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static SockIOPool GetInstance(String poolName)
+        public static SockPool GetInstance(String poolName)
         {
             if(Pools.ContainsKey(poolName))
-                return (SockIOPool)Pools[poolName];
+                return (SockPool)Pools[poolName];
 
-            SockIOPool pool = new SockIOPool();
+            SockPool pool = new SockPool();
             Pools[poolName] = pool;
 
             return pool;
@@ -202,7 +190,7 @@ namespace Memcached.ClientLibrary
         /// </summary>
         /// <returns>instance of SockIOPool</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static SockIOPool GetInstance()
+        public static SockPool GetInstance()
         {
             return GetInstance("default instance");
         }
@@ -482,7 +470,7 @@ namespace Memcached.ClientLibrary
 
 				for(int j = 0; j < _initConns; j++) 
 				{
-					SockIO socket = CreateSocket((string)_servers[i]);
+					Socket socket = CreateSocket((string)_servers[i]);
 					if(socket == null) 
 					{
 
@@ -528,19 +516,35 @@ namespace Memcached.ClientLibrary
         {
             get { return _initialized; }
         }
+        /// <summary>
+        /// Gets whether or not the socket is connected.  Returns <c>true</c> if it is.
+        /// </summary>
+        public bool IsConnected(Socket socket)
+        {
+            return socket != null && socket.Connected; 
+        }
 
         /// <summary>
-        /// Creates a new SockIO obj for the given server.
+        /// 关闭连接
+        /// </summary>
+        /// <param name="socket"></param>
+        internal static void TrueCloseSocket(Socket socket) 
+        {
+            socket.Close();
+        }
+        private string _host;
+        /// <summary>
+        /// Creates a new Socketobj for the given server.
         ///
         ///If server fails to connect, then return null and do not try
         ///again until a duration has passed.  This duration will grow
         ///by doubling after each failed attempt to connect.
         /// </summary>
         /// <param name="host">host:port to connect to</param>
-        /// <returns>SockIO obj or null if failed to create</returns>
-        protected SockIO CreateSocket(string host)
+        /// <returns>Socketobj or null if failed to create</returns>
+        protected Socket CreateSocket(string host)
         {
-            SockIO socket = null;
+            Socket socket = null;
 
             // if host is dead, then we don't need to try again
             // until the dead status has expired
@@ -554,17 +558,36 @@ namespace Memcached.ClientLibrary
                 if((store.AddMilliseconds(expire)) > DateTime.Now)
                     return null;
             }
-
+            String[] ip = host.Split(':');
+            
+            IPAddress ipa = IPAddress.Any;
+            if (!IPAddress.TryParse(ip[0], out ipa)) 
+            {
+                throw new FormatException(host + "不是正确的地址格式");
+            }
+            int port = 6379;
+            if (ip.Length > 1) 
+            {
+                if (!int.TryParse(ip[1], out port)) 
+                {
+                    throw new FormatException(host + "不是正确的地址格式");
+                }
+            }
 			try
 			{
-				socket = new SockIO(this, host, _socketTimeout, _socketConnectTimeout, _nagle);
+                //socket = new Socket(this, host, _socketTimeout, _socketConnectTimeout, _nagle);
+                
 
-				if(!socket.IsConnected)
+                socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                socket.NoDelay = true;
+                socket.SendTimeout = _socketTimeout;
+                socket.Connect(ipa, port);
+                if (!IsConnected(socket))
 				{
 
 					try
 					{
-						socket.TrueClose();
+						TrueCloseSocket(socket);
 					}
 					catch(SocketException ex)
 					{
@@ -614,32 +637,32 @@ namespace Memcached.ClientLibrary
                 if(_buckets.BinarySearch(host) < 0)
                     _buckets.Add(host);
             }
-
+            _host = host;
             return socket;
         }
 
         /// <summary>
-        /// Returns appropriate SockIO object given
+        /// Returns appropriate Socketobject given
         /// string cache key.
         /// </summary>
         /// <param name="key">hashcode for cache key</param>
-        /// <returns>SockIO obj connected to server</returns>
-        public SockIO GetSock(string key)
+        /// <returns>Socketobj connected to server</returns>
+        public Socket GetSock(string key)
         {
             return GetSock(key, null);
         }
 
         /// <summary>
-        /// Returns appropriate SockIO object given
+        /// Returns appropriate Socketobject given
         /// string cache key and optional hashcode.
         /// 
-        /// Trys to get SockIO from pool.  Fails over
+        /// Trys to get Socketfrom pool.  Fails over
         /// to additional pools in event of server failure.
         /// </summary>
         /// <param name="key">hashcode for cache key</param>
         /// <param name="hashCode">if not null, then the int hashcode to use</param>
-        /// <returns>SockIO obj connected to server</returns>
-        public SockIO GetSock(string key, object hashCode)
+        /// <returns>Socketobj connected to server</returns>
+        public Socket GetSock(string key, object hashCode)
         {
 			string hashCodeString = "<null>";
 			if(hashCode != null)
@@ -712,7 +735,7 @@ namespace Memcached.ClientLibrary
                 if(bucket < 0)
                     bucket += _buckets.Count;
 
-                SockIO sock = GetConnection((string)_buckets[bucket]);
+                Socket sock = GetConnection((string)_buckets[bucket]);
 
 
 
@@ -752,16 +775,16 @@ namespace Memcached.ClientLibrary
         }
 
         /// <summary>
-        /// Returns a SockIO object from the pool for the passed in host.
+        /// Returns a Socketobject from the pool for the passed in host.
         /// 
         /// Meant to be called from a more intelligent method
         /// which handles choosing appropriate server
         /// and failover. 
         /// </summary>
         /// <param name="host">host from which to retrieve object</param>
-        /// <returns>SockIO object or null if fail to retrieve one</returns>
+        /// <returns>Socketobject or null if fail to retrieve one</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public SockIO GetConnection(string host)
+        public Socket GetConnection(string host)
         {
             if(!_initialized)
             {
@@ -781,9 +804,9 @@ namespace Memcached.ClientLibrary
 
                 if(aSockets != null && !(aSockets.Count == 0))
                 {
-                    foreach(SockIO socket in new IteratorIsolateCollection(aSockets.Keys))
+                    foreach(Socket socket in new IteratorIsolateCollection(aSockets.Keys))
                     {
-                        if(socket.IsConnected)
+                        if(IsConnected(socket))
                         {
 
 
@@ -831,7 +854,7 @@ namespace Memcached.ClientLibrary
 
             for(int i = create; i > 0; i--)
             {
-                SockIO socket = CreateSocket(host);
+                Socket socket = CreateSocket(host);
                 if(socket == null)
                     break;
 
@@ -861,7 +884,7 @@ namespace Memcached.ClientLibrary
         /// <param name="host">host this socket is connected to</param>
         /// <param name="socket">socket to add</param>
         //[MethodImpl(MethodImplOptions.Synchronized)]
-        protected static void AddSocketToPool(Hashtable pool, string host, SockIO socket)
+        protected static void AddSocketToPool(Hashtable pool, string host, Socket socket)
         {
             if (pool == null)
                 return; 
@@ -892,7 +915,7 @@ namespace Memcached.ClientLibrary
         /// <param name="host">host pool</param>
         /// <param name="socket">socket to remove</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        protected static void RemoveSocketFromPool(Hashtable pool, string host, SockIO socket)
+        protected static void RemoveSocketFromPool(Hashtable pool, string host, Socket socket)
         {
             if (host != null && host.Length == 0 || pool == null)
                 return; 
@@ -926,10 +949,10 @@ namespace Memcached.ClientLibrary
 
                 if(sockets != null && sockets.Count > 0)
                 {
-                    foreach(SockIO socket in new IteratorIsolateCollection(sockets.Keys))
+                    foreach(Socket socket in new IteratorIsolateCollection(sockets.Keys))
                     {
 
-                            socket.TrueClose();
+                         TrueCloseSocket(socket);
 
 
                         sockets.Remove(socket);
@@ -939,7 +962,7 @@ namespace Memcached.ClientLibrary
         }
 
         /// <summary>
-        /// Checks a SockIO object in with the pool.
+        /// Checks a Socketobject in with the pool.
         /// 
         /// This will remove SocketIO from busy pool, and optionally
         /// add to avail pool.
@@ -947,12 +970,12 @@ namespace Memcached.ClientLibrary
         /// <param name="socket">socket to return</param>
         /// <param name="addToAvail">add to avail pool if true</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void CheckIn(SockIO socket, bool addToAvail)
+        public void CheckIn(Socket socket, bool addToAvail)
         {
             if (socket == null)
                 return; 
 
-            string host = socket.Host;
+            string host = _host;
 
 
             // remove from the busy pool
@@ -960,7 +983,7 @@ namespace Memcached.ClientLibrary
             RemoveSocketFromPool(_busyPool, host, socket);
 
             // add to avail pool
-            if(addToAvail && socket.IsConnected)
+            if(addToAvail && IsConnected(socket))
             {
 
                 AddSocketToPool(_availPool, host, socket);
@@ -971,12 +994,12 @@ namespace Memcached.ClientLibrary
         /// Returns a socket to the avail pool.
         /// 
         /// This is called from SockIO.close().  Calling this method
-        /// directly without closing the SockIO object first
+        /// directly without closing the Socketobject first
         /// will cause an IOException to be thrown.
         /// </summary>
         /// <param name="socket">socket to return</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void CheckIn(SockIO socket)
+        public void CheckIn(Socket socket)
         {
             CheckIn(socket, true);
         }
@@ -990,15 +1013,17 @@ namespace Memcached.ClientLibrary
         protected static void ClosePool(Hashtable pool)
         {
             if (pool == null)
-                return;
+                return; 
 
-            foreach (string host in pool.Keys)
+            foreach(string host in pool.Keys)
             {
                 Hashtable sockets = (Hashtable)pool[host];
 
-                foreach (SockIO socket in new IteratorIsolateCollection(sockets.Keys))
+                foreach(Socket socket in new IteratorIsolateCollection(sockets.Keys))
                 {
-                    socket.TrueClose();
+
+                        TrueCloseSocket(socket);
+
                     sockets.Remove(socket);
                 }
             }
@@ -1092,7 +1117,7 @@ namespace Memcached.ClientLibrary
 
                     for(int j = 0; j < need; j++)
                     {
-                        SockIO socket = CreateSocket(host);
+                        Socket socket = CreateSocket(host);
 
                         if(socket == null)
                             break;
@@ -1109,7 +1134,7 @@ namespace Memcached.ClientLibrary
                         : (diff) / _poolMultiplier;
 
 
-                    foreach(SockIO socket in new IteratorIsolateCollection(sockets.Keys))
+                    foreach(Socket socket in new IteratorIsolateCollection(sockets.Keys))
                     {
                         if(needToClose <= 0)
                             break;
@@ -1124,7 +1149,7 @@ namespace Memcached.ClientLibrary
                         {
 
 
-                                socket.TrueClose();
+                                TrueCloseSocket(socket);
 
 
                             sockets.Remove(socket);
@@ -1133,7 +1158,7 @@ namespace Memcached.ClientLibrary
                     }
                 }
 
-                // reset the shift value for creating new SockIO objects
+                // reset the shift value for creating new Socketobjects
                 _createShift[host] = 0;
             }
 
@@ -1145,7 +1170,7 @@ namespace Memcached.ClientLibrary
 
 
                 // loop through all connections and check to see if we have any hung connections
-                foreach(SockIO socket in new IteratorIsolateCollection(sockets.Keys))
+                foreach(Socket socket in new IteratorIsolateCollection(sockets.Keys))
                 {
                     // remove stale entries
                     DateTime hungTime = (DateTime)sockets[socket];
@@ -1156,7 +1181,7 @@ namespace Memcached.ClientLibrary
                     if((hungTime.AddMilliseconds(_maxBusyTime)) < DateTime.Now)
                     {
 
-                            socket.TrueClose();
+                            TrueCloseSocket(socket);
                        
 
                         sockets.Remove(socket);
@@ -1176,11 +1201,11 @@ namespace Memcached.ClientLibrary
 
             private Thread _thread;
 
-            private SockIOPool _pool;
+            private SockPool _pool;
             private long _interval = 1000 * 3; // every 3 seconds
             private bool _stopThread;
 
-            public MaintenanceThread(SockIOPool pool)
+            public MaintenanceThread(SockPool pool)
             {
                 _thread = new Thread(new ThreadStart(Maintain));
                 _pool = pool;
