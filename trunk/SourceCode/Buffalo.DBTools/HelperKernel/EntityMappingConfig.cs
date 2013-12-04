@@ -43,6 +43,12 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     entity.IsTable = att.InnerText=="1";
                 }
+                att = classNode.Attributes["UseCache"];
+                if (att != null)
+                {
+                    
+                    entity.UseCache = att.InnerText.Equals("true",StringComparison.CurrentCultureIgnoreCase);
+                }
             }
 
             FillPropertyInfo(doc, entity);
@@ -280,6 +286,10 @@ namespace Buffalo.DBTools.HelperKernel
             att.InnerText = entity.CurrentDBConfigInfo.DbName;
             classNode.Attributes.Append(att);
 
+            att = doc.CreateAttribute("UseCache");
+            att.InnerText = "false";
+            classNode.Attributes.Append(att);
+
             AppendPropertyInfo(entity.BelongTable.Params, classNode);
             AppendRelationInfo(entity.BelongTable.RelationItems, classNode);
             return doc;
@@ -409,6 +419,10 @@ namespace Buffalo.DBTools.HelperKernel
 
             att = doc.CreateAttribute("BelongDB");
             att.InnerText = entity.CurrentDBConfigInfo.DbName;
+            classNode.Attributes.Append(att);
+
+            att = doc.CreateAttribute("UseCache");
+            att.InnerText = entity.UseCache?"true":"false";
             classNode.Attributes.Append(att);
 
             AppendPropertyInfo(entity, classNode);

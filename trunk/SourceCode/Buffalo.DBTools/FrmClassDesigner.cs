@@ -93,7 +93,7 @@ namespace Buffalo.DBTools
         {
             txtClassName.Text = _config.ClassName;
             txtTableName.Text = _config.TableName;
-
+            ckbCache.Checked = _config.UseCache;
             txtBaseClass.Text = _config.BaseTypeName;
 
             gvField.DataSource = _config.EParamFields;
@@ -148,7 +148,7 @@ namespace Buffalo.DBTools
         {
             //_config.BaseType = txtBaseClass.Text;
             _config.TableName = txtTableName.Text;
-
+            _config.UseCache = ckbCache.Checked;
             _config.GenerateCode();
             this.DialogResult = DialogResult.OK;
         }

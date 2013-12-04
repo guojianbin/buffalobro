@@ -82,6 +82,7 @@ namespace Buffalo.DBTools
 
         private void FrmDBSetting_Load(object sender, EventArgs e)
         {
+            
             InitTiers();
             InitDBType();
             FillEdit();
@@ -279,13 +280,14 @@ namespace Buffalo.DBTools
 
         private void btnModel_Click(object sender, EventArgs e)
         {
-            string dbType = cmbType.SelectedValue as string;
-            if (string.IsNullOrEmpty(dbType))
+            //string dbType = cmbType.SelectedValue as string;
+            ComboBoxItem item = cmbType.SelectedItem as ComboBoxItem;
+            if (item==null)
             {
                 MessageBox.Show("请选择数据库类型", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            string conn = Generate3Tier.GetConnString(dbType);
+            string conn = item.Tag as string;
             if (!string.IsNullOrEmpty(conn)) 
             {
                 rtbConnstr.Text = conn;

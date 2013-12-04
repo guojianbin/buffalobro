@@ -45,7 +45,14 @@
             this.chkAllDal = new System.Windows.Forms.CheckBox();
             this.chkEntityToDirectory = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.gpCache = new System.Windows.Forms.GroupBox();
+            this.cmbCacheType = new System.Windows.Forms.ComboBox();
+            this.gpCacheServer = new System.Windows.Forms.GroupBox();
+            this.txtCacheServer = new System.Windows.Forms.RichTextBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.gpCache.SuspendLayout();
+            this.gpCacheServer.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmbType
@@ -125,7 +132,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(344, 10);
+            this.pictureBox1.Location = new System.Drawing.Point(347, 9);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(100, 204);
             this.pictureBox1.TabIndex = 8;
@@ -181,12 +188,64 @@
             this.toolTip1.SetToolTip(this.chkEntityToDirectory, "库到类模式下，实体将会放到Entity中");
             this.chkEntityToDirectory.UseVisualStyleBackColor = true;
             // 
+            // gpCache
+            // 
+            this.gpCache.Controls.Add(this.gpCacheServer);
+            this.gpCache.Controls.Add(this.cmbCacheType);
+            this.gpCache.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.gpCache.Location = new System.Drawing.Point(0, 219);
+            this.gpCache.Name = "gpCache";
+            this.gpCache.Size = new System.Drawing.Size(449, 115);
+            this.gpCache.TabIndex = 14;
+            this.gpCache.TabStop = false;
+            this.gpCache.Text = "缓存设置";
+            // 
+            // cmbCacheType
+            // 
+            this.cmbCacheType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCacheType.FormattingEnabled = true;
+            this.cmbCacheType.Location = new System.Drawing.Point(8, 14);
+            this.cmbCacheType.Name = "cmbCacheType";
+            this.cmbCacheType.Size = new System.Drawing.Size(145, 20);
+            this.cmbCacheType.TabIndex = 0;
+            // 
+            // gpCacheServer
+            // 
+            this.gpCacheServer.Controls.Add(this.txtCacheServer);
+            this.gpCacheServer.Controls.Add(this.button1);
+            this.gpCacheServer.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.gpCacheServer.Location = new System.Drawing.Point(3, 37);
+            this.gpCacheServer.Name = "gpCacheServer";
+            this.gpCacheServer.Size = new System.Drawing.Size(443, 75);
+            this.gpCacheServer.TabIndex = 1;
+            this.gpCacheServer.TabStop = false;
+            this.gpCacheServer.Text = "缓存服务器连接字符串";
+            // 
+            // txtCacheServer
+            // 
+            this.txtCacheServer.Dock = System.Windows.Forms.DockStyle.Right;
+            this.txtCacheServer.Location = new System.Drawing.Point(73, 17);
+            this.txtCacheServer.Name = "txtCacheServer";
+            this.txtCacheServer.Size = new System.Drawing.Size(367, 55);
+            this.txtCacheServer.TabIndex = 6;
+            this.txtCacheServer.Text = "";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(5, 30);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(62, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "参考";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // FrmDBSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(444, 215);
+            this.ClientSize = new System.Drawing.Size(449, 334);
+            this.Controls.Add(this.gpCache);
             this.Controls.Add(this.chkEntityToDirectory);
             this.Controls.Add(this.clbSummary);
             this.Controls.Add(this.rtbConnstr);
@@ -203,13 +262,13 @@
             this.Controls.Add(this.pictureBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(460, 253);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(460, 253);
             this.Name = "FrmDBSetting";
             this.Text = "Buffalo助手--数据库设置";
             this.Load += new System.EventHandler(this.FrmDBSetting_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.gpCache.ResumeLayout(false);
+            this.gpCacheServer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,5 +291,10 @@
         private System.Windows.Forms.CheckBox chkAllDal;
         private System.Windows.Forms.CheckBox chkEntityToDirectory;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.GroupBox gpCache;
+        private System.Windows.Forms.ComboBox cmbCacheType;
+        private System.Windows.Forms.GroupBox gpCacheServer;
+        private System.Windows.Forms.RichTextBox txtCacheServer;
+        private System.Windows.Forms.Button button1;
     }
 }

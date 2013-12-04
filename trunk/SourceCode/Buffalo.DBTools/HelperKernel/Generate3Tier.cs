@@ -110,24 +110,29 @@ namespace Buffalo.DBTools.HelperKernel
         /// </summary>
         public static readonly ComboBoxItemCollection DataAccessTypes = InitItems();
 
-        private static Dictionary<string, string> _dicConnString = InitConnStrings();
         /// <summary>
-        /// 初始化参考字符串
+        /// 数据层的类型
         /// </summary>
-        /// <returns></returns>
-        private static Dictionary<string, string> InitConnStrings() 
-        {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-            dic["Sql2K"] = "server={server};database={database};uid={username};pwd={pwd}";
-            dic["Sql2K5"] = "server={server};database={database};uid={username};pwd={pwd}";
-            dic["Sql2K8"] = "server={server};database={database};uid={username};pwd={pwd}";
-            dic["Oracle9"] = "server={server};user id={username};password={pwd}";
-            dic["MySQL5"] = "User ID={username};Password={pwd};Host={server};Port=3306;Database={database};charset=utf8";
-            dic["SQLite"] = "Data Source={databasePath}";
-            dic["DB2v9"] = "server={server}:50000;DATABASE ={database};UID={username};PWD={pwd}";
-            dic["Psql9"] = "Server={server};Port=5432;User Id={username};Password={pwd};Database={database}";
-            return dic;
-        }
+        public static readonly ComboBoxItemCollection CacheTypes = InitCacheItems();
+
+        //private static Dictionary<string, string> _dicConnString = InitConnStrings();
+        ///// <summary>
+        ///// 初始化参考字符串
+        ///// </summary>
+        ///// <returns></returns>
+        //private static Dictionary<string, string> InitConnStrings() 
+        //{
+        //    Dictionary<string, string> dic = new Dictionary<string, string>();
+        //    dic["Sql2K"] = "server={server};database={database};uid={username};pwd={pwd}";
+        //    dic["Sql2K5"] = "server={server};database={database};uid={username};pwd={pwd}";
+        //    dic["Sql2K8"] = "server={server};database={database};uid={username};pwd={pwd}";
+        //    dic["Oracle9"] = "server={server};user id={username};password={pwd}";
+        //    dic["MySQL5"] = "User ID={username};Password={pwd};Host={server};Port=3306;Database={database};charset=utf8";
+        //    dic["SQLite"] = "Data Source={databasePath}";
+        //    dic["DB2v9"] = "server={server}:50000;DATABASE ={database};UID={username};PWD={pwd}";
+        //    dic["Psql9"] = "Server={server};Port=5432;User Id={username};Password={pwd};Database={database}";
+        //    return dic;
+        //}
 
         /// <summary>
         /// 获取参考字符串
@@ -144,6 +149,25 @@ namespace Buffalo.DBTools.HelperKernel
             return null;
         }
 
+        /// <summary>
+        /// 初始化数据库类型
+        /// </summary>
+        /// <returns></returns>
+        private static ComboBoxItemCollection InitCacheItems()
+        {
+            ComboBoxItemCollection types = new ComboBoxItemCollection();
+            ComboBoxItem item = new ComboBoxItem("内存", "system");
+            item.Tag = "";
+            types.Add(item);
+            item = new ComboBoxItem("Memcached", "memcached");
+            item.Tag = "server=127.0.0.1:11211;expir=30";
+            types.Add(item);
+            item = new ComboBoxItem("Redis", "redis");
+            item.Tag = "server=127.0.0.1:6379;expir=30";
+            types.Add(item);
+            
+            return types;
+        }
 
         /// <summary>
         /// 初始化数据库类型
@@ -153,28 +177,28 @@ namespace Buffalo.DBTools.HelperKernel
         {
             ComboBoxItemCollection types = new ComboBoxItemCollection();
             ComboBoxItem item = new ComboBoxItem("SQL Server 2000", "Sql2K");
-            item.Tag = "server={server};database={database};uid={username};pwd={pwd}";
+            item.Tag = "server=127.0.0.1;database=mydb;uid=sa;pwd=sa";
             types.Add(item);
             item = new ComboBoxItem("SQL Server 2005", "Sql2K5");
-            item.Tag = "server={server};database={database};uid={username};pwd={pwd}";
+            item.Tag = "server=127.0.0.1;database=mydb;uid=sa;pwd=sa";
             types.Add(item);
             item = new ComboBoxItem("SQL Server 2008 或以上", "Sql2K8");
-            item.Tag = "server={server};database={database};uid={username};pwd={pwd}";
+            item.Tag = "server=127.0.0.1;database=mydb;uid=sa;pwd=sa";
             types.Add(item);
             item = new ComboBoxItem("Oracle 9 或以上", "Oracle9");
-            item.Tag = "server={server};user id={username};password={pwd}";
+            item.Tag = "server=Myserver;user id=username;password=pwd";
             types.Add(item);
             item = new ComboBoxItem("MySQL 5.0 或以上", "MySQL5");
-            item.Tag = "User ID={username};Password={pwd};Host={server};Port=3306;Database={database};";
+            item.Tag = "User ID=root;Password=pwd;Host=127.0.0.1;Port=3306;Database=mydb;";
             types.Add(item);
             item = new ComboBoxItem("SQLite", "SQLite");
-            item.Tag = "Data Source={databasePath}";
+            item.Tag = "Data Source=D:\\db.s3db";
             types.Add(item);
             item = new ComboBoxItem("IBM DB2 v9或以上", "DB2v9");
-            item.Tag = "server={server}:50000;DATABASE ={database};UID={username};PWD={pwd}";
+            item.Tag = "server=127.0.0.1:50000;DATABASE =mydb;UID=DB2Admin;PWD=pwd";
             types.Add(item);
             item = new ComboBoxItem("Postgresql9或以上", "Psql9");
-            item.Tag = "Server={server};Port=5432;User Id={username};Password={pwd};Database={database}";
+            item.Tag = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=pwd;Database=mydb";
             types.Add(item);
             return types;
         }

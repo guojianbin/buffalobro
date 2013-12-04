@@ -87,6 +87,7 @@
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
     <Compile Include="CacheManager\Redissharp\SockPool.cs" />
+    <Compile Include="CacheManager\RedisAdaper.cs" />
     <Compile Include="CommBase\BusinessBases\BatchAction.cs" />
     <Compile Include="CommBase\BusinessBases\BusinessModelBase.cs" />
     <Compile Include="CommBase\BusinessBases\BusinessModelBaseForSelect.cs" />

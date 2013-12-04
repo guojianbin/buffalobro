@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Diagnostics;
+using System.Data;
+using MemcacheClient;
 //using System.Linq;
 namespace Redissharp
 {
@@ -42,11 +44,11 @@ namespace Redissharp
         }
         private SockPool _pool;
 
-        public Redis(Socket socket, SockPool pool)
+        public Redis(SockPool pool)
         {
-            _socket = socket;
+            
             _pool = pool;
-            _bstream = new BufferedStream(new NetworkStream(socket), 16 * 1024);
+            
         }
         public string _host;
         public string Host { get { return _host; } private set { _host = value; } }
@@ -75,11 +77,27 @@ namespace Redissharp
                 SendExpectSuccess("SELECT {0}\r\n", db);
             }
         }
-
+        /// <summary>
+        /// 开启连接
+        /// </summary>
+        public void Open(string key) 
+        {
+            _socket = _pool.GetSock(key);
+            _bstream = new BufferedStream(new NetworkStream(_socket), 16 * 1024);
+        }
+        /// <summary>
+        /// 开启连接
+        /// </summary>
+        public void Open()
+        {
+            Open("anyKey");
+        }
         public void Close() 
         {
-            _pool.CheckIn(_socket);
-            _socket = null;
+            if (_socket != null)
+            {
+                _pool.CheckIn(_socket);
+            }
         }
         /// <summary>
         /// closes socket and all streams connected to it 
@@ -157,12 +175,45 @@ namespace Redissharp
         //  Set(dict.ToDictionary(k => k.Key, v => Encoding.UTF8.GetBytes(v.Value)));
         //}
 
+        private static readonly byte[] _nl = Encoding.UTF8.GetBytes("\r\n");
+
+        /// <summary>
+        /// 设置字节数组
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        public void SetBytes(string key, byte[] val) 
+        {
+            MemoryStream ms = new MemoryStream();
+            byte[] kLength = Encoding.UTF8.GetBytes("$" + key.Length + "\r\n");
+            byte[] k = Encoding.UTF8.GetBytes(key + "\r\n");
+            byte[] vLength = Encoding.UTF8.GetBytes("$" + val.Length + "\r\n");
+            ms.Write(kLength, 0, kLength.Length);
+            ms.Write(k, 0, k.Length);
+            ms.Write(vLength, 0, vLength.Length);
+            ms.Write(val, 0, val.Length);
+            ms.Write(_nl, 0, _nl.Length);
+            SendDataCommand(ms.ToArray(), "*" + (2 + 1) + "\r\n$4\r\nMSET\r\n");
+            ExpectSuccess();
+        }
+        static Encoding _IntEncoding = Encoding.ASCII;
+        /// <summary>
+        /// 设置值类型
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        public void SetValue(string key, object val)
+        {
+            byte[] bval = _IntEncoding.GetBytes(val.ToString());
+            SetBytes(key, bval);
+        }
+
         public void Set(IDictionary<string, byte[]> dict)
         {
             if (dict == null)
                 throw new ArgumentNullException("dict");
 
-            byte[] nl = Encoding.UTF8.GetBytes("\r\n");
+            //byte[] nl = Encoding.UTF8.GetBytes("\r\n");
 
             MemoryStream ms = new MemoryStream();
             foreach (string key in dict.Keys)
@@ -176,11 +227,56 @@ namespace Redissharp
                 ms.Write(k, 0, k.Length);
                 ms.Write(vLength, 0, vLength.Length);
                 ms.Write(val, 0, val.Length);
-                ms.Write(nl, 0, nl.Length);
+                ms.Write(_nl, 0, _nl.Length);
             }
 
             SendDataCommand(ms.ToArray(), "*" + (dict.Count * 2 + 1) + "\r\n$4\r\nMSET\r\n");
             ExpectSuccess();
+        }
+        /// <summary>
+        /// 设置DataSet
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        public void SetDataSet(string key, DataSet val)
+        {
+            byte[] bval = MemDataSerialize.DataSetToBytes(val);
+            SetBytes(key, bval);
+        }
+        /// <summary>
+        /// 获取DataSet
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public DataSet GetDataSet(string key)
+        {
+            if (!SendDataCommand(null, "GET " + key + "\r\n"))
+                throw new Exception("Unable to connect");
+            string r = ReadLine();
+
+            if (r.Length == 0)
+                throw new ResponseException("Zero length respose");
+
+            char c = r[0];
+            if (c == '-')
+                throw new ResponseException(r.StartsWith("-ERR") ? r.Substring(5) : r.Substring(1));
+
+            if (c == '$')
+            {
+                if (r == "$-1")
+                    return null;
+                int n;
+
+                if (Int32.TryParse(r.Substring(1), out n))
+                {
+                    DataSet ds = MemDataSerialize.LoadDataSet(_bstream);
+                    return ds;
+                }
+                throw new ResponseException("Invalid length");
+            }
+
+           
+            throw new ResponseException("Unexpected reply: " + r);
         }
 
         public byte[] Get(string key)
@@ -194,7 +290,12 @@ namespace Redissharp
         {
             if (key == null)
                 throw new ArgumentNullException("key");
-            return Encoding.UTF8.GetString(Get(key));
+            byte[] content = Get(key);
+            if (content == null || content.Length <= 0) 
+            {
+                return null;
+            }
+            return Encoding.UTF8.GetString(content);
         }
 
         public byte[][] Sort(SortOptions options)
@@ -257,7 +358,7 @@ namespace Redissharp
             byte[] r = Encoding.UTF8.GetBytes(s);
             try
             {
-                Log("S: " + String.Format(cmd, args));
+
                 _socket.Send(r);
                 if (data != null)
                 {
@@ -286,7 +387,7 @@ namespace Redissharp
             byte[] r = Encoding.UTF8.GetBytes(s);
             try
             {
-                Log("S: " + String.Format(cmd, args));
+
                 _socket.Send(r);
             }
             catch (SocketException)
@@ -300,11 +401,7 @@ namespace Redissharp
             return true;
         }
 
-        [Conditional("DEBUG")]
-        void Log(string fmt, params object[] args)
-        {
-            Console.WriteLine("{0}", String.Format(fmt, args).Trim());
-        }
+
 
         void ExpectSuccess()
         {
@@ -313,7 +410,7 @@ namespace Redissharp
                 throw new ResponseException("No more data");
 
             string s = ReadLine();
-            Log((char)c + s);
+
             if (c == '-')
                 throw new ResponseException(s.StartsWith("ERR") ? s.Substring(4) : s);
         }
@@ -336,7 +433,7 @@ namespace Redissharp
                 throw new ResponseException("No more data");
 
             string s = ReadLine();
-            Log("R: " + s);
+
             if (c == '-')
                 throw new ResponseException(s.StartsWith("ERR") ? s.Substring(4) : s);
             if (c == ':')
@@ -358,7 +455,7 @@ namespace Redissharp
                 throw new ResponseException("No more data");
 
             string s = ReadLine();
-            Log("R: " + s);
+
             if (c == '-')
                 throw new ResponseException(s.StartsWith("ERR") ? s.Substring(4) : s);
             if (c == ':')
@@ -380,7 +477,7 @@ namespace Redissharp
                 throw new ResponseException("No more data");
 
             string s = ReadLine();
-            Log("R: " + s);
+
             if (c == '-')
                 throw new ResponseException(s.StartsWith("ERR") ? s.Substring(4) : s);
             if (c == '+')
@@ -411,7 +508,7 @@ namespace Redissharp
         byte[] ReadData()
         {
             string r = ReadLine();
-            Log("R: {0}", r);
+
             if (r.Length == 0)
                 throw new ResponseException("Zero length respose");
 
@@ -662,7 +759,7 @@ namespace Redissharp
                 throw new ResponseException("No more data");
 
             string s = ReadLine();
-            Log("R: " + s);
+
             if (c == '-')
                 throw new ResponseException(s.StartsWith("ERR") ? s.Substring(4) : s);
             if (c == '*')

@@ -67,6 +67,16 @@ namespace Buffalo.DBTools.HelperKernel
         //private Diagram _currentDiagram;
         private DBConfigInfo _currentDBConfigInfo;
         private Encoding _fileEncoding;
+
+        private bool _useCache;
+        /// <summary>
+        /// 使用缓存
+        /// </summary>
+        public bool UseCache
+        {
+            get { return _useCache; }
+            set { _useCache = value; }
+        }
         /// <summary>
         /// 类文件编码
         /// </summary>

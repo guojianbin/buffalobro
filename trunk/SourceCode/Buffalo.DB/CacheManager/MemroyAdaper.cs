@@ -59,6 +59,7 @@ namespace Buffalo.DB.CacheManager
             }
             OutPutMessage(QueryCache.CommandSetDataSet, sql);
             _cache[key] = ds;
+            
             return true;
         }
         /// <summary>

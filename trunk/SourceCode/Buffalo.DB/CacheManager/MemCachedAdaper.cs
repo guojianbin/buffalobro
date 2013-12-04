@@ -67,7 +67,7 @@ namespace Buffalo.DB.CacheManager
             string[] conStrs = connStr.Split(';');
             string serverString = "server=";
             string sizeString = "maxsize=";
-            string timeoutString = "timeout=";
+            string expirString = "expir=";
             string part = null;
             foreach (string lpart in conStrs)
             {
@@ -101,17 +101,17 @@ namespace Buffalo.DB.CacheManager
                         throw new ArgumentException("最大连接数必须是1-" + MaxVersion + "的值");
                     }
                 }
-                else if (part.IndexOf(timeoutString, StringComparison.CurrentCultureIgnoreCase) == 0)
+                else if (part.IndexOf(expirString, StringComparison.CurrentCultureIgnoreCase) == 0)
                 {
-                    string timeoutStr = part.Substring(timeoutString.Length);
+                    string expirStr = part.Substring(expirString.Length);
                     int mins = 30;
-                    if (!int.TryParse(timeoutStr, out mins))
+                    if (!int.TryParse(expirStr, out mins))
                     {
-                        throw new ArgumentException("超时分钟数必须是1-9999的值");
+                        throw new ArgumentException("数据保存分钟数必须是1-999999999的值");
                     }
-                    if (mins <= 0 || mins >= 9999)
+                    if (mins <= 0 || mins >= 999999999)
                     {
-                        throw new ArgumentException("超时分钟数必须是1-9999的值");
+                        throw new ArgumentException("数据保存分钟数必须是1-999999999的值");
                     }
                     _expiration = TimeSpan.FromMinutes((double)mins);
                 }
@@ -233,8 +233,6 @@ namespace Buffalo.DB.CacheManager
                 sbSql[sbSql.Length - 1] = ':';
             }
             sbSql.Append(sql);
-            sbSql.Append(";");
-            sbSql.Append(sbSql.Length.ToString());
             StringBuilder sbRet = new StringBuilder();
 
             sourceKey = sbSql.ToString();

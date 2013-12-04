@@ -80,7 +80,10 @@ namespace Buffalo.DB.CacheManager
             {
                 return new MemCachedAdaper(connectionString, info);
             }
-            
+            else if (dtype.Equals("redis", StringComparison.CurrentCultureIgnoreCase))//memcached
+            {
+                return new RedisAdaper(connectionString, info);
+            }
             throw new NotSupportedException("不支持:" + type + " 的缓存类型，当前只支持system、memcached类型");
             return null;
         }

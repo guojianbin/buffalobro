@@ -21,7 +21,10 @@ namespace Buffalo.DB.MessageOutPuters
 
                 smsg.Append(",");
             }
-
+            if (smsg.Length > 0) 
+            {
+                smsg.Remove(smsg.Length - 1, 1);
+            }
             Debug.WriteLine(messName+"["+messType + "]:" + smsg.ToString());
         }
     }
