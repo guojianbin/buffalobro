@@ -194,7 +194,7 @@ namespace Buffalo.DB.DataBaseAdapter
                     {
                         cacheType = att.InnerText;
                     }
-                    else if (att.Name.Equals("cacheConn", StringComparison.CurrentCultureIgnoreCase))
+                    else if (att.Name.Equals("cacheConnString", StringComparison.CurrentCultureIgnoreCase))
                     {
                         cacheConn = att.InnerText;
                     }

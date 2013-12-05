@@ -86,9 +86,18 @@ namespace Buffalo.DBTools
             InitTiers();
             InitDBType();
             FillEdit();
+            InitCacheType();
+        }
+        /// <summary>
+        /// 初始化缓存类型
+        /// </summary>
+        private void InitCacheType()
+        {
+            cmbCacheType.DisplayMember = "Text";
+            cmbCacheType.ValueMember = "Value";
+            cmbCacheType.DataSource = Generate3Tier.CacheTypes;
             
         }
-
         /// <summary>
         /// 填充编辑项
         /// </summary>
@@ -291,6 +300,30 @@ namespace Buffalo.DBTools
             if (!string.IsNullOrEmpty(conn)) 
             {
                 rtbConnstr.Text = conn;
+            }
+        }
+
+        private void cmbCacheType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBoxItem item = cmbCacheType.SelectedItem as ComboBoxItem;
+            if (item != null)
+            {
+                string connStr = item.Tag as string;
+                gpCacheServer.Enabled = !string.IsNullOrEmpty(connStr);
+            }
+        }
+
+        private void btnCacheModel_Click(object sender, EventArgs e)
+        {
+            ComboBoxItem item = cmbCacheType.SelectedItem as ComboBoxItem;
+            if (item == null)
+            {
+                return;
+            }
+            string conn = item.Tag as string;
+            if (!string.IsNullOrEmpty(conn))
+            {
+                txtCacheServer.Text = conn;
             }
         }
     }

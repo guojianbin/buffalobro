@@ -134,20 +134,20 @@ namespace Buffalo.DBTools.HelperKernel
         //    return dic;
         //}
 
-        /// <summary>
-        /// 获取参考字符串
-        /// </summary>
-        /// <param name="dbType">数据库类型</param>
-        /// <returns></returns>
-        public static string GetConnString(string dbType) 
-        {
-            string conn = null;
-            if(_dicConnString.TryGetValue(dbType,out conn))
-            {
-                return conn;
-            }
-            return null;
-        }
+        ///// <summary>
+        ///// 获取参考字符串
+        ///// </summary>
+        ///// <param name="dbType">数据库类型</param>
+        ///// <returns></returns>
+        //public static string GetConnString(string dbType) 
+        //{
+        //    string conn = null;
+        //    if(_dicConnString.TryGetValue(dbType,out conn))
+        //    {
+        //        return conn;
+        //    }
+        //    return null;
+        //}
 
         /// <summary>
         /// 初始化数据库类型
@@ -156,7 +156,11 @@ namespace Buffalo.DBTools.HelperKernel
         private static ComboBoxItemCollection InitCacheItems()
         {
             ComboBoxItemCollection types = new ComboBoxItemCollection();
-            ComboBoxItem item = new ComboBoxItem("内存", "system");
+            ComboBoxItem item = null;
+            item = new ComboBoxItem("无", "");
+            item.Tag = "";
+            types.Add(item);
+            item = new ComboBoxItem("内存", "system");
             item.Tag = "";
             types.Add(item);
             item = new ComboBoxItem("Memcached", "memcached");

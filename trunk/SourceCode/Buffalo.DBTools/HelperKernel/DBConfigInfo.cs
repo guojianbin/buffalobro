@@ -118,6 +118,36 @@ namespace Buffalo.DBTools.HelperKernel
             set { _entityToDirectory = value; }
         }
 
+        private string _cacheType;
+        /// <summary>
+        /// 缓存类型
+        /// </summary>
+        public string CacheType
+        {
+            get { return _cacheType; }
+            set { _cacheType = value; }
+        }
+
+        private string _cacheConnString;
+        /// <summary>
+        /// 缓存的连接字符串
+        /// </summary>
+        public string CacheConnString
+        {
+            get { return _cacheConnString; }
+            set { _cacheConnString = value; }
+        }
+
+        private bool _isAllTable;
+        /// <summary>
+        /// 是否所有表都可用缓存
+        /// </summary>
+        public bool IsAllTable
+        {
+            get { return _isAllTable; }
+            set { _isAllTable = value; }
+        }
+
         /// <summary>
         /// 创建数据库信息
         /// </summary>
@@ -205,7 +235,17 @@ namespace Buffalo.DBTools.HelperKernel
             att.InnerText = this.DbName;
             configNode.Attributes.Append(att);
 
-            
+            att = doc.CreateAttribute("cache");
+            att.InnerText = this.CacheType;
+            configNode.Attributes.Append(att);
+
+            att = doc.CreateAttribute("cacheConnString");
+            att.InnerText = this.CacheConnString;
+            configNode.Attributes.Append(att);
+
+            att = doc.CreateAttribute("allCache");
+            att.InnerText = this.IsAllTable ? "1" : "0";
+            configNode.Attributes.Append(att);
 
             EntityMappingConfig.SaveXML(path, doc);
             SaveConfigInfo(path);
@@ -314,7 +354,23 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     info.DbName = att.InnerText;
                 }
-                
+
+                att = config.Attributes["cache"];
+                if (att != null)
+                {
+                    info.CacheType = att.InnerText;
+                }
+
+                att = config.Attributes["cacheConnString"];
+                if (att != null)
+                {
+                    info.CacheConnString = att.InnerText;
+                }
+                att = config.Attributes["allCache"];
+                if (att != null)
+                {
+                    info.IsAllTable = att.InnerText=="1";
+                }
                 return info;
             }
             return null;
