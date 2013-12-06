@@ -79,14 +79,16 @@ namespace Buffalo.DBTools
             cmbTier.ValueMember = "Value";
             cmbTier.DataSource = Generate3Tier.Tiers;
         }
-
+        Size _maxSize = Size.Empty;
         private void FrmDBSetting_Load(object sender, EventArgs e)
         {
-            
+            _maxSize = this.Size;
             InitTiers();
             InitDBType();
-            FillEdit();
             InitCacheType();
+            FillEdit();
+
+            ShowOrHideCache(!string.IsNullOrEmpty(_info.CacheType));
         }
         /// <summary>
         /// ≥ı ºªØª∫¥Ê¿‡–Õ
@@ -98,6 +100,7 @@ namespace Buffalo.DBTools
             cmbCacheType.DataSource = Generate3Tier.CacheTypes;
             
         }
+        
         /// <summary>
         /// ÃÓ≥‰±‡º≠œÓ
         /// </summary>
@@ -116,6 +119,14 @@ namespace Buffalo.DBTools
                 rtbConnstr.Text = _info.ConnectionString;
                 chkAllDal.Checked = _info.IsAllDal;
                 chkEntityToDirectory.Checked = _info.EntityToDirectory;
+
+                //ª∫¥Ê
+                if (!string.IsNullOrEmpty(_info.CacheType)) 
+                {
+                    cmbCacheType.SelectedValue = _info.CacheType;
+                }
+                ckbAll.Checked = _info.IsAllTable;
+                txtCacheServer.Text = Info.CacheConnString;
             }
         }
         /// <summary>
@@ -260,6 +271,9 @@ namespace Buffalo.DBTools
             _info.IsAllDal = chkAllDal.Checked;
             _info.EntityToDirectory = chkEntityToDirectory.Checked;
             _info.Tier = Convert.ToInt32(tier);
+            _info.CacheType = cmbCacheType.SelectedValue as string;
+            _info.CacheConnString = txtCacheServer.Text;
+            _info.IsAllTable = ckbAll.Checked;
             return true;
         }
 
@@ -325,6 +339,38 @@ namespace Buffalo.DBTools
             {
                 txtCacheServer.Text = conn;
             }
+        }
+
+        /// <summary>
+        /// œ‘ æªÚ“˛≤ÿª∫¥Ê
+        /// </summary>
+        private void ShowOrHideCache(bool isShow) 
+        {
+            gpCache.Visible = isShow;
+            string mark = null;
+            if (isShow)
+            {
+                mark = "°¸";
+            }
+            else 
+            {
+                mark = "°˝";
+            }
+            btnCache.Text = "ª∫¥Ê…Ë÷√" + mark;
+            if (isShow)
+            {
+                this.Height = _maxSize.Height;
+            }
+            else 
+            {
+                this.Height = _maxSize.Height - gpCache.Height;
+            }
+
+        }
+
+        private void btnCache_Click(object sender, EventArgs e)
+        {
+            ShowOrHideCache(!gpCache.Visible);
         }
     }
 }

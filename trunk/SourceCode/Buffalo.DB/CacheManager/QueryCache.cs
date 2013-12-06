@@ -27,6 +27,17 @@ namespace Buffalo.DB.CacheManager
 
         private DBInfo _db;
 
+        private Dictionary<string, bool> _dicAllowCache = new Dictionary<string, bool>();
+
+        private bool _isAllTableCache;
+        /// <summary>
+        /// 是否所有表都使用缓存
+        /// </summary>
+        public bool IsAllTableCache
+        {
+            get { return _isAllTableCache; }
+            set { _isAllTableCache = value; }
+        }
         /// <summary>
         /// 数据库信息
         /// </summary>
@@ -136,7 +147,7 @@ namespace Buffalo.DB.CacheManager
         /// </summary>
         /// <param name="tables"></param>
         /// <returns></returns>
-        public Dictionary<string, bool> CreateMap(params string[] tables) 
+        internal Dictionary<string, bool> CreateMap(params string[] tables) 
         {
             if (_cache == null)
             {
@@ -206,6 +217,45 @@ namespace Buffalo.DB.CacheManager
                 _cache.RemoveByTableName(kvp.Key);
             }
             return true;
+        }
+
+        /// <summary>
+        /// 检查表是否合法
+        /// </summary>
+        /// <param name="tables"></param>
+        private void CheckTable(IDictionary<string, bool> tables) 
+        {
+            if (_isAllTableCache) 
+            {
+                return;
+            }
+
+        }
+
+        /// <summary>
+        /// 判断表名是否允许使用缓存
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        private bool IsCacheTable(string table) 
+        {
+            bool hascache = false;
+            if (_dicAllowCache.TryGetValue(table, out hascache)) 
+            {
+                return hascache;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 设置需要缓存的表
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public bool SetCacheTable(string tableName) 
+        {
+            _dicAllowCache[tableName] = true;
         }
     }
 }

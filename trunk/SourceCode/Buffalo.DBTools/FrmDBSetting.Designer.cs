@@ -134,9 +134,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(347, 9);
+            this.pictureBox1.Location = new System.Drawing.Point(345, 9);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 171);
+            this.pictureBox1.Size = new System.Drawing.Size(132, 171);
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             // 
@@ -196,9 +196,9 @@
             this.gpCache.Controls.Add(this.gpCacheServer);
             this.gpCache.Controls.Add(this.cmbCacheType);
             this.gpCache.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gpCache.Location = new System.Drawing.Point(0, 212);
+            this.gpCache.Location = new System.Drawing.Point(0, 213);
             this.gpCache.Name = "gpCache";
-            this.gpCache.Size = new System.Drawing.Size(449, 115);
+            this.gpCache.Size = new System.Drawing.Size(475, 115);
             this.gpCache.TabIndex = 14;
             this.gpCache.TabStop = false;
             this.gpCache.Text = "缓存设置";
@@ -206,7 +206,7 @@
             // ckbAll
             // 
             this.ckbAll.AutoSize = true;
-            this.ckbAll.Location = new System.Drawing.Point(182, 16);
+            this.ckbAll.Location = new System.Drawing.Point(361, 17);
             this.ckbAll.Name = "ckbAll";
             this.ckbAll.Size = new System.Drawing.Size(108, 16);
             this.ckbAll.TabIndex = 2;
@@ -220,7 +220,7 @@
             this.gpCacheServer.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.gpCacheServer.Location = new System.Drawing.Point(3, 37);
             this.gpCacheServer.Name = "gpCacheServer";
-            this.gpCacheServer.Size = new System.Drawing.Size(443, 75);
+            this.gpCacheServer.Size = new System.Drawing.Size(469, 75);
             this.gpCacheServer.TabIndex = 1;
             this.gpCacheServer.TabStop = false;
             this.gpCacheServer.Text = "缓存服务器连接字符串";
@@ -228,7 +228,7 @@
             // txtCacheServer
             // 
             this.txtCacheServer.Dock = System.Windows.Forms.DockStyle.Right;
-            this.txtCacheServer.Location = new System.Drawing.Point(73, 17);
+            this.txtCacheServer.Location = new System.Drawing.Point(99, 17);
             this.txtCacheServer.Name = "txtCacheServer";
             this.txtCacheServer.Size = new System.Drawing.Size(367, 55);
             this.txtCacheServer.TabIndex = 6;
@@ -256,19 +256,20 @@
             // 
             // btnCache
             // 
-            this.btnCache.Location = new System.Drawing.Point(362, 187);
+            this.btnCache.Location = new System.Drawing.Point(361, 187);
             this.btnCache.Name = "btnCache";
-            this.btnCache.Size = new System.Drawing.Size(75, 23);
+            this.btnCache.Size = new System.Drawing.Size(108, 23);
             this.btnCache.TabIndex = 15;
             this.btnCache.Text = "缓存设置↓";
             this.btnCache.UseVisualStyleBackColor = true;
+            this.btnCache.Click += new System.EventHandler(this.btnCache_Click);
             // 
             // FrmDBSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(449, 327);
+            this.ClientSize = new System.Drawing.Size(475, 328);
             this.Controls.Add(this.btnCache);
             this.Controls.Add(this.gpCache);
             this.Controls.Add(this.chkEntityToDirectory);
