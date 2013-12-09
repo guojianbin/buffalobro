@@ -40,9 +40,9 @@ namespace Buffalo.DB.DataBaseAdapter
         /// …Ë÷√≤È—Øª∫¥Ê
         /// </summary>
         /// <param name="ica"></param>
-        internal void SetQueryCache(ICacheAdaper ica) 
+        internal void SetQueryCache(ICacheAdaper ica, bool isAlltable) 
         {
-            _cache = new QueryCache(this,ica);
+            _cache = new QueryCache(this,ica,isAlltable);
         }
         
         private static Dictionary<string, IAdapterLoader> _dicAdapterLoaderName = InitAdapterLoaderName();

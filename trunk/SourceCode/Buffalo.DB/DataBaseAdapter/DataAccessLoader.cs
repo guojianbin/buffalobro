@@ -150,7 +150,7 @@ namespace Buffalo.DB.DataBaseAdapter
             {
                 throw new Exception("找不到配置文件");
             }
-
+            bool isAlltable = false ;
             XmlNodeList lstConfig = doc.GetElementsByTagName("config");
             if (lstConfig.Count > 0)
             {
@@ -198,6 +198,10 @@ namespace Buffalo.DB.DataBaseAdapter
                     {
                         cacheConn = att.InnerText;
                     }
+                    else if (att.Name.Equals("allCache", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        isAlltable = att.InnerText=="1";
+                    }
                 }
             }
             else
@@ -206,8 +210,11 @@ namespace Buffalo.DB.DataBaseAdapter
             }
             
             DBInfo info = new DBInfo(name, connectionString, dbType);
+            
             ica = QueryCache.GetCache(info,cacheType, cacheConn);
-            info.SetQueryCache(ica);
+
+            info.SetQueryCache(ica,isAlltable);
+            
             info.DataaccessNamespace=attNames;
             return info;
         }
@@ -257,6 +264,7 @@ namespace Buffalo.DB.DataBaseAdapter
 
                                     }
                                 }
+                                
                             }
                         }
                         catch

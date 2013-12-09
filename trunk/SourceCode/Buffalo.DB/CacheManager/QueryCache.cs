@@ -36,7 +36,6 @@ namespace Buffalo.DB.CacheManager
         public bool IsAllTableCache
         {
             get { return _isAllTableCache; }
-            set { _isAllTableCache = value; }
         }
         /// <summary>
         /// 数据库信息
@@ -53,10 +52,11 @@ namespace Buffalo.DB.CacheManager
         /// </summary>
         /// <param name="db">数据库</param>
         /// <param name="cache">缓存</param>
-        public QueryCache(DBInfo db,ICacheAdaper cache) 
+        public QueryCache(DBInfo db,ICacheAdaper cache,bool isAllTableCache) 
         {
             _db = db;
             _cache = cache;
+            _isAllTableCache = isAllTableCache;
         }
 
         /// <summary>
@@ -95,6 +95,7 @@ namespace Buffalo.DB.CacheManager
             {
                 return new RedisAdaper(connectionString, info);
             }
+
             throw new NotSupportedException("不支持:" + type + " 的缓存类型，当前只支持system、memcached类型");
             return null;
         }
@@ -113,6 +114,7 @@ namespace Buffalo.DB.CacheManager
             {
                 return null;
             }
+            CheckTable(tables);
             StringBuilder sbSql = new StringBuilder();
             sbSql.Append(sql);
             sbSql.Append(";");
@@ -174,6 +176,7 @@ namespace Buffalo.DB.CacheManager
             {
                 return null;
             }
+            CheckTable(tables);
             DataSet ds = GetDataSet(tables,sql,lstParam);
             if (ds == null) 
             {
@@ -196,6 +199,7 @@ namespace Buffalo.DB.CacheManager
             {
                 return null;
             }
+            
             DataSet ds = CacheReader.GenerateDataSet(reader, false);
             MemCacheReader mreader = new MemCacheReader(ds);
             SetDataSet(ds, tables, sql, lstParam);
@@ -210,17 +214,21 @@ namespace Buffalo.DB.CacheManager
         {
             if (_cache == null)
             {
-                return false; ;
+                return false; 
             }
+
             foreach (KeyValuePair<string, bool> kvp in tables)
             {
-                _cache.RemoveByTableName(kvp.Key);
+                if (IsCacheTable(kvp.Key) || _isAllTableCache)
+                {
+                    _cache.RemoveByTableName(kvp.Key);
+                }
             }
             return true;
         }
 
         /// <summary>
-        /// 检查表是否合法
+        /// 检查表是否可用缓存
         /// </summary>
         /// <param name="tables"></param>
         private void CheckTable(IDictionary<string, bool> tables) 
@@ -229,7 +237,20 @@ namespace Buffalo.DB.CacheManager
             {
                 return;
             }
-
+            StringBuilder sbBuffer=new StringBuilder();
+            foreach (KeyValuePair<string, bool> kvp in tables) 
+            {
+                if (!IsCacheTable(kvp.Key)) 
+                {
+                    sbBuffer.Append(kvp.Key);
+                    sbBuffer.Append(",");
+                }
+            }
+            if (sbBuffer.Length > 0) 
+            {
+                sbBuffer.Remove(sbBuffer.Length - 1, 1);
+                throw new Exception("表:" + sbBuffer.ToString() + "没设置为使用缓存，请在配置文件中指定");
+            }
         }
 
         /// <summary>
@@ -240,11 +261,12 @@ namespace Buffalo.DB.CacheManager
         private bool IsCacheTable(string table) 
         {
             bool hascache = false;
+
             if (_dicAllowCache.TryGetValue(table, out hascache)) 
             {
                 return hascache;
             }
-
+            
             return false;
         }
 
@@ -256,6 +278,7 @@ namespace Buffalo.DB.CacheManager
         public bool SetCacheTable(string tableName) 
         {
             _dicAllowCache[tableName] = true;
+            return true;
         }
     }
 }

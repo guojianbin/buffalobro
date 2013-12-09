@@ -47,7 +47,7 @@ namespace Buffalo.DBTools.HelperKernel
                 if (att != null)
                 {
                     
-                    entity.UseCache = att.InnerText.Equals("true",StringComparison.CurrentCultureIgnoreCase);
+                    entity.UseCache =(att.InnerText=="1");
                 }
             }
 
@@ -287,7 +287,7 @@ namespace Buffalo.DBTools.HelperKernel
             classNode.Attributes.Append(att);
 
             att = doc.CreateAttribute("UseCache");
-            att.InnerText = "false";
+            att.InnerText = "0";
             classNode.Attributes.Append(att);
 
             AppendPropertyInfo(entity.BelongTable.Params, classNode);
@@ -422,7 +422,7 @@ namespace Buffalo.DBTools.HelperKernel
             classNode.Attributes.Append(att);
 
             att = doc.CreateAttribute("UseCache");
-            att.InnerText = entity.UseCache?"true":"false";
+            att.InnerText = entity.UseCache?"1":"0";
             classNode.Attributes.Append(att);
 
             AppendPropertyInfo(entity, classNode);

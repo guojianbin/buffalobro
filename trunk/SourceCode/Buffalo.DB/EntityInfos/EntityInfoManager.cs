@@ -196,6 +196,19 @@ namespace Buffalo.DB.EntityInfos
                 {
                     tableAtt.BelongDB = att.InnerText;
                 }
+                att = node.Attributes["UseCache"];
+                if (att != null)
+                {
+                    DBInfo db = DataAccessLoader.GetDBInfo(tableAtt.BelongDB);
+                    if (db != null)
+                    {
+                        if (att.InnerText == "1")
+                        {
+                            db.QueryCache.SetCacheTable(tableAtt.TableName);
+                        }
+                    }
+                }
+                
             }
         }
 
