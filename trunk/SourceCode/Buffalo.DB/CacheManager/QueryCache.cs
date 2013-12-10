@@ -91,12 +91,12 @@ namespace Buffalo.DB.CacheManager
             {
                 return new MemCachedAdaper(connectionString, info);
             }
-            else if (dtype.Equals("redis", StringComparison.CurrentCultureIgnoreCase))//memcached
+            else if (dtype.Equals("redis", StringComparison.CurrentCultureIgnoreCase))//redis
             {
                 return new RedisAdaper(connectionString, info);
             }
 
-            throw new NotSupportedException("不支持:" + type + " 的缓存类型，当前只支持system、memcached类型");
+            throw new NotSupportedException("不支持:" + type + " 的缓存类型，当前只支持system、memcached、redis类型的缓存");
             return null;
         }
 
