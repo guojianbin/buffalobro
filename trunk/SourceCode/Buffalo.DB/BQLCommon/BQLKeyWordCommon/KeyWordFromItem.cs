@@ -187,7 +187,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
                 if (CommonMethods.IsNull(info.FromTable)) 
                 {
                     BQLEntityTableHandle etab = tab as BQLEntityTableHandle;
-                    if (CommonMethods.IsNull(etab))
+                    if (!CommonMethods.IsNull(etab))
                     {
                         info.FromTable = etab;
                     }
