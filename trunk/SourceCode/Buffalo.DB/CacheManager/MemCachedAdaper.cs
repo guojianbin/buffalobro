@@ -167,9 +167,6 @@ namespace Buffalo.DB.CacheManager
             {
                 return null;
             }
-
-
-
             DataSet dsRet = client.GetDataSet(key);
             OutPutMessage(QueryCache.CommandGetDataSet, sourceKey);
             return dsRet;
