@@ -60,14 +60,11 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         }
 
         /// <summary>
-        /// 默认连接
+        /// 获取默认连接
         /// </summary>
-        public static DataBaseOperate DefaultOperate 
+        public static DataBaseOperate GetDefaultOperate()
         {
-            get 
-            {
-                return _db.DefaultOperate;
-            }
+            return _db.DefaultOperate;
         }
 
         /// <summary>
@@ -77,7 +74,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         public static DBTransation StartTransation()
         {
 
-            return DefaultOperate.StartTransation() ;
+            return GetDefaultOperate().StartTransation() ;
         }
         /// <summary>
         /// 开始非事务的批量动作
@@ -86,7 +83,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         public static BatchAction StartBatchAction()
         {
 
-            return DefaultOperate.StarBatchAction();
+            return GetDefaultOperate().StarBatchAction();
         }
 
         /// <summary>
