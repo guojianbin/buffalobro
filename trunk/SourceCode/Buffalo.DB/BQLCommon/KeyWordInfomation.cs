@@ -173,7 +173,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 
         private bool _outPutModle = false;
         /// <summary>
-        /// 输出信息模式
+        /// 是否输出SQL语句模式
         /// </summary>
         public bool OutPutModle
         {

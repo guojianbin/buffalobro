@@ -57,7 +57,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <param name="setList">Set值列表</param>
         /// <param name="optimisticConcurrency">是否进行并发控制</param>
         /// <returns></returns>
-        public int Update(EntityBase obj, ScopeList scopeList,ValueSetList setList, bool optimisticConcurrency)
+        public int Update(EntityBase obj, ScopeList scopeList, ValueSetList setList, bool optimisticConcurrency)
         {
             StringBuilder sql = new StringBuilder(500);
             ParamList list = new ParamList();
@@ -69,10 +69,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
 
             KeyWordInfomation keyinfo = BQLValueItem.GetKeyInfo().Clone() as KeyWordInfomation;
             keyinfo.ParamList = list;
-
+            keyinfo.OutPutModle = false;
             if (obj != null)
             {
-                if(!(obj is IEntityProxy))
+                if (!(obj is IEntityProxy))
                 {
                     throw new System.InvalidCastException("Update的实体类型必须为代理类，请用CH.Create<T>创建实体或者使用查询出来的实体来更新");
                 }
@@ -190,10 +190,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             int ret = -1;
             Dictionary<string, bool> cacheTables = null;
 
-                cacheTables = _oper.DBInfo.QueryCache.CreateMap(EntityInfo.TableName);
-            
-                ret = ExecuteCommand(con.GetSql(true), list, CommandType.Text,  cacheTables);
-            if (obj._dicUpdateProperty___ != null)
+            cacheTables = _oper.DBInfo.QueryCache.CreateMap(EntityInfo.TableName);
+
+            ret = ExecuteCommand(con.GetSql(true), list, CommandType.Text, cacheTables);
+            if (obj != null && obj._dicUpdateProperty___ != null)
             {
                 obj._dicUpdateProperty___.Clear();
             }
