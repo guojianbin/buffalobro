@@ -55,9 +55,9 @@ namespace Buffalo.Kernel.FastReflection.ClassInfos
             {
                 ///通过属性来反射
                 string proName = pinf.Name;
-                
-                FastInvokeHandler getHandle = FastValueGetSet.GetGetMethodInfo(proName, type);
-                FastInvokeHandler setHandle = FastValueGetSet.GetSetMethodInfo(proName, type);
+
+                FastPropertyHandler getHandle = FastValueGetSet.GetGetMethodInfo(proName, type);
+                FastPropertyHandler setHandle = FastValueGetSet.GetSetMethodInfo(proName, type);
                 if (getHandle != null || setHandle != null)
                 {
                     PropertyInfoHandle classProperty = new PropertyInfoHandle(type,getHandle, setHandle, pinf.PropertyType, pinf.Name);

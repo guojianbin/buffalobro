@@ -9,8 +9,8 @@ namespace Buffalo.Kernel.FastReflection
     /// </summary>
     public class PropertyInfoHandle
     {
-        private FastInvokeHandler _getHandle;
-        private FastInvokeHandler _setHandle;
+        private FastPropertyHandler _getHandle;
+        private FastPropertyHandler _setHandle;
         private Type _propertyType;
         private string _propertyName;
         private Type _belong;
@@ -20,7 +20,7 @@ namespace Buffalo.Kernel.FastReflection
         /// <param name="getHandle">get委托</param>
         /// <param name="setHandle">set委托</param>
         /// <param name="propertyType">属性数据类型</param>
-        public PropertyInfoHandle(Type belong,FastInvokeHandler getHandle, FastInvokeHandler setHandle, Type propertyType, string propertyName)
+        public PropertyInfoHandle(Type belong, FastPropertyHandler getHandle, FastPropertyHandler setHandle, Type propertyType, string propertyName)
         {
             this._getHandle = getHandle;
             this._setHandle = setHandle;

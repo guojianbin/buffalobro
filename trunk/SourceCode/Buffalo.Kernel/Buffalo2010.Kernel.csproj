@@ -77,6 +77,7 @@
     <Compile Include="FastReflection\ClassInfos\ProxyObject.cs" />
     <Compile Include="FastReflection\FastFieldGetSet.cs" />
     <Compile Include="FastReflection\FastInvoke.cs" />
+    <Compile Include="FastReflection\FastPropertyInvoke.cs" />
     <Compile Include="FastReflection\FastValueGetSet.cs" />
     <Compile Include="FastReflection\FieldInfoHandle.cs" />
     <Compile Include="FastReflection\PropertyInfoHandle.cs" />

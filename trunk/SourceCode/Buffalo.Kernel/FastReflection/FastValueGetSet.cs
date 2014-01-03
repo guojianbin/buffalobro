@@ -45,8 +45,8 @@ namespace Buffalo.Kernel.FastReflection
         /// <returns></returns>
         public static PropertyInfoHandle GetPropertyInfoHandleWithOutCache(string proName, Type type)
         {
-            FastInvokeHandler getHandle = GetGetMethodInfo(proName, type);
-            FastInvokeHandler setHandle = GetSetMethodInfo(proName, type);
+            FastPropertyHandler getHandle = GetGetMethodInfo(proName, type);
+            FastPropertyHandler setHandle = GetSetMethodInfo(proName, type);
             PropertyInfo pinf = type.GetProperty(proName, AllBindingFlags);//获取子元素集合的属性
             Type proType = null;
             if (pinf != null)
@@ -63,7 +63,7 @@ namespace Buffalo.Kernel.FastReflection
         /// <param name="proName">属性名</param>
         /// <param name="type">类型</param>
         /// <returns></returns>
-        public static FastInvokeHandler GetGetMethodInfo(string proName,Type type)
+        public static FastPropertyHandler GetGetMethodInfo(string proName, Type type)
         {
             MethodInfo methodInfo = type.GetMethod("get_" + proName,AllBindingFlags);
             if (methodInfo == null)
@@ -73,7 +73,7 @@ namespace Buffalo.Kernel.FastReflection
             {
                 return null;
             }
-            FastInvokeHandler fastInvoker = FastInvoke.GetMethodInvoker(methodInfo);
+            FastPropertyHandler fastInvoker = FastPropertyInvoke.GetMethodInvoker(methodInfo);
             return fastInvoker;
         }
 
@@ -84,7 +84,7 @@ namespace Buffalo.Kernel.FastReflection
         /// <param name="proName">属性名</param>
         /// <param name="type">类型</param>
         /// <returns></returns>
-        public static FastInvokeHandler GetSetMethodInfo(string proName, Type type)
+        public static FastPropertyHandler GetSetMethodInfo(string proName, Type type)
         {
             MethodInfo methodInfo = type.GetMethod("set_" + proName, AllBindingFlags);
             if (methodInfo == null) 
@@ -95,7 +95,7 @@ namespace Buffalo.Kernel.FastReflection
             {
                 return null;
             }
-            FastInvokeHandler fastInvoker = FastInvoke.GetMethodInvoker(methodInfo);
+            FastPropertyHandler fastInvoker = FastPropertyInvoke.GetMethodInvoker(methodInfo);
 
             return fastInvoker;
         }

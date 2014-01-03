@@ -770,7 +770,7 @@ namespace Buffalo.Kernel
         {
             Dictionary<TKey, TValue> dic = new Dictionary<TKey, TValue>();
 
-            FastInvokeHandler handle=FastValueGetSet.GetGetMethodInfo(keyProperty,typeof(TValue));
+            FastPropertyHandler handle = FastValueGetSet.GetGetMethodInfo(keyProperty, typeof(TValue));
             object[] emptyParams=new object[] { };
             foreach (TValue objValue in collection) 
             {
