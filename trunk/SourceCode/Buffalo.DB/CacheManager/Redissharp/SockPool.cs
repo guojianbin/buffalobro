@@ -417,17 +417,17 @@ namespace Redissharp
         public void Initialize() 
 		{
 			// check to see if already initialized
-			if(_initialized
-				&& _buckets != null
-				&& _availPool != null
-				&& _busyPool != null) 
-			{
+            if (_initialized
+                && _buckets != null
+                && _availPool != null
+                && _busyPool != null)
+            {
 
-					throw new Exception("initializing initialized pool");
-				
-				return;
-			}
+                throw new Exception("initializing initialized pool");
 
+                return;
+            }
+            
 			// initialize empty maps
 			_buckets     = new ArrayList();
 			_availPool   = new Hashtable(_servers.Count * _initConns);

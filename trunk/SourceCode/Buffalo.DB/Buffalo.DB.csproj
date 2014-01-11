@@ -348,6 +348,9 @@
     <None Include="Resources\tableParam2000.sql" />
     <None Include="Resources\tableParam2005.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CacheManager\CacheConnectionPool\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
