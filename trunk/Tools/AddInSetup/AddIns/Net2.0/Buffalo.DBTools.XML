@@ -2034,17 +2034,15 @@
             数据层的类型
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.HelperKernel.Generate3Tier.InitConnStrings">
+        <member name="F:Buffalo.DBTools.HelperKernel.Generate3Tier.CacheTypes">
             <summary>
-            初始化参考字符串
+            数据层的类型
             </summary>
-            <returns></returns>
         </member>
-        <member name="M:Buffalo.DBTools.HelperKernel.Generate3Tier.GetConnString(System.String)">
+        <member name="M:Buffalo.DBTools.HelperKernel.Generate3Tier.InitCacheItems">
             <summary>
-            获取参考字符串
+            初始化数据库类型
             </summary>
-            <param name="dbType">数据库类型</param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.DBTools.HelperKernel.Generate3Tier.InitItems">
@@ -3108,24 +3106,9 @@
             VS2008的位置配置信息
             </summary>
         </member>
-        <member name="P:Buffalo.DBTools.DocSummary.VSConfig.IVSConfig.MemberLineHeight">
-            <summary>
-            填充色的X
-            </summary>
-        </member>
         <member name="P:Buffalo.DBTools.DocSummary.VSConfig.IVSConfig.MemberMarginX">
             <summary>
-            行高
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.DocSummary.VSConfig.IVSConfig.MemberStartMargin">
-            <summary>
-            离顶端的距离
-            </summary>
-        </member>
-        <member name="P:Buffalo.DBTools.DocSummary.VSConfig.IVSConfig.MemberSummaryHeight">
-            <summary>
-            离顶端的距离
+            填充色的X
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.DocSummary.VSConfig.IVSConfig.MemberSummaryY">
@@ -3606,6 +3589,21 @@
             实体是否放到Entity文件夹中
             </summary>
         </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.DBConfigInfo.CacheType">
+            <summary>
+            缓存类型
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.DBConfigInfo.CacheConnString">
+            <summary>
+            缓存的连接字符串
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.DBConfigInfo.IsAllTable">
+            <summary>
+            是否所有表都可用缓存
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.UIHelper.UIProject">
             <summary>
             项目项
@@ -3951,6 +3949,19 @@
             生成代码
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.VirtualProperty(System.String)">
+            <summary>
+            Virtual属性
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.NeedVirtual">
+            <summary>
+            获取需要Virtual的属性
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.AddContext(System.Collections.Generic.List{System.String})">
             <summary>
             添加到代码
@@ -4004,6 +4015,15 @@
             <param name="fillBase">是否级联父类</param>
         </member>
         <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.ExistsMember``1(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType,System.String)">
+            <summary>
+            判断是否存在成员
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="type"></param>
+            <param name="menberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.HelperKernel.EntityConfig.ExistsMember``1(Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr.ClrType,System.String,System.Boolean)">
             <summary>
             判断是否存在成员
             </summary>
@@ -4084,6 +4104,11 @@
         <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.ERelation">
             <summary>
             映射属性
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.UseCache">
+            <summary>
+            使用缓存
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.HelperKernel.EntityConfig.FileEncoding">
@@ -4389,6 +4414,11 @@
             初始化数据库类型
             </summary>
         </member>
+        <member name="M:Buffalo.DBTools.FrmDBSetting.InitCacheType">
+            <summary>
+            初始化缓存类型
+            </summary>
+        </member>
         <member name="M:Buffalo.DBTools.FrmDBSetting.FillEdit">
             <summary>
             填充编辑项
@@ -4412,6 +4442,11 @@
             填充信息
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Buffalo.DBTools.FrmDBSetting.ShowOrHideCache(System.Boolean)">
+            <summary>
+            显示或隐藏缓存
+            </summary>
         </member>
         <member name="F:Buffalo.DBTools.FrmDBSetting.components">
             <summary>

@@ -55,6 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrayTypeConvert.cs" />
+    <Compile Include="ClassProxyBuilder\DefaultProxyBuilder.cs" />
+    <Compile Include="ClassProxyBuilder\IInterceptor.cs" />
     <Compile Include="CommonMethods.cs" />
     <Compile Include="CommonRegular.cs" />
     <Compile Include="CSVReader.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="FastReflection\ClassInfos\ProxyObject.cs" />
     <Compile Include="FastReflection\FastFieldGetSet.cs" />
     <Compile Include="FastReflection\FastInvoke.cs" />
+    <Compile Include="FastReflection\FastPropertyInvoke.cs" />
     <Compile Include="FastReflection\FastValueGetSet.cs" />
     <Compile Include="FastReflection\FieldInfoHandle.cs" />
     <Compile Include="FastReflection\PropertyInfoHandle.cs" />

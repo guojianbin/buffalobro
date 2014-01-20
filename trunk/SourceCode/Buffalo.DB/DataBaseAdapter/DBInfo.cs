@@ -22,11 +22,9 @@ namespace Buffalo.DB.DataBaseAdapter
         private IConvertFunction _curConvertFunctions = null;
         private ICommonFunction _curCommonFunctions = null;
         private IDBStructure _curDBStructure = null;
-#if DEBUG
         MessageOutput _sqlOutputer = new MessageOutput();
-#else
-        MessageOutput _sqlOutputer =null;
-#endif
+
+
         private string _connectionString = null;
         private string _dbType = null;
         private QueryCache _cache;

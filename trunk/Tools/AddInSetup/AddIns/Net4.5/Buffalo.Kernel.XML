@@ -45,6 +45,74 @@
             <param name="pbarr">原类型指针</param>
             <param name="newLength">新数组长度</param>
         </member>
+        <member name="T:Buffalo.Kernel.ClassProxyBuilder.DefaultProxyBuilder">
+            <summary>
+            代理建造类
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.ClassProxyBuilder.DefaultProxyBuilder.#ctor(System.String,System.Type)">
+            <summary>
+            代理建造类
+            </summary>
+            <param name="classNamespace">类的命名空间</param>
+            <param name="interceptorType">拦截器</param>
+        </member>
+        <member name="M:Buffalo.Kernel.ClassProxyBuilder.DefaultProxyBuilder.CreateProxyType(System.Type,System.String)">
+            <summary>
+            建造代理类
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.ClassProxyBuilder.DefaultProxyBuilder.BulidType(System.Type,System.Reflection.Emit.ModuleBuilder,System.String)">
+            <summary>
+            建造类
+            </summary>
+            <param name="classType"></param>
+            <param name="moduleBuilder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.ClassProxyBuilder.DefaultProxyBuilder.NeedBuildBeforeMethod(System.Type,System.Reflection.MethodInfo)">
+            <summary>
+            判断需要重建函数
+            </summary>
+            <param name="methodInfo"></param>
+        </member>
+        <member name="M:Buffalo.Kernel.ClassProxyBuilder.DefaultProxyBuilder.NeedBuildAfterMethod(System.Type,System.Reflection.MethodInfo)">
+            <summary>
+            判断需要重建函数
+            </summary>
+            <param name="methodInfo"></param>
+        </member>
+        <member name="M:Buffalo.Kernel.ClassProxyBuilder.DefaultProxyBuilder.BuildMethod(System.Type,System.Reflection.Emit.FieldBuilder,System.Reflection.Emit.TypeBuilder)">
+            <summary>
+            建方法
+            </summary>
+            <param name="classType"></param>
+            <param name="inspectorFieldBuilder"></param>
+            <param name="typeBuilder"></param>
+        </member>
+        <member name="T:Buffalo.Kernel.ClassProxyBuilder.IInterceptor">
+            <summary>
+            拦截器接口
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.ClassProxyBuilder.IInterceptor.BeforeCall(System.String,System.Object[])">
+            <summary>
+            方法调用前
+            </summary>
+            <param name="operationName">方法名</param>
+            <param name="inputs">参数</param>
+            <returns>状态对象，用于调用后传入</returns>
+        </member>
+        <member name="M:Buffalo.Kernel.ClassProxyBuilder.IInterceptor.AfterCall(System.Object,System.String,System.Object,System.Object)">
+            <summary>
+            方法调用后
+            </summary>
+            <param name="operationName">方法名</param>
+            <param name="returnValue">结果</param>
+            <param name="correlationState">状态对象</param>
+        </member>
         <member name="T:Buffalo.Kernel.CommonMethods">
             <summary>
             常用的方法类
@@ -121,13 +189,7 @@
             <param name="mode">指定如何从 System.Data.DataSet 写入 XML 数据和关系架构</param>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.Kernel.CommonMethods.DataSetToXML(System.Data.DataSet)">
-            <summary>
-            把DataSet打成XML字符串
-            </summary>
-            <param name="ds">要处理的DataSet</param>
-            <returns></returns>
-        </member>
+        <!-- 对于成员“M:Buffalo.Kernel.CommonMethods.DataSetToXML(System.Data.DataSet)”忽略有格式错误的 XML 注释 -->
         <member name="M:Buffalo.Kernel.CommonMethods.XMLToDataSet(System.String,System.Data.XmlReadMode)">
             <summary>
             XML字符串转成DataSet
@@ -142,6 +204,20 @@
             </summary>
             <param name="xml">xml字符串</param>
             <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.CommonMethods.ConvertIntDateTime(System.Double)">
+            <summary>
+            将Unix时间戳转换为DateTime类型时间
+            </summary>
+            <param name="d">double 型数字</param>
+            <returns>DateTime</returns>
+        </member>
+        <member name="M:Buffalo.Kernel.CommonMethods.ConvertDateTimeInt(System.DateTime)">
+            <summary>
+            将c# DateTime时间格式转换为Unix时间戳格式
+            </summary>
+            <param name="time">时间</param>
+            <returns>double</returns>
         </member>
         <member name="M:Buffalo.Kernel.CommonMethods.RawDeserialize(System.Byte[],System.Type)">
             <summary>
@@ -715,6 +791,20 @@
             <param name="value">要判断的属性值</param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.Kernel.EnumUnit.GetContainerValues(System.Int32,System.Type)">
+            <summary>
+            获取包含值的信息
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.EnumUnit.GetContainerValues(System.Enum)">
+            <summary>
+            获取包含值的信息
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.Kernel.EnumUnit.GetEnumInfos(System.Type)">
             <summary>
             获取本枚举里边所有属性的信息
@@ -742,13 +832,6 @@
             </summary>
             <param name="enumType">枚举类型</param>
             <param name="name">属性名称</param>
-            <returns></returns>
-        </member>
-        <member name="M:Buffalo.Kernel.EnumUnit.EnumString(System.Enum)">
-            <summary>
-            获取枚举字符串
-            </summary>
-            <param name="objEnum"></param>
             <returns></returns>
         </member>
         <member name="T:Buffalo.Kernel.ExcelFormat">
@@ -1278,7 +1361,7 @@
             @链接:http://www.cnblogs.com/JeffreyZhao/archive/2009/02/01/Fast-Reflection-Library.html
             @说明:.NET IL快速反射类
         </member>
-        <member name="M:Buffalo.Kernel.FastReflection.FastInvoke.InvokeMethod(Buffalo.Kernel.FastReflection.FastInvokeHandler,System.Object,System.Object[])">
+        <member name="F:Buffalo.Kernel.FastReflection.FastInvoke.VoidType">
             <summary>
             委托获取实体类对象
             </summary>
@@ -1328,6 +1411,13 @@
             获取指定类的标识
             </summary>
             <param name="classType">指定类的类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.FastReflection.FastPropertyInvoke.GetMethodInvoker(System.Reflection.MethodInfo)">
+            <summary>
+            生成调用方法
+            </summary>
+            <param name="methodInfo"></param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.Kernel.FastReflection.FastValueGetSet.GetPropertyInfoHandle(System.String,System.Type)">
@@ -1418,7 +1508,7 @@
             <param name="type">类型</param> 
             <returns></returns> 
         </member>
-        <member name="M:Buffalo.Kernel.FastReflection.FieldInfoHandle.#ctor(System.Type,Buffalo.Kernel.FastReflection.GetFieldValueHandle,Buffalo.Kernel.FastReflection.SetFieldValueHandle,System.Type,System.String)">
+        <member name="M:Buffalo.Kernel.FastReflection.FieldInfoHandle.#ctor(System.Type,Buffalo.Kernel.FastReflection.GetFieldValueHandle,Buffalo.Kernel.FastReflection.SetFieldValueHandle,System.Type,System.String,System.Reflection.FieldInfo)">
             <summary>
             创建属性的信息类
             </summary>
@@ -1427,6 +1517,7 @@
             <param name="setHandle">set委托</param>
             <param name="fieldType">字段数据类型</param>
             <param name="fieldName">字段名</param>
+            <param name="belongFieldInfo">所属的字段反射信息</param>
         </member>
         <member name="M:Buffalo.Kernel.FastReflection.FieldInfoHandle.SetValue(System.Object,System.Object)">
             <summary>
@@ -1457,6 +1548,11 @@
             <param name="objType"></param>
             <param name="flags"></param>
             <param name="fillBase"></param>
+        </member>
+        <member name="P:Buffalo.Kernel.FastReflection.FieldInfoHandle.BelongFieldInfo">
+            <summary>
+            所属的字段反射信息
+            </summary>
         </member>
         <member name="P:Buffalo.Kernel.FastReflection.FieldInfoHandle.Belong">
             <summary>
@@ -1498,7 +1594,7 @@
             创建属性的信息类
             </summary>
         </member>
-        <member name="M:Buffalo.Kernel.FastReflection.PropertyInfoHandle.#ctor(System.Type,Buffalo.Kernel.FastReflection.FastInvokeHandler,Buffalo.Kernel.FastReflection.FastInvokeHandler,System.Type,System.String)">
+        <member name="M:Buffalo.Kernel.FastReflection.PropertyInfoHandle.#ctor(System.Type,Buffalo.Kernel.FastReflection.FastPropertyHandler,Buffalo.Kernel.FastReflection.FastPropertyHandler,System.Type,System.String)">
             <summary>
             创建属性的信息类
             </summary>
