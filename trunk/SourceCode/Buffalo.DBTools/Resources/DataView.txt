@@ -17,7 +17,7 @@ namespace <#=Entity.GetValue("Namespace")#>
 {
 	public class <#=Entity.ClassName #>DataView:DataViewer
 	{
-		<# foreach(GenerateItem pro in SelectedPropertys ) {#>
+		<# foreach(Property pro in SelectedPropertys ) {#>
 		private DataItem _<#=GetFieldName(pro.PropertyName)#>=null;
 		private DataItem <#=pro.PropertyName#>
 		{
@@ -39,7 +39,7 @@ namespace <#=Entity.GetValue("Namespace")#>
 		public <#=Entity.ClassName #>DataView(BQLEntityTableHandle entityHandle)
 		:base(entityHandle)
 		{
-			<# foreach(GenerateItem pro in SelectedPropertys ) {#>
+			<# foreach(Property pro in SelectedPropertys ) {#>
 			_<#=GetFieldName(pro.PropertyName)#>=CreateDataItem(<#=GetParamString(pro)#>);
 			<#}#>
 		}
@@ -66,12 +66,12 @@ public string GetFieldName(string name)
 /// </summary>
 /// <param name="pro"> Ù–‘–≈œ¢</param>
 /// <returns></returns>
-public string GetParamString(GenerateItem pro)
+public string GetParamString(Property pro)
 {
 	StringBuilder sb=new StringBuilder();
 	sb.Append("\""+pro.PropertyName+"\"");
 	sb.Append(",");
-	sb.Append("typeof("+pro.PropertyType+")");
+	sb.Append("typeof("+pro.TypeName+")");
 	sb.Append(",");
 	sb.Append(pro.HasItem("CanQuery")?"true":"false");
 	sb.Append(",");
