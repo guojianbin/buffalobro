@@ -337,8 +337,19 @@ namespace Buffalo.DB.DataBaseAdapter
         /// <returns></returns>
         public BQLEntityTableHandle FindTable(Type entityType)
         {
+
+            return FindTable(entityType.FullName);
+        }
+
+        /// <summary>
+        /// 通过实体类型查找对应的BQL表信息
+        /// </summary>
+        /// <param name="entityType"></param>
+        /// <returns></returns>
+        public BQLEntityTableHandle FindTable(string fullName)
+        {
             BQLEntityTableHandle ret = null;
-            _dicTables.TryGetValue(entityType.FullName, out ret);
+            _dicTables.TryGetValue(fullName, out ret);
             return ret;
         }
     }

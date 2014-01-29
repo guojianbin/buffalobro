@@ -8,6 +8,7 @@ using Buffalo.DB.BQLCommon.IdentityInfos;
 using Buffalo.Kernel;
 using System.Data;
 using Buffalo.Kernel.Defaults;
+using Buffalo.Kernel.FastReflection;
 
 namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 {
@@ -132,12 +133,8 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         {
             get
             {
-                BQLEntityParamHandle prm = null;
-                if (_dicParam.TryGetValue(propertyName, out prm))
-                {
-                    return prm;
-                }
-                return base[propertyName, DbType.Object];
+
+                return this[propertyName, DbType.Object];
             }
         }
         /// <summary>
@@ -161,19 +158,69 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         }
 
         /// <summary>
+        /// 查找实体的关联属性信息属性
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public BQLEntityTableHandle FindChildEntity(string propertyName)
+        {
+            BQLEntityTableHandle table = null;
+            PropertyInfoHandle handle = FastValueGetSet.GetPropertyInfoHandle(propertyName, this.GetType());
+            if (!handle.HasGetHandle) 
+            {
+                throw new MissingMemberException("不存在属性:" + propertyName);
+            }
+            table = handle.GetValue(this) as BQLEntityTableHandle;
+            return table;
+        }
+
+        /// <summary>
         /// 查找实体属性
         /// </summary>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        protected BQLEntityParamHandle FindParamHandle(string propertyName) 
+        public BQLEntityParamHandle FindParamHandle(string propertyName)
         {
+            string[] strpNames = propertyName.Split('.');
+            BQLEntityTableHandle currentTable = this;
+
+            for (int i = 0; i < strpNames.Length; i++)
+            {
+                if (i == strpNames.Length - 1)
+                {
+                    return currentTable.FindParam(strpNames[i]);
+                }
+                else
+                {
+                    currentTable = FindChildEntity(strpNames[i]);
+                    if (CommonMethods.IsNull(currentTable))
+                    {
+                        throw new MissingMemberException("不存在属性:" + strpNames[i]);
+                    }
+                }
+            }
+
+
+            return null;
+        }
+         /// <summary>
+        /// 查找实体属性
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        private BQLEntityParamHandle FindParam(string propertyName)
+        {
+
             BQLEntityParamHandle prm = null;
             if (_dicParam.TryGetValue(propertyName, out prm))
             {
                 return prm;
             }
+
             return null;
+
         }
+
         /// <summary>
         /// 判断是否系统类型
         /// </summary>

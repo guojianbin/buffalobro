@@ -99,6 +99,22 @@ namespace Buffalo.Kernel.FastReflection
 
             return fastInvoker;
         }
+
+        /// <summary>
+        /// 获取函数的键
+        /// </summary>
+        /// <param name="methodInfo">函数反射</param>
+        /// <param name="objectType">类型</param>
+        /// <returns></returns>
+        private static string GetMethodInfoKey(MethodInfo methodInfo) 
+        {
+            StringBuilder sbRet = new StringBuilder();
+            sbRet.Append(methodInfo.DeclaringType.FullName);
+            sbRet.Append(":");
+            sbRet.Append(methodInfo.ToString());
+            return sbRet.ToString();
+        }
+
         /// <summary>
         /// 获取该类型的指定方法的委托
         /// </summary>
@@ -115,6 +131,7 @@ namespace Buffalo.Kernel.FastReflection
             }
             return null;
         }
+
         /// <summary>
         /// 获取该类型的指定方法的委托
         /// </summary>
@@ -123,48 +140,14 @@ namespace Buffalo.Kernel.FastReflection
         /// <returns></returns>
         public static FastInvokeHandler GetCustomerMethodInfo(MethodInfo methodInfo)
         {
-            string ptypes = "";
-            ParameterInfo[] info = methodInfo.GetParameters();
-            foreach (ParameterInfo ptype in info)
-            {
-                if (ptype.IsOut) 
-                {
-                    ptypes += "out ";
-                }
-                else if (ptype.IsRetval)
-                {
-                    ptypes += "Retva ";
-                }
-                else if (ptype.IsLcid)
-                {
-                    ptypes += "Lcid ";
-                }
-                else if (ptype.IsOptional)
-                {
-                    ptypes += "Optional ";
-                }
-                ptypes += ptype.ParameterType.FullName + ",";
-            }
-            if (ptypes.Length > 0)
-            {
-                ptypes = ptypes.Substring(0, ptypes.Length - 1);
-            }
-            string fullName = methodInfo.DeclaringType.FullName + "." + methodInfo.Name + "(" + ptypes + ")";
             FastInvokeHandler fastInvokerHandle = null;
-            
-                if (!dicMethod.TryGetValue(fullName, out fastInvokerHandle))
-                {
-                    if (methodInfo == null)
-                    {
-                        return null;
-                    }
-                    using (Lock objLock = new Lock(dicMethod))
-                    {
-                        FastInvokeHandler fastInvoker = FastInvoke.GetMethodInvoker(methodInfo);
-                        dicMethod[fullName]=fastInvoker;
-                        fastInvokerHandle = fastInvoker;
-                    }
-                }
+            string key = GetMethodInfoKey(methodInfo);
+            if (dicMethod.TryGetValue(key, out fastInvokerHandle))
+            {
+                return fastInvokerHandle;
+            }
+            fastInvokerHandle = FastInvoke.GetMethodInvoker(methodInfo);
+            dicMethod[key] = fastInvokerHandle;
             
             return fastInvokerHandle;
         }

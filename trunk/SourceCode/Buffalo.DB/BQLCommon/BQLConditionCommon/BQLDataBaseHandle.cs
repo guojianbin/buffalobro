@@ -107,7 +107,28 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return oper;
         }
 
-        
+        /// <summary>
+        /// 通过实体类型查找对应的BQL表信息
+        /// </summary>
+        /// <param name="entityType"></param>
+        /// <returns></returns>
+        public static BQLEntityTableHandle FindTable(Type entityType)
+        {
+
+            return _db.FindTable(entityType);
+        }
+
+        /// <summary>
+        /// 通过实体类型查找对应的BQL表信息
+        /// </summary>
+        /// <param name="entityType"></param>
+        /// <returns></returns>
+        public static BQLEntityTableHandle FindTable(string fullName)
+        {
+
+            return _db.FindTable(fullName);
+        }
+
         /// <summary>
         /// 获取当前类关联的DB信息
         /// </summary>
