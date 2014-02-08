@@ -79,7 +79,7 @@ namespace Buffalo.DBTools.UIHelper
         private void GenerateCode(EntityInfo entityInfo, UIConfigItem classConfig, Project selectedProject,
             List<UIModelItem> selectPropertys,UIModelItem classInfo,List<UIProjectItem> lstItem,ProjectItem parentItem) 
         {
-            Encoding fileEncoding = CodeFileHelper.GetFileEncoding(entityInfo.FileName);
+            Encoding fileEncoding = null;
 
             foreach (UIProjectItem pitem in lstItem) 
             {
@@ -87,7 +87,7 @@ namespace Buffalo.DBTools.UIHelper
                 string tPath = UIConfigItem.FormatParameter(pitem.TargetPath, entityInfo, selectedProject);
                 CodeGenInfo info=CodeGenCache.GetGenerationer(mPath,entityInfo);
                 string content=info.Invoke(entityInfo, classConfig, selectPropertys,classInfo);
-
+                fileEncoding = pitem.Encoding;
                 ProjectItem item = SaveItem(tPath, selectedProject, content, pitem.GenType, parentItem, fileEncoding);
                 if (pitem.ChildItems != null && pitem.ChildItems.Count > 0) 
                 {
@@ -99,12 +99,14 @@ namespace Buffalo.DBTools.UIHelper
         }
 
         /// <summary>
-        /// 保存文件
+        /// 保存结果文件
         /// </summary>
-        /// <param name="fileName">文件路径</param>
-        /// <param name="entityInfo"></param>
-        /// <param name="content"></param>
-        /// <param name="baction"></param>
+        /// <param name="fileName">文件名</param>
+        /// <param name="selectedProject">选中的项目</param>
+        /// <param name="content">文件内容</param>
+        /// <param name="baction">生成文件的类型</param>
+        /// <param name="parentItem"></param>
+        /// <param name="encoding"></param>
         /// <returns></returns>
         private ProjectItem SaveItem(string fileName, Project selectedProject,
             string content, BuildAction baction, ProjectItem parentItem,Encoding encoding) 

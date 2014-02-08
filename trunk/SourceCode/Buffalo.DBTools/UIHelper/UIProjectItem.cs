@@ -39,6 +39,16 @@ namespace Buffalo.DBTools.UIHelper
             set { _targetPath = value; }
         }
 
+        private Encoding _encoding = Encoding.GetEncoding("gb2312");
+        /// <summary>
+        /// 输出文件的编码
+        /// </summary>
+        public Encoding Encoding
+        {
+            get { return _encoding; }
+            set { _encoding = value; }
+        }
+
         /// <summary>
         /// 生成的代码缓存
         /// </summary>

@@ -56,16 +56,19 @@ namespace Buffalo.DBTools.UIHelper
         /// <summary>
         /// 初始化默认值
         /// </summary>
-        /// <param name="collection"></param>
+        /// <param name="collection">配置项</param>
+        /// <param name="entityInfo">实体信息</param>
+        /// <param name="selectedProject">选择项</param>
+        /// <param name="itemInfo">所属的属性信息</param>
         public void InitDefaultValue(IEnumerable<ConfigItem> collection,
-            EntityInfo entityInfo, Project selectedProject) 
+            EntityInfo entityInfo, Project selectedProject,UIModelItem itemInfo) 
         {
             foreach (ConfigItem citem in collection) 
             {
                 string dvalue = citem.DefaultValue;
                 if (!string.IsNullOrEmpty(dvalue))
                 {
-                    dvalue = ConfigItem.FormatDefaultValue(citem, entityInfo, selectedProject);
+                    dvalue = ConfigItem.FormatDefaultValue(citem, entityInfo, selectedProject,itemInfo);
                     object value=ConvertValue(dvalue,citem);
                     _dicCheckItem[citem.Name] = value;
                 }
@@ -230,15 +233,21 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         public string TypeName
         {
+            get { return _belongProperty.MemberTypeName; }
+        }
+        /// <summary>
+        /// 类型的短名
+        /// </summary>
+        public string TypeShortName
+        {
             get { return _belongProperty.MemberTypeShortName; }
         }
-
         /// <summary>
         /// 类型的完整名
         /// </summary>
         public string TypeFullName 
         {
-            get { return _belongProperty.MemberTypeName; }
+            get { return _belongProperty.MemberTypeLookupName; }
         }
 
         /// <summary>

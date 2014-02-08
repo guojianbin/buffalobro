@@ -100,6 +100,7 @@ namespace Buffalo.DBTools
         string _searchName;
         private void FrmAllTables_Load(object sender, EventArgs e)
         {
+            this.Text += ToolVersionInfo.ToolVerInfo;
             gvTables.AutoGenerateColumns = false;
             DBInfo info = DbInfo.CreateDBInfo();
             _curLst =TableChecker.GetAllTables(info);

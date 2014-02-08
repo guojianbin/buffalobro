@@ -234,6 +234,7 @@
     <Compile Include="UIHelper\UIModelItem.cs" />
     <Compile Include="UIHelper\UIProject.cs" />
     <Compile Include="UIHelper\UIProjectItem.cs" />
+    <Compile Include="ToolVersionInfo.cs" />
     <Content Include="Resources\BQLDB.txt" />
     <Content Include="Resources\BQLEntity.txt" />
     <Content Include="Resources\BQLDataAccess.txt" />

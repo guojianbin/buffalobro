@@ -74,7 +74,7 @@ namespace Buffalo.DBTools.UIHelper
 
             foreach (UIModelItem item in lstItems) 
             {
-                item.InitDefaultValue(_config.ConfigItems, CurEntityInfo, CurEntityInfo.DesignerInfo.CurrentProject);
+                item.InitDefaultValue(_config.ConfigItems, CurEntityInfo, CurEntityInfo.DesignerInfo.CurrentProject,item);
             }
 
             gvMember.DataSource = lstItems;
@@ -229,8 +229,17 @@ namespace Buffalo.DBTools.UIHelper
 
         private void FrmUIGenerater_Load(object sender, EventArgs e)
         {
+            
             gvMember.AutoGenerateColumns = false;
-            LoadInfo();
+            try
+            {
+                LoadInfo();
+            }
+            catch (Exception ex) 
+            {
+                FrmCompileResault.ShowCompileResault(null, ex.ToString(), "加载模版失败");
+                this.Close();
+            }
             CreateClassItem();
             CreateItems();
             LoadItemCache();
@@ -238,8 +247,8 @@ namespace Buffalo.DBTools.UIHelper
                         
             LoadClassItemCache();
             BindUIModleInfo(_classUIConfig, _classInfo);
-            this.Text = "UI界面生成-" + _curEntityInfo.ClassName;
-
+            this.Text = "UI界面生成-" + _curEntityInfo.ClassName+ToolVersionInfo.ToolVerInfo;
+            
            
         }
 
@@ -282,11 +291,11 @@ namespace Buffalo.DBTools.UIHelper
                     }
                     catch (CompileException cex) 
                     {
-                        FrmCompileResault.ShowCompileResault(cex.Code, cex.ToString());
+                        FrmCompileResault.ShowCompileResault(cex.Code, cex.ToString(),"编译错误");
                     }
                     catch (Exception ex)
                     {
-                        FrmCompileResault.ShowCompileResault(null, ex.ToString());
+                        FrmCompileResault.ShowCompileResault(null, ex.ToString(), "编译错误");
                         return;
                     }
                 }
@@ -433,7 +442,7 @@ namespace Buffalo.DBTools.UIHelper
         private void LoadClassItemCache() 
         {
             _classInfo = new UIModelItem();
-            _classInfo.InitDefaultValue(_config.ClassItems, CurEntityInfo, CurEntityInfo.DesignerInfo.CurrentProject);
+            _classInfo.InitDefaultValue(_config.ClassItems, CurEntityInfo, CurEntityInfo.DesignerInfo.CurrentProject,null);
             string fileName =ModelPath+ "\\classinfo.cache.xml";
             if (!File.Exists(fileName)) 
             {

@@ -89,13 +89,26 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                     }
                     break;
                 }
-                else if (CurrentChar == '<') 
+                else if (CurrentChar == '<')
                 {
+                    if (_currentItem == null)
+                    {
+                        _currentItem = new ExpressionItem();
+                        _currentItem.Type = ExpressionType.String;
+                        _queitem.Enqueue(_currentItem);
+                    }
                     _currentItem.Content.Append("<");
-                    continue;
+                    CompilerPart();
+                    break;
                 }
                 else
                 {
+                    if (_currentItem == null) 
+                    {
+                        _currentItem = new ExpressionItem();
+                        _currentItem.Type = ExpressionType.String;
+                        _queitem.Enqueue(_currentItem);
+                    }
                     _currentItem.Content.Append("<" + CurrentChar);
                     break;
                 }

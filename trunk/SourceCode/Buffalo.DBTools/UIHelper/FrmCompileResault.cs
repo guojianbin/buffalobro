@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
+
 namespace Buffalo.DBTools.UIHelper
 {
     public partial class FrmCompileResault : Form
@@ -17,15 +18,16 @@ namespace Buffalo.DBTools.UIHelper
 
         private void FrmCompileError_Load(object sender, EventArgs e)
         {
-
+            this.Text += ToolVersionInfo.ToolVerInfo;
         }
 
         /// <summary>
-        /// 显示编译结果
+        /// 显示错误
         /// </summary>
-        /// <param name="code"></param>
-        /// <param name="error"></param>
-        public static void ShowCompileResault(string code, string error) 
+        /// <param name="code">代码</param>
+        /// <param name="error">错误</param>
+        /// <param name="title">标题</param>
+        public static void ShowCompileResault(string code, string error,string title) 
         {
             FrmCompileResault frm = new FrmCompileResault();
             if (!string.IsNullOrEmpty(code))
@@ -39,13 +41,14 @@ namespace Buffalo.DBTools.UIHelper
             if (!string.IsNullOrEmpty(error))
             {
                 frm.txtError.Text = error;
-                frm.Text = "模版编译错误";
+                
             }
             else 
             {
-                frm.Text = "模版编译结果";
+                
                 frm.spInfo.Panel2Collapsed = true;
             }
+            frm.Text = title+ToolVersionInfo.ToolVerInfo;
             frm.ShowDialog();
         }
 

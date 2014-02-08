@@ -70,7 +70,7 @@ namespace Buffalo.Kernel.FastReflection
             {
                 throw new Exception("此类型没有Set方法");
             }
-            _setHandle(args, new object[] { value });
+            _setHandle(args,  value );
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Buffalo.Kernel.FastReflection
             {
                 throw new Exception("此类型没有Get方法");
             }
-            return _getHandle(args, new object[] { });
+            return _getHandle(args, null);
         }
         ///// <summary>
         ///// 给对象设置值

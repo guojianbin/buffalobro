@@ -182,6 +182,7 @@
     <Compile Include="HelperKernel\TagManager.cs" />
     <Compile Include="Models.Designer.cs" />
     <Compile Include="ROMHelper\DBEntityInfo.cs" />
+    <Compile Include="ToolVersionInfo.cs" />
     <Compile Include="UIHelper\BuildAction.cs" />
     <Compile Include="UIHelper\ConfigItem.cs" />
     <Compile Include="UIHelper\EntityInfo.cs" />

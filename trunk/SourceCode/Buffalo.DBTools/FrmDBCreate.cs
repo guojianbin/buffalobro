@@ -89,6 +89,7 @@ namespace Buffalo.DBTools
             {
                 GetClassSQL();
             }
+            this.Text += ToolVersionInfo.ToolVerInfo;
         }
 
         /// <summary>

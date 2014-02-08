@@ -2273,11 +2273,14 @@
             UI信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.InitDefaultValue(System.Collections.Generic.IEnumerable{Buffalo.DBTools.UIHelper.ConfigItem},Buffalo.DBTools.UIHelper.EntityInfo,EnvDTE.Project)">
+        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.InitDefaultValue(System.Collections.Generic.IEnumerable{Buffalo.DBTools.UIHelper.ConfigItem},Buffalo.DBTools.UIHelper.EntityInfo,EnvDTE.Project,Buffalo.DBTools.UIHelper.UIModelItem)">
             <summary>
             初始化默认值
             </summary>
-            <param name="collection"></param>
+            <param name="collection">配置项</param>
+            <param name="entityInfo">实体信息</param>
+            <param name="selectedProject">选择项</param>
+            <param name="itemInfo">所属的属性信息</param>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.HasItem(System.String)">
             <summary>
@@ -4170,6 +4173,16 @@
             </summary>
             <param name="dia">图</param>
         </member>
+        <member name="T:Buffalo.DBTools.VersionInfo">
+            <summary>
+            版本信息
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.VersionInfo.ToolVerInfo">
+            <summary>
+            软件版本信息
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.HelperKernel.EntityRelationItem">
             <summary>
             映射信息
@@ -4436,11 +4449,14 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ConfigItem.FormatDefaultValue(Buffalo.DBTools.UIHelper.ConfigItem,Buffalo.DBTools.UIHelper.EntityInfo,EnvDTE.Project)">
+        <member name="M:Buffalo.DBTools.UIHelper.ConfigItem.FormatDefaultValue(Buffalo.DBTools.UIHelper.ConfigItem,Buffalo.DBTools.UIHelper.EntityInfo,EnvDTE.Project,Buffalo.DBTools.UIHelper.UIModelItem)">
             <summary>
             格式化默认项的值
             </summary>
-            <param name="value"></param>
+            <param name="item">项信息</param>
+            <param name="entityInfo">实体信息</param>
+            <param name="selectedProject">选中的项目</param>
+            <param name="itemInfo">项的属性信息</param>
             <returns></returns>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.ConfigItem.Name">

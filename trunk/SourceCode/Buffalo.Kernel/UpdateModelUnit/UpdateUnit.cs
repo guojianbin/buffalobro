@@ -7,10 +7,19 @@ using Buffalo.Kernel.FastReflection;
 namespace Buffalo.Kernel.UpdateModelUnit
 {
     /// <summary>
+    /// 格式化类型的方法
+    /// </summary>
+    /// <param name="handle">属性的信息</param>
+    /// <param name="entity">所属实体</param>
+    /// <param name="value">新值</param>
+    /// <returns></returns>
+    public delegate object DelUpdateModelFormatValue(PropertyInfoHandle handle, object entity, object value);
+    /// <summary>
     /// 更新实体工具
     /// </summary>
     public class UpdateUnit
     {
+
         /// <summary>
         /// 填充实体
         /// </summary>
@@ -18,8 +27,8 @@ namespace Buffalo.Kernel.UpdateModelUnit
         /// <param name="model">实体</param>
         /// <param name="type">字典中的键类型</param>
         /// <param name="formatHandle">格式化信息</param>
-        public static void UpdateModel(IDictionary<string, object> dic, 
-            object model, PrefixType type,DelFormatValue formatHandle) 
+        public static void UpdateModel(IDictionary<string, object> dic,
+            object model, PrefixType type, DelUpdateModelFormatValue formatHandle) 
         {
             Type objType = model.GetType();
 
@@ -33,7 +42,11 @@ namespace Buffalo.Kernel.UpdateModelUnit
                     object value=kvp.Value;
                     if (formatHandle != null)
                     {
-                        value = formatHandle(key, pName, model, value);
+                        value = formatHandle(handle, model, value);
+                    }
+                    else if (value.GetType() != handle.PropertyType) 
+                    {
+                        value = Convert.ChangeType(value, handle.PropertyType);
                     }
                     handle.SetValue(model, value);
                 }
@@ -48,7 +61,7 @@ namespace Buffalo.Kernel.UpdateModelUnit
         public static void UpdateModel(IDictionary<string, object> dic,
             object model, PrefixType type)
         {
-            UpdateModel(dic, model, type, EntitySerializer.DefaultFormatValue);
+            UpdateModel(dic, model, type,null);
         }
 
     }

@@ -100,17 +100,27 @@ namespace Buffalo.DBTools.UIHelper
         /// <summary>
         /// 格式化默认项的值
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="item">项信息</param>
+        /// <param name="entityInfo">实体信息</param>
+        /// <param name="selectedProject">选中的项目</param>
+        /// <param name="itemInfo">项的属性信息</param>
         /// <returns></returns>
-        public static string FormatDefaultValue(ConfigItem item, 
-            EntityInfo entityInfo, Project selectedProject) 
+        public static string FormatDefaultValue(ConfigItem item,
+            EntityInfo entityInfo, Project selectedProject, UIModelItem itemInfo)
         {
             string value = item.DefaultValue;
             value = UIConfigItem.FormatParameter(value, entityInfo, selectedProject);
             value = value.Replace("{ItemSummary}", item.Summary);
             value = value.Replace("{ItemName}", item.Name);
+            if (itemInfo != null) 
+            {
+                value = value.Replace("{PropertyName}", itemInfo.PropertyName);
+                value = value.Replace("{PropertySummary}", itemInfo.Summary);
+                value = value.Replace("{PropertyTypeName}", itemInfo.TypeName);
+                value = value.Replace("{PropertyTypeFullName}", itemInfo.TypeFullName);
+            }
             return value;
-            
+
         }
 
     }

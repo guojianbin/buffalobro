@@ -87,7 +87,7 @@ namespace Buffalo.DBTools
             InitDBType();
             InitCacheType();
             FillEdit();
-
+            this.Text += ToolVersionInfo.ToolVerInfo;
             ShowOrHideCache(!string.IsNullOrEmpty(_info.CacheType));
         }
         /// <summary>

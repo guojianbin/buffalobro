@@ -170,6 +170,7 @@ namespace Buffalo.Kernel.Defaults
         public readonly static Type UIntType = typeof(uint?);
         public readonly static Type ULongType = typeof(ulong?);
         public readonly static Type GUIDType = typeof(Guid);
+        public readonly static Type NullableType = typeof(Nullable<>);
         /// <summary>
         /// 判断是否该类型的子类
         /// </summary>
@@ -223,6 +224,23 @@ namespace Buffalo.Kernel.Defaults
             return dataType;
         }
 
+        /// <summary>
+        /// 获取类型或Nullable类里边的类型
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <returns></returns>
+        public static Type GetNullableRealType(Type dataType)
+        {
+            if (dataType.IsGenericType && dataType.BaseType != null && dataType.GetGenericTypeDefinition() == NullableType)
+            {
+                Type[] genTypes = dataType.GetGenericArguments();
+                if (genTypes.Length > 0)
+                {
+                    return genTypes[0];
+                }
+            }
+            return dataType;
+        }
         /// <summary>
         /// 获取泛型里边的类型
         /// </summary>

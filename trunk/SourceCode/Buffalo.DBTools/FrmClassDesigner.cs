@@ -51,7 +51,7 @@ namespace Buffalo.DBTools
         EntityConfig _config = null;
         private void FrmClassDesigner_Load(object sender, EventArgs e)
         {
-
+            this.Text += ToolVersionInfo.ToolVerInfo;
             _cmbCell = new GridViewComboBoxCell(gvField);
             _relationCell = new GridViewComboBoxCell(gvMapping);
             gvField.AutoGenerateColumns = false;

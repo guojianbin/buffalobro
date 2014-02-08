@@ -144,6 +144,15 @@ namespace Buffalo.DBTools.UIHelper
                     {
                         item.TargetPath = att.InnerText;
                     }
+                    att = projectNode.Attributes["encode"];
+                    if (att != null)
+                    {
+
+                        item.Encoding = Encoding.GetEncoding(att.InnerText);
+
+
+                    }
+
                     items.Add(item);
                     if (projectNode.ChildNodes.Count > 0)
                     {
