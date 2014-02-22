@@ -200,6 +200,7 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="ROMHelper\DBEntityInfo.cs" />
+    <Compile Include="ToolVersionInfo.cs" />
     <Compile Include="UIHelper\ConfigItem.cs" />
     <Compile Include="UIHelper\EntityInfo.cs" />
     <Compile Include="UIHelper\BuildAction.cs" />
@@ -234,7 +235,6 @@
     <Compile Include="UIHelper\UIModelItem.cs" />
     <Compile Include="UIHelper\UIProject.cs" />
     <Compile Include="UIHelper\UIProjectItem.cs" />
-    <Compile Include="ToolVersionInfo.cs" />
     <Content Include="Resources\BQLDB.txt" />
     <Content Include="Resources\BQLEntity.txt" />
     <Content Include="Resources\BQLDataAccess.txt" />

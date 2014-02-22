@@ -64,6 +64,7 @@
     <Compile Include="Defaults\DefaultValue.cs" />
     <Compile Include="Defaults\TypeItem.cs" />
     <Compile Include="DllInvoke.cs" />
+    <Compile Include="EntitySerializer.cs" />
     <Compile Include="EnumInfo.cs" />
     <Compile Include="EnumUnit.cs" />
     <Compile Include="Escape.cs" />

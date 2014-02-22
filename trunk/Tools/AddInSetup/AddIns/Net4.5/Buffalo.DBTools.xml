@@ -3748,6 +3748,16 @@
             基类
             </summary>
         </member>
+        <member name="T:Buffalo.DBTools.ToolVersionInfo">
+            <summary>
+            版本信息
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.ToolVersionInfo.ToolVerInfo">
+            <summary>
+            软件版本信息
+            </summary>
+        </member>
         <member name="T:Buffalo.DBTools.UIHelper.BuildAction">
             <summary>
             文件生成类型
@@ -3784,11 +3794,14 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.ConfigItem.FormatDefaultValue(Buffalo.DBTools.UIHelper.ConfigItem,Buffalo.DBTools.UIHelper.EntityInfo,EnvDTE.Project)">
+        <member name="M:Buffalo.DBTools.UIHelper.ConfigItem.FormatDefaultValue(Buffalo.DBTools.UIHelper.ConfigItem,Buffalo.DBTools.UIHelper.EntityInfo,EnvDTE.Project,Buffalo.DBTools.UIHelper.UIModelItem)">
             <summary>
             格式化默认项的值
             </summary>
-            <param name="value"></param>
+            <param name="item">项信息</param>
+            <param name="entityInfo">实体信息</param>
+            <param name="selectedProject">选中的项目</param>
+            <param name="itemInfo">项的属性信息</param>
             <returns></returns>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.ConfigItem.Name">
@@ -3925,12 +3938,13 @@
             泛型信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.FrmCompileResault.ShowCompileResault(System.String,System.String)">
+        <member name="M:Buffalo.DBTools.UIHelper.FrmCompileResault.ShowCompileResault(System.String,System.String,System.String)">
             <summary>
-            显示编译结果
+            显示错误
             </summary>
-            <param name="code"></param>
-            <param name="error"></param>
+            <param name="code">代码</param>
+            <param name="error">错误</param>
+            <param name="title">标题</param>
         </member>
         <member name="F:Buffalo.DBTools.UIHelper.FrmCompileResault.components">
             <summary>
@@ -4410,11 +4424,14 @@
             UI信息
             </summary>
         </member>
-        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.InitDefaultValue(System.Collections.Generic.IEnumerable{Buffalo.DBTools.UIHelper.ConfigItem},Buffalo.DBTools.UIHelper.EntityInfo,EnvDTE.Project)">
+        <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.InitDefaultValue(System.Collections.Generic.IEnumerable{Buffalo.DBTools.UIHelper.ConfigItem},Buffalo.DBTools.UIHelper.EntityInfo,EnvDTE.Project,Buffalo.DBTools.UIHelper.UIModelItem)">
             <summary>
             初始化默认值
             </summary>
-            <param name="collection"></param>
+            <param name="collection">配置项</param>
+            <param name="entityInfo">实体信息</param>
+            <param name="selectedProject">选择项</param>
+            <param name="itemInfo">所属的属性信息</param>
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.UIModelItem.HasItem(System.String)">
             <summary>
@@ -4486,6 +4503,11 @@
             类型名
             </summary>
         </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.TypeShortName">
+            <summary>
+            类型的短名
+            </summary>
+        </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIModelItem.TypeFullName">
             <summary>
             类型的完整名
@@ -4528,12 +4550,14 @@
         </member>
         <member name="M:Buffalo.DBTools.UIHelper.UIProject.SaveItem(System.String,EnvDTE.Project,System.String,Buffalo.DBTools.UIHelper.BuildAction,EnvDTE.ProjectItem,System.Text.Encoding)">
             <summary>
-            保存文件
+            保存结果文件
             </summary>
-            <param name="fileName">文件路径</param>
-            <param name="entityInfo"></param>
-            <param name="content"></param>
-            <param name="baction"></param>
+            <param name="fileName">文件名</param>
+            <param name="selectedProject">选中的项目</param>
+            <param name="content">文件内容</param>
+            <param name="baction">生成文件的类型</param>
+            <param name="parentItem"></param>
+            <param name="encoding"></param>
             <returns></returns>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIProject.Name">
@@ -4569,6 +4593,11 @@
         <member name="P:Buffalo.DBTools.UIHelper.UIProjectItem.TargetPath">
             <summary>
             生成路径
+            </summary>
+        </member>
+        <member name="P:Buffalo.DBTools.UIHelper.UIProjectItem.Encoding">
+            <summary>
+            输出文件的编码
             </summary>
         </member>
         <member name="P:Buffalo.DBTools.UIHelper.UIProjectItem.ChildItems">

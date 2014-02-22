@@ -563,6 +563,13 @@
             <param name="dataType"></param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.Kernel.Defaults.DefaultType.GetNullableRealType(System.Type)">
+            <summary>
+            获取类型或Nullable类里边的类型
+            </summary>
+            <param name="dataType"></param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.Kernel.Defaults.DefaultType.GetGenericType(System.Type,System.Boolean)">
             <summary>
             获取泛型里边的类型
@@ -746,6 +753,117 @@
             <param name="APIName"></param>
             <param name="t"></param>
             <returns></returns>
+        </member>
+        <member name="T:Buffalo.Kernel.DelFormatValue">
+            <summary>
+            格式化类型的方法
+            </summary>
+            <param name="key">Dictionary键</param>
+            <param name="propertyName">属性名(如：User.Name)</param>
+            <param name="entity">实体</param>
+            <param name="value">值</param>
+            <param name="newValue">新值</param>
+            <returns>是否格式化成功(失败的话就不赋值)</returns>
+        </member>
+        <member name="T:Buffalo.Kernel.EntitySerializer">
+            <summary>
+            实体序列化类
+            </summary>
+        </member>
+        <member name="M:Buffalo.Kernel.EntitySerializer.ValueListToDictionary(System.Collections.IList,System.String,Buffalo.Kernel.DelFormatValue)">
+            <summary>
+            值集合转换为字典集合(适合JavaScriptSerializer)
+            </summary>
+            <param name="lstEntity">实体</param>
+            <param name="propertyMap">Key的名字</param>
+            <param name="formatValue">格式化值的方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.EntitySerializer.ValueListToDictionary(System.Collections.IList,System.String)">
+            <summary>
+            值集合转换为字典集合(适合JavaScriptSerializer)
+            </summary>
+            <param name="lstEntity">实体</param>
+            <param name="propertyMap">Key的名字</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.EntitySerializer.EntityListToDictionary(System.Collections.IList,System.Collections.Generic.IEnumerable{System.String},Buffalo.Kernel.DelFormatValue)">
+            <summary>
+            实体转换为字典集合(适合JavaScriptSerializer)
+            </summary>
+            <param name="lstEntity">实体</param>
+            <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
+            <param name="formatValue">格式化值的方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.EntitySerializer.EntityToDictionary(System.Object,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            实体转换为字典集合(适合JavaScriptSerializer)
+            </summary>
+            <param name="lstEntity">实体</param>
+            <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
+            <param name="formatValue">格式化值的方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.EntitySerializer.EntityToDictionary(System.Object,System.Collections.Generic.IEnumerable{System.String},Buffalo.Kernel.DelFormatValue)">
+            <summary>
+            实体转换为字典集合(适合JavaScriptSerializer)
+            </summary>
+            <param name="lstEntity">实体</param>
+            <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
+            <param name="formatValue">格式化值的方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.EntitySerializer.EntityListToDictionary(System.Collections.IList,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            实体转换为字典集合(适合JavaScriptSerializer)
+            </summary>
+            <param name="lstEntity">实体</param>
+            <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.EntitySerializer.DefaultFormatValue(System.String,System.String,System.Object,System.Object)">
+            <summary>
+            默认的值格式化方法
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.EntitySerializer.GetValue(Buffalo.Kernel.EntitySerializerInfo,System.Object)">
+            <summary>
+            根据反射信息获取值
+            </summary>
+            <param name="info"></param>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.EntitySerializer.GetDicInfos(System.Type,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            根据需要的数据获取反射信息
+            </summary>
+            <param name="objType"></param>
+            <param name="propertyCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Buffalo.Kernel.EntitySerializerInfo">
+            <summary>
+            实体序列化信息
+            </summary>
+        </member>
+        <member name="P:Buffalo.Kernel.EntitySerializerInfo.Name">
+            <summary>
+            键名
+            </summary>
+        </member>
+        <member name="P:Buffalo.Kernel.EntitySerializerInfo.PropertyName">
+            <summary>
+            属性名字
+            </summary>
+        </member>
+        <member name="P:Buffalo.Kernel.EntitySerializerInfo.PropertyInfos">
+            <summary>
+            所属的属性反射
+            </summary>
         </member>
         <member name="P:Buffalo.Kernel.EnumInfo.Value">
             <summary>
@@ -1450,6 +1568,14 @@
             </summary>
             <param name="proName">属性名</param>
             <param name="type">类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.Kernel.FastReflection.FastValueGetSet.GetMethodInfoKey(System.Reflection.MethodInfo)">
+            <summary>
+            获取函数的键
+            </summary>
+            <param name="methodInfo">函数反射</param>
+            <param name="objectType">类型</param>
             <returns></returns>
         </member>
         <member name="M:Buffalo.Kernel.FastReflection.FastValueGetSet.GetCustomerMethodInfo(System.Type,System.String,System.Type[])">

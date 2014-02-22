@@ -4872,6 +4872,20 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLDataBaseHandle`1.FindTable(System.Type)">
+            <summary>
+            通过实体类型查找对应的BQL表信息
+            </summary>
+            <param name="entityType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLDataBaseHandle`1.FindTable(System.String)">
+            <summary>
+            通过实体类型查找对应的BQL表信息
+            </summary>
+            <param name="entityType"></param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLDataBaseHandle`1.GetDB">
             <summary>
             获取当前类关联的DB信息
@@ -4947,7 +4961,21 @@
             <param name="propertyName"></param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle.FindChildEntity(System.String)">
+            <summary>
+            查找实体的关联属性信息属性
+            </summary>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
         <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle.FindParamHandle(System.String)">
+            <summary>
+            查找实体属性
+            </summary>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.BQLCommon.BQLConditionCommon.BQLEntityTableHandle.FindParam(System.String)">
             <summary>
             查找实体属性
             </summary>
@@ -6655,6 +6683,13 @@
             <returns></returns>
         </member>
         <member name="M:Buffalo.DB.DataBaseAdapter.DBInfo.FindTable(System.Type)">
+            <summary>
+            通过实体类型查找对应的BQL表信息
+            </summary>
+            <param name="entityType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Buffalo.DB.DataBaseAdapter.DBInfo.FindTable(System.String)">
             <summary>
             通过实体类型查找对应的BQL表信息
             </summary>
