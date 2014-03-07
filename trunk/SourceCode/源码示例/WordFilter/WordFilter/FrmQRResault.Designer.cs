@@ -30,21 +30,33 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmQRResault));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.btnCopy = new System.Windows.Forms.Button();
-            this.txtContent = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.txtContent = new System.Windows.Forms.RichTextBox();
+            this.btnClose = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnClose);
             this.panel1.Controls.Add(this.btnCopy);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 84);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(349, 33);
             this.panel1.TabIndex = 0;
+            // 
+            // btnCopy
+            // 
+            this.btnCopy.Location = new System.Drawing.Point(177, 3);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(75, 23);
+            this.btnCopy.TabIndex = 0;
+            this.btnCopy.Text = "复制";
+            this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // panel2
             // 
@@ -55,25 +67,26 @@
             this.panel2.Size = new System.Drawing.Size(349, 84);
             this.panel2.TabIndex = 1;
             // 
-            // btnCopy
-            // 
-            this.btnCopy.Location = new System.Drawing.Point(266, 5);
-            this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(75, 23);
-            this.btnCopy.TabIndex = 0;
-            this.btnCopy.Text = "复制";
-            this.btnCopy.UseVisualStyleBackColor = true;
-            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
-            // 
             // txtContent
             // 
             this.txtContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtContent.Location = new System.Drawing.Point(0, 0);
-            this.txtContent.Multiline = true;
             this.txtContent.Name = "txtContent";
             this.txtContent.ReadOnly = true;
             this.txtContent.Size = new System.Drawing.Size(349, 84);
             this.txtContent.TabIndex = 0;
+            this.txtContent.Text = "";
+            this.txtContent.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtContent_LinkClicked);
+            // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(262, 3);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 1;
+            this.btnClose.Text = "关闭";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // FrmQRResault
             // 
@@ -90,7 +103,6 @@
             this.Load += new System.EventHandler(this.FrmQRResault_Load);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -100,6 +112,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox txtContent;
+        private System.Windows.Forms.RichTextBox txtContent;
+        private System.Windows.Forms.Button btnClose;
     }
 }
