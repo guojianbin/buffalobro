@@ -12,7 +12,7 @@ namespace Buffalo.Win32Kernel.Win32
     /// </summary>
     public class ClipboardListener
     {
-        private IntPtr _hNextClipboardViewer;//下一个监视的窗口
+        private IntPtr _hNextClipboardViewer=IntPtr.Zero;//下一个监视的窗口
 
         /// <summary>
         /// 当剪贴板被写入时候触发
@@ -85,6 +85,7 @@ namespace Buffalo.Win32Kernel.Win32
             else if (_hNextClipboardViewer != IntPtr.Zero)
             {
                 WindowsAPI.ChangeClipboardChain(_handle, _hNextClipboardViewer);
+                _hNextClipboardViewer = IntPtr.Zero;
             }
         }
 
@@ -101,19 +102,25 @@ namespace Buffalo.Win32Kernel.Win32
                 if (OnClipboardWrite != null) 
                 {
                     OnClipboardWrite(m);
-                    WindowsAPI.SendMessage(_hNextClipboardViewer, (Msg)m.Msg, m.WParam, m.LParam);
+                    if (_hNextClipboardViewer != IntPtr.Zero)
+                    {
+                        WindowsAPI.SendMessage(_hNextClipboardViewer, (Msg)m.Msg, m.WParam, m.LParam);
+                    }
                 }
                 
             }
             else if (objMsg == Msg.WM_CHANGECBCHAIN)
             {
-                if (_hNextClipboardViewer == m.WParam)
-                {//更新要发送消息的下一个窗口的句柄
-                    _hNextClipboardViewer = m.LParam;
-                }
-                else
+                if (_hNextClipboardViewer != IntPtr.Zero)
                 {
-                    WindowsAPI.SendMessage(_hNextClipboardViewer, (Msg)m.Msg, m.WParam, m.LParam);
+                    if (_hNextClipboardViewer == m.WParam)
+                    {//更新要发送消息的下一个窗口的句柄
+                        _hNextClipboardViewer = m.LParam;
+                    }
+                    else
+                    {
+                        WindowsAPI.SendMessage(_hNextClipboardViewer, (Msg)m.Msg, m.WParam, m.LParam);
+                    }
                 }
             }
         }
