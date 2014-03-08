@@ -50,7 +50,8 @@ namespace WordFilter
             _config = ConfigSave.ReadConfig();
             InitSelectItem();
 
-            ReRegisteredHotKey();
+            ReSetConfig();
+            
         }
        
         private void Form1_Load(object sender, EventArgs e)
@@ -91,10 +92,14 @@ namespace WordFilter
                                 {
                                     Clipboard.SetImage(img);
                                     SendKeys.SendWait("^V");
-                                    notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
-                                    notifyIcon1.BalloonTipText = str;
-                                    notifyIcon1.BalloonTipTitle = "已经转换文字";
-                                    notifyIcon1.ShowBalloonTip(1000);
+                                    
+                                    if (_config.ShowTime > 0)
+                                    {
+                                        notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
+                                        notifyIcon1.BalloonTipText = str;
+                                        notifyIcon1.BalloonTipTitle = "已经转换文字";
+                                        notifyIcon1.ShowBalloonTip(_config.ShowTime);
+                                    }
                                     Clipboard.Clear();
                                 }
                             }
@@ -167,18 +172,34 @@ namespace WordFilter
         {
             //kbListener.StopListener();
             SaveSelectItem();
-            WindowsAPI.ChangeClipboardChain(this.Handle, _hNextClipboardViewer);
-            if (_hotKey.IsRegistered)
-            {
-                _hotKey.UnRegister();
-            }
+            FreeConfig();
             Application.Exit();
         }
 
+        ~FrmMain() 
+        {
+            FreeConfig();
+        }
+
         /// <summary>
-        /// 重新注册热键
+        /// 释放钩子
         /// </summary>
-        public void ReRegisteredHotKey() 
+        private void FreeConfig() 
+        {
+            if (_hNextClipboardViewer != IntPtr.Zero)
+            {
+                WindowsAPI.ChangeClipboardChain(this.Handle, _hNextClipboardViewer);
+            }
+            if (_hotKey!=null&&_hotKey.IsRegistered)
+            {
+                _hotKey.UnRegister();
+            }
+        }
+
+        /// <summary>
+        /// 重新启动配置
+        /// </summary>
+        public void ReSetConfig() 
         {
             if (_hotKey!=null && _hotKey.IsRegistered)
             {
@@ -186,6 +207,8 @@ namespace WordFilter
             }
             _hotKey = new HotKey(1, _config.Modifiers, _config.HotKey, this);
             _hotKey.Register();
+            _qrcode.Options.Width = _config.Side;
+            _qrcode.Options.Height = _config.Side;
         }
 
         /// <summary>

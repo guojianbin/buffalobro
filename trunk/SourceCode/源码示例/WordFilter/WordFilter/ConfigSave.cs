@@ -20,6 +20,8 @@ namespace WordFilter
             _outItem = 0;
             _hotKey = Keys.F6;
             _modifiers = KeyModifiers.None;
+            _showTime = 500;
+            _side = 300;
         }
 
         private int _outItem;
@@ -49,7 +51,30 @@ namespace WordFilter
             get { return _modifiers; }
             set { _modifiers = value; }
         }
-
+        private int _side;
+        /// <summary>
+        /// 尺寸
+        /// </summary>
+        public int Side
+        {
+            get { return _side; }
+            set 
+            {
+                if (value > 50)
+                {
+                    _side = value;
+                }
+            }
+        }
+        private int _showTime;
+        /// <summary>
+        /// 提示文字的保留
+        /// </summary>
+        public int ShowTime
+        {
+            get { return _showTime; }
+            set { _showTime = value; }
+        }
         private static readonly string ConfigPath = AppDomain.CurrentDomain.BaseDirectory + "\\config.cfg";
         /// <summary>
         /// 保存配置
@@ -67,6 +92,8 @@ namespace WordFilter
                         writer.Write(_outItem);
                         writer.Write((int)_hotKey);
                         writer.Write((int)_modifiers);
+                        writer.Write(_side);
+                        writer.Write(_showTime);
                     }
                     catch { }
                 }
@@ -94,6 +121,8 @@ namespace WordFilter
                         config._outItem = reader.ReadInt32();
                         config._hotKey = (Keys)reader.ReadInt32();
                         config._modifiers = (KeyModifiers)reader.ReadInt32();
+                        config.Side = reader.ReadInt32(); 
+                        config._showTime = reader.ReadInt32(); 
                     }
                     catch { }
                 }

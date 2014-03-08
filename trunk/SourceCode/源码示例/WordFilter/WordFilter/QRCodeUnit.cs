@@ -18,40 +18,27 @@ namespace WordFilter
     public class QRCodeUnit
     {
         QrCodeEncodingOptions _options = new QrCodeEncodingOptions();
+        /// <summary>
+        /// 生成二维码的配置
+        /// </summary>
+        public QrCodeEncodingOptions Options
+        {
+            get { return _options; }
+        }
         BarcodeWriter _writer = null;
 
         private readonly static Encoding DefaultEncode = Encoding.UTF8;
         public QRCodeUnit() 
         {
-            int side = GetSide();
             _options.DisableECI = true;
             _options.CharacterSet = "UTF-8";
-            _options.Width = side;
-            _options.Height = side;
             _writer = new BarcodeWriter();
             _writer.Format = BarcodeFormat.QR_CODE;
             _writer.Options = _options;
 
         }
 
-        /// <summary>
-        /// 获取边长
-        /// </summary>
-        /// <returns></returns>
-        private int GetSide() 
-        {
-            string side = System.Configuration.ConfigurationManager.AppSettings["side"];
-            if (string.IsNullOrEmpty(side)) 
-            {
-                return 300;
-            }
-            int ret=0;
-            if (int.TryParse(side, out ret)) 
-            {
-                return ret;
-            }
-            return 300;
-        }
+
 
         /// <summary>
         /// 获取剪贴板的文件

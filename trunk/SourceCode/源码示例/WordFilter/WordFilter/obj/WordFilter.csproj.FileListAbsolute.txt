@@ -81,9 +81,7 @@ E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\bin\Debu
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\bin\Debug\zxing.xml
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\bin\Debug\Buffalo.Win32Kernel.xml
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\obj\Debug\WordFilter.FrmMain.resources
-E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\bin\Debug\WordFilter.exe.config
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\obj\Debug\WordFilter.FrmQRResault.resources
-E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\bin\Release\WordFilter.exe.config
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\obj\Release\WordFilter.exe
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\obj\Release\WordFilter.pdb
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\bin\Release\WordFilter.exe
