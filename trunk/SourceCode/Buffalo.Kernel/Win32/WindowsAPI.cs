@@ -938,7 +938,11 @@ namespace Buffalo.Kernel.Win32
             IntPtr hThread,
             ref int lpExitCode
         );
+        [DllImport("user32.dll")]
+        public static extern bool AddClipboardFormatListener(IntPtr hwnd);
 
+        [DllImport("user32.dll")]
+        public static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
         #region Windows Sevices API
         
         

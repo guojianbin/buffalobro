@@ -19,20 +19,13 @@ namespace WordFilter
     public partial class FrmMain : Form
     {
         HotKey _hotKey;
-        
         bool _visable = false;
         WordPicture _wp;
         QRCodeUnit _qrcode;
-
         private ToolStripMenuItem[] _toolItems;
-
-        const int WM_DRAWCLPBOARD = 0x308;
-        const int WM_CHANGCBCHAIN = 0X030D;
-        const int WM_HOTKEY = 0x312;
         internal bool _isSys = false;//是否系统复制
-        IntPtr _hNextClipboardViewer;//下一个监视的窗口
         ConfigSave _config;
-        
+        ClipboardListener _listener;
         public FrmMain()
         {
             
@@ -46,17 +39,34 @@ namespace WordFilter
             
             InitializeComponent();
             _toolItems = new ToolStripMenuItem[] { itemFont, itemQRCode, itemQRCodeEncry };
-            _hNextClipboardViewer = WindowsAPI.SetClipboardViewer(this.Handle);
+            _listener = new ClipboardListener(this.Handle);
+            _listener.Listen();
+            _listener.OnClipboardWrite += new DelOnWndProc(_listener_OnClipboardWrite);
             _config = ConfigSave.ReadConfig();
             InitSelectItem();
 
             ReSetConfig();
             
         }
+
+        void _listener_OnClipboardWrite(Message msg)
+        {
+            if (!_isSys)
+            {
+                string str = _qrcode.GetQRCodeString();
+                if (!string.IsNullOrEmpty(str))
+                {
+                    FrmQRResault.ShowBox(str);
+                }
+                
+            }
+        }
+
+        
        
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
         /// <summary>
         /// 配置
@@ -67,76 +77,13 @@ namespace WordFilter
         }
         protected override void WndProc(ref Message m)
         {
-           
-            if (m.Msg == WM_HOTKEY)
+            if (_hotKey != null) 
             {
-                try
-                {
-                    _isSys = true;
-                    Clipboard.Clear();
-                    
-                    SendKeys.SendWait("^A");
-                    SendKeys.SendWait("^C");
-
-
-                    if (Clipboard.ContainsText())
-                    {
-                        string str = (String)Clipboard.GetData(DataFormats.Text);
-                        if (str != null)
-                        {
-                            try
-                            {
-
-                                Image img = GetPicture(str);
-                                if (img != null)
-                                {
-                                    Clipboard.SetImage(img);
-                                    SendKeys.SendWait("^V");
-                                    
-                                    if (_config.ShowTime > 0)
-                                    {
-                                        notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
-                                        notifyIcon1.BalloonTipText = str;
-                                        notifyIcon1.BalloonTipTitle = "已经转换文字";
-                                        notifyIcon1.ShowBalloonTip(_config.ShowTime);
-                                    }
-                                    Clipboard.Clear();
-                                }
-                            }
-                            catch
-                            {
-                            }
-                        }
-                    }
-                    
-                }
-                finally 
-                {
-                    _isSys = false;
-                }
+                _hotKey.DoWndProc(m);
             }
-            else if (m.Msg == WM_DRAWCLPBOARD)
+            if (_listener != null)
             {
-                if (!_isSys)
-                {
-                    string str = _qrcode.GetQRCodeString();
-                    if (!string.IsNullOrEmpty(str))
-                    {
-                        FrmQRResault.ShowBox(str);
-                    }
-                    WindowsAPI.SendMessage(_hNextClipboardViewer, (Msg)m.Msg, m.WParam, m.LParam);
-                }
-            }
-            else if (m.Msg == WM_CHANGCBCHAIN)
-            {
-                if (_hNextClipboardViewer == m.WParam)
-                {//更新要发送消息的下一个窗口的句柄
-                    _hNextClipboardViewer = m.LParam;
-                }
-                else
-                {
-                    WindowsAPI.SendMessage(_hNextClipboardViewer, (Msg)m.Msg, m.WParam, m.LParam);
-                }
+                _listener.DoWndProc(m);
             }
             base.WndProc(ref m);
         }
@@ -186,9 +133,9 @@ namespace WordFilter
         /// </summary>
         private void FreeConfig() 
         {
-            if (_hNextClipboardViewer != IntPtr.Zero)
+            if (_listener != null)
             {
-                WindowsAPI.ChangeClipboardChain(this.Handle, _hNextClipboardViewer);
+                _listener.StopListen();
             }
             if (_hotKey!=null&&_hotKey.IsRegistered)
             {
@@ -206,9 +153,58 @@ namespace WordFilter
                 _hotKey.UnRegister();
             }
             _hotKey = new HotKey(1, _config.Modifiers, _config.HotKey, this);
+            _hotKey.OnHotKeyPress += new DelOnWndProc(_hotKey_OnHotKeyPress);
             _hotKey.Register();
             _qrcode.Options.Width = _config.Side;
             _qrcode.Options.Height = _config.Side;
+        }
+
+        void _hotKey_OnHotKeyPress(Message msg)
+        {
+            try
+            {
+                _isSys = true;
+                Clipboard.Clear();
+
+                SendKeys.SendWait("^A");
+                SendKeys.SendWait("^C");
+
+
+                if (Clipboard.ContainsText())
+                {
+                    string str = (String)Clipboard.GetData(DataFormats.Text);
+                    if (str != null)
+                    {
+                        try
+                        {
+
+                            Image img = GetPicture(str);
+                            if (img != null)
+                            {
+                                Clipboard.SetImage(img);
+                                SendKeys.SendWait("^V");
+
+                                if (_config.ShowTime > 0)
+                                {
+                                    notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
+                                    notifyIcon1.BalloonTipText = str;
+                                    notifyIcon1.BalloonTipTitle = "已经转换文字";
+                                    notifyIcon1.ShowBalloonTip(_config.ShowTime);
+                                }
+                                Clipboard.Clear();
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+
+            }
+            finally
+            {
+                _isSys = false;
+            }
         }
 
         /// <summary>

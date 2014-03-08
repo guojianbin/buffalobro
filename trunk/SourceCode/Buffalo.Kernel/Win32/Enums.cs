@@ -228,7 +228,8 @@ namespace Buffalo.Kernel.Win32
     NIN_BALLOONSHOW           = 0x402,
     NIN_BALLOONHIDE           = 0x403,
     NIN_BALLOONTIMEOUT        = 0x404,
-    NIN_BALLOONUSERCLICK      = 0x405
+    NIN_BALLOONUSERCLICK      = 0x405,
+    WM_CLIPBOARDUPDATE        = 0x031D
   }
     #endregion
 

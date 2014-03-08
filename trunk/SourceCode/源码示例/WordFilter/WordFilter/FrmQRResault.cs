@@ -64,5 +64,7 @@ namespace WordFilter
         {
             this.Close();
         }
+
+
     }
 }

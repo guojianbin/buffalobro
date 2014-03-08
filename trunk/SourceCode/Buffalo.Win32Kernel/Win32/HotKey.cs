@@ -8,6 +8,11 @@ namespace Buffalo.Win32Kernel.Win32
 {
     public class HotKey:IDisposable
     {
+        /// <summary>
+        /// 当热键被触发
+        /// </summary>
+        public event DelOnWndProc OnHotKeyPress;
+
         int id = -1;
 
         /// <summary>
@@ -104,6 +109,22 @@ namespace Buffalo.Win32Kernel.Win32
         {
             UnRegister();
         }
+
+        /// <summary>
+        /// 通知监听器控件触发了WndProc事件(请在WndProc)里调用)
+        /// </summary>
+        /// <param name="m">WndProc的消息</param>
+        /// <returns></returns>
+        public void DoWndProc(Message m)
+        {
+            if (m.Msg == (int)Msg.WM_HOTKEY)
+            {
+                if (OnHotKeyPress != null) 
+                {
+                    OnHotKeyPress(m);
+                }
+            }
+        }
     }
 }
 
@@ -120,27 +141,16 @@ public partial class Form1 : Form
         {
             objHotKey = new HotKey(123, KeyModifiers.Control | KeyModifiers.Alt, Keys.W, this);
             objHotKey.Register();
-
+            objHotKey.OnHotKeyPress += new DelOnWndProc(_hotKey_OnHotKeyPress);
             
         }
         
-        protected override void DefWndProc(ref Message m)
-        {
-            
-            base.DefWndProc(ref m);
-        }
-
+        
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == (int)Msg.WM_HOTKEY)
+            if (_hotKey != null) 
             {
-                int msgId = m.WParam.ToInt32();
-                if (msgId == 123) 
-                {
-                    MessageBox.Show("fuck");
-                    this.Close();
-                }
-
+                _hotKey.DoWndProc(m);
             }
             base.WndProc(ref m);
         }
@@ -149,7 +159,10 @@ public partial class Form1 : Form
         {
             objHotKey.UnRegister();
         }
-
+        void _hotKey_OnHotKeyPress(Message msg)
+        {
+            //热键触发
+        }
         private void Form1_Shown(object sender, EventArgs e)
         {
             this.Hide();

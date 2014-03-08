@@ -34,6 +34,7 @@ namespace WordFilter
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolKey = new System.Windows.Forms.ToolStripMenuItem();
             this.转换类型ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemFont = new System.Windows.Forms.ToolStripMenuItem();
             this.itemQRCode = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,7 +42,6 @@ namespace WordFilter
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tipInfo = new System.Windows.Forms.ToolTip(this.components);
-            this.toolKey = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +60,14 @@ namespace WordFilter
             this.toolStripMenuItem1,
             this.退出ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 98);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 76);
+            // 
+            // toolKey
+            // 
+            this.toolKey.Name = "toolKey";
+            this.toolKey.Size = new System.Drawing.Size(124, 22);
+            this.toolKey.Text = "设置";
+            this.toolKey.Click += new System.EventHandler(this.toolKey_Click);
             // 
             // 转换类型ToolStripMenuItem
             // 
@@ -69,7 +76,7 @@ namespace WordFilter
             this.itemQRCode,
             this.itemQRCodeEncry});
             this.转换类型ToolStripMenuItem.Name = "转换类型ToolStripMenuItem";
-            this.转换类型ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.转换类型ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.转换类型ToolStripMenuItem.Text = "转换类型";
             // 
             // itemFont
@@ -96,21 +103,14 @@ namespace WordFilter
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(121, 6);
             // 
             // 退出ToolStripMenuItem
             // 
             this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.退出ToolStripMenuItem.Text = "退出";
             this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
-            // 
-            // toolKey
-            // 
-            this.toolKey.Name = "toolKey";
-            this.toolKey.Size = new System.Drawing.Size(152, 22);
-            this.toolKey.Text = "快捷键";
-            this.toolKey.Click += new System.EventHandler(this.toolKey_Click);
             // 
             // FrmMain
             // 
