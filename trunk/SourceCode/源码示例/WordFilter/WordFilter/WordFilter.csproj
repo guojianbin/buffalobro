@@ -49,6 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigSave.cs" />
+    <Compile Include="FrmKeys.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmKeys.Designer.cs">
+      <DependentUpon>FrmKeys.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +69,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmKeys.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FrmKeys.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FrmMain.cs</DependentUpon>

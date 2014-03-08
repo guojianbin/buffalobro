@@ -31,13 +31,13 @@ namespace WordFilter
         const int WM_HOTKEY = 0x312;
         internal bool _isSys = false;//是否系统复制
         IntPtr _hNextClipboardViewer;//下一个监视的窗口
-
+        ConfigSave _config;
+        
         public FrmMain()
         {
             
 
-            _hotKey = new HotKey(1, KeyModifiers.None, Keys.F6, this);
-            _hotKey.Register();
+            
             _wp = new WordPicture();
             _wp.Fcolor = Color.Black;
             _wp.LineAlpha = 200;
@@ -47,14 +47,23 @@ namespace WordFilter
             InitializeComponent();
             _toolItems = new ToolStripMenuItem[] { itemFont, itemQRCode, itemQRCodeEncry };
             _hNextClipboardViewer = WindowsAPI.SetClipboardViewer(this.Handle);
+            _config = ConfigSave.ReadConfig();
             InitSelectItem();
+
+            ReRegisteredHotKey();
         }
        
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
-
+        /// <summary>
+        /// 配置
+        /// </summary>
+        public ConfigSave Config
+        {
+            get { return _config; }
+        }
         protected override void WndProc(ref Message m)
         {
            
@@ -86,7 +95,7 @@ namespace WordFilter
                                     notifyIcon1.BalloonTipText = str;
                                     notifyIcon1.BalloonTipTitle = "已经转换文字";
                                     notifyIcon1.ShowBalloonTip(1000);
-                                    
+                                    Clipboard.Clear();
                                 }
                             }
                             catch
@@ -159,34 +168,24 @@ namespace WordFilter
             //kbListener.StopListener();
             SaveSelectItem();
             WindowsAPI.ChangeClipboardChain(this.Handle, _hNextClipboardViewer);
-            _hotKey.UnRegister();
-            Application.Exit();
-        }
-
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-        {
-            停止监控键盘ToolStripMenuItem.Checked = _hotKey.IsRegistered;
-        }
-
-        private void 停止监控键盘ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //if (kbListener.IsListening)
-            //{
-            //    kbListener.StopListener();
-            //}
-            //else 
-            //{
-            //    kbListener.StartListener();
-            //}
-
             if (_hotKey.IsRegistered)
             {
                 _hotKey.UnRegister();
             }
-            else 
+            Application.Exit();
+        }
+
+        /// <summary>
+        /// 重新注册热键
+        /// </summary>
+        public void ReRegisteredHotKey() 
+        {
+            if (_hotKey!=null && _hotKey.IsRegistered)
             {
-                _hotKey.Register();
+                _hotKey.UnRegister();
             }
+            _hotKey = new HotKey(1, _config.Modifiers, _config.HotKey, this);
+            _hotKey.Register();
         }
 
         /// <summary>
@@ -222,12 +221,13 @@ namespace WordFilter
                 {
                     try
                     {
-                        ConfigSave.SaveConfig(i);
+                        _config.OutItem = i;
                     }
                     catch { }
                     break;
                 }
             }
+            _config.SaveConfig();
         }
 
         /// <summary>
@@ -238,11 +238,18 @@ namespace WordFilter
             
             try
             {
-                int index = ConfigSave.ReadConfig();
+                
+                int index = _config.OutItem;
                 ClearSelectItem();
+
                 _toolItems[index].Checked = true; ;
             }
             catch { }
+        }
+
+        private void toolKey_Click(object sender, EventArgs e)
+        {
+            FrmKeys.ShowBox();
         }
     }
 }

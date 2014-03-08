@@ -99,3 +99,5 @@ E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\obj\Rele
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\obj\Release\WordFilter.FrmQRResault.resources
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\obj\Release\WordFilter.Properties.Resources.resources
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\obj\Release\WordFilter.csproj.GenerateResource.Cache
+E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\obj\Release\WordFilter.FrmKeys.resources
+E:\CSharpTest\BuffaloCode\SourceCode\源码示例\WordFilter\WordFilter\obj\Debug\WordFilter.FrmKeys.resources

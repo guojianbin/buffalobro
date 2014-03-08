@@ -34,7 +34,6 @@ namespace WordFilter
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.停止监控键盘ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.转换类型ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemFont = new System.Windows.Forms.ToolStripMenuItem();
             this.itemQRCode = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +41,7 @@ namespace WordFilter
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tipInfo = new System.Windows.Forms.ToolTip(this.components);
+            this.toolKey = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,22 +55,12 @@ namespace WordFilter
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.停止监控键盘ToolStripMenuItem,
+            this.toolKey,
             this.转换类型ToolStripMenuItem,
             this.toolStripMenuItem1,
             this.退出ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 76);
-            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
-            // 
-            // 停止监控键盘ToolStripMenuItem
-            // 
-            this.停止监控键盘ToolStripMenuItem.Checked = true;
-            this.停止监控键盘ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.停止监控键盘ToolStripMenuItem.Name = "停止监控键盘ToolStripMenuItem";
-            this.停止监控键盘ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.停止监控键盘ToolStripMenuItem.Text = "监控键盘";
-            this.停止监控键盘ToolStripMenuItem.Click += new System.EventHandler(this.停止监控键盘ToolStripMenuItem_Click);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 98);
             // 
             // 转换类型ToolStripMenuItem
             // 
@@ -79,7 +69,7 @@ namespace WordFilter
             this.itemQRCode,
             this.itemQRCodeEncry});
             this.转换类型ToolStripMenuItem.Name = "转换类型ToolStripMenuItem";
-            this.转换类型ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.转换类型ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.转换类型ToolStripMenuItem.Text = "转换类型";
             // 
             // itemFont
@@ -106,14 +96,21 @@ namespace WordFilter
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(121, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
             // 
             // 退出ToolStripMenuItem
             // 
             this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.退出ToolStripMenuItem.Text = "退出";
             this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
+            // 
+            // toolKey
+            // 
+            this.toolKey.Name = "toolKey";
+            this.toolKey.Size = new System.Drawing.Size(152, 22);
+            this.toolKey.Text = "快捷键";
+            this.toolKey.Click += new System.EventHandler(this.toolKey_Click);
             // 
             // FrmMain
             // 
@@ -132,7 +129,6 @@ namespace WordFilter
 
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 停止监控键盘ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 转换类型ToolStripMenuItem;
@@ -140,6 +136,7 @@ namespace WordFilter
         private System.Windows.Forms.ToolStripMenuItem itemQRCode;
         private System.Windows.Forms.ToolStripMenuItem itemQRCodeEncry;
         private System.Windows.Forms.ToolTip tipInfo;
+        private System.Windows.Forms.ToolStripMenuItem toolKey;
 
     }
 }
