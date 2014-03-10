@@ -295,10 +295,9 @@ namespace Buffalo.DB.DbCommon
                     try
                     {
 
-                        if (_db.SqlOutputer.HasOutput)
-                        {
-                            OutMessage("Closed DataBase");
-                        }
+                        
+                           _db.OutMessage(MessageType.OtherOper,"Closed DataBase",null,"");
+                        
 
                         
                         _conn.Close();
@@ -323,14 +322,7 @@ namespace Buffalo.DB.DbCommon
             return true;
         }
 
-        /// <summary>
-        /// 输出信息
-        /// </summary>
-        /// <param name="message"></param>
-        private void OutMessage(string messageType, params string[] messages) 
-        {
-            _db.SqlOutputer.OutPut("BuffaloDB", messageType, messages);
-        }
+        
 
         /// <summary>
         /// 按照标识位自动关闭连接
@@ -409,10 +401,9 @@ namespace Buffalo.DB.DbCommon
             try
             {
 
-                if (_db.SqlOutputer.HasOutput)
-                {
-                    OutMessage("DataSet" , sql, paramInfo);
-                }
+
+                _db.OutMessage(MessageType.Query, "DataSet", null, sql + "," + paramInfo);
+                
 
                 _sda.Fill(dataSet);
                 if (paramList != null)
@@ -505,10 +496,9 @@ namespace Buffalo.DB.DbCommon
                 if ((_commitState == CommitState.AutoCommit) && !IsTran)
                 {
 
-                    if (_db.SqlOutputer.HasOutput)
-                    {
-                        OutMessage("AutoCloseReader" ,sql, paramInfo);
-                    }
+
+                    _db.OutMessage(MessageType.Query, "AutoCloseReader", null, sql + "," + paramInfo);
+                    
 
                     reader = _comm.ExecuteReader(CommandBehavior.CloseConnection);
                     
@@ -518,10 +508,9 @@ namespace Buffalo.DB.DbCommon
                 else 
                 {
 
-                    if (_db.SqlOutputer.HasOutput)
-                    {
-                        OutMessage("Reader" ,sql,paramInfo);
-                    }
+
+                    _db.OutMessage(MessageType.Query, "Reader", null, sql + "," + paramInfo);
+                    
 
                     reader = _comm.ExecuteReader();
                 }
@@ -571,10 +560,10 @@ namespace Buffalo.DB.DbCommon
                 if (IsTran)
                 {
 
-                    if (_db.SqlOutputer.HasOutput)
-                    {
-                        OutMessage("RollbackTransation");
-                    }
+
+                    _db.OutMessage(MessageType.OtherOper, "RollbackTransation", null, "");
+                       
+                    
 
                     _tran.Rollback();
                     _tran = null;
@@ -636,10 +625,9 @@ namespace Buffalo.DB.DbCommon
             try
             {
 
-                if (_db.SqlOutputer.HasOutput)
-                {
-                    OutMessage("NonQuery" ,sql, paramInfo);
-                }
+
+                _db.OutMessage(MessageType.Execute, "NonQuery", null, sql + "," + paramInfo);
+                
 
                 ret = _comm.ExecuteNonQuery();
                 _lastAffectedRows = ret;
@@ -704,10 +692,9 @@ namespace Buffalo.DB.DbCommon
             if (!IsTran)
             {
 
-                if (_db.SqlOutputer.HasOutput)
-                {
-                    OutMessage("BeginTransation","Level=" + isolationLevel.ToString());
-                }
+
+                _db.OutMessage(MessageType.OtherOper, "BeginTransation", null, "Level=" + isolationLevel.ToString());
+                
 
                 _tran = _conn.BeginTransaction(isolationLevel);
                 _comm.Transaction = _tran;
@@ -733,10 +720,9 @@ namespace Buffalo.DB.DbCommon
             try
             {
 
-                if (_db.SqlOutputer.HasOutput)
-                {
-                    OutMessage("CommitTransation");
-                }
+
+                _db.OutMessage(MessageType.OtherOper, "BeginTransation", null, "");
+                
 
                 _tran.Commit();
                 _tran = null;

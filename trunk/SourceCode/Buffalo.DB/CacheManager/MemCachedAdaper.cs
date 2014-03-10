@@ -11,6 +11,7 @@ using Memcached.ClientLibrary;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Buffalo.DB.DataBaseAdapter;
+using Buffalo.DB.MessageOutPuters;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -304,10 +305,9 @@ namespace Buffalo.DB.CacheManager
 
         private void OutPutMessage(string type,string message) 
         {
-            if (_info.SqlOutputer.HasOutput)
-            {
-                _info.SqlOutputer.DefaultOutputer.Output("Memcached", type, new string[] { message });
-            }
+            
+                _info.OutMessage(MessageType.QueryCache,"Memcached", type,  message );
+            
         }
 
         #endregion

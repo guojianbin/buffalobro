@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using Buffalo.Kernel;
+using System.Collections;
 
 namespace Buffalo.DB.MessageOutPuters
 {
@@ -10,22 +12,34 @@ namespace Buffalo.DB.MessageOutPuters
         /// <summary>
         ///  ‰≥ˆ–≈œ¢
         /// </summary>
-        /// <param name="messName"></param>
-        /// <param name="messInfo"></param>
-        public void Output(string messName, string messType, string[] mess) 
+        /// <param name="messType"></param>
+        /// <param name="mess"></param>
+        public void Output(MessageType messType,MessageInfo mess) 
         {
-            StringBuilder smsg = new StringBuilder(mess.Length * 20);
-            foreach (string msg in mess)
-            {
-                smsg.Append(msg);
+            string messName = messType.ToString();
+            StringBuilder smsg = new StringBuilder();
+            smsg.Append(messName);
 
-                smsg.Append(",");
-            }
-            if (smsg.Length > 0) 
+            object val=mess.GetValue(MessageInfo.Type);
+            smsg.Append("[");
+            if (val!=null) 
             {
-                smsg.Remove(smsg.Length - 1, 1);
+                smsg.Append(val);
             }
-            Debug.WriteLine(messName+"["+messType + "]:" + smsg.ToString());
+            val = mess.GetValue(MessageInfo.ExtendType);
+            if (val != null)
+            {
+                smsg.Append(","+val);
+            }
+            smsg.Append("]");
+
+            val = mess.GetValue(MessageInfo.Value);
+            if (val != null)
+            {
+                smsg.Append(":"+val);
+            }
+
+            Debug.WriteLine(smsg.ToString());
         }
     }
 }

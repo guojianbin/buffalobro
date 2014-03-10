@@ -42,8 +42,16 @@ namespace Buffalo.DB.DataBaseAdapter
         {
             _cache = new QueryCache(this,ica,isAlltable);
         }
-        
+
         private static Dictionary<string, IAdapterLoader> _dicAdapterLoaderName = InitAdapterLoaderName();
+
+        /// <summary>
+        /// 数据库适配器加载器
+        /// </summary>
+        public static Dictionary<string, IAdapterLoader> AdapterLoaders
+        {
+            get { return DBInfo._dicAdapterLoaderName; }
+        }
 
         /// <summary>
         /// 初始化适配器命名空间列表
@@ -62,7 +70,7 @@ namespace Buffalo.DB.DataBaseAdapter
             dic["Psql9"] = new Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter.AdapterLoader();
             return dic;
         }
-
+        
 
         //private Dictionary<string, string> _extendDatabaseConnection = null;
 
@@ -298,7 +306,20 @@ namespace Buffalo.DB.DataBaseAdapter
             }
         }
 
-
+       /// <summary>
+        /// 输出信息
+       /// </summary>
+       /// <param name="messageType">信息类型</param>
+       /// <param name="type">扩展类型1</param>
+       /// <param name="extendType">扩展类型2</param>
+       /// <param name="value">值</param>
+        public void OutMessage(MessageType messageType, string type, string extendType, string value)
+        {
+            if (SqlOutputer.HasOutput)
+            {
+                SqlOutputer.OutPut(messageType, type, extendType, value);
+            }
+        }
 
 
         private Dictionary<string, BQLEntityTableHandle> _dicTables = new Dictionary<string, BQLEntityTableHandle>();

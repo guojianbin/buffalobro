@@ -12,6 +12,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Buffalo.DB.DataBaseAdapter;
 using Redissharp;
+using Buffalo.DB.MessageOutPuters;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -320,10 +321,9 @@ namespace Buffalo.DB.CacheManager
 
         private void OutPutMessage(string type,string message) 
         {
-            if (_info.SqlOutputer.HasOutput)
-            {
-                _info.SqlOutputer.DefaultOutputer.Output("Redis", type, new string[] { message });
-            }
+
+                _info.OutMessage(MessageType.QueryCache, "Redis", type, message);
+            
         }
 
         #endregion

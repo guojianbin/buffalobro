@@ -50,14 +50,34 @@ namespace Buffalo.DB.MessageOutPuters
         /// <param name="messName">信息发送者名称</param>
         /// <param name="messInfo">信息</param>
         /// <returns></returns>
-        public bool OutPut(string messName,string messType, string[] mess) 
+        public bool OutPut(MessageType messType, MessageInfo mess) 
         {
             if (_defaultOutputer != null)
             {
-                _defaultOutputer.Output(messName, messType, mess);
+                _defaultOutputer.Output( messType, mess);
                 return true;
             }
             return false;
+        }
+
+       /// <summary>
+        /// 输出信息
+       /// </summary>
+       /// <param name="messType">消息类型</param>
+       /// <param name="type">类型</param>
+       /// <param name="extendType">扩展类型</param>
+       /// <param name="value">值</param>
+       /// <returns></returns>
+        public bool OutPut(MessageType messType, string type,string extendType,string value)
+        {
+            MessageInfo mess = new MessageInfo();
+            mess[MessageInfo.Type] = type;
+            if (extendType != null) 
+            {
+                mess[MessageInfo.ExtendType] = extendType;
+            }
+            mess[MessageInfo.Value] = value;
+            return OutPut(messType,mess);
         }
     }
 }

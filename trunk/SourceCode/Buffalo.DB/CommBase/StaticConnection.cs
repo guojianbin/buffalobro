@@ -7,6 +7,7 @@ using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.EntityInfos;
 using Buffalo.Kernel;
 using System.Diagnostics;
+using Buffalo.DB.MessageOutPuters;
 
 namespace Buffalo.DB.CommBase
 {
@@ -85,10 +86,9 @@ namespace Buffalo.DB.CommBase
             {
                 oper = new DataBaseOperate(db, true);
 
-                if (db.SqlOutputer.HasOutput)
-                {
-                    db.SqlOutputer.DefaultOutputer.Output("BuffaloDB", "CreateConnection", new string[] { "NewConnection" });
-                }
+               
+                    db.OutMessage(MessageType.OtherOper,"CreateConnection",null,  "NewConnection" );
+                
                 SetOperate(oper,key);
             }
             return oper;

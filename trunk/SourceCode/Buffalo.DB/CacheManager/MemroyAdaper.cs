@@ -7,6 +7,7 @@ using System.Data;
 using System.Collections;
 using Buffalo.Kernel;
 using Buffalo.DB.DataBaseAdapter;
+using Buffalo.DB.MessageOutPuters;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -156,10 +157,9 @@ namespace Buffalo.DB.CacheManager
 
         private void OutPutMessage(string type, string message)
         {
-            if (_info.SqlOutputer.HasOutput)
-            {
-                _info.SqlOutputer.DefaultOutputer.Output("SystemMemory", type, new string[] { message });
-            }
+           
+                _info.OutMessage(MessageType.QueryCache,"SystemMemory", type,  message);
+            
         }
     }
 

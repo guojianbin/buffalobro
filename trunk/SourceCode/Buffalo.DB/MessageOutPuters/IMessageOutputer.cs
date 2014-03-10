@@ -9,8 +9,8 @@ namespace Buffalo.DB.MessageOutPuters
         /// <summary>
         /// 输出信息
         /// </summary>
-        /// <param name="messName">信息发送者名称</param>
-        /// <param name="messInfo">信息</param>
-        void Output(string messName, string messType, string[] mess);
+        /// <param name="messType">信息类型</param>
+        /// <param name="mess">信息</param>
+        void Output(MessageType messType, MessageInfo mess);
     }
 }
