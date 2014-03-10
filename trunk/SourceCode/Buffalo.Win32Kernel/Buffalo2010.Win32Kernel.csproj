@@ -111,6 +111,7 @@
     <Compile Include="UpdateModelUnit\ControlDefaultValue.cs" />
     <Compile Include="UpdateModelUnit\ModelUpdateHelper.cs" />
     <Compile Include="Win32\AsmManager.cs" />
+    <Compile Include="Win32\ClipboardListener.cs" />
     <Compile Include="Win32\FormInfo.cs" />
     <Compile Include="Win32\HardwareInfo.cs" />
     <Compile Include="Win32\HotKey.cs" />
