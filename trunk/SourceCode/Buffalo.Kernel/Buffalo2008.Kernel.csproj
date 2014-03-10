@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6EC04216-A422-4751-AA81-1211DCB10BAB}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -114,7 +114,10 @@
     <Compile Include="SysEventLog.cs" />
     <Compile Include="UpdateModelUnit\ContorlDefaultPropertyInfo.cs" />
     <Compile Include="UpdateModelUnit\UpdateModelInfo.cs" />
+    <Compile Include="UpdateModelUnit\UpdateUnit.cs" />
     <Compile Include="Win32\Enums.cs" />
+    <Compile Include="Win32\ExWindow.cs" />
+    <Compile Include="Win32\PtrGeter.cs" />
     <Compile Include="Win32\Structs.cs" />
     <Compile Include="Win32\SystemInfo.cs" />
     <Compile Include="Win32\WindowsAPI.cs" />

@@ -113,7 +113,10 @@
     <Compile Include="SysEventLog.cs" />
     <Compile Include="UpdateModelUnit\ContorlDefaultPropertyInfo.cs" />
     <Compile Include="UpdateModelUnit\UpdateModelInfo.cs" />
+    <Compile Include="UpdateModelUnit\UpdateUnit.cs" />
     <Compile Include="Win32\Enums.cs" />
+    <Compile Include="Win32\ExWindow.cs" />
+    <Compile Include="Win32\PtrGeter.cs" />
     <Compile Include="Win32\Structs.cs" />
     <Compile Include="Win32\SystemInfo.cs" />
     <Compile Include="Win32\WindowsAPI.cs" />
