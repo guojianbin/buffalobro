@@ -111,7 +111,6 @@ E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permis
 E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.PermissionsInfo.BEM.BPGroupItemRight.BEM.xml
 E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.dll
 E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.pdb
-E:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.XML
 E:\CSharpTest\BuffaloCode\SourceCode\Debug\2005\Buffalo.Permissions.XML
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Release\ResolveAssemblyReference.cache
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Release\Buffalo.Permissions.PermissionsInfo.BEM.BPBase.BEM.xml
@@ -145,3 +144,6 @@ E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\bin\Release\fr\Npgsql.r
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\bin\Release\ja\Npgsql.resources.dll
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\bin\Release\zh-CN\Npgsql.resources.dll
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Release\Buffalo.Permissions.dll
+E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\bin\Release\System.Data.SQLite.pdb
+E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\bin\Release\System.Data.SQLite.xml
+E:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.XML
