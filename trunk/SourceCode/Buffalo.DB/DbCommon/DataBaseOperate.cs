@@ -294,15 +294,10 @@ namespace Buffalo.DB.DbCommon
                 {
                     try
                     {
-
-                        
-                           _db.OutMessage(MessageType.OtherOper,"Closed DataBase",null,"");
-                        
-
-                        
+                        _db.OutMessage(MessageType.OtherOper, "Closed DataBase", null, "");
                         _conn.Close();
-                        
-                        if (_comm != null) 
+
+                        if (_comm != null)
                         {
                             _comm.Dispose();
                         }
@@ -310,7 +305,7 @@ namespace Buffalo.DB.DbCommon
                         _comm = null;
                         _conn = null;
                         _tran = null;
-                        
+
                     }
                     catch (Exception ex)
                     {
@@ -402,7 +397,7 @@ namespace Buffalo.DB.DbCommon
             {
 
 
-                _db.OutMessage(MessageType.Query, "DataSet", null, sql + "," + paramInfo);
+                _db.OutMessage(MessageType.Query, "DataSet", null, sql + ";" + paramInfo);
                 
 
                 _sda.Fill(dataSet);
@@ -497,7 +492,7 @@ namespace Buffalo.DB.DbCommon
                 {
 
 
-                    _db.OutMessage(MessageType.Query, "AutoCloseReader", null, sql + "," + paramInfo);
+                    _db.OutMessage(MessageType.Query, "AutoCloseReader", null, sql + ";" + paramInfo);
                     
 
                     reader = _comm.ExecuteReader(CommandBehavior.CloseConnection);
@@ -509,7 +504,7 @@ namespace Buffalo.DB.DbCommon
                 {
 
 
-                    _db.OutMessage(MessageType.Query, "Reader", null, sql + "," + paramInfo);
+                    _db.OutMessage(MessageType.Query, "Reader", null, sql + ";" + paramInfo);
                     
 
                     reader = _comm.ExecuteReader();
@@ -626,7 +621,7 @@ namespace Buffalo.DB.DbCommon
             {
 
 
-                _db.OutMessage(MessageType.Execute, "NonQuery", null, sql + "," + paramInfo);
+                _db.OutMessage(MessageType.Execute, "NonQuery", null, sql + ";" + paramInfo);
                 
 
                 ret = _comm.ExecuteNonQuery();
@@ -739,11 +734,11 @@ namespace Buffalo.DB.DbCommon
             }
 			return true;
 		}
-		
-        //~DataBaseOperate()
-        //{
-        //    CloseDataBase(); 
-        //}
+
+        ~DataBaseOperate()
+        {
+            CloseDataBase();
+        }
 
 	}
 }

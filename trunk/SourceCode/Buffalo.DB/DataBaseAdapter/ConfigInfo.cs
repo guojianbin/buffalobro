@@ -116,16 +116,7 @@ namespace Buffalo.DB.DataBaseAdapter
             }
         }
 
-        /// <summary>
-        /// »º´æÎÄ¼þÂ·¾¶
-        /// </summary>
-        public string CacheFilePath 
-        {
-            get 
-            {
-                return _filePath + ".cache";
-            }
-        }
+       
 
     }
 }

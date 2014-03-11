@@ -93,7 +93,12 @@ namespace Buffalo.DB.DataBaseAdapter
             _dicLoaderConfig = new Dictionary<string, Type>();
             _dicEntityLoaderConfig = new Dictionary<string, Type>();
             Dictionary<string, XmlDocument> dicEntityConfig = new Dictionary<string, XmlDocument>();
-            List<ConfigInfo> docs = ConfigXmlLoader.LoadXml("DataAccessConfig");
+
+            List<ConfigInfo> docs = ConfigXmlLoader.LoadXml("Buffalo.Config");
+            if (docs.Count <= 0) 
+            {
+                docs = ConfigXmlLoader.LoadXml("DataAccessConfig");
+            }
             if (docs.Count > 0)
             {
                 
@@ -123,7 +128,17 @@ namespace Buffalo.DB.DataBaseAdapter
             }
             if (_dicDBInfo.Count == 0) 
             {
-                throw new Exception("没有配置数据库信息，请检查config文件");
+                StringBuilder exMess = new StringBuilder();
+                exMess.Append("没有配置数据库信息，请检查");
+                if (CommonMethods.IsWebContext) 
+                {
+                    exMess.Append("web.config");
+                }else
+                {
+                    exMess.Append("app.config");
+                }
+                exMess.Append("的appSettings中是否有 Buffalo.Config 或 DataAccessConfig 节点");
+                throw new Exception(exMess.ToString());
             }
 
             LoadModel();
