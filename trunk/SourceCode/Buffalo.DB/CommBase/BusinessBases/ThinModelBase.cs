@@ -81,7 +81,17 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         ///  <param name="optimisticConcurrency">是否并发控制</param>
         /// <returns></returns>
-        public virtual int Update(bool optimisticConcurrency) 
+        public int Update(bool optimisticConcurrency) 
+        {
+            return Update(null, optimisticConcurrency);
+        }
+        /// <summary>
+        /// 更新实体
+        /// </summary>
+        /// <param name="lstValue">强制设置值</param>
+        ///  <param name="optimisticConcurrency">是否并发控制</param>
+        /// <returns></returns>
+        public virtual int Update(ValueSetList lstValue,bool optimisticConcurrency)
         {
             DataAccessSetBase dal = GetBaseDataAccess();
             foreach (EntityPropertyInfo epPk in dal.EntityInfo.PrimaryProperty)
@@ -89,10 +99,10 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 object id = epPk.GetValue(this);
                 if (DefaultType.IsDefaultValue(id))
                 {
-                    throw new Exception("主键:"+epPk.PropertyName+"的值不能为空");
+                    throw new Exception("主键:" + epPk.PropertyName + "的值不能为空");
                 }
             }
-            return dal.Update(this, null,null, optimisticConcurrency);
+            return dal.Update(this, null, lstValue, optimisticConcurrency);
         }
         /// <summary>
         /// 更新实体

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
-using System.Data.SQLite;
 using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 using Buffalo.DB.CommBase;
 using Buffalo.DB.EntityInfos;
@@ -64,7 +63,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public IDataParameter GetDataParameter(string paramName, DbType type, object paramValue, ParameterDirection paramDir)
         {
-            IDataParameter newParam = new SQLiteParameter();
+            IDataParameter newParam = SqliteLoader.GetDataParameter();
             newParam.ParameterName = paramName;
             newParam.DbType = type;
             newParam.Value = paramValue;
@@ -101,7 +100,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public IDbCommand GetCommand()
         {
-            IDbCommand comm = new SQLiteCommand();
+            IDbCommand comm = SqliteLoader.GetCommand();
             return comm;
         }
         /// <summary>
@@ -110,8 +109,8 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public DbConnection GetConnection(DBInfo db)
         {
-            
-            DbConnection conn = new SQLiteConnection();
+
+            DbConnection conn = SqliteLoader.GetConnection();
             return conn;
         }
         /// <summary>
@@ -120,7 +119,7 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public IDbDataAdapter GetAdapter()
         {
-            IDbDataAdapter adapter = new SQLiteDataAdapter();
+            IDbDataAdapter adapter = SqliteLoader.GetDataAdapter();
             return adapter;
         }
 

@@ -109,13 +109,22 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <summary>
         /// 范围更新(慎用)
         /// </summary>
-        /// <param name="lstScope"></param>
+        /// <param name="lstValue">设置值</param>
+        /// <param name="lstScope">条件</param>
+        /// <returns></returns>
+        public int UpdateByScope(T obj , ValueSetList lstValue, ScopeList lstScope)
+        {
+            return GetBaseContext().Update(obj, lstScope, lstValue, false);
+        }
+        /// <summary>
+        /// 范围更新(慎用)
+        /// </summary>
+        /// <param name="lstScope">条件</param>
         /// <returns></returns>
         public int UpdateByScope(T obj, ScopeList lstScope)
         {
-            return GetBaseContext().Update(obj, lstScope,null, false);
+            return GetBaseContext().Update(obj, lstScope, null, false);
         }
-
 
         /// <summary>
         /// 查询符合指定条件的记录条数

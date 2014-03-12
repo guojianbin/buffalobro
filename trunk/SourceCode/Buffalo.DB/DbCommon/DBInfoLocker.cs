@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.Common;
 using Buffalo.DB.DataBaseAdapter;
-using System.Data.SQLite;
 using System.Data;
+using Buffalo.DB.DataBaseAdapter.SQLiteAdapter;
 
 namespace Buffalo.DB.DbCommon
 {
@@ -28,12 +28,12 @@ namespace Buffalo.DB.DbCommon
             DbConnection conn = null;
             if (!_dicConn.TryGetValue(info.Name, out conn)) 
             {
-                conn = new SQLiteConnection();
+                conn = SqliteLoader.GetConnection();
                 _dicConn[info.Name] = conn;
             }
             if (conn == null) 
             {
-                conn = new SQLiteConnection();
+                conn = SqliteLoader.GetConnection();
                 _dicConn[info.Name] = conn;
             }
             //_dicConn.Add(info.Name,item);
