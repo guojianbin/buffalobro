@@ -1,52 +1,55 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9B0043E4-883B-47BA-9A5A-5110C8583902}</ProjectGuid>
+    <ProjectGuid>{0E1DA18C-2BFF-45B9-8780-0E4A9D561324}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Buffalo.DB</RootNamespace>
     <AssemblyName>Buffalo.DB</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Debug\2005\</OutputPath>
+    <OutputPath>..\Debug\2010\OldDll\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Debug\2005\Buffalo.DB.XML</DocumentationFile>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>..\Debug\2010\OldDll\Buffalo.DB.XML</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Release\2005\</OutputPath>
+    <OutputPath>..\Release\2010\OldDll\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Release\2005\Buffalo.DB.XML</DocumentationFile>
+    <DocumentationFile>..\Release\2010\OldDll\Buffalo.DB.XML</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="IBM.Data.DB2, Version=9.0.0.2, Culture=neutral, PublicKeyToken=7c307b91aa13d208, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dll\dll\Net2.0\IBM.Data.DB2.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Data, Version=6.5.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\dll\Net2.0\MySql.Data.dll</HintPath>
+      <HintPath>..\..\dll\dll\Net4.0\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Npgsql, Version=2.0.11.92, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\dll\Net2.0\Npgsql2.0.11.92-bin-ms.net\Npgsql.dll</HintPath>
+    <Reference Include="Npgsql">
+      <HintPath>..\..\dll\dll\Net4.0\Npgsql2.0.11.92-bin-ms.net4.0\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -54,7 +57,7 @@
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Data.SQLite, Version=1.0.84.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\dll\Net2.0\sqlite\x86\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\..\dll\dll\Net2.0\sqlite\Old\System.Data.SQLite.DLL</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -63,12 +66,12 @@
     <Compile Include="BQLCommon\BQLConditionCommon\BQLConditionValueItem.cs" />
     <Compile Include="BQLCommon\BQLConditionCommon\IOperatorPriorityLevel.cs" />
     <Compile Include="BQLCommon\BQLConditionCommon\OperatorPrecedenceUnit.cs" />
+    <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddPrimarykeyItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordCreateTableItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordTableParamItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAlterTableItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddParamItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddForeignkeyItem.cs" />
-    <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddPrimarykeyItem.cs" />
     <Compile Include="CacheManager\ICacheAdaper.cs" />
     <Compile Include="CacheManager\MemcacheClient\CRCTool.cs" />
     <Compile Include="CacheManager\MemcacheClient\IterIsolate.cs" />
@@ -83,11 +86,11 @@
     <Compile Include="CacheManager\MemCachedAdaper.cs" />
     <Compile Include="CacheManager\Memcached\MemCacheReader.cs" />
     <Compile Include="CacheManager\MemroyAdaper.cs" />
-    <Compile Include="CacheManager\Redissharp\Redis.cs" />
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
-    <Compile Include="CacheManager\Redissharp\SockPool.cs" />
     <Compile Include="CacheManager\RedisAdaper.cs" />
+    <Compile Include="CacheManager\Redissharp\Redis.cs" />
+    <Compile Include="CacheManager\Redissharp\SockPool.cs" />
     <Compile Include="CommBase\BusinessBases\BatchAction.cs" />
     <Compile Include="CommBase\BusinessBases\BusinessModelBase.cs" />
     <Compile Include="CommBase\BusinessBases\BusinessModelBaseForSelect.cs" />
@@ -217,6 +220,15 @@
     <Compile Include="DataBaseAdapter\Oracle9Adapter\DBStructure.cs" />
     <Compile Include="DataBaseAdapter\Oracle9Adapter\MathFunctions.cs" />
     <Compile Include="DataBaseAdapter\Oracle9Adapter\SequenceManager.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\AdapterLoader.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\AggregateFunctions.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CommonFunction.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\ConvertFunction.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CursorPageCutter.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CutPageSqlCreater.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\DBAdapter.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\DBStructure.cs" />
+    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\MathFunctions.cs" />
     <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\SequenceManager.cs" />
     <Compile Include="DataBaseAdapter\SQLiteAdapter\AdapterLoader.cs" />
     <Compile Include="DataBaseAdapter\SQLiteAdapter\AggregateFunctions.cs" />
@@ -249,22 +261,13 @@
     <Compile Include="DataBaseAdapter\IDbAdapters\IDBStructure.cs" />
     <Compile Include="DataBaseAdapter\IDbAdapters\IAdapterLoader.cs" />
     <Compile Include="DataBaseAdapter\SqlServer2KAdapter\MathFunctions.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\AdapterLoader.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\AggregateFunctions.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CommonFunction.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\ConvertFunction.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CursorPageCutter.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CutPageSqlCreater.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\DBAdapter.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\DBStructure.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\MathFunctions.cs" />
     <Compile Include="DataFillers\CacheReader.cs" />
     <Compile Include="DataFillers\MappingContorl.cs" />
     <Compile Include="DBCheckers\DBChecker.cs" />
     <Compile Include="DBCheckers\TableChecker.cs" />
-    <Compile Include="DbCommon\DBInfoLocker.cs" />
     <Compile Include="DbCommon\DataBaseOperate.cs" />
     <Compile Include="DbCommon\DBConn.cs" />
+    <Compile Include="DbCommon\DBInfoLocker.cs" />
     <Compile Include="DbCommon\DBParameter.cs" />
     <Compile Include="DbCommon\LockDBItem.cs" />
     <Compile Include="DbCommon\ParamList.cs" />
@@ -331,15 +334,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Buffalo.Kernel\Buffalo.Kernel.csproj">
-      <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
-      <Name>Buffalo.Kernel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="CacheManager\MemcacheClient\StringMessages.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <EmbeddedResource Include="CacheManager\MemcacheClient\StringMessages.resx" />
     <EmbeddedResource Include="Resource.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -351,7 +346,10 @@
     <None Include="Resources\tableParam2005.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CacheManager\CacheConnectionPool\" />
+    <ProjectReference Include="..\Buffalo.Kernel\Buffalo2010.Kernel.csproj">
+      <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
+      <Name>Buffalo2010.Kernel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
