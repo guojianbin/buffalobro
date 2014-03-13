@@ -40,27 +40,60 @@ namespace UpdateHelper
         {
             string sPath=_basePath+"\\"+SourcePath;
             string tPath = _basePath + "\\" + TargetPath;
-            if (!Directory.Exists(tPath)) 
+            DirectoryInfo tinfo = new DirectoryInfo(tPath.TrimEnd('\\'));
+            DirectoryInfo sinfo = new DirectoryInfo(sPath.TrimEnd('\\'));
+            
+            int totle = CopyDirectory(sinfo.FullName, tinfo.FullName);
+            return totle;
+        }
+
+        /// <summary>
+        /// 递归拷贝文件夹
+        /// </summary>
+        /// <param name="sPath">源路径</param>
+        /// <param name="tPath">目标</param>
+        /// <returns></returns>
+        private int CopyDirectory(string sPath, string tPath) 
+        {
+            
+            int totle=CopyFiles(sPath, tPath);
+            string[] childPaths = Directory.GetDirectories(sPath);
+            foreach (string child in childPaths) 
+            {
+                string childPart = child.Replace(sPath, "").Trim('\\');
+                string csPath = sPath + "\\" + childPart;
+                string tsPath = tPath + "\\" + childPart;
+                totle += CopyDirectory(csPath, tsPath);
+            }
+            return totle;
+        }
+        /// <summary>
+        /// 拷贝
+        /// </summary>
+        /// <returns></returns>
+        private int CopyFiles(string sPath, string tPath) 
+        {
+            if (!Directory.Exists(tPath))
             {
                 Directory.CreateDirectory(tPath);
             }
-            sPath=sPath.TrimEnd('\\');
-            tPath= tPath.TrimEnd('\\');
+            sPath = sPath.TrimEnd('\\');
+            tPath = tPath.TrimEnd('\\');
             string[] files= Directory.GetFiles(sPath);
             int totle = 0;
-            foreach (string file in files) 
+            foreach (string file in files)
             {
                 FileInfo fInfo = new FileInfo(file);
-                if (!fInfo.Exists) 
+                if (!fInfo.Exists)
                 {
                     continue;
                 }
 
                 string extension = fInfo.Extension;
                 bool isAllow = false;
-                foreach (string allow in _allowFile) 
+                foreach (string allow in _allowFile)
                 {
-                    if (extension.Equals(allow,StringComparison.CurrentCultureIgnoreCase)) 
+                    if (extension.Equals(allow, StringComparison.CurrentCultureIgnoreCase))
                     {
                         isAllow = true;
                         break;
@@ -68,15 +101,15 @@ namespace UpdateHelper
 
                 }
 
-                if (!isAllow) 
+                if (!isAllow)
                 {
                     continue;
                 }
                 try
                 {
-                    CommonMethods.CopyNewer(file,tPath + "\\" + fInfo.Name);
+                    CommonMethods.CopyNewer(file, tPath + "\\" + fInfo.Name);
                 }
-                catch(Exception ex) 
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
                 }
@@ -84,6 +117,7 @@ namespace UpdateHelper
             }
             return totle;
         }
+
         static string _basePath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
 
         /// <summary>
