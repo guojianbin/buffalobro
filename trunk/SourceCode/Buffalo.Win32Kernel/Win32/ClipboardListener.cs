@@ -26,6 +26,15 @@ namespace Buffalo.Win32Kernel.Win32
             get { return _hNextClipboardViewer; }
         }
 
+        private bool _isListen=false;
+        /// <summary>
+        /// ÊÇ·ñÔÚ¼àÌý
+        /// </summary>
+        public bool IsListen
+        {
+            get { return _isListen; }
+        }
+
         private static readonly bool IsWinVistaOrLater = GetIsWinVistaOrLater();
 
         private IntPtr _handle;
@@ -72,6 +81,7 @@ namespace Buffalo.Win32Kernel.Win32
             {
                 _hNextClipboardViewer = WindowsAPI.SetClipboardViewer(_handle);
             }
+            _isListen = true;
         }
         /// <summary>
         /// Í£Ö¹¼àÌý
@@ -87,6 +97,7 @@ namespace Buffalo.Win32Kernel.Win32
                 WindowsAPI.ChangeClipboardChain(_handle, _hNextClipboardViewer);
                 _hNextClipboardViewer = IntPtr.Zero;
             }
+            _isListen = false;
         }
 
         /// <summary>

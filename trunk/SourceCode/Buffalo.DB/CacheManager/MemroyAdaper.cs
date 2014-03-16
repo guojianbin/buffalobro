@@ -58,7 +58,10 @@ namespace Buffalo.DB.CacheManager
                 sqlItems.Add(key);
 
             }
-            OutPutMessage(QueryCache.CommandSetDataSet, sql);
+            if (_info.SqlOutputer.HasOutput)
+            {
+                OutPutMessage(QueryCache.CommandSetDataSet, sql);
+            }
             _cache[key] = ds;
             
             return true;
@@ -113,7 +116,10 @@ namespace Buffalo.DB.CacheManager
         public  DataSet GetData(IDictionary<string, bool> tableNames, string sql)
         {
             string key = GetKey(sql);
-            OutPutMessage(QueryCache.CommandGetDataSet, sql);
+            if (_info.SqlOutputer.HasOutput)
+            {
+                OutPutMessage(QueryCache.CommandGetDataSet, sql);
+            }
             return _cache[key] as DataSet;
         }
 
@@ -126,7 +132,10 @@ namespace Buffalo.DB.CacheManager
             string key = GetKey(sql);
             
             _cache.Remove(key);
-            OutPutMessage(QueryCache.CommandDeleteSQL, sql);
+            if (_info.SqlOutputer.HasOutput)
+            {
+                OutPutMessage(QueryCache.CommandDeleteSQL, sql);
+            }
 
         }
         /// <summary>
@@ -152,13 +161,16 @@ namespace Buffalo.DB.CacheManager
                 sqlItems.Clear();
 
             }
-            OutPutMessage(QueryCache.CommandDeleteTable, tableName);
+            if (_info.SqlOutputer.HasOutput)
+            {
+                OutPutMessage(QueryCache.CommandDeleteTable, tableName);
+            }
         }
 
         private void OutPutMessage(string type, string message)
         {
-           
-                _info.OutMessage(MessageType.QueryCache,"SystemMemory", type,  message);
+
+                _info.OutMessage(MessageType.QueryCache, "SystemMemory", type, message);
             
         }
     }

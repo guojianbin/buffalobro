@@ -8,14 +8,14 @@ namespace Buffalo.DB.CommBase.BusinessBases
     /// <summary>
     /// 数据库的自释放事务类
     /// </summary>
-    public class DBTransation:IDisposable
+    public class DBTransaction:IDisposable
     {
         /// <summary>
         /// 自释放事务类
         /// </summary>
         /// <param name="oper"></param>
         /// <param name="runnow"></param>
-        public DBTransation(DataBaseOperate oper) 
+        public DBTransaction(DataBaseOperate oper) 
         {
             _oper = oper;
             _isCommit = false;
@@ -92,7 +92,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
             GC.SuppressFinalize(this);
         }
 
-        ~DBTransation() 
+        ~DBTransaction() 
         {
             Rollback();
         }

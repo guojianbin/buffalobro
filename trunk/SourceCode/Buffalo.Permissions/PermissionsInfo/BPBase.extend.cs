@@ -20,11 +20,12 @@ namespace Buffalo.Permissions.PermissionsInfo
             }
             return Update();
         }
-        public override int Update(bool optimisticConcurrency)
+        public override int Update(Buffalo.DB.QueryConditions.ValueSetList lstValue, bool optimisticConcurrency)
         {
             this.LaseUpdate = DateTime.Now;
-            return base.Update(optimisticConcurrency);
+            return base.Update(lstValue, optimisticConcurrency);
         }
+
         public override int Insert(bool fillPrimaryKey)
         {
             this.CreateDate = DateTime.Now;

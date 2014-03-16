@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Buffalo.DB.DbCommon;
 using Buffalo.DB.DataBaseAdapter;
+using Buffalo.DB.CommBase.DataAccessBases;
 
 namespace Buffalo.DB.QueryConditions
 {
@@ -31,6 +32,7 @@ namespace Buffalo.DB.QueryConditions
 
         public override string GetSql(bool useCache)
         {
+            DataAccessCommon.TrimHead(_condition);
             StringBuilder sql = new StringBuilder(500);
             sql.Append("Delete from ");
             sql.Append(_tables.ToString());

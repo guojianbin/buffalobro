@@ -75,6 +75,16 @@ namespace WordFilter
             get { return _showTime; }
             set { _showTime = value; }
         }
+
+        private bool _listenClipboard=true;
+        /// <summary>
+        /// º‡Ã˝ºÙÃ˘∞Â
+        /// </summary>
+        public bool ListenClipboard
+        {
+            get { return _listenClipboard; }
+            set { _listenClipboard = value; }
+        }
         private static readonly string ConfigPath = AppDomain.CurrentDomain.BaseDirectory + "\\config.cfg";
         /// <summary>
         /// ±£¥Ê≈‰÷√
@@ -94,6 +104,7 @@ namespace WordFilter
                         writer.Write((int)_modifiers);
                         writer.Write(_side);
                         writer.Write(_showTime);
+                        writer.Write(_listenClipboard);
                     }
                     catch { }
                 }
@@ -122,7 +133,8 @@ namespace WordFilter
                         config._hotKey = (Keys)reader.ReadInt32();
                         config._modifiers = (KeyModifiers)reader.ReadInt32();
                         config.Side = reader.ReadInt32(); 
-                        config._showTime = reader.ReadInt32(); 
+                        config._showTime = reader.ReadInt32();
+                        config._listenClipboard = reader.ReadBoolean(); 
                     }
                     catch { }
                 }

@@ -71,10 +71,10 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// 开启事务
         /// </summary>
         /// <returns></returns>
-        public static DBTransation StartTransation()
+        public static DBTransaction StartTransaction()
         {
 
-            return GetDefaultOperate().StartTransation() ;
+            return GetDefaultOperate().StartTransaction() ;
         }
         /// <summary>
         /// 开始非事务的批量动作

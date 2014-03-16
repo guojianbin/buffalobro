@@ -51,10 +51,10 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// ¿ªÆôÊÂÎñ
         /// </summary>
         /// <returns></returns>
-        protected DBTransation StartTransation() 
+        protected DBTransaction StartTransaction() 
         {
 
-            return DefaultOperate.StartTransation() ;
+            return DefaultOperate.StartTransaction() ;
         }
 
         /// <summary>

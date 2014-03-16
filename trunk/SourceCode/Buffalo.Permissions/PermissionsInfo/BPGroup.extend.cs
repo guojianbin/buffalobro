@@ -44,7 +44,7 @@ namespace Buffalo.Permissions.PermissionsInfo
             {
                 return -1;
             }
-            using (DBTransation tran = PermissionDB.StartTransation())
+            using (DBTransaction tran = PermissionDB.StartTransaction())
             {
                 int ret =base.Insert(fillPrimaryKey);
                 if (ret <= 0)
@@ -65,14 +65,16 @@ namespace Buffalo.Permissions.PermissionsInfo
             }
             
         }
-        public override int Update(bool optimisticConcurrency)
+
+        public override int Update(ValueSetList lstValue, bool optimisticConcurrency)
         {
             if (Exists())
             {
                 return -1;
             }
-            return base.Update(optimisticConcurrency);
+            return base.Update(lstValue, optimisticConcurrency);
         }
+        
         
 	}
 }

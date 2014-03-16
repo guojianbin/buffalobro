@@ -88,9 +88,11 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                     {
                         string strSql = FillCondition(curEntityInfo,lstParam, lstInnerScope, ref index);
                         string connectString = DataAccessCommon.GetConnectString(objScope);
+                        StringBuilder sbstrSQL = new StringBuilder(strSql);
+                        DataAccessCommon.TrimAnd(sbstrSQL);
                         ret.Append(" ");
                         ret.Append(connectString);
-                        ret.Append(" (1=1 " + strSql + ")");
+                        ret.Append(" (" + sbstrSQL.ToString() + ")");
                     }
                 }
                 else
@@ -102,6 +104,69 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                 index++;
             }
             return ret.ToString();
+        }
+        /// <summary>
+        /// 删除起始的条件符
+        /// </summary>
+        /// <param name="sb"></param>
+        internal static void TrimHead(StringBuilder sb)
+        {
+            if (sb.Length == 0)
+            {
+                return;
+            }
+            const string sqlTrim = " 1=1 and";
+            int len = sb.Length > sqlTrim.Length ? sqlTrim.Length : sb.Length;
+            string andSql = sb.ToString(0, len);
+            if (andSql.IndexOf(" 1=1 and", StringComparison.CurrentCultureIgnoreCase) == 0)
+            {
+                sb.Remove(0, sqlTrim.Length);
+                return;
+            }
+            if (andSql.IndexOf("1=1 and", StringComparison.CurrentCultureIgnoreCase) == 0)
+            {
+                sb.Remove(0, sqlTrim.Length - 1);
+                return;
+            }
+            if (andSql.IndexOf(" 1=1", StringComparison.CurrentCultureIgnoreCase) == 0 && len < sqlTrim.Length)
+            {
+                sb.Remove(0, 4);
+                return;
+            }
+            if (andSql.IndexOf("1=1", StringComparison.CurrentCultureIgnoreCase) == 0 && len < sqlTrim.Length)
+            {
+                sb.Remove(0, 3);
+                return;
+            }
+        }
+        /// <summary>
+        /// 删除起始的条件符
+        /// </summary>
+        /// <param name="sb"></param>
+        internal static void TrimAnd(StringBuilder sb)
+        {
+            if (sb.Length == 0) 
+            {
+                return;
+            }
+            int len = sb.Length > 5 ? 5 : sb.Length;
+            string andSql = sb.ToString(0, len);
+            if (andSql.IndexOf(" and ",StringComparison.CurrentCultureIgnoreCase)==0)
+            {
+                sb.Remove(0, 5);
+            }
+            else if (andSql.IndexOf("and ", StringComparison.CurrentCultureIgnoreCase) == 0) 
+            {
+                sb.Remove(0, 4);
+            }
+            else if (andSql.IndexOf(" or ", StringComparison.CurrentCultureIgnoreCase) == 0)
+            {
+                sb.Remove(0, 4);
+            }
+            else if (andSql.IndexOf("or ", StringComparison.CurrentCultureIgnoreCase) == 0)
+            {
+                sb.Remove(0, 3);
+            }
         }
 
         /// <summary>

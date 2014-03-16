@@ -185,6 +185,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             con.Tables.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatTableName(EntityInfo.TableName));
             con.UpdateSetValue.Append(sql);
             con.Condition.Append("1=1");
+
             con.Condition.Append(where);
 
             int ret = -1;

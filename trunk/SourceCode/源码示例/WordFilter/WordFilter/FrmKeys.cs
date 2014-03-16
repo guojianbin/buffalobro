@@ -104,6 +104,7 @@ namespace WordFilter
             cmbKeys.SelectedValue = (int)config.HotKey;
             txtSide.Value = config.Side;
             txtShow.Value = config.ShowTime;
+            chkListen.Checked = config.ListenClipboard;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -114,6 +115,7 @@ namespace WordFilter
             config.HotKey = (Keys)cmbKeys.SelectedValue;
             config.Side = (int)txtSide.Value;
             config.ShowTime = (int)txtShow.Value;
+            config.ListenClipboard = chkListen.Checked;
             Program.MainForm.ReSetConfig();
             this.Close();
         }

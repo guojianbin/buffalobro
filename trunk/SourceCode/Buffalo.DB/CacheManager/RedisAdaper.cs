@@ -174,7 +174,10 @@ namespace Buffalo.DB.CacheManager
                 }
                 dsRet = client.GetDataSet(key);
             }
-            OutPutMessage(QueryCache.CommandGetDataSet, sourceKey);
+            if (_info.SqlOutputer.HasOutput)
+            {
+                OutPutMessage(QueryCache.CommandGetDataSet, sourceKey);
+            }
             return dsRet;
 
 
@@ -256,7 +259,10 @@ namespace Buffalo.DB.CacheManager
                     client.Remove(key);
                 }
             }
-            OutPutMessage(QueryCache.CommandDeleteSQL, sql);
+            if (_info.SqlOutputer.HasOutput)
+            {
+                OutPutMessage(QueryCache.CommandDeleteSQL, sql);
+            }
 
         }
         /// <summary>
@@ -295,7 +301,10 @@ namespace Buffalo.DB.CacheManager
                     client.Increment(key);
                 }
             }
-            OutPutMessage(QueryCache.CommandDeleteTable, tableName);
+            if (_info.SqlOutputer.HasOutput)
+            {
+                OutPutMessage(QueryCache.CommandDeleteTable, tableName);
+            }
         }
         /// <summary>
         /// ±£´æÊý¾Ý
@@ -312,7 +321,10 @@ namespace Buffalo.DB.CacheManager
 
                 string sourceKey = null;
                 string key = GetKey(tableNames, sql, client, true, out sourceKey);
-                OutPutMessage(QueryCache.CommandSetDataSet, sourceKey);
+                if (_info.SqlOutputer.HasOutput)
+                {
+                    OutPutMessage(QueryCache.CommandSetDataSet, sourceKey);
+                }
                 client.SetDataSet(key, ds);
                 client.Expire(key, (int)_expiration.TotalSeconds);
             }

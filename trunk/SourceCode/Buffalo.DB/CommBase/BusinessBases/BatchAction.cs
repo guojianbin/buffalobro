@@ -21,8 +21,10 @@ namespace Buffalo.DB.CommBase.BusinessBases
         {
             if (oper.CommitState == CommitState.AutoCommit)
             {
-
-                oper.DBInfo.OutMessage(MessageType.OtherOper, "StarBatchAction", null, "");
+                if (oper.DBInfo.SqlOutputer.HasOutput)
+                {
+                    oper.DBInfo.OutMessage(MessageType.OtherOper, "StarBatchAction", null, "");
+                }
                 _state = oper.CommitState;
                 oper.CommitState = CommitState.UserCommit;
                 _oper = oper;
@@ -61,7 +63,10 @@ namespace Buffalo.DB.CommBase.BusinessBases
         {
             if (_oper != null)
             {
-                _oper.DBInfo.OutMessage(MessageType.OtherOper, "EndBatchAction", null, "");
+                if (_oper.DBInfo.SqlOutputer.HasOutput)
+                {
+                    _oper.DBInfo.OutMessage(MessageType.OtherOper, "EndBatchAction", null, "");
+                }
                 _oper.CommitState = _state;
                 _oper.AutoClose();
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Buffalo.DB.DbCommon;
 using Buffalo.DB.DataBaseAdapter;
+using Buffalo.DB.CommBase.DataAccessBases;
 
 namespace Buffalo.DB.QueryConditions
 {
@@ -36,6 +37,7 @@ namespace Buffalo.DB.QueryConditions
 
         public override string GetSql(bool useCache)
         {
+            DataAccessCommon.TrimHead(_condition);
             StringBuilder sbRet = new StringBuilder(2000);
             sbRet.Append("update  ");
             sbRet.Append(_tables.ToString());

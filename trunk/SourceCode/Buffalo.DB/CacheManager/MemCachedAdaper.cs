@@ -169,7 +169,10 @@ namespace Buffalo.DB.CacheManager
                 return null;
             }
             DataSet dsRet = client.GetDataSet(key);
-            OutPutMessage(QueryCache.CommandGetDataSet, sourceKey);
+            if (_info.SqlOutputer.HasOutput)
+            {
+                OutPutMessage(QueryCache.CommandGetDataSet, sourceKey);
+            }
             return dsRet;
 
 
@@ -249,7 +252,10 @@ namespace Buffalo.DB.CacheManager
             {
                 client.Delete(key);
             }
-            OutPutMessage(QueryCache.CommandDeleteSQL, sql);
+            if (_info.SqlOutputer.HasOutput)
+            {
+                OutPutMessage(QueryCache.CommandDeleteSQL, sql);
+            }
 
         }
         /// <summary>
@@ -284,7 +290,10 @@ namespace Buffalo.DB.CacheManager
             {
                 client.Increment(key, 1);
             }
-            OutPutMessage(QueryCache.CommandDeleteTable, tableName);
+            if (_info.SqlOutputer.HasOutput)
+            {
+                OutPutMessage(QueryCache.CommandDeleteTable, tableName);
+            }
         }
         /// <summary>
         /// ±£´æÊý¾Ý
@@ -299,15 +308,18 @@ namespace Buffalo.DB.CacheManager
             client.PrimitiveAsString = true;
             string sourceKey = null;
             string key = GetKey(tableNames, sql, client, true,out sourceKey);
-            OutPutMessage(QueryCache.CommandSetDataSet, sourceKey);
+            if (_info.SqlOutputer.HasOutput)
+            {
+                OutPutMessage(QueryCache.CommandSetDataSet, sourceKey);
+            }
             return client.SetDataSet(key, ds, _expiration);
         }
 
-        private void OutPutMessage(string type,string message) 
+        private void OutPutMessage(string type, string message)
         {
-            
-                _info.OutMessage(MessageType.QueryCache,"Memcached", type,  message );
-            
+
+            _info.OutMessage(MessageType.QueryCache, "Memcached", type, message);
+
         }
 
         #endregion

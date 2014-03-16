@@ -255,7 +255,10 @@ namespace Buffalo.DB.DbCommon
                     {
                         _conn.Open();
                     }
-
+                    if (_db.SqlOutputer.HasOutput)
+                    {
+                        _db.OutMessage(MessageType.OtherOper, "Connect DataBase", null, "");
+                    }
                     if (_comm == null)
                     {
                         _comm = _dbAdapter.GetCommand();//**
@@ -294,7 +297,10 @@ namespace Buffalo.DB.DbCommon
                 {
                     try
                     {
-                        _db.OutMessage(MessageType.OtherOper, "Closed DataBase", null, "");
+                        if (_db.SqlOutputer.HasOutput)
+                        {
+                            _db.OutMessage(MessageType.OtherOper, "Closed DataBase", null, "");
+                        }
                         _conn.Close();
 
                         if (_comm != null)
@@ -396,9 +402,10 @@ namespace Buffalo.DB.DbCommon
             try
             {
 
-
-                _db.OutMessage(MessageType.Query, "DataSet", null, sql + ";" + paramInfo);
-                
+                if (_db.SqlOutputer.HasOutput)
+                {
+                    _db.OutMessage(MessageType.Query, "DataSet", null, sql + ";" + paramInfo);
+                }
 
                 _sda.Fill(dataSet);
                 if (paramList != null)
@@ -491,9 +498,10 @@ namespace Buffalo.DB.DbCommon
                 if ((_commitState == CommitState.AutoCommit) && !IsTran)
                 {
 
-
-                    _db.OutMessage(MessageType.Query, "AutoCloseReader", null, sql + ";" + paramInfo);
-                    
+                    if (_db.SqlOutputer.HasOutput)
+                    {
+                        _db.OutMessage(MessageType.Query, "AutoCloseReader", null, sql + ";" + paramInfo);
+                    }
 
                     reader = _comm.ExecuteReader(CommandBehavior.CloseConnection);
                     
@@ -503,9 +511,10 @@ namespace Buffalo.DB.DbCommon
                 else 
                 {
 
-
-                    _db.OutMessage(MessageType.Query, "Reader", null, sql + ";" + paramInfo);
-                    
+                    if (_db.SqlOutputer.HasOutput)
+                    {
+                        _db.OutMessage(MessageType.Query, "Reader", null, sql + ";" + paramInfo);
+                    }
 
                     reader = _comm.ExecuteReader();
                 }
@@ -555,9 +564,10 @@ namespace Buffalo.DB.DbCommon
                 if (IsTran)
                 {
 
-
-                    _db.OutMessage(MessageType.OtherOper, "RollbackTransation", null, "");
-                       
+                    if (_db.SqlOutputer.HasOutput)
+                    {
+                        _db.OutMessage(MessageType.OtherOper, "RollbackTransaction", null, "");
+                    }
                     
 
                     _tran.Rollback();
@@ -620,9 +630,10 @@ namespace Buffalo.DB.DbCommon
             try
             {
 
-
-                _db.OutMessage(MessageType.Execute, "NonQuery", null, sql + ";" + paramInfo);
-                
+                if (_db.SqlOutputer.HasOutput)
+                {
+                    _db.OutMessage(MessageType.Execute, "NonQuery", null, sql + ";" + paramInfo);
+                }
 
                 ret = _comm.ExecuteNonQuery();
                 _lastAffectedRows = ret;
@@ -654,22 +665,22 @@ namespace Buffalo.DB.DbCommon
         /// 开启事务
         /// </summary>
         /// <returns></returns>
-        public DBTransation StartTransation(IsolationLevel isolationLevel)
+        public DBTransaction StartTransaction(IsolationLevel isolationLevel)
         {
             bool runnow = StartTran(isolationLevel);
             if (runnow)
             {
-                return new DBTransation(this);
+                return new DBTransaction(this);
             }
-            return new DBTransation(null);
+            return new DBTransaction(null);
         }
         /// <summary>
         /// 开启事务
         /// </summary>
         /// <returns></returns>
-        public DBTransation StartTransation()
+        public DBTransaction StartTransaction()
         {
-            return StartTransation(IsolationLevel.ReadCommitted);
+            return StartTransaction(IsolationLevel.ReadCommitted);
         }
 
 		/// <summary>
@@ -687,9 +698,10 @@ namespace Buffalo.DB.DbCommon
             if (!IsTran)
             {
 
-
-                _db.OutMessage(MessageType.OtherOper, "BeginTransation", null, "Level=" + isolationLevel.ToString());
-                
+                if (_db.SqlOutputer.HasOutput)
+                {
+                    _db.OutMessage(MessageType.OtherOper, "BeginTransaction", null, "Level=" + isolationLevel.ToString());
+                }
 
                 _tran = _conn.BeginTransaction(isolationLevel);
                 _comm.Transaction = _tran;
@@ -715,9 +727,10 @@ namespace Buffalo.DB.DbCommon
             try
             {
 
-
-                _db.OutMessage(MessageType.OtherOper, "BeginTransation", null, "");
-                
+                if (_db.SqlOutputer.HasOutput)
+                {
+                    _db.OutMessage(MessageType.OtherOper, "BeginTransaction", null, "");
+                }
 
                 _tran.Commit();
                 _tran = null;

@@ -38,11 +38,16 @@ namespace WordFilter
             _qrcode = new QRCodeUnit();
             
             InitializeComponent();
+            _config = ConfigSave.ReadConfig();
+
             _toolItems = new ToolStripMenuItem[] { itemFont, itemQRCode, itemQRCodeEncry };
             _listener = new ClipboardListener(this.Handle);
-            _listener.Listen();
+            
             _listener.OnClipboardWrite += new DelOnWndProc(_listener_OnClipboardWrite);
-            _config = ConfigSave.ReadConfig();
+            if (_config.ListenClipboard)
+            {
+                _listener.Listen();
+            }
             InitSelectItem();
 
             ReSetConfig();
@@ -157,6 +162,20 @@ namespace WordFilter
             _hotKey.Register();
             _qrcode.Options.Width = _config.Side;
             _qrcode.Options.Height = _config.Side;
+            if (_config.ListenClipboard)
+            {
+                if (!_listener.IsListen)
+                {
+                    _listener.Listen();
+                }
+            }
+            else 
+            {
+                if (_listener.IsListen)
+                {
+                    _listener.StopListen();
+                }
+            }
         }
 
         void _hotKey_OnHotKeyPress(Message msg)

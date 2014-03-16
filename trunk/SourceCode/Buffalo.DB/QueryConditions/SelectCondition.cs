@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Buffalo.DB.DbCommon;
 using Buffalo.DB.DataBaseAdapter;
+using Buffalo.DB.CommBase.DataAccessBases;
 namespace Buffalo.DB.QueryConditions
 {
     /// <summary>
@@ -121,6 +122,7 @@ namespace Buffalo.DB.QueryConditions
         public override string GetSql(bool useCache)
         {
             string ret=null;
+            DataAccessCommon.TrimHead(_condition);
             if (_pageContente != null && _pageContente.PageSize > 0)
             {
                 ret = _dbInfo.CurrentDbAdapter.CreatePageSql(_paramList, _oper, this, _pageContente, useCache);

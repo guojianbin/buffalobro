@@ -49,11 +49,11 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// 开启事务
         /// </summary>
         /// <returns></returns>
-        public DBTransation StartTransation()
+        public DBTransaction StartTransaction()
         {
             DataAccessBase<T> baseDal = GetBaseContext();
 
-            return baseDal.Oper.StartTransation();
+            return baseDal.Oper.StartTransaction();
         }
         /// <summary>
         /// 查找

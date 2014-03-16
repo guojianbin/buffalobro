@@ -28,11 +28,14 @@ namespace Buffalo.DB.DataBaseAdapter
         private string _connectionString = null;
         private string _dbType = null;
         private QueryCache _cache;
-
+        /// <summary>
+        /// ≤È—Øª∫¥Ê
+        /// </summary>
         public QueryCache QueryCache
         {
             get { return _cache; }
         }
+
 
         /// <summary>
         /// …Ë÷√≤È—Øª∫¥Ê
@@ -40,7 +43,7 @@ namespace Buffalo.DB.DataBaseAdapter
         /// <param name="ica"></param>
         internal void SetQueryCache(ICacheAdaper ica, bool isAlltable) 
         {
-            _cache = new QueryCache(this,ica,isAlltable);
+            _cache.InitCache(ica,isAlltable);
         }
 
         private static Dictionary<string, IAdapterLoader> _dicAdapterLoaderName = InitAdapterLoaderName();
@@ -81,7 +84,7 @@ namespace Buffalo.DB.DataBaseAdapter
             _dbType = dbType;
             _connectionString = connectionString;
             _dbName = dbName;
-            
+            _cache = new QueryCache(this);
             InitAdapters();
         }
 
@@ -319,6 +322,7 @@ namespace Buffalo.DB.DataBaseAdapter
             {
                 SqlOutputer.OutPut(messageType, type, extendType, value);
             }
+
         }
 
 

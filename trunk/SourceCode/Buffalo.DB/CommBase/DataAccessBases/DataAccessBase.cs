@@ -277,8 +277,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             condition.Oper = this._oper;
             condition.Tables.Append(CurEntityInfo.DBInfo.CurrentDbAdapter.FormatTableName(CurEntityInfo.TableName));
             condition.SqlParams.Append(GetSelectParams(scopeList));
-            condition.CacheTables=new Dictionary<string,bool>();
-            condition.CacheTables[CurEntityInfo.TableName] = true;
+            if (scopeList.UseCache)
+            {
+                condition.CacheTables = CurEntityInfo.DBInfo.QueryCache.CreateMap(CurEntityInfo.TableName);
+            }
             condition.Condition.Append("1=1");
             foreach (EntityPropertyInfo ep in CurEntityInfo.PrimaryProperty)
             {
@@ -341,7 +343,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             string conditionWhere = "";
             string orderBy = "";
             SelectCondition condition = new SelectCondition(CurEntityInfo.DBInfo);
-            if (condition.SqlParams.Length > 0) 
+            if (condition.SqlParams.Length > 0)
             {
                 condition.SqlParams.Append(",");
             }
@@ -350,18 +352,22 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             condition.Tables.Append(CurEntityInfo.DBInfo.CurrentDbAdapter.FormatTableName(CurEntityInfo.TableName));
 
             condition.Condition.Append("1=1");
-            condition.CacheTables = new Dictionary<string, bool>();
-            condition.CacheTables[CurEntityInfo.TableName] = true;
+
+            if (scopeList.UseCache)
+            {
+                condition.CacheTables = CurEntityInfo.DBInfo.QueryCache.CreateMap(CurEntityInfo.TableName);
+            }
+
             if (scopeList != null)
             {
-                condition.Condition.Append(DataAccessCommon.FillCondition(CurEntityInfo,list, scopeList));
+                condition.Condition.Append(DataAccessCommon.FillCondition(CurEntityInfo, list, scopeList));
             }
             if (conditionWhere.Length > 0)
             {
                 condition.Condition.Append(conditionWhere);
             }
             SortList sortList = scopeList.OrderBy;
-            if (sortList != null && sortList.Count>0)
+            if (sortList != null && sortList.Count > 0)
             {
                 if (orderBy != "")
                 {
@@ -377,10 +383,6 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 condition.Orders.Append(orderBy);
             }
-            //if (scopeList.UseCache)
-            //{
-            //    cachetables[CurEntityInfo.DBInfo.CurrentDbAdapter.FormatTableName(CurEntityInfo.TableName)]=true;
-            //}
             condition.DbParamList = list;
             return condition;
         }
@@ -428,13 +430,6 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             T ret = default(T);
             list = new ParamList();
             string tabName = CurEntityInfo.DBInfo.CurrentDbAdapter.FormatTableName(CurEntityInfo.TableName);
-            StringBuilder sql = new StringBuilder(500);
-            //string sql = "SELECT " + AllParamNames + " FROM " + tabName + " WHERE 1=1";
-            sql.Append("SELECT ");
-            sql.Append(AllParamNames);
-            sql.Append(" FROM ");
-            sql.Append(tabName);
-            sql.Append(" WHERE 1=1");
             ScopeList lstScope = new ScopeList();
             PrimaryKeyInfo pkInfo = id as PrimaryKeyInfo;
             if (pkInfo == null)
@@ -445,14 +440,15 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 pkInfo.FillScope(CurEntityInfo.PrimaryProperty, lstScope, true);
             }
-            sql.Append( DataAccessCommon.FillCondition(CurEntityInfo,list, lstScope));
+            SelectCondition sc = GetSelectContant(list, lstScope, GetSelectParams(lstScope));
+            //sql.Append( DataAccessCommon.FillCondition(CurEntityInfo,list, lstScope));
 
             Dictionary<string,bool> cacheTables=null;
             if(lstScope.UseCache)
             {
                 cacheTables = _oper.DBInfo.QueryCache.CreateMap(CurEntityInfo.TableName);
             }
-            using (IDataReader reader = _oper.Query(sql.ToString(), list, cacheTables))
+            using (IDataReader reader = _oper.Query(sc.GetSql(lstScope.UseCache), list, cacheTables))
             {
                 if (reader.Read())
                 {
