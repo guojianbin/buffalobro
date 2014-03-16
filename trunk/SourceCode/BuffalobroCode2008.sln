@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo2008.WebKernel", "Bu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo2008.GeneratorInfo", "Buffalo.GeneratorInfo\Buffalo2008.GeneratorInfo.csproj", "{6320C7DC-D4AE-4EA5-A2AB-B08B59062868}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo2008.DB.OldDll", "Buffalo.DB\Buffalo2008.DB.OldDll.csproj", "{148C1AF2-B470-4E28-8073-1C136BAABB82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -107,6 +109,16 @@ Global
 		{6320C7DC-D4AE-4EA5-A2AB-B08B59062868}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6320C7DC-D4AE-4EA5-A2AB-B08B59062868}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6320C7DC-D4AE-4EA5-A2AB-B08B59062868}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Release|.NET.ActiveCfg = Release|Any CPU
+		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

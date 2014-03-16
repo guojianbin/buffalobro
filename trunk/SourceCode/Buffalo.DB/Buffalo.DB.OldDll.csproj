@@ -82,7 +82,7 @@
     <Compile Include="CacheManager\MemcacheClient\SockIOPool.cs" />
     <Compile Include="CacheManager\MemCachedAdaper.cs" />
     <Compile Include="CacheManager\Memcached\MemCacheReader.cs" />
-    <Compile Include="CacheManager\MemroyAdaper.cs" />
+    <Compile Include="CacheManager\MemoryAdaper.cs" />
     <Compile Include="CacheManager\Redissharp\Redis.cs" />
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
@@ -331,12 +331,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Buffalo.Kernel\Buffalo.Kernel.csproj">
-      <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
-      <Name>Buffalo.Kernel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="CacheManager\MemcacheClient\StringMessages.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -349,6 +343,12 @@
   <ItemGroup>
     <None Include="Resources\tableParam2000.sql" />
     <None Include="Resources\tableParam2005.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Buffalo.Kernel\Buffalo.Kernel.csproj">
+      <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
+      <Name>Buffalo.Kernel</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CacheManager\CacheConnectionPool\" />

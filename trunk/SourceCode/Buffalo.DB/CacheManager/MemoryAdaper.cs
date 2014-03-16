@@ -14,9 +14,9 @@ namespace Buffalo.DB.CacheManager
     /// <summary>
     /// 系统内存的缓存适配器
     /// </summary>
-    public class MemroyAdaper : ICacheAdaper 
+    public class MemoryAdaper : ICacheAdaper 
     {
-        public MemroyAdaper(DBInfo info) 
+        public MemoryAdaper(DBInfo info) 
         {
             _info = info;
         }

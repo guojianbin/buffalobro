@@ -22,11 +22,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Debug\2012\</OutputPath>
+    <OutputPath>..\Debug\2012\OldDll\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Debug\2012\Buffalo.DB.XML</DocumentationFile>
+    <DocumentationFile>..\Debug\2012\OldDll\Buffalo.DB.XML</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -87,7 +87,7 @@
     <Compile Include="CacheManager\MemcacheClient\SockIOPool.cs" />
     <Compile Include="CacheManager\MemCachedAdaper.cs" />
     <Compile Include="CacheManager\Memcached\MemCacheReader.cs" />
-    <Compile Include="CacheManager\MemroyAdaper.cs" />
+    <Compile Include="CacheManager\MemoryAdaper.cs" />
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
     <Compile Include="CacheManager\RedisAdaper.cs" />

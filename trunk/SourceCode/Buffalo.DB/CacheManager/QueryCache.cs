@@ -93,7 +93,7 @@ namespace Buffalo.DB.CacheManager
             string dtype = type.Trim();
             if (dtype.Equals("system", StringComparison.CurrentCultureIgnoreCase))//ÄÚ´æ
             {
-                return new MemroyAdaper(info);
+                return new MemoryAdaper(info);
             }
             else if (dtype.Equals("memcached", StringComparison.CurrentCultureIgnoreCase))//memcached
             {
