@@ -114,7 +114,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
             
             if (objRet == null)
             {
-                objRet = _entityInfo.CreateProxyInstance() as EntityBase;
+                objRet = _entityInfo.CreateSelectProxyInstance() as EntityBase;
                 
                 foreach (AliasReaderMapping readMapping in _lstReaderMapping)
                 {
@@ -130,7 +130,6 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
                 {
                     _dicInstance[pk.ToString()] = objRet;
                 }
-                
                 _baseList.Add(objRet);
                 hasValue = false;
             }

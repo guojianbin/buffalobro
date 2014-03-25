@@ -83,6 +83,24 @@ namespace Buffalo.DB.CommBase
             }
         }
 
+        /// <summary>
+        /// 通知主键已经修改
+        /// </summary>
+        /// <returns></returns>
+        internal bool PrimaryKeyChange() 
+        {
+            EntityInfoHandle entityInfo = GetEntityInfo();
+            List<EntityPropertyInfo> lstPk = entityInfo.PrimaryProperty;
+            if (lstPk == null || lstPk.Count == 0) 
+            {
+                return false;
+            }
+            foreach (EntityPropertyInfo pinfo in lstPk) 
+            {
+                OnPropertyUpdated(pinfo.PropertyName);
+            }
+            return true;
+        }
         
         /// <summary>
         /// 通知属性已经被修改

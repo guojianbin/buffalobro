@@ -17,15 +17,10 @@ namespace Buffalo.Kernel.Defaults
             dbTypeMapping = new TypeItem[28];
 
 
-            TypeItem item = new TypeItem(typeof(string), null, DbType.AnsiString);
-            ret.Add(item.ItemType.FullName, item);
-            dbTypeMapping[(int)item.DbType] = item;
-            dbTypeMapping[(int)DbType.AnsiStringFixedLength] = item;
-            dbTypeMapping[(int)DbType.String] = item;
-            dbTypeMapping[(int)DbType.StringFixedLength] = item;
+            TypeItem item;
 
 
-            item = new TypeItem(typeof(DateTime), DefaultValue.DefaultDateTimeValue,DbType.DateTime);
+            item = new TypeItem(typeof(DateTime), DefaultValue.DefaultDateTime,DbType.DateTime);
             ret.Add(item.ItemType.FullName, item);
             dbTypeMapping[(int)item.DbType] = item;
             dbTypeMapping[(int)DbType.Date] = item;
@@ -49,52 +44,43 @@ namespace Buffalo.Kernel.Defaults
             
 
 
-            item=new TypeItem(typeof(Guid), DefaultValue.DefaultGuidValue,DbType.Guid);
+            item=new TypeItem(typeof(Guid), DefaultValue.DefaultGuid,DbType.Guid);
             ret.Add(item.ItemType.FullName, item);
             dbTypeMapping[(int)item.DbType] = item;
 
 
-            item=new TypeItem(typeof(int), DefaultValue.DefaultIntValue,DbType.Int32);
+            item=new TypeItem(typeof(int), DefaultValue.DefaultInt,DbType.Int32);
             ret.Add(item.ItemType.FullName, item);
             dbTypeMapping[(int)item.DbType] = item;
 
 
-            item = new TypeItem(typeof(double), DefaultValue.DefaultDoubleValue, DbType.Double);
+            item = new TypeItem(typeof(double), DefaultValue.DefaultDouble, DbType.Double);
             ret.Add(item.ItemType.FullName, item);
             dbTypeMapping[(int)item.DbType] = item;
 
 
-            item = new TypeItem(typeof(float), DefaultValue.DefaultFloatValue, DbType.Single);
+            item = new TypeItem(typeof(float), DefaultValue.DefaultFloat, DbType.Single);
             ret.Add(item.ItemType.FullName, item);
             dbTypeMapping[(int)item.DbType] = item;
 
 
-            item = new TypeItem(typeof(decimal), DefaultValue.DefaultDecimalValue, DbType.Decimal);
+            item = new TypeItem(typeof(decimal), DefaultValue.DefaultDecimal, DbType.Decimal);
             ret.Add(item.ItemType.FullName, item);
             dbTypeMapping[(int)item.DbType] = item;
             dbTypeMapping[(int)DbType.Currency] = item;
             dbTypeMapping[(int)DbType.VarNumeric] = item;
 
-            item = new TypeItem(typeof(sbyte), DefaultValue.DefaultSbyteValue, DbType.SByte);
+            item = new TypeItem(typeof(sbyte), DefaultValue.DefaultSbyte, DbType.SByte);
             ret.Add(item.ItemType.FullName, item);
             dbTypeMapping[(int)item.DbType] = item;
 
 
-            item = new TypeItem(typeof(short), DefaultValue.DefaultShortValue, DbType.Int16);
+            item = new TypeItem(typeof(short), DefaultValue.DefaultShort, DbType.Int16);
             ret.Add(item.ItemType.FullName, item);
             dbTypeMapping[(int)item.DbType] = item;
 
 
-            item = new TypeItem(typeof(long), DefaultValue.DefaultLongValue, DbType.Int64);
-            ret.Add(item.ItemType.FullName, item);
-            dbTypeMapping[(int)item.DbType] = item;
-
-            item = new TypeItem(typeof(bool), null, DbType.Boolean);
-            ret.Add(item.ItemType.FullName, item);
-            dbTypeMapping[(int)item.DbType] = item;
-
-
-            item = new TypeItem(typeof(object), null, DbType.Object);
+            item = new TypeItem(typeof(long), DefaultValue.DefaultLong, DbType.Int64);
             ret.Add(item.ItemType.FullName, item);
             dbTypeMapping[(int)item.DbType] = item;
 

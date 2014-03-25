@@ -121,22 +121,22 @@ namespace Buffalo.DB.DataFillers
                     IList lst = (IList)mappingInfo.GetValue(sender);
                     while (reader.Read())
                     {
-                        object obj = childInfo.CreateProxyInstance();
+                        object obj = childInfo.CreateSelectProxyInstance();
                         string fk = reader[mappingInfo.TargetProperty.ParamName].ToString();
                         List<object> curElementObjs = null;
 
 
                         //if (dicElement.TryGetValue(fk, out curElementObjs))
                         //{
-                            //foreach (object curElementObj in curElementObjs)
-                            //{
-                                
-                                CacheReader.FillObjectFromReader(reader, lstParamNames, obj, db);
-                                lst.Add(obj);
-                                //baseList.Add(obj);
-                                //(obj as EntityBase).SetBaseList(baseList);
-                            //}
-                            
+                        //foreach (object curElementObj in curElementObjs)
+                        //{
+
+                        CacheReader.FillObjectFromReader(reader, lstParamNames, obj, db);
+                        lst.Add(obj);
+                        //baseList.Add(obj);
+                        //(obj as EntityBase).SetBaseList(baseList);
+                        //}
+
                         //}
                     }
 
@@ -277,24 +277,24 @@ namespace Buffalo.DB.DataFillers
                     List<EntityPropertyInfo> lstParamNames = CacheReader.GenerateCache(reader, fatherInfo);//创建一个缓存数值列表
                     //IList baseList = new ArrayList();//缓存的父列表
                     //string fk = reader[mappingInfo.TargetProperty.ParamName].ToString();
-                    
+
                     while (reader.Read())
                     {
                         //object obj = createrHandle();
-                       
+
                         //ArrayList lst = null;
                         //if (dicElement.TryGetValue(fk, out lst))
                         //{
-                            //foreach (object curObj in lst)
-                            //{
-                        object newObj = fatherInfo.CreateProxyInstance();
-                                //object fatherObj = mappingInfo.GetValue(curObj);
-                                mappingInfo.SetValue(sender, newObj);
-                                CacheReader.FillObjectFromReader(reader, lstParamNames, newObj, db);
-                                //baseList.Add(newObj);
-                                //(newObj as EntityBase).SetBaseList(baseList);
-                            //}
-
+                        //foreach (object curObj in lst)
+                        //{
+                        object newObj = fatherInfo.CreateSelectProxyInstance();
+                        //object fatherObj = mappingInfo.GetValue(curObj);
+                        mappingInfo.SetValue(sender, newObj);
+                        CacheReader.FillObjectFromReader(reader, lstParamNames, newObj, db);
+                        //baseList.Add(newObj);
+                        //(newObj as EntityBase).SetBaseList(baseList);
+                        //}
+                        
                         //}
                     }
 

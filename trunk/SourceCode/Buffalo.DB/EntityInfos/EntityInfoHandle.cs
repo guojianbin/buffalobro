@@ -174,6 +174,17 @@ namespace Buffalo.DB.EntityInfos
             return null;
         }
         /// <summary>
+        /// 返回此类型的代理类实例(用于查询)
+        /// </summary>
+        /// <returns></returns>
+        public object CreateSelectProxyInstance()
+        {
+            object obj = CreateProxyInstance();
+            EntityBase eobj = obj as EntityBase;
+            eobj.PrimaryKeyChange();
+            return obj;
+        }
+        /// <summary>
         /// 主属性
         /// </summary>
         public List<EntityPropertyInfo> PrimaryProperty
