@@ -142,6 +142,13 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                         {
                             continue;
                         }
+                        if (obj._dicUpdateProperty___ != null) 
+                        {
+                            if (!obj._dicUpdateProperty___.ContainsKey(info.PropertyName))
+                            {
+                                continue;
+                            }
+                        }
                         DBParameter dbPrm = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
                         where.Append(" and ");
                         where.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));

@@ -76,6 +76,10 @@ namespace Buffalo.DB.CommBase
                 {
                     OnPropertyUpdated(updatePropertyName);
                 }
+                else 
+                {
+                    OnPropertyUpdated(propertyName);
+                }
             }
         }
 
