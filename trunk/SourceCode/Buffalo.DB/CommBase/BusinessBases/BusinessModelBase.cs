@@ -87,7 +87,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         /// <param name="entity">对象</param>
         /// <returns>大于0:更新完毕,小于0:更新失败</returns>
-        public virtual object Update(T entity)
+        public object Update(T entity)
         {
 
 
@@ -104,7 +104,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <param name="entity">对象</param>
         /// <param name="scorpList">范围更新的列表</param>
         /// <returns>大于0:更新完毕,小于0:更新失败</returns>
-        public virtual object Update(T entity, ScopeList scorpList)
+        public object Update(T entity, ScopeList scorpList)
         {
 
 
@@ -142,7 +142,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <param name="entity">对象</param>
         /// <param name="scorpList">范围更新的列表</param>
         /// <returns>大于0:更新完毕,小于0:更新失败</returns>
-        public virtual object Update(T entity, ScopeList scorpList, ValueSetList lstValue)
+        public object Update(T entity, ScopeList scorpList, ValueSetList lstValue)
         {
 
 
@@ -217,7 +217,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         /// <param name="entity">对象</param>
         /// <returns>大于0:插入完毕,小于0:插入失败</returns>
-        public virtual object Insert(T entity)
+        public object Insert(T entity)
         {
 
             return Insert(entity, null, false);
@@ -228,7 +228,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         /// <param name="entity">对象</param>
         /// <returns>大于0:插入完毕,小于0:插入失败</returns>
-        public virtual object Insert(T entity,bool fillIdentity)
+        public object Insert(T entity,bool fillIdentity)
         {
 
 

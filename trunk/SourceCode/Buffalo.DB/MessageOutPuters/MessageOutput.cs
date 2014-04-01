@@ -71,12 +71,12 @@ namespace Buffalo.DB.MessageOutPuters
         public bool OutPut(MessageType messType, string type,string extendType,string value)
         {
             MessageInfo mess = new MessageInfo();
-            mess[MessageInfo.Type] = type;
+            mess.Type = type;
             if (extendType != null) 
             {
-                mess[MessageInfo.ExtendType] = extendType;
+                mess.ExtendType = extendType;
             }
-            mess[MessageInfo.Value] = value;
+            mess.Value = value;
             return OutPut(messType,mess);
         }
     }

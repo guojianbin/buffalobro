@@ -20,20 +20,20 @@ namespace Buffalo.DB.MessageOutPuters
             StringBuilder smsg = new StringBuilder();
             smsg.Append(messName);
 
-            object val=mess.GetValue(MessageInfo.Type);
+            object val=mess.Type;
             smsg.Append("[");
             if (val!=null) 
             {
                 smsg.Append(val);
             }
-            val = mess.GetValue(MessageInfo.ExtendType);
+            val = mess.ExtendType;
             if (val != null)
             {
                 smsg.Append(","+val);
             }
             smsg.Append("]");
 
-            val = mess.GetValue(MessageInfo.Value);
+            val = mess.Value;
             if (val != null)
             {
                 smsg.Append(":"+val);

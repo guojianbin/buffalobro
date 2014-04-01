@@ -79,6 +79,8 @@ namespace Buffalo.Kernel
                 return (HttpContext.Current != null);
             }
         }
+
+
         /// <summary>
         /// 获取应用程序的基目录
         /// </summary>

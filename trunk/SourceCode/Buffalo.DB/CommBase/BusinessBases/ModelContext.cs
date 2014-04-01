@@ -114,7 +114,15 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public int UpdateByScope(T obj , ValueSetList lstValue, ScopeList lstScope)
         {
-            return GetBaseContext().Update(obj, lstScope, lstValue, false);
+            int ret = 0;
+            bool conUpdate=this.obj.BeforeUpdateByScope(obj, lstScope, lstValue,false);
+            if (conUpdate)
+            {
+                ret = GetBaseContext().Update(obj, lstScope, lstValue, false);
+            }
+            this.obj.AfterUpdateByScope(ret,obj, lstScope, lstValue, false);
+            return ret;
+
         }
         /// <summary>
         /// ·¶Î§¸üÐÂ(É÷ÓÃ)
@@ -123,7 +131,15 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public int UpdateByScope(T obj, ScopeList lstScope)
         {
-            return GetBaseContext().Update(obj, lstScope, null, false);
+            int ret = 0;
+            bool conUpdate = this.obj.BeforeUpdateByScope(obj, lstScope, null, false);
+            if (conUpdate)
+            {
+                ret = GetBaseContext().Update(obj, lstScope, null, false);
+            }
+            this.obj.AfterUpdateByScope(ret,obj, lstScope, null, false);
+            return ret;
+
         }
 
         /// <summary>
@@ -144,7 +160,14 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public int DeleteByScope(ScopeList lstScope)
         {
-            return GetBaseContext().Delete(null, lstScope, false);
+            int ret = 0;
+            bool conUpdate = this.obj.BeforeDeleteByScope( lstScope);
+            if (conUpdate)
+            {
+                ret = GetBaseContext().Delete(null, lstScope, false);
+            }
+            this.obj.AfterDeleteByScope(ret, lstScope);
+            return ret;
         }
 
         /// <summary>

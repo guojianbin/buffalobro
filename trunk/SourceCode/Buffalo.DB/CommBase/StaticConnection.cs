@@ -25,15 +25,15 @@ namespace Buffalo.DB.CommBase
         /// <returns></returns>
         private static DataBaseOperate GetOperate(string name)
         {
-
-            if (Buffalo.Kernel.CommonMethods.IsWebContext)
-            {
-                return (DataBaseOperate)System.Web.HttpContext.Current.Items[name];
-            }
-            else
-            {
-                return (DataBaseOperate)System.Runtime.Remoting.Messaging.CallContext.GetData(name);
-            }
+            return ContextValue.Current[name] as DataBaseOperate;
+            //if (Buffalo.Kernel.CommonMethods.IsWebContext)
+            //{
+            //    return (DataBaseOperate)System.Web.HttpContext.Current.Items[name];
+            //}
+            //else
+            //{
+            //    return (DataBaseOperate)System.Runtime.Remoting.Messaging.CallContext.GetData(name);
+            //}
         }
 
         /// <summary>
@@ -45,14 +45,16 @@ namespace Buffalo.DB.CommBase
         private static void SetOperate(DataBaseOperate value,string name)
         {
 
-            if (CommonMethods.IsWebContext)
-            {
-                System.Web.HttpContext.Current.Items[name] = value;
-            }
-            else
-            {
-                System.Runtime.Remoting.Messaging.CallContext.SetData(name, value);
-            }
+            ContextValue.Current[name] = value;
+
+            //if (CommonMethods.IsWebContext)
+            //{
+            //    System.Web.HttpContext.Current.Items[name] = value;
+            //}
+            //else
+            //{
+            //    System.Runtime.Remoting.Messaging.CallContext.SetData(name, value);
+            //}
             
         }
 
