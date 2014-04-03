@@ -52,6 +52,7 @@
             this.btnCacheModel = new System.Windows.Forms.Button();
             this.cmbCacheType = new System.Windows.Forms.ComboBox();
             this.btnCache = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.gpCache.SuspendLayout();
             this.gpCacheServer.SuspendLayout();
@@ -63,7 +64,7 @@
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Location = new System.Drawing.Point(77, 11);
             this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(183, 20);
+            this.cmbType.Size = new System.Drawing.Size(262, 20);
             this.cmbType.TabIndex = 0;
             // 
             // label1
@@ -78,7 +79,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(2, 62);
+            this.label2.Location = new System.Drawing.Point(2, 87);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(71, 12);
             this.label2.TabIndex = 2;
@@ -86,7 +87,7 @@
             // 
             // rtbConnstr
             // 
-            this.rtbConnstr.Location = new System.Drawing.Point(78, 59);
+            this.rtbConnstr.Location = new System.Drawing.Point(78, 84);
             this.rtbConnstr.Name = "rtbConnstr";
             this.rtbConnstr.Size = new System.Drawing.Size(265, 96);
             this.rtbConnstr.TabIndex = 3;
@@ -94,7 +95,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(78, 187);
+            this.btnTest.Location = new System.Drawing.Point(78, 212);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 23);
             this.btnTest.TabIndex = 4;
@@ -104,7 +105,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(159, 187);
+            this.btnOK.Location = new System.Drawing.Point(159, 212);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 5;
@@ -114,7 +115,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(268, 187);
+            this.btnCancel.Location = new System.Drawing.Point(268, 212);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 6;
@@ -126,9 +127,9 @@
             // 
             this.cmbTier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTier.FormattingEnabled = true;
-            this.cmbTier.Location = new System.Drawing.Point(266, 11);
+            this.cmbTier.Location = new System.Drawing.Point(205, 33);
             this.cmbTier.Name = "cmbTier";
-            this.cmbTier.Size = new System.Drawing.Size(75, 20);
+            this.cmbTier.Size = new System.Drawing.Size(134, 20);
             this.cmbTier.TabIndex = 7;
             // 
             // pictureBox1
@@ -136,7 +137,7 @@
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(345, 9);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(132, 171);
+            this.pictureBox1.Size = new System.Drawing.Size(132, 196);
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             // 
@@ -144,7 +145,7 @@
             // 
             this.clbSummary.ColumnWidth = 65;
             this.clbSummary.FormattingEnabled = true;
-            this.clbSummary.Location = new System.Drawing.Point(79, 160);
+            this.clbSummary.Location = new System.Drawing.Point(79, 185);
             this.clbSummary.MultiColumn = true;
             this.clbSummary.Name = "clbSummary";
             this.clbSummary.Size = new System.Drawing.Size(265, 20);
@@ -153,7 +154,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(2, 165);
+            this.label3.Location = new System.Drawing.Point(2, 190);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 12);
             this.label3.TabIndex = 10;
@@ -161,7 +162,7 @@
             // 
             // btnModel
             // 
-            this.btnModel.Location = new System.Drawing.Point(2, 77);
+            this.btnModel.Location = new System.Drawing.Point(2, 102);
             this.btnModel.Name = "btnModel";
             this.btnModel.Size = new System.Drawing.Size(68, 23);
             this.btnModel.TabIndex = 11;
@@ -172,7 +173,7 @@
             // chkAllDal
             // 
             this.chkAllDal.AutoSize = true;
-            this.chkAllDal.Location = new System.Drawing.Point(260, 37);
+            this.chkAllDal.Location = new System.Drawing.Point(205, 61);
             this.chkAllDal.Name = "chkAllDal";
             this.chkAllDal.Size = new System.Drawing.Size(84, 16);
             this.chkAllDal.TabIndex = 12;
@@ -182,11 +183,11 @@
             // chkEntityToDirectory
             // 
             this.chkEntityToDirectory.AutoSize = true;
-            this.chkEntityToDirectory.Location = new System.Drawing.Point(79, 37);
+            this.chkEntityToDirectory.Location = new System.Drawing.Point(79, 62);
             this.chkEntityToDirectory.Name = "chkEntityToDirectory";
-            this.chkEntityToDirectory.Size = new System.Drawing.Size(156, 16);
+            this.chkEntityToDirectory.Size = new System.Drawing.Size(120, 16);
             this.chkEntityToDirectory.TabIndex = 13;
-            this.chkEntityToDirectory.Text = "实体保存到Entity文件夹";
+            this.chkEntityToDirectory.Text = "实体保存到文件夹";
             this.toolTip1.SetToolTip(this.chkEntityToDirectory, "库到类模式下，实体将会放到Entity中");
             this.chkEntityToDirectory.UseVisualStyleBackColor = true;
             // 
@@ -196,7 +197,7 @@
             this.gpCache.Controls.Add(this.gpCacheServer);
             this.gpCache.Controls.Add(this.cmbCacheType);
             this.gpCache.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gpCache.Location = new System.Drawing.Point(0, 213);
+            this.gpCache.Location = new System.Drawing.Point(0, 235);
             this.gpCache.Name = "gpCache";
             this.gpCache.Size = new System.Drawing.Size(475, 115);
             this.gpCache.TabIndex = 14;
@@ -256,7 +257,7 @@
             // 
             // btnCache
             // 
-            this.btnCache.Location = new System.Drawing.Point(361, 187);
+            this.btnCache.Location = new System.Drawing.Point(355, 212);
             this.btnCache.Name = "btnCache";
             this.btnCache.Size = new System.Drawing.Size(108, 23);
             this.btnCache.TabIndex = 15;
@@ -264,12 +265,24 @@
             this.btnCache.UseVisualStyleBackColor = true;
             this.btnCache.Click += new System.EventHandler(this.btnCache_Click);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(79, 37);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(120, 16);
+            this.checkBox1.TabIndex = 16;
+            this.checkBox1.Text = "属性添加注释标签";
+            this.toolTip1.SetToolTip(this.checkBox1, "添加属性时候将会自动添加注释标签");
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // FrmDBSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(475, 328);
+            this.ClientSize = new System.Drawing.Size(475, 350);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.btnCache);
             this.Controls.Add(this.gpCache);
             this.Controls.Add(this.chkEntityToDirectory);
@@ -325,5 +338,6 @@
         private System.Windows.Forms.Button btnCacheModel;
         private System.Windows.Forms.CheckBox ckbAll;
         private System.Windows.Forms.Button btnCache;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

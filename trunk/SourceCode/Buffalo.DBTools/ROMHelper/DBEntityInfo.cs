@@ -150,6 +150,9 @@ namespace Buffalo.DBTools.ROMHelper
                 return _className;
             }
         }
+
+        private string _baseType;
+
         /// <summary>
         /// »ùÀà
         /// </summary>
@@ -157,13 +160,20 @@ namespace Buffalo.DBTools.ROMHelper
         {
             get 
             {
-                string baseType =typeof(EntityBase).FullName;
-
-                if (CurrentDBConfigInfo.Tier == 1)
+                if (string.IsNullOrEmpty(_baseType))
                 {
-                    baseType = typeof(ThinModelBase).FullName;
+                    _baseType = typeof(EntityBase).FullName;
+
+                    if (CurrentDBConfigInfo.Tier == 1)
+                    {
+                        _baseType = typeof(ThinModelBase).FullName;
+                    }
                 }
-                return baseType;
+                return _baseType;
+            }
+            set 
+            {
+                _baseType = value;
             }
         }
 
