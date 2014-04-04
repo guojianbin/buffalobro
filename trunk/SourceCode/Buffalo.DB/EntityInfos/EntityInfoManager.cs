@@ -196,6 +196,11 @@ namespace Buffalo.DB.EntityInfos
                 {
                     tableAtt.BelongDB = att.InnerText;
                 }
+                att = node.Attributes["Description"];
+                if (att != null)
+                {
+                    tableAtt.Description = att.InnerText;
+                }
                 att = node.Attributes["UseCache"];
                 if (att != null)
                 {
@@ -263,6 +268,11 @@ namespace Buffalo.DB.EntityInfos
                 {
                     tr.IsToDB = att.InnerText == "1";
                 }
+                att = node.Attributes["Description"];
+                if (att != null)
+                {
+                    tr.Description = att.InnerText;
+                }
                 dicRelation[tr.FieldName] = tr;
 
             }
@@ -324,6 +334,11 @@ namespace Buffalo.DB.EntityInfos
                 if (att != null)
                 {
                     ep.ReadOnly = att.InnerText=="1";
+                }
+                att = node.Attributes["Description"];
+                if (att != null)
+                {
+                    ep.Description = att.InnerText;
                 }
                 ep.AllowNull = true;
 
@@ -408,7 +423,7 @@ namespace Buffalo.DB.EntityInfos
             FillEntityInfos(dicParamsInfo, dicRelationInfo, type, tableAtt, dicConfigs);
             DBInfo db = DataAccessLoader.GetDBInfo(tableAtt.BelongDB);
             IDBAdapter idb = db.CurrentDbAdapter;
-            EntityInfoHandle classInfo = new EntityInfoHandle(type, createrHandle, tableAtt.TableName, db);
+            EntityInfoHandle classInfo = new EntityInfoHandle(type, createrHandle, tableAtt, db);
 
             Dictionary<string, bool> dicNotFoundParam=new Dictionary<string,bool>();
             Dictionary<string, bool> dicNotFoundRelation = new Dictionary<string, bool>();

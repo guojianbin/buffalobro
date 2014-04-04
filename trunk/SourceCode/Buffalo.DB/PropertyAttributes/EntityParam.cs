@@ -37,9 +37,9 @@ namespace Buffalo.DB.PropertyAttributes
         /// <param name="propertyName">本字段对应的属性名</param>
         /// <param name="sqlType">对应的SQL数据类型</param>
         /// <param name="propertyType">属性类型</param>
-        public EntityParam(string fieldName, string paramName, string propertyName, DbType sqlType, 
-            EntityPropertyType propertyType)
-            : this(fieldName,paramName, propertyName, sqlType, propertyType, 0, true,false )
+        public EntityParam(string fieldName, string paramName, string propertyName, DbType sqlType,
+            EntityPropertyType propertyType, string description)
+            : this(fieldName,paramName, propertyName, sqlType, propertyType,description, 0, true,false )
         {
             
         }
@@ -51,8 +51,8 @@ namespace Buffalo.DB.PropertyAttributes
         /// <param name="sqlType">对应的SQL数据类型</param>
         /// <param name="propertyType">属性类型</param>
         /// <param name="length">长度</param>
-        public EntityParam(string fieldName, string paramName, string propertyName, DbType sqlType, 
-            EntityPropertyType propertyType,int length,bool allowNull,bool isReadOnly)
+        public EntityParam(string fieldName, string paramName, string propertyName, DbType sqlType,
+            EntityPropertyType propertyType, string description, int length, bool allowNull, bool isReadOnly)
         {
             this._fieldName = fieldName;
             this._paramName = paramName;
@@ -62,6 +62,7 @@ namespace Buffalo.DB.PropertyAttributes
             this._length = length;
             this._allowNull = allowNull;
             this._readonly = isReadOnly;
+            this._description = description;
         }
         /// <summary>
         /// 对应的字段名

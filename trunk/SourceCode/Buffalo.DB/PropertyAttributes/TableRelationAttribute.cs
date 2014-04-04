@@ -61,7 +61,8 @@ namespace Buffalo.DB.PropertyAttributes
         /// <param name="isParent">是否主表属性</param>
         /// <param name="?"></param>
         public TableRelationAttribute(string fieldName,
-            string propertyName, string sourcePropertyName, string targetPropertyName, bool isParent)
+            string propertyName, string sourcePropertyName, 
+            string targetPropertyName, bool isParent,string description)
         {
             _fieldName = fieldName;
             _propertyName = propertyName;
@@ -69,6 +70,7 @@ namespace Buffalo.DB.PropertyAttributes
             _targetName = targetPropertyName;
             _isParent = isParent;
             _isToDB = false;
+            _description = description;
         }
 
         private string _description;

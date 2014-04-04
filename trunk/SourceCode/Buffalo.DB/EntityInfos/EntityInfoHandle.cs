@@ -5,6 +5,7 @@ using Buffalo.Kernel.FastReflection;
 using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.CommBase;
 using Buffalo.DB.ProxyBuilder;
+using Buffalo.DB.PropertyAttributes;
 
 
 namespace Buffalo.DB.EntityInfos
@@ -18,7 +19,6 @@ namespace Buffalo.DB.EntityInfos
     {
         
         private Type _entityType;
-        private string _tableName;
         //private string connectionKey;
         private CreateInstanceHandler _createInstanceHandler;
         private PropertyInfoCollection _propertyInfoHandles;
@@ -26,6 +26,7 @@ namespace Buffalo.DB.EntityInfos
         private List<EntityPropertyInfo> _primaryProperty;//主属性
         private DBInfo _dbInfo;
         private CreateInstanceHandler _createProxyInstanceHandler;
+        private TableAttribute _tableInfo;
         /// <summary>
         /// 类的信息
         /// </summary>
@@ -35,13 +36,13 @@ namespace Buffalo.DB.EntityInfos
         /// <param name="tableName">对应的表名</param>
         /// <param name="baseListInfo">此对象的查询缓存集合句柄</param>
         /// <param name="connectionKey">连接字符串的键</param>
-        internal EntityInfoHandle(Type entityType, CreateInstanceHandler createInstanceHandler, 
-             string tableName,  DBInfo db) 
+        internal EntityInfoHandle(Type entityType, CreateInstanceHandler createInstanceHandler,
+             TableAttribute tableInfo, DBInfo db) 
         {
             this._entityType = entityType;
             this._createInstanceHandler = createInstanceHandler;
-            
-            this._tableName = tableName;
+
+            this._tableInfo = tableInfo;
             //this.connectionKey = connectionKey;
             this._dbInfo = db;
         }
@@ -79,7 +80,6 @@ namespace Buffalo.DB.EntityInfos
                 return _dbInfo;
             }
         }
-
         /// <summary>
         /// 本实体的类型
         /// </summary>
@@ -90,7 +90,16 @@ namespace Buffalo.DB.EntityInfos
                 return _entityType;
             }
         }
-
+        /// <summary>
+        /// 注释
+        /// </summary>
+        public string Description
+        {
+            get
+            {
+                return _tableInfo.Description;
+            }
+        }
         /// <summary>
         /// 对应的表名名
         /// </summary>
@@ -98,7 +107,7 @@ namespace Buffalo.DB.EntityInfos
         {
             get
             {
-                return _tableName;
+                return _tableInfo.TableName;
             }
         }
         ///// <summary>

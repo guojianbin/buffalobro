@@ -71,6 +71,16 @@ namespace Buffalo.DB.EntityInfos
             }
         }
         /// <summary>
+        /// 对应的属性注释
+        /// </summary>
+        public string Description
+        {
+            get
+            {
+                return _mappingInfo.Description;
+            }
+        }
+        /// <summary>
         /// 是否主表属性
         /// </summary>
         public bool IsParent

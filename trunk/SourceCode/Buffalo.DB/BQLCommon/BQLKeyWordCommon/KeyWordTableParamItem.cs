@@ -136,7 +136,7 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
             EntityPropertyType type,int length)
         {
             EntityParam info = new EntityParam("",paramName,"",
-                dbType, type, length, false,false);
+                dbType, type,"", length, false,false);
             _tparams.Add(info);
             return this;
         }

@@ -148,12 +148,22 @@ namespace Buffalo.DBTools.HelperKernel
             set { _isAllTable = value; }
         }
 
+        private bool _addDescription;
+        /// <summary>
+        /// 是否添加Description标签
+        /// </summary>
+        public bool AddDescription
+        {
+            get { return _addDescription; }
+            set { _addDescription = value; }
+        }
         /// <summary>
         /// 创建数据库信息
         /// </summary>
         /// <returns></returns>
         public DBInfo CreateDBInfo() 
         {
+            
             DBInfo info = new DBInfo(DbName, ConnectionString, DbType);
             return info;
         }

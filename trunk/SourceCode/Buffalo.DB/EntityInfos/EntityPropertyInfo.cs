@@ -60,6 +60,8 @@ namespace Buffalo.DB.EntityInfos
             }
         }
         
+
+
         /// <summary>
         /// 字段配置信息
         /// </summary>
@@ -102,8 +104,17 @@ namespace Buffalo.DB.EntityInfos
                 return _paramInfo.PropertyName;
             }
         }
-        
 
+        /// <summary>
+        /// 属性注释
+        /// </summary>
+        public string Description
+        {
+            get
+            {
+                return _paramInfo.Description;
+            }
+        }
         /// <summary>
         /// 获取对应的字段的SQL类型
         /// </summary>

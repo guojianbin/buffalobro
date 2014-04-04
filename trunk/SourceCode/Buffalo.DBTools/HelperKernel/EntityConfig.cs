@@ -290,6 +290,7 @@ namespace Buffalo.DBTools.HelperKernel
             _designerInfo = info;
             //_classShape = classShape;
             _classType = ctype;
+            
             FillClassInfo();
             InitField();
             InitPropertys();

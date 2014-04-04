@@ -22,6 +22,7 @@ namespace Buffalo.DBTools.HelperKernel
         private EntityConfig _belongEntity;
         private int _length;
         private bool _readonly;
+        
 
 
        /// <summary>
@@ -36,6 +37,7 @@ namespace Buffalo.DBTools.HelperKernel
             _fInfo = fInfo;
             GetEntityParamInfo(fInfo);
             _belongEntity = belongEntity;
+            
         }
         /// <summary>
         /// 属性类型
@@ -62,8 +64,16 @@ namespace Buffalo.DBTools.HelperKernel
                 }
             
         }
-        
-        
+        /// <summary>
+        /// 注释
+        /// </summary>
+        public string Description 
+        {
+            get 
+            {
+                return _fInfo.DocSummary;
+            }
+        }
 
         /// <summary>
         /// 字段类型
@@ -137,6 +147,7 @@ namespace Buffalo.DBTools.HelperKernel
             ep.PropertyType = EntityPropertyType;
             ep.AllowNull = IsNullProperty(_fInfo.MemberTypeShortName);
             ep.ReadOnly = ReadOnly;
+            ep.Description = Description;
             return ep;
         }
 

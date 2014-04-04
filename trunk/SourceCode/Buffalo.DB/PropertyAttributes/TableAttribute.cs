@@ -28,7 +28,16 @@ namespace Buffalo.DB.PropertyAttributes
         {
 
         }
+        private string _description;
 
+        /// <summary>
+        /// ×Ö¶Î×¢ÊÍ
+        /// </summary>
+        public string Description
+        {
+            get { return _description; }
+            set { _description = value; }
+        }
         /// <summary>
         /// ËùÊô¿â
         /// </summary>

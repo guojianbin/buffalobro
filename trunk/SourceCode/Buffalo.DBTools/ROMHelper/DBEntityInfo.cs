@@ -82,7 +82,13 @@ namespace Buffalo.DBTools.ROMHelper
             get { return _fileName; }
         }
 
-
+        /// <summary>
+        /// ×¢ÊÍ
+        /// </summary>
+        public string Summary
+        {
+            get { return _belongTable.Description; }
+        }
 
 
 
@@ -160,15 +166,7 @@ namespace Buffalo.DBTools.ROMHelper
         {
             get 
             {
-                if (string.IsNullOrEmpty(_baseType))
-                {
-                    _baseType = typeof(EntityBase).FullName;
-
-                    if (CurrentDBConfigInfo.Tier == 1)
-                    {
-                        _baseType = typeof(ThinModelBase).FullName;
-                    }
-                }
+                
                 return _baseType;
             }
             set 

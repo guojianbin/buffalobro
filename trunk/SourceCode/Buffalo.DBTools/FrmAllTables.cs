@@ -16,6 +16,8 @@ using Buffalo.DB.CommBase.BusinessBases;
 using System.IO;
 using System.Xml;
 using Buffalo.Win32Kernel.DataGridViewUnit;
+using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
+using Buffalo.DB.CommBase;
 
 namespace Buffalo.DBTools
 {
@@ -106,6 +108,7 @@ namespace Buffalo.DBTools
             _curLst =TableChecker.GetAllTables(info);
             gvTables.AllowUserToOrderColumns = true;
             RefreashTablesInfo();
+            FillBaseType();
         }
 
         /// <summary>
@@ -123,6 +126,39 @@ namespace Buffalo.DBTools
             
 
         }
+
+        /// <summary>
+        /// 默认基类
+        /// </summary>
+        /// <returns></returns>
+        private string GetDefaultBaseType()
+        {
+            string ret = null;
+
+            ret = typeof(EntityBase).FullName;
+
+            if (DbInfo.Tier == 1)
+            {
+                ret = typeof(ThinModelBase).FullName;
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 填充基类
+        /// </summary>
+        private void FillBaseType() 
+        {
+            List<ClrClass> lstClass=Connect.GetAllClass(DesignerInfo.SelectedDiagram);
+            cmbBaseType.Items.Clear();
+            cmbBaseType.Items.Add(GetDefaultBaseType());
+            foreach (ClrClass ctype in lstClass) 
+            {
+                string fullName = ctype.OwnerNamespace.Name + "." + ctype.Name;
+                cmbBaseType.Items.Add(fullName);
+            }
+        }
+
 
         /// <summary>
         /// 筛选表信息
@@ -253,6 +289,7 @@ namespace Buffalo.DBTools
             this.Close();
         }
 
+       
 
 
         /// <summary>

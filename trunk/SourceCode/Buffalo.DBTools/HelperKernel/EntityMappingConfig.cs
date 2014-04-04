@@ -290,6 +290,10 @@ namespace Buffalo.DBTools.HelperKernel
             att.InnerText = "0";
             classNode.Attributes.Append(att);
 
+            att = doc.CreateAttribute("Description");
+            att.InnerText = entity.Summary;
+            classNode.Attributes.Append(att);
+
             AppendPropertyInfo(entity.BelongTable.Params, classNode);
             AppendRelationInfo(entity.BelongTable.RelationItems, classNode);
             return doc;
@@ -336,6 +340,10 @@ namespace Buffalo.DBTools.HelperKernel
 
                 att = doc.CreateAttribute("IsParent");//数据库类型长度
                 att.InnerText = field.IsParent ? "1" : "0";
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("Description");//属性注释
+                att.InnerText = field.Description;
                 node.Attributes.Append(att);
             }
         }
@@ -385,6 +393,10 @@ namespace Buffalo.DBTools.HelperKernel
                 att = doc.CreateAttribute("ReadOnly");//字段名
                 att.InnerText = field.ReadOnly?"1":"0";
                 node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("Description");//属性注释
+                att.InnerText = field.Description;
+                node.Attributes.Append(att);
             }
         }
 
@@ -423,6 +435,10 @@ namespace Buffalo.DBTools.HelperKernel
 
             att = doc.CreateAttribute("UseCache");
             att.InnerText = entity.UseCache?"1":"0";
+            classNode.Attributes.Append(att);
+
+            att = doc.CreateAttribute("Description");
+            att.InnerText = entity.Summary;
             classNode.Attributes.Append(att);
 
             AppendPropertyInfo(entity, classNode);
@@ -470,6 +486,9 @@ namespace Buffalo.DBTools.HelperKernel
 
                 att = doc.CreateAttribute("IsParent");//数据库类型长度
                 att.InnerText = field.IsParent ? "1" : "0";
+                node.Attributes.Append(att);
+                att = doc.CreateAttribute("Description");//属性注释
+                att.InnerText = field.Summary;
                 node.Attributes.Append(att);
             }
 
@@ -524,6 +543,10 @@ namespace Buffalo.DBTools.HelperKernel
 
                 att = doc.CreateAttribute("ReadOnly");//字段名
                 att.InnerText = field.ReadOnly ? "1" : "0";
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("Description");//属性注释
+                att.InnerText = field.Summary;
                 node.Attributes.Append(att);
             }
 
