@@ -14,6 +14,7 @@ using System.Xml;
 using Buffalo.DB.CommBase;
 using Buffalo.DB.CommBase.BusinessBases;
 using Buffalo.DBTools.UIHelper;
+using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 
 
 namespace Buffalo.DBTools.ROMHelper
@@ -97,7 +98,8 @@ namespace Buffalo.DBTools.ROMHelper
         /// </summary>
         /// <param name="belong">所属的数据库信息</param>
         public DBEntityInfo(string entityNamespace, DBTableInfo belong, 
-            ClassDesignerInfo designerInfo, DBConfigInfo currentDBConfigInfo) 
+            ClassDesignerInfo designerInfo, DBConfigInfo currentDBConfigInfo,
+            string baseType) 
         {
             _belongTable = belong;
             _entityNamespace = entityNamespace;
@@ -105,9 +107,36 @@ namespace Buffalo.DBTools.ROMHelper
             //_currentProject = currentProject;
             _designerInfo = designerInfo;
             _currentDBConfigInfo = currentDBConfigInfo;
+            _baseType = baseType;
             InitInfo();
             //_tiers = tiers;
         }
+
+        private Dictionary<string, bool> _dicBaseTypeParam = new Dictionary<string, bool>();
+
+        
+
+        /// <summary>
+        /// 获取基类已有字段
+        /// </summary>
+        private void BildBaseTypeParam() 
+        {
+            if (_baseType == typeof(EntityBase).FullName || _baseType == typeof(ThinModelBase).FullName) 
+            {
+                return;
+            }
+            List<ClrClass> lstClass=Connect.GetAllClass(_designerInfo.SelectedDiagram);
+
+            foreach (ClrClass cls in lstClass) 
+            {
+                if (_baseType==EntityConfig.GetFullName(cls)) 
+                {
+
+                }
+
+            }
+        }
+
 
         /// <summary>
         /// 初始化类信息

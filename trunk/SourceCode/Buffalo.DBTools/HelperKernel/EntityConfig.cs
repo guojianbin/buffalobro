@@ -502,6 +502,16 @@ namespace Buffalo.DBTools.HelperKernel
         }
 
         /// <summary>
+        /// 获取ClrClass的全名
+        /// </summary>
+        /// <param name="cls"></param>
+        /// <returns></returns>
+        public static string GetFullName(ClrClass cls) 
+        {
+            return cls.OwnerNamespace.Name + "." + cls.Name;
+        }
+
+        /// <summary>
         /// 填充类信息
         /// </summary>
         private void FillClassInfo() 

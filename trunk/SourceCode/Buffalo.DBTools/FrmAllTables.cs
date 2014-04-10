@@ -154,9 +154,10 @@ namespace Buffalo.DBTools
             cmbBaseType.Items.Add(GetDefaultBaseType());
             foreach (ClrClass ctype in lstClass) 
             {
-                string fullName = ctype.OwnerNamespace.Name + "." + ctype.Name;
+                string fullName = EntityConfig.GetFullName(ctype);
                 cmbBaseType.Items.Add(fullName);
             }
+            cmbBaseType.SelectedIndex = 0;
         }
 
 
@@ -277,8 +278,12 @@ namespace Buffalo.DBTools
                     for (int i = 0; i < lstGen.Count; i++)
                     {
                         frmPro.UpdateProgress(i, lstGen.Count, "正在生成");
-
-                        DBEntityInfo info = new DBEntityInfo(entityNamespace, lstGen[i], DesignerInfo, DbInfo);
+                        string baseType = cmbBaseType.Text;
+                        if (string.IsNullOrEmpty(baseType)) 
+                        {
+                            baseType = GetDefaultBaseType();
+                        }
+                        DBEntityInfo info = new DBEntityInfo(entityNamespace, lstGen[i], DesignerInfo, DbInfo, baseType);
                         info.GreanCode(doc);
                     }
                     //拷贝备份
