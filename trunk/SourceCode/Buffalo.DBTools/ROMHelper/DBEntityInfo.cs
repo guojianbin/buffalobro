@@ -110,6 +110,7 @@ namespace Buffalo.DBTools.ROMHelper
             _baseType = baseType;
             InitInfo();
             //_tiers = tiers;
+            
         }
 
         /// <summary>
