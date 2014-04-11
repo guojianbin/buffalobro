@@ -681,8 +681,6 @@ namespace Buffalo.DBTools.HelperKernel
             _fields = new Dictionary<string, CodeElementPosition>();
             for (int j = 0; j < lstFields.Count; j++)
             {
-
-
                 ClrField field = lstFields[j];
                 if (field == null)
                 {

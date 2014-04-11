@@ -112,28 +112,76 @@ namespace Buffalo.DBTools.ROMHelper
             //_tiers = tiers;
         }
 
-        private Dictionary<string, bool> _dicBaseTypeParam = new Dictionary<string, bool>();
-
+        /// <summary>
+        /// 填充字段和映射信息
+        /// </summary>
+        /// <param name="cls"></param>
+        /// <param name="designerInfo"></param>
+        /// <param name="dicParam"></param>
+        /// <param name="dicRelation"></param>
+        public static void FillBaseTypeParam(ClrClass cls, ClassDesignerInfo designerInfo,
+            Dictionary<string, EntityParamField> dicParam, Dictionary<string, EntityRelationItem> dicRelation) 
+        {
+            
+            EntityConfig entity = new EntityConfig(cls, _designerInfo);
+            foreach (EntityParamField ep in entity.EParamFields) 
+            {
+                if (!ep.IsGenerate) 
+                {
+                    continue;
+                }
+                dicParam[ep.ParamName] = ep;
+            }
+            foreach (EntityRelationItem er in entity.ERelation)
+            {
+                if (!er.IsGenerate)
+                {
+                    continue;
+                }
+                string key = er.FieldName;
+                dicRelation[key] = er;
+            }
+            
+        }
         
 
         /// <summary>
-        /// 获取基类已有字段
+        /// 去掉基类已有字段
         /// </summary>
-        private void BildBaseTypeParam() 
+        private void FilterBaseTypeParam() 
         {
-            if (_baseType == typeof(EntityBase).FullName || _baseType == typeof(ThinModelBase).FullName) 
+            if (_baseType == typeof(EntityBase).FullName || _baseType == typeof(ThinModelBase).FullName)
             {
                 return;
             }
-            List<ClrClass> lstClass=Connect.GetAllClass(_designerInfo.SelectedDiagram);
-
-            foreach (ClrClass cls in lstClass) 
+            ClrClass cls = Connect.FindClrClassByName(_baseType, _designerInfo.SelectedDiagram);
+            if (cls == null) 
             {
-                if (_baseType==EntityConfig.GetFullName(cls)) 
+                return;
+            }
+
+            Dictionary<string, EntityParamField> dicParam=new Dictionary<string,EntityParamField>();
+            Dictionary<string, EntityRelationItem> dicRelation = new Dictionary<string, EntityRelationItem>();
+            FillBaseTypeParam(cls, _designerInfo, dicParam, dicRelation);
+            int count = _belongTable.Params.Count;
+            for (int i = count - 1; i >= 0; i--) 
+            {
+                string key = _belongTable.Params[i].ParamName;
+                if (dicParam.ContainsKey(key)) 
                 {
-
+                    _belongTable.Params.RemoveAt(i);
                 }
+            }
 
+            count = _belongTable.RelationItems.Count;
+            for (int i = count - 1; i >= 0; i--)
+            {
+                EntityRelationItem er = _belongTable.RelationItems[i];
+                string key = er.SourceProperty + "_" + er.TargetProperty;
+                if (dicParam.ContainsKey(key))
+                {
+                    _belongTable.Params.RemoveAt(i);
+                }
             }
         }
 
