@@ -110,7 +110,7 @@ namespace Buffalo.DBTools.ROMHelper
             _baseType = baseType;
             InitInfo();
             //_tiers = tiers;
-            
+            FilterBaseTypeParam();
         }
 
         /// <summary>
@@ -120,11 +120,24 @@ namespace Buffalo.DBTools.ROMHelper
         /// <param name="designerInfo"></param>
         /// <param name="dicParam"></param>
         /// <param name="dicRelation"></param>
-        public static void FillBaseTypeParam(ClrClass cls, ClassDesignerInfo designerInfo,
+        public static void FillBaseTypeParam(string type,ClassDesignerInfo designerInfo,
             Dictionary<string, EntityParamField> dicParam, Dictionary<string, EntityRelationItem> dicRelation) 
         {
-            
-            EntityConfig entity = new EntityConfig(cls, _designerInfo);
+            if (type == typeof(EntityBase).FullName || type == typeof(ThinModelBase).FullName)
+            {
+                return;
+            }
+            ClrClass cls = Connect.FindClrClassByName(type, designerInfo.SelectedDiagram);
+            if (cls == null)
+            {
+                return;
+            }
+
+            EntityConfig entity = new EntityConfig(cls, designerInfo);
+            if (!entity.HasConfig) 
+            {
+                return;
+            }
             foreach (EntityParamField ep in entity.EParamFields) 
             {
                 if (!ep.IsGenerate) 
@@ -139,10 +152,11 @@ namespace Buffalo.DBTools.ROMHelper
                 {
                     continue;
                 }
-                string key = er.FieldName;
+                string key = er.SourceProperty+"_"+er.TargetProperty;
                 dicRelation[key] = er;
             }
-            
+            FillBaseTypeParam(entity.BaseTypeName, designerInfo, dicParam, dicRelation);
+
         }
         
 
@@ -151,19 +165,11 @@ namespace Buffalo.DBTools.ROMHelper
         /// </summary>
         private void FilterBaseTypeParam() 
         {
-            if (_baseType == typeof(EntityBase).FullName || _baseType == typeof(ThinModelBase).FullName)
-            {
-                return;
-            }
-            ClrClass cls = Connect.FindClrClassByName(_baseType, _designerInfo.SelectedDiagram);
-            if (cls == null) 
-            {
-                return;
-            }
+            
 
             Dictionary<string, EntityParamField> dicParam=new Dictionary<string,EntityParamField>();
             Dictionary<string, EntityRelationItem> dicRelation = new Dictionary<string, EntityRelationItem>();
-            FillBaseTypeParam(cls, _designerInfo, dicParam, dicRelation);
+            FillBaseTypeParam(_baseType, _designerInfo, dicParam, dicRelation);
             int count = _belongTable.Params.Count;
             for (int i = count - 1; i >= 0; i--) 
             {
@@ -177,11 +183,11 @@ namespace Buffalo.DBTools.ROMHelper
             count = _belongTable.RelationItems.Count;
             for (int i = count - 1; i >= 0; i--)
             {
-                EntityRelationItem er = _belongTable.RelationItems[i];
-                string key = er.SourceProperty + "_" + er.TargetProperty;
-                if (dicParam.ContainsKey(key))
+                TableRelationAttribute er = _belongTable.RelationItems[i];
+                string key = EntityFieldBase.ToPascalName(er.SourceName) + "_" + EntityFieldBase.ToPascalName(er.TargetName);
+                if (dicRelation.ContainsKey(key))
                 {
-                    _belongTable.Params.RemoveAt(i);
+                    _belongTable.RelationItems.RemoveAt(i);
                 }
             }
         }

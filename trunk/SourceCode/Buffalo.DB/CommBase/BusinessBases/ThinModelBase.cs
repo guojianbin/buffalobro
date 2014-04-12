@@ -41,7 +41,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public int Insert() 
         {
-            return Insert(true);
+            return Insert(null,true);
         }
 
         /// <summary>
@@ -109,9 +109,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public virtual int Insert(bool fillPrimaryKey)
         {
-            DataAccessSetBase dal = GetBaseDataAccess();
-
-            return dal.DoInsert(this,null, fillPrimaryKey);
+            return Insert(null, fillPrimaryKey);
         }
         /// <summary>
         /// 保存实体并填充ID
@@ -158,7 +156,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public int Update()
         {
-            return Update(false);
+            return Update(null,false);
         }
 
         /// <summary>

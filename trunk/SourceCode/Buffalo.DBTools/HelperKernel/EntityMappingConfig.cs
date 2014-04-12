@@ -18,13 +18,13 @@ namespace Buffalo.DBTools.HelperKernel
         /// º”‘ÿ≈‰÷√–≈œ¢
         /// </summary>
         /// <param name="entity"></param>
-        public static void LoadConfigInfo(EntityConfig entity) 
+        public static bool LoadConfigInfo(EntityConfig entity) 
         {
             FileInfo classFile = new FileInfo(entity.DesignerInfo.SelectDocView.DocData.FileName);
             string fileName = classFile.DirectoryName + "\\BEM\\" + entity.ClassName + ".BEM.xml";
             if (!File.Exists(fileName)) 
             {
-                return;
+                return false;
             }
             XmlDocument doc = new XmlDocument();
             doc.Load(fileName);
@@ -53,6 +53,7 @@ namespace Buffalo.DBTools.HelperKernel
 
             FillPropertyInfo(doc, entity);
             FillRelationInfo(doc, entity);
+            return true;
         }
 
         /// <summary>

@@ -672,6 +672,15 @@ namespace Buffalo.DBTools.HelperKernel
             return null;
         }
 
+        private bool _hasConfig;
+        /// <summary>
+        /// 此实体是否存在配置(BEM)
+        /// </summary>
+        public bool HasConfig
+        {
+            get { return _hasConfig; }
+        }
+
         /// <summary>
         /// 初始化字段信息
         /// </summary>
@@ -709,7 +718,7 @@ namespace Buffalo.DBTools.HelperKernel
                 _eParamFields.SortItem();
                 _eRelation.SortItem();
             }
-            EntityMappingConfig.LoadConfigInfo(this);
+            _hasConfig=EntityMappingConfig.LoadConfigInfo(this);
 
 
         }
