@@ -11,6 +11,7 @@ using Buffalo.DB.CommBase.BusinessBases;
 using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.ProxyBuilder;
 using Buffalo.DB.CacheManager;
+using Buffalo.Kernel;
 
 namespace Buffalo.DB.CommBase.DataAccessBases
 {
@@ -281,6 +282,14 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 return 1;
             }
+            else if (type == DbType.String) 
+            {
+                return CommonMethods.GuidToString(Guid.NewGuid());
+            }
+            else if (type == DbType.Guid)
+            {
+                return Guid.NewGuid();
+            }
             return null;
         }
 
@@ -341,6 +350,15 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             if (DefaultType.EqualType(objType, DefaultType.UIntType))
             {
                 return (uint)val + 1;
+            }
+
+            if (DefaultType.EqualType(objType, DefaultType.StringType))
+            {
+                return CommonMethods.GuidToString(Guid.NewGuid());
+            }
+            if (DefaultType.EqualType(objType, DefaultType.GUIDType))
+            {
+                return Guid.NewGuid();
             }
 
             return null;
@@ -430,10 +448,14 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                 }
                 else if (info.IsVersion) //∞Ê±æ≥ı º÷µ
                 {
-                    object conValue = GetDefaultConcurrency(info);
+                    object conValue = curValue;
+                    if (conValue == null) 
+                    {
+                        conValue=GetDefaultConcurrency(info);
+                    }
                     if (conValue != null)
                     {
-                        DBParameter prm = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
+                        DBParameter prm = list.NewParameter(info.SqlType, conValue, EntityInfo.DBInfo);
 
                         sqlParams.Append(",");
                         sqlParams.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));

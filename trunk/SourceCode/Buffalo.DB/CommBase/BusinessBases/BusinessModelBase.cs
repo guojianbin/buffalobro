@@ -298,7 +298,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         /// <param name="entity">对象</param>
         /// <returns></returns>
-        public virtual object Delete(T entity)
+        public virtual object Delete(T entity,bool isConcurrency)
         {
 
             DataAccessModel<T> entityDao = new DataAccessModel<T>();
@@ -308,10 +308,18 @@ namespace Buffalo.DB.CommBase.BusinessBases
                 return ret;
             }
 
-            _affectedRows = entityDao.Delete(entity);
+            _affectedRows = entityDao.Delete(entity, null, isConcurrency);
             return ret;
         }
-
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="entity">对象</param>
+        /// <returns></returns>
+        public object Delete(T entity)
+        {
+            return Delete(entity, false);
+        }
         
 
         /// <summary>
@@ -338,6 +346,15 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <param name="lstScope">批量删除的条件集合</param>
         /// <returns>大于0:删除完毕,小于0:删除失败</returns>
         public virtual object Delete(ScopeList lstScope)
+        {
+            return Delete(lstScope, false);
+        }
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="lstScope">批量删除的条件集合</param>
+        /// <returns>大于0:删除完毕,小于0:删除失败</returns>
+        public virtual object Delete(ScopeList lstScope, bool isConcurrency)
         {
 
             DataAccessModel<T> entityDao = new DataAccessModel<T>();
