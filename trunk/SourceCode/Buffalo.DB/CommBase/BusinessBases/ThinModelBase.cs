@@ -179,7 +179,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
             }
             
             
-            return dal.Delete(null, lstScope, optimisticConcurrency);
+            return dal.Delete(this, lstScope, optimisticConcurrency);
         }
 
         /// <summary>
