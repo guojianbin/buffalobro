@@ -106,7 +106,7 @@ namespace Buffalo.DB.CommBase
         /// 通知属性已经被修改
         /// </summary>
         /// <param name="propertyName"></param>
-        protected bool HasPropertyChange(string propertyName)
+        protected internal bool HasPropertyChange(string propertyName)
         {
             return _dicUpdateProperty___.ContainsKey(propertyName);
         }

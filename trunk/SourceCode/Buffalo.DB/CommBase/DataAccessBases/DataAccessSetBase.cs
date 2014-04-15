@@ -102,14 +102,14 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                             //string paramKey = CurEntityInfo.DBInfo.CurrentDbAdapter.FormatParamKeyName(DataAccessCommon.FormatParam(info.ParamName, index));
                             if (info.IsNormal)
                             {
-                                if (obj._dicUpdateProperty___ == null || obj._dicUpdateProperty___.Count == 0)
-                                {
-                                    //if (DefaultType.IsDefaultValue(curValue))
-                                    //{
-                                    continue;
-                                    //}
-                                }
-                                else if (!obj._dicUpdateProperty___.ContainsKey(info.PropertyName))
+                                //if (obj._dicUpdateProperty___ == null || obj._dicUpdateProperty___.Count == 0)
+                                //{
+                                //    //if (DefaultType.IsDefaultValue(curValue))
+                                //    //{
+                                //    continue;
+                                //    //}
+                                //}
+                                if (!obj.HasPropertyChange(info.PropertyName))
                                 {
                                     continue;
                                 }

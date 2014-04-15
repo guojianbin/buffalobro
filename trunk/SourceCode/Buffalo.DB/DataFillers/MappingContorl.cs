@@ -222,6 +222,10 @@ namespace Buffalo.DB.DataFillers
         /// <param name="sender">发送者</param>
         public static void FillParent(string propertyName, EntityBase sender)
         {
+            if (sender.HasPropertyChange(propertyName))
+            {
+                return;
+            }
             Type senderType =CH.GetRealType(sender);//发送者类型
             EntityInfoHandle senderInfo = EntityInfoManager.GetEntityHandle(senderType);//获取发送类的信息
             EntityMappingInfo mappingInfo = senderInfo.MappingInfo[propertyName];
@@ -240,6 +244,7 @@ namespace Buffalo.DB.DataFillers
             
             if (mappingInfo != null)
             {
+
                 EntityPropertyInfo senderHandle = mappingInfo.SourceProperty;//本类的主键属性句柄
 
                 //IList pks = CollectFks(baseList, senderHandle, mappingInfo, dicElement, senderInfo.DBInfo);
@@ -258,53 +263,34 @@ namespace Buffalo.DB.DataFillers
         /// <param name="dicElement">元素</param>
         /// <param name="mappingInfo">当前父表对应属性的映射信息</param>
         private static void FillParent(object pk, EntityInfoHandle fatherInfo,
-             EntityMappingInfo mappingInfo,string propertyName, EntityBase sender)
-
+             EntityMappingInfo mappingInfo, string propertyName, EntityBase sender)
         {
             DBInfo db = fatherInfo.DBInfo;
-            //if (pks.Count>0)
-            //{
-                DataBaseOperate oper = fatherInfo.DBInfo.DefaultOperate;
-                BQLDbBase dao = new BQLDbBase(oper);
-                ScopeList lstScope = new ScopeList();
+            DataBaseOperate oper = fatherInfo.DBInfo.DefaultOperate;
+            BQLDbBase dao = new BQLDbBase(oper);
+            ScopeList lstScope = new ScopeList();
 
-                sender.OnFillParent(propertyName, lstScope);
-                lstScope.AddEqual(mappingInfo.TargetProperty.PropertyName, pk);
-                IDataReader reader = dao.QueryReader(lstScope, fatherInfo.EntityType);
-                try
+            sender.OnFillParent(propertyName, lstScope);
+            lstScope.AddEqual(mappingInfo.TargetProperty.PropertyName, pk);
+            IDataReader reader = dao.QueryReader(lstScope, fatherInfo.EntityType);
+            try
+            {
+                //获取子表的get列表
+                List<EntityPropertyInfo> lstParamNames = CacheReader.GenerateCache(reader, fatherInfo);//创建一个缓存数值列表
+                while (reader.Read())
                 {
-                    //获取子表的get列表
-                    List<EntityPropertyInfo> lstParamNames = CacheReader.GenerateCache(reader, fatherInfo);//创建一个缓存数值列表
-                    //IList baseList = new ArrayList();//缓存的父列表
-                    //string fk = reader[mappingInfo.TargetProperty.ParamName].ToString();
-
-                    while (reader.Read())
-                    {
-                        //object obj = createrHandle();
-
-                        //ArrayList lst = null;
-                        //if (dicElement.TryGetValue(fk, out lst))
-                        //{
-                        //foreach (object curObj in lst)
-                        //{
-                        object newObj = fatherInfo.CreateSelectProxyInstance();
-                        //object fatherObj = mappingInfo.GetValue(curObj);
-                        mappingInfo.SetValue(sender, newObj);
-                        CacheReader.FillObjectFromReader(reader, lstParamNames, newObj, db);
-                        //baseList.Add(newObj);
-                        //(newObj as EntityBase).SetBaseList(baseList);
-                        //}
-                        
-                        //}
-                    }
-
+                    object newObj = fatherInfo.CreateSelectProxyInstance();
+                    mappingInfo.SetValue(sender, newObj);
+                    CacheReader.FillObjectFromReader(reader, lstParamNames, newObj, db);
                 }
-                finally
-                {
-                    reader.Close();
-                    oper.AutoClose();
-                }
-            //}
+                sender.OnPropertyUpdated(mappingInfo.PropertyName);
+            }
+            finally
+            {
+                reader.Close();
+                oper.AutoClose();
+            }
+
         }
 
         

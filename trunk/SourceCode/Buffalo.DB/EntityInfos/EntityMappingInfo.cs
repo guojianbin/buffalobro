@@ -4,6 +4,7 @@ using System.Text;
 using Buffalo.DB.PropertyAttributes;
 using Buffalo.Kernel.FastReflection;
 using System.Reflection;
+using Buffalo.DB.CommBase;
 
 namespace Buffalo.DB.EntityInfos
 {
@@ -39,6 +40,15 @@ namespace Buffalo.DB.EntityInfos
         public PropertyInfo BelongPropertyInfo
         {
             get { return _belongPropertyInfo; }
+        }
+        public override void SetValue(object args, object value)
+        {
+            EntityBase obj = args as EntityBase;
+            if (obj != null)
+            {
+                obj.OnPropertyUpdated(PropertyName);
+            }
+            base.SetValue(args, value);
         }
         /// <summary>
         /// ”≥…‰–≈œ¢

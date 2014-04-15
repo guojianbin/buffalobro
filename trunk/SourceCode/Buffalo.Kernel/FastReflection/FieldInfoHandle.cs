@@ -94,7 +94,7 @@ namespace Buffalo.Kernel.FastReflection
         /// </summary>
         /// <param name="args">对象</param>
         /// <param name="value">值</param>
-        public void SetValue(object args, object value) 
+        public virtual void SetValue(object args, object value) 
         {
             if (_setHandle == null) 
             {
@@ -108,7 +108,7 @@ namespace Buffalo.Kernel.FastReflection
         /// </summary>
         /// <param name="args">对象</param>
         /// <param name="value">值</param>
-        public object GetValue(object args)
+        public virtual object GetValue(object args)
         {
             if (_getHandle == null)
             {

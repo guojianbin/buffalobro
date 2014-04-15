@@ -66,6 +66,7 @@ namespace Buffalo.DB.CommBase
         private string ClearParentProperty(EntityBase entity)
         {
             _mapInfo.SetValue(entity, null);
+            entity._dicUpdateProperty___.Remove(_mapInfo.PropertyName);
             return null;
         }
 

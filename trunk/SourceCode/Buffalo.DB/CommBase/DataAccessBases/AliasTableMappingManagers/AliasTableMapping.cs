@@ -145,6 +145,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
                     if (childMapping.MappingInfo.IsParent)//ÃÓ≥‰∏∏¿‡
                     {
                         childMapping.MappingInfo.SetValue(objRet, child);
+                        
                     }
                     else //ÃÓ≥‰◊”¿‡
                     {
