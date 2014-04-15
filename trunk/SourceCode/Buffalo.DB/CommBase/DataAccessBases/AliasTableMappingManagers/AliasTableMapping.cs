@@ -133,32 +133,28 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
                 _baseList.Add(objRet);
                 hasValue = false;
             }
-            
+
 
             foreach (KeyValuePair<string, AliasTableMapping> keyPair in _dicChildTables)
             {
                 AliasTableMapping childMapping = keyPair.Value;
                 bool hValue = false;
                 object child = childMapping.LoadFromReader(reader, out hValue);
-                if (child != null)
+                if (childMapping.MappingInfo.IsParent)//填充父类
                 {
-                    if (childMapping.MappingInfo.IsParent)//填充父类
-                    {
-                        childMapping.MappingInfo.SetValue(objRet, child);
-                        
-                    }
-                    else //填充子类
-                    {
-                        IList lst = childMapping.MappingInfo.GetValue(objRet) as IList;
-                        if (lst == null)
-                        {
-                            lst = Activator.CreateInstance(childMapping.MappingInfo.FieldType) as IList;
-                            childMapping.MappingInfo.SetValue(objRet, lst);
-                        }
-                        
-                        lst.Add(child);
-                    }
+                    childMapping.MappingInfo.SetValue(objRet, child);
                 }
+                else if ((!childMapping.MappingInfo.IsParent) && (child != null))//填充子类集合
+                {
+                    IList lst = childMapping.MappingInfo.GetValue(objRet) as IList;
+                    if (lst == null)
+                    {
+                        lst = Activator.CreateInstance(childMapping.MappingInfo.FieldType) as IList;
+                        childMapping.MappingInfo.SetValue(objRet, lst);
+                    }
+                    lst.Add(child);
+                }
+                
             }
             return objRet;
         }
