@@ -143,7 +143,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         }
 
         /// <summary>
-        /// 查询符合指定条件的记录条数
+        /// 查询是否有记录符合此条件
         /// </summary>
         /// <param name="scpoeList">范围查找的集合</param>
         /// <returns></returns>

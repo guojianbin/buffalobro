@@ -115,7 +115,7 @@ namespace Buffalo.DB.CommBase
         /// 获取当前实体的信息
         /// </summary>
         /// <returns></returns>
-        private EntityInfoHandle GetEntityInfo()
+        public EntityInfoHandle GetEntityInfo()
         {
             if (_thisInfo == null)
             {

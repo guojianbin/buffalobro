@@ -36,7 +36,10 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// 通知函数符号另一端的字段的数值类型
         /// </summary>
         /// <param name="type"></param>
-        internal virtual void ShowDbType(DbType type) { }
+        internal virtual void ShowDbType(DbType type)
+        {
+            this.ValueDbType = type;
+        }
 
         /// <summary>
         /// 给字段定义一个别名

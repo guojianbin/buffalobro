@@ -46,9 +46,9 @@
             this.ColExists = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlHead = new System.Windows.Forms.Panel();
-            this.cmbBaseType = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cmbBaseType = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.pnlTables.SuspendLayout();
@@ -130,7 +130,7 @@
             this.pnlTables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTables.Location = new System.Drawing.Point(0, 34);
             this.pnlTables.Name = "pnlTables";
-            this.pnlTables.Size = new System.Drawing.Size(584, 428);
+            this.pnlTables.Size = new System.Drawing.Size(584, 396);
             this.pnlTables.TabIndex = 1;
             // 
             // chkAll
@@ -170,7 +170,7 @@
             this.gvTables.RowHeadersVisible = false;
             this.gvTables.RowTemplate.Height = 23;
             this.gvTables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gvTables.Size = new System.Drawing.Size(584, 428);
+            this.gvTables.Size = new System.Drawing.Size(584, 396);
             this.gvTables.TabIndex = 0;
             this.gvTables.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gvTables_CellMouseUp);
             this.gvTables.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.gvTables_RowPrePaint);
@@ -216,23 +216,6 @@
             this.pnlHead.Size = new System.Drawing.Size(584, 34);
             this.pnlHead.TabIndex = 2;
             // 
-            // cmbBaseType
-            // 
-            this.cmbBaseType.FormattingEnabled = true;
-            this.cmbBaseType.Location = new System.Drawing.Point(54, 8);
-            this.cmbBaseType.Name = "cmbBaseType";
-            this.cmbBaseType.Size = new System.Drawing.Size(202, 20);
-            this.cmbBaseType.TabIndex = 5;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 12);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "基类:";
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.label2);
@@ -243,6 +226,23 @@
             this.panel2.Size = new System.Drawing.Size(269, 34);
             this.panel2.TabIndex = 7;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 12);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "基类:";
+            // 
+            // cmbBaseType
+            // 
+            this.cmbBaseType.FormattingEnabled = true;
+            this.cmbBaseType.Location = new System.Drawing.Point(54, 8);
+            this.cmbBaseType.Name = "cmbBaseType";
+            this.cmbBaseType.Size = new System.Drawing.Size(202, 20);
+            this.cmbBaseType.TabIndex = 5;
+            // 
             // FrmAllTables
             // 
             this.AcceptButton = this.btnSubmit;
@@ -250,9 +250,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(584, 462);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlTables);
             this.Controls.Add(this.pnlHead);
+            this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmAllTables";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
