@@ -8,9 +8,9 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
     public class BQLComparItem : BQLCondition, IOperatorPriorityLevel
     {
         private DelFunctionHandle function;
-        private BQLValueItem[] parameters;
+        private IList<BQLValueItem> parameters;
 
-        public BQLComparItem(DelFunctionHandle function, BQLValueItem[] parameters) 
+        public BQLComparItem(DelFunctionHandle function, IList<BQLValueItem> parameters) 
         {
             this.parameters = parameters;
             this.function = function;
@@ -19,7 +19,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// <summary>
         /// ²ÎÊý
         /// </summary>
-        internal BQLValueItem[] GetParameters()
+        internal IList<BQLValueItem> GetParameters()
         {
             
             return parameters;

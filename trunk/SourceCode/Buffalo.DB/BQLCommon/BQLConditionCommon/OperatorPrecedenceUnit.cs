@@ -26,7 +26,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 return value.DisplayValue(info);
             }
 
-            if ((isLeft && pl.PriorityLevel < operLevel)||
+            if ((!info.DBInfo.OperatorPrecedence) || (isLeft && pl.PriorityLevel < operLevel)||
                 ((!isLeft) && pl.PriorityLevel <= operLevel)
                 )
             {

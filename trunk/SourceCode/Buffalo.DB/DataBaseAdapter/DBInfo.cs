@@ -27,6 +27,16 @@ namespace Buffalo.DB.DataBaseAdapter
 
         private string _connectionString = null;
         private string _dbType = null;
+
+        private bool _operatorPrecedence=true;
+        /// <summary>
+        /// 生成的SQL语句进行运算符优先级优化可读性
+        /// </summary>
+        public bool OperatorPrecedence
+        {
+            get { return _operatorPrecedence; }
+            set { _operatorPrecedence = value; }
+        }
         private QueryCache _cache;
         /// <summary>
         /// 查询缓存

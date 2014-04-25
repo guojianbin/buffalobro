@@ -394,15 +394,33 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         }
         public static BQLComparItem operator &(BQLValueItem handle, BQLValueItem value)
         {
-            //UnityDbType(handle, value);
-            BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoAnd, new BQLValueItem[] { handle, value });
+            List<BQLValueItem> lstValues = new List<BQLValueItem>();
+            if (!CommonMethods.IsNull(handle))
+            {
+                lstValues.Add(handle);
+            }
+            if (!CommonMethods.IsNull(value))
+            {
+                lstValues.Add(value);
+            }
+
+            BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoAnd, lstValues);
             //fHandle.PriorityLevel = 3;
             fHandle.PriorityLevel = OperatorPrecedenceUnit.GetPrecedence("&");
             return fHandle;
         }
         public static BQLComparItem operator |(BQLValueItem handle, BQLValueItem value)
         {
-            BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoOr, new BQLValueItem[] { handle, value });
+            List<BQLValueItem> lstValues = new List<BQLValueItem>();
+            if (!CommonMethods.IsNull(handle))
+            {
+                lstValues.Add(handle);
+            }
+            if (!CommonMethods.IsNull(value))
+            {
+                lstValues.Add(value);
+            }
+            BQLComparItem fHandle = new BQLComparItem(FunctionManager.DoOr, lstValues);
             //fHandle.PriorityLevel = 4;
             fHandle.PriorityLevel = OperatorPrecedenceUnit.GetPrecedence("|");
             return fHandle;

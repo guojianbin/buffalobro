@@ -91,8 +91,8 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// <returns></returns>
         internal static string DoNot(BQLComparItem handle, KeyWordInfomation info) 
         {
-            BQLValueItem[] items = handle.GetParameters();
-            if (items != null && items.Length > 0) 
+            IList<BQLValueItem> items = handle.GetParameters();
+            if (items != null && items.Count > 0) 
             {
                 return " not " + items[0].DisplayValue(info);
             }
@@ -133,7 +133,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// <returns></returns>
         internal static string DoEqual(BQLComparItem handle, KeyWordInfomation info)
         {
-            BQLValueItem[] parameters = handle.GetParameters();
+            IList<BQLValueItem> parameters = handle.GetParameters();
             if (parameters[1].IsNullValue())
             {
                 BQLValueItem item = parameters[0];
@@ -148,7 +148,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// <returns></returns>
         internal static string DoNotequal(BQLComparItem handle, KeyWordInfomation info)
         {
-            BQLValueItem[] parameters = handle.GetParameters();
+            IList<BQLValueItem> parameters = handle.GetParameters();
             if (parameters[1].IsNullValue())
             {
                 BQLValueItem item = parameters[0];
@@ -217,17 +217,17 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// <param name="connect">连接符</param>
         /// <param name="operLevel">优先级</param>
         /// <returns></returns>
-        private static string CustomerConnectFunction(BQLValueItem[] parameters, string connect, KeyWordInfomation info, int operLevel)
+        private static string CustomerConnectFunction(IList<BQLValueItem> parameters, string connect, KeyWordInfomation info, int operLevel)
         {
             //BQLValueItem[] parameters = fHandle.GetParameters();
             string values = "";
-            for (int i = 0; i < parameters.Length; i++)
+            for (int i = 0; i < parameters.Count; i++)
             {
                 BQLValueItem item = parameters[i];
 
                 //values += item.DisplayValue(info);
                 values += OperatorPrecedenceUnit.FillBreak(item, i == 0, operLevel, info);
-                if (i < parameters.Length - 1)
+                if (i < parameters.Count - 1)
                 {
                     values += connect;
                 }

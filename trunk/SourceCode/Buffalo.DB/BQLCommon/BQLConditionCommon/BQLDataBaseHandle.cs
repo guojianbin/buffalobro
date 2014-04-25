@@ -60,6 +60,15 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         }
 
         /// <summary>
+        /// 设置生成的SQL语句进行运算符优先级优化可读性
+        /// </summary>
+        /// <param name="enable"></param>
+        public static void SetOperatorPrecedenceEnable(bool enable) 
+        {
+            _db.OperatorPrecedence = enable;
+        }
+
+        /// <summary>
         /// 获取默认连接
         /// </summary>
         public static DataBaseOperate GetDefaultOperate()

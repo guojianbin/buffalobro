@@ -115,30 +115,56 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 return;
             }
+            int sindex = GetStartIndex(sb);
             const string sqlTrim = " 1=1 and";
+            //const string sqlTrim = "1=1 and";
             int len = sb.Length > sqlTrim.Length ? sqlTrim.Length : sb.Length;
+            len += sindex;
             string andSql = sb.ToString(0, len);
-            if (andSql.IndexOf(" 1=1 and", StringComparison.CurrentCultureIgnoreCase) == 0)
+            
+            if (andSql.IndexOf("1=1 and", sindex, StringComparison.CurrentCultureIgnoreCase) == sindex)
             {
-                sb.Remove(0, sqlTrim.Length);
+                sb.Remove(sindex, sqlTrim.Length - 1);
                 return;
             }
-            if (andSql.IndexOf("1=1 and", StringComparison.CurrentCultureIgnoreCase) == 0)
+            if (andSql.IndexOf("1=1", sindex, StringComparison.CurrentCultureIgnoreCase) == sindex
+                && len < sqlTrim.Length)
             {
-                sb.Remove(0, sqlTrim.Length - 1);
+                sb.Remove(sindex, 3);
                 return;
             }
-            if (andSql.IndexOf(" 1=1", StringComparison.CurrentCultureIgnoreCase) == 0 && len < sqlTrim.Length)
+            if (andSql.IndexOf(" 1=1", sindex, StringComparison.CurrentCultureIgnoreCase) == sindex
+                && len < sqlTrim.Length)
             {
-                sb.Remove(0, 4);
+                sb.Remove(sindex, 4);
                 return;
             }
-            if (andSql.IndexOf("1=1", StringComparison.CurrentCultureIgnoreCase) == 0 && len < sqlTrim.Length)
+            if (andSql.IndexOf(" 1=1 and", sindex, StringComparison.CurrentCultureIgnoreCase) == sindex)
             {
-                sb.Remove(0, 3);
+                sb.Remove(sindex, sqlTrim.Length);
                 return;
             }
         }
+
+        /// <summary>
+        /// 获取真正开始的索引
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <returns></returns>
+        private static int GetStartIndex(StringBuilder sb) 
+        {
+            char cur = '\0';
+            for (int i = 0; i < sb.Length; i++) 
+            {
+                cur = sb[i];
+                if (cur != ' ' && cur != '(') 
+                {
+                    return i;
+                }
+            }
+            return 0;
+        }
+
         /// <summary>
         /// 删除起始的条件符
         /// </summary>
