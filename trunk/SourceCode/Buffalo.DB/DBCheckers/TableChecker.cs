@@ -40,7 +40,7 @@ namespace Buffalo.DB.DBCheckers
             {
                 if (tableInfo.IsView && tableInfo.Params.Count > 0) 
                 {
-                    tableInfo.Params[0].PropertyType = tableInfo.Params[0].PropertyType | EntityPropertyType.PrimaryKey;
+                    tableInfo.Params[0].PropertyType = EntityPropertyType.PrimaryKey;
                 }
             }
 
