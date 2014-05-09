@@ -125,6 +125,10 @@ namespace Buffalo.DB.BQLCommon.BQLConditions
             BQLScopeExplainer delFun=BQLExplainScope.GetExplainer(scope);
             if (delFun != null) 
             {
+                //if (dbType == DbType.Object && scope.Value1 != null) 
+                //{
+                //    dbType = DefaultType.ToDbType(scope.Value1.GetType());
+                //}
                 handle = delFun(scope, dbType, pro, handle, table, entityInfo);
             }
             

@@ -74,6 +74,9 @@ namespace Buffalo.Kernel.Defaults
             ret.Add(item.ItemType.FullName, item);
             dbTypeMapping[(int)item.DbType] = item;
 
+            item = new TypeItem(typeof(byte), DefaultValue.DefaultSbyte, DbType.Byte);
+            ret.Add(item.ItemType.FullName, item);
+            dbTypeMapping[(int)item.DbType] = item;
 
             item = new TypeItem(typeof(short), DefaultValue.DefaultShort, DbType.Int16);
             ret.Add(item.ItemType.FullName, item);
@@ -83,6 +86,13 @@ namespace Buffalo.Kernel.Defaults
             item = new TypeItem(typeof(long), DefaultValue.DefaultLong, DbType.Int64);
             ret.Add(item.ItemType.FullName, item);
             dbTypeMapping[(int)item.DbType] = item;
+
+            item = new TypeItem(typeof(string), null, DbType.String);
+            ret.Add(item.ItemType.FullName, item);
+            dbTypeMapping[(int)item.DbType] = item;
+            dbTypeMapping[(int)DbType.StringFixedLength] = item;
+            dbTypeMapping[(int)DbType.AnsiString] = item;
+            dbTypeMapping[(int)DbType.AnsiStringFixedLength] = item;
 
             return ret;
         }

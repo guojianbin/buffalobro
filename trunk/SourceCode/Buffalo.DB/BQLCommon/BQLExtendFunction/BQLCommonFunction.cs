@@ -39,11 +39,11 @@ namespace Buffalo.DB.BQLCommon.BQLExtendFunction
                 {
                     lstParams.Add(item.DisplayValue(info));
                 }
-                SelectCondition con = info.Condition as SelectCondition;
-                if (con != null) 
-                {
-                    con.HasGroup = true;
-                }
+                //SelectCondition con = info.Condition as SelectCondition;
+                //if (con != null) 
+                //{
+                //    con.HasGroup = true;
+                //}
                 return handle(lstParams.ToArray(),info.DBInfo);
             }
             return null;

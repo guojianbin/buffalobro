@@ -166,11 +166,29 @@ namespace Buffalo.DB.DbCommon
             {
                 DBParameter prm = this[i];
                 IDataParameter dPrm = GetParameter(prm, db);
-                ret.Append(dPrm.ParameterName + "=" + DataAccessCommon.FormatValue(dPrm.Value, dPrm.DbType, db));
-                if (i < this.Count - 1)
+
+                string value = null;
+
+                if (dPrm.DbType == DbType.Binary && !db.SqlOutputer.ShowBinary)
                 {
-                    ret.Append(" , ");
+                    value = "[Binary]";
                 }
+                else
+                {
+                    value = DataAccessCommon.FormatValue(dPrm.Value, dPrm.DbType, db);
+                }
+                ret.Append(dPrm.ParameterName);
+                ret.Append("(");
+                ret.Append(dPrm.DbType);
+                ret.Append(")");
+                ret.Append("=");
+                ret.Append(value);
+                ret.Append(",");
+            }
+
+            if (ret.Length > 0) 
+            {
+                ret.Remove(ret.Length - 1, 1);
             }
             return ret.ToString();
         }

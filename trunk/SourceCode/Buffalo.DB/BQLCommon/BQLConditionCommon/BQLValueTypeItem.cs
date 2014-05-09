@@ -27,21 +27,16 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         {
             return itemValue==null;
         }
-
-        public BQLValueTypeItem(object itemValue) 
+        /// <summary>
+        /// 值类型项
+        /// </summary>
+        /// <param name="itemValue">值</param>
+        public BQLValueTypeItem(object itemValue)
         {
-            if (itemValue != null)
-            {
-                this.itemValue = itemValue;
-                this._valueDbType=DefaultType.ToDbType(itemValue.GetType());
-            }
-            else 
-            {
-                this.itemValue = itemValue;
-                //this.valueDataType = null;
-            }
+
+            this.itemValue = itemValue;
+
         }
-        
         ///// <summary>
         ///// 此项的值
         ///// </summary>
@@ -55,17 +50,19 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 
         internal override void FillInfo(KeyWordInfomation info)
         {
+            if (_valueDbType == DbType.Object)
+            {
+                _valueDbType = DefaultType.ToDbType(itemValue.GetType());//自匹配类型
+            }
         }
 
         internal override string DisplayValue(KeyWordInfomation info)
         {
             //string ret = null;
+            
             if (info.ParamList != null && _valueDbType != DbType.Object && !info.OutPutModle) 
             {
-                
-                
                 DBParameter dbPrm=info.ParamList.NewParameter(_valueDbType, itemValue,info.DBInfo);
-
                 return dbPrm.ValueName;
             }
 

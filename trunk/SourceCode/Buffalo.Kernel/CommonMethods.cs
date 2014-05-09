@@ -573,25 +573,25 @@ namespace Buffalo.Kernel
             StringBuilder retStr = new StringBuilder(bye.Length * 2); ;
             for (int i = 0; i < bye.Length; i++)
             {
-                retStr.Append(ByteToHexString(bye[i]));
+                retStr.Append(bye[i].ToString("X2"));
             }
             return retStr.ToString();
         }
 
-        /// <summary>
-        /// 把字节转成十六进制字符串
-        /// </summary>
-        /// <param name="bye">字节</param>
-        /// <returns></returns>
-        public static string ByteToHexString(byte bye)
-        {
-            string curStr = bye.ToString("X");
-            if (curStr.Length < 2)
-            {
-                curStr = "0" + curStr;
-            }
-            return curStr;
-        }
+        ///// <summary>
+        ///// 把字节转成十六进制字符串
+        ///// </summary>
+        ///// <param name="bye">字节</param>
+        ///// <returns></returns>
+        //public static string ByteToHexString(byte bye)
+        //{
+        //    string curStr = bye.ToString("X");
+        //    if (curStr.Length < 2)
+        //    {
+        //        curStr = "0" + curStr;
+        //    }
+        //    return curStr;
+        //}
 
 
 
@@ -605,11 +605,11 @@ namespace Buffalo.Kernel
             string ret = "";
             for (int i = 0; i < byes.Length; i++) 
             {
-                string tmp = byes[i].ToString("X");
-                if (tmp.Length < 2) 
-                {
-                    tmp = "0" + tmp;
-                }
+                string tmp = byes[i].ToString("X2");
+                //if (tmp.Length < 2) 
+                //{
+                //    tmp = "0" + tmp;
+                //}
                 ret += tmp;
             }
             return ret;
@@ -622,11 +622,12 @@ namespace Buffalo.Kernel
         public static byte[] HexStringToBytes(string str)
         {
             byte[] ret = new byte[str.Length / 2];
+            char[] chr = new char[2];
             for (int i = 0; i < str.Length / 2; i++)
             {
-                char chr1 = str[i * 2];
-                char chr2 = str[i * 2 + 1];
-                string strCurNum = new string(new char[] { chr1, chr2 });
+                chr[0] = str[i * 2];
+                chr[1] = str[i * 2 + 1];
+                string strCurNum = new string(chr);
                 int curNum = int.Parse(strCurNum, System.Globalization.NumberStyles.AllowHexSpecifier);
                 ret[i] = (byte)curNum;
             }
@@ -881,7 +882,7 @@ namespace Buffalo.Kernel
                 {
                     curByte = curByte + 256;
                 }
-                sbRet.Append(ByteToHexString((byte)curByte));
+                sbRet.Append(curByte.ToString("X2"));
             }
             return sbRet.ToString();
         }

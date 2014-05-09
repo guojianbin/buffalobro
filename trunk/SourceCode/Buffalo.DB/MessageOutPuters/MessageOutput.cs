@@ -43,7 +43,15 @@ namespace Buffalo.DB.MessageOutPuters
                 return _defaultOutputer != null;
             }
         }
-
+        private bool _showBinary = false;
+        /// <summary>
+        /// 输出SQL时候是否输出二进制变量值的Hex
+        /// </summary>
+        public bool ShowBinary
+        {
+            get { return _showBinary; }
+            set { _showBinary = value; }
+        }
         /// <summary>
         /// 输出信息
         /// </summary>
