@@ -461,6 +461,8 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
 
         }
 
+        
+
         public int ToRealDbType(DbType dbType, long length)
         {
             return (int)dbType;

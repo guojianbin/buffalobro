@@ -65,8 +65,63 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         /// <returns></returns>
         public string ConvetTo(string value, DbType dbType) 
         {
+            string typeName = GetSQLType(dbType);
             //SqlDbType sdb = (SqlDbType)DbAdapterLoader.CurrentDbAdapter.ToCurrentDbType(dbType);
-            return value;
+            return "cast(" + value + " as " + typeName + ")";
+        }
+
+        /// <summary>
+        /// 获取SQL语句中的数值类型
+        /// </summary>
+        /// <param name="dbType"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private string GetSQLType(DbType dbType)
+        {
+            //int type = ToRealDbType(dbType, length);            
+            //SqliteType stype = (SqlDbType)type;            
+            switch (dbType)
+            {
+                case DbType.AnsiString:
+                case DbType.AnsiStringFixedLength:
+                        return "VARCHAR";
+                case DbType.Binary:
+                    return "BLOB";
+                case DbType.Boolean:
+                    return "BOOLEAN";
+                case DbType.Byte:
+                case DbType.Int16:
+                case DbType.Int32:
+                case DbType.UInt16:
+                case DbType.SByte:
+                    return "INTEGER";
+                case DbType.Decimal:
+                case DbType.Currency:
+                case DbType.Double:
+                case DbType.Int64:
+                case DbType.UInt32:
+                case DbType.UInt64:
+                case DbType.VarNumeric:
+                    return "REAL";
+                case DbType.Date:
+                    return "DATE";
+                case DbType.DateTime2:
+                case DbType.DateTimeOffset:
+                case DbType.DateTime:
+                    return "TIMESTAMP";
+                case DbType.Guid:
+                    return "VARCHAR";
+                case DbType.Single:
+                    return "FLOAT";
+                case DbType.String:
+                case DbType.StringFixedLength:
+                    return "NVARCHAR";
+                case DbType.Time:
+                    return "TIME";
+                default:
+                    return "NUMERIC";
+            }
+
         }
     }
 }
