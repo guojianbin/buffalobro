@@ -82,25 +82,30 @@ namespace Buffalo.Kernel
             foreach (FieldInfo field in fields)
             {
                 EnumInfo info = new EnumInfo();
-                object[] objs = field.GetCustomAttributes(typeof(DescriptionAttribute), false);
-                if (objs != null)
+                object[] objs = field.GetCustomAttributes(false);
+
+                foreach (object obj in objs) 
                 {
-                    if (objs.Length > 0)
+                    DescriptionAttribute da = obj as DescriptionAttribute;
+                    if (da != null) 
                     {
-                        DescriptionAttribute da = objs[0] as DescriptionAttribute;
                         info.Description = da.Description;
+                        continue;
                     }
-                }
-                objs = field.GetCustomAttributes(typeof(DisplayNameAttribute), false);
-                if (objs != null)
-                {
-                    if (objs.Length > 0)
+                    DisplayNameAttribute dn = obj as DisplayNameAttribute;
+                    if (da != null)
                     {
-                        DisplayNameAttribute da = objs[0] as DisplayNameAttribute;
-                        info.DisplayName = da.DisplayName;
+                        info.DisplayName = dn.DisplayName;
+                        continue;
                     }
+                    Attribute att = obj as Attribute;
+                    if (att == null) 
+                    {
+                        continue;
+                    }
+                    info.CustomerAttributes.Add(att);
                 }
-                
+
                 info.FieldName = field.Name;
                 if (objType.IsEnum)
                 {

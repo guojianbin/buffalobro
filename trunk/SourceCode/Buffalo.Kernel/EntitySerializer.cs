@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Buffalo.Kernel.FastReflection;
 using System.Collections;
+using Buffalo.Kernel.FastReflection.ClassInfos;
 
 namespace Buffalo.Kernel
 {
@@ -21,6 +22,152 @@ namespace Buffalo.Kernel
     /// </summary>
     public class EntitySerializer
     {
+        /// <summary>
+        /// 把集合信息变成实体集合
+        /// </summary>
+        /// <typeparam name="T">实体</typeparam>
+        /// <param name="dic">信息集合</param>
+        /// <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
+        /// <returns></returns>
+        public static List<T> DeserializeToList<T>(List<Dictionary<string, object>> lstDic, IEnumerable<string> propertyCollection, DelFormatValue formatValue) 
+            where T:new()
+        {
+            List<T> lstRet=new List<T>();
+            if (lstDic == null) 
+            {
+                return lstRet;
+            }
+
+            Type objType = typeof(T);
+
+            List<EntitySerializerInfo> lstInfo = null;
+            if (propertyCollection == null)
+            {
+                lstInfo = GetTypeInfos(objType);
+            }
+            else
+            {
+                lstInfo = GetDicInfos(objType, propertyCollection);
+            }
+
+            object value = null;
+            foreach (Dictionary<string, object> dic in lstDic)
+            {
+                T entity = (T)Activator.CreateInstance(objType);
+
+                foreach (EntitySerializerInfo info in lstInfo)
+                {
+                    if (!dic.TryGetValue(info.Name, out value)) 
+                    {
+                        continue;
+                    }
+                    value = SetValue(info, entity, value);
+                    if (formatValue != null)
+                    {
+                        value = formatValue(info.Name, info.PropertyName, entity, value);
+                    }
+                }
+                lstRet.Add(entity);
+            }
+            return lstRet;
+        }
+        /// <summary>
+        /// 把集合信息变成实体集合
+        /// </summary>
+        /// <typeparam name="T">实体</typeparam>
+        /// <param name="dic">信息集合</param>
+        /// <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
+        /// <returns></returns>
+        public static List<T> DeserializeToList<T>(List<Dictionary<string, object>> dic, IEnumerable<string> propertyCollection)
+            where T : new()
+        {
+            return DeserializeToList<T>(dic, propertyCollection, DefaultFormatValue);
+        }
+
+        /// <summary>
+        /// 把集合信息变成实体集合
+        /// </summary>
+        /// <typeparam name="T">实体</typeparam>
+        /// <param name="dic">信息集合</param>
+        /// <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
+        /// <returns></returns>
+        public static T DeserializeToObject<T>(Dictionary<string, object> dic, IEnumerable<string> propertyCollection, DelFormatValue formatValue)
+            where T : new()
+        {
+            
+            if (dic == null)
+            {
+                return default(T);
+            }
+
+            Type objType = typeof(T);
+            T entity = (T)Activator.CreateInstance(objType);
+
+            List<EntitySerializerInfo> lstInfo = null;
+            if (propertyCollection == null)
+            {
+                lstInfo = GetTypeInfos(objType);
+            }
+            else
+            {
+                lstInfo = GetDicInfos(objType, propertyCollection);
+            }
+
+            object value = null;
+            Dictionary<string, object> item = new Dictionary<string, object>();
+            foreach (EntitySerializerInfo info in lstInfo)
+            {
+                if (!dic.TryGetValue(info.Name, out value))
+                {
+                    continue;
+                }
+                value = SetValue(info, entity,value);
+                if (formatValue != null)
+                {
+                    value = formatValue(info.Name, info.PropertyName, entity, value);
+                }
+                item[info.Name] = value;
+            }
+            return entity;
+        }
+        /// <summary>
+        /// 把集合信息变成实体集合
+        /// </summary>
+        /// <typeparam name="T">实体</typeparam>
+        /// <param name="dic">信息集合</param>
+        /// <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
+        /// <returns></returns>
+        public static T DeserializeToObject<T>(Dictionary<string, object> dic, IEnumerable<string> propertyCollection)
+            where T : new()
+        {
+            return DeserializeToObject<T>(dic, propertyCollection, DefaultFormatValue);
+        }
+        /// <summary>
+        /// 根据反射信息获取值(链式)
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        private static bool SetValue(EntitySerializerInfo info, object obj,object value)
+        {
+            object tmpObj = obj;
+            int hcount=info.PropertyInfos.Count;
+            if (hcount > 1)
+            {
+                for (int i = 0; i < hcount - 1; i++)
+                {
+                    PropertyInfoHandle pHandle = info.PropertyInfos[i];
+                    tmpObj = pHandle.GetValue(value);
+                    if (tmpObj == null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            PropertyInfoHandle sethandle = info.PropertyInfos[hcount - 1];
+            sethandle.SetValue(tmpObj, value);
+            return true;
+        }
 
         /// <summary>
         /// 值集合转换为字典集合(适合JavaScriptSerializer)
@@ -29,7 +176,7 @@ namespace Buffalo.Kernel
         /// <param name="propertyMap">Key的名字</param>
         /// <param name="formatValue">格式化值的方法</param>
         /// <returns></returns>
-        public static List<Dictionary<string, object>> ValueListToDictionary(IList lstValue,
+        public static List<Dictionary<string, object>> SerializeListToDictionary(IList lstValue,
             string propertyMap, DelFormatValue formatValue)
         {
             if (lstValue.Count == 0)
@@ -58,10 +205,10 @@ namespace Buffalo.Kernel
         /// <param name="lstEntity">实体</param>
         /// <param name="propertyMap">Key的名字</param>
         /// <returns></returns>
-        public static List<Dictionary<string, object>> ValueListToDictionary(IList lstValue,
+        public static List<Dictionary<string, object>> SerializeListToDictionary(IList lstValue,
             string propertyMap)
         {
-            return ValueListToDictionary(lstValue, propertyMap, DefaultFormatValue);
+            return SerializeListToDictionary(lstValue, propertyMap, DefaultFormatValue);
         }
         /// <summary>
         /// 实体转换为字典集合(适合JavaScriptSerializer)
@@ -70,7 +217,7 @@ namespace Buffalo.Kernel
         /// <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
         /// <param name="formatValue">格式化值的方法</param>
         /// <returns></returns>
-        public static List<Dictionary<string, object>> EntityListToDictionary(IList lstEntity,
+        public static List<Dictionary<string, object>> SerializeListToDictionary(IList lstEntity,
             IEnumerable<string> propertyCollection,DelFormatValue formatValue)
         {
             if (lstEntity.Count == 0)
@@ -79,7 +226,15 @@ namespace Buffalo.Kernel
             }
             List<Dictionary<string, object>> lstDic = new List<Dictionary<string, object>>(lstEntity.Count);
             Type objType = lstEntity[0].GetType();
-            List<EntitySerializerInfo> lstInfo = GetDicInfos(objType, propertyCollection);
+            List<EntitySerializerInfo> lstInfo = null;
+            if (propertyCollection == null)
+            {
+                lstInfo = GetTypeInfos(objType);
+            }
+            else
+            {
+                lstInfo = GetDicInfos(objType, propertyCollection);
+            }
             object value = null;
 
             foreach (object obj in lstEntity)
@@ -107,10 +262,10 @@ namespace Buffalo.Kernel
         /// <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
         /// <param name="formatValue">格式化值的方法</param>
         /// <returns></returns>
-        public static Dictionary<string, object> EntityToDictionary(object entity,
+        public static Dictionary<string, object> SerializeToDictionary(object entity,
             IEnumerable<string> propertyCollection)
         {
-            return EntityToDictionary(entity, propertyCollection, DefaultFormatValue);
+            return SerializeToDictionary(entity, propertyCollection, DefaultFormatValue);
         }
 
         /// <summary>
@@ -120,7 +275,7 @@ namespace Buffalo.Kernel
         /// <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
         /// <param name="formatValue">格式化值的方法</param>
         /// <returns></returns>
-        public static Dictionary<string, object> EntityToDictionary(object entity,
+        public static Dictionary<string, object> SerializeToDictionary(object entity,
             IEnumerable<string> propertyCollection, DelFormatValue formatValue)
         {
             if (entity == null)
@@ -129,7 +284,15 @@ namespace Buffalo.Kernel
             }
 
             Type objType = entity.GetType();
-            List<EntitySerializerInfo> lstInfo = GetDicInfos(objType, propertyCollection);
+            List<EntitySerializerInfo> lstInfo =null;
+            if (propertyCollection == null)
+            {
+                lstInfo = GetTypeInfos(objType);
+            }
+            else 
+            {
+                lstInfo = GetDicInfos(objType, propertyCollection);
+            }
             object value = null;
 
 
@@ -152,10 +315,10 @@ namespace Buffalo.Kernel
         /// <param name="lstEntity">实体</param>
         /// <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
         /// <returns></returns>
-        public static List<Dictionary<string, object>> EntityListToDictionary(IList lstEntity,
+        public static List<Dictionary<string, object>> SerializeListToDictionary(IList lstEntity,
             IEnumerable<string> propertyCollection)
         {
-            return EntityListToDictionary(lstEntity, propertyCollection, DefaultFormatValue);
+            return SerializeListToDictionary(lstEntity, propertyCollection, DefaultFormatValue);
         }
 
         /// <summary>
@@ -186,7 +349,7 @@ namespace Buffalo.Kernel
         }
 
         /// <summary>
-        /// 根据反射信息获取值
+        /// 根据反射信息获取值(链式)
         /// </summary>
         /// <param name="info"></param>
         /// <param name="obj"></param>
@@ -197,6 +360,10 @@ namespace Buffalo.Kernel
             foreach (PropertyInfoHandle pHandle in info.PropertyInfos)
             {
                 value = pHandle.GetValue(value);
+                if (value == null) 
+                {
+                    return null;
+                }
             }
             return value;
         }
@@ -232,6 +399,28 @@ namespace Buffalo.Kernel
             }
             return lstInfos;
         }
+
+        /// <summary>
+        /// 获取类型所属的信息
+        /// </summary>
+        /// <param name="objType">类型</param>
+        /// <returns></returns>
+        private static List<EntitySerializerInfo> GetTypeInfos(Type objType) 
+        {
+            List<EntitySerializerInfo> lstInfos = new List<EntitySerializerInfo>(12);
+            ClassInfoHandle classInfo=ClassInfoManager.GetClassHandle(objType);
+            
+            foreach (PropertyInfoHandle handle in classInfo.PropertyInfo)
+            {
+                EntitySerializerInfo info = new EntitySerializerInfo();
+                info.PropertyInfos.Add(handle);
+                info.Name = handle.PropertyName;
+                info.PropertyName = handle.PropertyName;
+                lstInfos.Add(info);
+            }
+            return lstInfos;
+        }
+
     }
 
 

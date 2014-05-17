@@ -22,14 +22,13 @@ namespace Buffalo.Kernel.FastReflection.ClassInfos
         {
             string fullName = type.FullName;
             ClassInfoHandle classHandle = null;
-            using (Lock objLock = new Lock(dicClass))
+
+            if (!dicClass.TryGetValue(fullName, out classHandle))
             {
-                if (!dicClass.TryGetValue(fullName, out classHandle))
-                {
-                    InitClassPropertyInfos(type);
-                    classHandle = dicClass[fullName];
-                }
+                InitClassPropertyInfos(type);
+                classHandle = dicClass[fullName];
             }
+
             return classHandle;
         }
         /// <summary>

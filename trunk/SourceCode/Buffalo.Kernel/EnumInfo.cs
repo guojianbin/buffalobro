@@ -43,5 +43,33 @@ namespace Buffalo.Kernel
             get { return _displayName; }
             set { _displayName = value; }
         }
+
+        private List<Attribute> _customerAttributes=new List<Attribute>();
+        /// <summary>
+        /// 其他标签
+        /// </summary>
+        public List<Attribute> CustomerAttributes
+        {
+            get { return _customerAttributes; }
+        }
+
+        /// <summary>
+        /// 查找其他标签
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T FindCustomerAttribute<T>() where T:Attribute
+        {
+            T ret = null;
+            foreach (Attribute att in _customerAttributes) 
+            {
+                ret = att as T;
+                if (ret != null) 
+                {
+                    break;
+                }
+            }
+            return ret;
+        }
     }
 }
