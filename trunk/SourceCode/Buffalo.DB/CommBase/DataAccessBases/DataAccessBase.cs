@@ -415,15 +415,13 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         
 
         #endregion
-
-
        /// <summary>
         /// 根据ID获取记录
        /// </summary>
        /// <param name="id">ID</param>
        /// <param name="isSearchByCache">是否缓存搜索</param>
        /// <returns></returns>
-        public T GetObjectById(object id)
+        public T GetObjectById(object id, bool isSearchByCache)
         {
             
             ParamList list = null;
@@ -431,6 +429,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             list = new ParamList();
             string tabName = CurEntityInfo.DBInfo.CurrentDbAdapter.FormatTableName(CurEntityInfo.TableName);
             ScopeList lstScope = new ScopeList();
+            lstScope.UseCache = isSearchByCache;
             PrimaryKeyInfo pkInfo = id as PrimaryKeyInfo;
             if (pkInfo == null)
             {
@@ -458,42 +457,42 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             
             return ret;
         }
-        /// <summary>
-        /// 根据条件获取第一条记录
-        /// </summary>
-        /// <param name="scopeList">查询信息</param>
-        /// <returns></returns>
-        public T GetUnique(ScopeList scopeList)
-        {
-            if (scopeList.HasInner)
-            {
+        // <summary>
+        // 根据条件获取第一条记录
+        // </summary>
+        // <param name="scopeList">查询信息</param>
+        // <returns></returns>
+        //public T GetUnique(ScopeList scopeList)
+        //{
+        //    if (scopeList.HasInner)
+        //    {
                 
-                return _cdal.GetUnique<T>(scopeList);
-            }
-            ParamList list = null;
-            T ret = default(T);
-            list = new ParamList();
+        //        return _cdal.GetUnique<T>(scopeList);
+        //    }
+        //    ParamList list = null;
+        //    T ret = default(T);
+        //    list = new ParamList();
 
-            string sql = null;
+        //    string sql = null;
 
-            SelectCondition sc = GetSelectContant(list, scopeList, GetSelectParams(scopeList));
-            sql = CurEntityInfo.DBInfo.CurrentDbAdapter.GetTopSelectSql(sc, 1);
-            Dictionary<string,bool> cacheTables=null;
-            if(scopeList.UseCache)
-            {
-                cacheTables=_oper.DBInfo.QueryCache.CreateMap(CurEntityInfo.TableName);
-            }
-            using (IDataReader reader = _oper.Query(sql, list, cacheTables))
-            {
-                if (reader.Read())
-                {
-                    ret = LoadFromReader(reader);
+        //    SelectCondition sc = GetSelectContant(list, scopeList, GetSelectParams(scopeList));
+        //    sql = CurEntityInfo.DBInfo.CurrentDbAdapter.GetTopSelectSql(sc, 1);
+        //    Dictionary<string,bool> cacheTables=null;
+        //    if(scopeList.UseCache)
+        //    {
+        //        cacheTables=_oper.DBInfo.QueryCache.CreateMap(CurEntityInfo.TableName);
+        //    }
+        //    using (IDataReader reader = _oper.Query(sql, list, cacheTables))
+        //    {
+        //        if (reader.Read())
+        //        {
+        //            ret = LoadFromReader(reader);
 
-                }
-            }
+        //        }
+        //    }
 
-            return ret;
-        }
+        //    return ret;
+        //}
 
         /// <summary>
         /// 修改记录

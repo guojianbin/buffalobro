@@ -8,11 +8,16 @@ using System.Web;
 using Buffalo.WebKernel.WebModels;
 using Commons;
 using Buffalo.Kernel.UpdateModelUnit;
+using Buffalo.DB.QueryConditions;
+using Buffalo.WebKernel.ARTDialog;
 
 namespace Buffalo.WebKernel.WebCommons.PageBases
 {
     public class PageContext : System.Web.UI.Page
     {
+
+
+
         /// <summary>
         /// 给文本框控件添加keydown事件
         /// </summary>
@@ -34,6 +39,7 @@ namespace Buffalo.WebKernel.WebCommons.PageBases
                 txt.Attributes.Add(key, value);
             }
         }
+
         /// <summary>
         /// 向页面注册JS脚本
         /// </summary>
@@ -221,6 +227,141 @@ namespace Buffalo.WebKernel.WebCommons.PageBases
         {
             WebModel.UpdateModel(Page, modle, PrefixType.Camel);
         }
+
+
+
+        #region 排序管理
+
+        protected const string SortViewStateID="$SortViewID";
+
+        /// <summary>
+        /// 填充排序
+        /// </summary>
+        /// <param name="lstSort"></param>
+        protected virtual void FillOrderBy(string name,SortList lstSort)
+        {
+            string str = ViewState[name+SortViewStateID] as string;
+            if (string.IsNullOrEmpty(str)) 
+            {
+                return;
+            }
+            string[] sortItems = str.Split(',');
+            foreach (string item in sortItems) 
+            {
+                Sort objSort = new Sort();
+                string[] iPart = item.Trim().Split(' ');
+                if (iPart.Length <1) 
+                {
+                    continue;
+                }
+                objSort.PropertyName = iPart[0];
+                if (iPart.Length < 2)
+                {
+                    objSort.SortType = SortType.ASC;
+                }
+                else 
+                {
+                    objSort.SortType = (iPart[1].ToLower() == "asc") ? SortType.ASC : SortType.DESC;
+                }
+                lstSort.Add(objSort);
+            }
+        }
+        /// <summary>
+        /// 触发排序
+        /// </summary>
+        /// <param name="name">排序的表格名</param>
+        /// <param name="sortName">排序的属性名</param>
+        /// <returns></returns>
+        protected virtual SortType ChickOrderBy(string name, string sortName) 
+        {
+            SortList lstSort = new SortList();
+            FillOrderBy(name, lstSort);
+
+            
+            Sort objSort=lstSort[sortName];
+            if (objSort == null)
+            {
+                objSort = new Sort();
+                objSort.PropertyName = sortName;
+                objSort.SortType = SortType.ASC;
+                lstSort.Add(objSort);
+            }
+            else
+            {
+                if (objSort.SortType == SortType.ASC) 
+                {
+                    objSort.SortType = SortType.DESC;
+                }
+                else if (objSort.SortType == SortType.DESC) 
+                {
+                    for (int i = lstSort.Count - 1; i >= 0; i--) 
+                    {
+                        if (lstSort[i].PropertyName == objSort.PropertyName) 
+                        {
+                            lstSort.RemoveAt(i);
+                        }
+                    }
+                }
+                
+            }
+            SetOrderByString(name, lstSort);
+            return objSort.SortType;
+        }
+
+
+
+        /// <summary>
+        /// 保存设置排序的字符串
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="lstSort"></param>
+        protected virtual void SetOrderByString(string name, SortList lstSort) 
+        {
+            string value = GetOrderByString(lstSort);
+            ViewState[name + SortViewStateID] = value;
+        }
+
+        /// <summary>
+        /// 填充排序
+        /// </summary>
+        /// <param name="lstSort"></param>
+        private string GetOrderByString(SortList lstSort)
+        {
+            StringBuilder sbRet = new StringBuilder();
+            foreach (Sort obj in lstSort) 
+            {
+                sbRet.Append(obj.PropertyName);
+                sbRet.Append(' ');
+                sbRet.Append((obj.SortType == SortType.ASC)?"asc":"desc");
+                sbRet.Append(',');
+            }
+            if (sbRet.Length > 0) 
+            {
+                sbRet.Remove(sbRet.Length-1, 1);
+            }
+            return sbRet.ToString();
+        }
+
+        protected virtual void GridViewSorting(object sender, GridViewSortEventArgs e)
+        {
+            GridView gv = sender as GridView;
+            if (gv == null)
+            {
+                return;
+            }
+            SortType objSortType = ChickOrderBy(gv.ClientID, e.SortExpression);
+            GridBind();
+        }
+
+        /// <summary>
+        /// 输出绑定
+        /// </summary>
+        protected virtual void GridBind() 
+        {
+
+        }
+        #endregion
+
 
     }
 }

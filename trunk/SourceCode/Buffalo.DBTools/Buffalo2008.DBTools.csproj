@@ -19,7 +19,7 @@
     <Optimize>false</Optimize>
     <OutputPath>..\Debug\2008\</OutputPath>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET_3_5</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <IncrementalBuild>false</IncrementalBuild>
     <DocumentationFile>..\Debug\2008\Buffalo.DBTools.xml</DocumentationFile>
@@ -29,7 +29,7 @@
     <Optimize>true</Optimize>
     <OutputPath>..\Release\2008\</OutputPath>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;NET_3_5</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <IncrementalBuild>false</IncrementalBuild>
     <DocumentationFile>..\Release\2008\Buffalo.DBTools.xml</DocumentationFile>

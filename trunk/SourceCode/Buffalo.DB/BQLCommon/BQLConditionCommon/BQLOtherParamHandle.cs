@@ -33,8 +33,18 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             StringBuilder sb = new StringBuilder();
             if (!CommonMethods.IsNull(table) )
             {
-                sb.Append(table.DisplayValue(info) );
-                sb.Append(".");
+                BQLAliasHandle handle = info.AliasManager.GetPrimaryAliasHandle(table);
+                if (Buffalo.Kernel.CommonMethods.IsNull(handle))
+                {
+                    sb.Append(table.DisplayValue(info));
+                    sb.Append(".");
+                }
+                else 
+                {
+
+                    sb.Append(handle.GetAliasName());
+                    sb.Append(".");
+                }
             }
             sb.Append(idba.FormatParam(paramName));
             return sb.ToString();

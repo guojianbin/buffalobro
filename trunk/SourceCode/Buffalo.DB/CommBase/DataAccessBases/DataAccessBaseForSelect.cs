@@ -49,7 +49,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <returns></returns>
         public virtual T GetEntityById(object id)
         {
-            return base.GetObjectById(id);
+            return base.GetObjectById(id,false);
         }
         
         /// <summary>

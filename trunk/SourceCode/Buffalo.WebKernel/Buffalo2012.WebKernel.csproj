@@ -37,7 +37,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Debug\2012\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET_4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\Debug\2012\Buffalo.WebKernel.XML</DocumentationFile>
@@ -48,7 +48,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Release\2012\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;NET_4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\Release\2012\Buffalo.WebKernel.XML</DocumentationFile>
@@ -61,11 +61,18 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ARTDialogReource.Designer.cs" />
+    <Compile Include="JsonUnit\JsonHelper.cs" />
+    <Compile Include="JsonUnit\JsonStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebCommons\ARTDialog\ArtDialog.cs" />
+    <Compile Include="WebCommons\ARTDialog\ArtIcons.cs" />
+    <Compile Include="WebCommons\ARTDialog\DialogSkin.cs" />
     <Compile Include="WebCommons\ContorlCommons\ContorlCommon.cs" />
     <Compile Include="WebCommons\ContorlCommons\ControlDefaultValue.cs" />
     <Compile Include="WebCommons\ContorlCommons\JsSaver.cs" />
@@ -127,6 +134,15 @@
       <Project>{6ec04216-a422-4751-aa81-1211dcb10bab}</Project>
       <Name>Buffalo2012.Kernel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ARTDialogReource.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\artdialog.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\artdialogshow.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

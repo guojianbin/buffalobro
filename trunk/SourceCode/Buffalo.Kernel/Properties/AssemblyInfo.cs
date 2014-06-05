@@ -5,13 +5,44 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Buffalo.Kernel")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Buffalo")]
+#if (NET_1_0)
+[assembly: AssemblyTitle("BuffaloKernel for .NET Framework 1.0")]
+#elif (NET_1_1)
+[assembly: AssemblyTitle("BuffaloKernel for .NET Framework 1.1")]
+#elif (NET_2_0)
+[assembly: AssemblyTitle("BuffaloKernel for .NET Framework 2.0")]
+#elif (NET_3_0)
+[assembly: AssemblyTitle("BuffaloKernel for .NET Framework 3.0")]
+#elif (NET_3_5)
+[assembly: AssemblyTitle("BuffaloKernel for .NET Framework 3.5")]
+#elif (NET_4_0)
+[assembly: AssemblyTitle("BuffaloKernel for .NET Framework 4.0")]
+#elif (NET_4_5)
+[assembly: AssemblyTitle("BuffaloKernel for .NET Framework 4.5")]
+#elif (NETCF_1_0)
+[assembly: AssemblyTitle("BuffaloKernel for .NET Compact Framework 1.0")]
+#elif (NETCF_2_0)
+[assembly: AssemblyTitle("BuffaloKernel for .NET Compact Framework 2.0")]
+#elif (MONO_1_0)
+[assembly: AssemblyTitle("BuffaloKernel for Mono 1.0")]
+#elif (MONO_2_0)
+[assembly: AssemblyTitle("BuffaloKernel for Mono 2.0")]
+#else
+[assembly: AssemblyTitle("BuffaloKernel")]
+#endif
+
+[assembly: AssemblyDescription("Buffalo Kernel Library")]
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+[assembly: AssemblyProduct("Buffalo.Kernel(Debug)")]
+#else
+[assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyProduct("Buffalo.Kernel")]
+#endif
+[assembly: AssemblyCompany("Buffalo")]
+
 [assembly: AssemblyCopyright("版权所有 (C) Buffalo 2012")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("BuffaloLibrary")]
 [assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 使此程序集中的类型
@@ -31,5 +62,5 @@ using System.Runtime.InteropServices;
 //
 // 可以指定所有这些值，也可以使用“修订号”和“内部版本号”的默认值，
 // 方法是按如下所示使用“*”:
-[assembly: AssemblyVersion("1.0.1.6")]
-[assembly: AssemblyFileVersion("1.0.1.6")]
+[assembly: AssemblyVersion("1.0.1.7")]
+[assembly: AssemblyFileVersion("1.0.1.7")]

@@ -52,7 +52,7 @@ namespace Buffalo.Kernel
         }
 
 
-        private static string baseRoot = null;//基目录
+        private static string _baseRoot = null;//基目录
         /// <summary>
         /// 获取基路径
         /// </summary>
@@ -60,13 +60,19 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static string GetBaseRoot(string configRoot)
         {
-            
-            if (baseRoot == null)
-            {
-                baseRoot = AppDomain.CurrentDomain.BaseDirectory;
 
+            if (_baseRoot == null)
+            {
+                if (IsWebContext)
+                {
+                    _baseRoot = HttpContext.Current.Server.MapPath("\\"); ;
+                }
+                else 
+                {
+                    _baseRoot=AppDomain.CurrentDomain.BaseDirectory;
+                }
             }
-            string retRoot = baseRoot + configRoot;
+            string retRoot = _baseRoot + configRoot;
             return retRoot;
         }
         /// <summary>
@@ -87,11 +93,8 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static string GetBaseRoot()
         {
-            if (IsWebContext)
-            {
-                return AppDomain.CurrentDomain.DynamicDirectory;
-            }
-            return AppDomain.CurrentDomain.BaseDirectory;
+
+            return GetBaseRoot("");
         }
 
         /// <summary>

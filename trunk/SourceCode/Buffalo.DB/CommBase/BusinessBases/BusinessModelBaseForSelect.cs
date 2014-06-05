@@ -77,7 +77,16 @@ namespace Buffalo.DB.CommBase.BusinessBases
             DataAccessBaseForSelect<T> dao = new DataAccessBaseForSelect<T>();
             return dao.GetEntityById(id);
         }
-
+        /// <summary>
+        /// 根据主键查找实体(使用缓存)
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns></returns>
+        public T GetByIdUseCache(object id)
+        {
+            DataAccessBaseForSelect<T> dao = new DataAccessBaseForSelect<T>();
+            return dao.GetObjectById(id,true);
+        }
 
 
         /// <summary>

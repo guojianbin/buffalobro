@@ -5,15 +5,45 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Buffalo.DB")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Buffalo")]
-[assembly: AssemblyProduct("Buffalo.DB")]
-[assembly: AssemblyCopyright("版权所有 (C) Buffalo 2012")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+#if (NET_1_0)
+[assembly: AssemblyTitle("BuffaloDB for .NET Framework 1.0")]
+#elif (NET_1_1)
+[assembly: AssemblyTitle("BuffaloDB for .NET Framework 1.1")]
+#elif (NET_2_0)
+[assembly: AssemblyTitle("BuffaloDB for .NET Framework 2.0")]
+#elif (NET_3_0)
+[assembly: AssemblyTitle("BuffaloDB for .NET Framework 3.0")]
+#elif (NET_3_5)
+[assembly: AssemblyTitle("BuffaloDB for .NET Framework 3.5")]
+#elif (NET_4_0)
+[assembly: AssemblyTitle("BuffaloDB for .NET Framework 4.0")]
+#elif (NET_4_5)
+[assembly: AssemblyTitle("BuffaloDB for .NET Framework 4.5")]
+#elif (NETCF_1_0)
+[assembly: AssemblyTitle("BuffaloDB for .NET Compact Framework 1.0")]
+#elif (NETCF_2_0)
+[assembly: AssemblyTitle("BuffaloDB for .NET Compact Framework 2.0")]
+#elif (MONO_1_0)
+[assembly: AssemblyTitle("BuffaloDB for Mono 1.0")]
+#elif (MONO_2_0)
+[assembly: AssemblyTitle("BuffaloDB for Mono 2.0")]
+#else
+[assembly: AssemblyTitle("BuffaloDB")]
+#endif
 
+[assembly: AssemblyDescription("Buffalo DataBase Library")]
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+[assembly: AssemblyProduct("Buffalo.DB(Debug)")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+[assembly: AssemblyProduct("Buffalo.DB")]
+#endif
+[assembly: AssemblyCompany("Buffalo")]
+
+[assembly: AssemblyCopyright("版权所有 (C) Buffalo 2012")]
+[assembly: AssemblyTrademark("BuffaloLibrary")]
+[assembly: AssemblyCulture("")]
 // 将 ComVisible 设置为 false 使此程序集中的类型
 // 对 COM 组件不可见。如果需要从 COM 访问此程序集中的类型，
 // 则将该类型上的 ComVisible 属性设置为 true。
@@ -31,5 +61,5 @@ using System.Runtime.InteropServices;
 //
 // 可以指定所有这些值，也可以使用“修订号”和“内部版本号”的默认值，
 // 方法是按如下所示使用“*”:
-[assembly: AssemblyVersion("0.9.3.6")]
-[assembly: AssemblyFileVersion("0.9.3.6")]
+[assembly: AssemblyVersion("0.9.3.8")]
+[assembly: AssemblyFileVersion("0.9.3.8")]

@@ -14,11 +14,11 @@ namespace Buffalo.DB.CommBase.DataAccessBases
     {
 
                
-        /// 根据条件查找实体
-        /// </summary>
-        /// <param name="lstScope">条件</param>
-        /// <returns></returns>
-        T GetUnique(ScopeList lstScope);
+        ///// 根据条件查找实体
+        ///// </summary>
+        ///// <param name="lstScope">条件</param>
+        ///// <returns></returns>
+        //T GetUnique(ScopeList lstScope);
         /// <summary>
         /// 根据主键查找实体
         /// </summary>

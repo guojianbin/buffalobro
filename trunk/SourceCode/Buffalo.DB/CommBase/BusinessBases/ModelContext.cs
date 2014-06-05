@@ -187,9 +187,10 @@ namespace Buffalo.DB.CommBase.BusinessBases
             {
                 info.FillScope(CurEntityInfo.PrimaryProperty, lstScope, true);
             }
-            obj.OnSelect(lstScope);
-            return GetBaseContext().GetUnique(lstScope);
-            //return GetBaseContext().GetObjectById(id);
+
+
+
+            return GetUnique(lstScope);
         }
         /// <summary>
         /// 根据条件查找实体
@@ -199,7 +200,16 @@ namespace Buffalo.DB.CommBase.BusinessBases
         public T GetUnique(ScopeList lstScope)
         {
             obj.OnSelect(lstScope);
-            return GetBaseContext().GetUnique(lstScope);
+            lstScope.PageContent.PageSize = 1;
+            lstScope.PageContent.CurrentPage = 0;
+            lstScope.PageContent.IsFillTotleRecords = false;
+            List<T> lst = SelectList(lstScope);
+            if (lst.Count > 0)
+            {
+                return lst[0];
+            }
+
+            return null;
         }
 
     }

@@ -15,7 +15,7 @@ namespace Buffalo.WebKernel.WebCommons.ContorlCommons
         /// <summary>
         /// 默认的JS存放文件夹
         /// </summary>
-        private const string defaultDirectory = "/script/";
+        private const string defaultDirectory = "/Scripts/";
 
         /// <summary>
         /// 获取JS文件路径
@@ -28,13 +28,42 @@ namespace Buffalo.WebKernel.WebCommons.ContorlCommons
         }
 
         /// <summary>
+        /// sctipt的基础保存目录
+        /// </summary>
+        public static string BaseSavePath 
+        {
+            get 
+            {
+                return HttpContext.Current.Server.MapPath(HttpContext.Current.Request.ApplicationPath + defaultDirectory);
+            }
+        }
+
+        /// <summary>
+        /// 保存JS文件的方法
+        /// </summary>
+        /// <param name="fileName">JS文件名</param>
+        /// <param name="jsContent">JS内容</param>
+        public static void SaveJS(string fileName, byte[] file)
+        {
+            string dir = BaseSavePath;
+            string root = HttpContext.Current.Server.MapPath(HttpContext.Current.Request.ApplicationPath + defaultDirectory + fileName);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            if (!File.Exists(root))
+            {
+                File.WriteAllBytes(root, file);
+            }
+        }
+        /// <summary>
         /// 保存JS文件的方法
         /// </summary>
         /// <param name="fileName">JS文件名</param>
         /// <param name="jsContent">JS内容</param>
         public static void SaveJS(string fileName,string jsContent) 
         {
-            string dir = HttpContext.Current.Server.MapPath(HttpContext.Current.Request.ApplicationPath + defaultDirectory);
+            string dir = BaseSavePath;
             string root = HttpContext.Current.Server.MapPath(HttpContext.Current.Request.ApplicationPath + defaultDirectory + fileName);
             if (!Directory.Exists(dir))
             {
