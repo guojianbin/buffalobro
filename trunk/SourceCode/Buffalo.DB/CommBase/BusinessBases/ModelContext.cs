@@ -199,7 +199,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <returns></returns>
         public T GetUnique(ScopeList lstScope)
         {
-            obj.OnSelect(lstScope);
+            //obj.OnSelect(lstScope);
             lstScope.PageContent.PageSize = 1;
             lstScope.PageContent.CurrentPage = 0;
             lstScope.PageContent.IsFillTotleRecords = false;

@@ -117,7 +117,7 @@ namespace Buffalo.WebKernel.JsonUnit
         public static string SerializeList(IList lstEntity,
             IEnumerable<string> propertyMap)
         {
-            return SerializeList(lstEntity, propertyMap, null);
+            return SerializeList(lstEntity, propertyMap, EntitySerializer.DefaultFormatValue);
         }
         /// <summary>
         /// 实体转成Json

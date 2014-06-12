@@ -56,22 +56,32 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static DataSet LoadXLS(string path) 
         {
-            return LoadXLS(path, ExcelFormat.Excel2003);
+            ExcelFormat format = ExcelFormat.Excel2003;
+            FileInfo finf = new FileInfo(path);
+            string exName = finf.Extension;
+            if (!string.IsNullOrEmpty(exName)) 
+            {
+                if (exName.Equals(".xlsx", StringComparison.CurrentCultureIgnoreCase)) 
+                {
+                    format = ExcelFormat.Excel2010;
+                }
+            }
+            return LoadXLS(path, format,false);
         }
-
+        const string FilterString = "#_FilterDatabase";
         /// <summary>
         /// 读取Excel到DataSet
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static DataSet LoadXLS(string path,ExcelFormat fromat)
+        public static DataSet LoadXLS(string path,ExcelFormat fromat,bool showFilter)
         {
             DataSet ds = new DataSet();
             string connString = GetConnectString(path, fromat);
             using (OleDbConnection conn = new OleDbConnection(connString))
             {
                 conn.Open();
-                DataTable dtTables = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                DataTable dtTables = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
                 if (dtTables == null)
                 {
                     return ds;
@@ -79,6 +89,14 @@ namespace Buffalo.Kernel
                 foreach (DataRow row in dtTables.Rows)
                 {
                     string tableName = row["TABLE_NAME"].ToString();
+                    if (!showFilter)
+                    {
+                        int index = tableName.LastIndexOf(FilterString, StringComparison.CurrentCultureIgnoreCase);
+                        if (tableName.Length - FilterString.Length == index)
+                        {
+                            continue;
+                        }
+                    }
                     if (!string.IsNullOrEmpty(tableName))
                     {
                         OleDbDataAdapter oda = new OleDbDataAdapter("select * from [" + tableName + "]", conn);

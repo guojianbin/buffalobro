@@ -729,7 +729,7 @@ namespace Buffalo.DB.DbCommon
 
                 if (_db.SqlOutputer.HasOutput)
                 {
-                    _db.OutMessage(MessageType.OtherOper, "BeginTransaction", null, "");
+                    _db.OutMessage(MessageType.OtherOper, "CommitTransaction", null, "");
                 }
 
                 _tran.Commit();

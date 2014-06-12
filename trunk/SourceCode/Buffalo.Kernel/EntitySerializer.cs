@@ -320,7 +320,6 @@ namespace Buffalo.Kernel
         {
             return SerializeListToDictionary(lstEntity, propertyCollection, DefaultFormatValue);
         }
-
         /// <summary>
         /// 默认的值格式化方法
         /// </summary>
@@ -339,14 +338,15 @@ namespace Buffalo.Kernel
             {
                 return (int)value;
             }
-            else if (value is DateTime)
-            {
-                return ((DateTime)value).ToString("yyyy-MM-dd HH:mm:ss.ms");
-            }
+            //else if (value is DateTime)
+            //{
+            //    return ((DateTime)value).ToString("yyyy-MM-dd HH:mm:ss.ms");
+            //}
 
             return value;
 
         }
+
 
         /// <summary>
         /// 根据反射信息获取值(链式)
