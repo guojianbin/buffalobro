@@ -187,6 +187,7 @@ namespace Buffalo.WebKernel.ARTDialog
             string js = "artShow_AlertDialog('" + title.Replace("'", "\\'") + "','" + content.Replace("'", "\\'") + "'," + width + "," + height + ","
                 + GetBooleanString(isDialog) + "," + sicon + "," + handle + ");";
             CurPage.ClientScript.RegisterStartupScript(System.Web.HttpContext.Current.Handler.GetType(), content, js, true);
+            
         }
 
         /// <summary>

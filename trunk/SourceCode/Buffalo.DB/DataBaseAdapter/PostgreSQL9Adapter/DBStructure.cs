@@ -86,21 +86,26 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
         /// <returns></returns>
         public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, IEnumerable<string> childNames)
         {
-            StringBuilder sql = new StringBuilder();
+            StringBuilder sqlFk = new StringBuilder();
+            StringBuilder sqlPk = new StringBuilder();
+            string sql = "select px.conname as constraintname, px.contype, home.relname as thisname, fore.relname as theirname, px.conrelid as homeid, px.confrelid as foreid, px.conkey as thiscols, px.confkey as fcols, att.attname as colname, fatt.attname as fcolname, px.confupdtype, px.confdeltype from information_schema.table_constraints tc inner join pg_constraint px on (px.conname=tc.constraint_name) left join pg_class home on (home.oid = px.conrelid) left join pg_class fore on (fore.oid = px.confrelid) right join pg_attribute att on (att.attrelid = px.conrelid AND att.attnum = ANY(px.conkey)) right join pg_attribute fatt on (fatt.attrelid = px.confrelid AND fatt.attnum = ANY(px.confkey)) where tc.constraint_type='FOREIGN KEY'";
             //sql.Append("SELECT constraint_schema,constraint_name,unique_constraint_name,table_name,referenced_table_name FROM `information_schema`.`REFERENTIAL_CONSTRAINTS`;");
-            sql.Append("select px.conname as constraintname, px.contype, home.relname as thisname, fore.relname as theirname, px.conrelid as homeid, px.confrelid as foreid, px.conkey as thiscols, px.confkey as fcols, att.attname as colname, fatt.attname as fcolname, px.confupdtype, px.confdeltype from information_schema.table_constraints tc inner join pg_constraint px on (px.conname=tc.constraint_name) left join pg_class home on (home.oid = px.conrelid) left join pg_class fore on (fore.oid = px.confrelid) right join pg_attribute att on (att.attrelid = px.conrelid AND att.attnum = ANY(px.conkey)) right join pg_attribute fatt on (fatt.attrelid = px.confrelid AND fatt.attnum = ANY(px.confkey)) where tc.constraint_type='FOREIGN KEY'");
-            
+            sqlFk.Append(sql);
+            sqlPk.Append(sql);
             ParamList lstParam = new ParamList();
             string childName = Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBStructure.AllInTableNames(childNames);
 
             if (!string.IsNullOrEmpty(childName))
             {
-                sql.Append(" and home.relname in(" + childName + ")");
+                sqlFk.Append(" and home.relname in(" + childName + ")");
             }
-
+            if (!string.IsNullOrEmpty(childName))
+            {
+                sqlPk.Append(" and fore.relname in(" + childName + ")");
+            }
             List<TableRelationAttribute> lst = new List<TableRelationAttribute>();
 
-            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam, null))
+            using (IDataReader reader = info.DefaultOperate.Query(sqlFk.ToString(), lstParam, null))
             {
                 while (reader.Read())
                 {
@@ -111,6 +116,20 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
                     tinfo.TargetTable = reader["theirname"] as string;
                     tinfo.TargetName = reader["fcolname"] as string;
                     tinfo.IsParent = true;
+                    lst.Add(tinfo);
+                }
+            }
+            using (IDataReader reader = info.DefaultOperate.Query(sqlPk.ToString(), lstParam, null))
+            {
+                while (reader.Read())
+                {
+                    TableRelationAttribute tinfo = new TableRelationAttribute();
+                    tinfo.Name = reader["constraintname"] as string;
+                    tinfo.TargetTable = reader["thisname"] as string;
+                    tinfo.TargetName = reader["colname"] as string;
+                    tinfo.SourceTable = reader["theirname"] as string;
+                    tinfo.SourceName = reader["fcolname"] as string;
+                    tinfo.IsParent = false;
                     lst.Add(tinfo);
                 }
             }

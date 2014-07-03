@@ -17,7 +17,7 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static List<EnumInfo> GetInfos()
         {
-            List<EnumInfo> dicInfos = MassManager.GetMassInfos(_curType);
+            List<EnumInfo> dicInfos = MassManager.GetMassInfos(_curType).LstInfo;
             return dicInfos;
         }
 
@@ -54,6 +54,29 @@ namespace Buffalo.Kernel
         public static EnumInfo GetInfoByName(string name)
         {
             return MassManager.GetInfoByName(_curType, name);
+        }
+    }
+
+    /// <summary>
+    /// 常量类信息
+    /// </summary>
+    public class MassInfo 
+    {
+        private List<EnumInfo> _lstInfo = new List<EnumInfo>();
+        /// <summary>
+        /// 常量信息集合
+        /// </summary>
+        public List<EnumInfo> LstInfo
+        {
+            get { return _lstInfo; }
+        }
+        private Dictionary<string, EnumInfo> _dicInfos = new Dictionary<string, EnumInfo>();
+        /// <summary>
+        /// 常量字典信息集合
+        /// </summary>
+        public Dictionary<string, EnumInfo> DicInfos
+        {
+            get { return _dicInfos; }
         }
     }
 }

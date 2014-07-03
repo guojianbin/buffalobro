@@ -55,12 +55,39 @@ namespace Buffalo.Kernel.ZipUnit
                 {
                     UnZip(file);
                 }
-
+                
             }
             
 
         }
 
+        /// <summary>
+        /// 获取包里的文件名和内容
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, MemoryStream> GetContentStream()
+        {
+            Dictionary<string, MemoryStream> dic = new Dictionary<string, MemoryStream>();
+
+            while (true)
+            {
+                ZipEntry zp = _zipStream.GetNextEntry();
+                if (zp == null)
+                {
+                    break;
+                }
+                if (zp.IsDirectory || zp.Crc == 00000000L)
+                {
+                    continue;
+                }
+
+                //string fileDic = SharpZipFile.GetDirectoryName(directory + zp.Name);
+                MemoryStream stm = new MemoryStream();
+                dic[zp.Name] = stm;
+                UnZip(stm);
+            }
+            return dic;
+        }
 
         /// <summary>
         /// 解压到流
@@ -87,6 +114,7 @@ namespace Buffalo.Kernel.ZipUnit
         #endregion
     }
 }
+
 
 
 //*******************例子**************

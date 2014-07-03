@@ -115,6 +115,11 @@ namespace Buffalo.DBTools.HelperKernel
                         {
                             filed.ReadOnly = att.InnerText=="1";
                         }
+                        att = node.Attributes["AllowNull"];
+                        if (att != null)
+                        {
+                            filed.AllowNull = att.InnerText == "1";
+                        }
                     }
                 }
                 
@@ -398,6 +403,10 @@ namespace Buffalo.DBTools.HelperKernel
                 att = doc.CreateAttribute("Description");// Ù–‘◊¢ Õ
                 att.InnerText = field.Description;
                 node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("AllowNull");// Ù–‘◊¢ Õ
+                att.InnerText = field.AllowNull ? "1" : "0";
+                node.Attributes.Append(att);
             }
         }
 
@@ -548,6 +557,10 @@ namespace Buffalo.DBTools.HelperKernel
 
                 att = doc.CreateAttribute("Description");// Ù–‘◊¢ Õ
                 att.InnerText = field.Summary;
+                node.Attributes.Append(att);
+
+                att = doc.CreateAttribute("AllowNull");//◊÷∂Œ√˚
+                att.InnerText = field.AllowNull ? "1" : "0";
                 node.Attributes.Append(att);
             }
 

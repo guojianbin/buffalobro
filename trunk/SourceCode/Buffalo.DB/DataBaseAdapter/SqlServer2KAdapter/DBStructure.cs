@@ -100,19 +100,24 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, IEnumerable<string> childNames) 
         {
-            StringBuilder sql =new StringBuilder();
-
-            sql.Append("select * from (select fk.name fkname ,ftable.[name] childname, cn.[name] childparam, rtable.[name] parentname,pn.[name] parentparam from sysforeignkeys join sysobjects fk on sysforeignkeys.constid = fk.id join sysobjects ftable on sysforeignkeys.fkeyid = ftable.id join sysobjects rtable on sysforeignkeys.rkeyid = rtable.id join syscolumns cn on sysforeignkeys.fkeyid = cn.id and sysforeignkeys.fkey = cn.colid join syscolumns pn on sysforeignkeys.rkeyid = pn.id and sysforeignkeys.rkey = pn.colid) a where 1=1");
+            string fksql = "select * from (select fk.name fkname ,ftable.[name] childname, cn.[name] childparam, rtable.[name] parentname,pn.[name] parentparam from sysforeignkeys join sysobjects fk on sysforeignkeys.constid = fk.id join sysobjects ftable on sysforeignkeys.fkeyid = ftable.id join sysobjects rtable on sysforeignkeys.rkeyid = rtable.id join syscolumns cn on sysforeignkeys.fkeyid = cn.id and sysforeignkeys.fkey = cn.colid join syscolumns pn on sysforeignkeys.rkeyid = pn.id and sysforeignkeys.rkey = pn.colid) a where 1=1";
+            StringBuilder sqlfk =new StringBuilder();
+            StringBuilder sqlpk = new StringBuilder();
+            sqlfk.Append(fksql);
+            sqlpk.Append(fksql);
             ParamList lstParam=new ParamList();
             string childName = AllInTableNames(childNames);
             if(!string.IsNullOrEmpty(childName))
             {
-                sql.Append(" and childname in(" + childName + ")");
+                sqlfk.Append(" and childname in(" + childName + ")");
             }
-
+            if (!string.IsNullOrEmpty(childName))
+            {
+                sqlpk.Append(" and parentname in(" + childName + ")");
+            }
             List<TableRelationAttribute> lst = new List<TableRelationAttribute>();
 
-            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam,null)) 
+            using (IDataReader reader = info.DefaultOperate.Query(sqlfk.ToString(), lstParam, null)) 
             {
                 while (reader.Read()) 
                 {
@@ -123,6 +128,20 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                     tinfo.TargetTable = reader["parentname"] as string;
                     tinfo.TargetName = reader["parentparam"] as string;
                     tinfo.IsParent = true;
+                    lst.Add(tinfo);
+                }
+            }
+            using (IDataReader reader = info.DefaultOperate.Query(sqlpk.ToString(), lstParam, null))
+            {
+                while (reader.Read())
+                {
+                    TableRelationAttribute tinfo = new TableRelationAttribute();
+                    tinfo.Name = reader["fkname"] as string;
+                    tinfo.TargetTable = reader["childname"] as string;
+                    tinfo.TargetName = reader["childparam"] as string;
+                    tinfo.SourceTable = reader["parentname"] as string;
+                    tinfo.SourceName = reader["parentparam"] as string;
+                    tinfo.IsParent = false;
                     lst.Add(tinfo);
                 }
             }

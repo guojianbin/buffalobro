@@ -54,19 +54,24 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
 
         public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, IEnumerable<string> childNames)
         {
-            StringBuilder sql = new StringBuilder();
-            sql.Append("select CONSTNAME,FK_COLNAMES,TABSCHEMA,TABNAME,REFTABSCHEMA, REFTABNAME,REFKEYNAME,PK_COLNAMES from SYSCAT.REFERENCES where 1=1");
-
+            string sql = "select CONSTNAME,FK_COLNAMES,TABSCHEMA,TABNAME,REFTABSCHEMA, REFTABNAME,REFKEYNAME,PK_COLNAMES from SYSCAT.REFERENCES where 1=1";
+            StringBuilder sqlFk = new StringBuilder();
+            StringBuilder sqlPk = new StringBuilder();
+            sqlFk.Append(sql);
+            sqlPk.Append(sql);
             ParamList lstParam=new ParamList();
             string childName = Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBStructure.AllInTableNames(childNames);
             if(!string.IsNullOrEmpty(childName))
             {
-                sql.Append(" and TABNAME in(" + childName + ")");
+                sqlFk.Append(" and TABNAME in(" + childName + ")");
             }
-
+            if (!string.IsNullOrEmpty(childName))
+            {
+                sqlPk.Append(" and REFTABNAME in(" + childName + ")");
+            }
             List<TableRelationAttribute> lst = new List<TableRelationAttribute>();
 
-            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam,null)) 
+            using (IDataReader reader = info.DefaultOperate.Query(sqlFk.ToString(), lstParam, null)) 
             {
                 while (reader.Read()) 
                 {
@@ -97,6 +102,40 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
                         tinfo.TargetName= tinfo.TargetName.Trim();
                     }
                     tinfo.IsParent = true;
+                    lst.Add(tinfo);
+                }
+            }
+            using (IDataReader reader = info.DefaultOperate.Query(sqlPk.ToString(), lstParam, null))
+            {
+                while (reader.Read())
+                {
+                    TableRelationAttribute tinfo = new TableRelationAttribute();
+                    tinfo.Name = (reader["CONSTNAME"] as string);
+                    if (!string.IsNullOrEmpty(tinfo.Name))
+                    {
+                        tinfo.Name = tinfo.Name.Trim();
+                    }
+                    tinfo.SourceTable = reader["REFTABNAME"] as string;
+                    if (!string.IsNullOrEmpty(tinfo.SourceTable))
+                    {
+                        tinfo.SourceTable = tinfo.SourceTable.Trim();
+                    }
+                    tinfo.SourceName = reader["PK_COLNAMES"] as string;
+                    if (!string.IsNullOrEmpty(tinfo.SourceName))
+                    {
+                        tinfo.SourceName = tinfo.SourceName.Trim();
+                    }
+                    tinfo.TargetTable = reader["TABNAME"] as string;
+                    if (!string.IsNullOrEmpty(tinfo.TargetTable))
+                    {
+                        tinfo.TargetTable = tinfo.TargetTable.Trim();
+                    }
+                    tinfo.TargetName = reader["FK_COLNAMES"] as string;
+                    if (!string.IsNullOrEmpty(tinfo.TargetName))
+                    {
+                        tinfo.TargetName = tinfo.TargetName.Trim();
+                    }
+                    tinfo.IsParent = false;
                     lst.Add(tinfo);
                 }
             }

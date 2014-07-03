@@ -77,7 +77,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             }
         }
 
-
+        
         
         #region 基本方法
 
@@ -621,6 +621,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                     cacheTables = _oper.DBInfo.QueryCache.CreateMap(CurEntityInfo.TableName);
                 }
                 retlist = QueryList(sql, list, CommandType.Text,cacheTables);
+                DataAccessCommon.FillEntityChidList(retlist, scopeList);
                 return retlist;
             }
         }

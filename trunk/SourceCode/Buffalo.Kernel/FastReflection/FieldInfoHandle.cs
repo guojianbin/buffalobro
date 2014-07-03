@@ -104,7 +104,7 @@ namespace Buffalo.Kernel.FastReflection
         }
 
         /// <summary>
-        /// 给对象设置值
+        /// 获取对象值
         /// </summary>
         /// <param name="args">对象</param>
         /// <param name="value">值</param>

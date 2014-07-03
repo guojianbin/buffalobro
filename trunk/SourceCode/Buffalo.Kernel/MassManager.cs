@@ -11,23 +11,38 @@ namespace Buffalo.Kernel
     /// </summary>
     public class MassManager
     {
-        private static Dictionary<string, List<EnumInfo>> dicMass = new Dictionary<string, List<EnumInfo>>();
+        private static Dictionary<string, MassInfo> _dicMass = new Dictionary<string, MassInfo>();
+        /// <summary>
+        /// 根据类型获取常量集合
+        /// </summary>
+        /// <param name="objType"></param>
+        /// <returns></returns>
+        public static MassInfo GetMassInfos(Type objType) 
+        {
+            string fullName = objType.FullName;
+            MassInfo ret = null;
+            if (!_dicMass.TryGetValue(fullName, out ret)) 
+            {
+                ret = new MassInfo();
+                GetInfos(objType, ret.LstInfo,ret.DicInfos);
+                _dicMass[fullName] = ret;
+            }
+            return ret;
+        }
 
         /// <summary>
         /// 根据类型获取常量集合
         /// </summary>
         /// <param name="objType"></param>
         /// <returns></returns>
-        public static List<EnumInfo> GetMassInfos(Type objType) 
+        public static List<EnumInfo> GetInfos(Type objType)
         {
-            string fullName = objType.FullName;
-            List<EnumInfo> ret = null;
-            if (!dicMass.TryGetValue(fullName, out ret)) 
+            MassInfo info = GetMassInfos(objType);
+            if (info != null) 
             {
-                ret= GetInfos(objType);
-                dicMass[fullName] = ret;
+                return info.LstInfo;
             }
-            return ret;
+            return null;
         }
 
         /// <summary>
@@ -38,13 +53,12 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static EnumInfo GetInfoByName(Type objType, string fieldName)
         {
-            List<EnumInfo> dicInfos = GetMassInfos(objType);
-            foreach (EnumInfo pair in dicInfos) 
+            Dictionary<string, EnumInfo> dicInfos = GetMassInfos(objType).DicInfos;
+            EnumInfo ret = null;
+            string key = "Name:" + fieldName;
+            if (dicInfos.TryGetValue(key, out ret)) 
             {
-                if (pair.FieldName == fieldName) 
-                {
-                    return pair;
-                }
+                return ret;
             }
             return null;
         }
@@ -57,15 +71,13 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static EnumInfo GetInfoByValue(Type objType, object value) 
         {
-            List<EnumInfo> lstInfos = GetMassInfos(objType);
-            foreach (EnumInfo pair in lstInfos)
+            Dictionary<string, EnumInfo> dicInfos = GetMassInfos(objType).DicInfos;
+            EnumInfo ret = null;
+            string key = "Value:" + value.ToString();
+            if (dicInfos.TryGetValue(key, out ret))
             {
-                if (pair.Value.Equals(value))
-                {
-                    return pair;
-                }
+                return ret;
             }
-            
             return null;
         }
 
@@ -74,10 +86,8 @@ namespace Buffalo.Kernel
         /// </summary>
         /// <param name="objType"></param>
         /// <returns></returns>
-        private static List<EnumInfo> GetInfos(Type objType) 
+        private static void GetInfos(Type objType, List<EnumInfo> lstInfos, Dictionary<string, EnumInfo> dicInfo) 
         {
-
-            List<EnumInfo> lstInfos = new List<EnumInfo>();
             FieldInfo[] fields = objType.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             foreach (FieldInfo field in fields)
             {
@@ -117,9 +127,9 @@ namespace Buffalo.Kernel
                     info.Value = field.GetValue(null);
                 }
                 lstInfos.Add(info);
-
+                dicInfo["Value:"+info.Value.ToString()] = info;
+                dicInfo["Name:" + info.FieldName.ToString()] = info;
             }
-            return lstInfos;
         }
     }
 }

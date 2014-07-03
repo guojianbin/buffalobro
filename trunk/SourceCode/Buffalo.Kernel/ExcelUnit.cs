@@ -24,6 +24,25 @@ namespace Buffalo.Kernel
         Excel2010
     }
 
+    /// <summary>
+    /// 数据读取模式
+    /// </summary>
+    public enum IMEX
+    {
+        /// <summary>
+        /// 只写模式,档案只能用来做“写入”用途
+        /// </summary>
+        ExportMode = 0,
+        /// <summary>
+        /// 只读模式,档案只能用来做“读取”用途
+        /// </summary>
+        ImportMode = 1,
+        /// <summary>
+        /// 读写模式，这个模式开启的 Excel 档案可同时支援“读取”与“写入”用途。
+        /// </summary>
+        LinkedMode = 2,
+    }
+
     public class ExcelUnit
     {
 
@@ -35,26 +54,36 @@ namespace Buffalo.Kernel
         /// <summary>
         /// 获取连接字符串
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="fromat"></param>
+        /// <param name="path">位置</param>
+        /// <param name="fromat">excel格式</param>
+        /// <param name="hasHeadText">是否把第一行作为表头</param>
+        /// <param name="mode">读写模式</param>
         /// <returns></returns>
-        private static string GetConnectString(string path, ExcelFormat fromat)
+        private static string GetConnectString(string path, ExcelFormat fromat,bool hasHeadText,IMEX mode)
         {
             string provider = XLSProvider;
             if (fromat == ExcelFormat.Excel2010)
             {
                 provider = XLSXProvider;
             }
-            string connString = string.Format(provider, path, "YES", "0");
+            string connString = null;
+            string hdr = "YES";
+            if (!hasHeadText) 
+            {
+                hdr = "NO";
+            }
+            string strmode = ((int)mode).ToString();
+            connString = string.Format(provider, path, hdr, strmode);
             return connString;
         }
 
         /// <summary>
         /// 读取Excel到DataSet
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">文件</param>
+        /// <param name="hasHeadText">是否有表头</param>
         /// <returns></returns>
-        public static DataSet LoadXLS(string path) 
+        public static DataSet LoadXLS(string path, bool hasHeadText) 
         {
             ExcelFormat format = ExcelFormat.Excel2003;
             FileInfo finf = new FileInfo(path);
@@ -66,18 +95,22 @@ namespace Buffalo.Kernel
                     format = ExcelFormat.Excel2010;
                 }
             }
-            return LoadXLS(path, format,false);
+            return LoadXLS(path, format,false,hasHeadText,IMEX.ImportMode);
         }
         const string FilterString = "#_FilterDatabase";
         /// <summary>
         /// 读取Excel到DataSet
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">路径</param>
+        /// <param name="fromat">格式</param>
+        /// <param name="showFilter">是否显示废弃表</param>
+        /// <param name="hasHeadText">是否把第一行作为表头</param>
+        /// <param name="mode">打开模式</param>
         /// <returns></returns>
-        public static DataSet LoadXLS(string path,ExcelFormat fromat,bool showFilter)
+        public static DataSet LoadXLS(string path, ExcelFormat fromat, bool showFilter, bool hasHeadText, IMEX mode)
         {
             DataSet ds = new DataSet();
-            string connString = GetConnectString(path, fromat);
+            string connString = GetConnectString(path, fromat, hasHeadText, mode);
             using (OleDbConnection conn = new OleDbConnection(connString))
             {
                 conn.Open();
@@ -131,7 +164,7 @@ namespace Buffalo.Kernel
                 return -1;
             }
             StringBuilder sb = new StringBuilder();
-            string connString = GetConnectString(excelPath, fromat);
+            string connString = GetConnectString(excelPath, fromat,true,IMEX.LinkedMode);
 
             using (OleDbConnection objConn = new OleDbConnection(connString))
             {

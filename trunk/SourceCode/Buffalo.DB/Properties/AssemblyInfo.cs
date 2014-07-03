@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("BuffaloDB")]
 #endif
 
-[assembly: AssemblyDescription("Buffalo DataBase Library")]
+[assembly: AssemblyDescription("BuffaloDataLibrary")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 [assembly: AssemblyProduct("Buffalo.DB(Debug)")]
@@ -61,5 +61,5 @@ using System.Runtime.InteropServices;
 //
 // 可以指定所有这些值，也可以使用“修订号”和“内部版本号”的默认值，
 // 方法是按如下所示使用“*”:
-[assembly: AssemblyVersion("0.9.3.10")]
-[assembly: AssemblyFileVersion("0.9.3.10")]
+[assembly: AssemblyVersion("0.9.4.0")]
+[assembly: AssemblyFileVersion("0.9.4.0")]

@@ -59,24 +59,10 @@ namespace Buffalo.DB.DataFillers
             Type senderType = CH.GetRealType(sender);//发送类的类型
             EntityInfoHandle senderHandle = EntityInfoManager.GetEntityHandle(senderType);//获取发送类的信息
             EntityMappingInfo mappingInfo = senderHandle.MappingInfo[propertyName];
-            //if (mappingInfo.GetValue(sender) != null) 
-            //{
-            //    return;
-            //}
-            //Dictionary<string, List<object>> dicElement = new Dictionary<string, List<object>>();//根据
-            ///获取本属性的映射信息
-            
-            //IList baseList = sender.GetBaseList();
-            //if (baseList == null)
-            //{
-            //    baseList = new ArrayList();
-            //    baseList.Add(sender);
-            //}
-            
+
             if (mappingInfo != null)
             {
                 EntityPropertyInfo pkHandle = mappingInfo.SourceProperty;//获取实体主键属性句柄
-                //IList pks = CollectPks(baseList, pkHandle, mappingInfo, dicElement, senderHandle.DBInfo);
                 object lst=Activator.CreateInstance(mappingInfo.FieldType) ;
                 mappingInfo.SetValue(sender, lst);
                 object pk = pkHandle.GetValue(sender);
@@ -94,104 +80,42 @@ namespace Buffalo.DB.DataFillers
         /// <param name="mappingInfo">映射信息</param>
         /// <param name="dicElement">元素</param>
         private static void FillChilds(object pk, EntityInfoHandle childHandle, EntityMappingInfo mappingInfo,
-            EntityBase sender,string propertyName)
+            EntityBase sender, string propertyName)
         {
             EntityInfoHandle childInfo = mappingInfo.TargetProperty.BelongInfo;
             DBInfo db = childInfo.DBInfo;
-            //if (pks.Count>0)
-            //{
-                DataBaseOperate oper = childHandle.DBInfo.DefaultOperate;
-                BQLDbBase dao = new BQLDbBase(oper);
-                ScopeList lstScope = new ScopeList();
-                
-                sender.OnFillChild(propertyName, lstScope);
-                lstScope.AddEqual(mappingInfo.TargetProperty.PropertyName, pk);
+            DataBaseOperate oper = childHandle.DBInfo.DefaultOperate;
+            BQLDbBase dao = new BQLDbBase(oper);
+            ScopeList lstScope = new ScopeList();
+
+            sender.OnFillChild(propertyName, lstScope);
+            lstScope.AddEqual(mappingInfo.TargetProperty.PropertyName, pk);
 
 
-                IDataReader reader = dao.QueryReader(lstScope, childInfo.EntityType);
-                try
-                {
-                    string fullName = mappingInfo.TargetProperty.BelongInfo.EntityType.FullName;
-                    Type childType = mappingInfo.TargetProperty.BelongInfo.EntityType;
-
-                    //获取子表的get列表
-                    List<EntityPropertyInfo> lstParamNames = CacheReader.GenerateCache(reader, childInfo);//创建一个缓存数值列表
-
-                    //IList baseList = new ArrayList();//缓存的父列表
-                    IList lst = (IList)mappingInfo.GetValue(sender);
-                    while (reader.Read())
-                    {
-                        object obj = childInfo.CreateSelectProxyInstance();
-                        string fk = reader[mappingInfo.TargetProperty.ParamName].ToString();
-                        List<object> curElementObjs = null;
-
-
-                        //if (dicElement.TryGetValue(fk, out curElementObjs))
-                        //{
-                        //foreach (object curElementObj in curElementObjs)
-                        //{
-
-                        CacheReader.FillObjectFromReader(reader, lstParamNames, obj, db);
-                        lst.Add(obj);
-                        //baseList.Add(obj);
-                        //(obj as EntityBase).SetBaseList(baseList);
-                        //}
-
-                        //}
-                    }
-
-                }
-                finally
-                {
-                    reader.Close();
-                    oper.AutoClose();
-                }
-            //}
-        }
-
-
-
-        /// <summary>
-        /// 收集键列表，把字字段实例化
-        /// </summary>
-        /// <param name="curList">当前实体的上一次查询的结果集合</param>
-        /// <param name="pkHandle">获取键值的代理</param>
-        /// <param name="mappingInfo">映射的属性信息</param>
-        /// <param name="dicElement">元素列表</param>
-        /// <returns></returns>
-        private static IList CollectPks(IList curList, EntityPropertyInfo pkHandle,
-            EntityMappingInfo mappingInfo, Dictionary<string, List<object>> dicElement,DBInfo db)
-        {
-            CreateInstanceHandler classInfo = FastValueGetSet.GetCreateInstanceHandler(mappingInfo.FieldType);
-            ArrayList ret = new ArrayList();
-            if (pkHandle != null)
+            IDataReader reader = dao.QueryReader(lstScope, childInfo.EntityType);
+            try
             {
-                foreach (object obj in curList)
+                string fullName = mappingInfo.TargetProperty.BelongInfo.EntityType.FullName;
+                Type childType = mappingInfo.TargetProperty.BelongInfo.EntityType;
+
+                //获取子表的get列表
+                List<EntityPropertyInfo> lstParamNames = CacheReader.GenerateCache(reader, childInfo);//创建一个缓存数值列表
+                IList lst = (IList)mappingInfo.GetValue(sender);
+                while (reader.Read())
                 {
-                    ////先给子列表赋空元素
-                    object newObj = classInfo.Invoke();
-                    mappingInfo.SetValue(obj, newObj);
-
-                    //获取主键集合字符串(用逗号隔开)
-                    object curObj = pkHandle.GetValue(obj);
-                    if (curObj != null)
-                    {
-                        ret.Add(curObj);
-                        //把当前元素以主键作为标识放在Dic里边
-                        List<object> lst = null;
-                        if (!dicElement.TryGetValue(curObj.ToString(), out lst))
-                        {
-                            lst = new List<object>();
-                            dicElement.Add(curObj.ToString(), lst);
-                        }
-                        lst.Add(obj);
-                    }
+                    object obj = childInfo.CreateSelectProxyInstance();
+                    //string fk = reader[mappingInfo.TargetProperty.ParamName].ToString();
+                    CacheReader.FillObjectFromReader(reader, lstParamNames, obj, db);
+                    lst.Add(obj);
                 }
+
             }
-            return ret;
-
+            finally
+            {
+                reader.Close();
+                oper.AutoClose();
+            }
         }
-
         /// <summary>
         /// 获取指定对应字段名的属性句柄
         /// </summary>
@@ -295,48 +219,48 @@ namespace Buffalo.DB.DataFillers
 
         
 
-        /// <summary>
-        /// 收集键列表，把字字段实例化
-        /// </summary>
-        /// <param name="curList">当前集合</param>
-        /// <param name="senderHandle">发动元素的信息</param>
-        /// <param name="mappingInfo">设置对应元素的的属性句柄</param>
-        /// <param name="dicElement">元素列表</param>
-        /// <returns></returns>
-        private static IList CollectFks(IList curList, EntityPropertyInfo senderHandle, 
-            EntityMappingInfo mappingInfo, Dictionary<string, ArrayList> dicElement,DBInfo db)
-        {
-            EntityInfoHandle classInfo = EntityInfoManager.GetEntityHandle(mappingInfo.FieldType);
-            ArrayList ret = new ArrayList();
-            if (senderHandle != null)
-            {
-                foreach (object obj in curList)
-                {
-                    //实例化父表元素对应类，并赋到集合里边以作初值
-                    //object newObj = classInfo.CreateProxyInstance();
-                    //mappingInfo.SetValue(obj, newObj);
+        ///// <summary>
+        ///// 收集键列表，把字字段实例化
+        ///// </summary>
+        ///// <param name="curList">当前集合</param>
+        ///// <param name="senderHandle">发动元素的信息</param>
+        ///// <param name="mappingInfo">设置对应元素的的属性句柄</param>
+        ///// <param name="dicElement">元素列表</param>
+        ///// <returns></returns>
+        //private static IList CollectFks(IList curList, EntityPropertyInfo senderHandle, 
+        //    EntityMappingInfo mappingInfo, Dictionary<string, ArrayList> dicElement,DBInfo db)
+        //{
+        //    EntityInfoHandle classInfo = EntityInfoManager.GetEntityHandle(mappingInfo.FieldType);
+        //    ArrayList ret = new ArrayList();
+        //    if (senderHandle != null)
+        //    {
+        //        foreach (object obj in curList)
+        //        {
+        //            //实例化父表元素对应类，并赋到集合里边以作初值
+        //            //object newObj = classInfo.CreateProxyInstance();
+        //            //mappingInfo.SetValue(obj, newObj);
 
-                    //获取对应字段的值以返回做查询条件
-                    object curObj = senderHandle.GetValue(obj);
-                    if (curObj != null)
-                    {
-                        string key = curObj.ToString();
-                        ArrayList lst = null;
-                        if (!dicElement.TryGetValue(key, out lst))
-                        {
-                            lst = new ArrayList();
-                            //把当前元素以主键作为标识放在Dic里边
-                            dicElement.Add(curObj.ToString(), lst);
-                            ret.Add(curObj);
-                        }
+        //            //获取对应字段的值以返回做查询条件
+        //            object curObj = senderHandle.GetValue(obj);
+        //            if (curObj != null)
+        //            {
+        //                string key = curObj.ToString();
+        //                ArrayList lst = null;
+        //                if (!dicElement.TryGetValue(key, out lst))
+        //                {
+        //                    lst = new ArrayList();
+        //                    //把当前元素以主键作为标识放在Dic里边
+        //                    dicElement.Add(curObj.ToString(), lst);
+        //                    ret.Add(curObj);
+        //                }
 
-                        lst.Add(obj);
-                    }
-                }
-            }
-            return ret;
+        //                lst.Add(obj);
+        //            }
+        //        }
+        //    }
+        //    return ret;
 
-        }
+        //}
 
 
         #endregion

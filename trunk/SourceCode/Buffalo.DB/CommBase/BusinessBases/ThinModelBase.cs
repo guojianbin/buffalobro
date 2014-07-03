@@ -49,7 +49,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         /// <param name="lstScope"></param>
         /// <returns></returns>
-        public virtual void OnSelect(ScopeList lstScope) 
+        protected internal virtual void OnSelect(ScopeList lstScope) 
         {
             
         }
@@ -62,7 +62,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <param name="lstValue">赋值</param>
         /// <param name="optimisticConcurrency">是否用并发锁</param>
         /// <returns>是否继续执行更新</returns>
-        public virtual bool BeforeUpdateByScope(EntityBase entity, ScopeList scorpList, ValueSetList lstValue, bool optimisticConcurrency)
+        protected internal virtual bool BeforeUpdateByScope(EntityBase entity, ScopeList scorpList, ValueSetList lstValue, bool optimisticConcurrency)
         {
             return true;
         }
@@ -76,7 +76,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// <param name="scorpList">范围更新条件</param>
         /// <param name="lstValue">赋值</param>
         /// <param name="optimisticConcurrency">是否用并发锁</param>
-        public virtual void AfterUpdateByScope(int affected, EntityBase entity, ScopeList scorpList, ValueSetList lstValue, bool optimisticConcurrency)
+        protected internal virtual void AfterUpdateByScope(int affected, EntityBase entity, ScopeList scorpList, ValueSetList lstValue, bool optimisticConcurrency)
         {
 
         }
@@ -86,7 +86,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         /// <param name="scorpList">范围更新条件</param>
         /// <returns>是否继续执行更新</returns>
-        public virtual bool BeforeDeleteByScope(ScopeList scorpList)
+        protected internal virtual bool BeforeDeleteByScope(ScopeList scorpList)
         {
             return true;
         }
@@ -97,7 +97,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         /// <param name="affected">影响行数</param>
         /// <param name="scorpList">范围更新条件</param>
-        public virtual void AfterDeleteByScope(int affected,  ScopeList scorpList)
+        protected internal virtual void AfterDeleteByScope(int affected, ScopeList scorpList)
         {
 
         }

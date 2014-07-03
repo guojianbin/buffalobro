@@ -22,7 +22,9 @@ namespace Buffalo.DBTools.HelperKernel
         private EntityConfig _belongEntity;
         private int _length;
         private bool _readonly;
-        
+        private bool _allowNull;
+
+       
 
 
        /// <summary>
@@ -37,7 +39,6 @@ namespace Buffalo.DBTools.HelperKernel
             _fInfo = fInfo;
             GetEntityParamInfo(fInfo);
             _belongEntity = belongEntity;
-            
         }
         /// <summary>
         /// 属性类型
@@ -74,7 +75,14 @@ namespace Buffalo.DBTools.HelperKernel
                 return _fInfo.DocSummary;
             }
         }
-
+        /// <summary>
+        /// 允许空
+        /// </summary>
+        public bool AllowNull
+        {
+            get { return _allowNull; }
+            set { _allowNull = value; }
+        }
         /// <summary>
         /// 字段类型
         /// </summary>
@@ -145,7 +153,8 @@ namespace Buffalo.DBTools.HelperKernel
             ep.PropertyName = PropertyName;
             ep.SqlType = (DbType)EnumUnit.GetEnumInfoByName(typeof(DbType), DbType).Value;
             ep.PropertyType = EntityPropertyType;
-            ep.AllowNull = IsNullProperty(_fInfo.MemberTypeShortName);
+            //ep.AllowNull = IsNullProperty(_fInfo.MemberTypeShortName);
+            ep.AllowNull = AllowNull;
             ep.ReadOnly = ReadOnly;
             ep.Description = Description;
             return ep;

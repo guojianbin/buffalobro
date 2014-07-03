@@ -14,6 +14,7 @@ using Buffalo.DB.CommBase;
 using Buffalo.DB.DataBaseAdapter;
 using Buffalo.Kernel;
 using Buffalo.DB.CommBase.BusinessBases;
+using Buffalo.DB.CommBase.DataAccessBases;
 
 namespace Buffalo.DB.BQLCommon
 {
@@ -120,6 +121,7 @@ namespace Buffalo.DB.BQLCommon
             where E : EntityBase, new()
         {
             Type eType = typeof(E);
+            List<E> retlist = null;
             BQLEntityTableHandle table = _oper.DBInfo.FindTable(eType);
             if (CommonMethods.IsNull(table)) 
             {
@@ -128,11 +130,15 @@ namespace Buffalo.DB.BQLCommon
             BQLQuery BQL = GetSelectSql(lstScope, table);
             if (!lstScope.HasPage)
             {
-                return QueryList<E>(BQL,lstScope.ShowEntity,lstScope.UseCache);
+                retlist = QueryList<E>(BQL, lstScope.ShowEntity, lstScope.UseCache);
+                DataAccessCommon.FillEntityChidList(retlist, lstScope);
+                return retlist;
             }
             using (BatchAction ba = _oper.StarBatchAction())
             {
-                return QueryPageList<E>(BQL, lstScope.PageContent, lstScope.ShowEntity,lstScope.UseCache);
+                retlist = QueryPageList<E>(BQL, lstScope.PageContent, lstScope.ShowEntity, lstScope.UseCache);
+                DataAccessCommon.FillEntityChidList(retlist, lstScope);
+                return retlist;
             }
         }
 

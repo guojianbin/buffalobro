@@ -175,7 +175,7 @@ namespace Buffalo.DBTools
                 DbType dbt=(DbType)EnumUnit.GetEnumInfoByName(typeof(DbType),param.DbType).Value;
                 EntityParam pInfo = new EntityParam("",
                     param.ParamName,"",dbt,
-                    param.EntityPropertyType,entity.Summary, param.Length, EntityFieldBase.IsNullProperty(param.FInfo.MemberTypeShortName), param.ReadOnly);
+                    param.EntityPropertyType, entity.Summary, param.Length, param.AllowNull, param.ReadOnly);
                 
                 lstParam.Add(pInfo);
             }

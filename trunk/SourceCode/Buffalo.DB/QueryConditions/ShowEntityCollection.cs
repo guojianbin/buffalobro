@@ -24,7 +24,10 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="prm"></param>
         public new void Add(BQLEntityTableHandle prm)
         {
-            _belongList.HasInner = true;
+            if (_belongList != null)
+            {
+                _belongList.HasInner = true;
+            }
             base.Add(prm);
         }
 
@@ -34,7 +37,10 @@ namespace Buffalo.DB.QueryConditions
         /// <param name="prm"></param>
         public void AddRange(params BQLEntityTableHandle[] prms)
         {
-            _belongList.HasInner = true;
+            if (_belongList != null)
+            {
+                _belongList.HasInner = true;
+            }
             base.AddRange(prms);
         }
     }

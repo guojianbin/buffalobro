@@ -34,18 +34,24 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
 
         public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, IEnumerable<string> childNames)
         {
-            StringBuilder sql = new StringBuilder(1024);
+            string sql = "select b.table_name as pktable_name,b.column_name pkcolumn_name,c.table_name fktable_name,c.column_name fkcolumn_name,c.position ke_seq,c.constraint_name fk_name from (select * from user_cons_columns ) b left join (select * from user_constraints where user_constraints.constraint_type='R' ) a on  b.constraint_name=a.r_constraint_name left join user_cons_columns c on  c.constraint_name=a.constraint_name where c.position is not null and c.position=b.position ";
+            StringBuilder sqlFk = new StringBuilder(1024);
+            StringBuilder sqlPk = new StringBuilder(1024);
             ParamList lstParam = new ParamList();
-            sql.Append("select b.table_name as pktable_name,b.column_name pkcolumn_name,c.table_name fktable_name,c.column_name fkcolumn_name,c.position ke_seq,c.constraint_name fk_name from (select * from user_cons_columns ) b left join (select * from user_constraints where user_constraints.constraint_type='R' ) a on  b.constraint_name=a.r_constraint_name left join user_cons_columns c on  c.constraint_name=a.constraint_name where c.position is not null and c.position=b.position ");
-
+            sqlFk.Append(sql);
+            sqlPk.Append(sql);
             string childName = Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBStructure.AllInTableNames(childNames);
             if (!string.IsNullOrEmpty(childName)) 
             {
-                sql.Append("and c.table_name in(" + childName + ")");
+                sqlFk.Append("and c.table_name in(" + childName + ")");
+            }
+            if (!string.IsNullOrEmpty(childName))
+            {
+                sqlPk.Append("and  b.table_name in(" + childName + ")");
             }
             List<TableRelationAttribute> lst = new List<TableRelationAttribute>();
 
-            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam,null))
+            using (IDataReader reader = info.DefaultOperate.Query(sqlFk.ToString(), lstParam, null))
             {
                 while (reader.Read())
                 {
@@ -56,6 +62,20 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                     tinfo.TargetTable = reader["PKTABLE_NAME"] as string;
                     tinfo.TargetName = reader["PKCOLUMN_NAME"] as string;
                     tinfo.IsParent = true;
+                    lst.Add(tinfo);
+                }
+            }
+            using (IDataReader reader = info.DefaultOperate.Query(sqlPk.ToString(), lstParam, null))
+            {
+                while (reader.Read())
+                {
+                    TableRelationAttribute tinfo = new TableRelationAttribute();
+                    tinfo.Name = reader["FK_NAME"] as string;
+                    tinfo.TargetTable = reader["FKTABLE_NAME"] as string;
+                    tinfo.TargetName = reader["FKCOLUMN_NAME"] as string;
+                    tinfo.SourceTable = reader["PKTABLE_NAME"] as string;
+                    tinfo.SourceName = reader["PKCOLUMN_NAME"] as string;
+                    tinfo.IsParent = false;
                     lst.Add(tinfo);
                 }
             }

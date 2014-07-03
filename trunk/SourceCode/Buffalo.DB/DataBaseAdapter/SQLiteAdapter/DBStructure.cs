@@ -97,6 +97,16 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
                 tr.SourceTable=row["TABLE_NAME"] as string;
                 tr.TargetName=row["FKEY_TO_COLUMN"] as string;
                 tr.TargetTable =row["FKEY_TO_TABLE"] as string;
+                tr.IsParent = true;
+                lstRet.Add(tr);
+
+                tr = new TableRelationAttribute();
+                tr.Name = row["CONSTRAINT_NAME"] as string;
+                tr.TargetName = row["FKEY_FROM_COLUMN"] as string;
+                tr.TargetTable = row["TABLE_NAME"] as string;
+                tr.SourceName = row["FKEY_TO_COLUMN"] as string;
+                tr.SourceTable = row["FKEY_TO_TABLE"] as string;
+                tr.IsParent = false;
                 lstRet.Add(tr);
             }
             return lstRet;

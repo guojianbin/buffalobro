@@ -93,22 +93,27 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// <returns></returns>
         public List<TableRelationAttribute> GetRelation(DataBaseOperate oper, DBInfo info, IEnumerable<string> childNames)
         {
-            StringBuilder sql = new StringBuilder();
+            string sql = "SELECT t1.CONSTRAINT_NAME,t1.TABLE_NAME, t1.COLUMN_NAME, t1.POSITION_IN_UNIQUE_CONSTRAINT,  t1.REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE t1  INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS t2  ON t2.TABLE_SCHEMA = t1.TABLE_SCHEMA  AND t2.TABLE_NAME = t1.TABLE_NAME  AND t2.CONSTRAINT_NAME = t1.CONSTRAINT_NAME WHERE t1.TABLE_SCHEMA = ?dbName  AND t2.CONSTRAINT_TYPE = 'FOREIGN KEY'";
+            StringBuilder sqlFk = new StringBuilder();
+            StringBuilder sqlPk = new StringBuilder();
             //sql.Append("SELECT constraint_schema,constraint_name,unique_constraint_name,table_name,referenced_table_name FROM `information_schema`.`REFERENTIAL_CONSTRAINTS`;");
-            sql.Append("SELECT t1.CONSTRAINT_NAME,t1.TABLE_NAME, t1.COLUMN_NAME, t1.POSITION_IN_UNIQUE_CONSTRAINT,  t1.REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE t1  INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS t2  ON t2.TABLE_SCHEMA = t1.TABLE_SCHEMA  AND t2.TABLE_NAME = t1.TABLE_NAME  AND t2.CONSTRAINT_NAME = t1.CONSTRAINT_NAME WHERE t1.TABLE_SCHEMA = ?dbName  AND t2.CONSTRAINT_TYPE = 'FOREIGN KEY'");
-            
+            sqlFk.Append(sql);
+            sqlPk.Append(sql);
             ParamList lstParam = new ParamList();
             lstParam.AddNew("?dbName", DbType.String, oper.DataBaseName);
             string childName = Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.DBStructure.AllInTableNames(childNames);
 
             if (!string.IsNullOrEmpty(childName))
             {
-                sql.Append(" and t1.TABLE_NAME in(" + childName + ")");
+                sqlFk.Append(" and t1.TABLE_NAME in(" + childName + ")");
             }
-
+            if (!string.IsNullOrEmpty(childName))
+            {
+                sqlPk.Append(" and t1.REFERENCED_TABLE_NAME in(" + childName + ")");
+            }
             List<TableRelationAttribute> lst = new List<TableRelationAttribute>();
 
-            using (IDataReader reader = info.DefaultOperate.Query(sql.ToString(), lstParam, null))
+            using (IDataReader reader = info.DefaultOperate.Query(sqlFk.ToString(), lstParam, null))
             {
                 while (reader.Read())
                 {
@@ -119,6 +124,20 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
                     tinfo.TargetTable = reader["REFERENCED_TABLE_NAME"] as string;
                     tinfo.TargetName = reader["REFERENCED_COLUMN_NAME"] as string;
                     tinfo.IsParent = true;
+                    lst.Add(tinfo);
+                }
+            }
+            using (IDataReader reader = info.DefaultOperate.Query(sqlPk.ToString(), lstParam, null))
+            {
+                while (reader.Read())
+                {
+                    TableRelationAttribute tinfo = new TableRelationAttribute();
+                    tinfo.Name = reader["CONSTRAINT_NAME"] as string;
+                    tinfo.TargetTable = reader["TABLE_NAME"] as string;
+                    tinfo.TargetName = reader["COLUMN_NAME"] as string;
+                    tinfo.SourceTable = reader["REFERENCED_TABLE_NAME"] as string;
+                    tinfo.SourceName  = reader["REFERENCED_COLUMN_NAME"] as string;
+                    tinfo.IsParent = false;
                     lst.Add(tinfo);
                 }
             }

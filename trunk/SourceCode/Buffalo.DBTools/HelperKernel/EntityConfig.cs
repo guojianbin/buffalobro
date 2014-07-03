@@ -704,6 +704,7 @@ namespace Buffalo.DBTools.HelperKernel
                     if (!IsManyOne(field))
                     {
                         EntityParamField epf = new EntityParamField(cp, field, this);
+                        epf.AllowNull = EntityFieldBase.IsNullProperty(field.MemberTypeShortName);
                         _eParamFields.Add(epf);
                     }
                     else 

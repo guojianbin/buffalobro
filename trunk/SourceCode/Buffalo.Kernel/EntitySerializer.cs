@@ -338,6 +338,16 @@ namespace Buffalo.Kernel
             {
                 return (int)value;
             }
+            else if (value is bool) 
+            {
+                bool bvalue = (bool)value;
+                return bvalue ? 1 : 0;
+            }
+            else if (value is bool?)
+            {
+                bool? bvalue = (bool?)value;
+                return bvalue.GetValueOrDefault() ? 1 : 0;
+            }
             //else if (value is DateTime)
             //{
             //    return ((DateTime)value).ToString("yyyy-MM-dd HH:mm:ss.ms");

@@ -23,7 +23,10 @@ namespace Buffalo.DB.QueryConditions
             _groupBy = new ScopePropertyCollection(this);
             _showProperty = new ScopePropertyCollection(this);
             _hideProperty = new ScopePropertyCollection(this);
+            _showChild = new ShowEntityCollection(null);
         }
+
+        
 
         /// <summary>
         /// 获取真正要显示的属性集合
@@ -115,7 +118,18 @@ namespace Buffalo.DB.QueryConditions
                 return _showEntity;
             }
         }
+        private ShowEntityCollection _showChild = null;
 
+        /// <summary>
+        /// 要显示的子实体属性名
+        /// </summary>
+        public ShowEntityCollection ShowChild
+        {
+            get
+            {
+                return _showChild;
+            }
+        }
         private ScopePropertyCollection _showProperty = null;
 
         /// <summary>

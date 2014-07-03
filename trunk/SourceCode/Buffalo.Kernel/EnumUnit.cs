@@ -6,6 +6,9 @@ using System.ComponentModel;
 
 namespace Buffalo.Kernel
 {
+    /// <summary>
+    /// 枚举工具类
+    /// </summary>
     public class EnumUnit
     {
         /// <summary>
@@ -80,7 +83,7 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static List<EnumInfo> GetEnumInfos(Type enumType) 
         {
-            List<EnumInfo> dicInfos = MassManager.GetMassInfos(enumType);
+            List<EnumInfo> dicInfos = MassManager.GetMassInfos(enumType).LstInfo;
             return dicInfos;
         }
 

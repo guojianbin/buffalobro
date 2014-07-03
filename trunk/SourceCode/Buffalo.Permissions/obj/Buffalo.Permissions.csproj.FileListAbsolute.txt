@@ -53,7 +53,6 @@ E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permi
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.PermissionsInfo.BEM.BPGroupItemRight.BEM.xml
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.dll
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Debug\Buffalo.Permissions.pdb
-E:\CSharpTest\BuffaloCode\SourceCode\Debug\2005\Buffalo.Permissions.XML
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\bin\Release\Buffalo.Permissions.dll
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\bin\Release\Buffalo.Permissions.pdb
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\bin\Release\Buffalo.DB.dll
@@ -88,3 +87,4 @@ E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Release\Buffalo.Per
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\obj\Release\Buffalo.Permissions.pdb
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\bin\Release\ICSharpCode.SharpZipLib.dll
 E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\bin\Release\ICSharpCode.SharpZipLib.xml
+E:\CSharpTest\BuffaloCode\SourceCode\Debug\2005\Buffalo.Permissions.XML

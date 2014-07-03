@@ -294,41 +294,45 @@ namespace Buffalo.DBTools.HelperKernel
                 //    continue;
                 //}
                 //string targetType = er.FInfo.MemberTypeShortName;
-                if (er.IsParent)
-                {
-                    string targetType = er.FieldTypeName;
-                    sbRelation.Append("        /// <summary>\n");
-                    sbRelation.Append("        /// " + er.Description + "\n");
-                    sbRelation.Append("        /// </summary>\n");
-                    bool isGeneric = false;
-                    string type = null;
-                    if (GenericInfo!=null && GenericInfo.ContainsKey(targetType))
-                    {
-                        type = targetType;
-                        isGeneric = true;
-                    }
-                    else 
-                    {
-                        type = DBName + "_" + targetType;
-                    }
-                    sbRelation.Append("        public " + type + " " + er.PropertyName + "\n");
-                    sbRelation.Append("        {\n");
-                    sbRelation.Append("            get\n");
-                    sbRelation.Append("            {\n");
-                    if (!isGeneric)
-                    {
-                        sbRelation.Append("               return new " + DBName + "_" + targetType + "(this,\"" + er.PropertyName + "\");\n");
-                    }
-                    else 
-                    {
-                        sbRelation.Append("               Type objType = typeof(" + type + ");");
+                //if (er.IsParent)
+                //{
+                string targetType = er.FieldTypeName;
+                sbRelation.Append("        /// <summary>\n");
+                sbRelation.Append("        /// " + er.Description + "\n");
+                sbRelation.Append("        /// </summary>\n");
 
-                        sbRelation.Append("               return ("+type+")Activator.CreateInstance(objType, this, \"" + er.PropertyName + "\");");
+                string type = null;
+                if (!er.IsParent)
+                {
+                    targetType = er.FieldTypeName;
+                    int indexStart = targetType.IndexOf("<");
+                    int indexEnd = targetType.LastIndexOf(">");
+                    if (indexStart > 0 && indexEnd > 0)
+                    {
+                        targetType = targetType.Substring(indexStart + 1, indexEnd - indexStart - 1);
                     }
-                    sbRelation.Append("            }\n");
-                    sbRelation.Append("         }\n");
+
                 }
-                
+
+                type = DBName + "_" + targetType;
+
+                sbRelation.Append("        public " + type + " " + er.PropertyName + "\n");
+                sbRelation.Append("        {\n");
+                sbRelation.Append("            get\n");
+                sbRelation.Append("            {\n");
+
+                sbRelation.Append("               return new " + DBName + "_" + targetType + "(this,\"" + er.PropertyName + "\");\n");
+
+                //else
+                //{
+                //    sbRelation.Append("               Type objType = typeof(" + type + ");");
+
+                //    sbRelation.Append("               return (" + type + ")Activator.CreateInstance(objType, this, \"" + er.PropertyName + "\");");
+                //}
+                sbRelation.Append("            }\n");
+                sbRelation.Append("         }\n");
+                //}
+
             }
             return sbRelation.ToString();
         }

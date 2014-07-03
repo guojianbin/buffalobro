@@ -17,6 +17,7 @@ using Buffalo.Kernel.FastReflection;
 using System.Web;
 using Buffalo.Kernel.FastReflection.ClassInfos;
 using Buffalo.Kernel.Win32;
+using System.Collections;
 
 
 namespace Buffalo.Kernel
@@ -60,19 +61,19 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static string GetBaseRoot(string configRoot)
         {
-
+            
             if (_baseRoot == null)
             {
                 if (IsWebContext)
                 {
-                    _baseRoot = HttpContext.Current.Server.MapPath("\\"); ;
+                    _baseRoot = HttpContext.Current.Server.MapPath("~//");
                 }
                 else 
                 {
                     _baseRoot=AppDomain.CurrentDomain.BaseDirectory;
                 }
             }
-            string retRoot = _baseRoot + configRoot;
+            string retRoot = _baseRoot+ configRoot;
             return retRoot;
         }
         /// <summary>
@@ -772,7 +773,7 @@ namespace Buffalo.Kernel
         /// <param name="collection">集合类</param>
         /// <param name="keyProperty">键名</param>
         /// <returns></returns>
-        public static Dictionary<TKey, TValue> ListToDictionary<TKey, TValue>(IEnumerable<TValue> collection, string keyProperty) 
+        public static Dictionary<TKey, TValue> ListToDictionary<TKey, TValue>(IEnumerable collection, string keyProperty) 
         {
             Dictionary<TKey, TValue> dic = new Dictionary<TKey, TValue>();
 
