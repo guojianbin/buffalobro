@@ -101,11 +101,14 @@ namespace Buffalo.DB.CacheManager
             }
             else if (dtype.Equals("redis", StringComparison.CurrentCultureIgnoreCase))//redis
             {
-                return new RedisAdaper(connectionString, info);
+#if (NET_2_0)
+                    return new RedisAdaper(connectionString, info);
+#else
+                return new RedisAdaperByServiceStack(connectionString, info);
+#endif
             }
 
             throw new NotSupportedException("不支持:" + type + " 的缓存类型，当前只支持system、memcached、redis类型的缓存");
-            return null;
         }
 
         /// <summary>

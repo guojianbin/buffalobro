@@ -52,6 +52,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dll\dll\Net3.5\Npgsql2.0.11.92-bin-ms.net3.5\Npgsql.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dll\dll\Net3.5\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dll\dll\Net3.5\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dll\dll\Net3.5\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=3.9.60.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dll\dll\Net3.5\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -93,6 +109,7 @@
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
     <Compile Include="CacheManager\RedisAdaper.cs" />
+    <Compile Include="CacheManager\RedisAdaperByServiceStack.cs" />
     <Compile Include="CacheManager\Redissharp\Redis.cs" />
     <Compile Include="CacheManager\Redissharp\SockPool.cs" />
     <Compile Include="CommBase\BusinessBases\BatchAction.cs" />

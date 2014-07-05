@@ -38,8 +38,11 @@ namespace Buffalo.DB.MessageOutPuters
             {
                 smsg.Append(":"+val);
             }
-
+#if DEBUG
             Debug.WriteLine(smsg.ToString());
+#else
+            Console.WriteLine(smsg.ToString());
+#endif
         }
     }
 }

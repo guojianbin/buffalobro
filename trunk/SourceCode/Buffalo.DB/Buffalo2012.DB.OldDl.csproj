@@ -53,6 +53,18 @@
     <Reference Include="Npgsql">
       <HintPath>..\..\dll\dll\Net4.0\Npgsql2.0.11.92-bin-ms.net4.0\Npgsql.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\dll\dll\Net4.5\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\dll\dll\Net4.5\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis">
+      <HintPath>..\..\dll\dll\Net4.5\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\dll\dll\Net4.5\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -91,6 +103,7 @@
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
     <Compile Include="CacheManager\RedisAdaper.cs" />
+    <Compile Include="CacheManager\RedisAdaperByServiceStack.cs" />
     <Compile Include="CacheManager\Redissharp\Redis.cs" />
     <Compile Include="CacheManager\Redissharp\SockPool.cs" />
     <Compile Include="CommBase\BusinessBases\BatchAction.cs" />

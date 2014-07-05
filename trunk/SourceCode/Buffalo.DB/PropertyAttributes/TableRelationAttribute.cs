@@ -72,7 +72,10 @@ namespace Buffalo.DB.PropertyAttributes
             _isToDB = false;
             _description = description;
         }
-
+        public override string ToString()
+        {
+            return Name;
+        }
         private string _description;
 
         /// <summary>

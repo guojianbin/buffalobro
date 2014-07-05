@@ -241,20 +241,21 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
 
             foreach (TableRelationAttribute tinfo in lstRelation)
             {
+
                 if (dicTables.TryGetValue(tinfo.SourceTable, out ctable))
                 {
                     ctable.RelationItems.Add(tinfo);
                 }
-                if ( dicTables.TryGetValue(tinfo.TargetTable, out ptable)) //Ìî³ä¸¸Ïî
-                {
-                    TableRelationAttribute cinfo = new TableRelationAttribute();
-                    cinfo.SourceName = tinfo.TargetName;
-                    cinfo.SourceTable = tinfo.TargetTable;
-                    cinfo.TargetName = tinfo.SourceName;
-                    cinfo.TargetTable = tinfo.SourceTable;
-                    cinfo.IsParent = false;
-                    ptable.RelationItems.Add(cinfo);
-                }
+                //else if (!tinfo.IsParent && dicTables.TryGetValue(tinfo.TargetTable, out ptable)) //Ìî³ä¸¸Ïî
+                //{
+                //    //TableRelationAttribute cinfo = new TableRelationAttribute();
+                //    //cinfo.SourceName = tinfo.TargetName;
+                //    //cinfo.SourceTable = tinfo.TargetTable;
+                //    //cinfo.TargetName = tinfo.SourceName;
+                //    //cinfo.TargetTable = tinfo.SourceTable;
+                //    //cinfo.IsParent = false;
+                //    ptable.RelationItems.Add(tinfo);
+                //}
                
 
 
