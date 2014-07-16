@@ -267,7 +267,10 @@ namespace Buffalo.DB.BQLCommon
             }
             finally
             {
-                reader.Close();
+                if (reader != null)
+                {
+                    reader.Close();
+                }
             }
             return retlist;
         }
@@ -720,7 +723,10 @@ namespace Buffalo.DB.BQLCommon
             }
             finally
             {
-                reader.Close();
+                if (reader != null)
+                {
+                    reader.Close();
+                }
             }
             return exists;
         }
@@ -785,7 +791,10 @@ namespace Buffalo.DB.BQLCommon
             }
             finally
             {
-                reader.Close();
+                if (reader != null)
+                {
+                    reader.Close();
+                }
             }
             return ret;
         }
