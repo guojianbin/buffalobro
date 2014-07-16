@@ -1,0 +1,6 @@
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\cs\zf\bin\Release\zf.exe
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\cs\zf\bin\Release\ICSharpCode.SharpZipLib.dll
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\cs\zf\bin\Release\ICSharpCode.SharpZipLib.pdb
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\cs\zf\bin\Release\ICSharpCode.SharpZipLib.xml
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\cs\zf\obj\Release\ResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\cs\zf\obj\Release\zf.exe

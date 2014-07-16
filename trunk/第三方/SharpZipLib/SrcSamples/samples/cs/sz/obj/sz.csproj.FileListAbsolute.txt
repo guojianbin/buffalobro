@@ -1,0 +1,5 @@
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\cs\bin\sz.exe
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\cs\bin\sz.pdb
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\cs\sz\obj\Debug\ResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\cs\sz\obj\Debug\sz.exe
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\cs\sz\obj\Debug\sz.pdb

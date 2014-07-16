@@ -1,0 +1,10 @@
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\vb\CreateZipFile\bin\Debug\CreateZipFile.exe
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\vb\CreateZipFile\bin\Debug\CreateZipFile.pdb
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\vb\CreateZipFile\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\vb\CreateZipFile\bin\Debug\ICSharpCode.SharpZipLib.pdb
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\vb\CreateZipFile\bin\Debug\ICSharpCode.SharpZipLib.xml
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\vb\CreateZipFile\obj\Debug\ResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\vb\CreateZipFile\obj\Debug\CreateZipFile.CreateZipFile.MainForm.resources
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\vb\CreateZipFile\obj\Debug\CreateZipFile.vbproj.GenerateResource.Cache
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\vb\CreateZipFile\obj\Debug\CreateZipFile.exe
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\samples\vb\CreateZipFile\obj\Debug\CreateZipFile.pdb

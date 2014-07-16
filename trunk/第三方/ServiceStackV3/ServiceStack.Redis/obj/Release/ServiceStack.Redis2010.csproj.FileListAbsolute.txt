@@ -1,0 +1,6 @@
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Redis\obj\Release\ServiceStack.Redis.pdb
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Release\4.0\ServiceStack.Redis.XML
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Release\4.0\ServiceStack.Redis.dll
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Release\4.0\ServiceStack.Redis.pdb
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Redis\obj\Release\ServiceStack.Redis2010.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Redis\obj\Release\ServiceStack.Redis.dll

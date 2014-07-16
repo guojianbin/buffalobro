@@ -1,0 +1,6 @@
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Release\3.5\ServiceStack.Common.XML
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Release\3.5\ServiceStack.Common.dll
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Release\3.5\ServiceStack.Common.pdb
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Common\obj\Release\ServiceStack.Common.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Common\obj\Release\ServiceStack.Common.dll
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Common\obj\Release\ServiceStack.Common.pdb

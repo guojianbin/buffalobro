@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="ICSharpCode.SharpZLib2010">
+</Property><Property Name="解决方案文件" Value="E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\ICSharpCode.SharpZLib2010.sln">
+</Property><Property Name="Date" Value="2014年6月5日">
+</Property><Property Name="Time" Value="9:36">
+</Property><Property Name="日志号" Value="3">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="ICSharpCode.SharpZLib2010.sln" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\ICSharpCode.SharpZLib2010.sln">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\SharpZipLibTests.csproj" Description="项目文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\tests\SharpZipLibTests.csproj">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\AssemblyInfo.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\tests\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\Core\Core.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\tests\Core\Core.cs">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\TestSupport\RingBuffer.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\tests\TestSupport\RingBuffer.cs">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\TestSupport\Streams.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\tests\TestSupport\Streams.cs">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\TestSupport\Utils.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\tests\TestSupport\Utils.cs">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\TestSupport\ZipTesting.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\tests\TestSupport\ZipTesting.cs">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\Zip\ZipTests.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\tests\Zip\ZipTests.cs">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\BZip2\Bzip2Tests.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\tests\BZip2\Bzip2Tests.cs">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\GZip\GZipTests.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\tests\GZip\GZipTests.cs">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\Tar\TarTests.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\tests\Tar\TarTests.cs">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\Base\InflaterDeflaterTests.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\tests\Base\InflaterDeflaterTests.cs">
+</Event><Event ErrorLevel="1" Project="SharpZipLibTests" Source="tests\SharpZipLibTests.csproj" Description="您的项目以 .NET Framework 2.0 或 3.0 为目标。如果您的项目使用的程序集需要更新的 .NET Framework，则项目生成将失败。通过单击项目菜单上的“属性”，然后在“.NET Framework”下拉框中选择一个新版本，可以更改 .NET Framework 的版本。(在 Visual Basic 中，可在单击“高级编辑器选项...”按钮时显示的“编译”选项卡上找到此下拉框。)">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\SharpZipLibTests.csproj" Description="项目已成功转换">
+</Event><Event ErrorLevel="3" Project="SharpZipLibTests" Source="tests\SharpZipLibTests.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\ICSharpCode.SharpZLib.csproj" Description="项目文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\ICSharpCode.SharpZLib.csproj">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Core\WindowsPathUtils.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Core\WindowsPathUtils.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Encryption\ZipAESStream.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Encryption\ZipAESStream.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Encryption\ZipAESTransform.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Encryption\ZipAESTransform.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Main.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Main.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\AssemblyInfo.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Checksums\IChecksum.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Checksums\IChecksum.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Checksums\Adler32.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Checksums\Adler32.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Checksums\Crc32.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Checksums\Crc32.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\WindowsNameTransform.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\WindowsNameTransform.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\ZipEntry.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\ZipEntry.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\ZipInputStream.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\ZipInputStream.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\ZipOutputStream.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\ZipOutputStream.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\ZipConstants.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\ZipConstants.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\ZipFile.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\ZipFile.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\GZip\GzipOutputStream.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\GZip\GzipOutputStream.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\GZip\GzipInputStream.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\GZip\GzipInputStream.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\GZip\GZipConstants.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\GZip\GZipConstants.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\ZipException.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\ZipException.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\BZip2\BZip2InputStream.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\BZip2\BZip2InputStream.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\BZip2\BZip2OutputStream.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\BZip2\BZip2OutputStream.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\BZip2\BZip2Constants.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\BZip2\BZip2Constants.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\BZip2\BZip2.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\BZip2\BZip2.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Checksums\StrangeCrc.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Checksums\StrangeCrc.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Tar\TarEntry.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Tar\TarEntry.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Tar\TarHeader.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Tar\TarHeader.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Tar\TarBuffer.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Tar\TarBuffer.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Tar\TarOutputStream.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Tar\TarOutputStream.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Tar\InvalidHeaderException.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Tar\InvalidHeaderException.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Tar\TarInputStream.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Tar\TarInputStream.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Tar\TarArchive.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Tar\TarArchive.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\PendingBuffer.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\PendingBuffer.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\InflaterDynHeader.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\InflaterDynHeader.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\InflaterHuffmanTree.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\InflaterHuffmanTree.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\DeflaterPending.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\DeflaterPending.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\DeflaterHuffman.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\DeflaterHuffman.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\DeflaterEngine.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\DeflaterEngine.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\Inflater.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\Inflater.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\DeflaterConstants.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\DeflaterConstants.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\Deflater.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\Deflater.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\Streams\DeflaterOutputStream.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\Streams\DeflaterOutputStream.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\Streams\InflaterInputStream.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\Streams\InflaterInputStream.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\Streams\StreamManipulator.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\Streams\StreamManipulator.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\Compression\Streams\OutputWindow.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\Compression\Streams\OutputWindow.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\SharpZipBaseException.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\SharpZipBaseException.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Tar\TarException.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Tar\TarException.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\GZip\GZipException.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\GZip\GZipException.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\BZip2\BZip2Exception.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\BZip2\BZip2Exception.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Core\NameFilter.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Core\NameFilter.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\FastZip.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\FastZip.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Core\FileSystemScanner.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Core\FileSystemScanner.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Core\PathFilter.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Core\PathFilter.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Core\INameTransform.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Core\INameTransform.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\ZipNameTransform.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\ZipNameTransform.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Encryption\PkzipClassic.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Encryption\PkzipClassic.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Core\IScanFilter.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Core\IScanFilter.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\ZipHelperStream.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\ZipHelperStream.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\ZipExtraData.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\ZipExtraData.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Core\StreamUtils.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Core\StreamUtils.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\ZipEntryFactory.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\ZipEntryFactory.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\Zip\IEntryFactory.cs" Description="文件已成功备份为 E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\Backup2\src\Zip\IEntryFactory.cs">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\ICSharpCode.SharpZLib.csproj" Description="项目已成功转换">
+</Event><Event ErrorLevel="3" Project="ICSharpCode.SharpZLib" Source="src\ICSharpCode.SharpZLib.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="ICSharpCode.SharpZLib2010.sln" Description="成功转换解决方案">
+</Event><Event ErrorLevel="3" Project="" Source="ICSharpCode.SharpZLib2010.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="SharpZipLibTests" Source="tests\SharpZipLibTests.csproj" Description="扫描完成: 项目文件不需要升级。">
+</Event><Event ErrorLevel="0" Project="ICSharpCode.SharpZLib" Source="src\ICSharpCode.SharpZLib.csproj" Description="扫描完成: 项目文件不需要升级。">
+</Event></UpgradeLog>

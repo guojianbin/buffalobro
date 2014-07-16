@@ -1,0 +1,1 @@
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStackV3_4.5\ServiceStackV3_4.5\bin\Debug\ServiceStackV3_4.5.exe.config

@@ -1,0 +1,6 @@
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Interfaces\bin\Debug\ServiceStack.Interfaces.dll
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Interfaces\bin\Debug\ServiceStack.Interfaces.pdb
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Interfaces\obj\Debug\ServiceStack.Interfaces.dll
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Interfaces\obj\Debug\ServiceStack.Interfaces.pdb
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Debug\3.5\ServiceStack.Interfaces.dll
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Debug\3.5\ServiceStack.Interfaces.pdb

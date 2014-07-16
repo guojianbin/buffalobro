@@ -1,0 +1,1 @@
+E:\CSharpTest\BuffaloCode\第三方\SharpZipLib\SrcSamples\tests\obj\Debug\ResolveAssemblyReference.cache
