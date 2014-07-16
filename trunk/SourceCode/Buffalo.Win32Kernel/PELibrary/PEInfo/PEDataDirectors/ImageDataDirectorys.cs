@@ -15,6 +15,11 @@ namespace Buffalo.Win32Kernel.PELibrary.PEInfo.PEDataDirectors
         PEHandle pe;
         IMAGE_DATA_DIRECTORY[] dataDirectorys;
 
+        public IMAGE_DATA_DIRECTORY[] DataDirectorys
+        {
+            get { return dataDirectorys; }
+        }
+
         /// <summary>
         /// 加载数据目录表信息
         /// </summary>
@@ -238,6 +243,21 @@ namespace Buffalo.Win32Kernel.PELibrary.PEInfo.PEDataDirectors
             }
             set { resourceDirector = value; }
         }
+
+         /// <summary>
+        /// 把此位置的表加载成资源表
+        /// </summary>
+        public ImageResourceManager LoadToResourceDirector(int index) 
+        {
+            if (dataDirectorys[index].VirtualAddress <= 0)
+            {
+                return null;
+            }
+            uint baseOffest = pe.RVAToFileOffest(dataDirectorys[index].VirtualAddress);
+            pe.BaseStream.Position = baseOffest;
+            return new ImageResourceManager(pe, baseOffest);
+        }
+
 
         /// <summary>
         /// 加载资源表

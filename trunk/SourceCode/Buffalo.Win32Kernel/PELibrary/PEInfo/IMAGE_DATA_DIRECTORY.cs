@@ -14,5 +14,10 @@ namespace Buffalo.Win32Kernel.PELibrary.PEInfo
         /// 数据块长度
         /// </summary>
         public uint Size;
+
+        public override string ToString()
+        {
+            return "RAV:"+VirtualAddress+",Size:"+Size;
+        }
     }
 }

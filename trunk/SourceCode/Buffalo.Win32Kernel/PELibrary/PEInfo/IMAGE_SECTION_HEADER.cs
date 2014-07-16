@@ -50,7 +50,10 @@ namespace Buffalo.Win32Kernel.PELibrary.PEInfo
         /// Ω⁄ Ù–‘
         /// </summary>
         public IMAGE_SECTION_Characteristics Characteristics;
-
+        public override string ToString()
+        {
+            return Name;
+        }
         public bool IsNull 
         {
             get 
