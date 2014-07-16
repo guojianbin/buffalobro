@@ -106,7 +106,7 @@ namespace Buffalo.Kernel.FastReflection
         /// <param name="methodInfo">函数反射</param>
         /// <param name="objectType">类型</param>
         /// <returns></returns>
-        private static string GetMethodInfoKey(MethodInfo methodInfo) 
+        internal static string GetMethodInfoKey(MemberInfo methodInfo) 
         {
             StringBuilder sbRet = new StringBuilder();
             sbRet.Append(methodInfo.DeclaringType.FullName);

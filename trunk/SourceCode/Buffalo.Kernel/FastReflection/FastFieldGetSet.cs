@@ -12,9 +12,6 @@ namespace Buffalo.Kernel.FastReflection
     /// <param name="obj">对象</param>
     /// <param name="value">值</param>
     public delegate void SetFieldValueHandle(object obj, object value);
-
-
-
     /// <summary>
     /// 快速获取字段值的委托
     /// </summary>
@@ -23,6 +20,41 @@ namespace Buffalo.Kernel.FastReflection
     public delegate object GetFieldValueHandle(object obj);
     public class FastFieldGetSet
     {
+        private static Dictionary<string, GetFieldValueHandle> _dicGet = new Dictionary<string, GetFieldValueHandle>();
+        private static Dictionary<string, SetFieldValueHandle> _dicSet = new Dictionary<string, SetFieldValueHandle>();
+
+        /// <summary>
+        /// 获取字段获取值的委托(带缓存)
+        /// </summary>
+        /// <param name="info">字段信息</param>
+        /// <returns></returns>
+        public static GetFieldValueHandle FindGetValueHandle(FieldInfo info)
+        {
+            GetFieldValueHandle ret=null;
+            string key=FastValueGetSet.GetMethodInfoKey(info);
+            if (!_dicGet.TryGetValue(key, out ret)) 
+            {
+                ret = GetGetValueHandle(info);
+                _dicGet[key] = ret;
+            }
+            return ret;
+        }
+        /// <summary>
+        /// 获取字段设置值的委托(带缓存)
+        /// </summary>
+        /// <param name="info">字段信息</param>
+        /// <returns></returns>
+        public static SetFieldValueHandle FindSetValueHandle(FieldInfo info)
+        {
+            SetFieldValueHandle ret = null;
+            string key = FastValueGetSet.GetMethodInfoKey(info);
+            if (!_dicSet.TryGetValue(key, out ret))
+            {
+                ret = GetSetValueHandle(info);
+                _dicSet[key] = ret;
+            }
+            return ret;
+        }
         /// <summary>
         /// 获取字段获取值的委托
         /// </summary>
