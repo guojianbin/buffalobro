@@ -6,6 +6,7 @@ using Buffalo.Win32Kernel.Win32;
 using System.Threading;
 using Buffalo.Kernel.Win32;
 
+
 namespace Buffalo.Win32Kernel
 {
     public class ThreadCycle
