@@ -11,6 +11,8 @@ using Buffalo.DB.DbCommon;
 using Buffalo.Kernel;
 using System.Data.Common;
 using Buffalo.DB.PropertyAttributes;
+using Buffalo.DB.CommBase.DataAccessBases;
+using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
 {
     public class DBAdapter : IDBAdapter
@@ -204,6 +206,8 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             newParam.Direction = paramDir;
             return newParam;
         }
+
+        
 
         /// <summary>
         /// 获取top的查询字符串
@@ -568,6 +572,27 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             
             info.SetValue(arg, val);
         }
+        /// <summary>
+        /// 获取创建注释的SQL
+        /// </summary>
+        /// <param name="table">表</param>
+        /// <param name="paramName">字段(如果为空则给表设置注释)</param>
+        /// <param name="description">注释</param>
+        /// <returns></returns>
+        public string GetAddDescriptionSQL(KeyWordTableParamItem table, EntityParam pInfo, DBInfo info)
+        {
+            string tableValue = DataAccessCommon.FormatValue(table.TableName, DbType.AnsiString, info);
+            string description = pInfo == null ? table.Description : pInfo.Description;
+            
+            string descriptionValue = DataAccessCommon.FormatValue(description, DbType.AnsiString, info);
+            if (pInfo==null)
+            {
+
+                return "EXECUTE sp_addextendedproperty N'MS_Description', N" + descriptionValue + ", N'SCHEMA', N'dbo', N'TABLE', N" + tableValue + ", NULL, NULL";
+            }
+            return "EXECUTE sp_addextendedproperty N'MS_Description', N" + descriptionValue + ", N'SCHEMA', N'dbo', N'TABLE', N" + tableValue + ", N'COLUMN', N'" + pInfo.ParamName + "'";
+        }
+
         /// <summary>
         /// 根据Reader的内容把数值赋进实体
         /// </summary>

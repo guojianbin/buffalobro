@@ -121,13 +121,16 @@ namespace Buffalo.DBTools
                 List<EntityParam> lstParam = new List<EntityParam>();
                 List<TableRelationAttribute> lstRelation = new List<TableRelationAttribute>();
                 string lastTableName = null;
+                string lastSummary=null;
                 while (stkConfig.Count > 0)
                 {
                     EntityConfig centity = stkConfig.Pop();
                     FillParams(centity, lstParam, lstRelation);
                     lastTableName = centity.TableName;
+                    lastSummary=centity.Summary;
                 }
                 KeyWordTableParamItem table = new KeyWordTableParamItem(lstParam, lstRelation, lastTableName, null);
+                table.Description = lastSummary;
                 lstTable.Add(table);
                 
             }
@@ -175,7 +178,7 @@ namespace Buffalo.DBTools
                 DbType dbt=(DbType)EnumUnit.GetEnumInfoByName(typeof(DbType),param.DbType).Value;
                 EntityParam pInfo = new EntityParam("",
                     param.ParamName,"",dbt,
-                    param.EntityPropertyType, entity.Summary, param.Length, param.AllowNull, param.ReadOnly);
+                    param.EntityPropertyType, param.Summary, param.Length, param.AllowNull, param.ReadOnly);
                 
                 lstParam.Add(pInfo);
             }

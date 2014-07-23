@@ -164,7 +164,7 @@ namespace Buffalo.Kernel
                 return -1;
             }
             StringBuilder sb = new StringBuilder();
-            string connString = GetConnectString(excelPath, fromat,true,IMEX.LinkedMode);
+            string connString = GetConnectString(excelPath, fromat,true,IMEX.ExportMode);
 
             using (OleDbConnection objConn = new OleDbConnection(connString))
             {

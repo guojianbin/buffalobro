@@ -9,9 +9,6 @@ namespace Buffalo.DB.MessageOutPuters
     /// </summary>
     public class MessageOutput
     {
-        private static IMessageOutputer _debugOutputer = new DebugOutputer();
-
-
         private IMessageOutputer _defaultOutputer =null;
 
         /// <summary>
@@ -20,7 +17,7 @@ namespace Buffalo.DB.MessageOutPuters
         public MessageOutput() 
         {
 #if DEBUG
-            _defaultOutputer = _debugOutputer;
+            _defaultOutputer =  new DebugOutputer();
 #endif
         }
 

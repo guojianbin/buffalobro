@@ -159,6 +159,8 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             return Resource.tableParam2000;
         }
 
+       
+
         /// <summary>
         /// 获取表信息
         /// </summary>

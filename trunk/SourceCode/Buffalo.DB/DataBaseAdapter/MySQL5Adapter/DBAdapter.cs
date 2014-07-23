@@ -10,6 +10,8 @@ using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 using System.Data.Common;
 using Buffalo.DB.PropertyAttributes;
+using Buffalo.DB.CommBase.DataAccessBases;
+using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
 {
     public class DBAdapter : IDBAdapter
@@ -339,7 +341,26 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         {
             SqlServer2KAdapter.DBAdapter.ValueFromReader(reader, index, arg, info);
         }
+        /// <summary>
+        /// 获取创建注释的SQL
+        /// </summary>
+        /// <param name="table">表</param>
+        /// <param name="paramName">字段(如果为空则给表设置注释)</param>
+        /// <param name="description">注释</param>
+        /// <returns></returns>
+        public string GetAddDescriptionSQL(KeyWordTableParamItem table, EntityParam pInfo, DBInfo info)
+        {
+            string description = pInfo == null ? table.Description : pInfo.Description;
 
+            string descriptionValue = DataAccessCommon.FormatValue(description, DbType.AnsiString, info);
+            if (pInfo == null)
+            {
+
+                return "alter table " + FormatTableName(table.TableName) + " comment " + descriptionValue;
+            }
+            string dbType=DBTypeToSQL(pInfo.SqlType, pInfo.Length);
+            return "alter table " + FormatTableName(table.TableName) + " modify column " + FormatParam(pInfo.ParamName) + " " + dbType + " comment " + descriptionValue;
+        }
         #region IDBAdapter 成员
 
 

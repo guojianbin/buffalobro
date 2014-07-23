@@ -10,6 +10,8 @@ using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 using System.Data.Common;
 using Buffalo.DB.PropertyAttributes;
+using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
+using Buffalo.DB.CommBase.DataAccessBases;
 namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
 {
     public class DBAdapter : IDBAdapter
@@ -337,7 +339,25 @@ namespace Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter
         {
             SqlServer2KAdapter.DBAdapter.ValueFromReader(reader, index, arg, info);
         }
+        /// <summary>
+        /// 获取创建注释的SQL
+        /// </summary>
+        /// <param name="table">表</param>
+        /// <param name="paramName">字段(如果为空则给表设置注释)</param>
+        /// <param name="description">注释</param>
+        /// <returns></returns>
+        public string GetAddDescriptionSQL(KeyWordTableParamItem table, EntityParam pInfo, DBInfo info)
+        {
+            string tableValue = DataAccessCommon.FormatValue(table.TableName, DbType.AnsiString, info);
+            string description = pInfo == null ? table.Description : pInfo.Description;
 
+            string descriptionValue = DataAccessCommon.FormatValue(description, DbType.AnsiString, info);
+            if (pInfo == null)
+            {
+                return "COMMENT ON TABLE " + FormatTableName(table.TableName) + " IS " + descriptionValue;
+            }
+            return "COMMENT ON COLUMN " + FormatTableName(table.TableName) + "." + FormatParam(pInfo.ParamName) + " IS " + descriptionValue;
+        }
         #region IDBAdapter 成员
 
 

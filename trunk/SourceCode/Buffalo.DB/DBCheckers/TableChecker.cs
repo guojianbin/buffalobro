@@ -166,8 +166,7 @@ namespace Buffalo.DB.DBCheckers
         /// 检查表信息
         /// </summary>
         /// <param name="info">数据库</param>
-        /// <param name="tableName">表名</param>
-        /// <param name="lstParams">字段</param>
+        /// <param name="lstTableInfos">需要检查的表</param>
         /// <returns></returns>
         public static List<string> CheckTable(DBInfo info, List<KeyWordTableParamItem> lstTableInfos) 
         {
@@ -248,20 +247,43 @@ namespace Buffalo.DB.DBCheckers
         }
 
         /// <summary>
-        /// 创建表的信息
+        /// 创建表的SQL
         /// </summary>
-        /// <param name="notExists"></param>
-        /// <returns></returns>
+        /// <param name="sql">sql语句集合</param>
+        /// <param name="dbInfo">数据信息</param>
+        /// <param name="notExists">不存在的表</param>
         private static void CreateTableSQL(List<string> sql,DBInfo dbInfo, List<KeyWordTableParamItem> notExists)
         {
-            
-            
+            IDBAdapter ida = dbInfo.CurrentDbAdapter;
             foreach (KeyWordTableParamItem table in notExists)
             {
                 dbInfo.DBStructure.OnCheckEvent(table, dbInfo, CheckEvent.TableBeginCreate,sql);
                 BQLQuery bql = BQL.CreateTable(table.TableName).Param(table.Params);
                 AbsCondition con = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
                 sql.Add(con.GetSql(false));
+
+                if (!string.IsNullOrEmpty(table.Description))//设置表注释
+                {
+                    string desSQL = ida.GetAddDescriptionSQL(table,null, dbInfo);
+                    if (!string.IsNullOrEmpty(desSQL))
+                    {
+                        sql.Add(desSQL);
+                    }
+                }
+
+                foreach (EntityParam prm in table.Params) //设置字段注释
+                {
+                    if (!string.IsNullOrEmpty(prm.Description))
+                    {
+                        string desSQL = ida.GetAddDescriptionSQL(table, prm, dbInfo);
+                        if (!string.IsNullOrEmpty(desSQL))
+                        {
+                            sql.Add(desSQL);
+                        }
+                    }
+                }
+
+
                 dbInfo.DBStructure.OnCheckEvent(table, dbInfo, CheckEvent.TableCreated, sql);
             }
         }
@@ -302,8 +324,9 @@ namespace Buffalo.DB.DBCheckers
         /// <summary>
         /// 检测表结构
         /// </summary>
-        /// <param name="table"></param>
-        /// <returns></returns>
+        /// <param name="lstSql">需要更新的SQL</param>
+        /// <param name="dbInfo">数据库信息</param>
+        /// <param name="table">要检测的表</param>
         private static void CheckTableStruct(List<string> lstSql,DBInfo dbInfo,KeyWordTableParamItem table) 
         {
             
@@ -322,6 +345,8 @@ namespace Buffalo.DB.DBCheckers
             }
 
             StringBuilder sbSql = new StringBuilder();
+            string desSQL = null;
+            IDBAdapter idb = dbInfo.CurrentDbAdapter;
             foreach (EntityParam pInfo in table.Params) 
             {
                 if (!dic.ContainsKey(pInfo.ParamName.ToLower())) 
@@ -330,6 +355,14 @@ namespace Buffalo.DB.DBCheckers
                     bql = BQL.AlterTable(tableName).AddParam(pInfo);
                     AbsCondition acon = BQLKeyWordManager.ToCondition(bql, dbInfo, null, true);
                     lstSql.Add(acon.GetSql(false));
+                    if (!string.IsNullOrEmpty(pInfo.Description))//添加注释
+                    {
+                        desSQL = idb.GetAddDescriptionSQL(table, pInfo, dbInfo);
+                        if (!string.IsNullOrEmpty(desSQL))
+                        {
+                            lstSql.Add(desSQL);
+                        }
+                    }
                     dbInfo.DBStructure.OnCheckEvent(pInfo, dbInfo, CheckEvent.TableChecked, lstSql);
                 }
             }

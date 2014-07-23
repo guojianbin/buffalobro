@@ -7,6 +7,7 @@ using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 using Buffalo.DB.PropertyAttributes;
 using System.Data.Common;
+using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
 {
     public interface IDBAdapter
@@ -259,5 +260,14 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <param name="db">数据库信息</param>
         /// <returns></returns>
         bool OnConnectionClosed(DbConnection conn, DBInfo db);
+
+        /// <summary>
+        /// 获取创建注释的SQL
+        /// </summary>
+        /// <param name="table">表</param>
+        /// <param name="pInfo">字段（如果为空则设置表注释）</param>
+        /// <returns></returns>
+        string GetAddDescriptionSQL(KeyWordTableParamItem table, EntityParam pInfo, DBInfo info);
+        
     }
 }

@@ -10,6 +10,7 @@ using Buffalo.DB.DbCommon;
 using System.Data.Common;
 using Buffalo.DB.PropertyAttributes;
 using System.Data.SQLite;
+using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
 {
     public class DBAdapter : IDBAdapter
@@ -352,7 +353,17 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
             return null;
         }
 
-
+        /// <summary>
+        /// 获取创建注释的SQL
+        /// </summary>
+        /// <param name="table">表</param>
+        /// <param name="paramName">字段(如果为空则给表设置注释)</param>
+        /// <param name="description">注释</param>
+        /// <returns></returns>
+        public string GetAddDescriptionSQL(KeyWordTableParamItem table, EntityParam pInfo, DBInfo info)
+        {
+            return "";
+        }
         /// <summary>
         /// 根据Reader的内容把数值赋进实体
         /// </summary>

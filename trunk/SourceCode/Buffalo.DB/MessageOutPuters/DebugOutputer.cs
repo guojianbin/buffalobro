@@ -41,7 +41,7 @@ namespace Buffalo.DB.MessageOutPuters
 #if DEBUG
             Debug.WriteLine(smsg.ToString());
 #else
-            Console.WriteLine(smsg.ToString());
+            Trace.WriteLine(smsg.ToString());
 #endif
         }
     }
