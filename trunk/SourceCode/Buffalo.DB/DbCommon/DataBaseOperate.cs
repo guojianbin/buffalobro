@@ -658,7 +658,7 @@ namespace Buffalo.DB.DbCommon
                 AutoClose();
             }
 
-            return ret;			
+            return ret;
 		}
 
         /// <summary>

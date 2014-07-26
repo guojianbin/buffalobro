@@ -24,7 +24,7 @@ namespace Buffalo.DB.ProxyBuilder
         AssemblyName _assemblyName ;
         AssemblyBuilder _assemblyBuilder;
         ModuleBuilder _moduleBuilder;
-        string pnamespace = null;
+        string _pnamespace = null;
         MethodInfo _updateMethod = null;
         MethodInfo _mapupdateMethod = null;
         MethodInfo _fillChildMethod = null;
@@ -32,19 +32,32 @@ namespace Buffalo.DB.ProxyBuilder
         MethodInfo _getTypeMethod=null;
         MethodInfo _getBaseTypeMethod = null;
         /// <summary>
+        /// 构建的类数量
+        /// </summary>
+        long _count=0;
+        /// <summary>
         /// 接口类型
         /// </summary>
         private readonly static Type[] _entityInterface = new Type[] { typeof(IEntityProxy) };
+
         /// <summary>
         /// 代理建造类
         /// </summary>
-        public EntityProxyBuilder()
+        public EntityProxyBuilder() 
+            :this("BuffaloProxy")
         {
-            pnamespace = "BuffaloProxyBuilder";
-            _assemblyName = new AssemblyName(pnamespace);
+
+        }
+        /// <summary>
+        /// 代理建造类
+        /// </summary>
+        public EntityProxyBuilder(string proxyNamespace)
+        {
+            _pnamespace = proxyNamespace; 
+            _assemblyName = new AssemblyName(_pnamespace);
             _assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(_assemblyName,
                                                                             AssemblyBuilderAccess.RunAndSave);
-            _moduleBuilder = _assemblyBuilder.DefineDynamicModule(pnamespace);
+            _moduleBuilder = _assemblyBuilder.DefineDynamicModule(_pnamespace);
 
             Type classType = typeof(EntityBase);
             Type objectType = typeof(object);
@@ -66,8 +79,8 @@ namespace Buffalo.DB.ProxyBuilder
         {
 
             //string name = classType.Namespace + ".ProxyClass";
-
-            string className = pnamespace+"."+classType.Name + "_" + CommonMethods.GuidToString(Guid.NewGuid());
+            _count++;
+            string className = _pnamespace + "." + classType.Name + "_" + _count.ToString("X5");
 
             Type aopType = BulidType(classType, _moduleBuilder, className);
             

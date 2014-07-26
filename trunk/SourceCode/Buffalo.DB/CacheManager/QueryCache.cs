@@ -61,7 +61,7 @@ namespace Buffalo.DB.CacheManager
         /// </summary>
         /// <param name="cache">缓存类</param>
         /// <param name="isAllTableCache">是否所有表都进行缓存</param>
-        internal void InitCache(ICacheAdaper cache, bool isAllTableCache) 
+        public void InitCache(ICacheAdaper cache, bool isAllTableCache) 
         {
             _cache = cache;
             _isAllTableCache = isAllTableCache;

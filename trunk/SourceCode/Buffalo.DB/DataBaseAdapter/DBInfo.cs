@@ -97,7 +97,6 @@ namespace Buffalo.DB.DataBaseAdapter
             _cache = new QueryCache(this);
             InitAdapters();
         }
-
         /// <summary>
         /// 检查数据库结构
         /// </summary>

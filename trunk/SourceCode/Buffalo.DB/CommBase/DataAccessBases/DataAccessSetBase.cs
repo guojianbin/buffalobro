@@ -137,19 +137,20 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                         }
                     }
 
-                    if (info.IsPrimaryKey)
+                    if (info.IsPrimaryKey && scopeList == null)//当不强制指定条件时候，用主键做更新条件
                     {
                         if (DefaultType.IsDefaultValue(curValue))
                         {
                             continue;
                         }
-                        if (obj._dicUpdateProperty___ != null) 
-                        {
-                            if (!obj._dicUpdateProperty___.ContainsKey(info.PropertyName))
-                            {
-                                continue;
-                            }
-                        }
+                        //if (obj._dicUpdateProperty___ != null) 
+                        //{
+                        //    if (!obj._dicUpdateProperty___.ContainsKey(info.PropertyName))
+                        //    {
+                        //        continue;
+                        //    }
+                        //}
+
                         DBParameter dbPrm = list.NewParameter(info.SqlType, curValue, EntityInfo.DBInfo);
                         where.Append(" and ");
                         where.Append(EntityInfo.DBInfo.CurrentDbAdapter.FormatParam(info.ParamName));
@@ -535,6 +536,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                                 if (!reader.IsDBNull(0))
                                 {
                                     EntityInfo.DBInfo.CurrentDbAdapter.SetObjectValueFromReader(reader, 0, obj, pkInfo);
+                                    //obj.PrimaryKeyChange();
                                     ret = 1;
                                 }
                             }
