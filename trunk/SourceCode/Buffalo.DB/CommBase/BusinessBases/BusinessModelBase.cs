@@ -94,7 +94,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
            
 
 
-            return Update(entity,new ScopeList(),null,false);
+            return Update(entity,null,null,false);
 
         }
 
