@@ -8,6 +8,7 @@ using Buffalo.DB.BQLCommon.BQLConditionCommon;
 using Buffalo.DB.CommBase;
 using Buffalo.DB.DBCheckers;
 using Buffalo.DB.CacheManager;
+using Buffalo.DB.Exceptions;
 
 namespace Buffalo.DB.DataBaseAdapter
 {
@@ -386,5 +387,14 @@ namespace Buffalo.DB.DataBaseAdapter
             _dicTables.TryGetValue(fullName, out ret);
             return ret;
         }
+        private SQLRunningExceptionOption _exceptionOption=new SQLRunningExceptionOption();
+        /// <summary>
+        /// “Ï≥£–≈œ¢≈‰÷√
+        /// </summary>
+        public SQLRunningExceptionOption ExceptionOption
+        {
+            get { return _exceptionOption; }
+        }
+       
     }
 }

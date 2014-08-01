@@ -74,6 +74,7 @@
     <Compile Include="EnumUnit.cs" />
     <Compile Include="Escape.cs" />
     <Compile Include="ExcelUnit.cs" />
+    <Compile Include="ExceptionReader.cs" />
     <Compile Include="ExpressionsEval.cs" />
     <Compile Include="FastReflection\AssemblyTypeLoader.cs" />
     <Compile Include="FastReflection\ClassInfos\ClassFieldEnumerator.cs" />

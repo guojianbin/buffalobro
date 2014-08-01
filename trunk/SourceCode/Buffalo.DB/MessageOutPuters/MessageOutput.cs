@@ -49,6 +49,16 @@ namespace Buffalo.DB.MessageOutPuters
             get { return _showBinary; }
             set { _showBinary = value; }
         }
+
+        private int _hideTextLength = 0;
+        /// <summary>
+        /// 输出SQL时候设置一个值，当字符串大于这个长度时候则隐藏值
+        /// </summary>
+        public int HideTextLength
+        {
+            get { return _hideTextLength; }
+            set { _hideTextLength = value; }
+        }
         /// <summary>
         /// 输出信息
         /// </summary>

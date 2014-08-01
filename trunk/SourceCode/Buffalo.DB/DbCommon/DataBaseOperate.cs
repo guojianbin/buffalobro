@@ -7,6 +7,7 @@ using System.Text;
 using Buffalo.DB.CommBase.BusinessBases;
 using System.Data.Common;
 using System.Collections.Generic;
+using Buffalo.DB.Exceptions;
 
 ///通用SQL Server访问类v1.2
 
@@ -396,7 +397,11 @@ namespace Buffalo.DB.DbCommon
             string paramInfo = null;
 			if(paramList!=null)
 			{
-                paramInfo=paramList.Fill(_comm, _db);
+                paramList.Fill(_comm, _db);
+                if (_db.SqlOutputer.HasOutput)
+                {
+                    paramInfo = paramList.GetParamString(_db);
+                }
 			}
 
             try
@@ -404,6 +409,7 @@ namespace Buffalo.DB.DbCommon
 
                 if (_db.SqlOutputer.HasOutput)
                 {
+                    
                     _db.OutMessage(MessageType.Query, "DataSet", null, sql + ";" + paramInfo);
                 }
 
@@ -423,7 +429,7 @@ namespace Buffalo.DB.DbCommon
             {
                 //如果正在执行事务，回滚
                 //RoolBack();
-                throw e;
+                throw new SQLRunningException(sql, paramList, _db, e);
             }
             finally 
             {
@@ -487,7 +493,11 @@ namespace Buffalo.DB.DbCommon
             string paramInfo = null;
             if (paramList != null)
 			{
-                paramInfo=paramList.Fill(_comm, _db);
+                paramList.Fill(_comm, _db);
+                if (_db.SqlOutputer.HasOutput)
+                {
+                    paramInfo = paramList.GetParamString(_db);
+                }
 			}
 			
 
@@ -538,7 +548,7 @@ namespace Buffalo.DB.DbCommon
             {
                 //如果正在执行事务，回滚
                 //RoolBack();
-                throw e;
+                throw new SQLRunningException(sql, paramList, _db, e);
             }
             
 
@@ -624,7 +634,11 @@ namespace Buffalo.DB.DbCommon
             string paramInfo=null;
 			if(paramList!=null)
 			{
-				paramInfo=paramList.Fill(_comm,_db);
+				paramList.Fill(_comm,_db);
+                if (_db.SqlOutputer.HasOutput)
+                {
+                    paramInfo = paramList.GetParamString(_db);
+                }
 			}
 
             try
@@ -651,7 +665,7 @@ namespace Buffalo.DB.DbCommon
             {
                 //如果正在执行事务，回滚
                 //RoolBack();
-                throw e;
+                throw new SQLRunningException(sql, paramList, _db, e);
             }
             finally 
             {

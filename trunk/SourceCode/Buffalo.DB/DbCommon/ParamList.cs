@@ -135,7 +135,7 @@ namespace Buffalo.DB.DbCommon
 		/// 把列表里边的SqlParameter加到SqlCommand里边
 		/// </summary>
 		/// <param name="comm">要加进去的SqlCommand</param>
-		public string Fill(IDbCommand comm,DBInfo db)
+		public void Fill(IDbCommand comm,DBInfo db)
 		{
             StringBuilder ret = new StringBuilder(500);
             comm.Parameters.Clear();
@@ -148,18 +148,29 @@ namespace Buffalo.DB.DbCommon
                 comm.Parameters.Add(dPrm);
             }
 
-            if (db.SqlOutputer.HasOutput)
-            {
-                return GetParamString(db);
-            }
+            //if (db.SqlOutputer.HasOutput)
+            //{
+            //    return GetParamString(db);
+            //}
 
-            return null;
+            //return null;
 		}
         /// <summary>
         /// 获取param里边的值的显示字符串
         /// </summary>
         /// <returns></returns>
-        internal string GetParamString(DBInfo db) 
+        public string GetParamString(DBInfo db)
+        {
+            return GetParamString(db, db.SqlOutputer.ShowBinary, db.SqlOutputer.HideTextLength);
+        }
+        /// <summary>
+        /// 获取param里边的值的信息
+        /// </summary>
+        /// <param name="db">数据库</param>
+        /// <param name="showBinary">是否显示byte[]</param>
+        /// <param name="hideTextLength">当字符串长度大于这个值时候，则隐藏值</param>
+        /// <returns></returns>
+        public string GetParamString(DBInfo db, bool showBinary,int hideTextLength) 
         {
             StringBuilder ret = new StringBuilder(500);
             for (int i = 0; i < this.Count; i++)
@@ -168,12 +179,31 @@ namespace Buffalo.DB.DbCommon
                 IDataParameter dPrm = GetParameter(prm, db);
 
                 string value = null;
-
-                if (dPrm.DbType == DbType.Binary && !db.SqlOutputer.ShowBinary)
+                if (dPrm.Value != null)
                 {
-                    value = "[Binary]";
+                    if (dPrm.DbType == DbType.Binary && !showBinary)
+                    {
+                        Array val = dPrm.Value as Array;
+                        if (val != null)
+                        {
+                            value = "[Binary len=" + val.Length + "]";
+                        }
+                        else
+                        {
+                            value = "[Binary null]";
+                        }
+                    }
+                    else if (hideTextLength > 0)
+                    {
+                        string strValue = dPrm.Value as string;
+                        if (strValue != null && strValue.Length > hideTextLength) 
+                        {
+                            value = "[String len=" + strValue.Length + "]";
+                        }
+                    }
+                   
                 }
-                else
+                if (value == null)
                 {
                     value = DataAccessCommon.FormatValue(dPrm.Value, dPrm.DbType, db);
                 }

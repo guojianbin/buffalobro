@@ -298,6 +298,7 @@
     <Compile Include="EntityInfos\PrimaryKeyInfo.cs" />
     <Compile Include="EntityInfos\PropertyEnumerator.cs" />
     <Compile Include="EntityInfos\PropertyInfoCollection.cs" />
+    <Compile Include="Exceptions\SQLRunningException.cs" />
     <Compile Include="FaintnessSearchConditions\FullTextConfigManager.cs" />
     <Compile Include="FaintnessSearchConditions\NoiseWord.cs" />
     <Compile Include="ListExtends\CompareItem.cs" />
