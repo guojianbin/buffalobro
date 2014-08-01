@@ -139,10 +139,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
 
                     if (info.IsPrimaryKey && scopeList == null)//当不强制指定条件时候，用主键做更新条件
                     {
-                        if (DefaultType.IsDefaultValue(curValue))
-                        {
-                            continue;
-                        }
+                        //if (DefaultType.IsDefaultValue(curValue))
+                        //{
+                        //    continue;
+                        //}
                         //if (obj._dicUpdateProperty___ != null) 
                         //{
                         //    if (!obj._dicUpdateProperty___.ContainsKey(info.PropertyName))
