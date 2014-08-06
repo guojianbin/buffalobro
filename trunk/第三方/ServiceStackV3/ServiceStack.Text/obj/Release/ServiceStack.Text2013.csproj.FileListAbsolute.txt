@@ -1,0 +1,5 @@
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Release\4.5.1\ServiceStack.Text.XML
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Release\4.5.1\ServiceStack.Text.dll
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Release\4.5.1\ServiceStack.Text.pdb
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Text\obj\Release\ServiceStack.Text.dll
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Text\obj\Release\ServiceStack.Text.pdb

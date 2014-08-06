@@ -1,0 +1,5 @@
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Debug\4.5\ServiceStack.Interfaces.dll
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Debug\4.5\ServiceStack.Interfaces.pdb
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Interfaces\obj\Debug\ServiceStack.Interfaces2013.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Interfaces\obj\Debug\ServiceStack.Interfaces.dll
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Interfaces\obj\Debug\ServiceStack.Interfaces.pdb

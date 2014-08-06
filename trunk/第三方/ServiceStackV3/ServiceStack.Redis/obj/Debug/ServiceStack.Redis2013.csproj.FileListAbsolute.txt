@@ -1,0 +1,5 @@
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Debug\4.5.1\ServiceStack.Redis.dll
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\Debug\4.5.1\ServiceStack.Redis.pdb
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Redis\obj\Debug\ServiceStack.Redis2013.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Redis\obj\Debug\ServiceStack.Redis.dll
+E:\CSharpTest\BuffaloCode\第三方\ServiceStackV3\ServiceStack.Redis\obj\Debug\ServiceStack.Redis.pdb

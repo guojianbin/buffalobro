@@ -53,6 +53,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SharpZipLib for .NET Framework 4.0")]
 #elif (NET_4_5)
 [assembly: AssemblyTitle("SharpZipLib for .NET Framework 4.5")]
+#elif (NET_4_5_1)
+[assembly: AssemblyTitle("SharpZipLib for .NET Framework 4.5.1")]
 #elif (NETCF_1_0)
 [assembly: AssemblyTitle("SharpZipLib for .NET Compact Framework 1.0")]
 #elif (NETCF_2_0)
