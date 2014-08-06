@@ -19,6 +19,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("BuffaloWebControls for .NET Framework 4.0")]
 #elif (NET_4_5)
 [assembly: AssemblyTitle("BuffaloWebControls for .NET Framework 4.5")]
+#elif (NET_4_5_1)
+[assembly: AssemblyTitle("BuffaloWebControls for .NET Framework 4.5.1")]
 #elif (NETCF_1_0)
 [assembly: AssemblyTitle("BuffaloWebControls for .NET Compact Framework 1.0")]
 #elif (NETCF_2_0)

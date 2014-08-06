@@ -31,6 +31,7 @@ namespace Buffalo.DBTools
         {
             get { return _currentProject; }
         }
+        
         ClassDesignerDocView _selectDocView;
         /// <summary>
         /// Ñ¡ÔñµÄÎÄµµ
