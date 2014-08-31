@@ -63,31 +63,40 @@ namespace Buffalo.DB.CacheManager
         /// <returns></returns>
         private SockPool CreatePool(string connStr) 
         {
-            string ip = "127.0.0.1";
-            uint port = 6379;
+            string localserver = "127.0.0.1:6379";
+            //uint port = 6379;
             int maxSize = 10;
             string[] conStrs = connStr.Split(';');
             string serverString = "server=";
             string sizeString = "maxsize=";
             string expirString = "expir=";
             string part = null;
+            List<string> lstServers = new List<string>();
             foreach (string lpart in conStrs)
             {
                 part = lpart.Trim();
                 if (part.IndexOf(serverString, StringComparison.CurrentCultureIgnoreCase) == 0)
                 {
                     string serverStr = part.Substring(serverString.Length);
-                    string[] parts = serverStr.Split(':');
-                    if (parts.Length > 0)
-                    {
-                        ip = parts[0].Trim();
+                    //string[] parts = serverStr.Split(':');
+                    //if (parts.Length > 0)
+                    //{
+                    //    ip = parts[0].Trim();
 
-                    }
-                    if (parts.Length > 1)
+                    //}
+                    //if (parts.Length > 1)
+                    //{
+                    //    if (!uint.TryParse(parts[1].Trim(), out port))
+                    //    {
+                    //        throw new ArgumentException(parts[1].Trim() + "不是正确的端口号");
+                    //    }
+                    //}
+                    string[] parts = serverStr.Split(',');
+                    foreach (string sser in parts)
                     {
-                        if (!uint.TryParse(parts[1].Trim(), out port))
+                        if (!string.IsNullOrWhiteSpace(sser))
                         {
-                            throw new ArgumentException(parts[1].Trim() + "不是正确的端口号");
+                            lstServers.Add(sser);
                         }
                     }
                 }
@@ -118,11 +127,11 @@ namespace Buffalo.DB.CacheManager
                     _expiration = TimeSpan.FromMinutes((double)mins);
                 }
             }
-            if (ip == "localhost") 
+            if (lstServers.Count == 0)
             {
-                ip = "127.0.0.1";
+                lstServers.Add(localserver);
             }
-            string[] serviers ={ip+":"+port };
+            string[] serviers = lstServers.ToArray();
 
             SockPool pool = SockPool.GetInstance(_info.Name);
             pool.SetServers(serviers);

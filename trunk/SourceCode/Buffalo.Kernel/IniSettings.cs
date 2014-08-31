@@ -10,37 +10,85 @@ namespace Buffalo.Kernel
     /// </summary>
     public class IniSettings
     {
-        private Dictionary<string, string> _dicConfig;
+        private Dictionary<string, string> _dicConfig = new Dictionary<string, string>();
         /// <summary>
         /// ini配置读取器
         /// </summary>
         /// <param name="filePath">ini文件的路径</param>
-        public IniSettings(string filePath) 
+        public IniSettings() 
         {
-            using (FileStream stm = new FileStream(filePath, FileMode.Open, FileAccess.Read)) 
-            {
-                LoadIniConfig(stm);
-            }
-        }
-        /// <summary>
-        /// ini配置读取器
-        /// </summary>
-        /// <param name="stm">ini文件的流</param>
-        public IniSettings(Stream stm)
-        {
-            LoadIniConfig(stm);
         }
 
+        private Encoding _encoding = Encoding.Default;
+        /// <summary>
+        /// 编码
+        /// </summary>
+        public Encoding Encoding
+        {
+            get { return _encoding; }
+        }
+        /// <summary>
+        /// 加载本程序下的ini文件
+        /// </summary>
+        /// <param name="stm">文件流</param>
+        /// <returns></returns>
+        public static IniSettings Load(Stream stm)
+        {
+            return Load(stm, Encoding.Default);
+        }
         /// <summary>
         /// 加载本程序下的ini文件
         /// </summary>
         /// <param name="fileName">ini名称</param>
         /// <returns></returns>
-        public static IniSettings Load(string fileName) 
+        public static IniSettings Load(Stream stm, Encoding encoding) 
         {
-            string filePath=AppDomain.CurrentDomain.BaseDirectory + fileName;
-            return new IniSettings(filePath);
+            IniSettings ret= new IniSettings();
+            ret._encoding = encoding;
+            ret.LoadIniConfig(stm);
+            return ret;
         }
+         /// <summary>
+        /// 加载本程序下的ini文件
+        /// </summary>
+        /// <param name="fileName">ini名称</param>
+        /// <returns></returns>
+        public static IniSettings Load(string fileName)
+        {
+            return Load(fileName, Encoding.Default);
+        }
+        /// <summary>
+        /// 加载本程序下的ini文件
+        /// </summary>
+        /// <param name="fileName">ini名称</param>
+        /// <returns></returns>
+        public static IniSettings Load(string fileName, Encoding encoding)
+        {
+            using (FileStream file = new FileStream(fileName, FileMode.Open, FileAccess.Read)) 
+            {
+                return Load(file, encoding);
+            }
+        }
+
+        /// <summary>
+        /// 获取ini值
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <returns></returns>
+        public string this[string key]
+        {
+            get 
+            {
+                string ret = null;
+                if (_dicConfig.TryGetValue(key, out ret)) 
+                {
+                    return ret;
+                }
+                return null;
+            }
+        }
+
+
 
         /// <summary>
         /// 加载Ini配置
@@ -49,8 +97,7 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         private void LoadIniConfig(Stream stm) 
         {
-            _dicConfig = new Dictionary<string, string>();
-            using (StreamReader reader = new StreamReader(stm)) 
+            using (StreamReader reader = new StreamReader(stm,_encoding)) 
             {
                 string line = null;
                 while ((line = reader.ReadLine()) != null)

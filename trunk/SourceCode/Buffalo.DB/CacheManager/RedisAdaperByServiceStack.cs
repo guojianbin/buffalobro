@@ -56,31 +56,67 @@ namespace Buffalo.DB.CacheManager
         /// <returns></returns>
         private  PooledRedisClientManager CreateManager(string connectionString)
         {
-            string ip = "127.0.0.1";
-            uint port = 6379;
+            string localserver = "127.0.0.1:6379";
+            //uint port = 6379;
             int maxSize = 10;
             string[] conStrs = connectionString.Split(';');
             string serverString = "server=";
+            string readonlyserverString = "roserver=";
             string sizeString = "maxsize=";
             string expirString = "expir=";
             string part = null;
+            List<string> lstServers = new List<string>();
+            List<string> lstRoServers = new List<string>();
             foreach (string lpart in conStrs)
             {
                 part = lpart.Trim();
                 if (part.IndexOf(serverString, StringComparison.CurrentCultureIgnoreCase) == 0)
                 {
                     string serverStr = part.Substring(serverString.Length);
-                    string[] parts = serverStr.Split(':');
-                    if (parts.Length > 0)
-                    {
-                        ip = parts[0].Trim();
+                    //string[] parts = serverStr.Split(':');
+                    //if (parts.Length > 0)
+                    //{
+                    //    ip = parts[0].Trim();
 
-                    }
-                    if (parts.Length > 1)
+                    //}
+                    //if (parts.Length > 1)
+                    //{
+                    //    if (!uint.TryParse(parts[1].Trim(), out port))
+                    //    {
+                    //        throw new ArgumentException(parts[1].Trim() + "不是正确的端口号");
+                    //    }
+                    //}
+                    string[] parts = serverStr.Split(',');
+                    foreach (string sser in parts)
                     {
-                        if (!uint.TryParse(parts[1].Trim(), out port))
+                        if (!string.IsNullOrWhiteSpace(sser))
                         {
-                            throw new ArgumentException(parts[1].Trim() + "不是正确的端口号");
+                            lstServers.Add(sser);
+                        }
+                    }
+                }
+                if (part.IndexOf(readonlyserverString, StringComparison.CurrentCultureIgnoreCase) == 0)
+                {
+                    string serverStr = part.Substring(serverString.Length);
+                    //string[] parts = serverStr.Split(':');
+                    //if (parts.Length > 0)
+                    //{
+                    //    ip = parts[0].Trim();
+
+                    //}
+                    //if (parts.Length > 1)
+                    //{
+                    //    if (!uint.TryParse(parts[1].Trim(), out port))
+                    //    {
+                    //        throw new ArgumentException(parts[1].Trim() + "不是正确的端口号");
+                    //    }
+                    //}
+                    string[] parts = serverStr.Split(',');
+                    foreach (string sser in parts)
+                    {
+                        if (!string.IsNullOrWhiteSpace(sser))
+                        {
+                            lstRoServers.Add(sser);
                         }
                     }
                 }
@@ -111,14 +147,25 @@ namespace Buffalo.DB.CacheManager
                     _expiration = TimeSpan.FromMinutes((double)mins);
                 }
             }
-            if (ip == "localhost") 
+            if (lstServers.Count == 0)
             {
-                ip = "127.0.0.1";
+                lstServers.Add(localserver);
             }
-            string[] serviers ={ip+":"+port };
+            string[] serviers = lstServers.ToArray();
+
+            string[] roserviers = null;
+            if (lstRoServers.Count > 0)
+            {
+                roserviers = lstRoServers.ToArray();
+            }
+            else 
+            {
+                roserviers = serviers;
+            }
+            //string[] serviers ={ip+":"+port };
 
             //支持读写分离，均衡负载
-            return new PooledRedisClientManager(serviers, serviers, new RedisClientManagerConfig
+            return new PooledRedisClientManager(serviers, roserviers, new RedisClientManagerConfig
             {
                 MaxWritePoolSize = maxSize,//“写”链接池链接数
                 MaxReadPoolSize = maxSize,//“写”链接池链接数
@@ -149,7 +196,7 @@ namespace Buffalo.DB.CacheManager
         {
             string sourceKey = null;
             DataSet dsRet = null;
-            using (IRedisClient client = _pool.GetClient())
+            using (IRedisClient client = _pool.GetReadOnlyClient())
             {
                 
                 string key = GetKey(tableNames, sql, client, true, out sourceKey);
