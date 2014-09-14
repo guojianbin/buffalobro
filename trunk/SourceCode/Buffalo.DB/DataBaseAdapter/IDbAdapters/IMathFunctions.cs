@@ -23,5 +23,11 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         string DoTan(string[] values);
         string IndexOf(string[] values);
         string SubString(string[] values);
+        string DoMod(string[] values);
+        string BitAND(string[] values);
+        string BitOR(string[] values);
+        string BitXOR(string[] values);
+        string BitNot(string[] values);
+        
     }
 }

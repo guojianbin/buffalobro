@@ -194,5 +194,25 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         {
             return " substr(" + values[0] + "," + values[1] + "," + values[2] + ")";
         }
+        public virtual string DoMod(string[] values) 
+        {
+            return "(" + values[0] + "%" + values[1] + ")";
+        }
+        public virtual string BitAND(string[] values)
+        {
+            return "(" + values[0] + " & " + values[1] + ")";
+        }
+        public virtual string BitOR(string[] values)
+        {
+            return "(" + values[0] + " | " + values[1] + ")";
+        }
+        public virtual string BitXOR(string[] values)
+        {
+            return "(" + values[0] + " ^ " + values[1] + ")";
+        }
+        public virtual string BitNot(string[] values)
+        {
+            return "(~" + values[0] + ")";
+        }
     }
 }

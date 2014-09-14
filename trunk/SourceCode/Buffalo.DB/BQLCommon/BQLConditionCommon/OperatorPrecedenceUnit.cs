@@ -52,6 +52,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             arr[(int)'-'] = 6;
             arr[(int)'*'] = 7;
             arr[(int)'/'] = 7;
+            arr[(int)'%'] = int.MaxValue;//取模被识别为函数，不做任何优先级处理
             arr[(int)'='] = 1;
             arr[(int)'!'+128] = 1;//!=
             arr[(int)'&'] = 3;

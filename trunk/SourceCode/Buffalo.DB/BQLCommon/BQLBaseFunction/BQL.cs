@@ -401,6 +401,23 @@ namespace Buffalo.DB.BQLCommon.BQLBaseFunction
         }
 
         /// <summary>
+        /// 取模运算
+        /// </summary>
+        /// <param name="value">弧度</param>
+        /// <returns></returns>
+        public static BQLOperatorHandle MathMod(object value1, object value2)
+        {
+            
+            BQLValueItem oValue1= BQLValueItem.ToValueItem(value1);
+            BQLValueItem oValue2 = BQLValueItem.ToValueItem(value2);
+            BQLValueItem.UnityDbType(oValue1, oValue2);
+
+            BQLOperatorHandle fHandle = new BQLOperatorHandle(FunctionManager.DoMod, new BQLValueItem[] { oValue1, oValue2 });
+            //fHandle.PriorityLevel = 3;
+            fHandle.PriorityLevel = OperatorPrecedenceUnit.GetPrecedence("%");
+            return fHandle;
+        }
+        /// <summary>
         /// 反正切
         /// </summary>
         /// <param name="value">弧度</param>
@@ -504,6 +521,75 @@ namespace Buffalo.DB.BQLCommon.BQLBaseFunction
             return handle;
         }
 
+        /// <summary>
+        /// 求模运算
+        /// </summary>
+        /// <param name="value1">要求的数字</param>
+        /// <param name="value2">被除数</param>
+        /// <returns></returns>
+        public static CsqCommonFunction Mod(BQLValueItem value1, BQLValueItem value2)
+        {
+            value1.ValueDbType = DbType.Double;
+            value2.ValueDbType = DbType.Double;
+            CsqCommonFunction handle = new CsqCommonFunction(new BQLValueItem[] { value1, value2 }, DBMathFunction.DoMod, DbType.Double);
+            //handle.ValueDataType = DefaultType.DoubleType;
+            return handle;
+        }
+        /// <summary>
+        /// 按位与运算
+        /// </summary>
+        /// <param name="value1">数字1</param>
+        /// <param name="value2">数字2</param>
+        /// <returns></returns>
+        public static CsqCommonFunction BitAND(BQLValueItem value1, BQLValueItem value2)
+        {
+            value1.ValueDbType = DbType.Double;
+            value2.ValueDbType = DbType.Double;
+            CsqCommonFunction handle = new CsqCommonFunction(new BQLValueItem[] { value1,value2 }, DBMathFunction.BitAND, DbType.Double);
+            //handle.ValueDataType = DefaultType.DoubleType;
+            return handle;
+        }
+        /// <summary>
+        /// 非运算
+        /// </summary>
+        /// <param name="value1">数字1</param>
+        /// <param name="value2">数字2</param>
+        /// <returns></returns>
+        public static CsqCommonFunction BitNot(BQLValueItem value)
+        {
+            value.ValueDbType = DbType.Double;
+            CsqCommonFunction handle = new CsqCommonFunction(new BQLValueItem[] { value }, DBMathFunction.BitNot, DbType.Double);
+            //handle.ValueDataType = DefaultType.DoubleType;
+            return handle;
+        }
+        /// <summary>
+        /// 按位或运算
+        /// </summary>
+        /// <param name="value1">数字1</param>
+        /// <param name="value2">数字2</param>
+        /// <returns></returns>
+        public static CsqCommonFunction BitOR(BQLValueItem value1, BQLValueItem value2)
+        {
+            value1.ValueDbType = DbType.Double;
+            value2.ValueDbType = DbType.Double;
+            CsqCommonFunction handle = new CsqCommonFunction(new BQLValueItem[] { value1, value2 }, DBMathFunction.BitOR, DbType.Double);
+            //handle.ValueDataType = DefaultType.DoubleType;
+            return handle;
+        }
+        /// <summary>
+        /// 按位异或运算
+        /// </summary>
+        /// <param name="value1">数字1</param>
+        /// <param name="value2">数字2</param>
+        /// <returns></returns>
+        public static CsqCommonFunction BitXOR(BQLValueItem value1, BQLValueItem value2)
+        {
+            value1.ValueDbType = DbType.Double;
+            value2.ValueDbType = DbType.Double;
+            CsqCommonFunction handle = new CsqCommonFunction(new BQLValueItem[] { value1, value2 }, DBMathFunction.BitXOR, DbType.Double);
+            //handle.ValueDataType = DefaultType.DoubleType;
+            return handle;
+        }
         /// <summary>
         /// 求任意数为底的幂 
         /// </summary>

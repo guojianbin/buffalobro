@@ -126,6 +126,21 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         {
             return OperatorFunction(handle, "/", info);
         }
+
+        /// <summary>
+        /// 进行除法运算
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <returns></returns>
+        internal static string DoMod(BQLOperatorHandle handle, KeyWordInfomation info)
+        {
+            BQLValueItem[] parameters = handle.GetParameters();
+            BQLValueItem item1 = parameters[0];
+            BQLValueItem item2 = parameters[1];
+            string value1 = item1.DisplayValue(info);
+            string value2 = item2.DisplayValue(info);
+            return info.DBInfo.Math.DoMod(new string[] { value1, value2 });
+        }
         /// <summary>
         /// 进行等于运算
         /// </summary>

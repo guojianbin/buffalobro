@@ -58,7 +58,7 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
             string sql = objCondition.GetSelect();
             if (objPage.IsFillTotleRecords)
             {
-                objPage.TotleRecords = GetTotleRecord(list, oper, sql, objPage.MaxSelectRecords,
+                objPage.TotleRecords = GetTotleRecord(list, oper, objCondition.GetSelect(false), objPage.MaxSelectRecords,
                     (useCache?objCondition.CacheTables:null));//获取总记录数
                 long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
                 objPage.TotlePage = totlePage;

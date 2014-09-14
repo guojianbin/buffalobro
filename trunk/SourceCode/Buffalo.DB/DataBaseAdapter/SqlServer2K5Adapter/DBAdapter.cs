@@ -24,16 +24,16 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
                 return true;
             }
         }
-        /// <summary>
-        /// 获取变量列表
-        /// </summary>
-        public override ParamList BQLSelectParamList
-        {
-            get
-            {
-                return new ParamList();
-            }
-        }
+        ///// <summary>
+        ///// 获取变量列表
+        ///// </summary>
+        //public override ParamList BQLSelectParamList
+        //{
+        //    get
+        //    {
+        //        return new ParamList();
+        //    }
+        //}
         
     }
 }

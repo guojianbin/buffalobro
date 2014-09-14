@@ -202,6 +202,16 @@
     <Compile Include="BQLCommon\IdentityInfos\IdentityInfo.cs" />
     <Compile Include="BQLCommon\KeyWordConver.cs" />
     <Compile Include="BQLCommon\KeyWordInfomation.cs" />
+    <Compile Include="DataBaseAdapter\AccessAdapter\AdapterLoader.cs" />
+    <Compile Include="DataBaseAdapter\AccessAdapter\AggregateFunctions.cs" />
+    <Compile Include="DataBaseAdapter\AccessAdapter\CommonFunction.cs" />
+    <Compile Include="DataBaseAdapter\AccessAdapter\ConvertFunction.cs" />
+    <Compile Include="DataBaseAdapter\AccessAdapter\CutPageSqlCreater.cs" />
+    <Compile Include="DataBaseAdapter\AccessAdapter\DBAdapter.cs" />
+    <Compile Include="DataBaseAdapter\AccessAdapter\DBStructure.cs" />
+    <Compile Include="DataBaseAdapter\AccessAdapter\FormatCode.cs" />
+    <Compile Include="DataBaseAdapter\AccessAdapter\MathFunctions.cs" />
+    <Compile Include="DataBaseAdapter\AccessAdapter\RebuildParamInfo.cs" />
     <Compile Include="DataBaseAdapter\ConfigInfo.cs" />
     <Compile Include="DataBaseAdapter\DataAccessLoader.cs" />
     <Compile Include="DataBaseAdapter\DBInfo.cs" />

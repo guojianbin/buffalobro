@@ -219,11 +219,34 @@ namespace Buffalo.DB.PropertyAttributes
         {
             StringBuilder sb = new StringBuilder();
             IDBAdapter idba = info.DBInfo.CurrentDbAdapter;
-            sb.Append(idba.FormatParam(ParamName) + " ");
-            sb.Append(idba.DBTypeToSQL(SqlType, Length) + " ");
-
             bool isPrimary = EnumUnit.ContainerValue((int)_propertyType, (int)EntityPropertyType.PrimaryKey);
             bool isAutoIdentity = EnumUnit.ContainerValue((int)_propertyType, (int)EntityPropertyType.Identity);
+
+            
+            bool needIdentity = false;
+            bool putType = true;
+            sb.Append(idba.FormatParam(ParamName) + " ");
+
+            if (isAutoIdentity && TableChecker.IsIdentityType(SqlType))
+            {
+                if (idba.IdentityIsType)
+                {
+                    sb.Append(idba.DBIdentity(tableName, _paramName));
+                    sb.Append(" ");
+                    putType = false;
+                }
+                else
+                {
+                    needIdentity = true;
+                }
+            }
+            
+            
+            if (putType)
+            {
+                sb.Append(idba.DBTypeToSQL(SqlType, Length) + " ");
+            }
+            
             bool allowNULL = _allowNull & (!isPrimary);
             //if (isPrimary)
             //{
@@ -247,7 +270,7 @@ namespace Buffalo.DB.PropertyAttributes
                 }
             }
             //}
-            if (isAutoIdentity && TableChecker.IsIdentityType(SqlType))
+            if (needIdentity&&isAutoIdentity && TableChecker.IsIdentityType(SqlType))
             {
 
                 sb.Append(idba.DBIdentity(tableName, _paramName));

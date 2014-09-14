@@ -375,6 +375,7 @@ namespace Buffalo.DB.DbCommon
 			)
 		{
             DataSet dataSet = null;
+            paramList = _db.CurrentDbAdapter.RebuildParamList(ref sql, paramList);
             if (cacheTables != null && cacheTables.Count > 0)
             {
                 dataSet = _db.QueryCache.GetDataSet(cacheTables, sql, paramList);
@@ -470,7 +471,7 @@ namespace Buffalo.DB.DbCommon
 			)
 		{
             IDataReader reader;
-
+            paramList = _db.CurrentDbAdapter.RebuildParamList(ref sql, paramList);
             if (cacheTables != null && cacheTables.Count>0)
             {
                 reader = _db.QueryCache.GetReader(cacheTables, sql, paramList);
@@ -625,7 +626,7 @@ namespace Buffalo.DB.DbCommon
 			{
 				throw(new ApplicationException("没有建立数据库连接")); 
 			}
-			
+            paramList = _db.CurrentDbAdapter.RebuildParamList(ref sql, paramList);
 			_comm.CommandType = exeCommandType;
 			_comm.CommandText = sql;
             int ret = -1;

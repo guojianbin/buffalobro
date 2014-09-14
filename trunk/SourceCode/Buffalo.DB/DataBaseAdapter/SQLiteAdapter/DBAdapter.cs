@@ -25,7 +25,10 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
                 return false;
             }
         }
-
+        public bool IdentityIsType
+        {
+            get { return false; }
+        }
         /// <summary>
         /// 获取当前时间
         /// </summary>
@@ -34,7 +37,15 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         {
             return "CURRENT_TIMESTAMP";
         }
-
+        /// <summary>
+        /// 重建参数集合
+        /// </summary>
+        /// <param name="lstPrm"></param>
+        /// <returns></returns>
+        public virtual ParamList RebuildParamList(ref string sql, ParamList lstPrm)
+        {
+            return lstPrm;
+        }
         /// <summary>
         /// 是否记录自增长字段作手动处理
         /// </summary>
@@ -45,16 +56,16 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
                 return false;
             }
         }
-        /// <summary>
-        /// 获取变量列表
-        /// </summary>
-        public ParamList BQLSelectParamList
-        {
-            get
-            {
-                return new ParamList();
-            }
-        }
+        ///// <summary>
+        ///// 获取变量列表
+        ///// </summary>
+        //public ParamList BQLSelectParamList
+        //{
+        //    get
+        //    {
+        //        return new ParamList();
+        //    }
+        //}
         /// <summary>
         /// 获取参数类
         /// </summary>
@@ -412,7 +423,11 @@ namespace Buffalo.DB.DataBaseAdapter.SQLiteAdapter
         #region IDBAdapter 成员
 
 
-        public string DBIdentity(string tableName, string paramName)
+        /// <summary>
+        /// 获取数据库的自增长字段的信息
+        /// </summary>
+        /// <returns></returns>
+        public virtual string DBIdentity(string tableName, string paramName)
         {
             return " AUTOINCREMENT";
         }

@@ -25,6 +25,11 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <returns></returns>
         string DBIdentity(string tableName, string paramName);
         /// <summary>
+        /// 自增长是否一个数据类型
+        /// </summary>
+        /// <returns></returns>
+        bool IdentityIsType { get;}
+        /// <summary>
         /// 把DBType类型转成对应的SQLType
         /// </summary>
         /// <param name="dbType"></param>
@@ -44,6 +49,14 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         {
             get;
         }
+
+        /// <summary>
+        /// 重建参数集合(Access需要)
+        /// </summary>
+        /// <param name="lstPrm"></param>
+        /// <returns></returns>
+        ParamList RebuildParamList(ref string sql,ParamList lstPrm);
+
         /// <summary>
         /// 获取数据库当前时间
         /// </summary>
@@ -246,13 +259,13 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <param name="seqName"></param>
         string GetSequenceInit(string seqName,EntityParam prm, DataBaseOperate oper);
 
-        /// <summary>
-        /// 获取变量列表
-        /// </summary>
-        ParamList BQLSelectParamList
-        {
-            get;
-        }
+        ///// <summary>
+        ///// 获取变量列表
+        ///// </summary>
+        //ParamList BQLSelectParamList
+        //{
+        //    get;
+        //}
         /// <summary>
         /// 连接被关闭时候触发
         /// </summary>

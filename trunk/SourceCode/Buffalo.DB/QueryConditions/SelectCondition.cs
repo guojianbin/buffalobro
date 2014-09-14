@@ -135,7 +135,21 @@ namespace Buffalo.DB.QueryConditions
             return ret;
         }
 
-        internal string GetSelect() 
+        /// <summary>
+        /// 获取查询语句
+        /// </summary>
+        /// <param name="hasOrder">是否有排序</param>
+        /// <returns></returns>
+        internal string GetSelect()
+        {
+            return GetSelect(true);
+        }
+        /// <summary>
+        /// 获取查询语句
+        /// </summary>
+        /// <param name="hasOrder">是否有排序</param>
+        /// <returns></returns>
+        internal string GetSelect(bool hasOrder) 
         {
             StringBuilder sql = new StringBuilder(5000);
             sql.Append("select ");
@@ -154,11 +168,15 @@ namespace Buffalo.DB.QueryConditions
                 sql.Append(_groupBy.ToString());
             }
 
-            if (_orders.Length > 0) 
+            if (hasOrder)
             {
-                sql.Append(" order by ");
-                sql.Append(_orders.ToString());
+                if (_orders.Length > 0)
+                {
+                    sql.Append(" order by ");
+                    sql.Append(_orders.ToString());
+                }
             }
+
             if (_sqlHaving.Length > 0)
             {
                 sql.Append(" having ");

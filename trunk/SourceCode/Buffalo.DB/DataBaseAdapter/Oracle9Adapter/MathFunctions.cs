@@ -38,5 +38,26 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         {
             return " substr(" + values[0] + "," + values[1] + "," + values[2] + ")";
         }
+
+        public override string DoMod(string[] values)
+        {
+            return "MOD(" + values[0] + ", " + values[1] + ")";
+        }
+        public override string BitAND(string[] values)
+        {
+            return "BITAND(" + values[0] + "," + values[1] + ")";
+        }
+        public override string BitOR(string[] values)
+        {
+            return "((" + values[0] + " + " + values[1] + ") - BITAND(" + values[0] + ", " + values[1] + "))";
+        }
+        public override string BitXOR(string[] values)
+        {
+            return "((" + values[0] + " + " + values[1] + ") - BITAND(" + values[0] + ", " + values[1] + ") * 2)";
+        }
+        public override string BitNot(string[] values)
+        {
+            return "(-1 - " + values[0] + ")";
+        }
     }
 }

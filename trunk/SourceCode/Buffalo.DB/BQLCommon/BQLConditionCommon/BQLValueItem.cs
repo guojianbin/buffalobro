@@ -297,7 +297,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
         /// </summary>
         /// <param name="value1"></param>
         /// <param name="value2"></param>
-        protected static void UnityDbType(BQLValueItem value1, BQLValueItem value2)
+        protected internal static void UnityDbType(BQLValueItem value1, BQLValueItem value2)
         {
             if (CommonMethods.IsNull(value1)  || CommonMethods.IsNull(value2)) 
             {
@@ -373,6 +373,16 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             fHandle.PriorityLevel = OperatorPrecedenceUnit.GetPrecedence("/");
             return fHandle;
         }
+        public static BQLOperatorHandle operator %(BQLValueItem handle, object value)
+        {
+            BQLValueItem oValue = ToValueItem(value);
+            UnityDbType(handle, oValue);
+
+            BQLOperatorHandle fHandle = new BQLOperatorHandle(FunctionManager.DoMod, new BQLValueItem[] { handle, oValue });
+            //fHandle.PriorityLevel = 3;
+            fHandle.PriorityLevel = OperatorPrecedenceUnit.GetPrecedence("%");
+            return fHandle;
+        }
 
         public static BQLComparItem operator ==(BQLValueItem handle, object value)
         {
@@ -392,6 +402,11 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             fHandle.PriorityLevel = OperatorPrecedenceUnit.GetPrecedence("!=");
             return fHandle;
         }
+
+        
+
+
+
         public static BQLComparItem operator &(BQLValueItem handle, BQLValueItem value)
         {
             List<BQLValueItem> lstValues = new List<BQLValueItem>();
@@ -409,6 +424,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             fHandle.PriorityLevel = OperatorPrecedenceUnit.GetPrecedence("&");
             return fHandle;
         }
+        
         public static BQLComparItem operator |(BQLValueItem handle, BQLValueItem value)
         {
             List<BQLValueItem> lstValues = new List<BQLValueItem>();

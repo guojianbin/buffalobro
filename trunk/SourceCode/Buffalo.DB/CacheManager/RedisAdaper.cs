@@ -94,7 +94,7 @@ namespace Buffalo.DB.CacheManager
                     string[] parts = serverStr.Split(',');
                     foreach (string sser in parts)
                     {
-                        if (!string.IsNullOrWhiteSpace(sser))
+                        if (!string.IsNullOrEmpty(sser))
                         {
                             lstServers.Add(sser);
                         }

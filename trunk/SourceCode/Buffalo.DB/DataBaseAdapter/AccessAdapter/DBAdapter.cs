@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.OleDb;
 using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 using Buffalo.DB.CommBase;
 using Buffalo.DB.EntityInfos;
@@ -13,7 +13,7 @@ using System.Data.Common;
 using Buffalo.DB.PropertyAttributes;
 using Buffalo.DB.CommBase.DataAccessBases;
 using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
-namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
+namespace Buffalo.DB.DataBaseAdapter.AccessAdapter
 {
     public class DBAdapter : IDBAdapter
     {
@@ -28,30 +28,148 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                 return false;
             }
         }
-
         public bool IdentityIsType
         {
-            get { return false; }
+            get { return true; }
         }
-
         /// <summary>
         /// 获取数据库的自增长字段的信息
         /// </summary>
         /// <returns></returns>
-        public virtual string DBIdentity(string tableName, string paramName)
+        public virtual string DBIdentity(string tableName, string paramName) 
         {
-
-            return "IDENTITY(1,1)";
+            return "autoincrement(1,1)";
         }
+
         /// <summary>
         /// 重建参数集合
         /// </summary>
         /// <param name="lstPrm"></param>
         /// <returns></returns>
-        public virtual ParamList RebuildParamList(ref string sql, ParamList lstPrm)
+        public virtual ParamList RebuildParamList(ref string sql,ParamList lstPrm) 
         {
-            return lstPrm;
+            ParamList lstRet = new ParamList();
+            StringBuilder newSql = new StringBuilder();
+            Dictionary<string, DBParameter> dicPrm = new Dictionary<string, DBParameter>();
+            foreach (DBParameter prm in lstPrm) 
+            {
+                dicPrm[prm.ParameterName] = prm;
+            }
+            Queue<RebuildParamInfo> queStrPrm = FindAllParams(sql);
+            DBParameter curPrm=null;
+
+            RebuildParamInfo curprmInfo=null;
+            if(queStrPrm.Count>0)
+            {
+                curprmInfo=queStrPrm.Dequeue();
+            }
+            for (int i = 0; i < sql.Length; i++)
+            {
+                if (curprmInfo != null && curprmInfo.Index==i) 
+                {
+                    if (dicPrm.TryGetValue(curprmInfo.ParamName, out curPrm)) 
+                    {
+                        string pName="P"+lstRet.Count;
+                        DBParameter newPrm = lstRet.AddNew(FormatParamKeyName(pName), curPrm.DbType, curPrm.Value, curPrm.Direction);
+                        newPrm.ValueName = FormatValueName(pName);
+                        newSql.Append(newPrm.ValueName);
+                        i += curprmInfo.ParamName.Length -1;
+
+                        if (queStrPrm.Count > 0)
+                        {
+                            curprmInfo = queStrPrm.Dequeue();
+                        }
+                        continue;
+                    }
+                    
+                }
+                newSql.Append(sql[i]);
+            }
+            sql = newSql.ToString();
+            return lstRet;
         }
+
+        private static Dictionary<char, bool> _dicPrm = InitPrm();
+        /// <summary>
+        /// 变量名称可用字符
+        /// </summary>
+        /// <returns></returns>
+        private static Dictionary<char, bool> InitPrm()
+        {
+            Dictionary<char, bool> ret = new Dictionary<char, bool>();
+            string chars = "abcdefghijklmnopqrstuvwxyz";
+            foreach (char chr in chars)
+            {
+                ret[chr] = true;
+            }
+            chars = chars.ToUpper();
+            foreach (char chr in chars)
+            {
+                ret[chr] = true;
+            }
+            chars = "0123456789_";
+            foreach (char chr in chars)
+            {
+                ret[chr] = true;
+            }
+            return ret;
+        }
+        /// <summary>
+        /// 收集所有变量
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        private static Queue<RebuildParamInfo> FindAllParams(string sql)
+        {
+            CharCollectionEnumerator cenum = new CharCollectionEnumerator(sql);
+            Queue<RebuildParamInfo> prms = new Queue<RebuildParamInfo>();
+            
+            StringBuilder buffer = new StringBuilder();
+            while (cenum.MoveNext())
+            {
+                if (cenum.CurrentChar == '@')
+                {
+                    RebuildParamInfo rpf = new RebuildParamInfo();
+                    rpf.Index = cenum.CurIndex;
+                    buffer.Append(cenum.Current);
+                    while (cenum.MoveNext())
+                    {
+                        if (_dicPrm.ContainsKey(cenum.CurrentChar))
+                        {
+                            buffer.Append(cenum.Current);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    
+                    rpf.ParamName = buffer.ToString();
+                    prms.Enqueue(rpf);
+                    buffer.Remove(0, buffer.Length);
+                }
+                else if (cenum.CurrentChar == '\'')
+                {
+                    bool hasChar = false;//判断是否遇到过单引号
+                    while (cenum.MoveNext())
+                    {
+                        if (cenum.CurrentChar == '\'')
+                        {
+                            hasChar = !hasChar;
+                        }
+                        else
+                        {
+                            if (hasChar) //如果本字符不是单引号，且上一个字符是单引号，则结束字符串
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return prms;
+        }
+
 
         /// <summary>
         /// 把DBType类型转成对应的SQLType
@@ -61,27 +179,64 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         public virtual string DBTypeToSQL(DbType dbType,long length) 
         {
             int type = ToRealDbType(dbType,length);
-            SqlDbType stype = (SqlDbType)type;
+            DbType stype = (DbType)type;
             switch (stype) 
             {
-                case SqlDbType.VarChar:
-                    return stype.ToString() + "(" + length + ")";
-                case SqlDbType.Char:
-                    return stype.ToString() + "(" + length + ")";
-                case SqlDbType.Binary:
-                    return stype.ToString() + "(" + length + ")";
-                case SqlDbType.Decimal:
-                    if (length <= 0) 
+                case DbType.AnsiString:
+                case DbType.AnsiStringFixedLength:
+                case DbType.String:
+                case DbType.StringFixedLength:
+                    if (length <= 255) 
                     {
-                        length = 18;
+                        return "Text(" + length + ")";
                     }
-                    return stype.ToString() + "(" + length + ",5)";
-                case SqlDbType.NVarChar:
-                    return stype.ToString() + "(" + length + ")";
-                case SqlDbType.NChar:
-                    return stype.ToString() + "(" + length + ")";
-                case SqlDbType.UniqueIdentifier:
-                    return "varchar(64)";
+                    return "Memo";
+
+                case DbType.Boolean:
+                    return "YesNo";
+
+                case DbType.Byte:
+                    return "Byte";
+
+                case DbType.Currency:
+                    return "Currency";
+
+                case DbType.Date:
+                    return "Date";
+
+                case DbType.DateTime:
+                case DbType.DateTime2:
+                case DbType.DateTimeOffset:
+                case DbType.Time:
+                    return "DateTime";
+
+                case DbType.Single:
+                    return "Single";
+               
+
+                case DbType.Double:
+                    return "Double";
+
+                case DbType.SByte:
+                case DbType.Int16:
+                    return "Integer";
+
+                case DbType.UInt16:
+                case DbType.Int32:
+                    return "Long";
+
+                case DbType.Int64:
+                case DbType.UInt32:
+                case DbType.UInt64:
+                case DbType.Decimal:
+                case DbType.VarNumeric:
+                    return "Decimal";
+
+                case DbType.Binary:
+                    return "OLEObject";
+
+                case DbType.Guid:
+                    return "ReplicationID";
                 default:
                     return stype.ToString();
             }
@@ -96,91 +251,97 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public virtual int ToRealDbType(DbType dbType,long length) 
         {
-            switch (dbType) 
-            {
-                case DbType.AnsiString:
-                    if (length < 8000)
-                    {
-                        return (int)SqlDbType.VarChar;
-                    }
-                    else 
-                    {
-                        return (int)SqlDbType.Text;
-                    }
-                case DbType.AnsiStringFixedLength:
-                    if (length < 8000)
-                    {
-                        return (int)SqlDbType.Char;
-                    }
-                    else 
-                    {
-                        return (int)SqlDbType.Text;
-                    }
-                case DbType.Binary:
-                    if (length < 8000)
-                    {
-                        return (int)SqlDbType.Binary;
-                    }
-                    else
-                    {
-                        return (int)SqlDbType.Image;
-                    }
-                case DbType.Boolean:
-                    return (int)SqlDbType.Bit;
-                case DbType.Byte:
-                    return (int)SqlDbType.TinyInt;
-                case DbType.Currency:
-                    return (int)SqlDbType.Money;
-                case DbType.Date:
-                case DbType.DateTime:
-                case DbType.DateTime2:
-                case DbType.DateTimeOffset:
-                case DbType.Time:
-                    return (int)SqlDbType.DateTime;
-                case DbType.Decimal:
-                case DbType.Double:
-                    return (int)SqlDbType.Decimal;
-                case DbType.Guid:
-                    return (int)SqlDbType.UniqueIdentifier;
-                case DbType.Int16:
-                    return (int)SqlDbType.SmallInt;
-                case DbType.UInt16:
-                case DbType.Int32:
-                    return (int)SqlDbType.Int;
-                case DbType.Int64:
-                    return (int)SqlDbType.BigInt;
-                case DbType.SByte:
-                    return (int)SqlDbType.TinyInt;
-                case DbType.Single:
-                    return (int)SqlDbType.Float;
-                case DbType.String:
-                    if (length < 4000)
-                    {
-                        return (int)SqlDbType.NVarChar;
-                    }
-                    else 
-                    {
-                        return (int)SqlDbType.NText;
-                    }
-                case DbType.StringFixedLength:
-                    if (length < 4000)
-                    {
-                        return (int)SqlDbType.NChar;
-                    }
-                    else
-                    {
-                        return (int)SqlDbType.NText;
-                    }
+            //switch (dbType) 
+            //{
+            //    case DbType.AnsiString:
+            //        if (length < 8000)
+            //        {
+            //            return (int)OleDbType.Char;
+            //        }
+            //        else 
+            //        {
+            //            return (int)OleDbType.LongVarChar;
+            //        }
+            //    case DbType.AnsiStringFixedLength:
+            //        if (length < 8000)
+            //        {
+            //            return (int)OleDbType.Char;
+            //        }
+            //        else 
+            //        {
+            //            return (int)OleDbType.LongVarChar;
+            //        }
+            //    case DbType.Binary:
+            //        if (length < 8000)
+            //        {
+            //            return (int)OleDbType.Binary;
+            //        }
+            //        else
+            //        {
+            //            return (int)OleDbType.LongVarBinary;
+            //        }
+            //    case DbType.Boolean:
+            //        return (int)OleDbType.Boolean;
+            //    case DbType.Byte:
+            //        return (int)OleDbType.UnsignedTinyInt;
+            //    case DbType.Currency:
+            //        return (int)OleDbType.Currency;
+            //    case DbType.Date:
+            //        return (int)OleDbType.DBDate;
+            //    case DbType.DateTime:
+            //    case DbType.DateTime2:
+            //    case DbType.DateTimeOffset:
+            //        return (int)OleDbType.DBTimeStamp;
+            //    case DbType.Time:
+            //        return (int)OleDbType.DBTime;
+            //    case DbType.Decimal:
+            //        return (int)OleDbType.Decimal;
+            //    case DbType.Double:
+            //        return (int)OleDbType.Double;
+            //    case DbType.Guid:
+            //        return (int)OleDbType.Guid;
+            //    case DbType.Int16:
+            //        return (int)OleDbType.SmallInt;
+            //    case DbType.UInt16:
+            //        return (int)OleDbType.UnsignedSmallInt;
+            //    case DbType.Int32:
+            //        return (int)OleDbType.Integer;
+            //    case DbType.Int64:
+            //        return (int)OleDbType.BigInt;
+            //    case DbType.SByte:
+            //        return (int)OleDbType.TinyInt;
+            //    case DbType.Single:
+            //        return (int)OleDbType.Single;
+            //    case DbType.String:
+            //        if (length < 4000)
+            //        {
+            //            return (int)OleDbType.VarWChar;
+            //        }
+            //        else 
+            //        {
+            //            return (int)OleDbType.LongVarWChar;
+            //        }
+            //    case DbType.StringFixedLength:
+            //        if (length < 4000)
+            //        {
+            //            return (int)OleDbType.WChar;
+            //        }
+            //        else
+            //        {
+            //            return (int)OleDbType.LongVarWChar;
+            //        }
                
-                case DbType.UInt32:
-                case DbType.UInt64:
-                    return (int)SqlDbType.BigInt;
-                case DbType.VarNumeric:
-                    return (int)SqlDbType.Real;
-                default:
-                    return (int)SqlDbType.Structured;
+            //    case DbType.UInt32:
+            //        return (int)OleDbType.UnsignedInt;
+            //    case DbType.UInt64:
+            //        return (int)OleDbType.UnsignedBigInt;
+            //    case DbType.VarNumeric:
+            //        return (int)OleDbType.VarNumeric;
+            //    default:
+            //        return (int)OleDbType.PropVariant;
 
-            }
+            //}
+            return (int)dbType;
         }
 
         /// <summary>
@@ -201,7 +362,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         //{
         //    get 
         //    {
-        //        return new ParamList();
+        //        return null;
         //    }
         //}
         /// <summary>
@@ -214,10 +375,17 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public IDataParameter GetDataParameter(string paramName, DbType type, object paramValue, ParameterDirection paramDir) 
         {
-            IDataParameter newParam = new SqlParameter();
+            OleDbParameter newParam = new OleDbParameter();
             newParam.ParameterName = paramName;
             newParam.DbType = type;
-            newParam.Value = paramValue;
+            if (newParam.OleDbType == OleDbType.DBTimeStamp && paramValue is DateTime)
+            {
+                newParam.Value = ((DateTime)paramValue).ToString("yyyy-MM-dd HH:mm:ss");
+            }
+            else
+            {
+                newParam.Value = paramValue;
+            }
             newParam.Direction = paramDir;
             return newParam;
         }
@@ -331,7 +499,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public IDbCommand GetCommand() 
         {
-            IDbCommand comm = new SqlCommand();
+            IDbCommand comm = new OleDbCommand();
             return comm;
         }
         /// <summary>
@@ -340,7 +508,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public virtual DbConnection GetConnection(DBInfo db)
         {
-            DbConnection conn = new SqlConnection();
+            DbConnection conn = new OleDbConnection();
             return conn;
         }
         /// <summary>
@@ -349,7 +517,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public IDbDataAdapter GetAdapter()
         {
-            IDbDataAdapter adapter = new SqlDataAdapter();
+            IDbDataAdapter adapter = new OleDbDataAdapter();
             return adapter;
         }
 
@@ -418,7 +586,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public string GetNowDate(DbType dbType)
         {
-            return "getdate()";
+            return "now()";
         }
         /// <summary>
         /// 游标分页
@@ -430,7 +598,8 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public IDataReader Query(string sql, PageContent objPage, DataBaseOperate oper)
         {
-            return CursorPageCutter.Query(sql, objPage, oper);
+            throw new NotSupportedException("不支持游标分页");
+            //return CursorPageCutter.Query(sql, objPage, oper);
         }
 
         /// <summary>
@@ -443,7 +612,8 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public DataTable QueryDataTable(string sql, PageContent objPage, DataBaseOperate oper, Type curType)
         {
-            return CursorPageCutter.QueryDataTable(sql, objPage, oper, curType);
+            throw new NotSupportedException("不支持游标分页");
+            //return CursorPageCutter.QueryDataTable(sql, objPage, oper, curType);
         }
         /// <summary>
         /// 游标分页
@@ -456,7 +626,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public IDataReader Query(string sql,ParamList lstParam, PageContent objPage, DataBaseOperate oper)
         {
-            throw new Exception("SqlServer不支持带参数的游标分页");
+            throw new Exception("Access不支持带参数的游标分页");
         }
 
         /// <summary>
@@ -470,7 +640,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public DataTable QueryDataTable(string sql,ParamList lstParam, PageContent objPage, DataBaseOperate oper, Type curType)
         {
-            throw new Exception("SqlServer不支持带参数的游标分页");
+            throw new Exception("Access不支持带参数的游标分页");
         }
         /// <summary>
         /// 生成分页SQL语句
@@ -482,7 +652,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public virtual string CreatePageSql(ParamList list, DataBaseOperate oper, SelectCondition objCondition, PageContent objPage,bool useCache) 
         {
-            return CutPageSqlCreater.CreatePageSql(list, oper, objCondition, objPage,useCache?objCondition.CacheTables:null);
+            return CutPageSqlCreater.CreatePageSql(list, oper, objCondition, objPage,objCondition.CacheTables);
         }
 
 
@@ -596,16 +766,17 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// <returns></returns>
         public string GetAddDescriptionSQL(KeyWordTableParamItem table, EntityParam pInfo, DBInfo info)
         {
-            string tableValue = DataAccessCommon.FormatValue(table.TableName, DbType.AnsiString, info);
-            string description = pInfo == null ? table.Description : pInfo.Description;
+            //string tableValue = DataAccessCommon.FormatValue(table.TableName, DbType.AnsiString, info);
+            //string description = pInfo == null ? table.Description : pInfo.Description;
             
-            string descriptionValue = DataAccessCommon.FormatValue(description, DbType.AnsiString, info);
-            if (pInfo==null)
-            {
+            //string descriptionValue = DataAccessCommon.FormatValue(description, DbType.AnsiString, info);
+            //if (pInfo==null)
+            //{
 
-                return "EXECUTE sp_addextendedproperty N'MS_Description', N" + descriptionValue + ", N'SCHEMA', N'dbo', N'TABLE', N" + tableValue + ", NULL, NULL";
-            }
-            return "EXECUTE sp_addextendedproperty N'MS_Description', N" + descriptionValue + ", N'SCHEMA', N'dbo', N'TABLE', N" + tableValue + ", N'COLUMN', N'" + pInfo.ParamName + "'";
+            //    return "EXECUTE sp_addextendedproperty N'MS_Description', N" + descriptionValue + ", N'SCHEMA', N'dbo', N'TABLE', N" + tableValue + ", NULL, NULL";
+            //}
+            //return "EXECUTE sp_addextendedproperty N'MS_Description', N" + descriptionValue + ", N'SCHEMA', N'dbo', N'TABLE', N" + tableValue + ", N'COLUMN', N'" + pInfo.ParamName + "'";
+            return "";
         }
 
         /// <summary>
@@ -624,7 +795,5 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             conn.Dispose();
             return true;
         }
-
-        
     }
 }

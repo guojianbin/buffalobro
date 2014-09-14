@@ -6,7 +6,7 @@ using Buffalo.DB.CommBase;
 using Buffalo.DB.QueryConditions;
 using Buffalo.DB.DbCommon;
 
-namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
+namespace Buffalo.DB.DataBaseAdapter.AccessAdapter
 {
     /// <summary>
     /// 生成分页语句的类
