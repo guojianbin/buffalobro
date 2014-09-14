@@ -30,11 +30,7 @@ public string GetSearchControl(Property pro)
 		return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
 		"<cc1:KimSoftWebCalendar ID=\""+GetSearchControlName(pro)+"\" runat=\"server\" />";
 	}
-	if(type=="bool")
-	{
-		return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
-		"<cc1:KimSoftWebCalendar ID=\""+GetSearchControlName(pro)+"\" runat=\"server\" />";
-	}
+
 	return "<asp:Label ID=\"lab"+pro.PropertyName+"\" runat=\"server\" Text=\""+pro.Summary+":\"></asp:Label>\n"+
 		"<asp:DropDownList ID=\""+GetSearchControlName(pro)+"\" runat=\"server\"></asp:DropDownList>";
 }

@@ -1,2 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<config connectionString="server=.;database=School;uid=sa;pwd=111111" dbType="Sql2K5" appnamespace="TestPerLib.DataAccess.Sql2K5" assembly="" name="School" />
+<config connectionString="Provider=Microsoft.Jet.OLEDB.4.0; Data Source=E:\test.mdb; Jet OLEDB:Database Password=pwd" dbType="Access" appnamespace="TestPerLib.DataAccess.Sql2K5" assembly="" name="School" cache="" cacheConnString="" allCache="0" />
