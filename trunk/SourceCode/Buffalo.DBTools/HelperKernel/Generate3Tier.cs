@@ -210,6 +210,9 @@ namespace Buffalo.DBTools.HelperKernel
             item = new ComboBoxItem("Postgresql9ªÚ“‘…œ", "Psql9");
             item.Tag = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=pwd;Database=mydb";
             types.Add(item);
+            item = new ComboBoxItem("Access", "Access");
+            item.Tag = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=c:\\db.mdb; Jet OLEDB:Database Password=pwd";
+            types.Add(item);
             return types;
         }
 
