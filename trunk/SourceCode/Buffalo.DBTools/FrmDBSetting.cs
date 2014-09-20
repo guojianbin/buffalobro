@@ -15,6 +15,7 @@ using Buffalo.Kernel;
 using Buffalo.DBTools.DocSummary;
 using Buffalo.DB.CommBase;
 using Buffalo.Win32Kernel;
+using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
 
 namespace Buffalo.DBTools
 {
@@ -149,6 +150,11 @@ namespace Buffalo.DBTools
         }
 
         /// <summary>
+        /// 选中的关系图信息
+        /// </summary>
+        private ClassDesignerInfo _selectedClassDesigner;
+        
+        /// <summary>
         /// 显示配置框
         /// </summary>
         /// <param name="curProject"></param>
@@ -157,10 +163,9 @@ namespace Buffalo.DBTools
         public static void ShowConfig(ClassDesignerInfo desinfo, string dalNamespace) 
         {
             DBConfigInfo dbinfo = DBConfigInfo.LoadInfo(desinfo);
-
             using (FrmDBSetting frmSetting = new FrmDBSetting())
             {
-
+                frmSetting._selectedClassDesigner = desinfo;
                 if (dbinfo == null)
                 {
                     dbinfo = new DBConfigInfo();
@@ -372,5 +377,10 @@ namespace Buffalo.DBTools
         {
             ShowOrHideCache(!gpCache.Visible);
         }
+
+
+
+        
     }
+
 }

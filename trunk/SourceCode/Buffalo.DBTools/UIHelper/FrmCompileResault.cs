@@ -18,7 +18,7 @@ namespace Buffalo.DBTools.UIHelper
 
         private void FrmCompileError_Load(object sender, EventArgs e)
         {
-            this.Text += ToolVersionInfo.ToolVerInfo;
+            
         }
 
         /// <summary>

@@ -20,6 +20,7 @@ using Buffalo.DB.DBCheckers;
 using Buffalo.DB.PropertyAttributes;
 using Microsoft.VisualStudio.EnterpriseTools.ClassDesigner;
 using Buffalo.DB.CommBase.BusinessBases;
+using Buffalo.DBTools.UIHelper;
 
 namespace Buffalo.DBTools
 {
@@ -229,6 +230,24 @@ namespace Buffalo.DBTools
         private void btnCLose_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+        }
+
+        private void labHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            StringBuilder sbInfo = new StringBuilder();
+            sbInfo.AppendLine("数据库生成语句缺少字段一般是由于多个数据项目相互引起的");
+            sbInfo.AppendLine("由于本插件不可实现跨项目检测实体和数据库的映射");
+            sbInfo.AppendLine("假设：B项目引用了A项目，B项目中的实体派生自A项目的实体基类，则会出现B项目生成数据库时候缺少字段的问题");
+            sbInfo.AppendLine("\n");
+            sbInfo.AppendLine("可以在程序启动时候执行以下语句获取准确的数据库架构升级语句:");
+            StringBuilder sbCode = new StringBuilder();
+            sbCode.AppendLine("Buffalo.DB.DataBaseAdapter.DataAccessLoader.AppendModelAssembly(typeof(InfoDB).Assembly);");
+            sbCode.AppendLine("MyClass.GetDBinfo().GetUpdateDBText();");
+            sbCode.AppendLine("MyClass.InitDB();");
+            sbCode.AppendLine("string sql = MyClass.GetDBinfo().GetUpdateDBText();");
+            sbCode.AppendLine("\n");
+            sbCode.AppendLine("其中InfoDB为A项目的数据库类，MyClass为B项目的数据库");
+            FrmCompileResault.ShowCompileResault(sbInfo.ToString(), sbCode.ToString(), "数据库生成语句不准确怎么办?");
         }
 
     }

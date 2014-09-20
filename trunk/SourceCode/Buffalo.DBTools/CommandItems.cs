@@ -24,6 +24,7 @@ namespace Buffalo.DBTools
         Command commandSummary = null;
         Command commandDBAll = null;
         Command commandDBSet = null;
+        Command commandGenDal = null;
         Command commandEntityUpdate = null;
         Command commandRemove = null;
         Command commandUI = null;
@@ -93,6 +94,7 @@ namespace Buffalo.DBTools
             commandROM = AddToCommand("BuffaloDBToEntity", "表到实体", "通过数据层的表生成Buffalo实体", true, 292);
             commandSummary = AddToCommand("BuffaloShowHideSummery", "显示/隐藏注释", "显示/隐藏注释", true, 192);
             commandDBAll = AddToCommand("BuffaloDBCreateAll", "生成数据库", "生成数据库", true, 577);
+            commandGenDal = AddToCommand("commandGenDal", "生成数据层", "生成当前类型的数据层", true, 159);
             commandDBSet = AddToCommand("BuffaloDBSet", "设置参数", "设置数据库和生成参数", true, 611);
             commandEntityUpdate = AddToCommand("BuffaloUpdateEntityByDB", "更新实体", "把数据库的新字段更新到实体", true, 524);
             commandUI = AddToCommand("BuffaloUI", "界面生成", "按照Buffalo模版生成界面", true, 333);
@@ -113,7 +115,8 @@ namespace Buffalo.DBTools
                 commandROM.AddControl(commandDB, 1);
                 commandSummary.AddControl(commandDB, 2);
                 commandDBAll.AddControl(commandDB, 3);
-                commandDBSet.AddControl(commandDB, 4);
+                commandGenDal.AddControl(commandDB, 4);
+                commandDBSet.AddControl(commandDB, 5);
                 
             }
 
@@ -158,6 +161,11 @@ namespace Buffalo.DBTools
             {
                 commandDBSet.Delete();
                 commandDBSet = null;
+            }
+            if (commandGenDal != null) 
+            {
+                commandGenDal.Delete();
+                commandGenDal = null;
             }
             if (commandEntityUpdate != null)
             {

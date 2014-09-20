@@ -1,4 +1,3 @@
-E:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.XML
 E:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.dll
 E:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.pdb
 E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\obj\Debug\ResolveAssemblyReference.cache
@@ -90,3 +89,4 @@ E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Permissions\bin\Release\ICSharpCode
 E:\CSharpTest\BuffaloCode\SourceCode\Debug\2005\Buffalo.Permissions.XML
 E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\bin\Release\ICSharpCode.SharpZipLib.dll
 E:\CShareTest\Buffalobro\SourceCode\Buffalo.Permissions\bin\Release\ICSharpCode.SharpZipLib.xml
+E:\CShareTest\Buffalobro\SourceCode\Debug\2005\Buffalo.Permissions.XML

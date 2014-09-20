@@ -107,7 +107,20 @@ namespace Buffalo.DB.DataBaseAdapter
         {
             return DBChecker.CheckDataBase(this);
         }
-
+        /// <summary>
+        /// 获取更新数据的SQL
+        /// </summary>
+        /// <returns></returns>
+        public string GetUpdateDBText()
+        {
+            List<string> lstSQL=DBChecker.CheckDataBase(this);
+            StringBuilder sbSQL = new StringBuilder();
+            foreach (string sql in lstSQL) 
+            {
+                sbSQL.AppendLine(sql);
+            }
+            return sbSQL.ToString();
+        }
         /// <summary>
         /// 检查并更新数据库结构
         /// </summary>

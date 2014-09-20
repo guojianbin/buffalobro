@@ -39,6 +39,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.rtbOutput = new System.Windows.Forms.RichTextBox();
+            this.labHelp = new System.Windows.Forms.LinkLabel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -48,6 +49,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.labHelp);
             this.panel1.Controls.Add(this.btnCLose);
             this.panel1.Controls.Add(this.btnSubmit);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -145,6 +147,17 @@
             this.rtbOutput.TabIndex = 0;
             this.rtbOutput.Text = "";
             // 
+            // labHelp
+            // 
+            this.labHelp.AutoSize = true;
+            this.labHelp.Location = new System.Drawing.Point(12, 11);
+            this.labHelp.Name = "labHelp";
+            this.labHelp.Size = new System.Drawing.Size(113, 12);
+            this.labHelp.TabIndex = 2;
+            this.labHelp.TabStop = true;
+            this.labHelp.Text = "数据库不准怎么办？";
+            this.labHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.labHelp_LinkClicked);
+            // 
             // FrmDBCreate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -157,6 +170,7 @@
             this.Text = "Buffalo助手--创建/修改数据表";
             this.Load += new System.EventHandler(this.FrmDBCreate_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
@@ -178,5 +192,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.RichTextBox rtbOutput;
+        private System.Windows.Forms.LinkLabel labHelp;
     }
 }
