@@ -14,7 +14,8 @@
       <item type="check"  name="CanQuery" summary="可查询" default="1"></item>
       <item type="check" name="CanAddNew" summary="可添加" default="1"></item>
       <item type="check" name="CanEdit" summary="可编辑" default="1"></item>
-      <item type="text" name="Namespace" summary="命名空间" default="{ClassNamespace}"></item>
+      <item type="text" name="Namespace" summary="实体包" default="{ClassNamespace}"></item>
+      <item type="text" name="TargetNamespace" summary="目标包名" default="{SelectProjectName}.ManagerPage"></item>
       <item type="mtext" name="Using" summary="引用"></item>
   </classItems>
   <models>
@@ -22,7 +23,8 @@
       <item path="{ProjectPath}\.bmodels\DataView.bm" type="none" target="{SelectProjectPath}\App_Code\DataView\{ClassName}DataView.cs">
       </item>
       <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.bm" type="none" target="{SelectProjectPath}\ManagerPage\{ClassName}Manager.aspx">
-        <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.cs.bm" type="none" target="{SelectProjectPath}\ManagerPage\{ClassName}Manager.aspx.cs">
+        <item path="{ProjectPath}\.bmodels\ManagerPage.aspx.designer.cs.bm" type="none" target="{SelectProjectPath}\ManagerPage\{ClassName}Manager.aspx.designer.cs" ></item>
+        <item path="{ProjectPath}\.bmodels\ManagerPage.apsx.cs.bm" type="none" target="{SelectProjectPath}\ManagerPage\{ClassName}Manager.aspx.cs" >
 
         </item>
       </item>

@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Manager/BeeMangerModel.Master" AutoEventWireup="true" CodeBehind="AudiopacketManager.aspx.cs" Inherits="BeeStudyServices.Manager.AudiopacketManager" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Manager/ManagerViewModel.Master" AutoEventWireup="true" CodeBehind="<#=Entity.ClassName #>Manager.aspx.cs" Inherits="<#=Entity.GetValue("TargetNamespace")#>.<#=Entity.ClassName #>Manager" %>
 <%@ Register src="../WebPageNumberBar/WebPagingBar.ascx" tagname="WebPagingBar" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlace" runat="server">
     <style type="text/css">
@@ -8,10 +8,10 @@
 </style>
 <script type="text/javascript">
     function showDialog(id, mid) {
-        var title = "添加音频包";
+        var title = "添加<#=Entity.Summary #>";
         var param = "";
         if (id != null) {
-            title = "编辑音频包";
+            title = "编辑<#=Entity.Summary #>";
             param = "?id=" + id;
         }
         if (mid != null) {
@@ -19,20 +19,10 @@
 
         }
 
-        artShow_ShowIFrameDialog("AudioPacketEdit.aspx" + param, title, 750, 450, true, closeFN);
+        artShow_ShowIFrameDialog("<#=Entity.ClassName #>Edit.aspx" + param, title, 750, 450, true, closeFN);
     }
 
-    function showEdit(id) {
-        var title = "添加";
-        var param = "";
-        if (id != null) {
-            title = "管理";
-            param = "?id=" + id;
-        }
-
-
-        artShow_ShowIFrameDialog("AudioPacketItemManager.aspx" + param, title, 1024, 768, true, closeFN);
-    }
+    
 	
     function closeFN() { }
 
@@ -76,20 +66,24 @@
         Width="100%" onsorting="GridViewSorting" AllowSorting="True">
         <Columns>
 
-            <asp:TemplateField HeaderText="名称">
+		
+		<# foreach(Property pro in SelectedPropertys ) {#>
+		
+            <asp:TemplateField HeaderText="<#=pro.Summary#>">
                 <ItemTemplate>
-                    <asp:Label ID="Label1" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
+                    <asp:Label ID="Label1" runat="server" Text='<%# Eval("<#=GetFieldName(pro.PropertyName)#>") %>'></asp:Label>
                 </ItemTemplate>
                 <ControlStyle CssClass="STYLE4" />
                 <HeaderStyle CssClass="StyleGridHead" />
                 <ItemStyle CssClass="STYLE4" />
             </asp:TemplateField>
-            
+			
+            <#}#>
 
 
             <asp:TemplateField  HeaderStyle-CssClass="StyleGridHead">
                 <HeaderTemplate>
-                <a href='javascript:showDialog(null,null);'><img alt="新音频包" src="../images/33.gif" class="imgsty"/>新音频包</a>&nbsp;&nbsp;&nbsp;
+                <a href='javascript:showDialog(null,null);'><img alt="新<#=Entity.Summary #>" src="../images/33.gif" class="imgsty"/>新<#=Entity.Summary #></a>&nbsp;&nbsp;&nbsp;
                 </HeaderTemplate>
                 <ItemTemplate>
                     <div class="STYLE4" style="text-align:center; vertical-align:middle">
@@ -107,7 +101,7 @@
         </Columns>
         <EmptyDataTemplate>
         <div class=" STYLE4">
-        现在还没有音频包，是否需要<a href='javascript:showDialog(null,null);'><img alt="新增" src="../images/22.gif" class="imgsty"/>新增</a>
+        现在还没有<#=Entity.Summary #>，是否需要<a href='javascript:showDialog(null,null);'><img alt="新增" src="../images/22.gif" class="imgsty"/>新增</a>
         </div>
         </EmptyDataTemplate>
     </asp:GridView>

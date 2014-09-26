@@ -10,166 +10,74 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Collections.Generic;
 using Buffalo.DB.QueryConditions;
-using Buffalo.Permissions.DataViewInfo;
 using <#=Entity.GetValue("Namespace")#>;
 using <#=Entity.GetValue("Namespace")#>.Business;
 using <#=Entity.GetValue("Namespace")#>.DataView;
 using <#=Entity.GetValue("Namespace")#>.BQLEntity;
 
-public partial class ManagerPage_<#=Entity.ClassName #>Manager : ScPageBase
+namespace <#=Entity.GetValue("TargetNamespace")#>
 {
-    protected void Page_Load(object sender, EventArgs e)
+    public partial class <#=Entity.ClassName #>Manager :UserPageBase
     {
-        if (!Page.IsPostBack) 
+        protected void Page_Load(object sender, EventArgs e)
         {
-            Bind();
-			<#foreach(Property pro in SelectedPropertys)
-			{
-				if(pro.RelInfo!=null)
-				{#>
-				Bind<#=pro.PropertyName#>();
-				<#}
-			}#>
+            if (!Page.IsPostBack)
+            {
+                GridBind();
+            }
+            LocationString = "[业务中心]-[<#=Entity.Summary #>管理]";
+            pbPaging.OnPageIndexChange += new Buffalo.WebKernel.WebCommons.PagerCommon.PageIndexChange(pbPaging_OnPageIndexChange);
         }
-        pb.OnPageIndexChange += new Buffalo.WebKernel.WebCommons.PagerCommon.PageIndexChange(pb_OnPageIndexChange);
-    }
 
-    void pb_OnPageIndexChange(object sender, long currentIndex)
-    {
-        Bind();
-        
-    }
-
-    /// <summary>
-    /// 获取统计值
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public string GetSum(string name) 
-    {
-        if (dtSum == null) 
+        void pbPaging_OnPageIndexChange(object sender, long currentIndex)
         {
-            return "0";
+            
+            GridBind();
         }
-        if (dtSum.Rows.Count == 0) 
+        protected override void GridBind()
         {
-            return "0";
-        }
-        DataRow dr = dtSum.Rows[0];
-        object value = dr[name];
-        if (value == null || value is DBNull) 
-        {
-            return "0";
-        }
-        return value.ToString();
-    }
-    DataTable dtSum = null;
-    /// <summary>
-    /// 绑定数据
-    /// </summary>
-    private void Bind() 
-    {
-        <#=Entity.ClassName #>Business bo=new <#=Entity.ClassName #>Business();
-        ScopeList lstScope=new ScopeList();
-        FillCondition(lstScope);
-        lstScope.PageContent.PageSize = 10;
-        lstScope.PageContent.CurrentPage =pb.CurrentPage;
-        List<<#=Entity.ClassName #>> lst=bo.SelectList(lstScope);
-        dtSum = DataViewerSum.GetSumQuery(new <#=Entity.ClassName #>DataView(), lstScope, <#=Entity.DBName #>.GetDBinfo());
-        gvDisplay.DataSource = lst;
-        gvDisplay.DataBind();
-        pb.DataSource = lstScope.PageContent;
-    }
-	
-	<#foreach(Property pro in SelectedPropertys)
-	{
-		if(pro.RelInfo!=null)
-		{
-	#>
-	
-    /// <summary>
-    /// 绑定所属套餐
-    /// </summary>
-    private void Bind<#=pro.PropertyName#>() 
-    {
-        ddl<#=pro.PropertyName#>.Items.Clear();
-        <#=pro.RelInfo.SourceType#>Business bo=new <#=pro.RelInfo.SourceType#>Business();
-        ScopeList lstScope=new ScopeList();
-        List<<#=pro.RelInfo.SourceType#>> lst<#=pro.RelInfo.SourceType#> = bo.SelectList(lstScope);
-        ListItem item = new ListItem("全部", "");
-        ddl<#=pro.PropertyName#>.Items.Add(item);
-        foreach (<#=pro.RelInfo.SourceType#> obj<#=pro.RelInfo.SourceType#> in lst<#=pro.RelInfo.SourceType#>) 
-        {
-            item=new ListItem(obj<#=pro.RelInfo.SourceType#>.ToString(),obj<#=pro.RelInfo.SourceType#>.<#=pro.RelInfo.TargetName#>.ToString());
-            ddl<#=pro.PropertyName#>.Items.Add(item);
-        }
-    }
-	<#
-		}
-	}#>
-    /// <summary>
-    /// 保存条件
-    /// </summary>
-    private void SaveCondition() 
-    {
-		<#foreach(Property pro in SelectedPropertys)
-		{
-			if(!pro.HasItem("CanQuery"))
-			{
-				continue;
-			}
-		#>
-		
-        if (!string.IsNullOrEmpty(txt<#=pro.PropertyName#>.<#=GetControlValueProperty(pro)#>))
-        {
-            ViewState["vstate_<#=pro.PropertyName#>"] = txt<#=pro.PropertyName#>.<#=GetControlValueProperty(pro)#>;
-        }
-        else
-        {
-            ViewState.Remove("vstate_<#=pro.PropertyName#>");
-        }
-		<#
-		}
-		#>
-        
-    }
-
-    /// <summary>
-    /// 填充条件
-    /// </summary>
-    /// <param name="lstScope"></param>
-    private void FillCondition(ScopeList lstScope) 
-    {
-		<#foreach(Property pro in SelectedPropertys)
-		{
-			if(!pro.HasItem("CanQuery"))
-			{
-				continue;
-			}
-		#>
-        string vs<#=pro.PropertyName#>=ViewState["vstate_<#=pro.PropertyName#>"] as string;
-        if (!string.IsNullOrEmpty(vs<#=pro.PropertyName#>)) 
-        {
-            lstScope.Add(<#=Entity.DBName #>.<#=Entity.ClassName #>.<#=pro.PropertyName#><#=GetSearchCondition(pro,"vs"+pro.PropertyName)#>);
-        }
-		<#
-		}
-		#>
-        
-    }
-    protected void btnSearch_Click(object sender, EventArgs e)
-    {
-        SaveCondition();
-        Bind();
-    }
-    protected void gvDisplay_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
-        if (e.CommandName == "DoDelete") 
-        {
-            int id = Convert.ToInt32(e.CommandArgument);
             <#=Entity.ClassName #>Business bo = new <#=Entity.ClassName #>Business();
-            bo.DeleteById(id);
-            Alert("删除完毕");
+            ScopeList lstScope = new ScopeList();
+            lstScope.PageContent.PageSize = 20;
+            lstScope.PageContent.CurrentPage = pbPaging.CurrentPage;
+            FillOrderBy(gvDetail.ClientID, lstScope.OrderBy);
+            List<<#=Entity.ClassName #>> lst = bo.SelectList(lstScope);
+            gvDetail.DataSource = lst;
+            SetGridViewStyle(gvDetail);
+            gvDetail.DataBind();
+            pbPaging.DataSource = lstScope.PageContent;
+            base.GridBind();
+            labSort.Text = GetGridViewOrderString(gvDetail);
+        }
+
+        protected void lbDelete_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtWillDelete.Value))
+            {
+                return;
+            }
+            string sid = txtWillDelete.Value;
+            txtWillDelete.Value = "";
+            int id = 0;
+            if (!int.TryParse(sid, out id))
+            {
+                ArtError("删除失败:找不到记录");
+                return;
+            }
+            <#=Entity.ClassName #>Business bo = new <#=Entity.ClassName #>Business();
+            
+
+            string err = bo.DeleteById(obj) as string;
+            if (err != null)
+            {
+                
+                ArtError("删除失败:" + err);
+            }
+            else
+            {
+                ArtSuccess("删除完毕");
+                GridBind();
+            }
         }
     }
 }
