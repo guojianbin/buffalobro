@@ -80,7 +80,7 @@ namespace Buffalo.DBTools.HelperKernel
             }
             else 
             {
-                baseType = DBName + "_" + EntityBaseTypeShortName;
+                baseType = BaseNamespace + ".BQLEntity." + FormatClassName(EntityBaseTypeShortName);
                 
             }
             
@@ -104,6 +104,8 @@ namespace Buffalo.DBTools.HelperKernel
                         //    continue;
                         //}
                         tmp = tmp.Replace("<%=EntityNamespace%>", EntityNamespace);
+                        tmp = tmp.Replace("<%=BQLClassName%>", FormatClassName(ClassName));
+                        
                         tmp = tmp.Replace("<%=BQLEntityNamespace%>", BQLEntityNamespace);
                         tmp = tmp.Replace("<%=Summary%>", Table.Description);
                         tmp = tmp.Replace("<%=DBName%>", DBName);
@@ -221,7 +223,7 @@ namespace Buffalo.DBTools.HelperKernel
                         }
                         else if (whereItem.IndexOf("(") < 0)
                         {
-                            where.Append(DBName + "_" + whereItem);
+                            where.Append(FormatClassName(whereItem));
                             
                         }
                         else 
@@ -277,6 +279,19 @@ namespace Buffalo.DBTools.HelperKernel
         }
 
         /// <summary>
+        /// 格式化类名
+        /// </summary>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        private string FormatClassName(string typeName)
+        {
+            StringBuilder sbName = new StringBuilder(typeName.Length + 10);
+            sbName.Append("BQL_");
+            sbName.Append(typeName);
+            return sbName.ToString();
+        }
+
+        /// <summary>
         /// 生成映射属性
         /// </summary>
         /// <returns></returns>
@@ -314,14 +329,14 @@ namespace Buffalo.DBTools.HelperKernel
 
                 }
 
-                type = DBName + "_" + targetType;
+                type = FormatClassName(targetType);
 
                 sbRelation.Append("        public " + type + " " + er.PropertyName + "\n");
                 sbRelation.Append("        {\n");
                 sbRelation.Append("            get\n");
                 sbRelation.Append("            {\n");
 
-                sbRelation.Append("               return new " + DBName + "_" + targetType + "(this,\"" + er.PropertyName + "\");\n");
+                sbRelation.Append("               return new " + FormatClassName(targetType) + "(this,\"" + er.PropertyName + "\");\n");
 
                 //else
                 //{

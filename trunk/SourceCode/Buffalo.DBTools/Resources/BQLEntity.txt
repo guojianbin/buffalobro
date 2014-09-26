@@ -11,9 +11,9 @@ namespace <%=BQLEntityNamespace%>
 
     public partial class <%=DBName%> 
     {
-        private static <%=DBName%>_<%=ClassName%> _<%=ClassName%> = new <%=DBName%>_<%=ClassName%>();
+        private static <%=BQLClassName%> _<%=ClassName%> = new <%=BQLClassName%>();
     
-        public static <%=DBName%>_<%=ClassName%> <%=ClassName%>
+        public static <%=BQLClassName%> <%=ClassName%>
         {
             get
             {
@@ -26,7 +26,7 @@ namespace <%=BQLEntityNamespace%>
     /// <summary>
     ///  <%=Summary%>
     /// </summary>
-    public partial class <%=DBName%>_<%=ClassName%><%=Generic%> : <%=BQLEntityBaseType%><%=GenericWhere%>
+    public partial class <%=BQLClassName%><%=Generic%> : <%=BQLEntityBaseType%><%=GenericWhere%>
     {
 <%=PropertyDetail%>
 <%=RelationDetail%>
@@ -36,7 +36,7 @@ namespace <%=BQLEntityNamespace%>
         /// </summary>
         /// <param name="parent">父表信息</param>
         /// <param name="propertyName">属性名</param>
-        public <%=DBName%>_<%=ClassName%>(BQLEntityTableHandle parent,string propertyName) 
+        public <%=BQLClassName%>(BQLEntityTableHandle parent,string propertyName) 
         :this(typeof(<%=EntityNamespace%>.<%=EntityClassName%><%=HasGeneric%>),parent,propertyName)
         {
 			
@@ -46,7 +46,7 @@ namespace <%=BQLEntityNamespace%>
         /// </summary>
         /// <param name="parent">父表信息</param>
         /// <param name="propertyName">属性名</param>
-        public <%=DBName%>_<%=ClassName%>(Type entityType,BQLEntityTableHandle parent,string propertyName) 
+        public <%=BQLClassName%>(Type entityType,BQLEntityTableHandle parent,string propertyName) 
         :base(entityType,parent,propertyName)
         {
 <%=PropertyInit%>
@@ -55,7 +55,7 @@ namespace <%=BQLEntityNamespace%>
         /// <summary>
         /// 初始化本类的信息
         /// </summary>
-        public <%=DBName%>_<%=ClassName%>() 
+        public <%=BQLClassName%>() 
             :this(null,null)
         {
         }

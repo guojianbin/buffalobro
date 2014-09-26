@@ -134,7 +134,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ARTDialogReource.resx" />
+    <EmbeddedResource Include="ARTDialogReource.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\artdialog.zip" />

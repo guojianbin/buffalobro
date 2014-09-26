@@ -282,9 +282,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UIHelper\FrmCompileResault.resx">
       <DependentUpon>FrmCompileResault.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UIHelper\FrmUIGenerater.resx">
       <DependentUpon>FrmUIGenerater.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

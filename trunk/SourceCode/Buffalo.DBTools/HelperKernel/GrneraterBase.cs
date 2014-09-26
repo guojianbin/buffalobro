@@ -168,7 +168,17 @@ namespace Buffalo.DBTools.HelperKernel
                 return _businessNamespace;
             }
         }
-
+        private string _baseNamespace;
+        /// <summary>
+        /// 基类命名空间
+        /// </summary>
+        public string BaseNamespace
+        {
+            get
+            {
+                return _baseNamespace;
+            }
+        }
         private string _dataAccessNamespace;
         /// <summary>
         /// 数据层命名空间
@@ -244,6 +254,21 @@ namespace Buffalo.DBTools.HelperKernel
             return baseType;
         }
         /// <summary>
+        /// 获取基类短名
+        /// </summary>
+        /// <param name="baseType"></param>
+        /// <returns></returns>
+        private string GetBaseTypeNameSpace(string baseType)
+        {
+            baseType = GetBaseTypeName(baseType);
+            int lastDot = baseType.LastIndexOf('.');
+            if (lastDot >= 0)
+            {
+                return baseType.Substring(0,lastDot);
+            }
+            return baseType;
+        }
+        /// <summary>
         /// 获取基类名
         /// </summary>
         /// <returns></returns>
@@ -269,6 +294,7 @@ namespace Buffalo.DBTools.HelperKernel
            
             _entityFileName = entity.FileName;
             _entityNamespace = entity.EntityNamespace;
+            _baseNamespace = GetBaseTypeNameSpace(entity.BaseType);
             _BQLEntityNamespace = entity.EntityNamespace + ".BQLEntity";
             _businessNamespace = entity.EntityNamespace + ".Business";
             _dataAccessNamespace = entity.EntityNamespace + ".DataAccess";
@@ -293,9 +319,8 @@ namespace Buffalo.DBTools.HelperKernel
             _table = entity.ToTableInfo();
             DesignerInfo = entity.DesignerInfo;
             _entityBaseTypeName = GetBaseTypeName(entity.BaseTypeName);
-
-
             _entityBaseTypeShortName = GetBaseTypeShortName(entity.BaseTypeName);
+            _baseNamespace = GetBaseTypeNameSpace(entity.BaseTypeName);
             _entityFileName = entity.FileName;
             _entityNamespace = entity.Namespace;
             //_summary = entity.Summary;

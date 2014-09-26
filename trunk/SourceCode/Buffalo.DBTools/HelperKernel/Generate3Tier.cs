@@ -62,7 +62,7 @@ namespace Buffalo.DBTools.HelperKernel
             }
             else
             {
-                baseClass = BusinessNamespace + "." + EntityBaseTypeShortName + "BusinessBase";
+                baseClass = BaseNamespace + ".Business." + EntityBaseTypeShortName + "BusinessBase";
             }
             
             

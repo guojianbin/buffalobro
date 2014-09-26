@@ -366,7 +366,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CacheManager\MemcacheClient\StringMessages.resx" />
+    <EmbeddedResource Include="CacheManager\MemcacheClient\StringMessages.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resource.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
