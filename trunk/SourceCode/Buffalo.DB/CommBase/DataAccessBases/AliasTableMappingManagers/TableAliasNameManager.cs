@@ -8,6 +8,7 @@ using Buffalo.DB.BQLCommon.BQLBaseFunction;
 using Buffalo.Kernel;
 using System.Data;
 using Buffalo.DB.BQLCommon;
+using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 
 namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
 {
@@ -28,17 +29,27 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         private Dictionary<string, AliasTableMapping> _dicKeyTable = new Dictionary<string, AliasTableMapping>();
 
 
-        private bool _isInitReader = false;//是否已经初始化过Reader
+        //private bool _isInitReader = false;//是否已经初始化过Reader
 
-        public object LoadFromReader(IDataReader reader,out bool hasValue) 
+        /// <summary>
+        /// 初始化映射
+        /// </summary>
+        public void InitMapping(IDataReader reader) 
         {
-            if (!_isInitReader) 
-            {
-                _primaryTable.InitReaderMapping(reader);
-                _isInitReader = true;
-            }
+            _primaryTable.InitReaderMapping(reader);
+        }
 
-            return _primaryTable.LoadFromReader(reader,out hasValue);
+        /// <summary>
+        /// 从Reader读取
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="hasValue"></param>
+        /// <returns></returns>
+        public object LoadFromReader(IDataReader reader) 
+        {
+
+
+            return _primaryTable.LoadFromReader(reader);
         }
 
         public TableAliasNameManager(BQLEntityTableHandle pEntityinfo) 

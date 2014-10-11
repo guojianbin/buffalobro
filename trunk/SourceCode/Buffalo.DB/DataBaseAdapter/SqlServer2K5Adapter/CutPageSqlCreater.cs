@@ -85,19 +85,22 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
             long topRec = objPage.GetStarIndex() + objPage.PageSize;
 
             //sql.Append("select top " + objPage.PageSize + " * from(");
-            sql.Append("select * from(");
+            sql.Append("select ");
             string newOrderBy = null;
             if (objCondition.HasGroup)
             {
+                sql.Append("*");
                 newOrderBy = Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.CutPageSqlCreater.FilterGroupOrderBy(orderBy, "[_tmpInnerTable]");
             }
             else 
             {
+                sql.Append("*");
                 newOrderBy = orderBy;
             }
+            sql.Append(" from (");
             //sql.Append("select row_number() over(order by " + newOrderBy + ") as " +
             //  rowNumberName + ",");
-            sql.Append("select top " + topRec + " row_number() over(order by " + newOrderBy + ") as " +
+            sql.Append("select row_number() over(order by " + newOrderBy + ") as " +
                 rowNumberName + ",");
 
             if (!objCondition.HasGroup)
@@ -127,7 +130,9 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
                Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.CutPageSqlCreater.GetGroupPart(objCondition, sql);
                 sql.Append(") [_tmpInnerTable]");
             }
-            sql.Append(") tmp where " + rowNumberName + " >=" + starIndex);
+            sql.Append(") tmp where " + rowNumberName + " between " + starIndex + " and " + topRec);
+            sql.Append(" order by ");
+            sql.Append(rowNumberName);
             return sql.ToString();
         }
 

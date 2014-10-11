@@ -24,3 +24,5 @@ D:\CShareTest\Buffalobro\SourceCode\源码示例\广播桌面\BroadcastDesktop\o
 D:\CShareTest\Buffalobro\SourceCode\源码示例\广播桌面\BroadcastDesktop\obj\Debug\BroadcastDesktop.csproj.GenerateResource.Cache
 E:\CShareTest\Buffalobro\SourceCode\源码示例\广播桌面\BroadcastDesktop\obj\Debug\BroadcastDesktop.exe
 E:\CShareTest\Buffalobro\SourceCode\源码示例\广播桌面\BroadcastDesktop\obj\Debug\BroadcastDesktop.pdb
+E:\CSharpTest\BuffaloCode\SourceCode\源码示例\广播桌面\BroadcastDesktop\obj\Debug\BroadcastDesktop.exe
+E:\CSharpTest\BuffaloCode\SourceCode\源码示例\广播桌面\BroadcastDesktop\obj\Debug\BroadcastDesktop.pdb

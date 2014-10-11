@@ -59,25 +59,13 @@ namespace Buffalo.DBTools.UIHelper
         /// <summary>
         /// 绑定属性信息
         /// </summary>
-        private void BindItems() 
+        private void BindItems(List<UIModelItem> lstItems) 
         {
-            if (_curEntityInfo==null)
-            {
-                return;
-            }
-            XmlDocument doc = LoadConfig();
-            _config = new UIConfigItem(doc, _curEntityInfo.DesignerInfo);
+           
+           
+            BindingList<UIModelItem> lst = new BindingList<UIModelItem>(lstItems);
 
-
-
-            List<UIModelItem> lstItems = _curEntityInfo.Propertys;
-
-            foreach (UIModelItem item in lstItems) 
-            {
-                item.InitDefaultValue(_config.ConfigItems, CurEntityInfo, CurEntityInfo.DesignerInfo.CurrentProject,item);
-            }
-
-            gvMember.DataSource = lstItems;
+            gvMember.DataSource = lst;
             BindProjects();
         }
 
@@ -224,7 +212,21 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         private void LoadInfo() 
         {
-            BindItems();
+            if (_curEntityInfo == null)
+            {
+                return;
+            }
+            XmlDocument doc = LoadConfig();
+            _config = new UIConfigItem(doc, _curEntityInfo.DesignerInfo);
+
+
+
+            List<UIModelItem> lstItems = _curEntityInfo.Propertys;
+
+            foreach (UIModelItem item in lstItems)
+            {
+                item.InitDefaultValue(_config.ConfigItems, CurEntityInfo, CurEntityInfo.DesignerInfo.CurrentProject, item);
+            }
         }
 
         private void FrmUIGenerater_Load(object sender, EventArgs e)
@@ -233,6 +235,7 @@ namespace Buffalo.DBTools.UIHelper
             gvMember.AutoGenerateColumns = false;
             try
             {
+                
                 LoadInfo();
             }
             catch (Exception ex) 
@@ -243,10 +246,9 @@ namespace Buffalo.DBTools.UIHelper
             CreateClassItem();
             CreateItems();
             LoadItemCache();
-            
-                        
             LoadClassItemCache();
             BindUIModleInfo(_classUIConfig, _classInfo);
+            BindItems(_curEntityInfo.Propertys);
             this.Text = "UI界面生成-" + _curEntityInfo.ClassName+ToolVersionInfo.ToolVerInfo;
             
            
@@ -286,7 +288,7 @@ namespace Buffalo.DBTools.UIHelper
                     try
                     {
                         Project selectedProject = cmbProjects.Value as Project;
-                        project.GenerateCode(_curEntityInfo, _config,selectedProject, GetSelectedProperty(), _classInfo);
+                        project.GenerateCode(_curEntityInfo, _config,selectedProject, GetProperty(false), _classInfo);
                         this.Close();
                     }
                     catch (CompileException cex) 
@@ -348,18 +350,19 @@ namespace Buffalo.DBTools.UIHelper
         }
 
         /// <summary>
-        /// 获取选中的项
+        /// 获取项
         /// </summary>
+        /// <param name="isAll">是否全部项</param>
         /// <returns></returns>
-        private List<UIModelItem> GetSelectedProperty() 
+        private List<UIModelItem> GetProperty(bool isAll) 
         {
-            List<UIModelItem> lst = gvMember.DataSource as List<UIModelItem>;
+            BindingList<UIModelItem> lst = gvMember.DataSource as BindingList<UIModelItem>;
             List<UIModelItem> lstRet = new List<UIModelItem>(lst.Count);
 
             EntityConfig entity = new EntityConfig(CurEntityInfo.ClassType, CurEntityInfo.DesignerInfo);
             foreach (UIModelItem item in lst)
             {
-                if (!item.IsGenerate)
+                if ((!isAll) && (!item.IsGenerate))
                 {
                     continue;
                 }
@@ -379,7 +382,7 @@ namespace Buffalo.DBTools.UIHelper
             doc.AppendChild(root);
 
             
-            List<UIModelItem> lst = GetSelectedProperty();
+            List<UIModelItem> lst = GetProperty(true);
             foreach (UIModelItem item in lst)
             {
 
@@ -494,6 +497,7 @@ namespace Buffalo.DBTools.UIHelper
                     }
                 }
             }
+            
             _classInfo.ReadItem(nodeRoot, _configClassInfo);
             
         }
@@ -519,10 +523,12 @@ namespace Buffalo.DBTools.UIHelper
             catch { return; }
             XmlNodeList nodes = doc.GetElementsByTagName("modelitem");
 
-            
 
-            foreach (XmlNode node in nodes)
+            List<UIModelItem> lstCurPropertys = _curEntityInfo.Propertys;
+            List<UIModelItem> lstNewPropertys = new List<UIModelItem>(lstCurPropertys.Count);
+            for (int j=0;j<nodes.Count;j++)
             {
+                XmlNode node = nodes[j];
                 XmlAttribute att=node.Attributes["name"];
                 if(att==null)
                 {
@@ -533,16 +539,27 @@ namespace Buffalo.DBTools.UIHelper
                 {
                     continue;
                 }
-                foreach (UIModelItem item in _curEntityInfo.Propertys) 
+                for (int i=lstCurPropertys.Count-1;i>=0;i--) 
                 {
+                    UIModelItem item = lstCurPropertys[i];
                     if (item.PropertyName == name) 
                     {
+                        att = node.Attributes["isgen"];
+                        if (att != null)
+                        {
+                            item.IsGenerate = att.InnerText == "1";
+                        }
+
                         item.ReadItem(node,_configItemInfo);
-                        item.IsGenerate = true;
+                        lstNewPropertys.Add(item);
+                        lstCurPropertys.RemoveAt(i);
+                        break;
                     }
                 }
                 
             }
+            _curEntityInfo.Propertys = lstNewPropertys;
+            
         }
         /// <summary>
         /// 绑定UI信息
@@ -603,6 +620,51 @@ namespace Buffalo.DBTools.UIHelper
         private void btnReFreash_Click(object sender, EventArgs e)
         {
             CodeGenCache.Clear();
+        }
+
+        private void btnDown_Click(object sender, EventArgs e)
+        {
+            
+            if (gvMember.SelectedRows.Count == 0) 
+            {
+                return;
+            }
+            int index = gvMember.SelectedRows[0].Index;
+            if (index >= gvMember.Rows.Count-1) 
+            {
+                return;
+            }
+            BindingList<UIModelItem> lst = gvMember.DataSource as BindingList<UIModelItem>;
+            if (lst == null)
+            {
+                return;
+            }
+            UIModelItem tmp = lst[index];
+            lst[index] = lst[index + 1];
+            lst[index + 1] = tmp;
+            gvMember.Rows[index + 1].Selected = true;
+        }
+
+        private void btnUp_Click(object sender, EventArgs e)
+        {
+            if (gvMember.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            int index = gvMember.SelectedRows[0].Index;
+            if (index <= 0)
+            {
+                return;
+            }
+            BindingList<UIModelItem> lst = gvMember.DataSource as BindingList<UIModelItem>;
+            if (lst == null)
+            {
+                return;
+            }
+            UIModelItem tmp = lst[index];
+            lst[index] = lst[index - 1];
+            lst[index - 1] = tmp;
+            gvMember.Rows[index - 1].Selected = true;
         }
 
         

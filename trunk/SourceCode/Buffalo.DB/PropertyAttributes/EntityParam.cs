@@ -275,6 +275,13 @@ namespace Buffalo.DB.PropertyAttributes
 
                 sb.Append(idba.DBIdentity(tableName, _paramName));
             }
+            string comment=idba.GetColumnDescriptionSQL(this,info.DBInfo);
+            if (!string.IsNullOrEmpty(comment)) 
+            {
+                sb.Append(" ");
+                sb.Append(comment);
+            }
+
             return sb.ToString();
         }
     }

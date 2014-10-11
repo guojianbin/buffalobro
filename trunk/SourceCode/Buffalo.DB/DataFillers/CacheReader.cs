@@ -227,9 +227,10 @@ namespace Buffalo.DB.DataFillers
             if (reader != null && !reader.IsClosed)
             {
                 List<EntityPropertyInfo> lstParamNames = GenerateCache(reader, entityInfo);
+               
                 while (reader.Read())
                 {
-                    T obj = (T)entityInfo.CreateSelectProxyInstance();
+                    T obj = entityInfo.CreateSelectProxyInstance() as T;
                     FillObjectFromReader(reader, lstParamNames, obj, entityInfo.DBInfo);
                     retLst.Add(obj);
                 }
@@ -252,7 +253,7 @@ namespace Buffalo.DB.DataFillers
             {
                 if (!reader.IsDBNull(i) && lstParams[i]!=null)
                 {
-                    dbAdapter.SetObjectValueFromReader(reader, i, obj, lstParams[i]);
+                    dbAdapter.SetObjectValueFromReader(reader, i, obj, lstParams[i], !lstParams[i].TypeEqual(reader, i));
                 }
             }
         }

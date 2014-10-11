@@ -143,6 +143,10 @@ namespace Buffalo.DBTools.UIHelper
                 att.InnerText = PropertyName;
                 node.Attributes.Append(att);
             }
+            att = doc.CreateAttribute("isgen");
+
+            att.InnerText = IsGenerate?"1":"0";
+            node.Attributes.Append(att);
             
 
             foreach (KeyValuePair<string, object> kvp in _dicCheckItem) 
@@ -185,18 +189,19 @@ namespace Buffalo.DBTools.UIHelper
                 {
                     continue;
                 }
+
                 name = att.InnerText;
+
+                
+
                 att = cnode.Attributes["value"];
-                if (att == null)
+                if (att != null)
                 {
-                    continue;
-                }
-                if (dicConfig.TryGetValue(name, out item))
-                {
-
-                    value = ConvertValue(att.InnerText, item);
-
-                    _dicCheckItem[name] = value;
+                    if (dicConfig.TryGetValue(name, out item))
+                    {
+                        value = ConvertValue(att.InnerText, item);
+                        _dicCheckItem[name] = value;
+                    }
                 }
             }
         }

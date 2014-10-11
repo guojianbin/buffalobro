@@ -97,14 +97,15 @@ namespace Buffalo.DBTools.UIHelper
             get { return _classType; }
         }
 
-        List<UIModelItem> lstProperty;
+        List<UIModelItem> _lstProperty;
 
         /// <summary>
         ///  Ù–‘ºØ∫œ
         /// </summary>
         public List<UIModelItem> Propertys
         {
-            get { return lstProperty; }
+            get { return _lstProperty; }
+            set { _lstProperty=value; }
         }
         private ClrType _baseType;
 
@@ -144,7 +145,7 @@ namespace Buffalo.DBTools.UIHelper
         /// </summary>
         private void InitPropertys() 
         {
-            lstProperty = new List<UIModelItem>();
+            _lstProperty = new List<UIModelItem>();
             
 
             List<ClrProperty> lstClrProperty = EntityConfig.GetAllMember<ClrProperty>(_classType, true);
@@ -174,7 +175,7 @@ namespace Buffalo.DBTools.UIHelper
 
 
 
-                lstProperty.Add(item);
+                _lstProperty.Add(item);
             }
         }
 

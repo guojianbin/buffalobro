@@ -42,6 +42,16 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
             }
         }
         /// <summary>
+        /// 获取在字段添加SQL
+        /// </summary>
+        /// <param name="table">表</param>
+        /// <param name="pInfo">字段（如果为空则设置表注释）</param>
+        /// <returns></returns>
+        public virtual string GetColumnDescriptionSQL(EntityParam pInfo, DBInfo info)
+        {
+            return null;
+        }
+        /// <summary>
         /// 重建参数集合
         /// </summary>
         /// <param name="lstPrm"></param>
@@ -399,9 +409,9 @@ namespace Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter
         /// <param name="index">当前Reader的索引</param>
         /// <param name="arg">目标对象</param>
         /// <param name="info">目标属性的句柄</param>
-        public void SetObjectValueFromReader(IDataReader reader, int index, object arg, EntityPropertyInfo info)
+        public void SetObjectValueFromReader(IDataReader reader, int index, object arg, EntityPropertyInfo info, bool needChangeType)
         {
-            SqlServer2KAdapter.DBAdapter.ValueFromReader(reader, index, arg, info);
+            SqlServer2KAdapter.DBAdapter.ValueFromReader(reader, index, arg, info,needChangeType);
         }
 
         public string GetSequenceName(EntityPropertyInfo info)

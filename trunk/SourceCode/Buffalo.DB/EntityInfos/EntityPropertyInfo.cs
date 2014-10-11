@@ -41,6 +41,8 @@ namespace Buffalo.DB.EntityInfos
             _belongPropertyInfo = belongPropertyInfo;
         }
 
+
+
         /// <summary>
         /// 所属的属性信息
         /// </summary>

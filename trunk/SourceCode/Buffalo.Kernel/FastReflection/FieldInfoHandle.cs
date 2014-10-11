@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
+using Buffalo.Kernel.Defaults;
+using System.Data;
 
 namespace Buffalo.Kernel.FastReflection
 {
@@ -18,6 +20,9 @@ namespace Buffalo.Kernel.FastReflection
         protected Type _fieldType;
         protected string _fieldName;
         protected Type _belong;
+        private Type _realFieldType;
+
+        
         /// <summary>
         /// 创建属性的信息类
         /// </summary>
@@ -36,7 +41,33 @@ namespace Buffalo.Kernel.FastReflection
             this._fieldName = fieldName;
             this._belong = belong;
             this._belongFieldInfo = belongFieldInfo;
+
+            LoadRealFieldType();
         }
+
+        /// <summary>
+        /// 判断类型是否跟本属性一致
+        /// </summary>
+        /// <param name="reader">读取器</param>
+        /// <param name="index">索引</param>
+        /// <returns></returns>
+        public bool TypeEqual(IDataReader reader, int index) 
+        {
+            return this._realFieldType.Equals(reader.GetFieldType(index));
+        }
+
+        /// <summary>
+        /// 加载真正的数据类型
+        /// </summary>
+        private void LoadRealFieldType() 
+        {
+            this._realFieldType = DefaultType.GetRealValueType(_fieldType);
+            if (_realFieldType.IsEnum)
+            {
+                _realFieldType = typeof(int);
+            }
+        }
+
         /// <summary>
         /// 所属的字段反射信息
         /// </summary>
@@ -53,6 +84,13 @@ namespace Buffalo.Kernel.FastReflection
             {
                 return _belong;
             }
+        }
+        /// <summary>
+        /// 真正的数值类型
+        /// </summary>
+        public Type RealFieldType
+        {
+            get { return _realFieldType; }
         }
         /// <summary>
         /// Set句柄

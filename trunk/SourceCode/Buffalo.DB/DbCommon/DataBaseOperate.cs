@@ -470,7 +470,7 @@ namespace Buffalo.DB.DbCommon
             Dictionary<string, bool> cacheTables
 			)
 		{
-            IDataReader reader;
+            IDataReader reader=null;
             paramList = _db.CurrentDbAdapter.RebuildParamList(ref sql, paramList);
             if (cacheTables != null && cacheTables.Count>0)
             {
@@ -500,9 +500,6 @@ namespace Buffalo.DB.DbCommon
                     paramInfo = paramList.GetParamString(_db);
                 }
 			}
-			
-
-            
             try
             {
 
@@ -526,7 +523,7 @@ namespace Buffalo.DB.DbCommon
                     {
                         _db.OutMessage(MessageType.Query, "Reader", null, sql + ";" + paramInfo);
                     }
-
+                    
                     reader = _comm.ExecuteReader();
                 }
                 if (paramList != null)

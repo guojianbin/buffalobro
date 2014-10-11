@@ -236,7 +236,7 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <param name="index">当前Reader的索引</param>
         /// <param name="arg">目标对象</param>
         /// <param name="info">目标属性的句柄</param>
-        void SetObjectValueFromReader(IDataReader reader, int index, object arg, EntityPropertyInfo info);
+        void SetObjectValueFromReader(IDataReader reader, int index, object arg, EntityPropertyInfo info,bool needChangeType);
 
         
 
@@ -281,6 +281,13 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <param name="pInfo">字段（如果为空则设置表注释）</param>
         /// <returns></returns>
         string GetAddDescriptionSQL(KeyWordTableParamItem table, EntityParam pInfo, DBInfo info);
+        /// <summary>
+        /// 获取在字段添加SQL
+        /// </summary>
+        /// <param name="table">表</param>
+        /// <param name="pInfo">字段（如果为空则设置表注释）</param>
+        /// <returns></returns>
+        string GetColumnDescriptionSQL(EntityParam pInfo, DBInfo info);
         
     }
 }

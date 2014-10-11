@@ -531,11 +531,13 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                         sql = EntityInfo.DBInfo.CurrentDbAdapter.GetIdentitySQL(pkInfo);
                         using (IDataReader reader = _oper.Query(sql, new ParamList(),null))
                         {
+
                             if (reader.Read())
                             {
                                 if (!reader.IsDBNull(0))
                                 {
-                                    EntityInfo.DBInfo.CurrentDbAdapter.SetObjectValueFromReader(reader, 0, obj, pkInfo);
+
+                                    EntityInfo.DBInfo.CurrentDbAdapter.SetObjectValueFromReader(reader, 0, obj, pkInfo, !pkInfo.TypeEqual(reader, 0));
                                     //obj.PrimaryKeyChange();
                                     ret = 1;
                                 }

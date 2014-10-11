@@ -341,13 +341,14 @@ namespace Buffalo.DB.BQLCommon
             List<E> lst = new List<E>();
             if (reader != null && !reader.IsClosed)
             {
-                bool hasValue = false;
+                aliasManager.InitMapping(reader);
                 while (reader.Read())
                 {
-                    object value = aliasManager.LoadFromReader(reader, out hasValue);
-                    if (!hasValue && value != null)
+
+                    object value = aliasManager.LoadFromReader(reader);
+                    if (value != null)
                     {
-                        E obj = (E)value;
+                        E obj = value as E;
                         //obj.SetBaseList(lst);
                         lst.Add(obj);
                     }
@@ -784,9 +785,10 @@ namespace Buffalo.DB.BQLCommon
             {
                 con.Oper = _oper;
                 bool hasValue=true;
+                aliasManager.InitMapping(reader);
                 if (reader.Read())
                 {
-                    ret = aliasManager.LoadFromReader(reader, out hasValue) as E;
+                    ret = aliasManager.LoadFromReader(reader) as E;
                 }
             }
             finally

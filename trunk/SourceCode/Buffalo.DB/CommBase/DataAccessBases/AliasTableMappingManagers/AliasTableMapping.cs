@@ -35,9 +35,9 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
 
         private AliasReaderMapping _primaryMapping = null;
 
-        private Dictionary<string, EntityBase> _dicInstance = new Dictionary<string, EntityBase>();//已经实例化的实体
+        //private Dictionary<string, EntityBase> _dicInstance = new Dictionary<string, EntityBase>();//已经实例化的实体
 
-        private IList _baseList;
+        //private IList _baseList;
 
         /// <summary>
         /// 别名映射
@@ -68,11 +68,14 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
 
                 if (_dicPropertyInfo.TryGetValue(colName, out info)) 
                 {
-                    AliasReaderMapping aliasMapping = new AliasReaderMapping(i, info);
-                    _lstReaderMapping.Add(aliasMapping);
-                    if (info.IsPrimaryKey) 
+                    AliasReaderMapping aliasMapping = new AliasReaderMapping(i, info, !info.TypeEqual(reader,i));
+                    if (aliasMapping != null)
                     {
-                        _primaryMapping = aliasMapping;
+                        _lstReaderMapping.Add(aliasMapping);
+                        if (info.IsPrimaryKey)
+                        {
+                            _primaryMapping = aliasMapping;
+                        }
                     }
                 }
             }
@@ -82,7 +85,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
                 keyPair.Value.InitReaderMapping(reader);
             }
 
-            _baseList = new ArrayList();
+            //_baseList = new ArrayList();
         }
 
         /// <summary>
@@ -90,71 +93,23 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
-        public EntityBase LoadFromReader(IDataReader reader, out bool hasValue) 
+        public EntityBase LoadFromReader(IDataReader reader)
         {
-            
+
             IDBAdapter dbAdapter = _entityInfo.DBInfo.CurrentDbAdapter;
 
             EntityBase objRet = null;
-            string pk = null;
-            hasValue = true;
-            if (_primaryMapping != null)//如果有就返回null
-            {
-
-
-                if (reader.IsDBNull(_primaryMapping.ReaderIndex)) 
-                {
-                    return null;
-                }
-                object pkValue = reader[_primaryMapping.ReaderIndex];
-                pk = pkValue.ToString();
-                _dicInstance.TryGetValue(pk, out objRet);
-            }
-
             
-            if (objRet == null)
+            objRet = _entityInfo.CreateSelectProxyInstance() as EntityBase;
+
+            foreach (AliasReaderMapping readMapping in _lstReaderMapping)
             {
-                objRet = _entityInfo.CreateSelectProxyInstance() as EntityBase;
-                
-                foreach (AliasReaderMapping readMapping in _lstReaderMapping)
+                int index = readMapping.ReaderIndex;
+                EntityPropertyInfo info = readMapping.PropertyInfo;
+                if (!reader.IsDBNull(index))
                 {
-                    int index = readMapping.ReaderIndex;
-                    EntityPropertyInfo info = readMapping.PropertyInfo;
-                    if (!reader.IsDBNull(index) && info != null)
-                    {
-
-                        dbAdapter.SetObjectValueFromReader(reader, index, objRet, info);
-                    }
+                    dbAdapter.SetObjectValueFromReader(reader, index, objRet, info, readMapping.NeedChangeType);
                 }
-                if (!string.IsNullOrEmpty(pk))
-                {
-                    _dicInstance[pk.ToString()] = objRet;
-                }
-                _baseList.Add(objRet);
-                hasValue = false;
-            }
-
-
-            foreach (KeyValuePair<string, AliasTableMapping> keyPair in _dicChildTables)
-            {
-                AliasTableMapping childMapping = keyPair.Value;
-                bool hValue = false;
-                object child = childMapping.LoadFromReader(reader, out hValue);
-                if (childMapping.MappingInfo.IsParent)//填充父类
-                {
-                    childMapping.MappingInfo.SetValue(objRet, child);
-                }
-                else if ((!childMapping.MappingInfo.IsParent) && (child != null))//填充子类集合
-                {
-                    IList lst = childMapping.MappingInfo.GetValue(objRet) as IList;
-                    if (lst == null)
-                    {
-                        lst = Activator.CreateInstance(childMapping.MappingInfo.FieldType) as IList;
-                        childMapping.MappingInfo.SetValue(objRet, lst);
-                    }
-                    lst.Add(child);
-                }
-                
             }
             return objRet;
         }

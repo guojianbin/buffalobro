@@ -67,6 +67,17 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
                 return false;
             }
         }
+        /// <summary>
+        /// 获取在字段添加SQL
+        /// </summary>
+        /// <param name="table">表</param>
+        /// <param name="pInfo">字段（如果为空则设置表注释）</param>
+        /// <returns></returns>
+        public virtual string GetColumnDescriptionSQL(EntityParam pInfo, DBInfo info)
+        {
+            string comm = DataAccessCommon.FormatValue(pInfo.Description, DbType.String, info);
+            return "COMMENT " + comm;
+        }
         ///// <summary>
         ///// 获取变量列表
         ///// </summary>
@@ -348,9 +359,9 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// <param name="index">当前Reader的索引</param>
         /// <param name="arg">目标对象</param>
         /// <param name="info">目标属性的句柄</param>
-        public void SetObjectValueFromReader(IDataReader reader, int index, object arg, EntityPropertyInfo info)
+        public void SetObjectValueFromReader(IDataReader reader, int index, object arg, EntityPropertyInfo info, bool needChangeType)
         {
-            SqlServer2KAdapter.DBAdapter.ValueFromReader(reader, index, arg, info);
+            SqlServer2KAdapter.DBAdapter.ValueFromReader(reader, index, arg, info,needChangeType);
         }
         /// <summary>
         /// 获取创建注释的SQL
@@ -361,16 +372,17 @@ namespace Buffalo.DB.DataBaseAdapter.MySQL5Adapter
         /// <returns></returns>
         public string GetAddDescriptionSQL(KeyWordTableParamItem table, EntityParam pInfo, DBInfo info)
         {
-            string description = pInfo == null ? table.Description : pInfo.Description;
+            //string description = pInfo == null ? table.Description : pInfo.Description;
 
-            string descriptionValue = DataAccessCommon.FormatValue(description, DbType.AnsiString, info);
-            if (pInfo == null)
-            {
+            //string descriptionValue = DataAccessCommon.FormatValue(description, DbType.AnsiString, info);
+            //if (pInfo == null)
+            //{
 
-                return "alter table " + FormatTableName(table.TableName) + " comment " + descriptionValue;
-            }
-            string dbType=DBTypeToSQL(pInfo.SqlType, pInfo.Length);
-            return "alter table " + FormatTableName(table.TableName) + " modify column " + FormatParam(pInfo.ParamName) + " " + dbType + " comment " + descriptionValue;
+            //    return "alter table " + FormatTableName(table.TableName) + " comment " + descriptionValue;
+            //}
+            //string dbType=DBTypeToSQL(pInfo.SqlType, pInfo.Length);
+            //return "alter table " + FormatTableName(table.TableName) + " modify column " + FormatParam(pInfo.ParamName) + " " + dbType + " comment " + descriptionValue;
+            return "";
         }
         #region IDBAdapter 成员
 

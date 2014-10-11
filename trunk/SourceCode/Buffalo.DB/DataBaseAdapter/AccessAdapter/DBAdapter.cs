@@ -33,6 +33,16 @@ namespace Buffalo.DB.DataBaseAdapter.AccessAdapter
             get { return true; }
         }
         /// <summary>
+        /// 获取在字段添加SQL
+        /// </summary>
+        /// <param name="table">表</param>
+        /// <param name="pInfo">字段（如果为空则设置表注释）</param>
+        /// <returns></returns>
+        public virtual string GetColumnDescriptionSQL(EntityParam pInfo, DBInfo info)
+        {
+            return null;
+        }
+        /// <summary>
         /// 获取数据库的自增长字段的信息
         /// </summary>
         /// <returns></returns>
@@ -748,13 +758,15 @@ namespace Buffalo.DB.DataBaseAdapter.AccessAdapter
         /// <param name="index">当前Reader的索引</param>
         /// <param name="arg">目标对象</param>
         /// <param name="info">目标属性的句柄</param>
-        public static void ValueFromReader(IDataReader reader,int index,object arg,EntityPropertyInfo info) 
+        public static void ValueFromReader(IDataReader reader,int index,object arg,EntityPropertyInfo info,bool needChangeType) 
         {
             object val = reader.GetValue(index);
-            Type resType = info.FieldType;//字段值类型
 
-            val=CommonMethods.EntityProChangeType(val, resType);
-            
+            if (needChangeType)
+            {
+                Type resType = info.RealFieldType;//字段值类型
+                val = CommonMethods.ChangeType(val, resType);
+            }
             info.SetValue(arg, val);
         }
         /// <summary>
@@ -786,9 +798,9 @@ namespace Buffalo.DB.DataBaseAdapter.AccessAdapter
         /// <param name="index">当前Reader的索引</param>
         /// <param name="arg">目标对象</param>
         /// <param name="info">目标属性的句柄</param>
-        public void SetObjectValueFromReader(IDataReader reader, int index, object arg, EntityPropertyInfo info)
+        public void SetObjectValueFromReader(IDataReader reader, int index, object arg, EntityPropertyInfo info,bool needChangeType)
         {
-            ValueFromReader(reader, index, arg, info);
+            ValueFromReader(reader, index, arg, info, needChangeType);
         }
         public bool OnConnectionClosed(DbConnection conn, DBInfo db)
         {

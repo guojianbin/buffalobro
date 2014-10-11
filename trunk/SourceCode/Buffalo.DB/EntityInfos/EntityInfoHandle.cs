@@ -189,7 +189,7 @@ namespace Buffalo.DB.EntityInfos
         public object CreateSelectProxyInstance()
         {
             object obj = CreateProxyInstance();
-            EntityBase eobj = obj as EntityBase;
+            //EntityBase eobj = obj as EntityBase;
             //eobj.PrimaryKeyChange();
             return obj;
         }
