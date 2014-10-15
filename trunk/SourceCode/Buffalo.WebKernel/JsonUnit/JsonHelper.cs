@@ -22,7 +22,17 @@ namespace Buffalo.WebKernel.JsonUnit
             Dictionary<string, object> ret = serializer.Deserialize<Dictionary<string, object>>(json);
             return ret;
         }
-        
+        /// <summary>
+        /// 把json信息填充到实体
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        public static void DeserializeObject(object obj,string json, IEnumerable<string> propertyMap = null)
+        {
+            Dictionary<string, object> dic = serializer.Deserialize<Dictionary<string, object>>(json);
+            EntitySerializer.DeserializeToObject(obj,dic, propertyMap);
+
+        }
         /// <summary>
         /// 把Json信息解释成实体
         /// </summary>

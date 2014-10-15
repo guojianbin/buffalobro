@@ -212,6 +212,15 @@ namespace Buffalo.DB.CommBase
         public void CopyTo(object target) 
         {
             FieldCloneHelper.CopyTo(this, target);
+            EntityBase tar=target as EntityBase;
+            if (tar != null)
+            {
+                tar._dicUpdateProperty___.Clear();
+                foreach (KeyValuePair<string, bool> kvp in this._dicUpdateProperty___) 
+                {
+                    tar._dicUpdateProperty___[kvp.Key] = kvp.Value;
+                }
+            }
         }
 
         
@@ -220,8 +229,10 @@ namespace Buffalo.DB.CommBase
 
         public object Clone()
         {
-            object target = Activator.CreateInstance(this.GetType());
-            FieldCloneHelper.CopyTo(this, target);
+            object target = CH.Create(this.GetType());
+
+            CopyTo(target);
+            
             return target;
         }
 
