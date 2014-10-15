@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Web;
 
 namespace Buffalo.Kernel.HttpServerModel
 {
@@ -45,73 +46,93 @@ namespace Buffalo.Kernel.HttpServerModel
                         continue;
                     }
 
-                    int labIndex=strBuffer.IndexOf("Host:", StringComparison.CurrentCultureIgnoreCase);
-                    int len = 0;
-                    if (labIndex >= 0) 
+                    int index = strBuffer.IndexOf(':');
+                    string key = "";
+                    string value = "";
+                    if (index >= 0) 
                     {
-                        len = "Host:".Length;
-                        _host = strBuffer.Substring(labIndex + len, strBuffer.Length - labIndex- len);
+                        key = strBuffer.Substring(0, index).Trim();
+                        value = strBuffer.Substring(index + 1).Trim(' ', ';');
+                        _dicHeader[key.ToLower()] = value;
+                    }
+
+                    if (key.Equals("Host", StringComparison.CurrentCultureIgnoreCase)) 
+                    {
+                        _host = value;
                         continue;
                     }
 
-                    labIndex = strBuffer.IndexOf("Connection:", StringComparison.CurrentCultureIgnoreCase);
-                    if (labIndex >= 0)
+                    if (key.Equals("Connection", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        len="Connection:".Length;
-                        _connection = strBuffer.Substring(labIndex + len, strBuffer.Length - labIndex - len);
+                        _connection = value;
                         continue;
                     }
 
-                    labIndex = strBuffer.IndexOf("Cache-Control:", StringComparison.CurrentCultureIgnoreCase);
-                    if (labIndex >= 0)
+                    if (key.Equals("Cache-Control", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        len = "Cache-Control:".Length;
-                        _cacheControl = strBuffer.Substring(labIndex + len, strBuffer.Length - labIndex - len);
+                        _cacheControl = value;
                         continue;
                     }
 
-                    labIndex = strBuffer.IndexOf("User-Agent:", StringComparison.CurrentCultureIgnoreCase);
-                    if (labIndex >= 0)
+
+                    if (key.Equals("User-Agent", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        len = "User-Agent:".Length;
-                        _userAgent = strBuffer.Substring(labIndex + len, strBuffer.Length - labIndex - len);
+                        _userAgent = value;
                         continue;
                     }
 
-                    labIndex = strBuffer.IndexOf("Accept:", StringComparison.CurrentCultureIgnoreCase);
-                    if (labIndex >= 0)
+                    if (key.Equals("Accept", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        len = "Accept:".Length;
-                        _accept = strBuffer.Substring(labIndex + len, strBuffer.Length - labIndex - len);
+                        _accept = value;
                         continue;
                     }
 
-                    labIndex = strBuffer.IndexOf("Accept-Encoding:", StringComparison.CurrentCultureIgnoreCase);
-                    if (labIndex >= 0)
+                    if (key.Equals("Accept-Encoding", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        len = "Accept-Encoding:".Length;
-                        _acceptEncoding = strBuffer.Substring(labIndex + len, strBuffer.Length - labIndex - len);
+                        _acceptEncoding = value;
                         continue;
                     }
 
-                    labIndex = strBuffer.IndexOf("Accept-Language:", StringComparison.CurrentCultureIgnoreCase);
-                    if (labIndex >= 0)
+                    if (key.Equals("Accept-Language", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        len = "Accept-Language:".Length;
-                        _acceptLanguage = strBuffer.Substring(labIndex + len, strBuffer.Length - labIndex - len);
+                        _acceptLanguage = value;
                         continue;
                     }
 
-                    labIndex = strBuffer.IndexOf("Accept-Charset:", StringComparison.CurrentCultureIgnoreCase);
-                    if (labIndex >= 0)
+                    if (key.Equals("Accept-Charset", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        len = "Accept-Charset:".Length;
-                        _acceptCharset = strBuffer.Substring(labIndex + len, strBuffer.Length - labIndex - len);
+                        _acceptCharset = value;
                         continue;
                     }
-
+                    
                 }
             }
+        }
+
+        private Dictionary<string, string> _dicHeader = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// 其他头信息
+        /// </summary>
+        public Dictionary<string, string> Header
+        {
+            get { return _dicHeader; }
+        }
+
+        /// <summary>
+        /// 处理文件名
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public static string GetFileName(RequestInfo request, string filename) 
+        {
+            string ua = request.UserAgent;
+            if (ua.IndexOf("firefox", StringComparison.CurrentCultureIgnoreCase)>=0) 
+            {
+                return "\""+ filename+"\"";
+            }
+            return HttpUtility.UrlEncode(filename);
         }
 
         /// <summary>

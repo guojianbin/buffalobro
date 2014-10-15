@@ -83,6 +83,53 @@ namespace Buffalo.Kernel
         {
             return DeserializeToList<T>(dic, propertyCollection, DefaultFormatValue);
         }
+        /// <summary>
+        /// 把集合信息变成实体集合
+        /// </summary>
+        /// <typeparam name="T">实体</typeparam>
+        /// <param name="dic">信息集合</param>
+        /// <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
+        /// <returns></returns>
+        public static void DeserializeToObject(object obj, Dictionary<string, object> dic, IEnumerable<string> propertyCollection)
+        {
+            DeserializeToObject(obj, dic, propertyCollection, DefaultFormatValue);
+        }
+        /// <summary>
+        /// 把集合信息变成实体集合
+        /// </summary>
+        /// <typeparam name="T">实体</typeparam>
+        /// <param name="dic">信息集合</param>
+        /// <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
+        /// <returns></returns>
+        public static void DeserializeToObject(object obj, Dictionary<string, object> dic, IEnumerable<string> propertyCollection, DelFormatValue formatValue)
+        {
+            Type objType = obj.GetType();
+            List<EntitySerializerInfo> lstInfo = null;
+            if (propertyCollection == null)
+            {
+                lstInfo = GetTypeInfos(objType);
+            }
+            else
+            {
+                lstInfo = GetDicInfos(objType, propertyCollection);
+            }
+
+            object value = null;
+            Dictionary<string, object> item = new Dictionary<string, object>();
+            foreach (EntitySerializerInfo info in lstInfo)
+            {
+                if (!dic.TryGetValue(info.Name, out value))
+                {
+                    continue;
+                }
+                value = SetValue(info, obj, value);
+                if (formatValue != null)
+                {
+                    value = formatValue(info.Name, info.PropertyName, obj, value);
+                }
+                item[info.Name] = value;
+            }
+        }
 
         /// <summary>
         /// 把集合信息变成实体集合
@@ -102,32 +149,8 @@ namespace Buffalo.Kernel
 
             Type objType = typeof(T);
             T entity = (T)Activator.CreateInstance(objType);
-
-            List<EntitySerializerInfo> lstInfo = null;
-            if (propertyCollection == null)
-            {
-                lstInfo = GetTypeInfos(objType);
-            }
-            else
-            {
-                lstInfo = GetDicInfos(objType, propertyCollection);
-            }
-
-            object value = null;
-            Dictionary<string, object> item = new Dictionary<string, object>();
-            foreach (EntitySerializerInfo info in lstInfo)
-            {
-                if (!dic.TryGetValue(info.Name, out value))
-                {
-                    continue;
-                }
-                value = SetValue(info, entity,value);
-                if (formatValue != null)
-                {
-                    value = formatValue(info.Name, info.PropertyName, entity, value);
-                }
-                item[info.Name] = value;
-            }
+            DeserializeToObject(entity, dic, propertyCollection, formatValue);
+           
             return entity;
         }
         /// <summary>

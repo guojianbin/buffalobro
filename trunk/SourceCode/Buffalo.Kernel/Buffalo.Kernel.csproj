@@ -88,6 +88,7 @@
     <Compile Include="FastReflection\PropertyInfoHandle.cs" />
     <Compile Include="FieldCloneHelper.cs" />
     <Compile Include="FileEncodingInfo.cs" />
+    <Compile Include="HttpServerModel\RangeInfo.cs" />
     <Compile Include="HttpServerModel\RequestInfo.cs" />
     <Compile Include="HttpServerModel\ResponseInfo.cs" />
     <Compile Include="HttpServerModel\ReuqestParamCollection.cs" />
@@ -100,6 +101,8 @@
     <Compile Include="Media\AVIWriter.cs" />
     <Compile Include="NetClients\NetConnection.cs" />
     <Compile Include="NetClients\NetListener.cs" />
+    <Compile Include="ObjectSerializer\NeedSerializer.cs" />
+    <Compile Include="ObjectSerializer\SerializerHelper.cs" />
     <Compile Include="OrderSortList.cs" />
     <Compile Include="PasswordHash.cs" />
     <Compile Include="Picture.cs" />
@@ -116,10 +119,6 @@
     <Compile Include="Win32\PtrGeter.cs" />
     <Compile Include="Win32\Structs.cs" />
     <Compile Include="Win32\SystemInfo.cs" />
-    <Compile Include="SmartSellMap\CombinationItem.cs" />
-    <Compile Include="SmartSellMap\ICombinationItem.cs" />
-    <Compile Include="SmartSellMap\ICombinationState.cs" />
-    <Compile Include="SmartSellMap\SellCombination.cs" />
     <Compile Include="SysEventLog.cs" />
     <Compile Include="UpdateModelUnit\ContorlDefaultPropertyInfo.cs" />
     <Compile Include="UpdateModelUnit\UpdateModelInfo.cs" />

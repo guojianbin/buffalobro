@@ -17,18 +17,30 @@ namespace Buffalo.Kernel.HttpServerModel
     public delegate void RequestProcessingHandle(RequestInfo request,ResponseInfo response);
 
     /// <summary>
+    /// 请求处理委托
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="response"></param>
+    public delegate void RequestSendingBodyHandle(RequestInfo request, ResponseInfo response,Socket requestSocket);
+    /// <summary>
     /// 模拟Web服务器模块
     /// </summary>
     public class ServerModel
     {
         private TcpListener _listener;
         /// <summary>
-        /// 请求处理呃事件
+        /// 请求处理事件
         /// </summary>
         public event RequestProcessingHandle OnRequestProcessing;
+        /// <summary>
+        /// 请求正在发送内容的事件
+        /// </summary>
+        public event RequestSendingBodyHandle OnRequestSendingBody;
         Thread _lisThread = null;
         bool isrunning=false;
         int _port = 0;
+
+        
 
         /// <summary>
         /// 端口
@@ -89,62 +101,102 @@ namespace Buffalo.Kernel.HttpServerModel
             while (isrunning)
             {
                 //接受新连接
-                using (Socket requestSocket = _listener.AcceptSocket())
+                Socket requestSocket = _listener.AcceptSocket();
+                
+                    ParameterizedThreadStart prmThd = new ParameterizedThreadStart(DelSocket);
+                    Thread thd = new Thread(new ParameterizedThreadStart(DelSocket));
+
+                    thd.Start(requestSocket);
+                
+            }
+        }
+
+        private void DelSocket(object prm)
+        {
+            Socket requestSocket = prm as Socket;
+            if (requestSocket == null)
+            {
+                return;
+            }
+            try
+            {
+                byte[] receiveContent = null;//接收的内容
+                if (requestSocket.Connected)
                 {
-                    try
+                    using (MemoryStream ms = new MemoryStream())
                     {
-                        byte[] receiveContent = null;//接收的内容
-                        if (requestSocket.Connected)
+                        Byte[] bufferContent = new Byte[1024];
+                        int receiveBytes = 0;
+                        do
                         {
-                            using (MemoryStream ms = new MemoryStream())
-                            {
-                                Byte[] bufferContent = new Byte[1024];
-                                int receiveBytes = 0;
-                                do
-                                {
-                                    receiveBytes = requestSocket.Receive(bufferContent, bufferContent.Length, 0);
-                                    ms.Write(bufferContent, 0, receiveBytes);
-                                } while (receiveBytes >= bufferContent.Length);
-                                if (ms.Length <= 0)
-                                {
-                                    continue;
-                                }
-                                receiveContent = ms.ToArray();
-                                
-
-                            }
-                        }
-                        else
+                            receiveBytes = requestSocket.Receive(bufferContent, bufferContent.Length, 0);
+                            ms.Write(bufferContent, 0, receiveBytes);
+                        } while (receiveBytes >= bufferContent.Length);
+                        if (ms.Length <= 0)
                         {
-                            continue;
+                            return;
                         }
+                        receiveContent = ms.ToArray();
 
-                        string content = DefaultEncoding.GetString(receiveContent);
-                        RequestInfo info = new RequestInfo(content);
-                        if (OnRequestProcessing != null)
-                        {
-                            Encoding encoding = GetEncoding(info);
-                            using (ResponseInfo resInfo = new ResponseInfo(encoding))
-                            {
-                                OnRequestProcessing(info, resInfo);
-                                byte[] rcontent = resInfo.ResponseContent;
-                                string header = CreateHeader(info.HttpVersion, resInfo.MimeType, rcontent.Length, info.Connection,encoding);
-                                byte[] headContent = encoding.GetBytes(header);
 
-                                requestSocket.Send(headContent);
-                                requestSocket.Send(rcontent);
-                            }
-                        }
                     }
-                    catch(Exception ex) 
+                }
+                else
+                {
+                    return;
+                }
+                requestSocket.SendTimeout = 5000;
+                string content = DefaultEncoding.GetString(receiveContent);
+                RequestInfo info = new RequestInfo(content);
+                if (OnRequestProcessing != null)
+                {
+                    Encoding encoding = GetEncoding(info);
+                    using (ResponseInfo resInfo = new ResponseInfo(encoding))
                     {
-#if DEBUG
-                        Debug.WriteLine(ex.Message);
-#endif
+                        OnRequestProcessing(info, resInfo);
+                        byte[] rcontent = resInfo.ResponseContent;
+                        long len = resInfo.Length;
+                        if (len == 0)
+                        {
+                            len = rcontent.Length;
+                        }
+
+                        
+                        string header = CreateHeader(info.HttpVersion,info, resInfo, len, " 200 OK", encoding);
+                        byte[] headContent = encoding.GetBytes(header);
+
+                        requestSocket.Send(headContent);
+
+                        if (OnRequestSendingBody != null)
+                        {
+                            OnRequestSendingBody(info, resInfo, requestSocket);
+                        }
+                        if (rcontent.Length > 0)
+                        {
+                            requestSocket.Send(rcontent);
+                        }
+
                     }
                 }
             }
+            catch (Exception ex)
+            {
+#if DEBUG
+                Debug.WriteLine(ex.Message);
+#endif
+            }
+            finally 
+            {
+                try
+                {
+                    
+                    requestSocket.Close();
+
+                }
+                catch { }
+            }
         }
+        
 
         /// <summary>
         /// 获取请求的编码
@@ -169,6 +221,8 @@ namespace Buffalo.Kernel.HttpServerModel
             return DefaultEncoding;
         }
 
+       
+
         /// <summary>
         /// 发送头
         /// </summary>
@@ -176,22 +230,46 @@ namespace Buffalo.Kernel.HttpServerModel
         /// <param name="sMIMEHeader"></param>
         /// <param name="iTotBytes"></param>
         /// <param name="sStatusCode"></param>
-        private string CreateHeader(string sHttpVersion, string sMIMEHeader, int iTotBytes, string sStatusCode, Encoding encoding)
+        private string CreateHeader(string sHttpVersion, RequestInfo request, ResponseInfo resInfo, long iTotBytes, string sStatusCode, Encoding encoding)
         {
 
             StringBuilder sBuffer = new StringBuilder();
 
-            if (string.IsNullOrEmpty(sMIMEHeader))
+            if (string.IsNullOrEmpty(resInfo.MimeType))
             {
-                sMIMEHeader = "text/html"; // 默认 text/html
+                resInfo.MimeType = "text/html"; // 默认 text/html
             }
 
-            sBuffer.Append(sHttpVersion + sStatusCode + "\r\n");
-            sBuffer.Append("Content-Type: " + sMIMEHeader + ";charset=" + encoding.WebName + "\r\n");
-            sBuffer.Append("Accept-Ranges: bytes\r\n");
-            sBuffer.Append("Content-Encoding: " + encoding.WebName + "\r\n");
-            sBuffer.Append("Content-Length: " + iTotBytes + "\r\n\r\n");
-            
+            sBuffer.AppendLine(sHttpVersion + sStatusCode);
+            if (resInfo.MimeType.Equals("text/html", StringComparison.CurrentCultureIgnoreCase))
+            {
+                sBuffer.AppendLine("Content-Type: " + resInfo.MimeType + ";charset=" + encoding.WebName);
+                sBuffer.AppendLine("Content-Encoding: " + encoding.WebName);
+            }
+            if (!resInfo.Header.ContainsKey("Accept-Ranges"))
+            {
+                sBuffer.AppendLine("Accept-Ranges: none");
+            }
+
+            //if (request.Header.ContainsKey("range"))
+            //{
+            //    resInfo.Header["Content-Range"] = request.Header["range"].Replace('=', ' ') + "/" + iTotBytes;
+            //}
+
+            if (!resInfo.Header.ContainsKey("Server"))
+            {
+                resInfo.Header["Server"] = "Buffalo Mini Server";
+            }
+            if (!resInfo.Header.ContainsKey("Content-Length"))
+            {
+                resInfo.Header["Content-Length"] = iTotBytes.ToString();
+            }
+
+            foreach (KeyValuePair<string, string> kvp in resInfo.Header) 
+            {
+                sBuffer.AppendLine(kvp.Key + ": " + kvp.Value);
+            }
+            sBuffer.AppendLine("");
             return sBuffer.ToString();
         }
 
