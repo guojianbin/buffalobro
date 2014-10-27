@@ -4,6 +4,7 @@ using System.Text;
 using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.FaintnessSearchConditions;
+using Buffalo.Kernel;
 
 namespace Buffalo.DB.BQLCommon.BQLConditions
 {
@@ -29,21 +30,29 @@ namespace Buffalo.DB.BQLCommon.BQLConditions
             return sb.ToString();
         }
         /// <summary>
-        /// In条件
+        /// In条件(如果集合为空，则返回1=2)
         /// </summary>
         /// <param name="lstParam"></param>
         /// <returns></returns>
         internal static string DoIn(string source, string[] lstParam,DBInfo db) 
         {
+            if (CommonMethods.IsCollNullOrEmpty(lstParam)) 
+            {
+                return "1=2";
+            }
             return source + " in (" + ConcatParam(lstParam, ",")+")";
         }
         /// <summary>
-        /// NotIn条件
+        /// NotIn条件(如果集合为空，则返回1=1)
         /// </summary>
         /// <param name="lstParam"></param>
         /// <returns></returns>
         internal static string DoNotIn(string source, string[] lstParam, DBInfo db)
         {
+            if (CommonMethods.IsCollNullOrEmpty(lstParam))
+            {
+                return "1=1";
+            }
             return source + " not in (" + ConcatParam(lstParam, ",")+")";
         }
 

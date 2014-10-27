@@ -161,6 +161,43 @@ namespace Buffalo.Kernel
 
             
         }
+        /// <summary>
+        /// 判断字符串是 null、空还是仅由空白字符组成。
+        /// </summary>
+        /// <param name="value">字符串</param>
+        /// <returns></returns>
+        public static bool IsStringNullOrWhiteSpace(string value) 
+        {
+            if (value != null)
+            {
+                for (int i = 0; i < value.Length; i++)
+                {
+                    if (!char.IsWhiteSpace(value[i]))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 判断集合是 null还是空的集合。
+        /// </summary>
+        /// <param name="lst"></param>
+        /// <returns></returns>
+        public static bool IsCollNullOrEmpty(ICollection lst) 
+        {
+            if (lst == null) 
+            {
+                return true;
+            }
+            if (lst.Count == 0) 
+            {
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>
         /// 拷贝数据

@@ -52,7 +52,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 
         //public BQLConditionItem 
         /// <summary>
-        /// In条件
+        /// In条件(如果集合为空，则返回1=2)
         /// </summary>
         /// <param name="lstParam"></param>
         /// <returns></returns>
@@ -61,7 +61,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return new BQLConditionItem(this, values, BQLConditionManager.DoIn);
         }
         /// <summary>
-        /// In条件
+        /// In条件(如果集合为空，则返回1=2)
         /// </summary>
         /// <param name="lstParam"></param>
         /// <returns></returns>
@@ -70,7 +70,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return new BQLConditionItem(this, values, BQLConditionManager.DoIn);
         }
         /// <summary>
-        /// In条件
+        /// In条件(如果集合为空，则返回1=2)
         /// </summary>
         /// <param name="lstParam"></param>
         /// <returns></returns>
@@ -79,7 +79,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return new BQLConditionItem(this, collection, BQLConditionManager.DoIn);
         }
         /// <summary>
-        /// In条件
+        /// In条件(如果集合为空，则返回1=2)
         /// </summary>
         /// <param name="lstParam"></param>
         /// <returns></returns>
@@ -88,7 +88,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return new BQLConditionItem(this, item, BQLConditionManager.DoIn);
         }
         /// <summary>
-        /// NotIn条件
+        /// NotIn条件(如果集合为空，则返回1=1)
         /// </summary>
         /// <param name="lstParam"></param>
         /// <returns></returns>
@@ -97,7 +97,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return new BQLConditionItem(this, values, BQLConditionManager.DoNotIn);
         }
         /// <summary>
-        /// NotIn条件
+        /// NotIn条件(如果集合为空，则返回1=1)
         /// </summary>
         /// <param name="lstParam"></param>
         /// <returns></returns>
@@ -106,7 +106,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return new BQLConditionItem(this, values, BQLConditionManager.DoNotIn);
         }
         /// <summary>
-        /// NotIn条件
+        /// NotIn条件(如果集合为空，则返回1=1)
         /// </summary>
         /// <param name="lstParam"></param>
         /// <returns></returns>
@@ -115,7 +115,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
             return new BQLConditionItem(this, collection, BQLConditionManager.DoNotIn);
         }
         /// <summary>
-        /// NotIn条件
+        /// NotIn条件(如果集合为空，则返回1=1)
         /// </summary>
         /// <param name="lstParam"></param>
         /// <returns></returns>

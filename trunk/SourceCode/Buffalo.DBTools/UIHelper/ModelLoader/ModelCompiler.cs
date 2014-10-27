@@ -14,7 +14,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
     public class ModelCompiler
     {
 
-        private CodesManger man = new CodesManger();
+        private CodesManger _man = new CodesManger();
         private string _content;//model文件内容
         EntityInfo _entityInfo;
         private string _backCode;//model.cs文件内容
@@ -37,6 +37,9 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// </summary>
         public string GetCode(string className) 
         {
+            
+            
+            
             //解释Model.cs信息
             string strRef = @"(?isx)<[#]script\stype=""(?<type>[^""]+)"">(?<content>(.*?))</[#]script>";
             MatchCollection matches = new Regex(strRef).Matches(_backCode);
@@ -54,34 +57,33 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
                 {
                     LinkOutputer outputer = new LinkOutputer();
                     List<string> str = outputer.GetCode(queitem,_entityInfo);
-                    AddBuffaloLink(str);
-                    man.Link.AddRange(str);
+                    _man.Link.AddRange(str);
                 }
                 else if (type.Equals("using", StringComparison.CurrentCultureIgnoreCase)) 
                 {
                     UsingOutputer outputer = new UsingOutputer();
                     string str = outputer.GetCode(queitem);
-                    man.Using.Append(str);
+                    _man.Using.Append(str);
                 }
                 else if (_content==null && type.Equals("code", StringComparison.CurrentCultureIgnoreCase))
                 {
                     CodeOutputer outputer = new CodeOutputer();
                     string str = outputer.GetCode(queitem);
-                    man.Code.Append(str);
+                    _man.Code.Append(str);
                 }
                 else if (type.Equals("method", StringComparison.CurrentCultureIgnoreCase))
                 {
                     MethodOutputer outputer = new MethodOutputer();
                     string str = outputer.GetCode(queitem);
-                    man.Method.Append(str);
+                    _man.Method.Append(str);
                 }
             }
             //解释Model信息
             if (_content != null)
             {
-                man.Code.Append(GetContentCode(_content));
+                _man.Code.Append(GetContentCode(_content));
             }
-            return man.ToCode(className);
+            return _man.ToCode(className);
         }
 
         /// <summary>
@@ -102,7 +104,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// 添加本项目的引用
         /// </summary>
         /// <param name="dll"></param>
-        private void AddBuffaloLink(List<string> dll) 
+        private void AddBuffaloLink() 
         {
             Assembly ass = null;
 
@@ -127,7 +129,7 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             {
                 return;
             }
-            dll.Add(path);
+            _man.Link.Add(path);
             //file=new FileInfo(path);
             //string fileName=CommonMethods.GetBaseRoot(file.Name);
 
@@ -149,10 +151,11 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
         /// <returns></returns>
         public CodeGenInfo GetCompileType(string className,StringBuilder codeCache, StringBuilder errorMessage)
         {
+            AddBuffaloLink();
             string code = GetCode(className);
             codeCache.Append(code);
             string ret = null;
-            CodeGenInfo info = SourceCodeCompiler.DoCompiler(code, CodesManger.CompilerNamespace + "." + className, man.Link, errorMessage);
+            CodeGenInfo info = SourceCodeCompiler.DoCompiler(code, CodesManger.CompilerNamespace + "." + className, _man.Link, errorMessage);
 
             return info;
         }

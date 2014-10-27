@@ -16,12 +16,12 @@ namespace Buffalo.DB.QueryConditions
     public enum ScopeType :int
     {
         /// <summary>
-        /// in条件
+        /// in条件(如果集合为空，则返回1=2)
         /// </summary>
         [Description("in条件")]
         IN=0,
         /// <summary>
-        /// in条件
+        /// notin条件(如果集合为空，则返回1=1)
         /// </summary>
         [Description("not in条件")]
         NotIn = 1,

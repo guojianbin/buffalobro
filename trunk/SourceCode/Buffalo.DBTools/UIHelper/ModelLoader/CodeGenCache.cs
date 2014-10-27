@@ -59,17 +59,16 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             Encoding encoding = CodeFileHelper.GetFileEncoding(path);
             string content = File.ReadAllText(path, encoding);
             string backCodePath=path+"c";
-            string backCode=null;
+            string backCode="";
             if (File.Exists(backCodePath))
             {
                 encoding = CodeFileHelper.GetFileEncoding(backCodePath);
                 backCode = File.ReadAllText(backCodePath, encoding);
             }
-            if (backCode == null) 
-            {
-                backCode = content;
-                content = null;
-            }
+            //if (backCode == null) 
+            //{
+            //    backCode = "";
+            //}
             ModelCompiler compiler = new ModelCompiler(content, backCode, entityInfo);
             string className = "ModelCompilerClass" + _classCount;
             StringBuilder sbError=new StringBuilder();

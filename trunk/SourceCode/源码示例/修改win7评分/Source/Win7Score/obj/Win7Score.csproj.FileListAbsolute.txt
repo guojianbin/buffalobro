@@ -6,3 +6,5 @@ E:\CShareTest\Win7Score\Win7Score\obj\Debug\Win7Score.Properties.Resources.resou
 E:\CShareTest\Win7Score\Win7Score\obj\Debug\Win7Score.csproj.GenerateResource.Cache
 E:\CShareTest\Win7Score\Win7Score\obj\Debug\Win7Score.exe
 E:\CShareTest\Win7Score\Win7Score\obj\Debug\Win7Score.pdb
+F:\CSharpTest\BuffaloCode\SourceCode\源码示例\修改win7评分\Source\Win7Score\obj\Debug\Win7Score.exe
+F:\CSharpTest\BuffaloCode\SourceCode\源码示例\修改win7评分\Source\Win7Score\obj\Debug\Win7Score.pdb

@@ -67,14 +67,29 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
             {
                 return;
             }
-
+            string sName = null;
+            string tName = null;
+            string tTable = null;
+            if (_item.SourceProperty != null && _item.TargetProperty != null)
+            {
+                sName = _item.SourceProperty.ParamName;
+                tName = _item.TargetProperty.ParamName;
+                tTable = _item.TargetProperty.BelongInfo.TableName;
+            }
+            else 
+            {
+                sName = _item.SourceName;
+                tName = _item.TargetName;
+                tTable = _item.TargetTable;
+            }
             IDBAdapter ida = info.DBInfo.CurrentDbAdapter;
 
             con.Operator.Append("add constraint ");
             con.SqlParams.Append(_item.Name);
-            con.SqlParams.Append(" foreign key (" + ida.FormatParam(_item.SourceName) + ") ");
+            con.SqlParams.Append(" foreign key (" + ida.FormatParam(sName) + ") ");
             con.SqlParams.Append("references ");
-            con.SqlParams.Append(ida.FormatTableName(_item.TargetTable) + "(" + ida.FormatParam(_item.TargetName)+")");
+
+            con.SqlParams.Append(ida.FormatTableName(tTable) + "(" + ida.FormatParam(tName) + ")");
         }
     }
 

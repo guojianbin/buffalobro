@@ -132,7 +132,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         }
 
         /// <summary>
-        /// 解释IN条件
+        /// 解释IN条件(如果集合为空，则返回1=2)
         /// </summary>
         /// <param name="list"></param>
         /// <param name="entityType"></param>
@@ -170,7 +170,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         }
 
         /// <summary>
-        /// 解释NotIN条件
+        /// 解释NotIN条件(如果集合为空，则返回1=1)
         /// </summary>
         /// <param name="list"></param>
         /// <param name="entityType"></param>
@@ -197,6 +197,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                 sql.Append(" not in (");
                 sql.Append(inValue);
                 sql.Append("))");
+            }
+            else //没有数据时候设置改条件不成立
+            {
+                sql.Append(" ");
+                sql.Append(connectString);
+                sql.Append(" 1=1");
             }
             return sql.ToString();
         }

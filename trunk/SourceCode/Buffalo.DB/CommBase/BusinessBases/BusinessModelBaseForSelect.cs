@@ -72,7 +72,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         /// <param name="id">Ö÷¼ü</param>
         /// <returns></returns>
-        public T GetEntityById(object id)
+        public virtual T GetEntityById(object id)
         {
             DataAccessBaseForSelect<T> dao = new DataAccessBaseForSelect<T>();
             return dao.GetEntityById(id);
@@ -82,7 +82,7 @@ namespace Buffalo.DB.CommBase.BusinessBases
         /// </summary>
         /// <param name="id">Ö÷¼ü</param>
         /// <returns></returns>
-        public T GetByIdUseCache(object id)
+        public virtual T GetByIdUseCache(object id)
         {
             DataAccessBaseForSelect<T> dao = new DataAccessBaseForSelect<T>();
             return dao.GetObjectById(id,true);

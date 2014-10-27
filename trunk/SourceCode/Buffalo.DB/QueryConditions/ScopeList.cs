@@ -467,7 +467,7 @@ namespace Buffalo.DB.QueryConditions
             return true;
         }
         /// <summary>
-        /// 添加新的In条件
+        /// 添加新的In条件(如果集合为空，则返回1=2)
         /// </summary>
         /// <param name="property">属性名</param>
         /// <param name="valuesCollection">值集合</param>
@@ -488,7 +488,7 @@ namespace Buffalo.DB.QueryConditions
         }
 
         /// <summary>
-        /// 添加新的In条件
+        /// 添加新的In条件(如果集合为空，则返回1=2)
         /// </summary>
         /// <param name="propertyName">属性名</param>
         /// <param name="valuesCollection">值集合</param>
@@ -502,7 +502,7 @@ namespace Buffalo.DB.QueryConditions
         }
 
         /// <summary>
-        /// 添加新的In条件
+        /// 添加新的NotIn条件(如果集合为空，则返回1=1)
         /// </summary>
         /// <param name="property">属性名</param>
         /// <param name="valuesCollection">值集合</param>
@@ -522,7 +522,7 @@ namespace Buffalo.DB.QueryConditions
         }
 
         /// <summary>
-        /// 添加新的In条件
+        /// 添加新的NotIn条件(如果集合为空，则返回1=1)
         /// </summary>
         /// <param name="propertyName">属性名</param>
         /// <param name="valuesCollection">值集合</param>
@@ -774,7 +774,7 @@ namespace Buffalo.DB.QueryConditions
         }
 
         /// <summary>
-        /// 添加新的In条件
+        /// 添加新的In条件(如果集合为空，则返回1=2)
         /// </summary>
         /// <param name="propertyName">属性名</param>
         /// <param name="valuesCollection">值集合</param>
@@ -784,7 +784,7 @@ namespace Buffalo.DB.QueryConditions
             return AddIn(propertyName, valuesCollection, ConnectType.And);
         }
         /// <summary>
-        /// 添加新的In条件
+        /// 添加新的NotIn条件(如果集合为空，则返回1=1)
         /// </summary>
         /// <param name="propertyName">属性名</param>
         /// <param name="valuesCollection">值集合</param>
@@ -897,7 +897,7 @@ namespace Buffalo.DB.QueryConditions
         }
 
         /// <summary>
-        /// 添加新的In条件
+        /// 添加新的In条件(如果集合为空，则返回1=2)
         /// </summary>
         /// <param name="propertyName">属性名</param>
         /// <param name="valuesCollection">值集合</param>
@@ -907,7 +907,7 @@ namespace Buffalo.DB.QueryConditions
             return AddIn(property, valuesCollection, ConnectType.And);
         }
         /// <summary>
-        /// 添加新的In条件
+        /// 添加新的NotIn条件(如果集合为空，则返回1=1)
         /// </summary>
         /// <param name="propertyName">属性名</param>
         /// <param name="valuesCollection">值集合</param>

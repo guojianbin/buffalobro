@@ -51,27 +51,27 @@ namespace Buffalo.DB.PropertyAttributes
             _isParent = isParent;
         }
 
-        /// <summary>
-        ///  关联映射信息
-        /// </summary>
-        /// <param name="fieldName">对应字段</param>
-        /// <param name="propertyName">属性</param>
-        /// <param name="sourcePropertyName">源对象属性</param>
-        /// <param name="targetPropertyName">目标属性</param>
-        /// <param name="isParent">是否主表属性</param>
-        /// <param name="?"></param>
-        public TableRelationAttribute(string fieldName,
-            string propertyName, string sourcePropertyName, 
-            string targetPropertyName, bool isParent,string description)
-        {
-            _fieldName = fieldName;
-            _propertyName = propertyName;
-            _sourceName = sourcePropertyName;
-            _targetName = targetPropertyName;
-            _isParent = isParent;
-            _isToDB = false;
-            _description = description;
-        }
+        ///// <summary>
+        /////  关联映射信息
+        ///// </summary>
+        ///// <param name="fieldName">对应字段</param>
+        ///// <param name="propertyName">属性</param>
+        ///// <param name="sourcePropertyName">源对象属性</param>
+        ///// <param name="targetPropertyName">目标属性</param>
+        ///// <param name="isParent">是否主表属性</param>
+        ///// <param name="?"></param>
+        //public TableRelationAttribute(string fieldName,
+        //    string propertyName, string sourcePropertyName, 
+        //    string targetPropertyName, bool isParent,string description)
+        //{
+        //    _fieldName = fieldName;
+        //    _propertyName = propertyName;
+        //    _sourceName = sourcePropertyName;
+        //    _targetName = targetPropertyName;
+        //    _isParent = isParent;
+        //    _isToDB = false;
+        //    _description = description;
+        //}
         public override string ToString()
         {
             return Name;
@@ -160,7 +160,14 @@ namespace Buffalo.DB.PropertyAttributes
         /// </summary>
         public string SourceTable
         {
-            get { return _sourceTable; }
+            get 
+            {
+                if (_sourceTable == null && _sourceType != null)
+                {
+                    _sourceTable = GetTableName(_sourceType);
+                }
+                return _sourceTable;
+            }
             set { _sourceTable = value; }
         }
         /// <summary>
@@ -168,9 +175,17 @@ namespace Buffalo.DB.PropertyAttributes
         /// </summary>
         public string TargetTable
         {
-            get { return _targetTable; }
+            get 
+            {
+                if (_targetTable == null && _targetType!=null) 
+                {
+                    _targetTable = GetTableName(_targetType);
+                }
+                return _targetTable; 
+            }
             set { _targetTable = value; }
         }
+
         /// <summary>
         /// 目标属性名
         /// </summary>
@@ -180,6 +195,21 @@ namespace Buffalo.DB.PropertyAttributes
             set { _targetName = value; }
         }
 
+        
+        /// <summary>
+        /// 获取类型对应的表名
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public string GetTableName(Type type) 
+        {
+            EntityInfoHandle eInfo = EntityInfoManager.GetEntityHandle(type);
+            if (eInfo != null) 
+            {
+                return eInfo.TableName;
+            }
+            return "";
+        }
         /// <summary>
         /// 源属性名
         /// </summary>
