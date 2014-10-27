@@ -316,6 +316,7 @@
             this.nfIco.Icon = ((System.Drawing.Icon)(resources.GetObject("nfIco.Icon")));
             this.nfIco.Text = "ShareServer";
             this.nfIco.Visible = true;
+            this.nfIco.DoubleClick += new System.EventHandler(this.nfIco_DoubleClick);
             // 
             // cmsIcon
             // 

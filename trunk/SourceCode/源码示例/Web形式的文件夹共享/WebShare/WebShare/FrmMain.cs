@@ -275,6 +275,11 @@ namespace WebShare
             }
         }
 
+        private void nfIco_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
         
     }
 }

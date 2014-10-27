@@ -1,1 +1,3 @@
-<root ip="192.168.1.25" port="86" />
+<root ip="192.168.1.25" port="9997">
+  <item name="Fengbei" path="F:\CSharpTest\fengbei.zy.com" />
+</root>
