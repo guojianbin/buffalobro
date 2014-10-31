@@ -36,7 +36,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditions
         /// <returns></returns>
         internal static string DoIn(string source, string[] lstParam,DBInfo db) 
         {
-            if (CommonMethods.IsCollNullOrEmpty(lstParam)) 
+            if (CommonMethods.IsCollectionNullOrEmpty(lstParam)) 
             {
                 return "1=2";
             }
@@ -49,7 +49,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditions
         /// <returns></returns>
         internal static string DoNotIn(string source, string[] lstParam, DBInfo db)
         {
-            if (CommonMethods.IsCollNullOrEmpty(lstParam))
+            if (CommonMethods.IsCollectionNullOrEmpty(lstParam))
             {
                 return "1=1";
             }

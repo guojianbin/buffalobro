@@ -28,31 +28,10 @@ namespace Buffalo.Kernel
     /// </summary>
     public class CommonMethods
     {
-        /// <summary>
-        /// 常用的正则表达式
-        /// </summary>
-        public struct Regulars  
-        {
-            /// <summary>
-            /// 固定电话
-            /// </summary>
-            public const string PhoneRegular = "0\\d{2,3}-\\d{7,8}";
-            /// <summary>
-            /// 所有电话
-            /// </summary>
-            public const string AllPhoneRegular = "(((86)|(086)|(86-)|(086-))?(((0)?13\\d{9})|((\\(\\d{3,4}\\)|\\d{3,4}-)?\\d{7,8})))((-)?\\d{0,4})";
-            /// <summary>
-            /// 移动电话
-            /// </summary>
-            public const string Mobile = "((\\(\\d{3}\\))|(\\d{3}\\-))?13\\d{9}|15[89]\\d{8}";
-
-        }
         private CommonMethods()
         {
 
         }
-
-
         private static string _baseRoot = null;//基目录
         /// <summary>
         /// 获取基路径
@@ -142,31 +121,13 @@ namespace Buffalo.Kernel
             return FieldCloneHelper.Clone(source);
         }
 
-        /// <summary>
-        /// 把文件移到回收站
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
-        public static int SendToRecycleBin(string file) 
-        {
-            SHFILEOPSTRUCT lpFileOp = new SHFILEOPSTRUCT();
-            lpFileOp.wFunc = WFunc.FO_DELETE;
-            lpFileOp.pFrom = file + "\0";
-            lpFileOp.fFlags = FILEOP_FLAGS.FOF_NOCONFIRMATION | FILEOP_FLAGS.FOF_NOERRORUI | FILEOP_FLAGS.FOF_SILENT;
-            lpFileOp.fFlags |= FILEOP_FLAGS.FOF_ALLOWUNDO;//允许撤销即为放进回收站
-            lpFileOp.fAnyOperationsAborted = false;
 
-            int n =WindowsAPI.SHFileOperation(ref lpFileOp);
-            return n;
-
-            
-        }
         /// <summary>
-        /// 判断字符串是 null、空还是仅由空白字符组成。
+        /// 判断字符串是 null、空还是仅由空白字符组成（为.net2.0扩展的方法，等同于string.IsNullOrWhiteSpace）
         /// </summary>
         /// <param name="value">字符串</param>
         /// <returns></returns>
-        public static bool IsStringNullOrWhiteSpace(string value) 
+        public static bool IsNullOrWhiteSpace(string value) 
         {
             if (value != null)
             {
@@ -186,7 +147,7 @@ namespace Buffalo.Kernel
         /// </summary>
         /// <param name="lst"></param>
         /// <returns></returns>
-        public static bool IsCollNullOrEmpty(ICollection lst) 
+        public static bool IsCollectionNullOrEmpty(ICollection lst) 
         {
             if (lst == null) 
             {
@@ -456,21 +417,10 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static object EntityProChangeType(object sValue, Type targetType) 
         {
-            //if(targetType==null || targetType==typeof(object))
-            //{
-            //    return sValue;
-            //}
             Type valType = sValue.GetType();//实际值的类型
-            //Type resType = info.FieldType;//字段值类型
 
             if (!targetType.Equals(valType))
             {
-                
-                //targetType = DefaultType.GetRealValueType(targetType);
-                //if (targetType.IsEnum) 
-                //{
-                //    targetType = typeof(int);
-                //}
                 sValue = ChangeType(sValue, targetType);
 
             }
@@ -533,7 +483,6 @@ namespace Buffalo.Kernel
             byte[] buffer = new byte[512];
             if (stm != null)
             {
-                //tmp = new byte[stm.Length];
                 int loaded = 0;
                 while ((loaded = stm.Read(buffer, 0, buffer.Length)) > 0)
                 {
@@ -568,39 +517,20 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static string GetAllNumber(string str) 
         {
-            if (str == null || str == "")
+            if (IsNullOrWhiteSpace(str))
             {
-                return "0";
+                return "";
             }
-            string ret = "";
+            StringBuilder ret = new StringBuilder(str.Length);
             for (int i = 0; i < str.Length; i++)
             {
                 if (char.IsDigit(str, i))
                 {
-                    ret += str[i];
+                    ret.Append(str[i]);
                 }
             }
-            if (ret.Length <= 0) 
-            {
-                ret = "0";
-            }
-            return ret;
+            return ret.ToString() ;
         }
-
-        /// <summary>
-        /// 判断字符串是否为空
-        /// </summary>
-        /// <param name="str">字符串</param>
-        /// <returns></returns>
-        public static bool IsStringEmpty(string str) 
-        {
-            if (str == "" || str == null) 
-            {
-                return true;
-            }
-            return false;
-        }
-
         
 
         /// <summary>
@@ -610,30 +540,13 @@ namespace Buffalo.Kernel
         /// <returns></returns>
         public static string BytesToHexString(byte[] bye)
         {
-            StringBuilder retStr = new StringBuilder(bye.Length * 2); ;
+            StringBuilder retStr = new StringBuilder(bye.Length * 2);
             for (int i = 0; i < bye.Length; i++)
             {
                 retStr.Append(bye[i].ToString("X2"));
             }
             return retStr.ToString();
         }
-
-        ///// <summary>
-        ///// 把字节转成十六进制字符串
-        ///// </summary>
-        ///// <param name="bye">字节</param>
-        ///// <returns></returns>
-        //public static string ByteToHexString(byte bye)
-        //{
-        //    string curStr = bye.ToString("X");
-        //    if (curStr.Length < 2)
-        //    {
-        //        curStr = "0" + curStr;
-        //    }
-        //    return curStr;
-        //}
-
-
 
         /// <summary>
         /// 把文字转成十六进制字符码
@@ -642,17 +555,13 @@ namespace Buffalo.Kernel
         public static string ToByteString(string str) 
         {
             byte[] byes = System.Text.Encoding.Unicode.GetBytes(str);
-            string ret = "";
+            StringBuilder ret = new StringBuilder(str.Length*3);
             for (int i = 0; i < byes.Length; i++) 
             {
                 string tmp = byes[i].ToString("X2");
-                //if (tmp.Length < 2) 
-                //{
-                //    tmp = "0" + tmp;
-                //}
-                ret += tmp;
+                ret.Append(tmp);
             }
-            return ret;
+            return ret.ToString();
         }
         /// <summary>
         /// 把十六进制字符串转成字节数组
@@ -689,7 +598,7 @@ namespace Buffalo.Kernel
         }
 
         /// <summary>
-        /// 格式化字符串
+        /// 格式化长字符串
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
@@ -872,99 +781,6 @@ namespace Buffalo.Kernel
             }
             return true;
         }
-        /// <summary>
-        /// 创建文件名
-        /// </summary>
-        /// <param name="path">路径</param>
-        /// <param name="fileNamepart">文件名</param>
-        /// <param name="extendName">扩展名</param>
-        /// <returns></returns>
-        public static string GetFileName(string path, string fileNamepart, string extendName)
-        {
-            string root = path + fileNamepart + extendName;
-            int index = 0;
-            string fileName = fileNamepart + index.ToString();
-            while (File.Exists(root))
-            {
-                fileName = fileNamepart + index.ToString();
-                root = path + fileName + extendName;
-                index++;
-            }
-            return fileName;
-        }
-        /// <summary>
-        /// 按时间生成字符串
-        /// </summary>
-        /// <returns></returns>
-        public static string CurrentDataString()
-        {
-            return DateTime.Now.ToString("yyyyMMddHHmmssms");
-        }
 
-        /// <summary>
-        /// 把字符串变成字节数组，然后数组每个元素减去指定的值
-        /// </summary>
-        /// <param name="str">字符串</param>
-        /// <param name="bye">要减去的值</param>
-        /// <returns></returns>
-        public static string StringToKey(string str,byte bye) 
-        {
-            if (str == null)
-            {
-                return null;
-            }
-            byte[] strBye = System.Text.Encoding.UTF8.GetBytes(str);
-            StringBuilder sbRet = new StringBuilder();
-            foreach (byte cur in strBye) 
-            {
-                int curByte = (int)cur - (int)bye;
-                if (curByte < 0) 
-                {
-                    curByte = curByte + 256;
-                }
-                sbRet.Append(curByte.ToString("X2"));
-            }
-            return sbRet.ToString();
-        }
-        /// <summary>
-        /// 把字节数组变回字符串，数组每个元素加上指定的值
-        /// </summary>
-        /// <param name="str">字符串</param>
-        /// <param name="bye">要加上的值</param>
-        /// <returns></returns>
-        public static string KeyToString(string str, byte bye)
-        {
-            if (str == null) 
-            {
-                return null;
-            }
-            byte[] strBye = HexStringToBytes(str);
-
-            for (int i = 0; i < strBye.Length;i++)
-            {
-                byte cur = strBye[i];
-                int curByte = (int)cur + (int)bye;
-                curByte = curByte % 256;
-                strBye[i] = (byte)curByte;
-            }
-            string ret = System.Text.Encoding.UTF8.GetString(strBye);
-            return ret;
-        }
-
-        /// <summary>
-        /// 获取文件路径所在的文件夹
-        /// </summary>
-        /// <param name="filePath">文件路径</param>
-        /// <returns></returns>
-        public static string GetFilePath(string filePath)
-        {
-            int lastIndex = filePath.LastIndexOf('\\');
-            string dic = "";
-            if (lastIndex >= 0)
-            {
-                dic = filePath.Substring(0, lastIndex + 1);
-            }
-            return dic;
-        }
     }
 }

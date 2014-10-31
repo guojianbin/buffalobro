@@ -238,14 +238,9 @@ namespace Buffalo.DB.PropertyAttributes
                 {
                     if(_sourceType==null)
                     {
-                        throw new System.MissingMemberException("属性:"+PropertyName+"不存在源实体，请检查配置文件");
+                        return null;
                     }
                     _sourceProperty = EntityInfoManager.GetEntityHandle(_sourceType).PropertyInfo[_sourceName];
-                    if (_sourceProperty == null) 
-                    {
-                        throw new System.MissingMemberException("属性:" + PropertyName + 
-                            "的源实体属性:" + _sourceName + "不存在映射中，请检查配置");
-                    }
                 }
                 return _sourceProperty;
             }
@@ -261,15 +256,11 @@ namespace Buffalo.DB.PropertyAttributes
                 {
                     if (_targetType == null)
                     {
-                        throw new System.MissingMemberException("属性:" + PropertyName + "不存在目标实体，请检查配置文件");
+                        return null;
                     }
 
                     _targetProperty = EntityInfoManager.GetEntityHandle(_targetType).PropertyInfo[_targetName];
-                    if (_targetProperty == null)
-                    {
-                        throw new System.MissingMemberException("属性:" + PropertyName +
-                            "的源实体属性:" + _targetName + "不存在映射中，请检查配置");
-                    }
+                    
                 }
                 return _targetProperty;
             }
