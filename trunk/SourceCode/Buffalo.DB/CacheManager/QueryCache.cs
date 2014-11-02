@@ -119,7 +119,7 @@ namespace Buffalo.DB.CacheManager
         /// <param name="lstParam">变量集合</param>
         /// <returns></returns>
         public DataSet GetDataSet(IDictionary<string, bool> tables,
-            string sql, ParamList lstParam) 
+            string sql, ParamList lstParam,DataBaseOperate oper) 
         {
             if (_cache == null) 
             {
@@ -129,8 +129,8 @@ namespace Buffalo.DB.CacheManager
             StringBuilder sbSql = new StringBuilder();
             sbSql.Append(sql);
             sbSql.Append(";");
-            sbSql.Append(lstParam.GetParamString(_db));
-            DataSet ds = _cache.GetData(tables, sbSql.ToString());
+            sbSql.Append(lstParam.GetParamString(_db,oper));
+            DataSet ds = _cache.GetData(tables, sbSql.ToString(), oper);
             return ds;
         }
         /// <summary>
@@ -141,7 +141,7 @@ namespace Buffalo.DB.CacheManager
         /// <param name="lstParam">变量集合</param>
         /// <returns></returns>
         public bool SetDataSet(DataSet ds, IDictionary<string, bool> tables,
-            string sql, ParamList lstParam)
+            string sql, ParamList lstParam,DataBaseOperate oper)
         {
             if (_cache == null)
             {
@@ -150,8 +150,8 @@ namespace Buffalo.DB.CacheManager
             StringBuilder sbSql = new StringBuilder();
             sbSql.Append(sql);
             sbSql.Append(";");
-            sbSql.Append(lstParam.GetParamString(_db));
-            return _cache.SetData(tables, sbSql.ToString(), ds);
+            sbSql.Append(lstParam.GetParamString(_db,oper));
+            return _cache.SetData(tables, sbSql.ToString(), ds,oper);
             
         }
 
@@ -181,14 +181,14 @@ namespace Buffalo.DB.CacheManager
         /// <param name="lstParam">变量集合</param>
         /// <returns></returns>
         public MemCacheReader GetReader( IDictionary<string, bool> tables,
-            string sql, ParamList lstParam)
+            string sql, ParamList lstParam, DataBaseOperate oper)
         {
             if (_cache == null)
             {
                 return null;
             }
             CheckTable(tables);
-            DataSet ds = GetDataSet(tables,sql,lstParam);
+            DataSet ds = GetDataSet(tables,sql,lstParam,oper);
             if (ds == null) 
             {
                 return null;
@@ -204,7 +204,7 @@ namespace Buffalo.DB.CacheManager
         /// <param name="lstParam">变量集合</param>
         /// <returns></returns>
         public IDataReader SetReader(IDataReader reader, IDictionary<string, bool> tables,
-            string sql, ParamList lstParam)
+            string sql, ParamList lstParam,DataBaseOperate oper)
         {
             if (_cache == null)
             {
@@ -213,7 +213,7 @@ namespace Buffalo.DB.CacheManager
             
             DataSet ds = CacheReader.GenerateDataSet(reader, false);
             MemCacheReader mreader = new MemCacheReader(ds);
-            SetDataSet(ds, tables, sql, lstParam);
+            SetDataSet(ds, tables, sql, lstParam,oper);
             return mreader;
         }
         /// <summary>
@@ -221,7 +221,7 @@ namespace Buffalo.DB.CacheManager
         /// </summary>
         /// <param name="tables"></param>
         /// <returns></returns>
-        public bool ClearTableCache(IDictionary<string, bool> tables) 
+        public bool ClearTableCache(IDictionary<string, bool> tables, DataBaseOperate oper) 
         {
             if (_cache == null)
             {
@@ -232,7 +232,7 @@ namespace Buffalo.DB.CacheManager
             {
                 if (IsCacheTable(kvp.Key) || _isAllTableCache)
                 {
-                    _cache.RemoveByTableName(kvp.Key);
+                    _cache.RemoveByTableName(kvp.Key,oper);
                 }
             }
             return true;

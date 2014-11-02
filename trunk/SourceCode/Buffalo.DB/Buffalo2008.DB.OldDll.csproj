@@ -327,9 +327,9 @@
     <Compile Include="ListExtends\SortCompartItem.cs" />
     <Compile Include="ListExtends\XMLExtendsLoader.cs" />
     <Compile Include="MessageOutPuters\DebugOutputer.cs" />
-    <Compile Include="MessageOutPuters\IMessageOutputer.cs" />
     <Compile Include="MessageOutPuters\MessageInfo.cs" />
     <Compile Include="MessageOutPuters\MessageOutput.cs" />
+    <Compile Include="MessageOutPuters\MessageOutputBase.cs" />
     <Compile Include="MessageOutPuters\MessageType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyAttributes\AttributesGetter.cs" />

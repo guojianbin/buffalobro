@@ -56,7 +56,7 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 BQLEntityTableHandle handle = FastValueGetSet.GetGetMethodInfo(info.Name, type).Invoke(null, new object[] { }) as BQLEntityTableHandle;
                 AddToDB(handle);
             }
-            
+            StaticConnection.ClearCacheOperate(_db);
         }
 
         /// <summary>

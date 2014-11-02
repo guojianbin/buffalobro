@@ -1,33 +1,38 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Buffalo.DB.DbCommon;
 
 namespace Buffalo.DB.MessageOutPuters
 {
+    public delegate MessageOutputBase CreateOutputerHandle(DataBaseOperate oper);
+
     /// <summary>
     /// 信息输出类
     /// </summary>
     public class MessageOutput
     {
-        private IMessageOutputer _defaultOutputer =null;
+        public event CreateOutputerHandle OnOutputerCreate;
 
         /// <summary>
         /// 信息输出类
         /// </summary>
         public MessageOutput() 
         {
-#if DEBUG
-            _defaultOutputer =  new DebugOutputer();
-#endif
+
         }
 
         /// <summary>
-        /// 默认的信息输出类
+        /// 创建输出器
         /// </summary>
-        public IMessageOutputer DefaultOutputer
+        /// <returns></returns>
+        internal MessageOutputBase CreateOutput(DataBaseOperate oper) 
         {
-            get { return _defaultOutputer; }
-            set { _defaultOutputer = value; }
+            if (OnOutputerCreate != null) 
+            {
+                return OnOutputerCreate(oper);
+            }
+            return null;
         }
 
         /// <summary>
@@ -37,62 +42,11 @@ namespace Buffalo.DB.MessageOutPuters
         {
             get 
             {
-                return _defaultOutputer != null;
+                return OnOutputerCreate != null;
             }
-        }
-        private bool _showBinary = false;
-        /// <summary>
-        /// 输出SQL时候是否输出二进制变量值的Hex
-        /// </summary>
-        public bool ShowBinary
-        {
-            get { return _showBinary; }
-            set { _showBinary = value; }
         }
 
-        private int _hideTextLength = 0;
-        /// <summary>
-        /// 输出SQL时候设置一个值，当字符串大于这个长度时候则隐藏值
-        /// </summary>
-        public int HideTextLength
-        {
-            get { return _hideTextLength; }
-            set { _hideTextLength = value; }
-        }
-        /// <summary>
-        /// 输出信息
-        /// </summary>
-        /// <param name="messName">信息发送者名称</param>
-        /// <param name="messInfo">信息</param>
-        /// <returns></returns>
-        public bool OutPut(MessageType messType, MessageInfo mess) 
-        {
-            if (_defaultOutputer != null)
-            {
-                _defaultOutputer.Output( messType, mess);
-                return true;
-            }
-            return false;
-        }
 
-       /// <summary>
-        /// 输出信息
-       /// </summary>
-       /// <param name="messType">消息类型</param>
-       /// <param name="type">类型</param>
-       /// <param name="extendType">扩展类型</param>
-       /// <param name="value">值</param>
-       /// <returns></returns>
-        public bool OutPut(MessageType messType, string type,string extendType,string value)
-        {
-            MessageInfo mess = new MessageInfo();
-            mess.Type = type;
-            if (extendType != null) 
-            {
-                mess.ExtendType = extendType;
-            }
-            mess.Value = value;
-            return OutPut(messType,mess);
-        }
+
     }
 }

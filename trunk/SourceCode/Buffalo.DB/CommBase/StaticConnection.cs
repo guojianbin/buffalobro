@@ -90,7 +90,7 @@ namespace Buffalo.DB.CommBase
 
                 if (oper.DBInfo.SqlOutputer.HasOutput)
                 {
-                    db.OutMessage(MessageType.OtherOper, "CreateConnection", null, "NewConnection");
+                    oper.OutMessage(MessageType.OtherOper, "CreateConnection", null, "NewConnection");
                 }
                 
                 SetOperate(oper,key);

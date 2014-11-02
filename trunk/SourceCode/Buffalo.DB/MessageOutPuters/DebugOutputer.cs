@@ -7,14 +7,14 @@ using System.Collections;
 
 namespace Buffalo.DB.MessageOutPuters
 {
-    public class DebugOutputer : IMessageOutputer
+    public class DebugOutputer : MessageOutputBase
     {
         /// <summary>
         ///  ‰≥ˆ–≈œ¢
         /// </summary>
         /// <param name="messType"></param>
         /// <param name="mess"></param>
-        public void Output(MessageType messType,MessageInfo mess) 
+        public override void OutPut(MessageType messType, MessageInfo mess) 
         {
             string messName = messType.ToString();
             StringBuilder smsg = new StringBuilder();
@@ -44,5 +44,6 @@ namespace Buffalo.DB.MessageOutPuters
             Trace.WriteLine(smsg.ToString());
 #endif
         }
+
     }
 }

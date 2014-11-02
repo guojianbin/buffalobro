@@ -159,9 +159,17 @@ namespace Buffalo.DB.DbCommon
         /// 获取param里边的值的显示字符串
         /// </summary>
         /// <returns></returns>
-        public string GetParamString(DBInfo db)
+        public string GetParamString(DBInfo db,DataBaseOperate oper)
         {
-            return GetParamString(db, db.SqlOutputer.ShowBinary, db.SqlOutputer.HideTextLength);
+            bool showBinary=false;
+            int hideTextLength = 0;
+            MessageOutputBase msg=oper.MessageOutputer;
+            if (msg != null) 
+            {
+                showBinary = msg.ShowBinary;
+                hideTextLength = msg.HideTextLength;
+            }
+            return GetParamString(db, showBinary, hideTextLength);
         }
         /// <summary>
         /// 获取param里边的值的信息

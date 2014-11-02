@@ -333,23 +333,6 @@ namespace Buffalo.DB.DataBaseAdapter
             }
         }
 
-       /// <summary>
-        /// 输出信息
-       /// </summary>
-       /// <param name="messageType">信息类型</param>
-       /// <param name="type">扩展类型1</param>
-       /// <param name="extendType">扩展类型2</param>
-       /// <param name="value">值</param>
-        public void OutMessage(MessageType messageType, string type, string extendType, string value)
-        {
-            if (SqlOutputer.HasOutput)
-            {
-                SqlOutputer.OutPut(messageType, type, extendType, value);
-            }
-
-        }
-
-
         private Dictionary<string, BQLEntityTableHandle> _dicTables = new Dictionary<string, BQLEntityTableHandle>();
 
         /// <summary>

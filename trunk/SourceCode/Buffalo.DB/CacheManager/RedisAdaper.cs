@@ -13,6 +13,7 @@ using System.IO;
 using Buffalo.DB.DataBaseAdapter;
 using Redissharp;
 using Buffalo.DB.MessageOutPuters;
+using Buffalo.DB.DbCommon;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -78,19 +79,6 @@ namespace Buffalo.DB.CacheManager
                 if (part.IndexOf(serverString, StringComparison.CurrentCultureIgnoreCase) == 0)
                 {
                     string serverStr = part.Substring(serverString.Length);
-                    //string[] parts = serverStr.Split(':');
-                    //if (parts.Length > 0)
-                    //{
-                    //    ip = parts[0].Trim();
-
-                    //}
-                    //if (parts.Length > 1)
-                    //{
-                    //    if (!uint.TryParse(parts[1].Trim(), out port))
-                    //    {
-                    //        throw new ArgumentException(parts[1].Trim() + "不是正确的端口号");
-                    //    }
-                    //}
                     string[] parts = serverStr.Split(',');
                     foreach (string sser in parts)
                     {
@@ -169,28 +157,27 @@ namespace Buffalo.DB.CacheManager
             return ret;
         }
 
-        public System.Data.DataSet GetData(IDictionary<string, bool> tableNames, string sql)
+        public System.Data.DataSet GetData(IDictionary<string, bool> tableNames, string sql, DataBaseOperate oper)
         {
-            string sourceKey = null;
             DataSet dsRet = null;
             using (Redis client = new Redis(_pool))
             {
                 client.Open(QueryCache.CommandGetDataSet);
-                string key = GetKey(tableNames, sql, client, true, out sourceKey);
-                if (string.IsNullOrEmpty(key))
+                string sqlMD5 = GetSQLMD5(sql);
+                bool isVersion = ComparVersion(tableNames, sqlMD5, client);//判断版本号
+                if (!isVersion)
                 {
                     return null;
                 }
-                dsRet = client.GetDataSet(key);
+                dsRet = client.GetDataSet(sqlMD5);
             }
             if (_info.SqlOutputer.HasOutput)
             {
-                OutPutMessage(QueryCache.CommandGetDataSet, sourceKey);
+                OutPutMessage(QueryCache.CommandGetDataSet, sql,oper);
             }
             return dsRet;
-
-
         }
+
 
         /// <summary>
         /// 获取表名
@@ -207,23 +194,78 @@ namespace Buffalo.DB.CacheManager
         }
 
         /// <summary>
-        /// 根据SQL和表获取键
+        /// 获取SQL语句的键
         /// </summary>
-        /// <param name="tableNames">表名</param>
-        /// <param name="sql">SQL</param>
-        /// <param name="client">缓存信息</param>
-        /// <param name="needCreateTableVer">是否需要创建表的键</param>
-        /// <param name="sourceKey">源键</param>
+        /// <param name="sql">SQL语句</param>
+        /// <param name="client">创建器</param>
         /// <returns></returns>
-        private string GetKey(IDictionary<string, bool> tableNames, string sql,
-            Redis client, bool needCreateTableVer,out string sourceKey)
+        private string GetSQLMD5(string sql) 
         {
-            List<string> tables = GetSortTables(tableNames);
-            StringBuilder sbSql = new StringBuilder(tables.Count * 10 + 200);
-            sourceKey = "";
-            foreach (string tableName in tables)
+            StringBuilder sbSql = new StringBuilder(256);
+            StringBuilder sbSqlInfo = new StringBuilder();
+            sbSqlInfo.Append(_info.Name);
+            sbSqlInfo.Append(":");
+            sbSqlInfo.Append(sql);
+            sbSql.Append(PasswordHash.ToMD5String(sbSqlInfo.ToString()));
+            return sbSql.ToString();
+        }
+        /// <summary>
+        /// 获取版本号的键
+        /// </summary>
+        /// <param name="md5">哈希值</param>
+        /// <returns></returns>
+        private string FormatVersionKey(string md5) 
+        {
+            return "v." + md5;
+        }
+        /// <summary>
+        /// 对比版本
+        /// </summary>
+        /// <param name="tableNames">表名集合</param>
+        /// <param name="md5">sql语句的MD5</param>
+        /// <param name="client">客户端</param>
+        /// <returns></returns>
+        private bool ComparVersion(IDictionary<string, bool> tableNames, string md5, Redis client) 
+        {
+            Dictionary<string, string> dicTableVers = GetTablesVersion(tableNames, client, false);
+            if (dicTableVers == null) 
             {
-                string key = GetTableName(tableName);
+                return false;
+            }
+            Dictionary<string, string> dicDataVers = GetDataVersion(md5, client);
+            if (dicDataVers == null)
+            {
+                return false;
+            }
+            string tmp=null;
+            foreach (KeyValuePair<string, string> kvp in dicTableVers) 
+            {
+                if (!dicDataVers.TryGetValue(kvp.Key,out tmp) )
+                {
+                    return false;
+                }
+                if (tmp != kvp.Value) 
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 获取当前库中所有表的版本号
+        /// </summary>
+        /// <param name="tableNames">表名集合</param>
+        /// <param name="client">Redis连接</param>
+        /// <param name="needCreateTableVer">是否需要创建表的键</param>
+        /// <returns></returns>
+        private Dictionary<string, string> GetTablesVersion(IDictionary<string, bool> tableNames, Redis client, bool needCreateTableVer) 
+        {
+            Dictionary<string, string> dicTableVers = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
+            
+            foreach (KeyValuePair<string, bool> kvp in tableNames)
+            {
+                string key = GetTableName(kvp.Key);
                 string objVer = client.GetString(key);
                 if (objVer == null)
                 {
@@ -231,46 +273,94 @@ namespace Buffalo.DB.CacheManager
                     {
                         return null;
                     }
-                    else 
+                    else
                     {
                         client.SetValue(key, 1);
                         client.Expire(key, (int)_expiration.TotalSeconds);
                         objVer = "1";
                     }
                 }
-                sbSql.Append(tableName);
-                sbSql.Append(".");
-                sbSql.Append(objVer.ToString());
-                sbSql.Append(",");
-            }
+                dicTableVers[kvp.Key] = objVer;
 
-            if (sbSql.Length > 0)
+            }
+            return dicTableVers;
+        }
+        /// <summary>
+        /// 获取当前库中表的版本号字符串
+        /// </summary>
+        /// <param name="tableNames">表名集合</param>
+        /// <param name="client">Redis连接</param>
+        /// <param name="needCreateTableVer">是否需要创建表的键</param>
+        /// <returns></returns>
+        private string GetTablesVerString(IDictionary<string, bool> tableNames, Redis client, bool needCreateTableVer)
+        {
+            Dictionary<string, string> dicTableVers = GetTablesVersion(tableNames, client, needCreateTableVer);
+            StringBuilder sbTables = new StringBuilder(dicTableVers.Count*10);
+            foreach (KeyValuePair<string, string> kvp in dicTableVers) 
             {
-                sbSql[sbSql.Length - 1] = ':';
+                sbTables.Append(kvp.Key);
+                sbTables.Append("=");
+                sbTables.Append(kvp.Value);
+                sbTables.Append("\n");
             }
-            sbSql.Append(sql);
-            StringBuilder sbRet = new StringBuilder();
-
-            sourceKey = sbSql.ToString();
-            sbRet.Append(PasswordHash.ToMD5String(sourceKey));
-            return sbRet.ToString();
+            if (sbTables.Length > 0) 
+            {
+                sbTables.Remove(sbTables.Length - 1, 1);
+            }
+            return sbTables.ToString();
+        }
+        /// <summary>
+        /// 获取当前查询的版本号
+        /// </summary>
+        /// <param name="md5">SQL的md5</param>
+        /// <param name="client">Redis连接</param>
+        /// <returns></returns>
+        private Dictionary<string, string> GetDataVersion(string md5, Redis client)
+        {
+            //string md5 = GetSQLKey(sql);
+            string key = FormatVersionKey(md5);
+            string vers = client.GetString(key);
+            Dictionary<string, string> dicDataVers = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
+            if (CommonMethods.IsNullOrWhiteSpace(vers)) 
+            {
+                return null;
+            }
+            string[] verItems = vers.Split('\n');
+            foreach (string verItem in verItems) 
+            {
+                if (string.IsNullOrEmpty(verItem)) 
+                {
+                    continue;
+                }
+                string[] part = verItem.Split('=');
+                if (part.Length <2) 
+                {
+                    continue;
+                }
+                
+                dicDataVers[part[0]] = part[1];
+            }
+            return dicDataVers;
         }
 
-        public void RemoveBySQL(IDictionary<string, bool> tableNames, string sql)
+
+        public void RemoveBySQL(IDictionary<string, bool> tableNames, string sql, DataBaseOperate oper)
         {
             using (Redis client = new Redis(_pool))
             {
                 client.Open(QueryCache.CommandDeleteSQL);
                 string sourceKey = null;
-                string key = GetKey(tableNames, sql, client, false, out sourceKey);
-                if (!string.IsNullOrEmpty(key))
+                string md5 = GetSQLMD5(sql);
+                string verKey = FormatVersionKey(md5);
+                if (!string.IsNullOrEmpty(md5))
                 {
-                    client.Remove(key);
+                    client.Remove(md5);
+                    client.Remove(verKey);
                 }
             }
             if (_info.SqlOutputer.HasOutput)
             {
-                OutPutMessage(QueryCache.CommandDeleteSQL, sql);
+                OutPutMessage(QueryCache.CommandDeleteSQL, sql,oper);
             }
 
         }
@@ -282,12 +372,8 @@ namespace Buffalo.DB.CacheManager
         /// 根据表名删除缓存
         /// </summary>
         /// <param name="tableName"></param>
-        public void RemoveByTableName(string tableName)
+        public void RemoveByTableName(string tableName, DataBaseOperate oper)
         {
-            //if (client.GetValue(tableName) == null) 
-            //{
-            //    //_client.Set(tableName,1,
-            //}
             string key = GetTableName(tableName);
             using (Redis client = new Redis(_pool))
             {
@@ -312,7 +398,7 @@ namespace Buffalo.DB.CacheManager
             }
             if (_info.SqlOutputer.HasOutput)
             {
-                OutPutMessage(QueryCache.CommandDeleteTable, tableName);
+                OutPutMessage(QueryCache.CommandDeleteTable, tableName,oper);
             }
         }
         /// <summary>
@@ -322,29 +408,30 @@ namespace Buffalo.DB.CacheManager
         /// <param name="sql"></param>
         /// <param name="ds"></param>
         /// <returns></returns>
-        public  bool SetData(IDictionary<string, bool> tableNames, string sql, System.Data.DataSet ds)
+        public bool SetData(IDictionary<string, bool> tableNames, string sql, System.Data.DataSet ds, DataBaseOperate oper)
         {
             using (Redis client = new Redis(_pool))
             {
                 client.Open(QueryCache.CommandSetDataSet);
-
-                string sourceKey = null;
-                string key = GetKey(tableNames, sql, client, true, out sourceKey);
+                string md5 = GetSQLMD5(sql);
+                string verKey = FormatVersionKey(md5);
+                string verValue = GetTablesVerString(tableNames, client, true);
+                
                 if (_info.SqlOutputer.HasOutput)
                 {
-                    OutPutMessage(QueryCache.CommandSetDataSet, sourceKey);
+                    OutPutMessage(QueryCache.CommandSetDataSet, sql,oper);
                 }
-                client.SetDataSet(key, ds);
-                client.Expire(key, (int)_expiration.TotalSeconds);
+                client.SetValue(verKey, verValue);
+                client.SetDataSet(md5, ds);
+                client.Expire(verKey, (int)_expiration.TotalSeconds);
+                client.Expire(md5, (int)_expiration.TotalSeconds);
             }
             return true;
         }
 
-        private void OutPutMessage(string type,string message) 
+        private void OutPutMessage(string type, string message, DataBaseOperate oper)
         {
-
-                _info.OutMessage(MessageType.QueryCache, "Redis", type, message);
-            
+            oper.OutMessage(MessageType.QueryCache, "Redis", type, message);
         }
 
         #endregion

@@ -8,6 +8,7 @@ using System.Collections;
 using Buffalo.Kernel;
 using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.MessageOutPuters;
+using Buffalo.DB.DbCommon;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -38,7 +39,7 @@ namespace Buffalo.DB.CacheManager
         /// <param name="sql">SQL名</param>
         /// <param name="dt">数据</param>
         /// <returns></returns>
-        public  bool SetData(IDictionary<string, bool> tableNames, string sql, DataSet ds) 
+        public bool SetData(IDictionary<string, bool> tableNames, string sql, DataSet ds, DataBaseOperate oper) 
         {
             string key = GetKey(sql);
             ArrayList sqlItems = null;
@@ -60,7 +61,7 @@ namespace Buffalo.DB.CacheManager
             }
             if (_info.SqlOutputer.HasOutput)
             {
-                OutPutMessage(QueryCache.CommandSetDataSet, sql);
+                OutPutMessage(QueryCache.CommandSetDataSet, sql,oper);
             }
             _cache[key] = ds;
             
@@ -113,12 +114,12 @@ namespace Buffalo.DB.CacheManager
         /// <param name="sql">SQL语句</param>
         /// <param name="tableNames">表名集合</param>
         /// <returns></returns>
-        public  DataSet GetData(IDictionary<string, bool> tableNames, string sql)
+        public  DataSet GetData(IDictionary<string, bool> tableNames, string sql, DataBaseOperate oper)
         {
             string key = GetKey(sql);
             if (_info.SqlOutputer.HasOutput)
             {
-                OutPutMessage(QueryCache.CommandGetDataSet, sql);
+                OutPutMessage(QueryCache.CommandGetDataSet, sql,oper);
             }
             return _cache[key] as DataSet;
         }
@@ -127,14 +128,14 @@ namespace Buffalo.DB.CacheManager
         /// 通过SQL删除某项
         /// </summary>
         /// <param name="sql"></param>
-        public  void RemoveBySQL(IDictionary<string, bool> tableNames,string sql) 
+        public void RemoveBySQL(IDictionary<string, bool> tableNames, string sql, DataBaseOperate oper) 
         {
             string key = GetKey(sql);
             
             _cache.Remove(key);
             if (_info.SqlOutputer.HasOutput)
             {
-                OutPutMessage(QueryCache.CommandDeleteSQL, sql);
+                OutPutMessage(QueryCache.CommandDeleteSQL, sql,oper);
             }
 
         }
@@ -142,7 +143,7 @@ namespace Buffalo.DB.CacheManager
         /// 通过表名删除关联项
         /// </summary>
         /// <param name="sql"></param>
-        public  void RemoveByTableName(string tableName)
+        public void RemoveByTableName(string tableName, DataBaseOperate oper)
         {
             ArrayList sqlItems = _hsToKey[tableName] as ArrayList;
 
@@ -163,15 +164,13 @@ namespace Buffalo.DB.CacheManager
             }
             if (_info.SqlOutputer.HasOutput)
             {
-                OutPutMessage(QueryCache.CommandDeleteTable, tableName);
+                OutPutMessage(QueryCache.CommandDeleteTable, tableName,oper);
             }
         }
 
-        private void OutPutMessage(string type, string message)
+        private void OutPutMessage(string type, string message, DataBaseOperate oper)
         {
-
-                _info.OutMessage(MessageType.QueryCache, "SystemMemory", type, message);
-            
+            oper.OutMessage(MessageType.QueryCache, "SystemMemory", type, message);
         }
     }
 
