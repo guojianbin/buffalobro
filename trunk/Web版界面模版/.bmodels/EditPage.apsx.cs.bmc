@@ -47,6 +47,10 @@ private string GetControlName(Property pro)
 	{
 		return "chk"+pro.PropertyName;
 	}
+	if(pro.TypeName.IndexOf("DateTime")>=0)
+	{
+		return "txt"+pro.PropertyName;
+	}
 	return "txt"+pro.PropertyName;
 }
 /// <summary>
@@ -63,6 +67,10 @@ private string GetControlValue(Property pro)
 	if(pro.TypeName=="bool")
 	{
 		return "chk"+pro.PropertyName+".Checked";
+	}
+	if(pro.TypeName.IndexOf("DateTime")>=0)
+	{
+		return "txt"+pro.PropertyName+".Value";
 	}
 	return "txt"+pro.PropertyName+".Text";
 }

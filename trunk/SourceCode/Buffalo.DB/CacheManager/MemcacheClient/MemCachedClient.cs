@@ -159,7 +159,7 @@ using System.Data;
 	/// MemcachedClient mc = new MemcachedClient();
 	/// Hashtable stats = mc.stats();
 	/// </example>
-	public class MemcachedClient 
+	public class MemcachedClient :IDisposable
 	{
 
 		// logger
@@ -1704,5 +1704,10 @@ using System.Data;
         //{
         //    return _resourceManager.GetString(key);
         //}
-	}
+
+        public void Dispose()
+        {
+           
+        }
+    }
 }

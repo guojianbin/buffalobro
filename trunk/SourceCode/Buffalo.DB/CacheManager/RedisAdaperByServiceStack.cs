@@ -16,29 +16,10 @@ using Buffalo.DB.DbCommon;
 
 namespace Buffalo.DB.CacheManager
 {
-    public class RedisAdaperByServiceStack : ICacheAdaper
+    public class RedisAdaperByServiceStack : NetCacheBase<IRedisClient>
     {
         PooledRedisClientManager _pool =null;
-        /// <summary>
-        /// 过期时间(分钟)
-        /// </summary>
-        TimeSpan _expiration;
-        /// <summary>
-        /// 过期时间(分钟)
-        /// </summary>
-        public TimeSpan Expiration
-        {
-            get { return _expiration; }
-        }
-
-        private DBInfo _info;
-        /// <summary>
-        /// 数据库信息
-        /// </summary>
-        public DBInfo Info
-        {
-            get { return _info; }
-        }
+        
         /// <summary>
         /// memcached的适配器
         /// </summary>
@@ -65,6 +46,7 @@ namespace Buffalo.DB.CacheManager
             string readonlyserverString = "roserver=";
             string sizeString = "maxsize=";
             string expirString = "expir=";
+            string throwString = "throw=";
             string part = null;
             List<string> lstServers = new List<string>();
             List<string> lstRoServers = new List<string>();
@@ -133,6 +115,11 @@ namespace Buffalo.DB.CacheManager
                         throw new ArgumentException("最大连接数必须是1-" + MaxVersion + "的值");
                     }
                 }
+                else if (part.IndexOf(throwString, StringComparison.CurrentCultureIgnoreCase) == 0)
+                {
+                    string throwStr = part.Substring(throwString.Length);
+                    _throwExcertion = (throwStr == "1");
+                }
                 else if (part.IndexOf(expirString, StringComparison.CurrentCultureIgnoreCase) == 0)
                 {
                     string expirStr = part.Substring(expirString.Length);
@@ -178,283 +165,59 @@ namespace Buffalo.DB.CacheManager
         #region ICacheAdaper 成员
 
 
-        public System.Data.DataSet GetData(IDictionary<string, bool> tableNames, string sql, DataBaseOperate oper)
+        protected override IRedisClient CreateClient(bool realOnly,string cmd)
         {
-            DataSet dsRet = null;
-            using (IRedisClient client = _pool.GetReadOnlyClient())
+            IRedisClient client =null;
+            if (realOnly)
             {
-                string sqlMD5 = GetSQLMD5(sql);
-                bool isVersion = ComparVersion(tableNames, sqlMD5, client);//判断版本号
-                if (!isVersion)
-                {
-                    return null;
-                }
-                byte[] content = client.Get<byte[]>(sqlMD5);
-                using (MemoryStream stm = new MemoryStream(content))
-                {
-                    dsRet = MemDataSerialize.LoadDataSet(stm);
-                }
+                client = _pool.GetReadOnlyClient();
             }
-            if (_info.SqlOutputer.HasOutput)
+            else 
             {
-                OutPutMessage(QueryCache.CommandGetDataSet, sql, oper);
+                client = _pool.GetClient();
             }
-            return dsRet;
-
-
+            return client;
         }
 
-        /// <summary>
-        /// 获取表名
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <returns></returns>
-        private string GetTableName(string tableName)
+        protected override E GetValue<E>(string key,  IRedisClient client)
         {
-            StringBuilder sbInfo = new StringBuilder(tableName.Length + 10);
-            sbInfo.Append(_info.Name);
-            sbInfo.Append(".");
-            sbInfo.Append(tableName);
-            return PasswordHash.ToMD5String(sbInfo.ToString());
+            return client.Get<E>(key);
         }
 
-        /// <summary>
-        /// 获取SQL语句的键
-        /// </summary>
-        /// <param name="sql">SQL语句</param>
-        /// <param name="client">创建器</param>
-        /// <returns></returns>
-        private string GetSQLMD5(string sql)
+        protected override void SetValue<E>(string key, E value, IRedisClient client)
         {
-            StringBuilder sbSql = new StringBuilder(256);
-            StringBuilder sbSqlInfo = new StringBuilder();
-            sbSqlInfo.Append(_info.Name);
-            sbSqlInfo.Append(":");
-            sbSqlInfo.Append(sql);
-            sbSql.Append(PasswordHash.ToMD5String(sbSqlInfo.ToString()));
-            return sbSql.ToString();
+            client.Set(key, value, _expiration);
         }
-        /// <summary>
-        /// 获取版本号的键
-        /// </summary>
-        /// <param name="md5">哈希值</param>
-        /// <returns></returns>
-        private string FormatVersionKey(string md5)
+
+        protected override DataSet DoGetDataSet(string key, IRedisClient client)
         {
-            return "v." + md5;
+            byte[] content = client.Get<byte[]>(key);
+            using (MemoryStream stm = new MemoryStream(content))
+            {
+                return MemDataSerialize.LoadDataSet(stm);
+            }
         }
-        /// <summary>
-        /// 对比版本
-        /// </summary>
-        /// <param name="tableNames">表名集合</param>
-        /// <param name="md5">sql语句的MD5</param>
-        /// <param name="client">客户端</param>
-        /// <returns></returns>
-        private bool ComparVersion(IDictionary<string, bool> tableNames, string md5, IRedisClient client)
+
+        protected override bool DoSetDataSet(string key, DataSet value, IRedisClient client)
         {
-            Dictionary<string, string> dicTableVers = GetTablesVersion(tableNames, client, false);
-            if (dicTableVers == null)
-            {
-                return false;
-            }
-            Dictionary<string, string> dicDataVers = GetDataVersion(md5, client);
-            if (dicDataVers == null)
-            {
-                return false;
-            }
-            string tmp = null;
-            foreach (KeyValuePair<string, string> kvp in dicTableVers)
-            {
-                if (!dicDataVers.TryGetValue(kvp.Key, out tmp))
-                {
-                    return false;
-                }
-                if (tmp != kvp.Value)
-                {
-                    return false;
-                }
-            }
+            byte[] bval = MemDataSerialize.DataSetToBytes(value);
+            client.Set<byte[]>(key, bval, _expiration);
             return true;
         }
 
-        /// <summary>
-        /// 获取当前库中所有表的版本号
-        /// </summary>
-        /// <param name="tableNames">表名集合</param>
-        /// <param name="client">Redis连接</param>
-        /// <param name="needCreateTableVer">是否需要创建表的键</param>
-        /// <returns></returns>
-        private Dictionary<string, string> GetTablesVersion(IDictionary<string, bool> tableNames, IRedisClient client, bool needCreateTableVer)
+        protected override void DeleteValue(string key, IRedisClient client)
         {
-            Dictionary<string, string> dicTableVers = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
-
-            foreach (KeyValuePair<string, bool> kvp in tableNames)
-            {
-                string key = GetTableName(kvp.Key);
-                string objVer = client.GetValue(key);
-                if (objVer == null)
-                {
-                    if (!needCreateTableVer)
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        client.Set<int>(key, 1, _expiration);
-                        objVer = "1";
-                    }
-                }
-                dicTableVers[kvp.Key] = objVer;
-
-            }
-            return dicTableVers;
-        }
-        /// <summary>
-        /// 获取当前库中表的版本号字符串
-        /// </summary>
-        /// <param name="tableNames">表名集合</param>
-        /// <param name="client">Redis连接</param>
-        /// <param name="needCreateTableVer">是否需要创建表的键</param>
-        /// <returns></returns>
-        private string GetTablesVerString(IDictionary<string, bool> tableNames, IRedisClient client, bool needCreateTableVer)
-        {
-            Dictionary<string, string> dicTableVers = GetTablesVersion(tableNames, client, needCreateTableVer);
-            StringBuilder sbTables = new StringBuilder(dicTableVers.Count * 10);
-            foreach (KeyValuePair<string, string> kvp in dicTableVers)
-            {
-                sbTables.Append(kvp.Key);
-                sbTables.Append("=");
-                sbTables.Append(kvp.Value);
-                sbTables.Append("\n");
-            }
-            if (sbTables.Length > 0)
-            {
-                sbTables.Remove(sbTables.Length - 1, 1);
-            }
-            return sbTables.ToString();
-        }
-        /// <summary>
-        /// 获取当前查询的版本号
-        /// </summary>
-        /// <param name="md5">SQL的md5</param>
-        /// <param name="client">Redis连接</param>
-        /// <returns></returns>
-        private Dictionary<string, string> GetDataVersion(string md5, IRedisClient client)
-        {
-            string key = FormatVersionKey(md5);
-            string vers = client.Get<string>(key);
-            Dictionary<string, string> dicDataVers = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
-            if (CommonMethods.IsNullOrWhiteSpace(vers))
-            {
-                return null;
-            }
-            string[] verItems = vers.Split('\n');
-            foreach (string verItem in verItems)
-            {
-                if (string.IsNullOrEmpty(verItem))
-                {
-                    continue;
-                }
-                string[] part = verItem.Split('=');
-                if (part.Length < 2)
-                {
-                    continue;
-                }
-
-                dicDataVers[part[0]] = part[1];
-            }
-            return dicDataVers;
+            client.Remove(key);
         }
 
-
-
-        public void RemoveBySQL(IDictionary<string, bool> tableNames, string sql, DataBaseOperate oper)
+        protected override void DoIncrement(string key, IRedisClient client)
         {
-            using (IRedisClient client = _pool.GetClient())
-            {
-                string md5 = GetSQLMD5(sql);
-                string verKey = FormatVersionKey(md5);
-                if (!string.IsNullOrEmpty(md5))
-                {
-                    client.Remove(md5);
-                    client.Remove(verKey);
-                }
-            }
-            if (_info.SqlOutputer.HasOutput)
-            {
-                OutPutMessage(QueryCache.CommandDeleteSQL, sql,oper);
-            }
-
-        }
-        /// <summary>
-        /// 最大版本号
-        /// </summary>
-        private const int MaxVersion = (int.MaxValue - 1000);
-        /// <summary>
-        /// 根据表名删除缓存
-        /// </summary>
-        /// <param name="tableName"></param>
-        public void RemoveByTableName(string tableName, DataBaseOperate oper)
-        {
-            string key = GetTableName(tableName);
-            using (IRedisClient client = _pool.GetClient())
-            {
-
-                object oval = client.GetValue(key);
-                int val = 0;
-                try
-                {
-                    val = Convert.ToInt32(oval);
-                }
-                catch { }
-                if (val <= 0 || val >= MaxVersion)
-                {
-                    client.Set<int>(key, 1, _expiration);
-                }
-                else
-                {
-                    client.IncrementValue(key);
-                }
-            }
-            if (_info.SqlOutputer.HasOutput)
-            {
-                OutPutMessage(QueryCache.CommandDeleteTable, tableName,oper);
-            }
-        }
-        /// <summary>
-        /// 保存数据
-        /// </summary>
-        /// <param name="tableNames"></param>
-        /// <param name="sql"></param>
-        /// <param name="ds"></param>
-        /// <returns></returns>
-        public bool SetData(IDictionary<string, bool> tableNames, string sql, System.Data.DataSet ds, DataBaseOperate oper)
-        {
-            using (IRedisClient client = _pool.GetClient())
-            {
-
-                string md5 = GetSQLMD5(sql);
-                string verKey = FormatVersionKey(md5);
-                string verValue = GetTablesVerString(tableNames, client, true);
-
-                if (_info.SqlOutputer.HasOutput)
-                {
-                    OutPutMessage(QueryCache.CommandSetDataSet, sql, oper);
-                }
-                
-
-                byte[] bval = MemDataSerialize.DataSetToBytes(ds);
-                client.Set<string>(verKey, verValue);
-                client.Set<byte[]>(md5, bval, _expiration);
-            }
-            return true;
+            client.IncrementValue(key);
         }
 
-        private void OutPutMessage(string type, string message, DataBaseOperate oper)
+        protected override string GetCacheName()
         {
-
-            oper.OutMessage(MessageType.QueryCache, "Redis", type, message);
-
+            return "Redis";
         }
 
         #endregion

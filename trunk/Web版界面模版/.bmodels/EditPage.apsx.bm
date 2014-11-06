@@ -1,4 +1,5 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Models/EditModel.Master" AutoEventWireup="true" CodeBehind="<#=Entity.ClassName #>Edit.aspx.cs" Inherits="<#=Entity.GetValue("TargetNamespace")#>.<#=Entity.ClassName #>Edit" %>
+<%@ Register assembly="Buffalo.WebControls" namespace="Buffalo.WebControls.KimSoftWebCalendars" tagprefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlace" runat="server">
 <script type="text/javascript">
     var id=<%=string.IsNullOrEmpty(Request["id"])?"0":Request["id"] %>;
@@ -41,7 +42,7 @@
 <tr>
         <td></td>
         <td>
-                <span onclick="return fillFiles();">
+                <span>
             <asp:Button ID="btnSave" runat="server" Text="±£´æ" Height="30px" Width="70px"
                 onclick="btnSave_Click" />
                 </span>

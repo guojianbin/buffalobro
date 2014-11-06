@@ -97,6 +97,11 @@ namespace Redissharp
             if (_socket != null)
             {
                 _pool.CheckIn(_socket);
+                
+                _bstream.Flush();
+                _bstream.Dispose();
+                _socket = null;
+                _bstream = null;
             }
         }
         /// <summary>
@@ -510,7 +515,7 @@ namespace Redissharp
             string r = ReadLine();
 
             if (r.Length == 0)
-                throw new ResponseException("Zero length respose");
+                return null;
 
             char c = r[0];
             if (c == '-')

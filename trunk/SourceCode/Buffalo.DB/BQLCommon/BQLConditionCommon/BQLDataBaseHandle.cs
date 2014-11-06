@@ -8,6 +8,7 @@ using Buffalo.DB.CommBase;
 using Buffalo.DB.CommBase.BusinessBases;
 using Buffalo.Kernel.FastReflection;
 using System.Reflection;
+using Buffalo.DB.MessageOutPuters;
 
 namespace Buffalo.DB.BQLCommon.BQLConditionCommon
 {
@@ -57,8 +58,20 @@ namespace Buffalo.DB.BQLCommon.BQLConditionCommon
                 AddToDB(handle);
             }
             StaticConnection.ClearCacheOperate(_db);
+#if DEBUG
+            _db.SqlOutputer.OnOutputerCreate += new Buffalo.DB.MessageOutPuters.CreateOutputerHandle(SqlOutputer_OnOutputerCreate);
+#endif
         }
 
+
+#if DEBUG
+        static DebugOutputer _outputer = new DebugOutputer();
+        static Buffalo.DB.MessageOutPuters.MessageOutputBase SqlOutputer_OnOutputerCreate(DataBaseOperate oper)
+        {
+            return _outputer;
+        }
+
+#endif
         /// <summary>
         /// 设置生成的SQL语句进行运算符优先级优化可读性
         /// </summary>

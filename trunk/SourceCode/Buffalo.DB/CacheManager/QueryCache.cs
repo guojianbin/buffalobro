@@ -99,16 +99,15 @@ namespace Buffalo.DB.CacheManager
             {
                 return new MemCachedAdaper(connectionString, info);
             }
+#if (NET_2_0)
+            throw new NotSupportedException("不支持:" + type + " 的缓存类型，当前只支持system、memcached类型的缓存");
+#else
             else if (dtype.Equals("redis", StringComparison.CurrentCultureIgnoreCase))//redis
             {
-#if (NET_2_0)
-                    return new RedisAdaper(connectionString, info);
-#else
                 return new RedisAdaperByServiceStack(connectionString, info);
-#endif
             }
-
             throw new NotSupportedException("不支持:" + type + " 的缓存类型，当前只支持system、memcached、redis类型的缓存");
+#endif
         }
 
         /// <summary>
@@ -227,7 +226,7 @@ namespace Buffalo.DB.CacheManager
             {
                 return false; 
             }
-
+            
             foreach (KeyValuePair<string, bool> kvp in tables)
             {
                 if (IsCacheTable(kvp.Key) || _isAllTableCache)

@@ -18,5 +18,7 @@ namespace Buffalo.DB.MessageOutPuters
         OtherOper,
         [Description("查询缓存")]
         QueryCache,
+        [Description("缓存服务器异常")]
+        CacheException,
     }
 }

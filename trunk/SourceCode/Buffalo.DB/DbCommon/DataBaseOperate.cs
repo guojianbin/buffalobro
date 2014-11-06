@@ -784,7 +784,20 @@ namespace Buffalo.DB.DbCommon
                 _outputer.OutPut(messType, type, extendType, value);
             }
         }
-
+        /// <summary>
+        /// 输出信息
+        /// </summary>
+        /// <param name="messType">信息类型</param>
+        /// <param name="type">具体类型</param>
+        /// <param name="extendType">开展类型</param>
+        /// <param name="value">值</param>
+        public void OutMessage(MessageType messType, MessageInfo info)
+        {
+            if (_outputer != null)
+            {
+                _outputer.OutPut(messType, info);
+            }
+        }
         /// <summary>
         /// 信息输出器
         /// </summary>

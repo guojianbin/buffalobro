@@ -27,8 +27,10 @@ public string GetEditControl(Property pro)
 	{
 		return "System.Web.UI.WebControls.CheckBox "+GetSearchControlName(pro)+";";
 	}
-	
-
+	if(type.IndexOf("DateTime")>=0)
+	{
+		return "Buffalo.WebControls.KimSoftWebCalendars.KimSoftWebCalendar "+GetSearchControlName(pro)+";";
+	}
 	return "System.Web.UI.WebControls.TextBox "+GetSearchControlName(pro)+";";
 }
 

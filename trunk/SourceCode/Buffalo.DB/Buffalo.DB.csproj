@@ -83,11 +83,9 @@
     <Compile Include="CacheManager\MemCachedAdaper.cs" />
     <Compile Include="CacheManager\Memcached\MemCacheReader.cs" />
     <Compile Include="CacheManager\MemoryAdaper.cs" />
-    <Compile Include="CacheManager\Redissharp\Redis.cs" />
+    <Compile Include="CacheManager\NetCacheBase.cs" />
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
-    <Compile Include="CacheManager\Redissharp\SockPool.cs" />
-    <Compile Include="CacheManager\RedisAdaper.cs" />
     <Compile Include="CommBase\BusinessBases\BatchAction.cs" />
     <Compile Include="CommBase\BusinessBases\BusinessModelBase.cs" />
     <Compile Include="CommBase\BusinessBases\BusinessModelBaseForSelect.cs" />
