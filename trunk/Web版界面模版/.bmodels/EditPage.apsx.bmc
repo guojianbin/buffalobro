@@ -29,7 +29,7 @@ public string GetEditControl(Property pro)
 	}
 	if(type.IndexOf("DateTime")>=0)
 	{
-		return "<cc1:KimSoftWebCalendar ID=\""+GetSearchControlName(pro)+"\" runat="server" />";
+		return "<cc1:KimSoftWebCalendar ID=\""+GetSearchControlName(pro)+"\" runat=\"server\" />";
 	}
 
 	return "<asp:TextBox ID=\""+GetSearchControlName(pro)+"\" runat=\"server\"></asp:TextBox>";

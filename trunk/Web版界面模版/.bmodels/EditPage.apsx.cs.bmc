@@ -70,7 +70,7 @@ private string GetControlValue(Property pro)
 	}
 	if(pro.TypeName.IndexOf("DateTime")>=0)
 	{
-		return "txt"+pro.PropertyName+".Value";
+		return "txt"+pro.PropertyName+".CurrentDate";
 	}
 	return "txt"+pro.PropertyName+".Text";
 }
@@ -87,6 +87,10 @@ private string GetProValue(Property pro)
 		return pro.RelInfo.SourceName.ToString();
 	}
 	if(pro.TypeName=="bool")
+	{
+		return pro.PropertyName;
+	}
+	if(pro.TypeName.IndexOf("DateTime")>=0)
 	{
 		return pro.PropertyName;
 	}
@@ -150,10 +154,10 @@ private string GetChangeTypeValue(Property pro)
 	{
 		return "Convert.ToDecimal("+GetControlValue(pro)+")";
 	}
-	if(tname=="DateTime" || tname=="System.DateTime" )
+	/*if(tname=="DateTime" || tname=="System.DateTime" )
 	{
 		return "Convert.ToDateTime("+GetControlValue(pro)+")";
-	}
+	}*/
 	if(tname=="double" || tname=="Double")
 	{
 		return "Convert.ToDouble("+GetControlValue(pro)+")";
