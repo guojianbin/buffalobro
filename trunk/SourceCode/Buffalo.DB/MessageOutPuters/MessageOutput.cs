@@ -45,7 +45,13 @@ namespace Buffalo.DB.MessageOutPuters
                 return OnOutputerCreate != null;
             }
         }
-
+        /// <summary>
+        /// 清除输出事件
+        /// </summary>
+        public void ClearOutpuHandle()
+        {
+            OnOutputerCreate = null;
+        }
 
 
     }
