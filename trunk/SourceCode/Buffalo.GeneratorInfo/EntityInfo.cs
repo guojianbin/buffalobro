@@ -19,9 +19,10 @@ namespace Buffalo.GeneratorInfo
         /// <param name="summary">注释</param>
         /// <param name="baseTypeName">基类名</param>
         /// <param name="dicGenericInfo">泛型信息</param>
+        /// <param name="lstAllProperty">所有属性</param>
         /// <param name="model">可选项信息</param>
         public EntityInfo(string dbName, string fileName, string nameSpace, string className, 
-            string summary, string baseTypeName,
+            string summary, string baseTypeName,List<Property> lstAllProperty,
             Dictionary<string, List<string>> dicGenericInfo, Property model) 
         {
             _dbName = dbName;
@@ -33,6 +34,20 @@ namespace Buffalo.GeneratorInfo
             _model = model;
             _namespace = nameSpace;
             _summary = summary;
+            _allProperty = lstAllProperty;
+
+            foreach (Property pro in _allProperty)
+            {
+                if (pro.TableInfo == null) 
+                {
+                    continue;
+                }
+                if (pro.TableInfo.IsPrimary)
+                {
+                    _primaryProperty = pro;
+                    break;
+                }
+            }
         }
 
         private string _dbName;
@@ -117,6 +132,23 @@ namespace Buffalo.GeneratorInfo
         {
             get { return _dicGenericInfo; }
         }
+        private List<Property> _allProperty;
+        /// <summary>
+        /// 所有属性
+        /// </summary>
+        public List<Property> AllProperty
+        {
+            get { return _allProperty; }
+        }
+        private Property _primaryProperty;
+        /// <summary>
+        /// 主键对应的属性
+        /// </summary>
+        public Property PrimaryProperty
+        {
+            get { return _primaryProperty; }
+        }
+
 
         private Property _model=null;
 

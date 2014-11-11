@@ -69,24 +69,40 @@ namespace Buffalo.DB.CacheManager
 
         public System.Data.DataSet GetData(IDictionary<string, bool> tableNames, string sql, DataBaseOperate oper)
         {
-            using (T client = CreateClient(true, QueryCache.CommandGetDataSet))
+            try
             {
-                //client.PrimitiveAsString = true;
-                string sqlMD5 = GetSQLMD5(sql);
-                bool isVersion = ComparVersion(tableNames, sqlMD5, client);//判断版本号
-                if (!isVersion)
+                using (T client = CreateClient(true, QueryCache.CommandGetDataSet))
                 {
+                    //client.PrimitiveAsString = true;
+                    string sqlMD5 = GetSQLMD5(sql);
+                    bool isVersion = ComparVersion(tableNames, sqlMD5, client);//判断版本号
+                    if (!isVersion)
+                    {
+                        return null;
+                    }
+
+                    DataSet dsRet = DoGetDataSet(sqlMD5, client);
+
+                    if (_info.SqlOutputer.HasOutput)
+                    {
+                        OutPutMessage(QueryCache.CommandGetDataSet, sql, oper);
+                    }
+
+                    return dsRet;
+                }
+            }
+            catch (Exception ex)
+            {
+                if (_throwExcertion)
+                {
+                    throw ex;
+                }
+                else
+                {
+                    OutExceptionMessage(ex, oper);
                     return null;
                 }
-                DataSet dsRet = DoGetDataSet(sqlMD5, client);
-                if (_info.SqlOutputer.HasOutput)
-                {
-                    OutPutMessage(QueryCache.CommandGetDataSet, sql, oper);
-                }
-
-                return dsRet;
             }
-
         }
 
         /// <summary>
@@ -306,20 +322,34 @@ namespace Buffalo.DB.CacheManager
 
         public void RemoveBySQL(IDictionary<string, bool> tableNames, string sql, DataBaseOperate oper)
         {
-            using (T client = CreateClient(false, QueryCache.CommandDeleteSQL))
+            try
             {
+                using (T client = CreateClient(false, QueryCache.CommandDeleteSQL))
+                {
 
-                //client.PrimitiveAsString = true;
-                string md5 = GetSQLMD5(sql);
-                string verKey = FormatVersionKey(md5);
-                if (!string.IsNullOrEmpty(md5))
-                {
-                    DeleteValue(md5, client);
-                    DeleteValue(verKey, client);
+                    //client.PrimitiveAsString = true;
+                    string md5 = GetSQLMD5(sql);
+                    string verKey = FormatVersionKey(md5);
+                    if (!string.IsNullOrEmpty(md5))
+                    {
+                        DeleteValue(md5, client);
+                        DeleteValue(verKey, client);
+                    }
+                    if (_info.SqlOutputer.HasOutput)
+                    {
+                        OutPutMessage(QueryCache.CommandDeleteSQL, sql, oper);
+                    }
                 }
-                if (_info.SqlOutputer.HasOutput)
+            }
+            catch (Exception ex)
+            {
+                if (_throwExcertion)
                 {
-                    OutPutMessage(QueryCache.CommandDeleteSQL, sql, oper);
+                    throw ex;
+                }
+                else
+                {
+                    OutExceptionMessage(ex, oper);
                 }
             }
         }
@@ -333,24 +363,38 @@ namespace Buffalo.DB.CacheManager
         /// <param name="tableName"></param>
         public void RemoveByTableName(string tableName, DataBaseOperate oper)
         {
-            string key = GetTableName(tableName);
-            using (T client = CreateClient(false, QueryCache.CommandDeleteTable))
+            try
             {
-                //client.PrimitiveAsString = true;
-                int val = GetValue<int>(key, client);
-                
-                if (val <= 0 || val >= MaxVersion)
+                string key = GetTableName(tableName);
+                using (T client = CreateClient(false, QueryCache.CommandDeleteTable))
                 {
-                    SetValue<int>(key, 1, client);
-                    //client.Set(key, 1, _expiration);
+                    //client.PrimitiveAsString = true;
+                    int val = GetValue<int>(key, client);
+
+                    if (val <= 0 || val >= MaxVersion)
+                    {
+                        SetValue<int>(key, 1, client);
+                        //client.Set(key, 1, _expiration);
+                    }
+                    else
+                    {
+                        DoIncrement(key, client);
+                    }
+                    if (_info.SqlOutputer.HasOutput)
+                    {
+                        OutPutMessage(QueryCache.CommandDeleteTable, tableName, oper);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (_throwExcertion)
+                {
+                    throw ex;
                 }
                 else
                 {
-                    DoIncrement(key, client);
-                }
-                if (_info.SqlOutputer.HasOutput)
-                {
-                    OutPutMessage(QueryCache.CommandDeleteTable, tableName, oper);
+                    OutExceptionMessage(ex, oper);
                 }
             }
         }
@@ -363,19 +407,34 @@ namespace Buffalo.DB.CacheManager
         /// <returns></returns>
         public bool SetData(IDictionary<string, bool> tableNames, string sql, System.Data.DataSet ds, DataBaseOperate oper)
         {
-            using (T client = CreateClient(false, QueryCache.CommandSetDataSet))
+            try
             {
-                //client.PrimitiveAsString = true;
-                string md5 = GetSQLMD5(sql);
-                string verKey = FormatVersionKey(md5);
-                string verValue = GetTablesVerString(tableNames, client, true);
-
-                if (_info.SqlOutputer.HasOutput)
+                using (T client = CreateClient(false, QueryCache.CommandSetDataSet))
                 {
-                    OutPutMessage(QueryCache.CommandSetDataSet, sql, oper);
+                    //client.PrimitiveAsString = true;
+                    string md5 = GetSQLMD5(sql);
+                    string verKey = FormatVersionKey(md5);
+                    string verValue = GetTablesVerString(tableNames, client, true);
+
+                    if (_info.SqlOutputer.HasOutput)
+                    {
+                        OutPutMessage(QueryCache.CommandSetDataSet, sql, oper);
+                    }
+                    SetValue<string>(verKey, verValue, client);
+                    return DoSetDataSet(md5, ds, client);
                 }
-                SetValue<string>(verKey, verValue, client);
-                return DoSetDataSet(md5, ds,client);
+            }
+            catch (Exception ex)
+            {
+                if (_throwExcertion)
+                {
+                    throw ex;
+                }
+                else
+                {
+                    OutExceptionMessage(ex, oper);
+                    return false;
+                }
             }
         }
 
@@ -384,12 +443,12 @@ namespace Buffalo.DB.CacheManager
             oper.OutMessage(MessageType.QueryCache, GetCacheName(), type, message);
 
         }
-        private void OutPutMessage(string type, Exception ex, DataBaseOperate oper)
+        private void OutExceptionMessage(Exception ex, DataBaseOperate oper)
         {
             MessageInfo info = new MessageInfo();
             info.Value = ex;
             info.Type = GetCacheName();
-            oper.OutMessage(MessageType.QueryCache, info);
+            oper.OutMessage(MessageType.CacheException, info);
 
         }
         #endregion

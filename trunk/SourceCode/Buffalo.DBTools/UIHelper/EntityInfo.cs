@@ -208,10 +208,17 @@ namespace Buffalo.DBTools.UIHelper
         /// <returns></returns>
         public Buffalo.GeneratorInfo.EntityInfo ToGeneratorEntity(UIModelItem classModelInfo) 
         {
+            List<Property> lst = new List<Property>(_lstProperty.Count);
+            foreach (UIModelItem item in _lstProperty)
+            {
+                
+                lst.Add(item.ToGeneratItem());
+            }
+
             string dbName = DBConfigInfo.GetDbName(DesignerInfo);
             Buffalo.GeneratorInfo.EntityInfo entity = new Buffalo.GeneratorInfo.EntityInfo(dbName, _fileName,
-                _namespace, _className, _summary,
-                _baseTypeName, _dicGenericInfo, classModelInfo.ToGeneratItem());
+                _namespace, _className, _summary,_baseTypeName,lst,
+                _dicGenericInfo, classModelInfo.ToGeneratItem());
             return entity;
         }
     }

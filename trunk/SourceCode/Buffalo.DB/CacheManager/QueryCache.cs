@@ -118,9 +118,9 @@ namespace Buffalo.DB.CacheManager
         /// <param name="lstParam">变量集合</param>
         /// <returns></returns>
         public DataSet GetDataSet(IDictionary<string, bool> tables,
-            string sql, ParamList lstParam,DataBaseOperate oper) 
+            string sql, ParamList lstParam, DataBaseOperate oper)
         {
-            if (_cache == null) 
+            if (_cache == null)
             {
                 return null;
             }
@@ -128,8 +128,10 @@ namespace Buffalo.DB.CacheManager
             StringBuilder sbSql = new StringBuilder();
             sbSql.Append(sql);
             sbSql.Append(";");
-            sbSql.Append(lstParam.GetParamString(_db,oper));
+            sbSql.Append(lstParam.GetParamString(_db, oper));
+
             DataSet ds = _cache.GetData(tables, sbSql.ToString(), oper);
+
             return ds;
         }
         /// <summary>

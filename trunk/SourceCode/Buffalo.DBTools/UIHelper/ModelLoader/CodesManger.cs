@@ -125,9 +125,9 @@ namespace Buffalo.DBTools.UIHelper.ModelLoader
             sbCode.AppendLine("                return _selectedPropertys;");
             sbCode.AppendLine("            }");
             sbCode.AppendLine("        }");
-
-
         }
+
+        
 
         ///// <summary>
         ///// 获取生成的代码

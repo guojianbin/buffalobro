@@ -167,8 +167,8 @@ namespace Buffalo.DBTools.ROMHelper
         {
             
 
-            Dictionary<string, EntityParamField> dicParam=new Dictionary<string,EntityParamField>();
-            Dictionary<string, EntityRelationItem> dicRelation = new Dictionary<string, EntityRelationItem>();
+            Dictionary<string, EntityParamField> dicParam=new Dictionary<string,EntityParamField>(StringComparer.CurrentCultureIgnoreCase);
+            Dictionary<string, EntityRelationItem> dicRelation = new Dictionary<string, EntityRelationItem>(StringComparer.CurrentCultureIgnoreCase);
             FillBaseTypeParam(_baseType, _designerInfo, dicParam, dicRelation);
             int count = _belongTable.Params.Count;
             for (int i = count - 1; i >= 0; i--) 
