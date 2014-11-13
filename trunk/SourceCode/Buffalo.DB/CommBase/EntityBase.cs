@@ -216,26 +216,42 @@ namespace Buffalo.DB.CommBase
             if (tar != null)
             {
                 tar._dicUpdateProperty___.Clear();
-                foreach (KeyValuePair<string, bool> kvp in this._dicUpdateProperty___) 
+
+                foreach (KeyValuePair<string, bool> kvp in this._dicUpdateProperty___)
                 {
                     tar._dicUpdateProperty___[kvp.Key] = kvp.Value;
                 }
+
             }
         }
 
-        
+        /// <summary>
+        /// 设置所有属性都被更新
+        /// </summary>
+        public void SetAllPropertyUpdated() 
+        {
+            EntityInfoHandle eHandle = GetEntityInfo();
+            foreach (EntityPropertyInfo pinfo in eHandle.PropertyInfo) 
+            {
+                _dicUpdateProperty___[pinfo.PropertyName] = true;
+            }
+        }
 
         #region ICloneable 成员
 
+        /// <summary>
+        /// 拷贝对象
+        /// </summary>
+        /// <param name="allPropertyUpdate">是否识别为所有属性都被修改</param>
+        /// <returns></returns>
         public object Clone()
         {
             object target = CH.Create(this.GetType());
 
             CopyTo(target);
-            
+
             return target;
         }
-
         #endregion
     }
 }

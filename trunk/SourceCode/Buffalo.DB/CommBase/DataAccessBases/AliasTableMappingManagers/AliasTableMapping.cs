@@ -111,6 +111,26 @@ namespace Buffalo.DB.CommBase.DataAccessBases.AliasTableMappingManagers
                     dbAdapter.SetObjectValueFromReader(reader, index, objRet, info, readMapping.NeedChangeType);
                 }
             }
+            foreach (KeyValuePair<string, AliasTableMapping> keyPair in _dicChildTables)
+            {
+                AliasTableMapping childMapping = keyPair.Value;
+                object child = childMapping.LoadFromReader(reader);
+                if (childMapping.MappingInfo.IsParent)
+                {
+                    childMapping.MappingInfo.SetValue(objRet, child);
+                }
+                //else if ((!childMapping.MappingInfo.IsParent) && (child != null))
+                //{
+                //    IList lst = childMapping.MappingInfo.GetValue(objRet) as IList;
+                //    if (lst == null)
+                //    {
+                //        lst = Activator.CreateInstance(childMapping.MappingInfo.FieldType) as IList;
+                //        childMapping.MappingInfo.SetValue(objRet, lst);
+                //    }
+                //    lst.Add(child);
+                //}
+
+            }
             return objRet;
         }
 
