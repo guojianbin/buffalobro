@@ -98,6 +98,7 @@
     <Compile Include="WebCommons\PagerUrlCreater.cs" />
     <Compile Include="WebCommons\PostForms\FormFile.cs" />
     <Compile Include="WebCommons\PostForms\FormPost.cs" />
+    <Compile Include="WebCommons\StopAppDomainRestartOnFolderDeleteModule.cs" />
     <Compile Include="WebCommons\UBB.cs" />
     <Compile Include="WebCommons\WebCommon.cs" />
     <Compile Include="WebCommons\WebPageCommon.cs" />
