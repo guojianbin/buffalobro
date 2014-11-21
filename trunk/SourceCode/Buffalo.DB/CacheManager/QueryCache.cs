@@ -12,6 +12,7 @@ using Buffalo.DB.DbCommon;
 using System.Data;
 using Buffalo.DB.DataFillers;
 using System.Data.Common;
+using System.Reflection;
 
 namespace Buffalo.DB.CacheManager
 {
@@ -95,19 +96,49 @@ namespace Buffalo.DB.CacheManager
             {
                 return new MemoryAdaper(info);
             }
-            else if (dtype.Equals("memcached", StringComparison.CurrentCultureIgnoreCase))//memcached
+            ICacheAdaper cache = GetAssemblyCache(info, dtype, connectionString);
+            if (cache != null) 
             {
-                return new MemCachedAdaper(connectionString, info);
+                return cache;
             }
-#if (NET_2_0)
-            throw new NotSupportedException("不支持:" + type + " 的缓存类型，当前只支持system、memcached类型的缓存");
-#else
-            else if (dtype.Equals("redis", StringComparison.CurrentCultureIgnoreCase))//redis
-            {
-                return new RedisAdaperByServiceStack(connectionString, info);
-            }
+
             throw new NotSupportedException("不支持:" + type + " 的缓存类型，当前只支持system、memcached、redis类型的缓存");
-#endif
+        }
+
+        /// <summary>
+        /// 获取外部程序集的缓存
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="type"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        private static ICacheAdaper GetAssemblyCache(DBInfo info, string type, string connectionString) 
+        {
+            Assembly assembly = null;
+            try
+            {
+                assembly = Assembly.Load("Buffalo.QueryCache");
+            }
+            catch (Exception ex)
+            {
+                throw new MissingMemberException("找不到类Buffalo.QueryCache,请保证项目已经引用了Buffalo.QueryCache.dll");
+            }
+            if (assembly == null) 
+            {
+                throw new MissingMemberException("找不到类Buffalo.QueryCache,请保证项目已经引用了Buffalo.QueryCache.dll");
+            }
+            Type loaderType = assembly.GetType("Buffalo.QueryCache.CacheLoader", false, false);
+            if (loaderType == null) 
+            {
+                throw new MissingMemberException("找不到类Buffalo.QueryCache.CacheLoader,请保证Buffalo.QueryCache.dll的完整性");
+            }
+            MethodInfo mInfo = loaderType.GetMethod("GetCache");
+            if (loaderType == null)
+            {
+                throw new MissingMethodException("找不到方法GetCache,请保证Buffalo.QueryCache.dll的完整性");
+            }
+            ICacheAdaper cache = mInfo.Invoke(null, new object[] {info,type,connectionString }) as ICacheAdaper;
+            return cache;
         }
 
         /// <summary>

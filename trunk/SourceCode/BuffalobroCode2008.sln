@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo2008.GeneratorInfo",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo2008.DB.OldDll", "Buffalo.DB\Buffalo2008.DB.OldDll.csproj", "{148C1AF2-B470-4E28-8073-1C136BAABB82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo2008.QueryCache", "Buffalo.QueryCache\Buffalo2008.QueryCache.csproj", "{FD160D2C-3389-41AF-8D78-EB3F68F23CE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -119,6 +121,16 @@ Global
 		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Release|Any CPU.Build.0 = Release|Any CPU
 		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{148C1AF2-B470-4E28-8073-1C136BAABB82}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FD160D2C-3389-41AF-8D78-EB3F68F23CE2}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{FD160D2C-3389-41AF-8D78-EB3F68F23CE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD160D2C-3389-41AF-8D78-EB3F68F23CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD160D2C-3389-41AF-8D78-EB3F68F23CE2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FD160D2C-3389-41AF-8D78-EB3F68F23CE2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FD160D2C-3389-41AF-8D78-EB3F68F23CE2}.Release|.NET.ActiveCfg = Release|Any CPU
+		{FD160D2C-3389-41AF-8D78-EB3F68F23CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD160D2C-3389-41AF-8D78-EB3F68F23CE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD160D2C-3389-41AF-8D78-EB3F68F23CE2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FD160D2C-3389-41AF-8D78-EB3F68F23CE2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

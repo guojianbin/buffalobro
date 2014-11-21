@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo.Kernel", "Buffalo.K
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo.WebKernel", "Buffalo.WebKernel\Buffalo.WebKernel.csproj", "{CBD39541-7A26-4C92-A369-0F2DF5D13030}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo.QueryCache", "Buffalo.QueryCache\Buffalo.QueryCache.csproj", "{9C1857BF-4D45-4E1C-9CBD-8860339217A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{CBD39541-7A26-4C92-A369-0F2DF5D13030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBD39541-7A26-4C92-A369-0F2DF5D13030}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBD39541-7A26-4C92-A369-0F2DF5D13030}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C1857BF-4D45-4E1C-9CBD-8860339217A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C1857BF-4D45-4E1C-9CBD-8860339217A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C1857BF-4D45-4E1C-9CBD-8860339217A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C1857BF-4D45-4E1C-9CBD-8860339217A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

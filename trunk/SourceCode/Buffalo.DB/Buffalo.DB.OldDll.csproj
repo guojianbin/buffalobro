@@ -70,26 +70,11 @@
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddForeignkeyItem.cs" />
     <Compile Include="BQLCommon\BQLKeyWordCommon\KeyWordAddPrimarykeyItem.cs" />
     <Compile Include="CacheManager\ICacheAdaper.cs" />
-    <Compile Include="CacheManager\MemcacheClient\CRCTool.cs" />
-    <Compile Include="CacheManager\MemcacheClient\IterIsolate.cs" />
-    <Compile Include="CacheManager\MemcacheClient\MemCachedClient.cs" />
-    <Compile Include="CacheManager\MemcacheClient\MemDataSerialize.cs" />
-    <Compile Include="CacheManager\MemcacheClient\MemTypeItem.cs" />
-    <Compile Include="CacheManager\MemcacheClient\MemTypeManager.cs" />
-    <Compile Include="CacheManager\MemcacheClient\NativeHandler.cs" />
-    <Compile Include="CacheManager\MemcacheClient\NetworkStreamIgnoreSeek.cs" />
-    <Compile Include="CacheManager\MemcacheClient\SockIO.cs" />
-    <Compile Include="CacheManager\MemcacheClient\SockIOPool.cs" />
-    <Compile Include="CacheManager\MemCachedAdaper.cs" />
     <Compile Include="CacheManager\Memcached\MemCacheReader.cs" />
     <Compile Include="CacheManager\MemoryAdaper.cs" />
     <Compile Include="CacheManager\NetCacheBase.cs" />
-    <Compile Include="CacheManager\Redissharp\Redis.cs" />
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
-    <Compile Include="CacheManager\Redissharp\SockPool.cs" />
-    <Compile Include="CacheManager\RedisAdaper.cs" />
-    <None Include="CacheManager\RedisAdaper.bak" />
     <Compile Include="CommBase\BusinessBases\BatchAction.cs" />
     <Compile Include="CommBase\BusinessBases\BusinessModelBase.cs" />
     <Compile Include="CommBase\BusinessBases\BusinessModelBaseForSelect.cs" />
@@ -344,9 +329,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CacheManager\MemcacheClient\StringMessages.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resource.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -362,9 +344,6 @@
       <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
       <Name>Buffalo.Kernel</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CacheManager\CacheConnectionPool\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
