@@ -1,0 +1,5 @@
+E:\CSharpTest\BuffaloCode\第三方\Enyim\Enyim.Caching\Enyim.Caching\bin\Release\45\Enyim.Caching.dll
+E:\CSharpTest\BuffaloCode\第三方\Enyim\Enyim.Caching\Enyim.Caching\bin\Release\45\Enyim.Caching.pdb
+E:\CSharpTest\BuffaloCode\第三方\Enyim\Enyim.Caching\Enyim.Caching\obj\Release\Enyim.Caching.dll
+E:\CSharpTest\BuffaloCode\第三方\Enyim\Enyim.Caching\Enyim.Caching\obj\Release\Enyim.Caching.pdb
+E:\CSharpTest\BuffaloCode\第三方\Enyim\Enyim.Caching\Enyim.Caching\obj\Release\Enyim.Caching45.csprojResolveAssemblyReference.cache

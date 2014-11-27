@@ -4,24 +4,27 @@ using System.Text;
 using Buffalo.Kernel;
 using System.Data;
 using System.Net;
-using Memcached.ClientLibrary;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.MessageOutPuters;
 using Buffalo.DB.DbCommon;
 using Buffalo.DB.CacheManager;
+using Enyim.Caching;
+using Enyim.Caching.Configuration;
+using Enyim.Caching.Memcached;
+using MemcacheClient;
 
 namespace Buffalo.QueryCache
 {
     /// <summary>
     /// 利用MemCached做缓存
     /// </summary>
-    public class MemCachedAdaper : NetCacheBase<MemcachedClient>
+    public class MemCachedAdaper : NetCacheBase<EmptyClass>
     {
+        //MemcachedClientConfiguration _config = null;
 
-        SockIOPool _pool = null;
-
+        MemcachedClient _client = null;
         
         
         /// <summary>
@@ -31,7 +34,7 @@ namespace Buffalo.QueryCache
         public MemCachedAdaper(string connStr, DBInfo info) 
         {
             _info = info;
-            _pool = CreatePool(connStr);
+            CreatePool(connStr);
             
         }
 
@@ -41,9 +44,8 @@ namespace Buffalo.QueryCache
         /// </summary>
         /// <param name="connStr"></param>
         /// <returns></returns>
-        private SockIOPool CreatePool(string connStr) 
+        private void CreatePool(string connStr) 
         {
-            string localserver = "127.0.0.1:11211";
             //uint port = 11211;
             int maxSize = 10;
             string[] conStrs = connStr.Split(';');
@@ -53,8 +55,8 @@ namespace Buffalo.QueryCache
             string throwString = "throw=";
             string part = null;
 
-            List<string> lstServers = new List<string>();
-
+            //List<string> lstServers = new List<string>();
+            MemcachedClientConfiguration config = new MemcachedClientConfiguration();
             foreach (string lpart in conStrs)
             {
                 part = lpart.Trim();
@@ -67,7 +69,18 @@ namespace Buffalo.QueryCache
                     {
                         if (!string.IsNullOrEmpty(sser)) 
                         {
-                            lstServers.Add(sser);
+                            string[] serPart=sser.Split(':');
+                            string ip=null;
+                            string port="11211";
+                            if(serPart.Length>0)
+                            {
+                                ip=serPart[0];
+                            }
+                            if(serPart.Length>1)
+                            {
+                                port=serPart[1];
+                            }
+                            config.Servers.Add(new IPEndPoint(IPAddress.Parse(ip), Convert.ToInt32(port)));
                         }
                     }
                 }
@@ -103,43 +116,23 @@ namespace Buffalo.QueryCache
                     _expiration = TimeSpan.FromMinutes((double)mins);
                 }
             }
-            if (lstServers.Count == 0) 
-            {
-                lstServers.Add(localserver);
-            }
-            string[] serviers =lstServers.ToArray();
+            config.SocketPool.ReceiveTimeout = new TimeSpan(0, 0, 2);
+            config.SocketPool.DeadTimeout = new TimeSpan(0, 0, 10);
+            config.Protocol = MemcachedProtocol.Binary;
+            
+             //使用默认的数据桶
+            _client = new MemcachedClient(config);
+            
+        }
+        protected override EmptyClass CreateClient(bool readOnly, string cmd)
+        {
 
-            SockIOPool pool = SockIOPool.GetInstance(_info.Name);
-            pool.SetServers(serviers);
-            pool.InitConnections = 1;
-            pool.MinConnections = 1;
-            pool.MaxConnections = maxSize;
-            pool.SocketConnectTimeout = 1000;
-            pool.SocketTimeout = 3000;
-            pool.MaintenanceSleep = 30;
-            pool.Failover = true;
-            pool.Nagle = false;
-            
-            pool.Initialize();
-            
-            return pool;
+            return null;
         }
 
-
-
-
-
-
-        protected override MemcachedClient CreateClient(bool readOnly, string cmd)
+        protected override E GetValue<E>(string key, EmptyClass client)
         {
-            MemcachedClient client = new MemcachedClient(_pool);
-            client.PrimitiveAsString = true;
-            return client;
-        }
-
-        protected override E GetValue<E>(string key, MemcachedClient client)
-        {
-            object value = client.Get(key);
+            object value = _client.Get(key);
             if (value == null)
             {
                 return default(E);
@@ -149,34 +142,68 @@ namespace Buffalo.QueryCache
             return (E)Convert.ChangeType(value, curType);
         }
 
-        protected override void SetValue<E>(string key, E value, MemcachedClient client)
+        protected override void SetValue<E>(string key, E value, EmptyClass client)
         {
-            client.Set(key, value, _expiration);
+            _client.Store(StoreMode.Set, key, value, _expiration);
         }
 
-        protected override DataSet DoGetDataSet(string key, MemcachedClient client)
+        protected override DataSet DoGetDataSet(string key, EmptyClass client)
         {
-            return client.GetDataSet(key);
+            byte[] content = _client.Get<byte[]>(key);
+            using (MemoryStream stm = new MemoryStream(content))
+            {
+                return MemDataSerialize.LoadDataSet(stm);
+            }
+            
         }
 
-        protected override bool DoSetDataSet(string key, DataSet value, MemcachedClient client)
+        protected override bool DoSetDataSet(string key, DataSet value, EmptyClass client)
         {
-            return client.SetDataSet(key, value, _expiration);
+            byte[] bval = MemDataSerialize.DataSetToBytes(value);
+            _client.Store(StoreMode.Set, key, bval, _expiration);
+            return true;
         }
 
-        protected override void DeleteValue(string key, MemcachedClient client)
+        protected override void DeleteValue(string key, EmptyClass client)
         {
-            client.Delete(key);
+            _client.Remove(key);
+        }
+        /// <summary>
+        /// 设置版本号
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="client"></param>
+        protected override void DoNewVer(string key, EmptyClass client) 
+        {
+            _client.Increment(key, 1, 1,_expiration);
+        }
+        protected override void DoIncrement(string key, EmptyClass client)
+        {
+            _client.Increment(key, 1, 1, _expiration);
         }
 
-        protected override void DoIncrement(string key, MemcachedClient client)
+
+        protected override IDictionary<string, object> GetValues(string[] keys, EmptyClass client)
         {
-            client.Increment(key);
+            return _client.Get(keys);
         }
+       
 
         protected override string GetCacheName()
         {
             return "Memcached";
+        }
+    }
+
+    public class EmptyClass :IDisposable
+    {
+        public EmptyClass() 
+        {
+            
+        }
+        public void Dispose()
+        {
+            
         }
     }
 }

@@ -5,15 +5,15 @@ using System.Text;
 using Buffalo.Kernel;
 using System.Data;
 using System.Net;
-using Memcached.ClientLibrary;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Buffalo.DB.DataBaseAdapter;
 using Buffalo.DB.MessageOutPuters;
 using ServiceStack.Redis;
-using MemcacheClient;
 using Buffalo.DB.DbCommon;
 using Buffalo.DB.CacheManager;
+using ServiceStack.Text;
+using MemcacheClient;
 
 namespace Buffalo.QueryCache
 {
@@ -180,10 +180,15 @@ namespace Buffalo.QueryCache
             return client;
         }
 
+
+
         protected override E GetValue<E>(string key,  IRedisClient client)
         {
+            
             return client.Get<E>(key);
         }
+
+
 
         protected override void SetValue<E>(string key, E value, IRedisClient client)
         {
@@ -210,12 +215,58 @@ namespace Buffalo.QueryCache
         {
             client.Remove(key);
         }
-
+        /// <summary>
+        /// 设置版本号
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="client"></param>
+        protected override void DoNewVer(string key, IRedisClient client)
+        {
+            client.Set<int>(key, 1, _expiration);
+        }
         protected override void DoIncrement(string key, IRedisClient client)
         {
             client.IncrementValue(key);
         }
+        /// <summary>
+        /// 获取值
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="valueType">值类型</param>
+        /// <param name="client">客户端</param>
+        /// <returns></returns>
+        protected override IDictionary<string, object> GetValues(string[] keys, IRedisClient client) 
+        {
+            return GetValuesMap(keys, client);
+        }
 
+        public IDictionary<string, object> GetValuesMap(string[] keys, IRedisClient client)
+        {
+            RedisNativeClient cli = client as RedisNativeClient;
+            if (keys == null) throw new ArgumentNullException("keys");
+            if (cli == null) return new Dictionary<string, object>();
+            var resultBytesArray = cli.MGet(keys);
+
+            var results = new Dictionary<string, object>();
+            for (var i = 0; i < resultBytesArray.Length; i++)
+            {
+                var key = keys[i];
+
+                var resultBytes = resultBytesArray[i];
+                if (resultBytes == null)
+                {
+                    results.Add(key, null);
+                }
+                else
+                {
+                    var resultString = resultBytes.FromUtf8Bytes();
+                    var result = JsonSerializer.DeserializeFromString<string>(resultString);
+                    results.Add(key, result);
+                }
+            }
+
+            return results;
+        }
         protected override string GetCacheName()
         {
             return "Redis";

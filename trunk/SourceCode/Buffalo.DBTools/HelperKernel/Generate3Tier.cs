@@ -163,11 +163,12 @@ namespace Buffalo.DBTools.HelperKernel
             item = new ComboBoxItem("ÄÚ´æ", "system");
             item.Tag = "";
             types.Add(item);
+            
+#if (NET_2_0)
+#else
             item = new ComboBoxItem("Memcached", "memcached");
             item.Tag = "server=127.0.0.1:11211,127.0.0.1:11212;expir=30;maxsize=30;throw=0";
             types.Add(item);
-#if (NET_2_0)
-#else
             item = new ComboBoxItem("Redis", "redis");
             item.Tag = "server=127.0.0.1:6379,127.0.0.1:6380;readserver=127.0.0.1:6381,127.0.0.1:6382;expir=30;maxsize=30;throw=0";
             types.Add(item);

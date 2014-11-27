@@ -1,4 +1,5 @@
-<root ip="192.168.1.25" port="86">
+<root ip="192.168.1.25" port="9997">
   <item name="备份" path="E:\备份" />
   <item name="音乐" path="E:\Music" />
+  <item name="Bee" path="E:\BeeRes" />
 </root>

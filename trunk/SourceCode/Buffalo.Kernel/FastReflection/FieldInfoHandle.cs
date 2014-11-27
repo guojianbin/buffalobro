@@ -224,6 +224,7 @@ namespace Buffalo.Kernel.FastReflection
                 {
                     continue;
                 }
+                
                 GetFieldValueHandle getHandle = FastFieldGetSet.GetGetValueHandle(info);
                 SetFieldValueHandle setHandle = FastFieldGetSet.GetSetValueHandle(info);
                 FieldInfoHandle handle = new FieldInfoHandle(objType, getHandle, setHandle, info.FieldType, info.Name,info);

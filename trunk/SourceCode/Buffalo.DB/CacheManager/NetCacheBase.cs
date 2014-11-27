@@ -153,12 +153,21 @@ namespace Buffalo.DB.CacheManager
         /// <returns></returns>
         private bool ComparVersion(IDictionary<string, bool> tableNames, string md5, T client)
         {
-            Dictionary<string, string> dicTableVers = GetTablesVersion(tableNames, client, false);
+            string sqlKey = FormatVersionKey(md5);
+            string[] keys = GetKeys(tableNames, sqlKey);
+            IDictionary<string, object> tableVars = GetValues(keys, client);
+
+            Dictionary<string, string> dicTableVers = GetTablesVersion(tableNames, tableVars, client, false);
             if (dicTableVers == null)
             {
                 return false;
             }
-            Dictionary<string, string> dicDataVers = GetDataVersion(md5, client);
+            object data = null;
+            if (!tableVars.TryGetValue(sqlKey, out data)) 
+            {
+                return false;
+            }
+            Dictionary<string, string> dicDataVers = GetDataVersion(data.ToString(), client);
             if (dicDataVers == null)
             {
                 return false;
@@ -186,6 +195,14 @@ namespace Buffalo.DB.CacheManager
         /// <param name="client">客户端</param>
         /// <returns></returns>
         protected abstract E GetValue<E>(string key, T client);
+        /// <summary>
+        /// 获取值
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="valueType">值类型</param>
+        /// <param name="client">客户端</param>
+        /// <returns></returns>
+        protected abstract IDictionary<string, object> GetValues(string[] keys, T client);
         /// <summary>
         /// 设置值
         /// </summary>
@@ -223,13 +240,47 @@ namespace Buffalo.DB.CacheManager
         /// <param name="key"></param>
         /// <param name="client"></param>
         protected abstract void DoIncrement(string key, T client);
-
+        /// <summary>
+        /// 设置版本号
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="client"></param>
+        protected abstract void DoNewVer(string key, T client);
         /// <summary>
         /// 缓存服务器类型
         /// </summary>
         /// <param name="key"></param>
         /// <param name="client"></param>
         protected abstract string GetCacheName();
+
+        /// <summary>
+        /// 获取要申请的键集合
+        /// </summary>
+        /// <param name="tableNames"></param>
+        /// <param name="tableMD5"></param>
+        /// <returns></returns>
+        private string[] GetKeys(IDictionary<string, bool> tableNames, string tableMD5) 
+        {
+            int len = tableNames.Count;
+            if (!string.IsNullOrEmpty(tableMD5)) 
+            {
+                len++;
+            }
+            string[] keys = new string[len];
+            int index = 0;
+            foreach (KeyValuePair<string, bool> kvp in tableNames)
+            {
+                string key = GetTableName(kvp.Key);
+                keys[index] = key;
+                index++;
+            }
+            if (!string.IsNullOrEmpty(tableMD5))
+            {
+                keys[len - 1] = tableMD5;
+            }
+            return keys;
+        }
+
         /// <summary>
         /// 获取当前库中所有表的版本号
         /// </summary>
@@ -237,14 +288,20 @@ namespace Buffalo.DB.CacheManager
         /// <param name="client">Redis连接</param>
         /// <param name="needCreateTableVer">是否需要创建表的键</param>
         /// <returns></returns>
-        private Dictionary<string, string> GetTablesVersion(IDictionary<string, bool> tableNames, T client, bool needCreateTableVer)
+        private Dictionary<string, string> GetTablesVersion(IDictionary<string, bool> tableNames, IDictionary<string, object> tableVars, T client, bool needCreateTableVer)
         {
             Dictionary<string, string> dicTableVers = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
-
+            
+            
+            //IDictionary<string, object> tableVars = GetValues(keys, client);
+            object objVer = null;
             foreach (KeyValuePair<string, bool> kvp in tableNames)
             {
                 string key = GetTableName(kvp.Key);
-                object objVer = GetValue<int>(key,client);
+                if (!tableVars.TryGetValue(key, out objVer))
+                {
+                    objVer = null;
+                }
                 if (objVer == null)
                 {
                     if (!needCreateTableVer)
@@ -253,13 +310,14 @@ namespace Buffalo.DB.CacheManager
                     }
                     else
                     {
-                        SetValue<int>(key, 1, client);
+                        DoNewVer(key, client);
                         objVer = "1";
                     }
                 }
                 dicTableVers[kvp.Key] = objVer.ToString();
-
             }
+
+
             return dicTableVers;
         }
         /// <summary>
@@ -271,7 +329,9 @@ namespace Buffalo.DB.CacheManager
         /// <returns></returns>
         private string GetTablesVerString(IDictionary<string, bool> tableNames, T client, bool needCreateTableVer)
         {
-            Dictionary<string, string> dicTableVers = GetTablesVersion(tableNames, client, needCreateTableVer);
+            string[] keys = GetKeys(tableNames, null);
+            IDictionary<string, object> tableVars = GetValues(keys, client);
+            Dictionary<string, string> dicTableVers = GetTablesVersion(tableNames, tableVars, client, needCreateTableVer);
             StringBuilder sbTables = new StringBuilder(dicTableVers.Count * 10);
             foreach (KeyValuePair<string, string> kvp in dicTableVers)
             {
@@ -292,11 +352,10 @@ namespace Buffalo.DB.CacheManager
         /// <param name="md5">SQL的md5</param>
         /// <param name="client">Redis连接</param>
         /// <returns></returns>
-        private Dictionary<string, string> GetDataVersion(string md5, T client)
+        private Dictionary<string, string> GetDataVersion(string vers, T client)
         {
             //string md5 = GetSQLKey(sql);
-            string key = FormatVersionKey(md5);
-            string vers = GetValue<string>(key,client);
+            
             Dictionary<string, string> dicDataVers = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
             if (CommonMethods.IsNullOrWhiteSpace(vers))
             {
@@ -373,7 +432,7 @@ namespace Buffalo.DB.CacheManager
 
                     if (val <= 0 || val >= MaxVersion)
                     {
-                        SetValue<int>(key, 1, client);
+                        DoNewVer(key,  client);
                         //client.Set(key, 1, _expiration);
                     }
                     else

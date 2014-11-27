@@ -62,14 +62,25 @@ namespace Buffalo.Kernel.FastReflection
         /// <returns></returns>
         public static GetFieldValueHandle GetGetValueHandle(FieldInfo info) 
         {
+            if (info.IsLiteral)
+            {
+                return null;
+            }
             Type sourceType = info.FieldType;
 
             DynamicMethod dynamicMethod = new DynamicMethod(string.Empty, typeof(object), new Type[] { typeof(object) }, info.DeclaringType.Module, true);
             ILGenerator il = dynamicMethod.GetILGenerator();
             //Label labRet = il.DefineLabel();
             il.Emit(OpCodes.Nop);
-            il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Ldfld, info);
+            if (info.IsStatic)
+            {
+                il.Emit(OpCodes.Ldsfld, info);
+            }
+            else
+            {
+                il.Emit(OpCodes.Ldarg_0);
+                il.Emit(OpCodes.Ldfld, info);
+            }
             if (sourceType.IsValueType)
             {
                 il.Emit(OpCodes.Box, sourceType);
@@ -97,14 +108,25 @@ namespace Buffalo.Kernel.FastReflection
         /// <returns></returns>
         public static SetFieldValueHandle GetSetValueHandle(FieldInfo info) 
         {
+            if (info.IsInitOnly || info.IsLiteral) 
+            {
+                return null;
+            }
             Type targetType = info.FieldType;
             //MethodInfo call = typeof(objType).GetMethod("WriteLine", new Type[] { typeof(string), typeof(string) });
             DynamicMethod dynamicMethod = new DynamicMethod(string.Empty, null, new Type[] { typeof(object), typeof(object) }, info.DeclaringType.Module, true);
             ILGenerator il = dynamicMethod.GetILGenerator();
 
             il.Emit(OpCodes.Nop);
-            il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Ldarg_1);
+            if (info.IsStatic)
+            {
+                il.Emit(OpCodes.Ldarg_0);
+            }
+            else
+            {
+                il.Emit(OpCodes.Ldarg_0);
+                il.Emit(OpCodes.Ldarg_1);
+            }
             if (targetType.IsValueType)
             {
                 il.Emit(OpCodes.Unbox_Any, targetType);
@@ -113,7 +135,14 @@ namespace Buffalo.Kernel.FastReflection
             {
                 il.Emit(OpCodes.Castclass, targetType);
             }
-            il.Emit(OpCodes.Stfld, info);
+            if (info.IsStatic)
+            {
+                il.Emit(OpCodes.Stsfld,info);
+            }
+            else
+            {
+                il.Emit(OpCodes.Stfld, info);
+            }
             il.Emit(OpCodes.Ret);
             return (SetFieldValueHandle)dynamicMethod.CreateDelegate(typeof(SetFieldValueHandle));
         }
