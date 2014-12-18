@@ -39,6 +39,16 @@ namespace WebShare
             get { return _shareInfos; }
         }
 
+
+        private string _password;
+        /// <summary>
+        /// √‹¬Î
+        /// </summary>
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; }
+        }
         /// <summary>
         /// º«¬º≈‰÷√
         /// </summary>
@@ -66,6 +76,11 @@ namespace WebShare
                 {
                     _bindPort = Convert.ToInt32(attr.InnerText);
                 }
+                attr = root.Attributes["pwd"];
+                if (attr != null)
+                {
+                    _password = attr.InnerText;
+                }
                 XmlNodeList items = root.ChildNodes;
                 foreach (XmlNode item in items) 
                 {
@@ -80,6 +95,7 @@ namespace WebShare
                     {
                         info.Path = attr.InnerText;
                     }
+                    
                     _shareInfos.Add(info);
                 }
             }
@@ -102,6 +118,10 @@ namespace WebShare
 
             attr = xml.CreateAttribute("port");
             attr.InnerText = _bindPort.ToString();
+            root.Attributes.Append(attr);
+
+            attr = xml.CreateAttribute("pwd");
+            attr.InnerText = _password;
             root.Attributes.Append(attr);
 
             xml.AppendChild(root);

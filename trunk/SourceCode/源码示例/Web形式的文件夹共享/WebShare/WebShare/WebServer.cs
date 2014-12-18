@@ -17,7 +17,10 @@ namespace WebShare
         /// </summary>
         private string _model = null;
 
-
+        /// <summary>
+        /// 密码模版
+        /// </summary>
+        private string _pwdmodel = null;
         /// <summary>
         /// 服务器
         /// </summary>
@@ -49,6 +52,14 @@ namespace WebShare
             string path = CommonMethods.GetBaseRoot("model.htm");
             return File.ReadAllText(path, Encoding.UTF8);
         }
+        /// <summary>
+        /// 加载模版
+        /// </summary>
+        private static string LoadPwdModel()
+        {
+            string path = CommonMethods.GetBaseRoot("modelPwd.htm");
+            return File.ReadAllText(path, Encoding.UTF8);
+        }
 
         public WebServer(ConfigManager config) 
         {
@@ -63,6 +74,7 @@ namespace WebShare
         {
             Stop();
             _model = LoadModel();
+            _pwdmodel = LoadPwdModel();
             _server = null;
 
             _server = new ServerModel(_config.BindIP, _config.BindPort);
@@ -97,6 +109,17 @@ namespace WebShare
 
         void _server_OnRequestProcessing(RequestInfo request, ResponseInfo response)
         {
+            if(request.RequestParam["act"]=="login")
+            {
+                response.Write(_pwdmodel);
+                return;
+            }
+            //验证密码
+            if (!VerifiyPwd(request)) 
+            {
+                ShowPwdError(request,response);
+                return;
+            }
             string url = request.Path;
             string fileName=null;
             string curDir=GetDirectory(url,out fileName);
@@ -184,6 +207,46 @@ namespace WebShare
                 }
             }
         }
+
+        /// <summary>
+        /// 验证密码
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        private bool VerifiyPwd(RequestInfo request) 
+        {
+            string pwd=_config.Password;
+            if (string.IsNullOrEmpty(pwd)) 
+            {
+                return true;
+            }
+            string cPwd = request.RequestParam["pwd"];
+            if (string.IsNullOrEmpty(cPwd)) 
+            {
+                return false;
+            }
+            return cPwd.Equals(pwd);
+        }
+        /// <summary>
+        /// 获取密码参数
+        /// </summary>
+        /// <returns></returns>
+        private string GetPwdParam() 
+        {
+            string pwd = _config.Password;
+
+            return "pwd=" + pwd;
+        }
+        /// <summary>
+        /// 显示密码错误
+        /// </summary>
+        /// <param name="response"></param>
+        private void ShowPwdError(RequestInfo reqest, ResponseInfo response) 
+        {
+            response.StatusCode = 301;
+            response.Header["Location:"] = reqest.Path + "?act=login";
+        }
+
 
         /// <summary>
         /// 输出网页
@@ -305,7 +368,8 @@ namespace WebShare
                 List<RangeInfo> lstRange = ResponseInfo.GetRange(request.Header["Range"], finf.Length);//处理区段信息
                 if (lstRange.Count > 0)
                 {
-                    response.Header["Content-Range"] = "bytes=" + lstRange[0].Start + "-" + lstRange[0].End + "/" + finf.Length;//指定区段
+                    response.Header["Content-Range"] = "bytes " + lstRange[0].Start + "-" + lstRange[0].End + "/" + finf.Length;//指定区段
+                    response.StatusCode = 206;
                 }
             }
             try
@@ -405,7 +469,7 @@ namespace WebShare
                 sb.AppendLine("            &nbsp;");
                 sb.AppendLine("            </td>");
                 sb.AppendLine("                <td style=\" width:500px\" >");
-                sb.AppendLine("                    <a href=\"" + System.Web.HttpUtility.UrlEncode(info.Text) + "/\">" + System.Web.HttpUtility.HtmlEncode(info.Text) + "</a>");
+                sb.AppendLine("                    <a href=\"" + System.Web.HttpUtility.UrlEncode(info.Text) + "/?" + GetPwdParam()+ "\">" + System.Web.HttpUtility.HtmlEncode(info.Text) + "</a>");
                 sb.AppendLine("                </td>");
                 sb.AppendLine("                <td >");
                 if (info.Url == "..")
@@ -414,7 +478,7 @@ namespace WebShare
                 }
                 else
                 {
-                    sb.AppendLine("                    <a href=\"" + System.Web.HttpUtility.UrlEncode(info.Text) + "/?type=lst\" target=\"_blank\">打包下载</a>");
+                    sb.AppendLine("                    <a href=\"" + System.Web.HttpUtility.UrlEncode(info.Text) + "/?type=lst&" + GetPwdParam() + "\" target=\"_blank\">打包下载</a>");
                 }
                 sb.AppendLine("                </td>");
                 sb.AppendLine("            </tr>");
@@ -450,7 +514,7 @@ namespace WebShare
                 sb.AppendLine("                    " + System.Web.HttpUtility.HtmlEncode(info.LenString));
                 sb.AppendLine("                </td>");
                 sb.AppendLine("                <td >");
-                sb.AppendLine("                    <a href=\"" + System.Web.HttpUtility.UrlEncode(info.Url) + "\" target=\"_blank\">下载</a>");
+                sb.AppendLine("                    <a href=\"" + System.Web.HttpUtility.UrlEncode(info.Url) + "" + GetPwdParam() + "\" target=\"_blank\">下载</a>");
                 sb.AppendLine("                </td>");
                 sb.AppendLine("            </tr>");
             }

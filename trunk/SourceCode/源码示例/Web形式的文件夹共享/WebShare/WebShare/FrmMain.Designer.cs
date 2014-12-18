@@ -57,6 +57,9 @@
             this.显示窗体ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtPwd = new System.Windows.Forms.TextBox();
+            this.btnPwd = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.gpIP.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupPort)).BeginInit();
@@ -68,6 +71,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnPwd);
+            this.groupBox1.Controls.Add(this.txtPwd);
+            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.btnStop);
             this.groupBox1.Controls.Add(this.btnStart);
             this.groupBox1.Controls.Add(this.gpIP);
@@ -75,9 +81,9 @@
             this.groupBox1.Controls.Add(this.cmbIP);
             this.groupBox1.Controls.Add(this.nupPort);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox1.Location = new System.Drawing.Point(0, 232);
+            this.groupBox1.Location = new System.Drawing.Point(0, 235);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(418, 139);
+            this.groupBox1.Size = new System.Drawing.Size(418, 161);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "基础";
@@ -112,7 +118,7 @@
             this.gpIP.Controls.Add(this.label1);
             this.gpIP.Controls.Add(this.btnCopy);
             this.gpIP.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gpIP.Location = new System.Drawing.Point(3, 45);
+            this.gpIP.Location = new System.Drawing.Point(3, 67);
             this.gpIP.Name = "gpIP";
             this.gpIP.Size = new System.Drawing.Size(412, 91);
             this.gpIP.TabIndex = 20;
@@ -224,7 +230,7 @@
             this.pnlSetting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlSetting.Location = new System.Drawing.Point(0, 0);
             this.pnlSetting.Name = "pnlSetting";
-            this.pnlSetting.Size = new System.Drawing.Size(418, 232);
+            this.pnlSetting.Size = new System.Drawing.Size(418, 235);
             this.pnlSetting.TabIndex = 1;
             // 
             // gvPath
@@ -246,7 +252,7 @@
             this.gvPath.RowHeadersVisible = false;
             this.gvPath.RowTemplate.Height = 23;
             this.gvPath.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gvPath.Size = new System.Drawing.Size(418, 201);
+            this.gvPath.Size = new System.Drawing.Size(418, 204);
             this.gvPath.TabIndex = 1;
             this.gvPath.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvPath_CellContentClick);
             // 
@@ -284,7 +290,7 @@
             this.panel2.Controls.Add(this.chkAutoStart);
             this.panel2.Controls.Add(this.btnAddShare);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 201);
+            this.panel2.Location = new System.Drawing.Point(0, 204);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(418, 31);
             this.panel2.TabIndex = 0;
@@ -346,11 +352,36 @@
             this.退出ToolStripMenuItem.Text = "退出";
             this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(36, 47);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 12);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "密码:";
+            // 
+            // txtPwd
+            // 
+            this.txtPwd.Location = new System.Drawing.Point(72, 44);
+            this.txtPwd.Name = "txtPwd";
+            this.txtPwd.Size = new System.Drawing.Size(220, 21);
+            this.txtPwd.TabIndex = 24;
+            // 
+            // btnPwd
+            // 
+            this.btnPwd.Location = new System.Drawing.Point(298, 44);
+            this.btnPwd.Name = "btnPwd";
+            this.btnPwd.Size = new System.Drawing.Size(55, 23);
+            this.btnPwd.TabIndex = 25;
+            this.btnPwd.Text = "随机";
+            this.btnPwd.UseVisualStyleBackColor = true;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(418, 371);
+            this.ClientSize = new System.Drawing.Size(418, 396);
             this.Controls.Add(this.pnlSetting);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -404,6 +435,9 @@
         private System.Windows.Forms.ToolStripMenuItem 显示窗体ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
+        private System.Windows.Forms.Button btnPwd;
+        private System.Windows.Forms.TextBox txtPwd;
+        private System.Windows.Forms.Label label2;
     }
 }
 
