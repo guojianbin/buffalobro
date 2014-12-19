@@ -1,0 +1,12 @@
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\Microsoft.Hadoop.MapDriver\install.ps1
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\Microsoft.Hadoop.MapDriver\Microsoft.Hadoop.MapDriver.exe
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\Microsoft.Hadoop.MapDriver\Microsoft.Hadoop.MapDriver.pdb
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Microsoft.Hadoop.MapDriver\Microsoft.Hadoop.MapReduce.MapDriver.csprojResolveAssemblyReference.cache
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Microsoft.Hadoop.MapDriver\Microsoft.Hadoop.MapDriver.exe
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Microsoft.Hadoop.MapDriver\Microsoft.Hadoop.MapDriver.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.MapDriver\install.ps1
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.MapDriver\Microsoft.Hadoop.MapDriver.exe
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.MapDriver\Microsoft.Hadoop.MapDriver.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.MapDriver\Microsoft.Hadoop.MapReduce.MapDriver.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.MapDriver\Microsoft.Hadoop.MapDriver.exe
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.MapDriver\Microsoft.Hadoop.MapDriver.pdb

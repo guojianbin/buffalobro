@@ -38,6 +38,16 @@ namespace Buffalo.Kernel.HttpServerModel
             set { _mimeType = value; }
         }
 
+        private int _statusCode=200;
+        /// <summary>
+        /// 返回的状态码
+        /// </summary>
+        public int StatusCode
+        {
+            get { return _statusCode; }
+            set { _statusCode = value; }
+        }
+
         /// <summary>
         /// 返回的内容
         /// </summary>

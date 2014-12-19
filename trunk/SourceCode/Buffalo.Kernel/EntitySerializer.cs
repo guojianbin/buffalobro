@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Buffalo.Kernel.FastReflection;
 using System.Collections;
 using Buffalo.Kernel.FastReflection.ClassInfos;
+using System.Data;
 
 namespace Buffalo.Kernel
 {
@@ -277,7 +278,70 @@ namespace Buffalo.Kernel
             return lstDic;
 
         }
+        /// <summary>
+        /// 实体转换为DataTable
+        /// </summary>
+        /// <param name="lstEntity">实体</param>
+        /// <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
+        /// <param name="formatValue">格式化值的方法</param>
+        /// <returns></returns>
+        public static DataTable SerializeListToDataTable(IList lstEntity,
+            IEnumerable<string> propertyCollection, DelFormatValue formatValue)
+        {
+            if (lstEntity.Count == 0)
+            {
+                return new DataTable();
+            }
+            DataTable dt = new DataTable("DS");
+            Type objType = lstEntity[0].GetType();
+            List<EntitySerializerInfo> lstInfo = null;
+            if (propertyCollection == null)
+            {
+                lstInfo = GetTypeInfos(objType);
+            }
+            else
+            {
+                lstInfo = GetDicInfos(objType, propertyCollection);
+            }
 
+            foreach (EntitySerializerInfo info in lstInfo)
+            {
+                DataColumn dc = new DataColumn(info.Name, info.PropertyInfos[info.PropertyInfos.Count - 1].PropertyType);
+                dt.Columns.Add(dc);
+            }
+            object value = null;
+
+            dt.BeginLoadData();
+            foreach (object obj in lstEntity)
+            {
+                DataRow dr = dt.NewRow();
+                foreach (EntitySerializerInfo info in lstInfo)
+                {
+                    value = GetValue(info, obj);
+                    if (formatValue != null)
+                    {
+                        value = formatValue(info.Name, info.PropertyName, obj, value);
+                    }
+                    dr[info.Name] = value;
+                }
+                dt.Rows.Add(dr);
+            }
+            dt.EndLoadData();
+            return dt;
+
+        }
+        /// <summary>
+        /// 实体转换为字典集合
+        /// </summary>
+        /// <param name="lstEntity">实体</param>
+        /// <param name="propertyCollection">需要对应的字典键值（如：new string[]{"user=User.Name","uid=UserId"}）</param>
+        /// <param name="formatValue">格式化值的方法</param>
+        /// <returns></returns>
+        public static DataTable SerializeListToDataTable(IList lstEntity,
+            IEnumerable<string> propertyCollection)
+        {
+            return SerializeListToDataTable(lstEntity, propertyCollection, null);
+        }
         /// <summary>
         /// 实体转换为字典集合(适合JavaScriptSerializer)
         /// </summary>

@@ -1,0 +1,12 @@
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\MRRunner\install.ps1
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\MRRunner\MRRunner.exe
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\MRRunner\MRRunner.pdb
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\MRRunner\Microsoft.Hadoop.MapReduce.MRRunner.csprojResolveAssemblyReference.cache
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\MRRunner\MRRunner.exe
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\MRRunner\MRRunner.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\MRRunner\install.ps1
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\MRRunner\MRRunner.exe
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\MRRunner\MRRunner.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\MRRunner\Microsoft.Hadoop.MapReduce.MRRunner.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\MRRunner\MRRunner.exe
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\MRRunner\MRRunner.pdb

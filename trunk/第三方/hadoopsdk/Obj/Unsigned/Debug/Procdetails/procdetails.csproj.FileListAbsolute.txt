@@ -1,0 +1,6 @@
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\Procdetails\Procdetails.exe.config
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\Procdetails\Procdetails.exe
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\Procdetails\Procdetails.pdb
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Procdetails\procdetails.csprojResolveAssemblyReference.cache
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Procdetails\Procdetails.exe
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Procdetails\Procdetails.pdb

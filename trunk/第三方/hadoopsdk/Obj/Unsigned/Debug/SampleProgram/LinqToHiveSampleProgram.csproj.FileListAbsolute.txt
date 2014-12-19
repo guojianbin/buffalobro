@@ -1,0 +1,7 @@
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\SampleProgram\install.ps1
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\SampleProgram\SampleProgram.exe.config
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\SampleProgram\SampleProgram.exe
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\SampleProgram\SampleProgram.pdb
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\SampleProgram\LinqToHiveSampleProgram.csprojResolveAssemblyReference.cache
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\SampleProgram\SampleProgram.exe
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\SampleProgram\SampleProgram.pdb

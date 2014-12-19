@@ -511,6 +511,42 @@ namespace Buffalo.Kernel
             
         }
         /// <summary>
+        /// 流内容复制
+        /// </summary>
+        /// <param name="stmSource">源</param>
+        /// <param name="stmTarget">目标</param>
+        /// <param name="length">长度</param>
+        public static void CopyStreamData(Stream stmSource, Stream stmTarget,long length,HttpResponse response)
+        {
+            byte[] buffer = new byte[1024];
+            int readed = 0;
+            long left = length;//剩余字节
+            int len=buffer.Length;
+            do
+            {
+                if (response != null && !response.IsClientConnected) 
+                {
+                    return;
+                }
+                if (left < len) 
+                {
+                    len = (int)left;
+                }
+                readed = stmSource.Read(buffer, 0, len);
+                if (readed > 0)
+                {
+                    stmTarget.Write(buffer, 0, readed);
+                }
+                stmTarget.Flush();
+                left -= readed;
+                if (left<=0) 
+                {
+                    break;
+                }
+            } while (readed > 0);
+
+        }
+        /// <summary>
         /// 获取字符串里边的所有数字
         /// </summary>
         /// <param name="str"></param>

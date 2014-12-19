@@ -235,6 +235,8 @@ namespace Buffalo.Kernel.HttpServerModel
 
             StringBuilder sBuffer = new StringBuilder();
 
+
+            sBuffer.AppendLine("HTTP/1.1 "+resInfo.StatusCode+" OK");
             if (string.IsNullOrEmpty(resInfo.MimeType))
             {
                 resInfo.MimeType = "text/html"; // д╛хо text/html

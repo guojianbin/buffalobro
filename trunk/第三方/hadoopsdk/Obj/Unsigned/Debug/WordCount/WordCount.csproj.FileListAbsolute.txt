@@ -1,0 +1,6 @@
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\WordCount\install.ps1
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\WordCount\WordCount.exe
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\WordCount\WordCount.pdb
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\WordCount\WordCount.csprojResolveAssemblyReference.cache
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\WordCount\WordCount.exe
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\WordCount\WordCount.pdb

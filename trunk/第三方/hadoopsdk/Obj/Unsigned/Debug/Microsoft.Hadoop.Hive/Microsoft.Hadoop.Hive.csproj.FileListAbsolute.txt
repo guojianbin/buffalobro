@@ -1,0 +1,12 @@
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\Microsoft.Hadoop.Hive\install.ps1
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\Microsoft.Hadoop.Hive\Microsoft.Hadoop.Hive.dll
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\Microsoft.Hadoop.Hive\Microsoft.Hadoop.Hive.pdb
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Microsoft.Hadoop.Hive\Microsoft.Hadoop.Hive.csprojResolveAssemblyReference.cache
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Microsoft.Hadoop.Hive\Microsoft.Hadoop.Hive.dll
+E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Microsoft.Hadoop.Hive\Microsoft.Hadoop.Hive.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.Hive\install.ps1
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.Hive\Microsoft.Hadoop.Hive.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.Hive\Microsoft.Hadoop.Hive.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.Hive\Microsoft.Hadoop.Hive.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.Hive\Microsoft.Hadoop.Hive.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.Hive\Microsoft.Hadoop.Hive.pdb
