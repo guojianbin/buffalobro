@@ -20,13 +20,22 @@
       (for example 'FileName' -> 'Filename').
     -->
     <Recognized>
+      <Word>Awaiter</Word>
+      <Word>Rdfe</Word>
       <Word>procdetails</Word>
+      <Word>Wab</Word>
+      <Word>Deserializer</Word>
+      <Word>Posix</Word>
+      <Word>Serdes</Word>
+      <Word>Wabs</Word>
+      <Word>HDInsight</Word>
       <Word>Hadoop</Word>
       <Word>Bfs</Word>
       <Word>Chs</Word>
       <Word>Efi</Word>
       <Word>Dyna</Word>
       <Word>Ioc</Word>
+      <Word>Rdp</Word>
       <Word>Endianness</Word>
       <Word>Esx</Word>
       <Word>Awaiter</Word>
@@ -51,6 +60,7 @@
       <Word>Xosl</Word>
       <Word>Asv</Word>
       <Word>Concreates</Word>
+      <Word>Poco</Word>
 	  <Word>Hd</Word>
       <Word>Oozie</Word>
 	  <Word>Metastore</Word>

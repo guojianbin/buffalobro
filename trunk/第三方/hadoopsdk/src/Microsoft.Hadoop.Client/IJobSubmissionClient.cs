@@ -21,10 +21,5 @@ namespace Microsoft.Hadoop.Client
     /// </summary>
     public interface IJobSubmissionClient : IJobSubmissionSyncClient, IJobSubmissionAsyncClient
     {
-        /// <summary>
-        /// Returns custom user agent to pass along with all job submissions.
-        /// </summary>
-        /// <returns>Custom user agent.</returns>
-        string GetCustomUserAgent();
     }
 }

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation
+﻿// Copyright (c) Microsoft Corporation
 // All rights reserved.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -19,6 +19,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Management.Automation;
+    using System.Security;
     using System.Security.Cryptography.X509Certificates;
     using System.Threading;
     using System.Threading.Tasks;
@@ -32,10 +33,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.AzureManagementClient;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient;
+    using Microsoft.WindowsAzure.Management.HDInsight.Framework;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library.WebRequest;
-    using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Retries;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Logging;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.ServiceLocation;
     using Microsoft.WindowsAzure.Management.HDInsight.JobSubmission.PocoClient;
@@ -43,27 +44,67 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     using Microsoft.WindowsAzure.Management.HDInsight.Tests.RestSimulator;
     using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulator;
 
-    public class IntegrationTestBase : TestsBase
+    public class IntegrationTestBase : DisposableObject
     {
         public IntegrationTestBase()
         {
             HDInsightClient.DefaultPollingInterval = TimeSpan.FromSeconds(1);
+            var underlying = new HttpClientAbstractionFactory();
+            this.factory = new HttpAbstractionSimulatorFactory(underlying);
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            HDInsightClient.DefaultPollingInterval = TimeSpan.FromSeconds(1);
-            IHadoopClientExtensions.GetPollingInterval = () => 50;
-            HDInsightManagementRestSimulatorClient.ResetConnectivityDefaultsAllClusters();
-        }
+        private HttpAbstractionSimulatorFactory factory;
+        private bool httpSpyEnabled;
 
-        public override void TestCleanup()
+        public virtual void Initialize()
         {
             HDInsightClient.DefaultPollingInterval = TimeSpan.FromSeconds(1);
             IHadoopClientExtensions.GetPollingInterval = () => 50;
+            this.ApplyFullMocking();
+            this.ResetIndividualMocks();
+            this.httpSpyEnabled = false;
             HDInsightManagementRestSimulatorClient.ResetConnectivityDefaultsAllClusters();
-            base.TestCleanup();
+        }
+
+        public virtual void TestCleanup()
+        {
+            HDInsightClient.DefaultPollingInterval = TimeSpan.FromSeconds(1);
+            IHadoopClientExtensions.GetPollingInterval = () => 50;
+            this.ApplyFullMocking();
+            this.ResetIndividualMocks();
+            this.httpSpyEnabled = false;
+            HDInsightManagementRestSimulatorClient.ResetConnectivityDefaultsAllClusters();
+        }
+
+        protected void EnableHttpSpy()
+        {
+            var manager = ServiceLocator.Instance.Locate<IServiceLocationIndividualTestManager>();
+            manager.Override<IHttpClientAbstractionFactory>(this.factory);
+            this.httpSpyEnabled = true;
+        }
+
+        internal void EnableHttpMock(Func<IHttpClientAbstraction, IHttpResponseMessageAbstraction> asyncMoc)
+        {
+            if (!this.httpSpyEnabled)
+            {
+                this.EnableHttpSpy();
+            }
+            this.factory.AsyncMock = asyncMoc;
+        }
+
+        protected void DisableHttpMock()
+        {
+            this.factory.AsyncMock = null;
+        }
+
+        protected void ClearHttpCalls()
+        {
+            this.factory.Clients.Clear();
+        }
+
+        internal IEnumerable<Tuple<IHttpClientAbstraction, IHttpResponseMessageAbstraction>> GetHttpCalls()
+        {
+            return this.factory.Clients;
         }
 
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes",
@@ -192,6 +233,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
         private static IHDInsightSubscriptionCredentials validCredentials;
         private static IHDInsightSubscriptionCredentials invalidSubscriptionId;
         private static IHDInsightSubscriptionCredentials invalidCertificate;
+        public TestContext TestContext { get; set; }
 
         public static class TestCredentialsNames
         {
@@ -242,7 +284,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             runManager.RegisterType<IRemoteHadoopJobSubmissionPocoClientFactory, HadoopJobSubmissionPocoSimulatorClientFactory>();
             runManager.RegisterType<IHDInsightJobSubmissionPocoClientFactory, HadoopJobSubmissionPocoSimulatorClientFactory>();
             runManager.RegisterType<ISubscriptionRegistrationClientFactory, SubscriptionRegistrationSimulatorClientFactory>();
-            
+            var timeManager = new HttpOperationManager();
+            timeManager.RetryCount = 2;
+            timeManager.RetryInterval = TimeSpan.FromMilliseconds(250);
+            runManager.RegisterInstance<IHttpOperationManager>(timeManager);
             var testManager = new IntegrationTestManager();
             if (!testManager.RunAzureTests())
             {
@@ -265,8 +310,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             var tempCredentials = new HDInsightCertificateCredential()
             {
                 SubscriptionId = TestCredentials.SubscriptionId,
-                Certificate = defaultCertificate,
-                Endpoint = new Uri(TestCredentials.Endpoint)
+                Certificate = defaultCertificate
             };
             IntegrationTestBase.validCredentials = ServiceLocator.Instance
                                                 .Locate<IHDInsightSubscriptionCredentialsFactory>()
@@ -278,8 +322,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             tempCredentials = new HDInsightCertificateCredential()
             {
                 SubscriptionId = TestCredentials.SubscriptionId,
-                Certificate = new X509Certificate2(TestCredentials.InvalidCertificate),
-                Endpoint = new Uri(TestCredentials.Endpoint)
+                Certificate = new X509Certificate2(TestCredentials.InvalidCertificate)
             };
             IntegrationTestBase.invalidCertificate = ServiceLocator.Instance
                                                   .Locate<IHDInsightSubscriptionCredentialsFactory>()
@@ -287,6 +330,51 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
 
             // Prepares the environment 
             IntegrationTestBase.CleanUpClusters();
+        }
+
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Need secure string for pscredential object.")]
+        protected static PSCredential GetPSCredential(string userName, string password)
+        {
+            var securePassword = new SecureString();
+
+            foreach (var character in password)
+            {
+                securePassword.AppendChar(character);
+            }
+
+            return new PSCredential(userName, securePassword);
+        }
+
+        public void ApplyIndividualTestMockingOnly()
+        {
+            HDInsightClient.DefaultPollingInterval = TimeSpan.FromMinutes(1);
+            var manager = ServiceLocator.Instance.Locate<IServiceLocationSimulationManager>();
+            manager.MockingLevel = ServiceLocationMockingLevel.ApplyIndividualTestMockingOnly;
+        }
+
+        public void ResetIndividualMocks()
+        {
+            var manager = ServiceLocator.Instance.Locate<IServiceLocationIndividualTestManager>();
+            manager.Reset();
+        }
+
+        public void ApplySimulatorMockingOnly()
+        {
+            var manager = ServiceLocator.Instance.Locate<IServiceLocationSimulationManager>();
+            manager.MockingLevel = ServiceLocationMockingLevel.ApplyTestRunMockingOnly;
+        }
+
+        public void ApplyFullMocking()
+        {
+            var manager = ServiceLocator.Instance.Locate<IServiceLocationSimulationManager>();
+            manager.MockingLevel = ServiceLocationMockingLevel.ApplyFullMocking;
+        }
+
+        public void ApplyNoMocking()
+        {
+            HDInsightClient.DefaultPollingInterval = TimeSpan.FromMinutes(1);
+            var manager = ServiceLocator.Instance.Locate<IServiceLocationSimulationManager>();
+            manager.MockingLevel = ServiceLocationMockingLevel.ApplyNoMocking;
         }
 
         public void SetHDInsightManagementRestSimulatorClientOperationTime(int milliseconds)
@@ -328,6 +416,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
                                        Guid.NewGuid().ToString("N")).ToLowerInvariant();
             testToClusterMap.Add(retval, System.Environment.StackTrace.ToString());
             return retval;
+        }
+
+        public static string GetRandomValidPassword()
+        {
+            return Guid.NewGuid().ToString().ToUpperInvariant().Replace('A', 'a').Replace('B', 'b').Replace('C', 'c') + "forTest!";
         }
 
         public static ClusterCreateParameters GetRandomCluster()

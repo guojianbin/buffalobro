@@ -21,7 +21,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library.WebRequest;
-    using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Retries;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.ServiceLocation;
     using Microsoft.WindowsAzure.Management.HDInsight;
     using Microsoft.WindowsAzure.Management.HDInsight.Logging;
@@ -55,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                     throw new NotImplementedException("Mock Throw Exception");
                 }
 
-                public Task<IHttpResponseMessageAbstraction> CreateContainer(string dnsName, string location, string clusterPayload, int version=2)
+                public Task<IHttpResponseMessageAbstraction> CreateContainer(string dnsName, string location, string clusterPayload)
                 {
                     throw new NotImplementedException("Mock Throw Exception");
                 }
@@ -83,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                 public ILogger Logger { get; private set; }
             }
 
-            public IHDInsightManagementRestClient Create(IHDInsightSubscriptionCredentials credentials, IAbstractionContext context, bool ignoreSslErrors)
+            public IHDInsightManagementRestClient Create(IHDInsightSubscriptionCredentials credentials, HDInsight.IAbstractionContext context, bool ignoreSslErrors)
             {
                 return new ThrowMockRestClient();
             }

@@ -18,6 +18,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Versio
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
+    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning;
 
     /// <summary>
     /// Interface to allow a user to retrieve tha available Versions for a subscription id.

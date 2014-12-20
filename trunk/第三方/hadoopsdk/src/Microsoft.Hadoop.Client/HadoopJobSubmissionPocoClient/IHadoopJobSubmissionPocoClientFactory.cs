@@ -33,11 +33,10 @@ namespace Microsoft.Hadoop.Client.HadoopJobSubmissionPocoClient
         /// <param name="ignoreSslErrors">
         /// Specifies that server side SSL errors should be be ignored.
         /// </param>
-        /// <param name="userAgentString">User agent string to pass.</param>
         /// <returns>
         /// A new instance of an HadoopJobSubmissionPoco client capable of talking to the 
         /// specified cluster.
         /// </returns>
-        IHadoopJobSubmissionPocoClient Create(IJobSubmissionClientCredential credentials, IAbstractionContext context, bool ignoreSslErrors, string userAgentString);
+        IHadoopJobSubmissionPocoClient Create(IJobSubmissionClientCredential credentials, IAbstractionContext context, bool ignoreSslErrors);
     }
 }

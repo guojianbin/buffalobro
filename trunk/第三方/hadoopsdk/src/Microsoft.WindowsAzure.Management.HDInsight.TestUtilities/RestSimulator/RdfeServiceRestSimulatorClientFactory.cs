@@ -14,21 +14,15 @@
 // permissions and limitations under the License.
 namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulator
 {
-    using System;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient;
     using Microsoft.WindowsAzure.Management.HDInsight;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library;
-    using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Retries;
 
     internal class RdfeServiceRestSimulatorClientFactory : IRdfeServiceRestClientFactory
     {
         public IRdfeServiceRestClient Create(IHDInsightSubscriptionCredentials credentials, IAbstractionContext context, bool ignoreSslErrors)
         {
-            if (credentials.Is<IHDInsightCertificateCredential>())
-            {
-                return new RdfeServiceRestSimulatorClient(credentials.As<IHDInsightCertificateCredential>(), context);
-            }
-            return new RdfeServiceRestSimulatorClient(credentials.As<IHDInsightAccessTokenCredential>(), context);
+            return new RdfeServiceRestSimulatorClient(credentials.As<IHDInsightCertificateCredential>(), context);
         }
     }
 }

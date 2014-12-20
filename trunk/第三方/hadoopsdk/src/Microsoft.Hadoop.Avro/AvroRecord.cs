@@ -110,7 +110,7 @@ namespace Microsoft.Hadoop.Avro
         /// </value>
         /// <param name="position">The position.</param>
         /// <returns>Field value.</returns>
-        public object this[int position]
+        internal object this[int position]
         {
             get
             {

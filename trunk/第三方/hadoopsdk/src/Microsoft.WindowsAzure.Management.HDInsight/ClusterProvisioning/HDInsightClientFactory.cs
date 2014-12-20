@@ -15,7 +15,8 @@
 namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning
 {
     using System;
-    using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Retries;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Threading;
 
     /// <inheritdoc />
     internal class HDInsightClientFactory : IHDInsightClientFactory
@@ -24,12 +25,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning
         public IHDInsightClient Create(IHDInsightSubscriptionCredentials credentials)
         {
             return new HDInsightClient(credentials);
-        }
-
-        /// <inheritdoc />
-        public IHDInsightClient Create(IHDInsightSubscriptionCredentials credentials, TimeSpan httpOperationTimeout, IRetryPolicy policy)
-        {
-            return new HDInsightClient(credentials, httpOperationTimeout, policy);
         }
     }
 }

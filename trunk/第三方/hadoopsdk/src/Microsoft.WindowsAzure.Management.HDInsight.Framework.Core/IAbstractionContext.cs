@@ -14,9 +14,7 @@
 // permissions and limitations under the License.
 namespace Microsoft.WindowsAzure.Management.HDInsight
 {
-    using System;
     using System.Threading;
-    using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Retries;
     using Microsoft.WindowsAzure.Management.HDInsight.Logging;
 
     /// <summary>
@@ -24,11 +22,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
     /// </summary>
     public interface IAbstractionContext
     {
-        /// <summary>
-        /// Gets the HTTP operation timeout.
-        /// </summary>
-        TimeSpan HttpOperationTimeout { get; }
-
         /// <summary>
         /// Gets a cancellation token to cancel any running requests.
         /// </summary>
@@ -38,10 +31,5 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// Gets a logger to write log messages to.
         /// </summary>
         ILogger Logger { get; }
-
-        /// <summary>
-        /// Gets the retry policy.
-        /// </summary>
-        IRetryPolicy RetryPolicy { get; }
     }
 }

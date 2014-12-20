@@ -107,7 +107,7 @@ namespace Microsoft.Hadoop.Client.Storage
 
             var container = blobClient.GetContainerReference(containerName);
             container.CreateIfNotExists();
-            return Task.FromResult(true);
+            return TaskEx.GetCompletedTask();
         }
 
         public Task Write(Uri path, Stream stream)
@@ -118,7 +118,7 @@ namespace Microsoft.Hadoop.Client.Storage
             var container = client.GetContainerReference(this.credentials.ContainerName);
             var blobReference = container.GetBlockBlobReference(httpPath.OriginalString);
             blobReference.UploadFromStream(stream);
-            return Task.FromResult(true);
+            return TaskEx.GetCompletedTask();
         }
 
         public async Task<Stream> Read(Uri path)
@@ -161,40 +161,6 @@ namespace Microsoft.Hadoop.Client.Storage
             }
 
             return directoryContents;
-        }
-
-        public async Task DownloadToFile(Uri path, string localFileName)
-        {
-            path.ArgumentNotNull("path");
-            localFileName.ArgumentNotNullOrEmpty("localFileName");
-
-            var httpPath = ConvertToHttpPath(path);
-            this.AssertPathRootedToThisAccount(httpPath);
-
-            var blobReference = await this.GetBlobReference(httpPath, true);
-
-            // Read blob in chunks of up to 4MB
-            long chunkSize = 4 * 1024 * 1024;
-
-            if (blobReference.Properties.Length < chunkSize)
-            {
-                blobReference.DownloadToFile(localFileName, FileMode.OpenOrCreate);
-            }
-            else
-            {
-                byte[] buffer = new byte[chunkSize];
-                using (var blobStream = blobReference.OpenRead())
-                {
-                    using (var fileStream = File.Create(localFileName))
-                    {
-                        int bytesRead;
-                        while ((bytesRead = blobStream.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            fileStream.Write(buffer, 0, bytesRead);
-                        }
-                    }
-                }
-            }
         }
 
         private CloudBlobClient GetStorageClient()
@@ -270,7 +236,6 @@ namespace Microsoft.Hadoop.Client.Storage
             if (containerName == RootDirectoryPath && httpPath.Segments.Length > segmentTakeCount)
             {
                 containerName = httpPath.Segments.Skip(segmentTakeCount).FirstOrDefault();
-                containerName = containerName.TrimEnd('/');
                 segmentTakeCount++;
             }
 

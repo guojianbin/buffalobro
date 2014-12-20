@@ -1,79 +1,132 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <BuildConfig xmlns="http://microsoft.com/sat/buildconfig.xsd">
-   <Product>
-      <Group>Microsoft HDInsight</Group>
-      <ShortName>HDInsight SDK</ShortName>
-      <Name>HDInsight SDK</Name>
-      <Description>SDK for SQL Azure HDInsight</Description>
-      <Url>https://www.hadooponazure.com/</Url>
-      <Eula>HadoopSdkLicense.rtf</Eula>
-   </Product>
-   <Engineering>
-      <CodeReviewAlias>hadoopdevx</CodeReviewAlias>
-   </Engineering>
-
-   <Version>
-      <Major>0</Major>
-      <Minor>8</Minor>
-   </Version>
-   <Prepare>
-      <Zip folder="Cmdlet" name="Microsoft.WindowsAzure.Management.HDInsight.Cmdlets.zip" />
-      <NuGet id="Microsoft.Hadoop.MapReduce" outputFolder="MapReduce" >
-         <Title>Microsoft .NET Map Reduce API For Hadoop</Title>
-         <ProjectUrl>http://hadoopsdk.codeplex.com</ProjectUrl>
-         <Description>Provides a .NET API for the Map/Reduce functionality of Hadoop Streaming.</Description>
-         <Dependencies>
-           <Dependency id="Newtonsoft.Json" version="4.5.11" />
-         </Dependencies>
-      </NuGet>
-     <NuGet id="Microsoft.WindowsAzure.Management.HDInsight.TestUtilities" outputFolder="TestUtilities">
-       <Title>Microsoft .NET API for Hadoop Test Utilities</Title>
-       <ProjectUrl>http://hadoopsdk.codeplex.com</ProjectUrl>
-       <Description>Provides test utilities for working with the .NET API for Hadoop.</Description>
-     </NuGet>
-     <NuGet id="Microsoft.WindowsAzure.Management.Framework" outputFolder="TestUtilities">
-       <Title>Microsoft .NET API for Hadoop Framework</Title>
-       <ProjectUrl>http://hadoopsdk.codeplex.com</ProjectUrl>
-       <Description>Provides a set of useful framework functions for working with the .NET API for Hadoop</Description>
-     </NuGet>
-     <NuGet id="Microsoft.Hadoop.WebClient" outputFolder="WebClient" >
-         <Title>Microsoft .NET API For Hadoop WebClient</Title>
-         <ProjectUrl>http://hadoopsdk.codeplex.com</ProjectUrl>
-         <Description>Provides a .NET API for WebClient</Description>
-         <Dependencies>
-            <Dependency id="Microsoft.AspNet.WebApi.Client" />
-            <Dependency id="WindowsAzure.Storage" version="2.0.4.1" />
-            <Dependency id="Microsoft.WindowsAzure.ConfigurationManager" version="1.8.0.0" />
-            <Dependency id="Microsoft.Data.OData" version="5.2.0" />
-            <Dependency id="Microsoft.Data.Edm" version="5.2.0" />
-            <Dependency id="Newtonsoft.Json" version="4.5.11" />
-         </Dependencies>
-      </NuGet>
-      <NuGet id="Microsoft.Hadoop.Hive" outputFolder="Hive" >
-         <Title>Microsoft Linq to Hive</Title>
-         <ProjectUrl>http://hadoopsdk.codeplex.com</ProjectUrl>
-         <Description>Provides a .NET Linq implementation for accessing Hadoop Hive services.</Description>
-         <Dependencies>
-           <Dependency id="Newtonsoft.Json" version="4.5.11" />
-         </Dependencies>
-        <FrameworkAssemblies>
-            <FrameworkAssembly assemblyName="System.Data" targetFramework=".NETFramework4.0" />
-         </FrameworkAssemblies>
-      </NuGet>
-      <NuGet id="Microsoft.WindowsAzure.Management.HDInsight" outputFolder="HDInsightSdk" >
-         <Title>Microsoft .NET API For Windows Azure HDInsight Cluster Management</Title>
-         <ProjectUrl>http://hadoopsdk.codeplex.com</ProjectUrl>
-         <Description>Provides a .NET API for creating, listing and deleting Windows Azure HDInsight clusters.</Description>
-      </NuGet>
-   </Prepare>
-   <Package>
-      <None/>
-   </Package>
-   <Release push="HDInsight.SDK">
-      <Public>
-         <ApiScan name="HDInsight DevEx" />
-         <PoliCheck workspace=".\HDInsight\CLI" />
-      </Public>
-   </Release>
+  <Product>
+    <Group>Microsoft HDInsight</Group>
+    <ShortName>HDInsight Log Analysis Toolkit</ShortName>
+    <Name>Windows Azure HDInsight Log Analysis Toolkit</Name>
+    <Description>Tools to assist analysis of Azure Storage for HDInsight</Description>
+    <Url>https://www.hadooponazure.com/</Url>
+    <Eula>HadoopSdkLicense.rtf</Eula>
+  </Product>
+  <Engineering>
+    <CodeReviewAlias>hdxci</CodeReviewAlias>
+  </Engineering>
+ 
+  <Version>
+    <Major>1</Major>
+    <Minor>1</Minor>
+    <Patch>1</Patch>
+  </Version>
+  <Prepare>
+    <CopyTree>
+      <From>Cmdlet</From>
+      <To>Cmdlet</To>
+    </CopyTree>
+    <CopyTree>
+      <From>NonPublic\Source</From>
+      <To>NonPublic\Source</To>
+    </CopyTree>
+    <CopyTree>
+      <From>Cmdlet</From>
+      <To>NonPublic\Library</To>
+    </CopyTree>
+    <CopyTree>
+      <From>NonPublic\Library</From>
+      <To>NonPublic\Library</To>
+    </CopyTree>
+    <Copy>
+      <From>HadoopSdkLicense.rtf</From>
+      <To>Lat\HadoopSdkLicense.rtf</To>
+    </Copy>
+    <CopyTree>
+      <From>Lat</From>
+      <To>Lat</To>
+    </CopyTree>
+    <Zip folder="Cmdlet" name="Microsoft.WindowsAzure.Management.HDInsight.Cmdlets.zip" />
+    <Zip folder="Lat" name="Microsoft.WindowsAzure.HDInsight.LogAnalysisTool.zip" />
+    <NuGet id="Microsoft.Hadoop.Avro" outputFolder="Avro" >
+      <Title>Microsoft .NET Library for Avro</Title>
+      <ProjectUrl>http://hadoopsdk.codeplex.com</ProjectUrl>
+      <Description>Provides a .NET API for Serializing data into the Avro format.</Description>
+      <Dependencies>
+        <Dependency id="Newtonsoft.Json" version="5.0.5" />
+      </Dependencies>
+    </NuGet>
+    <NuGet id="Microsoft.Hadoop.Client" outputFolder="HadoopClient">
+      <Title>Microsoft .NET API for Hadoop</Title>
+      <ProjectUrl>http://hadoopsdk.codeplex.com</ProjectUrl>
+      <Description>Provides a .NET API for working with Hadoop clusters over HTTP</Description>
+      <NoReferences>
+        <NoReference targetFramework="net40" file="Microsoft.HDInsight.Threading.dll" />
+      </NoReferences>
+      <Dependencies>
+        <Dependency id="WindowsAzure.Storage" version="3.0.3.0"/>
+      </Dependencies>
+      <Authors>Microsoft</Authors>
+      <Owners>Microsoft Azure-sdk</Owners>
+      <IconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</IconUrl>
+      <LicenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</LicenseUrl>
+      <Tags>Microsoft Azure HDInsight Hadoop Scalable windowsazureofficial</Tags>
+      <RequireLicenseAcceptance>true</RequireLicenseAcceptance>
+    </NuGet>
+    <NuGet id="Microsoft.WindowsAzure.Management.HDInsight" outputFolder="HDInsightSdk" >
+      <Title>Windows Azure HDInsight</Title>
+      <ProjectUrl>http://hadoopsdk.codeplex.com</ProjectUrl>
+      <Description>Provides a .NET API for cluster management and job submission on Windows Azure HDInsight service.</Description>
+      <NoReferences>
+        <NoReference targetFramework="net40" file="Microsoft.HDInsight.Threading.dll" />
+      </NoReferences>
+      <Dependencies>
+        <Dependency id="Microsoft.Hadoop.Client" />
+      </Dependencies>
+      <Authors>Microsoft</Authors>
+      <Owners>Microsoft Azure-sdk</Owners>
+      <IconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</IconUrl>
+      <LicenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</LicenseUrl>
+      <Tags>Microsoft Azure HDInsight Hadoop Scalable windowsazureofficial</Tags>
+      <RequireLicenseAcceptance>true</RequireLicenseAcceptance>
+    </NuGet>
+  </Prepare>
+  <Package>
+    <CopyTree>
+      <From>Avro</From>
+      <To>Avro</To>
+    </CopyTree>
+    <CopyTree>
+      <From>HadoopClient</From>
+      <To>HadoopClient</To>
+    </CopyTree>
+    <CopyTree>
+      <From>HDInsightSdk</From>
+      <To>HDInsightSdk</To>
+    </CopyTree>
+    <CopyTree>
+      <From>NonPublic</From>
+      <To>NonPublic</To>
+    </CopyTree>
+    <CopyTree>
+      <From>Cmdlet</From>
+      <To>Cmdlet</To>
+    </CopyTree>
+    <Copy>
+      <From>Microsoft.WindowsAzure.Management.HDInsight.Cmdlets.zip</From>
+      <To>Microsoft.WindowsAzure.Management.HDInsight.Cmdlets.zip</To>
+    </Copy>
+    <Copy>
+      <From>Microsoft.WindowsAzure.HDInsight.LogAnalysisTool.zip</From>
+      <To>Microsoft.WindowsAzure.HDInsight.LogAnalysisTool.zip</To>
+    </Copy>
+    <XCopy ProductGuid="F99A06B5-8ACC-4D99-AE6B-5A9CF9269F68" SourceFolder="Lat">
+      <GuiStyle>
+        <SAT />
+      </GuiStyle>
+    </XCopy>
+  </Package>
+  <Release push="HDInsight.SDK">
+    <Public>
+      <ApiScan name="HDInsight DevEx" />
+      <PoliCheck workspace=".\HDInsight\Hdx.Sdk" />
+    </Public>
+  </Release>
 </BuildConfig>

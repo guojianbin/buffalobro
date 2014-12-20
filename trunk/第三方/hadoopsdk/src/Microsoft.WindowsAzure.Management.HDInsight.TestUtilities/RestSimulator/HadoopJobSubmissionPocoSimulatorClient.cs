@@ -39,15 +39,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
         internal BasicAuthCredential credentials;
         private readonly HDInsightManagementRestSimulatorClient.SimulatorClusterContainer cluster;
         internal IAbstractionContext context;
-        private string userAgentString = null;
 
-        public HadoopJobSubmissionPocoSimulatorClient(BasicAuthCredential connectionCredentials, IAbstractionContext context, string userAgentString)
+        public HadoopJobSubmissionPocoSimulatorClient(BasicAuthCredential connectionCredentials, IAbstractionContext context)
         {
             this.credentials = connectionCredentials;
             var server = connectionCredentials.Server.Host.Split('.')[0];
             this.cluster = HDInsightManagementRestSimulatorClient.GetCloudServiceInternal(server);
             this.context = context;
-            this.userAgentString = userAgentString;
             this.InitializeSimulator();
         }
 
@@ -105,11 +103,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
 
             var storageAccount = this.cluster.Cluster.DefaultStorageAccount;
             return new Uri(string.Format(CultureInfo.InvariantCulture, "{0}{1}@{2}/{3}/{4}", Constants.WabsProtocolSchemeName, storageAccount.Container, storageAccount.Name, rootPath.TrimStart('/'), fileName.TrimStart('/')));
-        }
-
-        public string GetUserAgentString()
-        {
-            return userAgentString;
         }
 
         public Task<JobList> ListJobs()

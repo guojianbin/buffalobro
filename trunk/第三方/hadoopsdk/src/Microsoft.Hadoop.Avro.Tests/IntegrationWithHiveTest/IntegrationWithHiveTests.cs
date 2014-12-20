@@ -27,6 +27,7 @@ namespace Microsoft.Hadoop.Avro.Tests
     using Microsoft.Hadoop.Client.Storage;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.WindowsAzure.Management.HDInsight;
+    using Microsoft.WindowsAzure.Management.HDInsight.Cmdlet.GetAzureHDInsightClusters.Extensions;
     using Microsoft.WindowsAzure.Management.HDInsight.JobSubmission;
     using Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario;
     using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities;
@@ -95,6 +96,36 @@ namespace Microsoft.Hadoop.Avro.Tests
         [TestCategory("Integration")]
         [TestCategory("Scenario")]
         [TestCategory("Nightly")]
+        public void CreateHiveTableBackedByAvro_ReadAvroGeneratedByHive_UsingGenericRecord_NullCodec()
+        {
+            this.dataProvider = new LargeClassGenericDataProvider(Codec.Null);
+            this.RoundtripAvroDataToHive();
+        }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        [TestCategory("Scenario")]
+        [TestCategory("Nightly")]
+        public void CreateHiveTableBackedByAvro_ReadAvroGeneratedByHive_UsingReflection_NullCodec()
+        {
+            this.dataProvider = new LargeClassReflectionDataProvider(Codec.Null);
+            this.RoundtripAvroDataToHive();
+        }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        [TestCategory("Scenario")]
+        [TestCategory("Nightly")]
+        public void CreateHiveTableBackedByAvro_ReadAvroGeneratedByHive_UsingGenericRecord_DeflateCodec()
+        {
+            this.dataProvider = new LargeClassGenericDataProvider(Codec.Deflate);
+            this.RoundtripAvroDataToHive();
+        }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        [TestCategory("Scenario")]
+        [TestCategory("Nightly")]
         public void CreateHiveTableBackedByAvro_ReadAvroGeneratedByHive_UsingReflection_DeflateCodec()
         {
             this.dataProvider = new LargeClassReflectionDataProvider(Codec.Deflate);
@@ -118,7 +149,7 @@ namespace Microsoft.Hadoop.Avro.Tests
                 RunHiveJob(
                     new HiveJobCreateParameters
                     {
-                        Query = "SELECT BoolMember, DateTimeMember, DecimalMember, DoubleMember, EnumMember, FloatMember, base64(GuidMember), IntArrayMember, IntListMember, IntMapMember, IntMember, LongMember, SByteArrayMember, StringMember FROM " + AvroIntegrationWithHiveConfigurations.HiveTableName,
+                        Query = "SELECT * FROM " + AvroIntegrationWithHiveConfigurations.HiveTableName,
                         JobName = "QueryLargeClassTable",
                         StatusFolder = "/" + AvroIntegrationWithHiveConfigurations.QueryResultFolder
                     });
@@ -211,8 +242,7 @@ namespace Microsoft.Hadoop.Avro.Tests
                 AvroIntegrationWithHiveConfigurations.QueryResultFolder);
 
             Task<IEnumerable<Uri>> listTask = this.storageClient.List(new Uri(s), true);
-            listTask.Wait();
-            IEnumerable<Uri> fileStreamBefore = listTask.Result;
+            IEnumerable<Uri> fileStreamBefore = listTask.WaitForResult();
         }
 
         public void CleanupCluster()
@@ -252,8 +282,7 @@ namespace Microsoft.Hadoop.Avro.Tests
             foreach (Uri filePath in pathsToDelete)
             {
                 Task<IEnumerable<Uri>> listFilesTask = this.storageClient.List(filePath, true);
-                listFilesTask.Wait();
-                IEnumerable<Uri> filesList = listFilesTask.Result;
+                IEnumerable<Uri> filesList = listFilesTask.WaitForResult();
                 if (filesList.Any())
                 {
                     this.storageClient.Delete(filePath);

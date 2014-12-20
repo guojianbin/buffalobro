@@ -17,7 +17,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
     using System.Collections.Generic;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient;
     using Microsoft.WindowsAzure.Management.HDInsight;
-    using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Retries;
 
     class TestPocoClientFactoryFlowThrough : IHDInsightManagementPocoClientFactory
     {

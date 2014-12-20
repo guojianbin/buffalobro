@@ -17,6 +17,7 @@ namespace Microsoft.Hadoop.Avro.Schema
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Threading;
 
     /// <summary>
     ///     Class representing an named schema: record, enumeration or fixed.

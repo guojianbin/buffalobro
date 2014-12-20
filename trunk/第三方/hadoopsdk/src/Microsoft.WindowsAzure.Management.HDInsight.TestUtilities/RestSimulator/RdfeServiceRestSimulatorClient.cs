@@ -24,13 +24,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient;
     using Microsoft.WindowsAzure.Management.HDInsight;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library.WebRequest;
-    using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Retries;
 
     internal class RdfeServiceRestSimulatorClient : IRdfeServiceRestClient
     {
+        private IHDInsightCertificateCredential credentials;
         private readonly IntegrationTestManager testmanager = new IntegrationTestManager();
         private readonly IAbstractionContext context;
-        private IHDInsightCertificateCredential credentials;
 
         public RdfeServiceRestSimulatorClient(IHDInsightCertificateCredential credentials, IAbstractionContext context)
         {
@@ -43,13 +42,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
             this.context = context;
             this.credentials = credentials;
             this.PollInterval = TimeSpan.FromMilliseconds(10);
-        }
-
-        public RdfeServiceRestSimulatorClient(IHDInsightAccessTokenCredential credentials, IAbstractionContext context)
-        {
-            this.context = context;
-            this.credentials = IntegrationTestBase.GetValidCredentials() as IHDInsightCertificateCredential;
-            this.PollInterval = TimeSpan.FromMilliseconds(10);
+            this.TimeOut = TimeSpan.FromMilliseconds(100);
         }
 
         public TimeSpan PollInterval { get; set; }

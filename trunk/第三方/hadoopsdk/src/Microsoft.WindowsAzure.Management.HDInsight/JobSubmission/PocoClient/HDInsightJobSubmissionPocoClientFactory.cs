@@ -25,9 +25,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.JobSubmission.PocoClient
     internal class HDInsightJobSubmissionPocoClientFactory : IHDInsightJobSubmissionPocoClientFactory
     {
         /// <inheritdoc />
-        public IHadoopJobSubmissionPocoClient Create(IJobSubmissionClientCredential credentials, IAbstractionContext context, bool ignoreSslErrors, string userAgentString)
+        public IHadoopJobSubmissionPocoClient Create(IJobSubmissionClientCredential credentials, IAbstractionContext context, bool ignoreSslErrors)
         {
-            return new HDInsightJobSubmissionPocoClient((BasicAuthCredential)credentials, context, ignoreSslErrors, userAgentString);
+            return new HDInsightJobSubmissionPocoClient((BasicAuthCredential)credentials, context, ignoreSslErrors);
         }
     }
 }

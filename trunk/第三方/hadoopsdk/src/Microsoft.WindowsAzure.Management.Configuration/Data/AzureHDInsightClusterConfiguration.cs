@@ -29,7 +29,6 @@ namespace Microsoft.WindowsAzure.Management.Configuration.Data
             this.Hdfs = new HdfsSiteConfigurationCollection();
             this.MapReduce = new MapReduceSiteConfigurationCollection();
             this.Oozie = new OozieSiteConfigurationCollection();
-            this.Yarn = new YarnSiteConfigurationCollection();
         }
 
         /// <summary>
@@ -56,11 +55,6 @@ namespace Microsoft.WindowsAzure.Management.Configuration.Data
         /// Gets a structure to represent oozie-site.xml settings.
         /// </summary>
         public OozieSiteConfigurationCollection Oozie { get; private set; }
-
-        /// <summary>
-        /// Gets a structure to represent yarn-site.xml settings.
-        /// </summary>
-        public YarnSiteConfigurationCollection Yarn { get; private set; }
 
     }
 }

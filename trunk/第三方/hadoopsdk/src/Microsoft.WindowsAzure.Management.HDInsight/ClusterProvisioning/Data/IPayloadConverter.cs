@@ -16,7 +16,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
 {
     using System;
     using System.Collections.ObjectModel;
-    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data;
 
     /// <summary>
     /// Converts payloads to and from an object form.
@@ -69,18 +68,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// A string that can be used as the payload in a rest call.
         /// </returns>
         string SerializeClusterCreateRequest(ClusterCreateParameters cluster);
-
-        /// <summary>
-        /// Serializes a create cluster request into a string that can be used as the 
-        /// payload for a rest call using schemaversion v3.
-        /// </summary>
-        /// <param name="cluster">
-        /// The create cluster request object.
-        /// </param>
-        /// <returns>
-        /// A string that can be used as the payload in a rest call.
-        /// </returns>
-        string SerializeClusterCreateRequestV3(ClusterCreateParameters cluster);
 
         /// <summary>
         /// Converts an HDInsight version string to a Version object.

@@ -10,7 +10,7 @@
    <!-- Set the Official Build Properties -->
    <PropertyGroup Condition="'$(OfficialBuild)' == 'true'">
       <SignAssembly>true</SignAssembly>
-      <DelaySign>true</DelaySign>
+      <DelaySign Condition="'$(SampleProject)' != 'true'">true</DelaySign>
       <SourceAnalysisTreatErrorsAsWarnings>false</SourceAnalysisTreatErrorsAsWarnings>
       <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
       <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
@@ -19,6 +19,11 @@
 	  <NoOrganizeOnBuild Condition="'$(SATCIBUILD)' == 'true'">true</NoOrganizeOnBuild>
 	  <NoPrepareOnBuild Condition="'$(SATCIBUILD)' == 'true'">true</NoPrepareOnBuild>
 	  <NoPackageOnBuild Condition="'$(SATCIBUILD)' == 'true'">true</NoPackageOnBuild>
+	  <NoVersionOnBuild Condition="'$(SATCIBUILD)' == 'true'">true</NoVersionOnBuild>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+      <DefineConstants Condition="'$(SignAssembly)' == 'true'">$(DefineConstants);SIGNED</DefineConstants>
 	</PropertyGroup>
 	
 	<PropertyGroup>
@@ -75,12 +80,12 @@
 		<RootLogPath>$(RootPath)\Logs</RootLogPath>
 		<LogPath>$(RootLogPath)\Unsigned\$(ConfigurationType)</LogPath>
 		<LogPath Condition="'$(SignAssembly)' == 'true'">$(RootLogPath)\Signed\$(ConfigurationType)</LogPath>
-		
+
 		<!-- The Orgnaized Directory are where files are droped after full build, it should look like you want the files on the client -->
 		<RootOrganizedPath>$(RootPath)\Organized</RootOrganizedPath>
 		<OrganizedPath>$(RootOrganizedPath)\Unsigned\$(ConfigurationType)</OrganizedPath>
 		<OrganizedPath Condition="'$(SignAssembly)' == 'true'">$(RootOrganizedPath)\Signed\$(ConfigurationType)</OrganizedPath>
-		
+
 		<!-- The Prepared Path are where pre-install steups are preformed (such as creating an IntegrationPack or an SCVMMAddIn -->
 		<RootPreparedPath>$(RootPath)\Prepared</RootPreparedPath>
 		<PreparedPath>$(RootPreparedPath)\Unsigned\$(ConfigurationType)</PreparedPath>
@@ -95,11 +100,13 @@
 
 	<!-- Set the project for delay signing -->
 	<PropertyGroup Condition="'$(SignAssembly)' == 'true'">
-		<DelaySign Condition="'$(DelaySign)' == ''">true</DelaySign>
+		<DelaySign Condition="'$(DelaySign)' == '' and '$(SampleProject)' != 'true'">true</DelaySign>
+		<DelaySign Condition="'$(DelaySign)' == '' and '$(SampleProject)' == 'true'">false</DelaySign>
 
 		<SignKeyPath>$(BuildFilesPath)</SignKeyPath>
 		<SignKeyPath Condition="'$(BuildToolsPath)' != ''">$(BuildToolsPath)\CodeSigning</SignKeyPath>
-		<AssemblyOriginatorKeyFile>$(SignKeyPath)\PublicKey.snk</AssemblyOriginatorKeyFile>
+		<AssemblyOriginatorKeyFile Condition="'$(SampleProject)' != 'true'">$(SignKeyPath)\PublicKey.snk</AssemblyOriginatorKeyFile>
+		<AssemblyOriginatorKeyFile Condition="'$(SampleProject)' == 'true'">$(BuildFilesPath)\FakeSign.snk</AssemblyOriginatorKeyFile>
 		<DefineConstants>$(DefineConstants);SIGN</DefineConstants>
 	</PropertyGroup>
 </Project>

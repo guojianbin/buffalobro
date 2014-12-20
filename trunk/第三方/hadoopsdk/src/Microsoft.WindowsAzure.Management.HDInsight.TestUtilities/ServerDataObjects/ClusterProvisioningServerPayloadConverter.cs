@@ -16,7 +16,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
 {
     using System.IO;
     using System.Runtime.Serialization;
-    using Microsoft.WindowsAzure.Management.HDInsight.Contracts;
+    using Microsoft.HDInsight.Management.Contracts;
 
     public class ClusterProvisioningServerPayloadConverter
     {

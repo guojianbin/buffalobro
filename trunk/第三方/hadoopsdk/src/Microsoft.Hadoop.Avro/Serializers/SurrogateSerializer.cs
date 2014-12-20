@@ -50,11 +50,7 @@ namespace Microsoft.Hadoop.Avro.Serializers
             Expression obj = Expression.TypeAs(
                 Expression.Call(surrogate, serialize, new[] { castValue, Expression.Constant(this.Schema.SurrogateType) }),
                 this.Schema.SurrogateType);
-
-            var tmp = Expression.Variable(this.Schema.SurrogateType, Guid.NewGuid().ToString());
-            var assignment = Expression.Assign(tmp, obj);
-            Expression serialized = this.Schema.Surrogate.Serializer.BuildSerializer(encoder, tmp);
-            return Expression.Block(new[] { tmp }, new[] { assignment, serialized });
+            return this.Schema.Surrogate.Serializer.BuildSerializer(encoder, obj);
         }
 
         protected override Expression BuildDeserializerSafe(Expression decoder)

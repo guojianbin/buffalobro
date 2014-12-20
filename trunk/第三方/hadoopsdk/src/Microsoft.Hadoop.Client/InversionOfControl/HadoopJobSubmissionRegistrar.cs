@@ -41,7 +41,6 @@ namespace Microsoft.Hadoop.Client.InversionOfControl
             manager.RegisterType<IRemoteHadoopJobSubmissionPocoClientFactory, RemoteHadoopJobSubmissionPocoClientFactory>();
             // manager.RegisterType<IHadoopLocalJobSubmissionRestClientFactory, HadoopLocalJobSubmissionRestClientFactory>();
             manager.RegisterType<IHadoopRemoteJobSubmissionRestClientFactory, HadoopRemoteJobSubmissionRestClientFactory>();
-            manager.RegisterType<IHadoopApplicationHistoryRestClientFactory, HadoopApplicationHistoryRestClientFactory>();
             manager.RegisterType<IWabStorageAbstractionFactory, WabStorageAbstractionFactory>();
         }
     }

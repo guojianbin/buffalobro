@@ -29,17 +29,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.JobSubmission
     {
         public IJobSubmissionClient Create(IHDInsightSubscriptionCredentials credential)
         {
-            return Create(credential, string.Empty);
-        }
-
-        public IJobSubmissionClient Create(IHDInsightSubscriptionCredentials credential, string customUserAgent)
-        {
-            return Help.SafeCreate(() => new HDInsightHadoopClient(credential, customUserAgent));
-        }
-
-        public IHadoopApplicationHistoryClient CreateHadoopApplicationHistoryClient(IHDInsightSubscriptionCredentials credential)
-        {
-            throw new NotImplementedException();
+            return Help.SafeCreate(() => new HDInsightHadoopClient(credential));
         }
     }
 }

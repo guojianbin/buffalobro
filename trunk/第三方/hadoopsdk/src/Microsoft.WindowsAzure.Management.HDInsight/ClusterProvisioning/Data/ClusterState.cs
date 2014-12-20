@@ -55,16 +55,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         Running,
 
         /// <summary>
-        /// A patch has been initiated.
-        /// </summary>
-        PatchQueued,
-
-        /// <summary>
-        /// A resize has been initialized.
-        /// </summary>
-        ResizeQueued,
-
-        /// <summary>
         /// Deployment and or Container Delete request queued.
         /// </summary>
         DeletePending,
@@ -80,23 +70,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         Error,
 
         /// <summary>
-        /// Cluster provisioning has timed out.
-        /// </summary>
-        TimedOut,
-
-        /// <summary>
-        /// A cluster cert rollover queued.
-        /// </summary>
-        CertRolloverQueued,
-
-        /// <summary>
         /// Container is in unkown state.
         /// </summary>
-        Unknown,
-
-        /// <summary>
-        /// Cluster is customizing.
-        /// </summary>
-        ClusterCustomization
+        Unknown
     }
 }

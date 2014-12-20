@@ -105,10 +105,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="modelPwd.htm" />
     <Content Include="slogo.ico" />
-    <None Include="modelPwd.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Buffalo.Kernel\Buffalo.Kernel.csproj">
