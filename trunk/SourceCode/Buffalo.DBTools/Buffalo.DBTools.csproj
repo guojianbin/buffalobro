@@ -133,6 +133,11 @@
     <Compile Include="DocSummary\ShapeSummaryDisplayer.cs" />
     <Compile Include="DocSummary\SummaryShape.cs" />
     <Compile Include="DocSummary\SummaryShowItem.cs" />
+    <Compile Include="Models.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Models.resx</DependentUpon>
+    </Compile>
     <Compile Include="DocSummary\VSConfig\IVSConfig.cs" />
     <Compile Include="DocSummary\VSConfig\VS2008Config.cs" />
     <Compile Include="DocSummary\VSConfig\VS2005Config.cs" />
@@ -188,11 +193,6 @@
     <Compile Include="HelperKernel\DataAccessMappingConfig.cs" />
     <Compile Include="HelperKernel\TagManager.cs" />
     <Compile Include="HelperKernel\ToolConfig.cs" />
-    <Compile Include="Models.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Models.resx</DependentUpon>
-    </Compile>
     <Content Include="Resources\Entity.txt" />
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -9,6 +9,7 @@ using Buffalo.DB.CommBase;
 using Buffalo.DB.DBCheckers;
 using Buffalo.DB.CacheManager;
 using Buffalo.DB.Exceptions;
+using System.Reflection;
 
 namespace Buffalo.DB.DataBaseAdapter
 {
@@ -57,35 +58,104 @@ namespace Buffalo.DB.DataBaseAdapter
             _cache.InitCache(ica,isAlltable);
         }
 
-        private static Dictionary<string, IAdapterLoader> _dicAdapterLoaderName = InitAdapterLoaderName();
+        //private static Dictionary<string, IAdapterLoader> _dicAdapterLoaderName = InitAdapterLoaderName();
+
+        ///// <summary>
+        ///// 数据库适配器加载器
+        ///// </summary>
+        //public static Dictionary<string, IAdapterLoader> AdapterLoaders
+        //{
+        //    get { return DBInfo._dicAdapterLoaderName; }
+        //}
+
+        ///// <summary>
+        ///// 初始化适配器命名空间列表
+        ///// </summary>
+        ///// <returns></returns>
+        //private static Dictionary<string, IAdapterLoader> InitAdapterLoaderName() 
+        //{
+        //    Dictionary<string, IAdapterLoader> dic = new Dictionary<string, IAdapterLoader>();
+        //    dic["Sql2K"] = new Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.AdapterLoader();
+        //    dic["Sql2K5"] = new Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter.AdapterLoader();
+        //    dic["Sql2K8"] = new Buffalo.DB.DataBaseAdapter.SqlServer2K8Adapter.AdapterLoader();
+        //    dic["Oracle9"] =new Buffalo.DB.DataBaseAdapter.Oracle9Adapter.AdapterLoader();
+        //    ////dic["MySQL5"] = new Buffalo.DB.DataBaseAdapter.MySQL5Adapter.AdapterLoader();
+        //    ////dic["SQLite"] = new Buffalo.DB.DataBaseAdapter.SQLiteAdapter.AdapterLoader();
+        //    ////dic["DB2v9"] = new Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter.AdapterLoader();
+        //    ////dic["Psql9"] = new Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter.AdapterLoader();
+        //    dic["Access"] = new Buffalo.DB.DataBaseAdapter.AccessAdapter.AdapterLoader();
+        //    return dic;
+        //}
+
+        private static Dictionary<string, Type> _dicAdapterLoader = new Dictionary<string, Type>();
 
         /// <summary>
-        /// 数据库适配器加载器
+        /// 获取外部加载器
         /// </summary>
-        public static Dictionary<string, IAdapterLoader> AdapterLoaders
+        /// <param name="key"></param>
+        /// <returns></returns>
+        private static Type GetAdapterLoader(string key) 
         {
-            get { return DBInfo._dicAdapterLoaderName; }
+            Type ret = null;
+            if (_dicAdapterLoader.TryGetValue(key, out ret)) 
+            {
+                return ret;
+            }
+            Assembly assembly = null;
+            try
+            {
+                assembly = Assembly.Load(key);
+            }
+            catch (Exception ex)
+            {
+                throw new MissingMemberException("找不到类:" + key + ",请保证项目已经引用了" + key + ".dll");
+            }
+
+            string typeName = key + ".AdapterLoader";
+            ret = assembly.GetType(typeName, false, false);
+            if (ret == null)
+            {
+                throw new MissingMemberException("找不到类" + typeName + ",请保证" + key + ".dll的完整性");
+            }
+            _dicAdapterLoader[key] = ret;
+            return ret;
         }
 
         /// <summary>
-        /// 初始化适配器命名空间列表
+        /// 获取加载器
         /// </summary>
         /// <returns></returns>
-        private static Dictionary<string, IAdapterLoader> InitAdapterLoaderName() 
+        public static IAdapterLoader GetLoader(string key) 
         {
-            Dictionary<string, IAdapterLoader> dic = new Dictionary<string, IAdapterLoader>();
-            dic["Sql2K"] = new Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.AdapterLoader();
-            dic["Sql2K5"] = new Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter.AdapterLoader();
-            dic["Sql2K8"] = new Buffalo.DB.DataBaseAdapter.SqlServer2K8Adapter.AdapterLoader();
-            dic["Oracle9"] =new Buffalo.DB.DataBaseAdapter.Oracle9Adapter.AdapterLoader();
-            dic["MySQL5"] = new Buffalo.DB.DataBaseAdapter.MySQL5Adapter.AdapterLoader();
-            dic["SQLite"] = new Buffalo.DB.DataBaseAdapter.SQLiteAdapter.AdapterLoader();
-            dic["DB2v9"] = new Buffalo.DB.DataBaseAdapter.IBMDB2V9Adapter.AdapterLoader();
-            dic["Psql9"] = new Buffalo.DB.DataBaseAdapter.PostgreSQL9Adapter.AdapterLoader();
-            dic["Access"] = new Buffalo.DB.DataBaseAdapter.AccessAdapter.AdapterLoader();
-            return dic;
+            IAdapterLoader ret = null;
+            if (key.Equals("Sql2K", StringComparison.CurrentCultureIgnoreCase)) 
+            {
+                ret = new Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter.AdapterLoader();
+            }
+            else if (key.Equals("Sql2K5", StringComparison.CurrentCultureIgnoreCase)) 
+            {
+                ret = new Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter.AdapterLoader();
+            }
+            else if (key.Equals("Sql2K8", StringComparison.CurrentCultureIgnoreCase))
+            {
+                ret = new Buffalo.DB.DataBaseAdapter.SqlServer2K8Adapter.AdapterLoader();
+            }
+            else if (key.Equals("Oracle9", StringComparison.CurrentCultureIgnoreCase))
+            {
+                ret = new Buffalo.DB.DataBaseAdapter.Oracle9Adapter.AdapterLoader();
+            }
+            else if (key.Equals("Access", StringComparison.CurrentCultureIgnoreCase))
+            {
+                ret = new Buffalo.DB.DataBaseAdapter.AccessAdapter.AdapterLoader();
+            }
+            else 
+            {
+                Type loaderType = GetAdapterLoader(key);
+                ret = Activator.CreateInstance(loaderType) as IAdapterLoader;
+            }
+            return ret;
         }
-        
+
 
         //private Dictionary<string, string> _extendDatabaseConnection = null;
 
@@ -152,8 +222,8 @@ namespace Buffalo.DB.DataBaseAdapter
         private void InitAdapters() 
         {
 
-            IAdapterLoader loader = null;
-            if (!_dicAdapterLoaderName.TryGetValue(DbType, out loader)) 
+            IAdapterLoader loader = GetLoader(DbType);
+            if (loader==null) 
             {
                 throw new Exception("不支持数据库类型:" + DbType);
             }

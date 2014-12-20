@@ -140,7 +140,7 @@ namespace Buffalo.DB.QueryConditions
         /// </summary>
         /// <param name="hasOrder">是否有排序</param>
         /// <returns></returns>
-        internal string GetSelect()
+        public string GetSelect()
         {
             return GetSelect(true);
         }
@@ -149,7 +149,7 @@ namespace Buffalo.DB.QueryConditions
         /// </summary>
         /// <param name="hasOrder">是否有排序</param>
         /// <returns></returns>
-        internal string GetSelect(bool hasOrder) 
+        public string GetSelect(bool hasOrder) 
         {
             StringBuilder sql = new StringBuilder(5000);
             sql.Append("select ");

@@ -169,7 +169,7 @@ namespace Buffalo.DB.PropertyAttributes
         public long Length
         {
             get { return _length; }
-            internal set { _length = value; }
+            set { _length = value; }
         }
         /// <summary>
         /// 获取对应的字段是否主键

@@ -4,7 +4,6 @@ using System.Text;
 using System.Data.Common;
 using Buffalo.DB.DataBaseAdapter;
 using System.Data;
-using Buffalo.DB.DataBaseAdapter.SQLiteAdapter;
 using System.Data.SQLite;
 
 namespace Buffalo.DB.DbCommon

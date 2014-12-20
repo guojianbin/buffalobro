@@ -36,7 +36,7 @@ namespace Buffalo.DB.QueryConditions
 
         private int pagerIndex=0;
 
-        internal int PagerIndex
+        public int PagerIndex
         {
             get { return pagerIndex; }
             set { pagerIndex = value; }

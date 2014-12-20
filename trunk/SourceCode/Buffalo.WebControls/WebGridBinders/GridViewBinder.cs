@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Buffalo.Permissions.DataViewInfo;
 using System.Web.UI.WebControls;
 
 namespace Buffalo.WebControls.WebGridBinders

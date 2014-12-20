@@ -34,7 +34,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <param name="tableName">±í</param>
         /// <param name="paramName">×Ö¶Î</param>
         /// <returns></returns>
-        internal static string GetDefaultName(string tableName, string paramName) 
+        public static string GetDefaultName(string tableName, string paramName) 
         {
             StringBuilder sbSeqName = new StringBuilder(20);
             sbSeqName.Append("seq_");

@@ -259,7 +259,6 @@
     <Compile Include="DataFillers\MappingContorl.cs" />
     <Compile Include="DBCheckers\DBChecker.cs" />
     <Compile Include="DBCheckers\TableChecker.cs" />
-    <Compile Include="DbCommon\DBInfoLocker.cs" />
     <Compile Include="DbCommon\DataBaseOperate.cs" />
     <Compile Include="DbCommon\DBConn.cs" />
     <Compile Include="DbCommon\DBParameter.cs" />

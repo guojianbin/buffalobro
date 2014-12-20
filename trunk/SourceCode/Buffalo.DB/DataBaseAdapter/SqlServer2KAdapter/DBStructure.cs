@@ -73,7 +73,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// </summary>
         /// <param name="childName"></param>
         /// <returns></returns>
-        internal static string AllInTableNames(IEnumerable<string> tableNames) 
+        public static string AllInTableNames(IEnumerable<string> tableNames) 
         {
             if (tableNames == null) 
             {
@@ -232,7 +232,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
         /// </summary>
         /// <param name="dicTables"></param>
         /// <param name="lstRelation"></param>
-        internal static void FillRelation(Dictionary<string, DBTableInfo> dicTables,List<TableRelationAttribute> lstRelation) 
+        public static void FillRelation(Dictionary<string, DBTableInfo> dicTables,List<TableRelationAttribute> lstRelation) 
         {
             if (lstRelation == null) 
             {
