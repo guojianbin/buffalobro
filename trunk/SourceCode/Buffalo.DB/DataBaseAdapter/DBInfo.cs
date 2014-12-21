@@ -87,7 +87,7 @@ namespace Buffalo.DB.DataBaseAdapter
         //    return dic;
         //}
 
-        private static Dictionary<string, Type> _dicAdapterLoader = new Dictionary<string, Type>();
+        private static Dictionary<string, Assembly> _dicAdapterLoader = new Dictionary<string, Assembly>();
 
         /// <summary>
         /// 获取外部加载器
@@ -97,11 +97,15 @@ namespace Buffalo.DB.DataBaseAdapter
         private static Type GetAdapterLoader(string key) 
         {
             Type ret = null;
-            if (_dicAdapterLoader.TryGetValue(key, out ret)) 
+            Assembly assembly = null;
+            string typeName = key + ".AdapterLoader";
+
+            if (_dicAdapterLoader.TryGetValue(key, out assembly)) 
             {
+                ret = assembly.GetType(typeName, false, false);
                 return ret;
             }
-            Assembly assembly = null;
+           
             try
             {
                 assembly = Assembly.Load(key);
@@ -111,13 +115,12 @@ namespace Buffalo.DB.DataBaseAdapter
                 throw new MissingMemberException("找不到类:" + key + ",请保证项目已经引用了" + key + ".dll");
             }
 
-            string typeName = key + ".AdapterLoader";
             ret = assembly.GetType(typeName, false, false);
             if (ret == null)
             {
                 throw new MissingMemberException("找不到类" + typeName + ",请保证" + key + ".dll的完整性");
             }
-            _dicAdapterLoader[key] = ret;
+            _dicAdapterLoader[key] = assembly;
             return ret;
         }
 

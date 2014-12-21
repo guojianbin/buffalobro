@@ -105,6 +105,7 @@ namespace Buffalo.DB.CacheManager
             throw new NotSupportedException("不支持:" + type + " 的缓存类型，当前只支持system、memcached、redis类型的缓存");
         }
 
+        private static Assembly _cacheAssembly = null;
         /// <summary>
         /// 获取外部程序集的缓存
         /// </summary>
@@ -114,20 +115,20 @@ namespace Buffalo.DB.CacheManager
         /// <returns></returns>
         private static ICacheAdaper GetAssemblyCache(DBInfo info, string type, string connectionString) 
         {
-            Assembly assembly = null;
+            Assembly _cacheAssembly = null;
             try
             {
-                assembly = Assembly.Load("Buffalo.QueryCache");
+                _cacheAssembly = Assembly.Load("Buffalo.QueryCache");
             }
             catch (Exception ex)
             {
                 throw new MissingMemberException("找不到类Buffalo.QueryCache,请保证项目已经引用了Buffalo.QueryCache.dll");
             }
-            if (assembly == null) 
+            if (_cacheAssembly == null) 
             {
                 throw new MissingMemberException("找不到类Buffalo.QueryCache,请保证项目已经引用了Buffalo.QueryCache.dll");
             }
-            Type loaderType = assembly.GetType("Buffalo.QueryCache.CacheLoader", false, false);
+            Type loaderType = _cacheAssembly.GetType("Buffalo.QueryCache.CacheLoader", false, false);
             if (loaderType == null) 
             {
                 throw new MissingMemberException("找不到类Buffalo.QueryCache.CacheLoader,请保证Buffalo.QueryCache.dll的完整性");
