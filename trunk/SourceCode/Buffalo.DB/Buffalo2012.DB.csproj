@@ -42,36 +42,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IBM.Data.DB2, Version=9.0.0.2, Culture=neutral, PublicKeyToken=7c307b91aa13d208, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\dll\Net2.0\IBM.Data.DB2.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data, Version=6.5.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\dll\Net4.0\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Npgsql">
-      <HintPath>..\..\dll\dll\Net4.0\Npgsql2.0.11.92-bin-ms.net4.0\Npgsql.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Common">
-      <HintPath>..\..\dll\dll\Net4.5\ServiceStack.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Interfaces">
-      <HintPath>..\..\dll\dll\Net4.5\ServiceStack.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Redis">
-      <HintPath>..\..\dll\dll\Net4.5\ServiceStack.Redis.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Text">
-      <HintPath>..\..\dll\dll\Net4.5\ServiceStack.Text.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.OracleClient" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\dll\dll\Net4.5\SQLite\X86\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -195,15 +169,6 @@
     <Compile Include="DataBaseAdapter\DataAccessLoader.cs" />
     <Compile Include="DataBaseAdapter\DBInfo.cs" />
     <Compile Include="DataBaseAdapter\DBTableInfo.cs" />
-    <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\AdapterLoader.cs" />
-    <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\AggregateFunctions.cs" />
-    <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\CommonFunction.cs" />
-    <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\ConvertFunction.cs" />
-    <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\CursorPageCutter.cs" />
-    <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\CutPageSqlCreater.cs" />
-    <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\DBAdapter.cs" />
-    <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\DBStructure.cs" />
-    <Compile Include="DataBaseAdapter\IBMDB2V9Adapter\MathFunctions.cs" />
     <Compile Include="DataBaseAdapter\IDbAdapters\CheckEvent.cs" />
     <Compile Include="DataBaseAdapter\IDbAdapters\IAggregateFunctions.cs" />
     <Compile Include="DataBaseAdapter\IDbAdapters\ICommonFunction.cs" />
@@ -211,15 +176,6 @@
     <Compile Include="DataBaseAdapter\IDbAdapters\IDBAdapter.cs" />
     <Compile Include="DataBaseAdapter\IDbAdapters\IMathFunctions.cs" />
     <Compile Include="DataBaseAdapter\LoadTypeInfo.cs" />
-    <Compile Include="DataBaseAdapter\MySQL5Adapter\AdapterLoader.cs" />
-    <Compile Include="DataBaseAdapter\MySQL5Adapter\AggregateFunctions.cs" />
-    <Compile Include="DataBaseAdapter\MySQL5Adapter\CommonFunction.cs" />
-    <Compile Include="DataBaseAdapter\MySQL5Adapter\ConvertFunction.cs" />
-    <Compile Include="DataBaseAdapter\MySQL5Adapter\CursorPageCutter.cs" />
-    <Compile Include="DataBaseAdapter\MySQL5Adapter\CutPageSqlCreater.cs" />
-    <Compile Include="DataBaseAdapter\MySQL5Adapter\DBAdapter.cs" />
-    <Compile Include="DataBaseAdapter\MySQL5Adapter\DBStructure.cs" />
-    <Compile Include="DataBaseAdapter\MySQL5Adapter\MathFunctions.cs" />
     <Compile Include="DataBaseAdapter\Oracle9Adapter\AdapterLoader.cs" />
     <Compile Include="DataBaseAdapter\Oracle9Adapter\AggregateFunctions.cs" />
     <Compile Include="DataBaseAdapter\Oracle9Adapter\CommonFunction.cs" />
@@ -230,25 +186,6 @@
     <Compile Include="DataBaseAdapter\Oracle9Adapter\DBStructure.cs" />
     <Compile Include="DataBaseAdapter\Oracle9Adapter\MathFunctions.cs" />
     <Compile Include="DataBaseAdapter\Oracle9Adapter\SequenceManager.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\AdapterLoader.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\AggregateFunctions.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CommonFunction.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\ConvertFunction.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CursorPageCutter.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\CutPageSqlCreater.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\DBAdapter.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\DBStructure.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\MathFunctions.cs" />
-    <Compile Include="DataBaseAdapter\PostgreSQL9Adapter\SequenceManager.cs" />
-    <Compile Include="DataBaseAdapter\SQLiteAdapter\AdapterLoader.cs" />
-    <Compile Include="DataBaseAdapter\SQLiteAdapter\AggregateFunctions.cs" />
-    <Compile Include="DataBaseAdapter\SQLiteAdapter\CommonFunction.cs" />
-    <Compile Include="DataBaseAdapter\SQLiteAdapter\ConvertFunction.cs" />
-    <Compile Include="DataBaseAdapter\SQLiteAdapter\CursorPageCutter.cs" />
-    <Compile Include="DataBaseAdapter\SQLiteAdapter\CutPageSqlCreater.cs" />
-    <Compile Include="DataBaseAdapter\SQLiteAdapter\DBAdapter.cs" />
-    <Compile Include="DataBaseAdapter\SQLiteAdapter\DBStructure.cs" />
-    <Compile Include="DataBaseAdapter\SQLiteAdapter\MathFunctions.cs" />
     <Compile Include="DataBaseAdapter\SqlServer2K5Adapter\AdapterLoader.cs" />
     <Compile Include="DataBaseAdapter\SqlServer2K5Adapter\AggregateFunctions.cs" />
     <Compile Include="DataBaseAdapter\SqlServer2K5Adapter\CutPageSqlCreater.cs" />
@@ -277,7 +214,6 @@
     <Compile Include="DBCheckers\TableChecker.cs" />
     <Compile Include="DbCommon\DataBaseOperate.cs" />
     <Compile Include="DbCommon\DBConn.cs" />
-    <Compile Include="DbCommon\DBInfoLocker.cs" />
     <Compile Include="DbCommon\DBParameter.cs" />
     <Compile Include="DbCommon\LockDBItem.cs" />
     <Compile Include="DbCommon\ParamList.cs" />
