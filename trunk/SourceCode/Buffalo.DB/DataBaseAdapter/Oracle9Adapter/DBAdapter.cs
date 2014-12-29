@@ -621,6 +621,14 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             conn.Dispose();
             return true;
         }
-
+        /// <summary>
+        /// 创建表语句的结束
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public string CreateTableSQLEnd(DBInfo info)
+        {
+            return null;
+        }
     }
 }

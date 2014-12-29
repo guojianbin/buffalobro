@@ -22,7 +22,7 @@ namespace Buffalo.DB.CacheManager
             _info = info;
         }
 
-        private Cache _cache = HttpRuntime.Cache;
+        private Hashtable _cache = Hashtable.Synchronized(new Hashtable());
         private Hashtable _hsToKey = Hashtable.Synchronized(new Hashtable());
         private DBInfo _info;
         /// <summary>

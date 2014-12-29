@@ -88,7 +88,6 @@ E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\We
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\WebShare\WebShare\obj\Release\WebShare.Properties.Resources.resources
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\WebShare\WebShare\obj\Release\WebShare.csproj.GenerateResource.Cache
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\WebShare\WebShare\bin\Debug\model.htm
-E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\WebShare\WebShare\bin\Debug\modelPwd.htm
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\WebShare\WebShare\bin\Debug\WebShare.exe
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\WebShare\WebShare\bin\Debug\WebShare.pdb
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\WebShare\WebShare\bin\Debug\Buffalo.Kernel.dll
@@ -107,3 +106,4 @@ E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\We
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\WebShare\WebShare\obj\Debug\WebShare.csproj.GenerateResource.Cache
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\WebShare\WebShare\obj\Debug\WebShare.exe
 E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\WebShare\WebShare\obj\Debug\WebShare.pdb
+E:\CSharpTest\BuffaloCode\SourceCode\源码示例\Web形式的文件夹共享\WebShare\WebShare\bin\Debug\modelPwd.htm

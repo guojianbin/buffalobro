@@ -105,7 +105,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="modelPwd.htm" />
+    <Content Include="modelPwd.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="slogo.ico" />
   </ItemGroup>
   <ItemGroup>

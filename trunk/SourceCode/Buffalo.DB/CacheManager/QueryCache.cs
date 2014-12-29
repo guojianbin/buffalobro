@@ -324,5 +324,7 @@ namespace Buffalo.DB.CacheManager
             _dicAllowCache[tableName] = true;
             return true;
         }
+
+
     }
 }

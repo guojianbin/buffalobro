@@ -59,7 +59,16 @@ namespace Buffalo.WebControls {
                 resourceCulture = value;
             }
         }
-        
+
+        /// </summary>
+        internal static string KimSoftWebCalendar
+        {
+            get
+            {
+                return ResourceManager.GetString("KimSoftWebCalendar", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   查找类似 	
         ///	function LocationPicker(provice,city,area,hidProviceId,hidCityId,hidAreaId)//城市对象

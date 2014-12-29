@@ -122,12 +122,20 @@ namespace WebShare
             }
             string url = request.Path;
             string fileName=null;
-            string curDir=GetDirectory(url,out fileName);
+            bool isRoot=false;
+            string curDir = GetDirectory(url, out fileName, out isRoot);
 
             if (fileName == "..") 
             {
                 DirectoryInfo dinfo = new DirectoryInfo(curDir);
-                curDir = dinfo.Parent.FullName;
+                if (isRoot)
+                {
+                    curDir = dinfo.FullName;
+                }
+                else
+                {
+                    curDir = dinfo.Parent.FullName;
+                }
                 fileName = "";
             }
             string strfname = HttpUtility.UrlDecode(fileName);
@@ -390,7 +398,7 @@ namespace WebShare
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        private string GetDirectory(string url,out string fileName) 
+        private string GetDirectory(string url,out string fileName,out bool isRoot) 
         {
             string[] parts = url.Split('/');
             StringBuilder dir = new StringBuilder();
@@ -422,6 +430,7 @@ namespace WebShare
                     dir.Append("\\");
                 }
             }
+            isRoot = parts.Length <= 1;
             return dir.ToString();
         }
 

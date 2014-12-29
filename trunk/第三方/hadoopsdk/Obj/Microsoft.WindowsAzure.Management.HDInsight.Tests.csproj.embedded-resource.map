@@ -1,3 +1,5 @@
-Embedded Resources located in this assembly relative to: E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\src\Microsoft.WindowsAzure.Management.HDInsight.Tests
-Microsoft.WindowsAzure.Management.HDInsight.Tests.App.config|E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\src\Microsoft.WindowsAzure.Management.HDInsight.Tests\App.config
-Microsoft.WindowsAzure.Management.HDInsight.Tests.Microsoft.WindowsAzure.Management.HDInsight.Tests.csproj.embedded-resource.map|E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Microsoft.WindowsAzure.Management.HDInsight.Tests.csproj.embedded-resource.map
+Embedded Resources located in this assembly relative to: E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\src\Microsoft.WindowsAzure.Management.HDInsight.Tests
+Microsoft.WindowsAzure.Management.HDInsight.Tests.Json.1599940_repro.txt|E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\src\Microsoft.WindowsAzure.Management.HDInsight.Tests\Json\1599940_repro.txt
+Microsoft.WindowsAzure.Management.HDInsight.Tests.deploymentdetail.txt|E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Tests\deploymentdetail.txt
+Microsoft.WindowsAzure.Management.HDInsight.Tests.App.config|E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\src\Microsoft.WindowsAzure.Management.HDInsight.Tests\App.config
+Microsoft.WindowsAzure.Management.HDInsight.Tests.Microsoft.WindowsAzure.Management.HDInsight.Tests.csproj.embedded-resource.map|E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Microsoft.WindowsAzure.Management.HDInsight.Tests.csproj.embedded-resource.map

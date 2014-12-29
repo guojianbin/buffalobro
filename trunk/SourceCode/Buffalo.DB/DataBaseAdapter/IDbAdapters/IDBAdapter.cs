@@ -288,6 +288,12 @@ namespace Buffalo.DB.DataBaseAdapter.IDbAdapters
         /// <param name="pInfo">字段（如果为空则设置表注释）</param>
         /// <returns></returns>
         string GetColumnDescriptionSQL(EntityParam pInfo, DBInfo info);
-        
+
+        /// <summary>
+        /// 创建表语句的结束
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        string CreateTableSQLEnd(DBInfo info) ;
     }
 }

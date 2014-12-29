@@ -1,1 +1,2 @@
 E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Tests\Microsoft.WindowsAzure.Management.HDInsight.Tests.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Tests\Microsoft.WindowsAzure.Management.HDInsight.Tests.csprojResolveAssemblyReference.cache

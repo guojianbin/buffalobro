@@ -639,6 +639,14 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             return true;
         }
 
-        
+        /// <summary>
+        /// 创建表语句的结束
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public string CreateTableSQLEnd(DBInfo info)
+        {
+            return null;
+        }
     }
 }

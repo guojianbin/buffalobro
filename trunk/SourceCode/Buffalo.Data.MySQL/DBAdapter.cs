@@ -523,5 +523,15 @@ namespace Buffalo.Data.MySQL
             return true;
         }
         #endregion
+
+        /// <summary>
+        /// 创建表语句的结束
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public string CreateTableSQLEnd(DBInfo info)
+        {
+            return " ENGINE=InnoDB";
+        }
     }
 }

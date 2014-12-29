@@ -43,6 +43,11 @@ namespace Buffalo.DB.QueryConditions
             sbRet.Append("(");
             sbRet.Append(SqlParams);
             sbRet.Append(")");
+            string end = ida.CreateTableSQLEnd(_dbInfo);
+            if (!string.IsNullOrEmpty(end)) 
+            {
+                sbRet.Append(end);
+            }
             return sbRet.ToString();
         }
     }
