@@ -1,9 +1,0 @@
-E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.dll
-E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Bin\Unsigned\Debug\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.pdb
-E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.dll
-E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.pdb
-E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.dll
-E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.pdb
-E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.dll
-E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.pdb
-E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.csprojResolveAssemblyReference.cache

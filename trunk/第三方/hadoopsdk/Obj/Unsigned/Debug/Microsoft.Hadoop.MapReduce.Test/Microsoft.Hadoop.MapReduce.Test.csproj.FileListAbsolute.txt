@@ -1,1 +1,0 @@
-E:\WebDownload\hadoopsdk-411625661b9d226387f4cb66137e1a6d7ddd33bc\Obj\Unsigned\Debug\Microsoft.Hadoop.MapReduce.Test\Microsoft.Hadoop.MapReduce.Test.csprojResolveAssemblyReference.cache
