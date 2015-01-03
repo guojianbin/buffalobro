@@ -465,8 +465,10 @@ namespace Buffalo.DBTools.ROMHelper
             if (er.IsParent)
             {
                 er.FieldTypeName = EntityFieldBase.ToPascalName(er.TargetTable);
-                er.FieldName = "_belong" + EntityFieldBase.ToPascalName(er.TargetTable) + "_" + EntityFieldBase.ToPascalName(er.SourceName) + "_" + EntityFieldBase.ToPascalName(er.TargetName);
-                er.PropertyName = "Belong" + EntityFieldBase.ToPascalName(er.TargetTable) + "_" + EntityFieldBase.ToPascalName(er.SourceName) + "_" + EntityFieldBase.ToPascalName(er.TargetName);
+                //string name = EntityFieldBase.ToPascalName(er.TargetTable) + "_" + EntityFieldBase.ToPascalName(er.SourceName) + "_" + EntityFieldBase.ToPascalName(er.TargetName);
+                string name = EntityFieldBase.ToPascalName(er.SourceName)+"2"+EntityFieldBase.ToPascalName(er.TargetTable);
+                er.FieldName = "_belong" + name;
+                er.PropertyName = name;
                 er.IsToDB = true;
                 sb.AppendLine("        /// <summary>");
                 sb.AppendLine("        /// " + er.Description);
@@ -486,8 +488,11 @@ namespace Buffalo.DBTools.ROMHelper
             else
             {
                 er.FieldTypeName = "List<" + EntityFieldBase.ToPascalName(er.TargetTable) + ">";
-                er.FieldName = "_lst" + EntityFieldBase.ToPascalName(er.TargetTable) + EntityFieldBase.ToPascalName(er.SourceName) + "_" + EntityFieldBase.ToPascalName(er.TargetName);
-                er.PropertyName = "Lst" + EntityFieldBase.ToPascalName(er.TargetTable) + EntityFieldBase.ToPascalName(er.SourceName) + "_" + EntityFieldBase.ToPascalName(er.TargetName);
+                string name = EntityFieldBase.ToPascalName(er.TargetTable) + "2"  + EntityFieldBase.ToPascalName(er.TargetName);
+                er.FieldName = "_lst" + name;
+                //er.PropertyName = "Lst" + name;
+               
+                er.PropertyName = name;
                 er.IsToDB = false;
                 sb.AppendLine("        /// <summary>");
                 sb.AppendLine("        /// " + er.Description);

@@ -128,6 +128,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                     tinfo.TargetTable = reader["parentname"] as string;
                     tinfo.TargetName = reader["parentparam"] as string;
                     tinfo.IsParent = true;
+                    
                     lst.Add(tinfo);
                 }
             }

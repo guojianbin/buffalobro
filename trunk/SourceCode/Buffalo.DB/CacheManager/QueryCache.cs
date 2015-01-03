@@ -325,6 +325,43 @@ namespace Buffalo.DB.CacheManager
             return true;
         }
 
-
+        /// <summary>
+        /// 获取值
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="valueType">值类型</param>
+        /// <returns></returns>
+        public IDictionary<string, object> GetValues(string[] keys) 
+        {
+            return _cache.GetValues(keys, _db.DefaultOperate);
+        }
+        /// <summary>
+        /// 设置值
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="value">值</param>
+        /// <returns></returns>
+        public void SetValue<E>(string key, E value) 
+        {
+            _cache.SetValue<E>(key,value, _db.DefaultOperate);
+        }
+        /// <summary>
+        /// 删除值
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="client">客户端</param>
+        /// <returns></returns>
+        public void DeleteValue(string key) 
+        {
+            _cache.DeleteValue(key, _db.DefaultOperate);
+        }
+        /// <summary>
+        /// 自增1
+        /// </summary>
+        /// <param name="key"></param>
+        public void DoIncrement(string key) 
+        {
+            _cache.DoIncrement(key, _db.DefaultOperate);
+        }
     }
 }

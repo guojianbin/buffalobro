@@ -199,14 +199,17 @@ namespace Buffalo.DB.CacheManager
 
         public void DoIncrement(string key, DataBaseOperate oper)
         {
-            object oval = _cache[key];
-            if (oval == null) 
+            lock (_cache)
             {
-                oval = 1;
+                object oval = _cache[key];
+                if (oval == null)
+                {
+                    oval = 1;
+                }
+                long value = Convert.ToInt64(oval);
+                value++;
+                _cache[key] = value;
             }
-            long value = Convert.ToInt64(oval);
-            value++;
-            _cache[key] = value;
         }
 
         #endregion
