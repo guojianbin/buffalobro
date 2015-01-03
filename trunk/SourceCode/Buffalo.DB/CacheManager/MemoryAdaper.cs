@@ -172,6 +172,44 @@ namespace Buffalo.DB.CacheManager
         {
             oper.OutMessage(MessageType.QueryCache, "SystemMemory", type, message);
         }
+
+        #region ICacheAdaper ≥…‘±
+
+
+        public IDictionary<string, object> GetValues(string[] keys, DataBaseOperate oper)
+        {
+            Dictionary<string, object> dic = new Dictionary<string, object>(keys.Length);
+            foreach (string str in keys) 
+            {
+                object val = _cache[str];
+                dic[str] = val;
+            }
+            return dic;
+        }
+
+        public void SetValue<E>(string key, E value, DataBaseOperate oper)
+        {
+            _cache[key] = value;
+        }
+
+        public void DeleteValue(string key, DataBaseOperate oper)
+        {
+            _cache.Remove(key);
+        }
+
+        public void DoIncrement(string key, DataBaseOperate oper)
+        {
+            object oval = _cache[key];
+            if (oval == null) 
+            {
+                oval = 1;
+            }
+            long value = Convert.ToInt64(oval);
+            value++;
+            _cache[key] = value;
+        }
+
+        #endregion
     }
 
     

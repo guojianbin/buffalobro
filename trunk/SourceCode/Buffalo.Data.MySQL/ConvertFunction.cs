@@ -19,8 +19,8 @@ namespace Buffalo.Data.MySQL
         {
             StringBuilder ret = new StringBuilder(format);
             ret.Replace("%", "%%");
-            ret.Replace("yy", "%y");
             ret.Replace("yyyy", "%Y");
+            ret.Replace("yy", "%y");
             ret.Replace("MM", "%m");
             ret.Replace("dd", "%d");
             ret.Replace("hh", "%H");

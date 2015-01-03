@@ -202,7 +202,7 @@ namespace Buffalo.DB.CacheManager
         /// <param name="valueType">值类型</param>
         /// <param name="client">客户端</param>
         /// <returns></returns>
-        protected abstract IDictionary<string, object> GetValues(string[] keys, T client);
+        protected abstract IDictionary<string, object> GetValues(IList<string> keys, T client);
         /// <summary>
         /// 设置值
         /// </summary>
@@ -510,6 +510,103 @@ namespace Buffalo.DB.CacheManager
             oper.OutMessage(MessageType.CacheException, info);
 
         }
+        #endregion
+
+        #region ICacheAdaper 成员
+
+
+        public IDictionary<string, object> GetValues(string[] keys, DataBaseOperate oper)
+        {
+            try
+            {
+                using (T client = CreateClient(false, QueryCache.CommandDeleteSQL))
+                {
+                    return GetValues(keys, client);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (_throwExcertion)
+                {
+                    throw ex;
+                }
+                else
+                {
+                    OutExceptionMessage(ex, oper);
+                    return null;
+                }
+            }
+        }
+
+        public void SetValue<E>(string key, E value, DataBaseOperate oper)
+        {
+            try
+            {
+                using (T client = CreateClient(false, QueryCache.CommandDeleteSQL))
+                {
+                    SetValue<E>(key, value, client);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (_throwExcertion)
+                {
+                    throw ex;
+                }
+                else
+                {
+                    OutExceptionMessage(ex, oper);
+                    
+                }
+            }
+        }
+
+        public void DeleteValue(string key, DataBaseOperate oper)
+        {
+            try
+            {
+                using (T client = CreateClient(false, QueryCache.CommandDeleteSQL))
+                {
+                    DeleteValue(key, client);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (_throwExcertion)
+                {
+                    throw ex;
+                }
+                else
+                {
+                    OutExceptionMessage(ex, oper);
+
+                }
+            }
+        }
+
+        public void DoIncrement(string key, DataBaseOperate oper)
+        {
+            try
+            {
+                using (T client = CreateClient(false, QueryCache.CommandDeleteSQL))
+                {
+                    DoIncrement(key, client);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (_throwExcertion)
+                {
+                    throw ex;
+                }
+                else
+                {
+                    OutExceptionMessage(ex, oper);
+
+                }
+            }
+        }
+
         #endregion
     }
 }

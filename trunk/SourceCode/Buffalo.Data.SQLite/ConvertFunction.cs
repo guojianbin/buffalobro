@@ -21,7 +21,6 @@ namespace Buffalo.Data.SQLite
             ret.Replace("%", "%%");
             ret.Replace("yyyy", "%Y");
             ret.Replace("yy", "%Y");
-            ret.Replace("YYYY", "%Y");
             ret.Replace("MM", "%m");
             ret.Replace("dd", "%d");
             ret.Replace("hh", "%H");

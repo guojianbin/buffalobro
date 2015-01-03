@@ -19,8 +19,8 @@ namespace Buffalo.Data.PostgreSQL
         {
             StringBuilder ret = new StringBuilder(format);
             ret.Replace("%", "%%");
-            ret.Replace("yy", "YY");
             ret.Replace("yyyy", "YYYY");
+            ret.Replace("yy", "YY");
             ret.Replace("MM", "MM");
             ret.Replace("dd", "DD");
             ret.Replace("hh", "HH24");

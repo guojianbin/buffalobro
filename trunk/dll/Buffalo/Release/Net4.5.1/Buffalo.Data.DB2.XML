@@ -361,6 +361,13 @@
             <param name="description">注释</param>
             <returns></returns>
         </member>
+        <member name="M:Buffalo.Data.DB2.DBAdapter.CreateTableSQLEnd(Buffalo.DB.DataBaseAdapter.DBInfo)">
+            <summary>
+            创建表语句的结束
+            </summary>
+            <param name="info"></param>
+            <returns></returns>
+        </member>
         <member name="P:Buffalo.Data.DB2.DBAdapter.IsShowExpression">
             <summary>
             全文搜索时候排序字段是否显示表达式
