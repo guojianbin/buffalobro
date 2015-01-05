@@ -274,6 +274,5 @@ namespace Buffalo.QueryCache
 
         #endregion
 
-
     }
 }

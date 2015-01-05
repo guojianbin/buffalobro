@@ -586,6 +586,7 @@ namespace Buffalo.DB.DbCommon
 
                     _tran.Rollback();
                     _tran = null;
+                    _comm.Transaction = null;
                     return true;
                 }
             }
@@ -751,6 +752,7 @@ namespace Buffalo.DB.DbCommon
                 }
 
                 _tran.Commit();
+                _comm.Transaction = null;
                 _tran = null;
                 
             }

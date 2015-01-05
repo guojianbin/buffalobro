@@ -202,7 +202,7 @@ namespace Buffalo.DB.CacheManager
         /// <param name="valueType">值类型</param>
         /// <param name="client">客户端</param>
         /// <returns></returns>
-        protected abstract IDictionary<string, object> GetValues(IList<string> keys, T client);
+        protected abstract IDictionary<string, object> GetValues(string[] keys, T client);
         /// <summary>
         /// 设置值
         /// </summary>
