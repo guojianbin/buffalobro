@@ -33,15 +33,15 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
             {
                 return "";
             }
-            if (objPage.IsFillTotleRecords)
+            if (objPage.IsFillTotalRecords)
             {
-                objPage.TotleRecords = GetTotleRecord(list, oper, objCondition,objPage,
+                objPage.TotalRecords = GetTotalRecord(list, oper, objCondition,objPage,
                     (useCache?objCondition.CacheTables:null));//获取总记录数
-                long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
-                objPage.TotlePage = totlePage;
-                if (objPage.CurrentPage >= objPage.TotlePage - 1)
+                long totalPage = (long)Math.Ceiling((double)objPage.TotalRecords / (double)objPage.PageSize);
+                objPage.TotalPage = totalPage;
+                if (objPage.CurrentPage >= objPage.TotalPage - 1)
                 {
-                    objPage.CurrentPage = objPage.TotlePage - 1;
+                    objPage.CurrentPage = objPage.TotalPage - 1;
                     //objCondition.CurrentPage = objPage.CurrentPage;
                 }
             }
@@ -144,10 +144,10 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
         /// <param name="part">查询条件</param>
         /// <param name="list">变量列表</param>
         /// <param name="oper">通用类</param>
-        private static long GetTotleRecord(ParamList list, DataBaseOperate oper,
+        private static long GetTotalRecord(ParamList list, DataBaseOperate oper,
             SelectCondition objCondition, PageContent objPage,Dictionary<string,bool> cacheTables)
         {
-            long totleRecords = 0;
+            long totalRecords = 0;
             StringBuilder sql = new StringBuilder();
             if (objPage.MaxSelectRecords > 0)
             {
@@ -213,7 +213,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
                 {
                     if (!reader.IsDBNull(0))
                     {
-                        totleRecords = Convert.ToInt64(reader[0]);
+                        totalRecords = Convert.ToInt64(reader[0]);
                     }
                 }
             }
@@ -221,7 +221,7 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2K5Adapter
             {
                 reader.Close();
             }
-            return totleRecords;
+            return totalRecords;
         }
     
     }

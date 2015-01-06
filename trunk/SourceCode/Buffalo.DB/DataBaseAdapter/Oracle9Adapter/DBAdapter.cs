@@ -99,7 +99,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         public string GetTopSelectSql(SelectCondition sql, int top)
         {
             PageContent objPage = new PageContent();
-            objPage.IsFillTotleRecords = false;
+            objPage.IsFillTotalRecords = false;
             objPage.StarIndex = 0;
             objPage.PageSize = top;
             return CutPageSqlCreater.GetCutPageSql(sql.GetSelect(), objPage);

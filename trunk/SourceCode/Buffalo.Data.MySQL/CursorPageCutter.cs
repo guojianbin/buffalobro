@@ -26,12 +26,12 @@ namespace Buffalo.Data.MySQL
         public static IDataReader Query(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper, Dictionary<string, bool> cacheTables)
         {
 
-            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql,objPage.MaxSelectRecords,cacheTables);
-            long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
-            objPage.TotlePage = totlePage;
-            if (objPage.CurrentPage >= objPage.TotlePage - 1)
+            objPage.TotalRecords = CutPageSqlCreater.GetTotalRecord(lstParam, oper, sql,objPage.MaxSelectRecords,cacheTables);
+            long totalPage = (long)Math.Ceiling((double)objPage.TotalRecords / (double)objPage.PageSize);
+            objPage.TotalPage = totalPage;
+            if (objPage.CurrentPage >= objPage.TotalPage - 1)
             {
-                objPage.CurrentPage = objPage.TotlePage - 1;
+                objPage.CurrentPage = objPage.TotalPage - 1;
             }
             IDataReader reader = null;
             
@@ -51,16 +51,16 @@ namespace Buffalo.Data.MySQL
         /// <returns></returns>
         public static DataTable QueryDataTable(string sql, ParamList lstParam, PageContent objPage, DataBaseOperate oper, Type curType)
         {
-            objPage.TotleRecords = CutPageSqlCreater.GetTotleRecord(lstParam, oper, sql, objPage.MaxSelectRecords,null);
-            long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
-            objPage.TotlePage = totlePage;
-            if (objPage.CurrentPage >= objPage.TotlePage - 1)
+            objPage.TotalRecords = CutPageSqlCreater.GetTotalRecord(lstParam, oper, sql, objPage.MaxSelectRecords,null);
+            long totalPage = (long)Math.Ceiling((double)objPage.TotalRecords / (double)objPage.PageSize);
+            objPage.TotalPage = totalPage;
+            if (objPage.CurrentPage >= objPage.TotalPage - 1)
             {
-                objPage.CurrentPage = objPage.TotlePage - 1;
+                objPage.CurrentPage = objPage.TotalPage - 1;
             }
-            if (objPage.CurrentPage >= objPage.TotlePage - 1)
+            if (objPage.CurrentPage >= objPage.TotalPage - 1)
             {
-                objPage.CurrentPage = objPage.TotlePage - 1;
+                objPage.CurrentPage = objPage.TotalPage - 1;
             }
 
             DataTable ret = new DataTable();

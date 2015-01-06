@@ -12,18 +12,18 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
     public class KeyWordLimitItem : BQLQuery
     {
         uint star = 0;
-        uint totleRecords = 0;
+        uint totalRecords = 0;
         /// <summary>
         /// 显示记录的范围
         /// </summary>
         /// <param name="star">开始记录</param>
-        /// <param name="totleRecords">要显示多少条记录</param>
+        /// <param name="totalRecords">要显示多少条记录</param>
         /// <param name="previous">上一个语句</param>
-        public KeyWordLimitItem(uint star, uint totleRecords, BQLQuery previous)
+        public KeyWordLimitItem(uint star, uint totalRecords, BQLQuery previous)
             : base(previous) 
         {
             this.star = star;
-            this.totleRecords = totleRecords;
+            this.totalRecords = totalRecords;
         }
 
         internal override void LoadInfo(KeyWordInfomation info)
@@ -38,8 +38,8 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
             info.Infos.PagerCount++;
             objPage.PagerIndex = info.Infos.PagerCount;
             
-            objPage.PageSize = totleRecords;
-            objPage.IsFillTotleRecords = false;
+            objPage.PageSize = totalRecords;
+            objPage.IsFillTotalRecords = false;
             info.Condition.PageContent = objPage;
         }
     }

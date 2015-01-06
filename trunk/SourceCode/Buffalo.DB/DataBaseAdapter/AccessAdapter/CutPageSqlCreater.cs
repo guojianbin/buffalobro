@@ -57,14 +57,14 @@ namespace Buffalo.DB.DataBaseAdapter.AccessAdapter
             {
                 return "";
             }
-            if (objPage.IsFillTotleRecords)
+            if (objPage.IsFillTotalRecords)
             {
-                objPage.TotleRecords = GetTotleRecord(list, oper, objCondition, objPage,cacheTables);//获取总记录数
-                long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
-                objPage.TotlePage = totlePage;
-                if (objPage.CurrentPage >= objPage.TotlePage - 1)
+                objPage.TotalRecords = GetTotalRecord(list, oper, objCondition, objPage,cacheTables);//获取总记录数
+                long totalPage = (long)Math.Ceiling((double)objPage.TotalRecords / (double)objPage.PageSize);
+                objPage.TotalPage = totalPage;
+                if (objPage.CurrentPage >= objPage.TotalPage - 1)
                 {
-                    objPage.CurrentPage = objPage.TotlePage - 1;
+                    objPage.CurrentPage = objPage.TotalPage - 1;
                 }
             }
             return CreateCutPageSql(objCondition, objPage);
@@ -183,13 +183,13 @@ namespace Buffalo.DB.DataBaseAdapter.AccessAdapter
         private static string CreateCutPageSql(SelectCondition objCondition, PageContent objPage)
         {
 
-            string totleLine = objPage.PageSize.ToString();
+            string totalLine = objPage.PageSize.ToString();
 
             long starIndex = objPage.GetStarIndex();
 
             if (starIndex == 0)
             {
-                //sql.Append("select top " + totleLine + " " + objCondition.SqlParams + "  from [" + objCondition.Tables + "] " + " where " + objCondition.Condition);
+                //sql.Append("select top " + totalLine + " " + objCondition.SqlParams + "  from [" + objCondition.Tables + "] " + " where " + objCondition.Condition);
                 return GetFristPageSql(objCondition, objPage);
             }
 
@@ -213,9 +213,9 @@ namespace Buffalo.DB.DataBaseAdapter.AccessAdapter
             }
 
             StringBuilder sql = new StringBuilder(5000);
-            //sql.Append("select top " + totleLine + " " + objCondition.SqlParams.ToString() + " from [" + objCondition.Tables.ToString() + "] where(not exists (select * from (select top " + starIndex.ToString() + " " + objCondition.SqlParams + " from [" + objCondition.Tables + "] where " + objCondition.Condition);
+            //sql.Append("select top " + totalLine + " " + objCondition.SqlParams.ToString() + " from [" + objCondition.Tables.ToString() + "] where(not exists (select * from (select top " + starIndex.ToString() + " " + objCondition.SqlParams + " from [" + objCondition.Tables + "] where " + objCondition.Condition);
             sql.Append("select top ");
-            sql.Append(totleLine);
+            sql.Append(totalLine);
             sql.Append(" ");
             sql.Append(objCondition.SqlParams.ToString());
             sql.Append(" from ");
@@ -280,10 +280,10 @@ namespace Buffalo.DB.DataBaseAdapter.AccessAdapter
         /// <param name="part">查询条件</param>
         /// <param name="list">变量列表</param>
         /// <param name="oper">通用类</param>
-        private static long GetTotleRecord(ParamList list, DataBaseOperate oper,
+        private static long GetTotalRecord(ParamList list, DataBaseOperate oper,
             SelectCondition objCondition,PageContent objPage,Dictionary<string,bool> cacheTables)
         {
-            long totleRecords = 0;
+            long totalRecords = 0;
             StringBuilder sql = new StringBuilder(5000);
 
             if (objPage.MaxSelectRecords > 0)
@@ -341,7 +341,7 @@ namespace Buffalo.DB.DataBaseAdapter.AccessAdapter
                 {
                     if (!reader.IsDBNull(0))
                     {
-                        totleRecords = Convert.ToInt64(reader[0]);
+                        totalRecords = Convert.ToInt64(reader[0]);
                     }
                 }
             }
@@ -349,7 +349,7 @@ namespace Buffalo.DB.DataBaseAdapter.AccessAdapter
             {
                 reader.Close();
             }
-            return totleRecords;
+            return totalRecords;
         }
     
     }

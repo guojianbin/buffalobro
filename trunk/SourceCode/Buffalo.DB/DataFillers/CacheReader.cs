@@ -264,12 +264,12 @@ namespace Buffalo.DB.DataFillers
         /// <typeparam name="T">类型</typeparam>
         /// <param name="reader">reader</param>
         /// <param name="entityInfo">实体类信息</param>
-        /// <param name="totleSize">集合总大小</param>
+        /// <param name="totalSize">集合总大小</param>
         /// <returns></returns>
-        public static List<T> LoadFormReaderList<T>(IDataReader reader,EntityInfoHandle entityInfo, out int totleSize) where T : EntityBase, new()
+        public static List<T> LoadFormReaderList<T>(IDataReader reader,EntityInfoHandle entityInfo, out int totalSize) where T : EntityBase, new()
         {
             List<T> retLst = new List<T>();
-            totleSize = 0;//初始化当前记录集总大小
+            totalSize = 0;//初始化当前记录集总大小
             if (reader != null && !reader.IsClosed)
             {
                 List<EntityPropertyInfo> lstParamNames = GenerateCache(reader, entityInfo);
@@ -279,7 +279,7 @@ namespace Buffalo.DB.DataFillers
                     T obj = (T)entityInfo.CreateSelectProxyInstance();
                     int curSize = 0;//获取当前值大小
                     FillObjectFromReader(reader, lstParamNames, obj, out curSize);
-                    totleSize += curSize;//加到当前记录总大小里边
+                    totalSize += curSize;//加到当前记录总大小里边
                     retLst.Add(obj);
                 }
             }

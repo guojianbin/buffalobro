@@ -12,31 +12,31 @@ namespace Buffalo.WinFormsControl.DataGridViewEx
             base.CellTemplate = new DataGridViewPercentCell();
         }
 
-        private bool _showTotle = false;
+        private bool _showTotal = false;
 
         /// <summary>
         /// 是否在值后边显示总数
         /// </summary>
-        public bool ShowTotle
+        public bool ShowTotal
         {
             get
             {
-                return _showTotle;
+                return _showTotal;
             }
             set
             {
-                _showTotle = value;
+                _showTotal = value;
             }
         }
 
-        private decimal _TotleCount;
+        private decimal _TotalCount;
         /// <summary>
         /// 列总数
         /// </summary>
-        public decimal TotleCount
+        public decimal TotalCount
         {
-            get { return _TotleCount; }
-            set { _TotleCount = value; }
+            get { return _TotalCount; }
+            set { _TotalCount = value; }
         }
 
         private string _valueForamt;

@@ -69,13 +69,13 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             sb.Append("\n");
             sb.Append("as\n");
             sb.Append("declare @p1 int\n");
-            sb.Append("declare @totle int\n");
+            sb.Append("declare @total int\n");
             sb.Append("if (@maxRecords>0) \n");
             sb.Append("begin \n");
             sb.Append("	set rowcount @maxRecords \n");
             sb.Append("end \n");
-            sb.Append("exec sp_cursoropen @p1 output,@sql,@scrollopt=1,@ccopt=1,@totle=@totle output\n");
-            sb.Append("select @totle\n");
+            sb.Append("exec sp_cursoropen @p1 output,@sql,@scrollopt=1,@ccopt=1,@total=@total output\n");
+            sb.Append("select @total\n");
             sb.Append("exec sp_cursorfetch @p1,16,@currentIndex,@pagesize \n");
             sb.Append("exec sp_cursorclose @p1\n");
             sb.Append("if (@maxRecords>0) \n");
@@ -103,24 +103,24 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
             lstParams.AddNew("@currentIndex", DbType.Int32, objPage.GetStarIndex() + 1);
             lstParams.AddNew("@pagesize", DbType.Int32, objPage.PageSize);
             lstParams.AddNew("@maxRecords", DbType.Int64, objPage.MaxSelectRecords);
-            //lstParams.AddNew("@@totle", DbType.Int64, 0, ParameterDirection.Output);
+            //lstParams.AddNew("@@total", DbType.Int64, 0, ParameterDirection.Output);
             IDataReader reader = null;
 
             InitProc(oper);
             reader = oper.Query(ProcName, lstParams, CommandType.StoredProcedure,null);
             if (reader.NextResult())//第二个结果集为查询记录数
             {
-                if (objPage.IsFillTotleRecords)
+                if (objPage.IsFillTotalRecords)
                 {
                     if (reader.Read())
                     {
-                        int totleRecord = reader.GetInt32(0);
-                        objPage.TotleRecords = totleRecord;
-                        int totlePage = (int)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
-                        objPage.TotlePage = totlePage;
-                        if (objPage.CurrentPage >= objPage.TotlePage - 1)
+                        int totalRecord = reader.GetInt32(0);
+                        objPage.TotalRecords = totalRecord;
+                        int totalPage = (int)Math.Ceiling((double)objPage.TotalRecords / (double)objPage.PageSize);
+                        objPage.TotalPage = totalPage;
+                        if (objPage.CurrentPage >= objPage.TotalPage - 1)
                         {
-                            objPage.CurrentPage = objPage.TotlePage - 1;
+                            objPage.CurrentPage = objPage.TotalPage - 1;
                         }
                     }
                 }
@@ -170,13 +170,13 @@ namespace Buffalo.DB.DataBaseAdapter.SqlServer2KAdapter
                 {
                     if (reader.Read())
                     {
-                        int totleRecord = reader.GetInt32(0);
-                        objPage.TotleRecords = totleRecord;
-                        int totlePage = (int)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
-                        objPage.TotlePage = totlePage;
-                        if (objPage.CurrentPage >= objPage.TotlePage - 1)
+                        int totalRecord = reader.GetInt32(0);
+                        objPage.TotalRecords = totalRecord;
+                        int totalPage = (int)Math.Ceiling((double)objPage.TotalRecords / (double)objPage.PageSize);
+                        objPage.TotalPage = totalPage;
+                        if (objPage.CurrentPage >= objPage.TotalPage - 1)
                         {
-                            objPage.CurrentPage = objPage.TotlePage - 1;
+                            objPage.CurrentPage = objPage.TotalPage - 1;
                         }
                     }
                 }

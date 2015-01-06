@@ -32,9 +32,9 @@ namespace Buffalo.WinFormsControl.DataGridViewEx
             }
 
             DataGridViewPercentColumn col = this.OwningColumn as DataGridViewPercentColumn;
-            if (canParse && col.TotleCount > 0)
+            if (canParse && col.TotalCount > 0)
             {
-                decimal decv = val / col.TotleCount;
+                decimal decv = val / col.TotalCount;
                 if (decv > 1) decv = 1;
                 if (decv < 0) decv = 0;
                 Brush bs = new SolidBrush(cellStyle.BackColor);
@@ -65,10 +65,10 @@ namespace Buffalo.WinFormsControl.DataGridViewEx
                 if (cellBounds.Width > cellStyle.Font.Size * 4)
                 {
                     string showString = null;
-                    if (col.ShowTotle)
+                    if (col.ShowTotal)
                     {
 
-                        showString = GetNumberString(val) + "/" + GetNumberString(col.TotleCount);
+                        showString = GetNumberString(val) + "/" + GetNumberString(col.TotalCount);
                     }
                     else
                     {

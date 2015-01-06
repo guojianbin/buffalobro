@@ -430,7 +430,7 @@ namespace MyTipText
             js.Append("		{\n");
             js.Append("			var index=this.findItemIndex(this.curDiv);\n");
             js.Append("			var divHeight=document.getElementById(this.divId).clientHeight\n");
-            js.Append("			var height=this.curDiv.offsetHeight*(index+1);//totle height\n");
+            js.Append("			var height=this.curDiv.offsetHeight*(index+1);//total height\n");
             js.Append("			var scrollHeight=height-this.divHeight;\n");
             js.Append("			if(scrollHeight>document.getElementById(this.divId).scrollTop)\n");
             js.Append("			{\n");

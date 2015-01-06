@@ -66,11 +66,11 @@ namespace Buffalo.DB.BQLCommon.BQLKeyWordCommon
         ///// 查询范围
         ///// </summary>
         ///// <param name="star">开始条数</param>
-        ///// <param name="totleRecord">显示条数</param>
+        ///// <param name="totalRecord">显示条数</param>
         ///// <returns></returns>
-        //public KeyWordLimitItem Limit(uint star, uint totleRecord)
+        //public KeyWordLimitItem Limit(uint star, uint totalRecord)
         //{
-        //    KeyWordLimitItem item = new KeyWordLimitItem(star, totleRecord, this);
+        //    KeyWordLimitItem item = new KeyWordLimitItem(star, totalRecord, this);
         //    return item;
         //}
         internal override void Tran(KeyWordInfomation info)

@@ -67,19 +67,19 @@ namespace Buffalo.WebKernel.WebCommons.PagerCommon
         /// <summary>
         /// ×ÜÒ³Êý
         /// </summary>
-        public long TotlePage 
+        public long TotalPage 
         {
             get 
             {
-                if (ViewState["totle"] != null) 
+                if (ViewState["total"] != null) 
                 {
-                    return (long)ViewState["totle"];
+                    return (long)ViewState["total"];
                 }
                 return -1;
             }
             set 
             {
-                ViewState["totle"] = value;
+                ViewState["total"] = value;
             }
         }
         /// <summary>

@@ -26,15 +26,15 @@ namespace Buffalo.WinFormsControl.PagingBar
         #region 基本数据
         public event PageIndexChange OnPageIndexChange;
 
-        private long _totlePage;
+        private long _totalPage;
         /// <summary>
         /// 总页数
         /// </summary>
-        public long TotlePage
+        public long TotalPage
         {
             get
             {
-                return _totlePage;
+                return _totalPage;
             }
             
         }
@@ -72,25 +72,25 @@ namespace Buffalo.WinFormsControl.PagingBar
             }
         }
 
-        private long _totleRecords;
+        private long _totalRecords;
         /// <summary>
         /// 总记录条数
         /// </summary>
-        public long TotleRecords 
+        public long TotalRecords 
         {
             get
             {
-                return _totleRecords;
+                return _totalRecords;
             }
             set
             {
-                _totleRecords = value;
+                _totalRecords = value;
                 
-                if (_totleRecords >=0)
+                if (_totalRecords >=0)
                 {
                     if (_pageSize > 0)
                     {
-                        _totlePage = _totleRecords / _pageSize;
+                        _totalPage = _totalRecords / _pageSize;
                     }
 
                     
@@ -145,16 +145,16 @@ namespace Buffalo.WinFormsControl.PagingBar
         public void BindData()
         {
             long curPage = CurrentPage + 1;
-            long totlePage = TotlePage;
+            long totalPage = TotalPage;
             this.Visible = true;
-            if (TotleRecords == 0)
+            if (TotalRecords == 0)
             {
                 this.Visible = false;
                 return;
             }
             CurrentPage = CurrentPage;
-            lblPage.Text = "/"+TotlePage.ToString()+"页";
-            labInfo.Text = "共["+TotleRecords.ToString()+"]条";
+            lblPage.Text = "/"+TotalPage.ToString()+"页";
+            labInfo.Text = "共["+TotalRecords.ToString()+"]条";
             txtPage.Text = curPage.ToString();
             btnLast.Enabled = true;
             btnNext.Enabled = true;
@@ -167,7 +167,7 @@ namespace Buffalo.WinFormsControl.PagingBar
                 btnFirsh.Enabled = false;
                 btnUp.Enabled = false;
             }
-            if (CurrentPage >= TotlePage - 1)
+            if (CurrentPage >= TotalPage - 1)
             {
                 //lbNext.Enabled = false;
                 btnLast.Enabled = false;
@@ -186,8 +186,8 @@ namespace Buffalo.WinFormsControl.PagingBar
             {
                 int page = Convert.ToInt32(GetAllNumber(txtPage.Text));
 
-                long totle = TotlePage;
-                if (page > totle)
+                long total = TotalPage;
+                if (page > total)
                 {
                     page = 0;
                 }
@@ -208,9 +208,9 @@ namespace Buffalo.WinFormsControl.PagingBar
         private void btnNext_Click(object sender, EventArgs e)
         {
             long page = CurrentPage + 1;
-            if (page > TotlePage - 1)
+            if (page > TotalPage - 1)
             {
-                page = TotlePage - 1;
+                page = TotalPage - 1;
             }
 
             DoPageIndexChange(this, page);
@@ -219,7 +219,7 @@ namespace Buffalo.WinFormsControl.PagingBar
         private void btnLast_Click(object sender, EventArgs e)
         {
 
-            DoPageIndexChange(this, TotlePage - 1);
+            DoPageIndexChange(this, TotalPage - 1);
         }
     }
     public delegate void PageIndexChange(object sender, long currentIndex);

@@ -21,25 +21,30 @@ namespace Buffalo.DB.QueryConditions
 		/// </summary>
 		Faintness
 	}
-	
+	/// <summary>
+	/// 分页类
+	/// </summary>
 	public class PageContent
 	{
-        private long pageSize = 0;
-        private long currentPage = 0;
-        private long totlePage = 0;
-        private long totleRecords = 0;
-        private long maxSelectRecords = 0;
+        private long _pageSize = 0;
+        private long _currentPage = 0;
+        private long _totalPage = 0;
+        private long _totalRecords = 0;
+        private long _maxSelectRecords = 0;
         
-        private bool isFillTotleRecords=true;
+        private bool _isFillTotalRecords=true;
 
-        private long starIndex = DefaultValue.DefaultLong;
+        private long _startIndex = DefaultValue.DefaultLong;
 
-        private int pagerIndex=0;
+        private int _pagerIndex=0;
 
+        /// <summary>
+        /// 分页起始值
+        /// </summary>
         public int PagerIndex
         {
-            get { return pagerIndex; }
-            set { pagerIndex = value; }
+            get { return _pagerIndex; }
+            set { _pagerIndex = value; }
         }
 
         /// <summary>
@@ -48,13 +53,13 @@ namespace Buffalo.DB.QueryConditions
         /// <returns></returns>
         public long GetStarIndex() 
         {
-            if (starIndex != DefaultValue.DefaultLong)
+            if (_startIndex != DefaultValue.DefaultLong)
             {
-                return starIndex;
+                return _startIndex;
             }
             else 
             {
-                return pageSize * currentPage;
+                return _pageSize * _currentPage;
             }
         }
 
@@ -80,8 +85,8 @@ namespace Buffalo.DB.QueryConditions
         /// </summary>
         internal long StarIndex
         {
-            get { return starIndex; }
-            set { starIndex = value; }
+            get { return _startIndex; }
+            set { _startIndex = value; }
         }
 		
 		/// <summary>
@@ -89,19 +94,19 @@ namespace Buffalo.DB.QueryConditions
 		/// </summary>
         public long PageSize
 		{
-			get { return pageSize; }
-			set { pageSize=value; }
+			get { return _pageSize; }
+			set { _pageSize=value; }
 		}
 		/// <summary>
 		/// 页数，从0开始算
 		/// </summary>
         public long CurrentPage
 		{
-			get { return currentPage; }
+			get { return _currentPage; }
 			set {
                 if (value >= 0)
                 {
-                    currentPage = value;
+                    _currentPage = value;
                 }
             }
 		}
@@ -111,35 +116,35 @@ namespace Buffalo.DB.QueryConditions
 		/// <summary>
 		/// 该查询的总记录数
 		/// </summary>
-        public long TotleRecords
+        public long TotalRecords
 		{
-            set { totleRecords = value; }
-			get { return totleRecords; }
+            set { _totalRecords = value; }
+			get { return _totalRecords; }
 		}
         /// <summary>
         /// 总页数
         /// </summary>
-        public long TotlePage
+        public long TotalPage
         {
-            set { totlePage = value; }
-            get { return totlePage; }
+            set { _totalPage = value; }
+            get { return _totalPage; }
         }
 		/// <summary>
 		/// 最大查询条数
 		/// </summary>
         public long MaxSelectRecords
 		{
-            set { maxSelectRecords = value; }
-            get { return maxSelectRecords; }
+            set { _maxSelectRecords = value; }
+            get { return _maxSelectRecords; }
 		}
 
         /// <summary>
         /// 是否查出总条数
         /// </summary>
-        public bool IsFillTotleRecords
+        public bool IsFillTotalRecords
         {
-            get { return isFillTotleRecords; }
-            set { isFillTotleRecords = value; }
+            get { return _isFillTotalRecords; }
+            set { _isFillTotalRecords = value; }
         }
 
 	}

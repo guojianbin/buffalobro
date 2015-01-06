@@ -15,6 +15,7 @@ using Buffalo.DB.CommBase;
 using Buffalo.DB.CommBase.BusinessBases;
 using Buffalo.DBTools.UIHelper;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
+using Buffalo.Kernel;
 
 
 namespace Buffalo.DBTools.ROMHelper
@@ -471,7 +472,7 @@ namespace Buffalo.DBTools.ROMHelper
                 er.PropertyName = name;
                 er.IsToDB = true;
                 sb.AppendLine("        /// <summary>");
-                sb.AppendLine("        /// " + er.Description);
+                sb.AppendLine(FormatSummary(er.Description));
                 sb.AppendLine("        /// </summary>");
                 sb.AppendLine("        protected " + er.FieldTypeName + " " + er.FieldName + ";");
                 sb.AppendLine("");
@@ -495,7 +496,7 @@ namespace Buffalo.DBTools.ROMHelper
                 er.PropertyName = name;
                 er.IsToDB = false;
                 sb.AppendLine("        /// <summary>");
-                sb.AppendLine("        /// " + er.Description);
+                sb.AppendLine(FormatSummary(er.Description));
                 sb.AppendLine("        /// </summary>");
                 sb.AppendLine("        protected " + er.FieldTypeName + " " + er.FieldName + ";");
                 sb.AppendLine("");
@@ -529,7 +530,33 @@ namespace Buffalo.DBTools.ROMHelper
             }
             return sb.ToString();
         }
-        
+
+        /// <summary>
+        /// 格式化注释
+        /// </summary>
+        /// <param name="summary"></param>
+        /// <returns></returns>
+        internal static string FormatSummary(string summary) 
+        {
+            StringBuilder sbSummary = new StringBuilder();
+            bool isHead=false;
+            using (StringReader reader = new StringReader(summary)) 
+            {
+                sbSummary.Append("        ///");
+                if (!isHead) 
+                {
+                    sbSummary.Append("<para>");
+                }
+                sbSummary.Append(System.Web.HttpUtility.HtmlEncode(summary));
+                if (!isHead)
+                {
+                    sbSummary.Append("</para>");
+                }
+                isHead = false;
+            }
+            return sbSummary.ToString();
+        }
+
         /// <summary>
         /// 添加字段代码
         /// </summary>
@@ -540,7 +567,7 @@ namespace Buffalo.DBTools.ROMHelper
             prm.FieldName = "_" + EntityFieldBase.ToCamelName(prm.ParamName);
             string typeName = ToCSharpType(prm.SqlType,prm.AllowNull);
             sb.AppendLine("        ///<summary>");
-            sb.AppendLine("        ///" + prm.Description);
+            sb.AppendLine(FormatSummary(prm.Description));
             sb.AppendLine("        ///</summary>");
             sb.AppendLine("        protected " + typeName + " " + prm.FieldName + ";");
             sb.AppendLine("");
@@ -548,7 +575,7 @@ namespace Buffalo.DBTools.ROMHelper
 
             prm.PropertyName = EntityFieldBase.ToPascalName(prm.ParamName);
             sb.AppendLine("        /// <summary>");
-            sb.AppendLine("        ///" + prm.Description + "");
+            sb.AppendLine(FormatSummary(prm.Description));
             sb.AppendLine("        ///</summary>");
             sb.AppendLine("        public virtual " + typeName + " " + prm.PropertyName + "");
             sb.AppendLine("        {");

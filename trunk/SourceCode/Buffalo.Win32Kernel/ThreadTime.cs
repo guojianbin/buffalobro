@@ -64,7 +64,7 @@ namespace Buffalo.Win32Kernel
         /// 获取一共用了多少CPU周期
         /// </summary>
         /// <returns></returns>
-        public ulong TotleCycle
+        public ulong TotalCycle
         {
             get
             {

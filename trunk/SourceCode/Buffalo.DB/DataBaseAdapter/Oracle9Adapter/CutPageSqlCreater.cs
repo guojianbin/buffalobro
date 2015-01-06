@@ -57,15 +57,15 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             //    sql.Append(objCondition.Having.ToString());
             //}
             string sql = objCondition.GetSelect();
-            if (objPage.IsFillTotleRecords)
+            if (objPage.IsFillTotalRecords)
             {
-                objPage.TotleRecords = GetTotleRecord(list, oper, objCondition.GetSelect(false), objPage.MaxSelectRecords,
+                objPage.TotalRecords = GetTotalRecord(list, oper, objCondition.GetSelect(false), objPage.MaxSelectRecords,
                     (useCache?objCondition.CacheTables:null));//获取总记录数
-                long totlePage = (long)Math.Ceiling((double)objPage.TotleRecords / (double)objPage.PageSize);
-                objPage.TotlePage = totlePage;
-                if (objPage.CurrentPage >= objPage.TotlePage - 1)
+                long totalPage = (long)Math.Ceiling((double)objPage.TotalRecords / (double)objPage.PageSize);
+                objPage.TotalPage = totalPage;
+                if (objPage.CurrentPage >= objPage.TotalPage - 1)
                 {
-                    objPage.CurrentPage = objPage.TotlePage - 1;
+                    objPage.CurrentPage = objPage.TotalPage - 1;
 
                 }
             }
@@ -98,10 +98,10 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <param name="part">查询条件</param>
         /// <param name="list">变量列表</param>
         /// <param name="oper">通用类</param>
-        public static long GetTotleRecord(ParamList list, DataBaseOperate oper,string sql
+        public static long GetTotalRecord(ParamList list, DataBaseOperate oper,string sql
             , long maxRecords,Dictionary<string,bool> cacheTables)
         {
-            long totleRecords = 0;
+            long totalRecords = 0;
             StringBuilder tmpsql = new StringBuilder(5000);
             if (maxRecords > 0)
             {
@@ -124,7 +124,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
                 {
                     if (!reader.IsDBNull(0))
                     {
-                        totleRecords = Convert.ToInt64(reader[0]);
+                        totalRecords = Convert.ToInt64(reader[0]);
                     }
                 }
             }
@@ -132,7 +132,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
             {
                 reader.Close();
             }
-            return totleRecords;
+            return totalRecords;
         }
     
     }

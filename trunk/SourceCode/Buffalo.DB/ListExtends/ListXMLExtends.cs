@@ -166,9 +166,9 @@ namespace Buffalo.DB.ListExtends
             }
             if (objPage != null) //写入分页信息
             {
-                XmlAttribute attTotlePage = doc.CreateAttribute("totlePage");
-                attTotlePage.InnerText = objPage.TotlePage.ToString();
-                rootNode.Attributes.Append(attTotlePage);
+                XmlAttribute attTotalPage = doc.CreateAttribute("totalPage");
+                attTotalPage.InnerText = objPage.TotalPage.ToString();
+                rootNode.Attributes.Append(attTotalPage);
                 XmlAttribute attCurrentPage = doc.CreateAttribute("currentPage");
                 attCurrentPage.InnerText = objPage.CurrentPage.ToString();
                 rootNode.Attributes.Append(attCurrentPage);
@@ -234,12 +234,12 @@ namespace Buffalo.DB.ListExtends
                 XmlNodeList rootList = doc.GetElementsByTagName("root");
                 if (rootList.Count > 0)
                 {
-                    XmlAttribute attTotlePage = rootList[0].Attributes["totlePage"];
+                    XmlAttribute attTotalPage = rootList[0].Attributes["totalPage"];
                     XmlAttribute attCurrentPage = rootList[0].Attributes["currentPage"];
                     XmlAttribute attPageSize = rootList[0].Attributes["pageSize"];
-                    if (attTotlePage != null)
+                    if (attTotalPage != null)
                     {
-                        objPage.TotlePage = Convert.ToInt32(attTotlePage.InnerText);
+                        objPage.TotalPage = Convert.ToInt32(attTotalPage.InnerText);
                     }
                     if (attCurrentPage != null)
                     {
