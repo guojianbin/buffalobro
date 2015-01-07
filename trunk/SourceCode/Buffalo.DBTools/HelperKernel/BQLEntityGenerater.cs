@@ -263,17 +263,17 @@ namespace Buffalo.DBTools.HelperKernel
                 //{
                 //    continue;
                 //}
-                sbProperty.Append("        private BQLEntityParamHandle " + epf.FieldName + " = null;\n");
-                sbProperty.Append("        /// <summary>\n");
-                sbProperty.Append("        /// " + epf.Description + "\n");
-                sbProperty.Append("        /// </summary>\n");
-                sbProperty.Append("        public BQLEntityParamHandle " + epf.PropertyName + "\n");
-                sbProperty.Append("        {\n");
-                sbProperty.Append("            get\n");
-                sbProperty.Append("            {\n");
-                sbProperty.Append("                return " + epf.FieldName + ";\n");
-                sbProperty.Append("            }\n");
-                sbProperty.Append("         }\n");
+                sbProperty.AppendLine("        private BQLEntityParamHandle " + epf.FieldName + " = null;");
+                sbProperty.AppendLine("        /// <summary>");
+                sbProperty.AppendLine(DBEntityInfo.FormatSummary(epf.Description));
+                sbProperty.AppendLine("        /// </summary>");
+                sbProperty.AppendLine("        public BQLEntityParamHandle " + epf.PropertyName + "");
+                sbProperty.AppendLine("        {");
+                sbProperty.AppendLine("            get");
+                sbProperty.AppendLine("            {");
+                sbProperty.AppendLine("                return " + epf.FieldName + ";");
+                sbProperty.AppendLine("            }");
+                sbProperty.AppendLine("         }");
             }
             return sbProperty.ToString();
         }
@@ -312,9 +312,9 @@ namespace Buffalo.DBTools.HelperKernel
                 //if (er.IsParent)
                 //{
                 string targetType = er.FieldTypeName;
-                sbRelation.Append("        /// <summary>\n");
-                sbRelation.Append("        /// " + er.Description + "\n");
-                sbRelation.Append("        /// </summary>\n");
+                sbRelation.AppendLine("        /// <summary>");
+                sbRelation.AppendLine(DBEntityInfo.FormatSummary(er.Description));
+                sbRelation.AppendLine("        /// </summary>");
 
                 string type = null;
                 if (!er.IsParent)
@@ -331,12 +331,12 @@ namespace Buffalo.DBTools.HelperKernel
 
                 type = FormatClassName(targetType);
 
-                sbRelation.Append("        public " + type + " " + er.PropertyName + "\n");
-                sbRelation.Append("        {\n");
-                sbRelation.Append("            get\n");
-                sbRelation.Append("            {\n");
+                sbRelation.AppendLine("        public " + type + " " + er.PropertyName + "");
+                sbRelation.AppendLine("        {");
+                sbRelation.AppendLine("            get");
+                sbRelation.AppendLine("            {");
 
-                sbRelation.Append("               return new " + FormatClassName(targetType) + "(this,\"" + er.PropertyName + "\");\n");
+                sbRelation.AppendLine("               return new " + FormatClassName(targetType) + "(this,\"" + er.PropertyName + "\");");
 
                 //else
                 //{
@@ -344,8 +344,8 @@ namespace Buffalo.DBTools.HelperKernel
 
                 //    sbRelation.Append("               return (" + type + ")Activator.CreateInstance(objType, this, \"" + er.PropertyName + "\");");
                 //}
-                sbRelation.Append("            }\n");
-                sbRelation.Append("         }\n");
+                sbRelation.AppendLine("            }");
+                sbRelation.AppendLine("         }");
                 //}
 
             }
@@ -366,7 +366,7 @@ namespace Buffalo.DBTools.HelperKernel
                 //{
                 //    continue;
                 //}
-                sbInit.Append("            " + epf.FieldName + "=CreateProperty(\"" + epf.PropertyName + "\");\n");
+                sbInit.AppendLine("            " + epf.FieldName + "=CreateProperty(\"" + epf.PropertyName + "\");");
                 
             }
             return sbInit.ToString();
