@@ -59,6 +59,7 @@
     <Compile Include="CacheManager\NetCacheBase.cs" />
     <Compile Include="CacheManager\QueryCache.cs" />
     <Compile Include="CacheManager\QueryViewConfig.cs" />
+    <Compile Include="CommBase\BH.cs" />
     <Compile Include="CommBase\BusinessBases\BatchAction.cs" />
     <Compile Include="CommBase\BusinessBases\BusinessModelBase.cs" />
     <Compile Include="CommBase\BusinessBases\BusinessModelBaseForSelect.cs" />

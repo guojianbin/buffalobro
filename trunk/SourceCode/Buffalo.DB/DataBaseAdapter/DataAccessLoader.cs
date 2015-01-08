@@ -25,7 +25,7 @@ namespace Buffalo.DB.DataBaseAdapter
         private static Dictionary<string, Type> _dicLoaderConfig =null;//配置记录集合
         private static Dictionary<string, Type> _dicEntityLoaderConfig = null;//配置实体记录集合
         private static Dictionary<string, DBInfo> _dicDBInfo = new Dictionary<string, DBInfo>();//配置实体记录集合
-        
+        private static Dictionary<string, Type> _dicBoLoader = null;//配置实体业务层集合
         /// <summary>
         /// 是否已经初始化
         /// </summary>
@@ -92,6 +92,7 @@ namespace Buffalo.DB.DataBaseAdapter
             }
             _dicLoaderConfig = new Dictionary<string, Type>();
             _dicEntityLoaderConfig = new Dictionary<string, Type>();
+            _dicBoLoader = new Dictionary<string, Type>();
             Dictionary<string, XmlDocument> dicEntityConfig = new Dictionary<string, XmlDocument>();
 
             List<ConfigInfo> docs = ConfigXmlLoader.LoadXml("Buffalo.Config");
@@ -293,6 +294,7 @@ namespace Buffalo.DB.DataBaseAdapter
                         XmlDocument doc = new XmlDocument();
                         doc.Load(stm);
                         AppendDalLoader(ass, doc);
+                        AppendBoLoader(ass, doc);
                     }
                 }
             }
@@ -322,7 +324,7 @@ namespace Buffalo.DB.DataBaseAdapter
                 return;
             }
             string[] namespaces = db.DataaccessNamespace;
-            XmlNodeList dalNodes = doc.GetElementsByTagName("item");
+            XmlNodeList dalNodes = nodes[0].ChildNodes;
             foreach (XmlNode dalNode in dalNodes) 
             {
                 att = dalNode.Attributes["type"];
@@ -358,7 +360,38 @@ namespace Buffalo.DB.DataBaseAdapter
                 }
             }
         }
-
+        /// <summary>
+        /// 添加到业务层
+        /// </summary>
+        /// <param name="doc"></param>
+        private static void AppendBoLoader(Assembly ass, XmlDocument doc)
+        {
+            XmlNodeList nodes = doc.GetElementsByTagName("business");
+            if (nodes.Count <= 0)
+            {
+                return;
+            }
+            XmlNodeList dalNodes = nodes[0].ChildNodes;
+            foreach (XmlNode dalNode in dalNodes)
+            {
+                XmlAttribute att = dalNode.Attributes["type"];
+                if (att == null)
+                {
+                    continue;
+                }
+                string typeName = att.InnerText;
+                Type boType = ass.GetType(typeName);
+                if (boType != null)
+                {
+                    att = dalNode.Attributes["class"];
+                    if (att == null)
+                    {
+                        break;
+                    }
+                    _dicBoLoader[att.InnerText] = boType;
+                }
+            }
+        }
 
         private static List<Assembly> _modelAssembly = new List<Assembly>();
 
@@ -507,6 +540,35 @@ namespace Buffalo.DB.DataBaseAdapter
                 throw new Exception("找不到对应的类型");
             }
             return Activator.CreateInstance(objType);
+        }
+
+        /// <summary>
+        /// 获取业务层的类型
+        /// </summary>
+        /// <param name="classTypeName">实体类型名</param>
+        /// <returns></returns>
+        public static Type GetBoType(string classTypeName) 
+        {
+            Type objType = null;
+            if (!_dicBoLoader.TryGetValue(classTypeName, out objType))
+            {
+                throw new Exception("找不到对应的类型");
+            }
+            return objType;
+        }
+        /// <summary>
+        ///  获取业务层的实例
+        /// </summary>
+        /// <param name="classTypeName">实体类型名</param>
+        /// <returns></returns>
+        public static object GetBoInstance(string classTypeName) 
+        {
+            Type type = GetBoType(classTypeName);
+            if (type == null) 
+            {
+                return null;
+            }
+            return Activator.CreateInstance(type);
         }
 
         /// <summary>

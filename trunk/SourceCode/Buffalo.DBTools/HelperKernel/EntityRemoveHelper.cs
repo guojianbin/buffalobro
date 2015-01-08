@@ -30,6 +30,7 @@ namespace Buffalo.DBTools.HelperKernel
                 RemoveFromProject(fileName, entity.DesignerInfo);
 
                 dalconfig.DeleteDal(dalconfig.DataAccessNamespace + "." + type + "." + entity.ClassName + "DataAccess");
+                dalconfig.DeleteBo(dalconfig.BusinessNamespace + "." + entity.ClassName + "Business");
             }
             dalconfig.SaveXML();
             string idalPath = dicPath + "\\IDataAccess";

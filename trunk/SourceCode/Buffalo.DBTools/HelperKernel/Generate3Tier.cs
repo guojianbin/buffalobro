@@ -281,6 +281,7 @@ namespace Buffalo.DBTools.HelperKernel
                     }
                 }
                 dmt.AppendDal(DataAccessNamespace + "." + type + "." + ClassName + "DataAccess", DataAccessNamespace + ".IDataAccess.I" + ClassName + "DataAccess");
+                dmt.AppendBo(BusinessNamespace + "." + ClassName + "Business", EntityNamespace + "." + ClassName);
                 CodeFileHelper.SaveFile(fileName, codes);
                 EnvDTE.ProjectItem newit = DesignerInfo.CurrentProject.ProjectItems.AddFromFile(fileName);
                 newit.Properties.Item("BuildAction").Value = (int)BuildAction.Code;
