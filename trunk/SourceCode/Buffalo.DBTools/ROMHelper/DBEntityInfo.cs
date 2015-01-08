@@ -538,6 +538,10 @@ namespace Buffalo.DBTools.ROMHelper
         /// <returns></returns>
         internal static string FormatSummary(string summary) 
         {
+            if (string.IsNullOrEmpty(summary)) 
+            {
+                return "        ///";
+            }
             StringBuilder sbSummary = new StringBuilder();
             bool isHead=true;
             using (StringReader reader = new StringReader(summary)) 
