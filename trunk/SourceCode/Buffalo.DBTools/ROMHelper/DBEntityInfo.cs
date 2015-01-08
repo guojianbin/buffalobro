@@ -539,20 +539,41 @@ namespace Buffalo.DBTools.ROMHelper
         internal static string FormatSummary(string summary) 
         {
             StringBuilder sbSummary = new StringBuilder();
-            bool isHead=false;
+            bool isHead=true;
             using (StringReader reader = new StringReader(summary)) 
             {
-                sbSummary.Append("        ///");
-                if (!isHead) 
+                string line=null;
+                while ((line = reader.ReadLine()) != null)
                 {
-                    sbSummary.Append("<para>");
+                    if (!isHead) 
+                    {
+                        continue;
+                    }
+                    sbSummary.Append("        ///");
+                    if (!isHead)
+                    {
+                        sbSummary.Append("<para>");
+                    }
+                    sbSummary.Append(System.Web.HttpUtility.HtmlEncode(line));
+                    if (!isHead)
+                    {
+                        sbSummary.Append("</para>");
+                    }
+                    isHead = false;
+                    sbSummary.AppendLine("");
                 }
-                sbSummary.Append(System.Web.HttpUtility.HtmlEncode(summary));
-                if (!isHead)
+            }
+            for (int i = sbSummary.Length - 1; i >= 0; i--) 
+            {
+                char cur = sbSummary[i];
+                if (cur == '\r' || cur == '\n')
                 {
-                    sbSummary.Append("</para>");
+                    sbSummary.Remove(sbSummary.Length - 1, 1);
                 }
-                isHead = false;
+                else 
+                {
+                    break;
+                }
             }
             return sbSummary.ToString();
         }
