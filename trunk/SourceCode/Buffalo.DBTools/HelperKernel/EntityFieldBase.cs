@@ -93,14 +93,44 @@ namespace Buffalo.DBTools.HelperKernel
         /// 把名字转成帕斯卡命名法
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="replaceSpace"></param>
         /// <returns></returns>
-        public static string ToPascalName(string name) 
+        public static string ToPascalName(string name,bool replaceSpace) 
         {
             string propertyName = name.Trim(' ', '_');
             propertyName = propertyName.Substring(0, 1).ToUpper() + propertyName.Substring(1, propertyName.Length - 1);
+            if (replaceSpace) 
+            {
+                propertyName = propertyName.Replace(" ", "_");
+            }
             return propertyName;
         }
+        /// <summary>
+        /// 把名字转成帕斯卡命名法
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static string ToPascalName(string name)
+        {
 
+            return ToPascalName(name,true);
+        }
+        /// <summary>
+        /// 把名字转成骆驼命名法
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="replaceSpace"></param>
+        /// <returns></returns>
+        public static string ToCamelName(string name, bool replaceSpace)
+        {
+            string camelName = name.Trim(' ', '_');
+            camelName = camelName.Substring(0, 1).ToLower() + camelName.Substring(1, camelName.Length - 1);
+            if (replaceSpace)
+            {
+                camelName = camelName.Replace(" ", "_");
+            }
+            return camelName;
+        }
         /// <summary>
         /// 把名字转成骆驼命名法
         /// </summary>
@@ -108,11 +138,8 @@ namespace Buffalo.DBTools.HelperKernel
         /// <returns></returns>
         public static string ToCamelName(string name)
         {
-            string camelName = name.Trim(' ', '_');
-            camelName = camelName.Substring(0, 1).ToLower() + camelName.Substring(1, camelName.Length - 1);
-            return camelName;
+            return ToCamelName(name,true);
         }
-
         private static Dictionary<string, DataTypeInfos> _dicTypeInfos = InitTypeInfos();
         
         private static string[] _allTypes={"Guid","float","float?","Single","Single?","bool","bool?","Boolean","Boolean?",

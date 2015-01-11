@@ -599,6 +599,7 @@ namespace Buffalo.DBTools.ROMHelper
 
 
             prm.PropertyName = EntityFieldBase.ToPascalName(prm.ParamName);
+
             sb.AppendLine("        /// <summary>");
             sb.AppendLine(FormatSummary(prm.Description));
             sb.AppendLine("        ///</summary>");
