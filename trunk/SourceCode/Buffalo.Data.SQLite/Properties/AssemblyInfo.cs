@@ -6,25 +6,25 @@ using System.Runtime.InteropServices;
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
 #if (NET_1_0)
-[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET Framework 1.0")]
+[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET 1.0")]
 #elif (NET_1_1)
-[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET Framework 1.1")]
+[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET 1.1")]
 #elif (NET_2_0)
-[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET Framework 2.0")]
+[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET 2.0")]
 #elif (NET_3_0)
-[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET Framework 3.0")]
+[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET 3.0")]
 #elif (NET_3_5)
-[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET Framework 3.5")]
+[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET 3.5")]
 #elif (NET_4_0)
-[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET Framework 4.0")]
+[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET 4.0")]
 #elif (NET_4_5)
-[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET Framework 4.5")]
+[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET 4.5")]
 #elif (NET_4_5_1)
-[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET Framework 4.5.1")]
+[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET 4.5.1")]
 #elif (NETCF_1_0)
-[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET Compact Framework 1.0")]
+[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET Compact 1.0")]
 #elif (NETCF_2_0)
-[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET Compact Framework 2.0")]
+[assembly: AssemblyTitle("Buffalo.Data.SQLite for .NET Compact 2.0")]
 #elif (MONO_1_0)
 [assembly: AssemblyTitle("Buffalo.Data.SQLite for Mono 1.0")]
 #elif (MONO_2_0)
@@ -36,10 +36,41 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Buffalo.Data.SQLiteLibrary")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
-[assembly: AssemblyProduct("Buffalo.Data.SQLite(Debug)")]
+
+    #if X64
+        #if(D1066)
+            [assembly: AssemblyProduct("Buffalo.Data.SQLite.1066.X64(Debug)")]
+        #else
+            [assembly: AssemblyProduct("Buffalo.Data.SQLite.X64(Debug)")]
+        #endif
+    #else
+        #if(D1066)
+                    [assembly: AssemblyProduct("Buffalo.Data.SQLite.1066(Debug)")]
+        #else
+                    [assembly: AssemblyProduct("Buffalo.Data.SQLite(Debug)")]
+        #endif
+        
+#endif
+        
 #else
+
 [assembly: AssemblyConfiguration("Release")]
-[assembly: AssemblyProduct("Buffalo.Data.SQLite")]
+    #if X64
+        #if(D1066)
+             [assembly: AssemblyProduct("Buffalo.Data.SQLite.1066(X64)")]
+        #else
+             [assembly: AssemblyProduct("Buffalo.Data.SQLite(X64)")]
+        #endif
+    
+    #else
+
+#if(D1066)
+    [assembly: AssemblyProduct("Buffalo.Data.SQLite.1066")]
+#else
+             [assembly: AssemblyProduct("Buffalo.Data.SQLite")]
+#endif
+
+#endif
 #endif
 [assembly: AssemblyCompany("Buffalo")]
 
