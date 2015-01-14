@@ -235,16 +235,16 @@ namespace WebShare
             }
             return cPwd.Equals(pwd);
         }
-        /// <summary>
-        /// 获取密码参数
-        /// </summary>
-        /// <returns></returns>
-        private string GetPwdParam() 
-        {
-            string pwd = _config.Password;
+        ///// <summary>
+        ///// 获取密码参数
+        ///// </summary>
+        ///// <returns></returns>
+        //private string GetPwdParam() 
+        //{
+        //    string pwd = _config.Password;
 
-            return "pwd=" + pwd;
-        }
+        //    return "pwd=" + pwd;
+        //}
         /// <summary>
         /// 显示密码错误
         /// </summary>
@@ -478,7 +478,7 @@ namespace WebShare
                 sb.AppendLine("            &nbsp;");
                 sb.AppendLine("            </td>");
                 sb.AppendLine("                <td style=\" width:500px\" >");
-                sb.AppendLine("                    <a href=\"" + System.Web.HttpUtility.UrlEncode(info.Text) + "/?" + GetPwdParam()+ "\">" + System.Web.HttpUtility.HtmlEncode(info.Text) + "</a>");
+                sb.AppendLine("                    <a href=\"" + System.Web.HttpUtility.UrlEncode(info.Text) + "/\">" + System.Web.HttpUtility.HtmlEncode(info.Text) + "</a>");
                 sb.AppendLine("                </td>");
                 sb.AppendLine("                <td >");
                 if (info.Url == "..")
@@ -487,7 +487,7 @@ namespace WebShare
                 }
                 else
                 {
-                    sb.AppendLine("                    <a href=\"" + System.Web.HttpUtility.UrlEncode(info.Text) + "/?type=lst&" + GetPwdParam() + "\" target=\"_blank\">打包下载</a>");
+                    sb.AppendLine("                    <a href=\"" + System.Web.HttpUtility.UrlEncode(info.Text) + "/?type=lst\" target=\"_blank\">打包下载</a>");
                 }
                 sb.AppendLine("                </td>");
                 sb.AppendLine("            </tr>");
@@ -523,7 +523,7 @@ namespace WebShare
                 sb.AppendLine("                    " + System.Web.HttpUtility.HtmlEncode(info.LenString));
                 sb.AppendLine("                </td>");
                 sb.AppendLine("                <td >");
-                sb.AppendLine("                    <a href=\"" + System.Web.HttpUtility.UrlEncode(info.Url) + "" + GetPwdParam() + "\" target=\"_blank\">下载</a>");
+                sb.AppendLine("                    <a href=\"" + System.Web.HttpUtility.UrlEncode(info.Url) + "\" target=\"_blank\">下载</a>");
                 sb.AppendLine("                </td>");
                 sb.AppendLine("            </tr>");
             }

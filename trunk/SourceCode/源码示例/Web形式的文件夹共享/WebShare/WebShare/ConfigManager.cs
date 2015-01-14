@@ -120,10 +120,6 @@ namespace WebShare
             attr.InnerText = _bindPort.ToString();
             root.Attributes.Append(attr);
 
-            attr = xml.CreateAttribute("pwd");
-            attr.InnerText = _password;
-            root.Attributes.Append(attr);
-
             xml.AppendChild(root);
 
 

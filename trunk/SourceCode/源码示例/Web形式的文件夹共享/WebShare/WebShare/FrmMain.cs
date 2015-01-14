@@ -172,7 +172,6 @@ namespace WebShare
         {
             _curConfig.BindIP = cmbIP.Text;
             _curConfig.BindPort = (int)nupPort.Value;
-            _curConfig.Password = txtPwd.Text;
             _curConfig.SaveConfig();
         }
 
@@ -218,10 +217,7 @@ namespace WebShare
                 sbRet.Append(port);
             }
             sbRet.Append("/");
-            if (!string.IsNullOrEmpty(txtPwd.Text))
-            {
-                sbRet.Append("?pwd=" + txtPwd.Text);
-            }
+           
             return sbRet.ToString();
         }
 
