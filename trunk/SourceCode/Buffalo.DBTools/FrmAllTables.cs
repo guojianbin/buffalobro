@@ -205,7 +205,7 @@ namespace Buffalo.DBTools
                 DBTableInfo info = dr.DataBoundItem as DBTableInfo;
                 if (info != null) 
                 {
-                    string fileName = DBEntityInfo.GetRealFileName(info, DesignerInfo);
+                    string fileName = DBEntityInfo.GetEntityRealFileName(info, _dbInfo, DesignerInfo);
                     try
                     {
                         if (File.Exists(fileName))
@@ -232,7 +232,8 @@ namespace Buffalo.DBTools
             DBTableInfo info = dr.DataBoundItem as DBTableInfo;
             if (info != null)
             {
-                string fileName = DBEntityInfo.GetRealFileName(info, DesignerInfo);
+                string fileName = DBEntityInfo.GetEntityRealFileName(info,_dbInfo, DesignerInfo);
+                
                 try
                 {
                     if (File.Exists(fileName))

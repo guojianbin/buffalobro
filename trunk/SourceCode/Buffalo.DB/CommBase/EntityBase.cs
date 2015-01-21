@@ -226,14 +226,49 @@ namespace Buffalo.DB.CommBase
         }
 
         /// <summary>
-        /// 设置所有属性都被更新
+        /// 提交属性更新通知
         /// </summary>
-        public void SetAllPropertyUpdated() 
+        /// <param name="propertys">属性集合(null则所有属性都通知更新)</param>
+        public void SubmitUpdateProperty(IEnumerable propertys) 
         {
-            EntityInfoHandle eHandle = GetEntityInfo();
-            foreach (EntityPropertyInfo pinfo in eHandle.PropertyInfo) 
+            
+            if (propertys == null)
             {
-                _dicUpdateProperty___[pinfo.PropertyName] = true;
+                EntityInfoHandle eHandle = GetEntityInfo();
+                foreach (EntityPropertyInfo pinfo in eHandle.PropertyInfo)
+                {
+                    _dicUpdateProperty___[pinfo.PropertyName] = true;
+                }
+                return;
+            }
+            foreach (object oproName in propertys)
+            {
+                string proName = oproName as string;
+                if (!string.IsNullOrEmpty(proName))
+                {
+                    _dicUpdateProperty___[proName]=true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 撤销哪些属性的更新通知
+        /// </summary>
+        /// <param name="propertys">属性集合(null则所有属性的更新通知都被撤销)</param>
+        public void CancelUpdateProperty(IEnumerable propertys) 
+        {
+            if (propertys == null) 
+            {
+                _dicUpdateProperty___.Clear();
+                return;
+            }
+            foreach (object oproName in propertys) 
+            {
+                string proName = oproName as string;
+                if (!string.IsNullOrEmpty(proName)) 
+                {
+                    _dicUpdateProperty___.Remove(proName);
+                }
             }
         }
 
