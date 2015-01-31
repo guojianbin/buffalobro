@@ -35,8 +35,16 @@ namespace Buffalo.DB.DbCommon
 	{
 		
 		
-		// 数据库连接标志
-		private bool _isConnected;
+		/// <summary>
+        /// 数据库连接标志
+		/// </summary>
+        private bool IsConnected 
+        {
+            get 
+            {
+                return _conn != null && _conn.State != ConnectionState.Closed;
+            }
+        }
 		
 		
 		//数据库连接对象
@@ -160,7 +168,6 @@ namespace Buffalo.DB.DbCommon
 		/// </summary>
 		internal DataBaseOperate(DBInfo db,bool isAutoClose)
 		{
-			_isConnected = false;
             _db = db;
             _dbAdapter = db.CurrentDbAdapter;
             if (!isAutoClose) 
@@ -249,7 +256,7 @@ namespace Buffalo.DB.DbCommon
 		/// <returns>成功返回true</returns>
 		public bool ConnectDataBase()
 		{
-			if (!_isConnected)
+			if (!IsConnected)
 			{
 				try
 				{
@@ -271,7 +278,6 @@ namespace Buffalo.DB.DbCommon
                         _comm = _dbAdapter.GetCommand();//**
                     }
                     
-					_isConnected = true;
 					_comm.Connection = _conn;
 				}
 				catch(Exception e)
@@ -296,37 +302,42 @@ namespace Buffalo.DB.DbCommon
         /// <summary>
         /// 关闭数据库连接
         /// </summary>
-        public bool CloseDataBase() 
+        public bool CloseDataBase()
         {
-            if (_isConnected)
+
+            if (_comm != null)
             {
-                if (_conn != null && _conn.State != ConnectionState.Closed)
+                try
                 {
-                    try
-                    {
-                        if (_db.SqlOutputer.HasOutput)
-                        {
-                            OutMessage(MessageType.OtherOper, "Closed DataBase", null, "");
-                        }
-                        _conn.Close();
+                    _comm.Dispose();
+                }
+                catch (Exception ex)
+                {
 
-                        if (_comm != null)
-                        {
-                            _comm.Dispose();
-                        }
-                        _dbAdapter.OnConnectionClosed(_conn, _db);
-                        _comm = null;
-                        _conn = null;
-                        _tran = null;
-
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
-                    _isConnected = false;
                 }
             }
+
+            try
+            {
+                if (IsConnected)
+                {
+
+                    if (_db.SqlOutputer.HasOutput)
+                    {
+                        OutMessage(MessageType.OtherOper, "Closed DataBase", null, "");
+                    }
+                    _conn.Close();
+                }
+                _dbAdapter.OnConnectionClosed(_conn, _db);
+            }
+            finally
+            {
+
+                _comm = null;
+                _conn = null;
+                _tran = null;
+            }
+
             return true;
         }
 
@@ -519,7 +530,7 @@ namespace Buffalo.DB.DbCommon
 
                     reader = _comm.ExecuteReader(CommandBehavior.CloseConnection);
                     
-                    _isConnected = false;
+                    
                     
                 }
                 else 
@@ -550,6 +561,7 @@ namespace Buffalo.DB.DbCommon
             }
             catch (Exception e)
             {
+                AutoClose();
                 //如果正在执行事务，回滚
                 //RoolBack();
                 throw new SQLRunningException(sql, paramList, _db, e);
