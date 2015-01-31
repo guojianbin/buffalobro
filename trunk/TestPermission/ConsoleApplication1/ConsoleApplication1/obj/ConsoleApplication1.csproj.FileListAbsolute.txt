@@ -1,5 +1,0 @@
-D:\CShareTest\TestPermission\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
-D:\CShareTest\TestPermission\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
-D:\CShareTest\TestPermission\ConsoleApplication1\ConsoleApplication1\obj\Debug\ResolveAssemblyReference.cache
-D:\CShareTest\TestPermission\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
-D:\CShareTest\TestPermission\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb

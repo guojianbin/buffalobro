@@ -25,6 +25,22 @@ namespace Buffalo.DB.CommBase.BusinessBases
             obj = (T)Activator.CreateInstance(typeof(T));
 
         }
+        private DataAccessSetBase _dal;
+
+        /// <summary>
+        /// 获取数据层(用作运行SQL)
+        /// </summary>
+        /// <returns></returns>
+        public DataAccessSetBase GetDAL()
+        {
+            if (_dal == null)
+            {
+                EntityInfoHandle handle = EntityInfoManager.GetEntityHandle(typeof(T));
+                _dal = new DataAccessSetBase(handle);
+                _dal.Oper = StaticConnection.GetStaticOperate(handle.DBInfo);
+            }
+            return _dal;
+        }
         /// <summary>
         /// 获取数据层基类
         /// </summary>

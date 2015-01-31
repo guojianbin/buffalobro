@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<class TableName="bpGroup" ClassName="Buffalo.Permissions.PermissionsInfo.BPGroup" IsTable="1" BelongDB="PermissionDB">
-  <property FieldName="_groupID" PropertyName="GroupID" DbType="AnsiString" Length="64" EntityPropertyType="1" ParamName="groupID" ReadOnly="0" />
-  <property FieldName="_groupName" PropertyName="GroupName" DbType="AnsiString" Length="255" EntityPropertyType="1" ParamName="groupName" ReadOnly="0" />
-</class>

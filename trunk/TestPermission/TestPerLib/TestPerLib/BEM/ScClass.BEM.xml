@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<class TableName="scClass" ClassName="TestPerLib.ScClass" IsTable="1" BelongDB="School">
-  <property FieldName="_className" PropertyName="ClassName" DbType="AnsiString" Length="255" EntityPropertyType="1" ParamName="className" ReadOnly="0" />
-  <relation FieldName="_lstStudent" PropertyName="LstStudent" SourceProperty="Id" TargetProperty="ClassId" IsToDB="0" IsParent="0" />
-</class>

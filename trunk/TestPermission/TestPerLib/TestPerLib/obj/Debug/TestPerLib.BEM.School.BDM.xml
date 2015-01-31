@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<dataaccess name="School">
-  <item type="TestPerLib.DataAccess.Sql2K5.ScClassDataAccess" interface="TestPerLib.DataAccess.IDataAccess.IScClassDataAccess" />
-  <item type="TestPerLib.DataAccess.Sql2K5.ScStudentDataAccess" interface="TestPerLib.DataAccess.IDataAccess.IScStudentDataAccess" />
-  <item type="TestPerLib.DataAccess.Sql2K5.ScEmployeeDataAccess" interface="TestPerLib.DataAccess.IDataAccess.IScEmployeeDataAccess" />
-  <item type="TestPerLib.DataAccess.Access.ScStudentDataAccess" interface="TestPerLib.DataAccess.IDataAccess.IScStudentDataAccess" />
-</dataaccess>

@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<class TableName="scEmployee" ClassName="TestPerLib.ScEmployee" IsTable="1" BelongDB="School">
-  <property FieldName="_name" PropertyName="Name" DbType="AnsiString" Length="32" EntityPropertyType="1" ParamName="name" ReadOnly="0" />
-  <property FieldName="_realName" PropertyName="RealName" DbType="AnsiString" Length="32" EntityPropertyType="1" ParamName="realName" ReadOnly="0" />
-  <property FieldName="_password" PropertyName="Password" DbType="AnsiString" Length="32" EntityPropertyType="1" ParamName="password" ReadOnly="0" />
-</class>
