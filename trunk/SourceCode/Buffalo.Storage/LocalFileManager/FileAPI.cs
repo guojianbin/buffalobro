@@ -49,7 +49,7 @@ namespace Buffalo.Storage.LocalFileManager
             if (result != ResultWin32.ERROR_SUCCESS && result != ResultWin32.ERROR_SESSION_CREDENTIAL_CONFLICT) 
             {
                 string errName = ResultWin32.GetErrorName((int)result);
-                throw new StorageConnectExceptin("用户:" + username + " 登录 " + localName + " 失败:" + errName);
+                throw new StorageConnectExceptin("用户:" + username + " 登录 " + localName + " 失败:" + errName+"(0x"+result.ToString("X")+")");
             }
             return result;
         }

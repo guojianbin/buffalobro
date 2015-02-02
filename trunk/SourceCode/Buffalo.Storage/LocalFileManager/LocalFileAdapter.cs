@@ -1,3 +1,4 @@
+using Buffalo.Kernel.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -48,7 +49,7 @@ namespace Buffalo.Storage.LocalFileManager
                 return;
             }
             uint resault=FileAPI.WNetAddConnection(_userName, _password, _fileRoot, null);
-
+            
         }
 
         /// <summary>
@@ -66,11 +67,48 @@ namespace Buffalo.Storage.LocalFileManager
         /// <summary>
         /// 获取所有文件
         /// </summary>
+        /// <param name="path">文件夹</param>
+        /// <param name="searchOption">查找选项</param>
         /// <returns></returns>
-        public List<string> ListFiles() 
+        public List<string> GetFiles(string path, SearchOption searchOption) 
         {
-            string[] files = Directory.GetFiles(_fileRoot);
-            return new List<string>(files);
+            string sfilePath = _fileRoot + path;
+
+            string[] files = Directory.GetFiles(sfilePath, "*.*", searchOption);
+            List<string> ret = new List<string>(files.Length);
+            foreach (string spath in files) 
+            {
+                string curPath = spath.Substring(_fileRoot.Length);
+                if (curPath[0] != '\\') 
+                {
+                    curPath = '\\' + curPath;
+                }
+                ret.Add(curPath);
+            }
+            return ret;
         }
+        /// <summary>
+        /// 获取所有文件夹
+        /// </summary>
+        /// <param name="path">文件夹</param>
+        /// <param name="searchOption">查找选项</param>
+        /// <returns></returns>
+        public List<string> GetDirectories(string path, SearchOption searchOption)
+        {
+            string sfilePath = _fileRoot + path;
+            string[] files = Directory.GetDirectories(sfilePath, "*", searchOption);
+            List<string> ret = new List<string>(files.Length);
+            foreach (string spath in files)
+            {
+                string curPath = spath.Substring(_fileRoot.Length);
+                if (curPath[0] != '\\')
+                {
+                    curPath = '\\' + curPath;
+                }
+                ret.Add(curPath);
+            }
+            return ret;
+        }
+
     }
 }

@@ -8,3 +8,13 @@ D:\CShareTest\Buffalobro\SourceCode\Buffalo.Storage\bin\Debug\ICSharpCode.SharpZ
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.Storage\bin\Debug\Buffalo.Kernel.pdb
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.Storage\bin\Debug\Buffalo.Kernel.xml
 D:\CShareTest\Buffalobro\SourceCode\Buffalo.Storage\bin\Debug\ICSharpCode.SharpZipLib.xml
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Storage\bin\Debug\Buffalo.Storage.dll
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Storage\bin\Debug\Buffalo.Storage.pdb
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Storage\bin\Debug\Buffalo.Kernel.dll
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Storage\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Storage\bin\Debug\Buffalo.Kernel.pdb
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Storage\bin\Debug\Buffalo.Kernel.xml
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Storage\bin\Debug\ICSharpCode.SharpZipLib.xml
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Storage\obj\Debug\Buffalo2013.Storage.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Storage\obj\Debug\Buffalo.Storage.dll
+E:\CSharpTest\BuffaloCode\SourceCode\Buffalo.Storage\obj\Debug\Buffalo.Storage.pdb
