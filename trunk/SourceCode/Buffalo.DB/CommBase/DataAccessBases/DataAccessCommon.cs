@@ -505,6 +505,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             EntityInfoHandle childInfo = mappingInfo.TargetProperty.BelongInfo;
             string fullName = mappingInfo.TargetProperty.BelongInfo.EntityType.FullName;
             Type childType = mappingInfo.TargetProperty.BelongInfo.EntityType;
+            List<object> senders = null;
 
             while (pks.Count > 0)
             {
@@ -525,7 +526,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                         lstParamNames = CacheReader.GenerateCache(reader, childInfo);//创建一个缓存数值列表
                     }
 
-                    List<object> senders = null;
+                    
                     while (reader.Read())
                     {
                         string fk = reader[mappingInfo.TargetProperty.ParamName].ToString();
@@ -554,7 +555,6 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                             }
                         }
                     }
-
                 }
             }
         
