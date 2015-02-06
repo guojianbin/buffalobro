@@ -118,12 +118,12 @@ namespace Buffalo.DB.QueryConditions
                 return _showEntity;
             }
         }
-        private ShowEntityCollection _showChild = null;
+        private ShowChildCollection _showChild = null;
 
         /// <summary>
         /// 要显示的子实体属性名
         /// </summary>
-        public ShowEntityCollection ShowChild
+        public ShowChildCollection ShowChild
         {
             get
             {

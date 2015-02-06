@@ -296,12 +296,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <param name="childName"></param>
         public static void FillEntityChidList(IList lst, ScopeList lstScope)
         {
-            ShowEntityCollection childs = lstScope.ShowChild;
+            ShowChildCollection childs = lstScope.ShowChild;
             if(childs==null)
             {
                 return;
             }
-            foreach (BQLEntityTableHandle showTable in childs) 
+            foreach (ShowChildItem showTable in childs) 
             {
 
                 FillEntityChidList(lst, showTable);
@@ -313,10 +313,10 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// </summary>
         /// <param name="showTable"></param>
         /// <param name="?"></param>
-        public static void FillEntityChidList(IList lst, BQLEntityTableHandle showTable)
+        public static void FillEntityChidList(IList lst, ShowChildItem showTable)
         {
             Stack<BQLEntityTableHandle> stkTables = new Stack<BQLEntityTableHandle>();
-            BQLEntityTableHandle curTable = showTable;
+            BQLEntityTableHandle curTable = showTable.ChildItem;
             while (true)
             {
                 stkTables.Push(curTable);
@@ -331,7 +331,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             while (stkTables.Count > 0)
             {
                 BQLEntityTableHandle table = stkTables.Pop();
-                FillEntityChidList(curList, table.GetPropertyName(), lastObjects, table.GetParentTable().GetEntityInfo().EntityType);
+                ScopeList lstScope = null;
+                if (stkTables.Count == 0) 
+                {
+                    lstScope = showTable.FilterScope;
+                }
+                FillEntityChidList(curList, table.GetPropertyName(), lastObjects, table.GetParentTable().GetEntityInfo().EntityType, lstScope);
                 curList = lastObjects;
                 lastObjects=new Queue<object>();
             }
@@ -343,7 +348,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// </summary>
         /// <param name="lst"></param>
         /// <param name="childName"></param>
-        private static void FillEntityChidList(IEnumerable lst, string childPropertyName, Queue<object> objs, Type objType)
+        private static void FillEntityChidList(IEnumerable lst, string childPropertyName, Queue<object> objs, Type objType,ScopeList lstScope)
         {
             if (lst == null)
             {
@@ -476,12 +481,15 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// 查询并填充子类信息
         /// </summary>
         /// <param name="pks"></param>
-        /// <param name="childHandle"></param>
         /// <param name="mappingInfo"></param>
         /// <param name="dicEntity"></param>
-        /// <param name="propertyName"></param>
+        /// <param name="dao"></param>
+        /// <param name="lstParamNames"></param>
+        /// <param name="db"></param>
+        /// <param name="curObjs"></param>
+        /// <param name="filter"></param>
         private static void FillChildReader(Queue<object> pks, EntityMappingInfo mappingInfo, Dictionary<string, List<object>> dicEntity, BQLDbBase dao,
-            ref List<EntityPropertyInfo> lstParamNames, DBInfo db,Queue<object> curObjs) 
+            ref List<EntityPropertyInfo> lstParamNames, DBInfo db,Queue<object> curObjs,ScopeList filter) 
         {
             EntityInfoHandle childInfo = mappingInfo.TargetProperty.BelongInfo;
             ScopeList lstScope = new ScopeList();
