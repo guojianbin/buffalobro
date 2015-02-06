@@ -328,13 +328,18 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             }
             IEnumerable curList = lst;
             Queue<object> lastObjects = new Queue<object>();
+            ScopeList empty = new ScopeList();
             while (stkTables.Count > 0)
             {
                 BQLEntityTableHandle table = stkTables.Pop();
                 ScopeList lstScope = null;
-                if (stkTables.Count == 0) 
+                if (stkTables.Count == 0)
                 {
                     lstScope = showTable.FilterScope;
+                }
+                else 
+                {
+                    lstScope = empty;
                 }
                 FillEntityChidList(curList, table.GetPropertyName(), lastObjects, table.GetParentTable().GetEntityInfo().EntityType, lstScope);
                 curList = lastObjects;
@@ -346,9 +351,12 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <summary>
         /// 填充子属性列表
         /// </summary>
-        /// <param name="lst"></param>
-        /// <param name="childName"></param>
-        private static void FillEntityChidList(IEnumerable lst, string childPropertyName, Queue<object> objs, Type objType,ScopeList lstScope)
+        /// <param name="lst">集合</param>
+        /// <param name="childPropertyName">子属性名</param>
+        /// <param name="objs">实体</param>
+        /// <param name="objType">类型</param>
+        /// <param name="filter">筛选条件</param>
+        private static void FillEntityChidList(IEnumerable lst, string childPropertyName, Queue<object> objs, Type objType,ScopeList filter)
         {
             if (lst == null)
             {
@@ -368,7 +376,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             Queue<object> pks = CollectFks(lst, mappingInfo.SourceProperty);
             EntityInfoHandle childHandle = mappingInfo.TargetProperty.BelongInfo;//获取子元素的信息
             Dictionary<string, List<object>> dic = GetEntityDictionary(lst, mappingInfo);
-            FillChilds(pks, childHandle, mappingInfo, dic, childPropertyName, objs);
+            FillChilds(pks, childHandle, mappingInfo, dic, childPropertyName, objs, filter);
         }
 
         /// <summary>
@@ -434,8 +442,11 @@ namespace Buffalo.DB.CommBase.DataAccessBases
         /// <param name="childHandle">子元素的信息句柄</param>
         /// <param name="mappingInfo">映射信息</param>
         /// <param name="dicElement">元素</param>
+        /// <param name="propertyName">属性名</param>
+        /// <param name="curObjs"></param>
+        /// <param name="filter"></param>
         private static void FillChilds(Queue<object> pks, EntityInfoHandle childHandle, EntityMappingInfo mappingInfo,
-            Dictionary<string, List<object>> dicEntity, string propertyName, Queue<object> curObjs)
+            Dictionary<string, List<object>> dicEntity, string propertyName, Queue<object> curObjs,ScopeList filter)
         {
 
             DBInfo db = childHandle.DBInfo;
@@ -448,7 +459,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                 while (pks.Count>0) 
                 {
                     needCollect = GetCurPks(pks);
-                    FillChildReader(needCollect, mappingInfo, dicEntity, dao, ref lstParamNames, db,curObjs);
+                    FillChildReader(needCollect, mappingInfo, dicEntity, dao, ref lstParamNames, db,curObjs,filter);
                 }
             }
             finally 
@@ -492,62 +503,86 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             ref List<EntityPropertyInfo> lstParamNames, DBInfo db,Queue<object> curObjs,ScopeList filter) 
         {
             EntityInfoHandle childInfo = mappingInfo.TargetProperty.BelongInfo;
-            ScopeList lstScope = new ScopeList();
+            string fullName = mappingInfo.TargetProperty.BelongInfo.EntityType.FullName;
+            Type childType = mappingInfo.TargetProperty.BelongInfo.EntityType;
 
-
-            lstScope.AddIn(mappingInfo.TargetProperty.PropertyName, pks);
-            IDataReader reader = dao.QueryReader(lstScope, childInfo.EntityType);
-            try
+            while (pks.Count > 0)
             {
-                
-                string fullName = mappingInfo.TargetProperty.BelongInfo.EntityType.FullName;
-                Type childType = mappingInfo.TargetProperty.BelongInfo.EntityType;
-
-                //获取子表的get列表
-                if (lstParamNames == null)
+                Queue<object> searchPks = GetSearchPKs(pks);
+                if (searchPks.Count <= 0) 
                 {
-                    lstParamNames = CacheReader.GenerateCache(reader, childInfo);//创建一个缓存数值列表
-                }
-                List<object> senders = null;
-                while (reader.Read())
-                {
-                    string fk = reader[mappingInfo.TargetProperty.ParamName].ToString();
-                    if (!dicEntity.TryGetValue(fk, out senders)) 
-                    {
-                        continue;
-                    }
-
-                    
-
-                    object obj = childInfo.CreateSelectProxyInstance();
-
-                    if (curObjs != null) 
-                    {
-                        curObjs.Enqueue(obj);
-                    }
-                    CacheReader.FillObjectFromReader(reader, lstParamNames, obj, db);
-
-                    foreach (object sender in senders)
-                    {
-                        if (mappingInfo.IsParent)
-                        {
-                            mappingInfo.SetValue(sender,obj);
-                        }
-                        else
-                        {
-                            IList lst = (IList)mappingInfo.GetValue(sender);
-
-                            lst.Add(obj);
-                        }
-                    }
+                    break;
                 }
 
+                ScopeList lstScope = new ScopeList();
+                lstScope.AddRange(filter);
+                lstScope.AddIn(mappingInfo.TargetProperty.PropertyName, pks);
+                using (IDataReader reader = dao.QueryReader(lstScope, childInfo.EntityType))
+                {
+                    //获取子表的get列表
+                    if (lstParamNames == null)
+                    {
+                        lstParamNames = CacheReader.GenerateCache(reader, childInfo);//创建一个缓存数值列表
+                    }
+
+                    List<object> senders = null;
+                    while (reader.Read())
+                    {
+                        string fk = reader[mappingInfo.TargetProperty.ParamName].ToString();
+                        if (!dicEntity.TryGetValue(fk, out senders))
+                        {
+                            continue;
+                        }
+                        object obj = childInfo.CreateSelectProxyInstance();
+
+                        if (curObjs != null)
+                        {
+                            curObjs.Enqueue(obj);
+                        }
+                        CacheReader.FillObjectFromReader(reader, lstParamNames, obj, db);
+
+                        foreach (object sender in senders)
+                        {
+                            if (mappingInfo.IsParent)
+                            {
+                                mappingInfo.SetValue(sender, obj);
+                            }
+                            else
+                            {
+                                IList lst = (IList)mappingInfo.GetValue(sender);
+                                lst.Add(obj);
+                            }
+                        }
+                    }
+
+                }
             }
-            finally
+        
+        }
+
+        /// <summary>
+        /// 每次查询的条数
+        /// </summary>
+        internal const int PreSearch=50;
+        /// <summary>
+        /// 获取需要查询的主键
+        /// </summary>
+        /// <param name="pks"></param>
+        /// <returns></returns>
+        private static Queue<object> GetSearchPKs(Queue<object> pks) 
+        {
+            Queue<object> searchPks = new Queue<object>();
+            int copyed = 0;
+            while (pks.Count > 0) 
             {
-                reader.Close();
-               
+                searchPks.Enqueue(pks.Dequeue());
+                copyed++;
+                if (copyed >= PreSearch) 
+                {
+                    break;
+                }
             }
+            return searchPks;
         }
 
         #endregion

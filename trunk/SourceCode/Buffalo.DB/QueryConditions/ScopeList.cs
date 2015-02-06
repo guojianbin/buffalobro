@@ -23,7 +23,7 @@ namespace Buffalo.DB.QueryConditions
             _groupBy = new ScopePropertyCollection(this);
             _showProperty = new ScopePropertyCollection(this);
             _hideProperty = new ScopePropertyCollection(this);
-            _showChild = new ShowEntityCollection(null);
+            _showChild = new ShowChildCollection();
         }
 
         
