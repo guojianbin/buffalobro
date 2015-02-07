@@ -321,7 +321,7 @@ namespace Buffalo.DB.CommBase.DataAccessBases
             {
                 stkTables.Push(curTable);
                 curTable = curTable.GetParentTable();
-                if (string.IsNullOrEmpty(curTable.GetPropertyName())) 
+                if (CommonMethods.IsNull(curTable) || string.IsNullOrEmpty(curTable.GetPropertyName())) 
                 {
                     break;
                 }
@@ -516,8 +516,8 @@ namespace Buffalo.DB.CommBase.DataAccessBases
                 }
 
                 ScopeList lstScope = new ScopeList();
-                lstScope.AddRange(filter);
-                lstScope.AddIn(mappingInfo.TargetProperty.PropertyName, pks);
+                lstScope.AddScopeList(filter);
+                lstScope.AddIn(mappingInfo.TargetProperty.PropertyName, searchPks);
                 using (IDataReader reader = dao.QueryReader(lstScope, childInfo.EntityType))
                 {
                     //获取子表的get列表

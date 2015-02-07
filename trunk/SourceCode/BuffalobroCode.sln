@@ -35,8 +35,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{4E2552
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo.Data.SQLite1066.X64", "Buffalo.Data.SQLite\Buffalo.Data.SQLite1066.X64.csproj", "{7BF5C444-7A98-41C3-AF1E-403AB5DBB117}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo.Storage", "Buffalo.Storage\Buffalo.Storage.csproj", "{1BBB9409-A9EA-48E4-BFF5-C97EB4017283}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,10 +101,6 @@ Global
 		{7BF5C444-7A98-41C3-AF1E-403AB5DBB117}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BF5C444-7A98-41C3-AF1E-403AB5DBB117}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BF5C444-7A98-41C3-AF1E-403AB5DBB117}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BBB9409-A9EA-48E4-BFF5-C97EB4017283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BBB9409-A9EA-48E4-BFF5-C97EB4017283}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BBB9409-A9EA-48E4-BFF5-C97EB4017283}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1BBB9409-A9EA-48E4-BFF5-C97EB4017283}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

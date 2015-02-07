@@ -327,8 +327,9 @@ namespace Buffalo.DB.DbCommon
                         OutMessage(MessageType.OtherOper, "Closed DataBase", null, "");
                     }
                     _conn.Close();
+                    _dbAdapter.OnConnectionClosed(_conn, _db);
                 }
-                _dbAdapter.OnConnectionClosed(_conn, _db);
+                
             }
             finally
             {

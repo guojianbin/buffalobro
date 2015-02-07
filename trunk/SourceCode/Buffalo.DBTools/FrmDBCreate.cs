@@ -88,7 +88,14 @@ namespace Buffalo.DBTools
         {
             if (SelectedClass != null) 
             {
-                GetClassSQL();
+                try
+                {
+                    GetClassSQL();
+                }
+                catch (Exception ex) 
+                {
+                    FrmCompileResault.ShowCompileResault(null, ex.ToString(), "Éú³ÉSQL´íÎó");
+                }
             }
             this.Text += ToolVersionInfo.ToolVerInfo;
         }
