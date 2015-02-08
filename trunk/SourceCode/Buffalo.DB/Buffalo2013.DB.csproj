@@ -267,6 +267,8 @@
     <Compile Include="QueryConditions\ScopeList.cs" />
     <Compile Include="QueryConditions\ScopeXmlExtend.cs" />
     <Compile Include="QueryConditions\SelectCondition.cs" />
+    <Compile Include="QueryConditions\ShowChildCollection.cs" />
+    <Compile Include="QueryConditions\ShowChildItem.cs" />
     <Compile Include="QueryConditions\ShowEntityCollection.cs" />
     <Compile Include="QueryConditions\ShowPropertyCollection.cs" />
     <Compile Include="QueryConditions\Sort.cs" />

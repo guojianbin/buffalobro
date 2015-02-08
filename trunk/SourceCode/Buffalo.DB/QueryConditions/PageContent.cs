@@ -83,7 +83,7 @@ namespace Buffalo.DB.QueryConditions
         /// <summary>
         /// 起始查询条数(从0开始)
         /// </summary>
-        internal long StarIndex
+        public long StarIndex
         {
             get { return _startIndex; }
             set { _startIndex = value; }

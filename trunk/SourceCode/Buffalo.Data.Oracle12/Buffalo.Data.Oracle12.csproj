@@ -4,11 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D7CA14C3-1869-4928-91E4-3584DE3823C2}</ProjectGuid>
+    <ProjectGuid>{481A477B-AF05-48F7-ADF3-34FF703D8366}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Buffalo.Data.SQLite</RootNamespace>
-    <AssemblyName>Buffalo.Data.SQLite</AssemblyName>
+    <RootNamespace>Buffalo.Data.Oracle12</RootNamespace>
+    <AssemblyName>Buffalo.Data.Oracle12</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -18,7 +18,7 @@
     <DefineConstants>TRACE;DEBUG;NET_2_0;X86</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Debug\2005\Buffalo.Data.SQLite.XML</DocumentationFile>
+    <DocumentationFile>..\Debug\2005\Buffalo.Data.Oracle12.XML</DocumentationFile>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,20 +28,20 @@
     <DefineConstants>TRACE;NET_2_0;X86</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Release\2005\Buffalo.Data.SQLite.XML</DocumentationFile>
     <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>..\Release\2005\Buffalo.Data.Oracle12.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Oracle.DataAccess, Version=2.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dll\dll\Net2.0\Oracle\X86\Oracle.DataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite, Version=1.0.93.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\dll\Net2.0\sqlite\x86\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AdapterLoader.cs" />
     <Compile Include="AggregateFunctions.cs" />
     <Compile Include="CommonFunction.cs" />
@@ -51,6 +51,8 @@
     <Compile Include="DBAdapter.cs" />
     <Compile Include="DBStructure.cs" />
     <Compile Include="MathFunctions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SequenceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Buffalo.DB\Buffalo.DB.csproj">
@@ -70,8 +72,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
 </Project>

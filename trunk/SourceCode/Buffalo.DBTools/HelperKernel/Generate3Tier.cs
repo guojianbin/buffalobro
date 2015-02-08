@@ -198,6 +198,9 @@ namespace Buffalo.DBTools.HelperKernel
             item = new ComboBoxItem("Oracle 9 或以上", "Oracle9");
             item.Tag = "server=Myserver;user id=username;password=pwd";
             types.Add(item);
+            item = new ComboBoxItem("Oracle 12 ODAC", "Buffalo.Data.Oracle12");
+            item.Tag = "server=Myserver;user id=username;password=pwd";
+            types.Add(item);
             item = new ComboBoxItem("MySQL 5.0 或以上", "Buffalo.Data.MySQL");
             item.Tag = "User ID=root;Password=pwd;Host=127.0.0.1;Port=3306;Database=mydb;";
             types.Add(item);

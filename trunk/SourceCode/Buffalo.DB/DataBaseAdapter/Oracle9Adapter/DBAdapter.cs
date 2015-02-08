@@ -80,7 +80,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// <param name="paramValue">参数值</param>
         /// <param name="paramDir">参数进出类型</param>
         /// <returns></returns>
-        public IDataParameter GetDataParameter(string paramName, DbType type, object paramValue, ParameterDirection paramDir)
+        public virtual IDataParameter GetDataParameter(string paramName, DbType type, object paramValue, ParameterDirection paramDir)
         {
             IDataParameter newParam = new OracleParameter();
             newParam.ParameterName = paramName;
@@ -118,7 +118,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// 获取SQL命令类
         /// </summary>
         /// <returns></returns>
-        public IDbCommand GetCommand()
+        public virtual IDbCommand GetCommand()
         {
             IDbCommand comm = new OracleCommand();
             return comm;
@@ -127,7 +127,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// 获取SQL连接
         /// </summary>
         /// <returns></returns>
-        public DbConnection GetConnection(DBInfo db)
+        public virtual DbConnection GetConnection(DBInfo db)
         {
             DbConnection conn = new OracleConnection();
             return conn;
@@ -136,7 +136,7 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         /// 获取SQL适配器
         /// </summary>
         /// <returns></returns>
-        public IDbDataAdapter GetAdapter()
+        public virtual IDbDataAdapter GetAdapter()
         {
             IDbDataAdapter adapter = new OracleDataAdapter();
             return adapter;
