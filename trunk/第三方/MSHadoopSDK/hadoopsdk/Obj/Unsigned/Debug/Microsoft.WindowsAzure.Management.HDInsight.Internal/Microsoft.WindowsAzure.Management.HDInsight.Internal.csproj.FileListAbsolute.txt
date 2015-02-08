@@ -1,0 +1,10 @@
+E:\QQDownload\hadoopsdk\Bin\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Internal\Microsoft.WindowsAzure.Management.HDInsight.Internal.dll
+E:\QQDownload\hadoopsdk\Bin\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Internal\Microsoft.WindowsAzure.Management.HDInsight.Internal.pdb
+E:\QQDownload\hadoopsdk\Obj\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Internal\Microsoft.WindowsAzure.Management.HDInsight.Internal.csprojResolveAssemblyReference.cache
+E:\QQDownload\hadoopsdk\Obj\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Internal\Microsoft.WindowsAzure.Management.HDInsight.Internal.dll
+E:\QQDownload\hadoopsdk\Obj\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Internal\Microsoft.WindowsAzure.Management.HDInsight.Internal.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Internal\Microsoft.WindowsAzure.Management.HDInsight.Internal.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Internal\Microsoft.WindowsAzure.Management.HDInsight.Internal.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Internal\Microsoft.WindowsAzure.Management.HDInsight.Internal.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Internal\Microsoft.WindowsAzure.Management.HDInsight.Internal.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.WindowsAzure.Management.HDInsight.Internal\Microsoft.WindowsAzure.Management.HDInsight.Internal.pdb

@@ -1,0 +1,14 @@
+E:\QQDownload\hadoopsdk\Bin\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.dll
+E:\QQDownload\hadoopsdk\Bin\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.pdb
+E:\QQDownload\hadoopsdk\Obj\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.csprojResolveAssemblyReference.cache
+E:\QQDownload\hadoopsdk\Obj\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.dll
+E:\QQDownload\hadoopsdk\Obj\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Bin\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Bin\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Obj\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Obj\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Obj\Unsigned\Debug\Microsoft.HDInsight.Threading\Microsoft.HDInsight.Threading.pdb

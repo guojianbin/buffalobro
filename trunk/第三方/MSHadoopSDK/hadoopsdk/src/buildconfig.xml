@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<BuildConfig xmlns="http://microsoft.com/sat/buildconfig.xsd">
+  <Product>
+    <Group>Microsoft HDInsight</Group>
+    <ShortName>Windows Azure HDInsight PowerShell</ShortName>
+    <Name>Windows Azure HDInsight PowerShell</Name>
+    <Description>Powershell tools for Windows Azure HDInsight</Description>
+    <Url>https://www.hadooponazure.com/</Url>
+    <Eula>HadoopSdkLicense.rtf</Eula>
+  </Product>
+  <Engineering>
+    <CodeReviewAlias>hdxci</CodeReviewAlias>
+  </Engineering>
+
+  <Version>
+    <Major>1</Major>
+    <Minor>0</Minor>
+    <Patch>0</Patch>
+  </Version>
+  <Prepare>
+    <CopyTree>
+      <From>Cmdlet</From>
+      <To>Cmdlet</To>
+    </CopyTree>
+    <CopyTree>
+      <From>NonPublic\Source</From>
+      <To>NonPublic\Source</To>
+    </CopyTree>
+    <CopyTree>
+      <From>Cmdlet</From>
+      <To>NonPublic\Library</To>
+    </CopyTree>
+    <CopyTree>
+      <From>NonPublic\Library</From>
+      <To>NonPublic\Library</To>
+    </CopyTree>
+    <Copy>
+      <From>HadoopSdkLicense.rtf</From>
+      <To>Cmdlet\HadoopSdkLicense.rtf</To>
+    </Copy>
+
+    <Zip folder="Cmdlet" name="Microsoft.WindowsAzure.Management.HDInsight.Cmdlets.zip" />
+    <NuGet id="Microsoft.Hadoop.Client" outputFolder="HadoopClient">
+      <Title>Microsoft .NET API for Hadoop</Title>
+      <ProjectUrl>http://hadoopsdk.codeplex.com</ProjectUrl>
+      <Description>Provides a .NET API for working with Hadoop clusters over HTTP</Description>
+      <NoReferences>
+        <NoReference targetFramework="net40" file="Microsoft.HDInsight.Threading.dll" />
+      </NoReferences>
+      <Authors>Microsoft Azure-sdk</Authors>
+      <Owners>Microsoft Azure-sdk</Owners>
+      <IconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</IconUrl>
+      <LicenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</LicenseUrl>
+      <Tags>Microsoft Azure HDInsight Hadoop Scalable windowsazureofficial</Tags>
+      <RequireLicenseAcceptance>true</RequireLicenseAcceptance>
+    </NuGet>
+    <NuGet id="Microsoft.WindowsAzure.Management.HDInsight" outputFolder="HDInsightSdk" >
+      <Title>Windows Azure HDInsight</Title>
+      <ProjectUrl>http://hadoopsdk.codeplex.com</ProjectUrl>
+      <Description>Provides a .NET API for cluster management and job submission on Windows Azure HDInsight service.</Description>
+      <NoReferences>
+        <NoReference targetFramework="net40" file="Microsoft.HDInsight.Threading.dll" />
+      </NoReferences>
+      <Dependencies>
+        <Dependency id="Microsoft.Hadoop.Client" />
+      </Dependencies>
+      <Authors>Microsoft Azure-sdk</Authors>
+      <Owners>Microsoft Azure-sdk</Owners>
+      <IconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</IconUrl>
+      <LicenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</LicenseUrl>
+      <Tags>Microsoft Azure HDInsight Hadoop Scalable windowsazureofficial</Tags>
+      <RequireLicenseAcceptance>true</RequireLicenseAcceptance>
+    </NuGet>
+  </Prepare>
+  <Package>
+    <CopyTree>
+      <From>HadoopClient</From>
+      <To>HadoopClient</To>
+    </CopyTree>
+    <CopyTree>
+      <From>HDInsightSdk</From>
+      <To>HDInsightSdk</To>
+    </CopyTree>
+    <CopyTree>
+      <From>NonPublic</From>
+      <To>NonPublic</To>
+    </CopyTree>
+    <CopyTree>
+      <From>Cmdlet</From>
+      <To>Cmdlet</To>
+    </CopyTree>
+    <Copy>
+      <From>Microsoft.WindowsAzure.Management.HDInsight.Cmdlets.zip</From>
+      <To>Microsoft.WindowsAzure.Management.HDInsight.Cmdlets.zip</To>
+    </Copy>
+    <XCopy ProductGuid="D1B62378-806E-4916-877B-E2EB83CBE22B" SourceFolder="Cmdlet">
+      <GuiStyle>
+        <SAT />
+      </GuiStyle>
+      <PowerShell />
+    </XCopy>
+  </Package>
+  <Release push="HDInsight.SDK">
+    <Public>
+      <ApiScan name="HDInsight DevEx" />
+      <PoliCheck workspace=".\HDInsight\Sdk" />
+    </Public>
+  </Release>
+</BuildConfig>

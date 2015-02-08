@@ -1,0 +1,12 @@
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.WebClient\install.ps1
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.WebClient\Microsoft.Hadoop.WebClient.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.WebClient\Microsoft.Hadoop.WebClient.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.WebClient\Microsoft.Hadoop.WebClient.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.WebClient\Microsoft.Hadoop.WebClient.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.WebClient\Microsoft.Hadoop.WebClient.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.WebClient\install.ps1
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.WebClient\Microsoft.Hadoop.WebClient.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.WebClient\Microsoft.Hadoop.WebClient.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.WebClient\Microsoft.Hadoop.WebClient.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.WebClient\Microsoft.Hadoop.WebClient.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.WebClient\Microsoft.Hadoop.WebClient.pdb

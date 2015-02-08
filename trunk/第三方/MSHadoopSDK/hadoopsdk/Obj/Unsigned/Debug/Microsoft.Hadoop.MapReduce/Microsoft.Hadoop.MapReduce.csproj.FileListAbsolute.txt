@@ -1,0 +1,12 @@
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.MapReduce\install.ps1
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.MapReduce\Microsoft.Hadoop.MapReduce.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.MapReduce\Microsoft.Hadoop.MapReduce.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.MapReduce\Microsoft.Hadoop.MapReduce.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.MapReduce\Microsoft.Hadoop.MapReduce.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.MapReduce\Microsoft.Hadoop.MapReduce.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.MapReduce\install.ps1
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.MapReduce\Microsoft.Hadoop.MapReduce.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.MapReduce\Microsoft.Hadoop.MapReduce.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.MapReduce\Microsoft.Hadoop.MapReduce.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.MapReduce\Microsoft.Hadoop.MapReduce.dll
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\hadoopsdk\Obj\Unsigned\Debug\Microsoft.Hadoop.MapReduce\Microsoft.Hadoop.MapReduce.pdb

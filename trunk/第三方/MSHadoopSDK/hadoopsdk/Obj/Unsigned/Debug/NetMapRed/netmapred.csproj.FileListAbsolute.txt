@@ -1,0 +1,12 @@
+E:\QQDownload\hadoopsdk\Bin\Unsigned\Debug\NetMapRed\NetMapRed.exe.config
+E:\QQDownload\hadoopsdk\Bin\Unsigned\Debug\NetMapRed\NetMapRed.exe
+E:\QQDownload\hadoopsdk\Bin\Unsigned\Debug\NetMapRed\NetMapRed.pdb
+E:\QQDownload\hadoopsdk\Obj\Unsigned\Debug\NetMapRed\netmapred.csprojResolveAssemblyReference.cache
+E:\QQDownload\hadoopsdk\Obj\Unsigned\Debug\NetMapRed\NetMapRed.exe
+E:\QQDownload\hadoopsdk\Obj\Unsigned\Debug\NetMapRed\NetMapRed.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\NetMapRed\NetMapRed.exe.config
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\NetMapRed\NetMapRed.exe
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Bin\Unsigned\Debug\NetMapRed\NetMapRed.pdb
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\NetMapRed\netmapred.csprojResolveAssemblyReference.cache
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\NetMapRed\NetMapRed.exe
+E:\CSharpTest\BuffaloCode\第三方\hadoopsdk\Obj\Unsigned\Debug\NetMapRed\NetMapRed.pdb
