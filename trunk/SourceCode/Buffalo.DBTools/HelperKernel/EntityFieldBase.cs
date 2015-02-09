@@ -97,11 +97,11 @@ namespace Buffalo.DBTools.HelperKernel
         /// <returns></returns>
         public static string ToPascalName(string name,bool replaceSpace) 
         {
-            string propertyName = name.Trim(' ', '_');
+            string propertyName = name;
             propertyName = propertyName.Substring(0, 1).ToUpper() + propertyName.Substring(1, propertyName.Length - 1);
             if (replaceSpace) 
             {
-                propertyName = propertyName.Replace(" ", "_");
+                propertyName = ReplaceBlock(propertyName);
             }
             return propertyName;
         }
@@ -123,13 +123,28 @@ namespace Buffalo.DBTools.HelperKernel
         /// <returns></returns>
         public static string ToCamelName(string name, bool replaceSpace)
         {
-            string camelName = name.Trim(' ', '_');
+            string camelName = name;
             camelName = camelName.Substring(0, 1).ToLower() + camelName.Substring(1, camelName.Length - 1);
             if (replaceSpace)
             {
-                camelName = camelName.Replace(" ", "_");
+                camelName = ReplaceBlock(camelName);
             }
             return camelName;
+        }
+
+        /// <summary>
+        /// 过滤无效字符
+        /// </summary>
+        /// <param name="name">名称</param>
+        /// <returns></returns>
+        private static string ReplaceBlock(string name) 
+        {
+            string retName = name.Replace(" ", "_");
+            retName = retName.Replace(":", "");
+            retName = retName.Replace("&", "");
+            retName = retName.Replace("=", "");
+            retName = retName.Replace("*", "");
+            return retName;
         }
         /// <summary>
         /// 把名字转成骆驼命名法

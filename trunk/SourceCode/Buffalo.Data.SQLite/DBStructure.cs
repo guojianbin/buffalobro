@@ -32,6 +32,24 @@ namespace Buffalo.Data.SQLite
 
             return GetTableNames(oper,info,null);
         }
+        private static string[] SysTables ={ "sqlite_sequence", "sqlite_master" };
+        /// <summary>
+        /// 是否系统表名
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public static bool IsSysTable(string tableName) 
+        {
+            foreach (string systab in SysTables) 
+            {
+                if (tableName.Equals(systab, StringComparison.CurrentCultureIgnoreCase)) 
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// 获取表信息
         /// </summary>
@@ -64,6 +82,10 @@ namespace Buffalo.Data.SQLite
                     DBTableInfo tableInfo = new DBTableInfo();
                     tableInfo.Name = reader["name"] as string;
                     tableInfo.IsView = (reader["type"] as string) == "view";
+                    if (IsSysTable(tableInfo.Name)) 
+                    {
+                        continue;
+                    }
                     lstName.Add(tableInfo);
                 }
             }

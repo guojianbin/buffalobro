@@ -82,16 +82,6 @@
     <Compile Include="SequenceManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Buffalo.DB\Buffalo.DB.csproj">
-      <Project>{9B0043E4-883B-47BA-9A5A-5110C8583902}</Project>
-      <Name>Buffalo.DB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Buffalo.Kernel\Buffalo.Kernel.csproj">
-      <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
-      <Name>Buffalo.Kernel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -107,6 +97,16 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Buffalo.DB\Buffalo2013.DB.csproj">
+      <Project>{9b0043e4-883b-47ba-9a5a-5110c8583902}</Project>
+      <Name>Buffalo2013.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buffalo.Kernel\Buffalo2013.Kernel.csproj">
+      <Project>{6ec04216-a422-4751-aa81-1211dcb10bab}</Project>
+      <Name>Buffalo2013.Kernel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
