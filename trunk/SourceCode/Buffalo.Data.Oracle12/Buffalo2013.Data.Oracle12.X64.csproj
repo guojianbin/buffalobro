@@ -37,11 +37,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Debug\2013\X64\</OutputPath>
+    <OutputPath>..\Debug\2013\Oracle12\X64\</OutputPath>
     <DefineConstants>TRACE;DEBUG;NET_4_5_1;X64</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Debug\2013\X64\Buffalo.Data.Oracle12.XML</DocumentationFile>
+    <DocumentationFile>..\Debug\2013\Oracle12\X64\Buffalo.Data.Oracle12.XML</DocumentationFile>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
@@ -49,20 +49,19 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Release\2013\X64\</OutputPath>
+    <OutputPath>..\Release\2013\Oracle12\X64\</OutputPath>
     <DefineConstants>TRACE;NET_4_5_1;X64</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
-    <DocumentationFile>..\Release\2013\X64\Buffalo.Data.Oracle12.XML</DocumentationFile>
+    <DocumentationFile>..\Release\2013\Oracle12\X64\Buffalo.Data.Oracle12.XML</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Oracle.DataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\dll\Net4.0\Oracle\X64\Oracle.DataAccess.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\dll\dll\Oracle\Oracle12\X64\.net4.0\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

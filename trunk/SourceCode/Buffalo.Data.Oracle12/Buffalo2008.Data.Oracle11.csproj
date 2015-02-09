@@ -1,21 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{481A477B-AF05-48F7-ADF3-34FF703D8366}</ProjectGuid>
+    <ProjectGuid>{6CEF8A61-F539-4864-B1A2-679DBC86E1B3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Buffalo.Data.Oracle12</RootNamespace>
-    <AssemblyName>Buffalo.Data.Oracle12</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>Buffalo.Data.Oracle11</RootNamespace>
+    <AssemblyName>Buffalo.Data.Oracle11</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -31,38 +30,37 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Debug\2010\Oracle12\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET_4_0;X86</DefineConstants>
+    <OutputPath>..\Debug\2008\Oracle11\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET_3_5;X86</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Debug\2010\Oracle12\Buffalo.Data.Oracle12.XML</DocumentationFile>
+    <DocumentationFile>..\Debug\2008\Oracle11\Buffalo.Data.Oracle11.XML</DocumentationFile>
     <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Release\2010\Oracle12\</OutputPath>
-    <DefineConstants>TRACE;NET_4_0;X86</DefineConstants>
+    <OutputPath>..\Release\2008\Oracle11\</OutputPath>
+    <DefineConstants>TRACE;NET_3_5;X86</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <DocumentationFile>..\Release\2010\Oracle12\Buffalo.Data.Oracle12.XML</DocumentationFile>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\Release\2008\Oracle11\Buffalo.Data.Oracle11.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Oracle.DataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+    <Reference Include="Oracle.DataAccess, Version=2.112.4.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\dll\Oracle\Oracle12\X86\.net4.0\Oracle.DataAccess.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\dll\dll\Oracle\Oracle11\X86\.net2.0\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -80,30 +78,30 @@
     <Compile Include="SequenceManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Buffalo.DB\Buffalo2010.DB.csproj">
+    <ProjectReference Include="..\Buffalo.DB\Buffalo2008.DB.csproj">
       <Project>{9B0043E4-883B-47BA-9A5A-5110C8583902}</Project>
-      <Name>Buffalo2010.DB</Name>
+      <Name>Buffalo2008.DB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Buffalo.Kernel\Buffalo2010.Kernel.csproj">
+    <ProjectReference Include="..\Buffalo.Kernel\Buffalo2008.Kernel.csproj">
       <Project>{6EC04216-A422-4751-AA81-1211DCB10BAB}</Project>
-      <Name>Buffalo2010.Kernel</Name>
+      <Name>Buffalo2008.Kernel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

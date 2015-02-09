@@ -198,6 +198,9 @@ namespace Buffalo.DBTools.HelperKernel
             item = new ComboBoxItem("Oracle 9 ªÚ“‘…œ", "Oracle9");
             item.Tag = "server=Myserver;user id=username;password=pwd";
             types.Add(item);
+            item = new ComboBoxItem("Oracle 11 ODAC", "Buffalo.Data.Oracle11");
+            item.Tag = "server=Myserver;user id=username;password=pwd";
+            types.Add(item);
             item = new ComboBoxItem("Oracle 12 ODAC", "Buffalo.Data.Oracle12");
             item.Tag = "server=Myserver;user id=username;password=pwd";
             types.Add(item);

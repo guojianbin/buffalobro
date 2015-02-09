@@ -4,38 +4,37 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{22A81FF4-0737-4092-ACB0-830E4A065EDD}</ProjectGuid>
+    <ProjectGuid>{4FD7AEC2-A074-45FF-AAC1-818F74F50A96}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Buffalo.Data.Oracle12</RootNamespace>
-    <AssemblyName>Buffalo.Data.Oracle12</AssemblyName>
+    <RootNamespace>Buffalo.Data.Oracle11</RootNamespace>
+    <AssemblyName>Buffalo.Data.Oracle11</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Debug\2005\Oracle12\X64\</OutputPath>
+    <OutputPath>..\Debug\2005\Oracle11\X64\</OutputPath>
     <DefineConstants>TRACE;DEBUG;NET_2_0;X64</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Debug\2005\Oracle12\X64\Buffalo.Data.Oracle12.XML</DocumentationFile>
+    <DocumentationFile>..\Debug\2005\Oracle11\X64\Buffalo.Data.Oracle11.XML</DocumentationFile>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Release\2005\Oracle12\X64\</OutputPath>
+    <OutputPath>..\Release\2005\Oracle11\X64\</OutputPath>
     <DefineConstants>TRACE;NET_2_0;X64</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
-    <DocumentationFile>..\Release\2005\Oracle12\X64\Buffalo.Data.Oracle12.XML</DocumentationFile>
+    <DocumentationFile>..\Release\2005\Oracle11\X64\Buffalo.Data.Oracle11.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Oracle.DataAccess, Version=2.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
+    <Reference Include="Oracle.DataAccess, Version=2.112.4.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\dll\Oracle\Oracle12\X64\.net2.0\Oracle.DataAccess.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\dll\dll\Oracle\Oracle11\X64\.net2.0\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

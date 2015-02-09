@@ -14,27 +14,27 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Debug\2005\</OutputPath>
+    <OutputPath>..\Debug\2005\Oracle12\</OutputPath>
     <DefineConstants>TRACE;DEBUG;NET_2_0;X86</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Debug\2005\Buffalo.Data.Oracle12.XML</DocumentationFile>
+    <DocumentationFile>..\Debug\2005\Oracle12\Buffalo.Data.Oracle12.XML</DocumentationFile>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Release\2005\</OutputPath>
+    <OutputPath>..\Release\2005\Oracle12\</OutputPath>
     <DefineConstants>TRACE;NET_2_0;X86</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <DocumentationFile>..\Release\2005\Buffalo.Data.Oracle12.XML</DocumentationFile>
+    <DocumentationFile>..\Release\2005\Oracle12\Buffalo.Data.Oracle12.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Oracle.DataAccess, Version=2.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dll\dll\Net2.0\Oracle\X86\Oracle.DataAccess.dll</HintPath>
+      <HintPath>..\..\dll\dll\Oracle\Oracle12\X86\.net2.0\Oracle.DataAccess.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

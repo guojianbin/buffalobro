@@ -43,6 +43,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo2010.Data.Oracle12",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo2010.Data.Oracle12.X64", "Buffalo.Data.Oracle12\Buffalo2010.Data.Oracle12.X64.csproj", "{22A81FF4-0737-4092-ACB0-830E4A065EDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo2010.Data.Oracle11", "Buffalo.Data.Oracle12\Buffalo2010.Data.Oracle11.csproj", "{684531C6-93D1-426D-9039-7DBA111003D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buffalo2010.Data.Oracle11.X64", "Buffalo.Data.Oracle12\Buffalo2010.Data.Oracle11.X64.csproj", "{E986EECF-0C55-4861-9440-2A7392249B9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -233,6 +237,26 @@ Global
 		{22A81FF4-0737-4092-ACB0-830E4A065EDD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{22A81FF4-0737-4092-ACB0-830E4A065EDD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{22A81FF4-0737-4092-ACB0-830E4A065EDD}.Release|x86.ActiveCfg = Release|Any CPU
+		{684531C6-93D1-426D-9039-7DBA111003D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{684531C6-93D1-426D-9039-7DBA111003D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{684531C6-93D1-426D-9039-7DBA111003D4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{684531C6-93D1-426D-9039-7DBA111003D4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{684531C6-93D1-426D-9039-7DBA111003D4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{684531C6-93D1-426D-9039-7DBA111003D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{684531C6-93D1-426D-9039-7DBA111003D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{684531C6-93D1-426D-9039-7DBA111003D4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{684531C6-93D1-426D-9039-7DBA111003D4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{684531C6-93D1-426D-9039-7DBA111003D4}.Release|x86.ActiveCfg = Release|Any CPU
+		{E986EECF-0C55-4861-9440-2A7392249B9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E986EECF-0C55-4861-9440-2A7392249B9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E986EECF-0C55-4861-9440-2A7392249B9B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E986EECF-0C55-4861-9440-2A7392249B9B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E986EECF-0C55-4861-9440-2A7392249B9B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E986EECF-0C55-4861-9440-2A7392249B9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E986EECF-0C55-4861-9440-2A7392249B9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E986EECF-0C55-4861-9440-2A7392249B9B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E986EECF-0C55-4861-9440-2A7392249B9B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E986EECF-0C55-4861-9440-2A7392249B9B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -249,5 +273,7 @@ Global
 		{76EB67E0-53A6-4E99-B3B9-BFA320C84062} = {9BC41824-AC79-4CD6-AC8C-A2C60500FCF1}
 		{481A477B-AF05-48F7-ADF3-34FF703D8366} = {DED7C020-39CD-488C-8B73-1E337067C693}
 		{22A81FF4-0737-4092-ACB0-830E4A065EDD} = {DED7C020-39CD-488C-8B73-1E337067C693}
+		{684531C6-93D1-426D-9039-7DBA111003D4} = {DED7C020-39CD-488C-8B73-1E337067C693}
+		{E986EECF-0C55-4861-9440-2A7392249B9B} = {DED7C020-39CD-488C-8B73-1E337067C693}
 	EndGlobalSection
 EndGlobal
