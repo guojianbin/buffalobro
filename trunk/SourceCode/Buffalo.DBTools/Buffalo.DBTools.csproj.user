@@ -2,8 +2,8 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <StartArguments>/resetaddin Buffalo.DBTools.Connect</StartArguments>
     <StartAction>Program</StartAction>
-    <StartProgram>c:\Program Files (x86)\Microsoft Visual Studio 8\Common7\IDE\devenv.exe</StartProgram>
-    <StartWorkingDirectory>c:\Program Files (x86)\Microsoft Visual Studio 8\Common7\IDE\</StartWorkingDirectory>
+    <StartProgram>d:\Program Files (x86)\Microsoft Visual Studio 8\Common7\IDE\devenv.exe</StartProgram>
+    <StartWorkingDirectory>d:\Program Files (x86)\Microsoft Visual Studio 8\Common7\IDE\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>

@@ -52,6 +52,7 @@
             this.btnCacheModel = new System.Windows.Forms.Button();
             this.cmbCacheType = new System.Windows.Forms.ComboBox();
             this.btnCache = new System.Windows.Forms.Button();
+            this.btnImp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.gpCache.SuspendLayout();
             this.gpCacheServer.SuspendLayout();
@@ -65,6 +66,7 @@
             this.cmbType.Name = "cmbType";
             this.cmbType.Size = new System.Drawing.Size(157, 20);
             this.cmbType.TabIndex = 0;
+            this.cmbType.SelectedValueChanged += new System.EventHandler(this.cmbType_SelectedValueChanged);
             // 
             // label1
             // 
@@ -264,12 +266,24 @@
             this.btnCache.UseVisualStyleBackColor = true;
             this.btnCache.Click += new System.EventHandler(this.btnCache_Click);
             // 
+            // btnImp
+            // 
+            this.btnImp.ForeColor = System.Drawing.Color.Red;
+            this.btnImp.Location = new System.Drawing.Point(3, 106);
+            this.btnImp.Name = "btnImp";
+            this.btnImp.Size = new System.Drawing.Size(67, 23);
+            this.btnImp.TabIndex = 16;
+            this.btnImp.Text = "注意事项";
+            this.btnImp.UseVisualStyleBackColor = true;
+            this.btnImp.Click += new System.EventHandler(this.btnImp_Click);
+            // 
             // FrmDBSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(475, 326);
+            this.Controls.Add(this.btnImp);
             this.Controls.Add(this.btnCache);
             this.Controls.Add(this.gpCache);
             this.Controls.Add(this.chkEntityToDirectory);
@@ -325,5 +339,6 @@
         private System.Windows.Forms.Button btnCacheModel;
         private System.Windows.Forms.CheckBox ckbAll;
         private System.Windows.Forms.Button btnCache;
+        private System.Windows.Forms.Button btnImp;
     }
 }

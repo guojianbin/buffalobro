@@ -14,7 +14,11 @@ using Buffalo.DB.BQLCommon.BQLKeyWordCommon;
 using Buffalo.DB.DataBaseAdapter;
 using Oracle.DataAccess.Client;
 
+#if Ora11
+namespace Buffalo.Data.Oracle11
+#elif Ora12
 namespace Buffalo.Data.Oracle12
+#endif
 {
     public class DBAdapter : Buffalo.DB.DataBaseAdapter.Oracle9Adapter.DBAdapter
     {

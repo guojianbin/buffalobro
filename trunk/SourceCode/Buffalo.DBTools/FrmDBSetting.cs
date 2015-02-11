@@ -16,6 +16,7 @@ using Buffalo.DBTools.DocSummary;
 using Buffalo.DB.CommBase;
 using Buffalo.Win32Kernel;
 using Microsoft.VisualStudio.EnterpriseTools.ArtifactModel.Clr;
+using Buffalo.DBTools.UIHelper;
 
 namespace Buffalo.DBTools
 {
@@ -301,7 +302,7 @@ namespace Buffalo.DBTools
             }
             catch (Exception ex)
             {
-                MessageBox.Show("连接错误:" + ex.Message, "连接数据库错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("连接错误:" + ex.ToString(), "连接数据库错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
         }
@@ -315,10 +316,10 @@ namespace Buffalo.DBTools
                 MessageBox.Show("请选择数据库类型", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            string conn = item.Tag as string;
-            if (!string.IsNullOrEmpty(conn)) 
+            ComboBoxItem conn = item.Tag as ComboBoxItem;
+            if (!string.IsNullOrEmpty(conn.Text)) 
             {
-                rtbConnstr.Text = conn;
+                rtbConnstr.Text = conn.Text;
             }
         }
 
@@ -376,6 +377,45 @@ namespace Buffalo.DBTools
         private void btnCache_Click(object sender, EventArgs e)
         {
             ShowOrHideCache(!gpCache.Visible);
+        }
+
+        private void cmbType_SelectedValueChanged(object sender, EventArgs e)
+        {
+            ComboBoxItem item = cmbType.SelectedItem as ComboBoxItem;
+            if (item == null)
+            {
+                btnImp.Visible = false;
+                return;
+            }
+
+            ComboBoxItem conn = item.Tag as ComboBoxItem;
+            string summary = conn.Value as string;
+            if (!string.IsNullOrEmpty(summary))
+            {
+                btnImp.Visible = true;
+            }
+            else
+            {
+                btnImp.Visible = false;
+            }
+        }
+
+        private void btnImp_Click(object sender, EventArgs e)
+        {
+            ComboBoxItem item = cmbType.SelectedItem as ComboBoxItem;
+            if (item == null)
+            {
+                
+                return;
+            }
+
+            ComboBoxItem conn = item.Tag as ComboBoxItem;
+            string summary = conn.Value as string;
+            if (!string.IsNullOrEmpty(summary))
+            {
+                FrmCompileResault.ShowCompileResault(summary, null, "注意事项");
+            }
+            
         }
 
 

@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using Buffalo.DB.DataBaseAdapter.IDbAdapters;
 
+#if Ora11
+namespace Buffalo.Data.Oracle11
+#elif Ora12
 namespace Buffalo.Data.Oracle12
+#endif
 {
     /// <summary>
     ///   ≈‰∆˜º”‘ÿ∆˜

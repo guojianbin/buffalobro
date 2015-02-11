@@ -38,7 +38,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Debug\2012\Oracle12\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET_4_5;X86</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET_4_5;X86;Ora12</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\Debug\2012\Oracle12\Buffalo.Data.Oracle12.XML</DocumentationFile>
@@ -50,7 +50,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Release\2012\Oracle12\</OutputPath>
-    <DefineConstants>TRACE;NET_4_5;X86</DefineConstants>
+    <DefineConstants>TRACE;NET_4_5;X86;Ora12</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>

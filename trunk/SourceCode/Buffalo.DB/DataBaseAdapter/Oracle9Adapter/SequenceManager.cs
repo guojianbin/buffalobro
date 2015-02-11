@@ -37,13 +37,17 @@ namespace Buffalo.DB.DataBaseAdapter.Oracle9Adapter
         public static string GetDefaultName(string tableName, string paramName) 
         {
             StringBuilder sbSeqName = new StringBuilder(20);
-            sbSeqName.Append("seq_");
+            //sbSeqName.Append("s_");
             sbSeqName.Append(tableName);
             sbSeqName.Append("_");
             sbSeqName.Append(paramName);
             sbSeqName.Replace(" ", "");
-
-            return sbSeqName.ToString();
+            string str=sbSeqName.ToString();
+            if(str.Length>30)
+            {
+                str=str.Substring(0,30);
+            }
+            return str;
         }
         /// <summary>
         /// ≥ı ºªØ–Ú¡–

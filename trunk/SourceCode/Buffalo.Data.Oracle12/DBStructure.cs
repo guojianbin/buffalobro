@@ -9,7 +9,11 @@ using Buffalo.DB.DBCheckers;
 
 
 
+#if Ora11
+namespace Buffalo.Data.Oracle11
+#elif Ora12
 namespace Buffalo.Data.Oracle12
+#endif
 {
     /// <summary>
     /// 数据库结构特性类

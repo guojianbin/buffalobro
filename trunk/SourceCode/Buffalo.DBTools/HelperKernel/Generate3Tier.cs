@@ -178,7 +178,40 @@ namespace Buffalo.DBTools.HelperKernel
 
             return types;
         }
+#if (NET_2_0)
+        private static string version = "2.0";
+        private static string orcVer = "2.0";
+#elif (NET_3_0)
+        private static string version = "3.0";
+        private static string orcVer = "2.0";
+#elif (NET_3_5)
+        private static string version = "3.5";
+        private static string orcVer = "2.0";
+#elif (NET_4_0)
+        private static string version = "4.0";
+        private static string orcVer = "4.0";
+#elif (NET_4_5)
+        private static string version = "4.5";
+        private static string orcVer = "4.0";
+#elif (NET_4_5_1)
+        private static string version = "4.5.1";
+        private static string orcVer = "4.0";
+#endif
 
+        /// <summary>
+        /// 获取Oracle数据库的备注
+        /// </summary>
+        /// <param name="oracleVersion">oracle版本</param>
+        /// <returns></returns>
+        private static string GetOracleSummary(string oracleVersion,string oraOps) 
+        {
+            StringBuilder sbRet = new StringBuilder();
+            sbRet.AppendLine("本插件如使用ODAC操作Oracle");
+            sbRet.AppendLine("则需要把 BuffaloCode\\dll\\Buffalo\\Net" + version + "\\Oracle" + oracleVersion + "\\ 目录下的 Buffalo.Data.Oracle" + oracleVersion + ".dll、Oracle.DataAccess.dll和 OraOps" + oraOps + ".dll");
+            sbRet.AppendLine("还有 BuffaloResource\\OracleODAC\\Oracle" + oracleVersion + "\\X86\\ 目录下的 oci.dll 和oraociei" + oracleVersion + ".dll");
+            sbRet.AppendLine("拷贝到 BuffaloCode\\Tools\\AddInSetup\\AddIns\\Net" + version + "\\ 目录下");
+            return sbRet.ToString();
+        }
         /// <summary>
         /// 初始化数据库类型
         /// </summary>
@@ -187,37 +220,39 @@ namespace Buffalo.DBTools.HelperKernel
         {
             ComboBoxItemCollection types = new ComboBoxItemCollection();
             ComboBoxItem item = new ComboBoxItem("SQL Server 2000", "Sql2K");
-            item.Tag = "server=127.0.0.1;database=mydb;uid=sa;pwd=sa";
+            item.Tag =new ComboBoxItem("server=127.0.0.1;database=mydb;uid=sa;pwd=sa",null);
             types.Add(item);
             item = new ComboBoxItem("SQL Server 2005", "Sql2K5");
-            item.Tag = "server=127.0.0.1;database=mydb;uid=sa;pwd=sa";
+            item.Tag = new ComboBoxItem("server=127.0.0.1;database=mydb;uid=sa;pwd=sa", null);
             types.Add(item);
             item = new ComboBoxItem("SQL Server 2008 或以上", "Sql2K8");
-            item.Tag = "server=127.0.0.1;database=mydb;uid=sa;pwd=sa";
+            item.Tag = new ComboBoxItem("server=127.0.0.1;database=mydb;uid=sa;pwd=sa", null);
             types.Add(item);
             item = new ComboBoxItem("Oracle 9 或以上", "Oracle9");
-            item.Tag = "server=Myserver;user id=username;password=pwd";
+            item.Tag = new ComboBoxItem("server=Myserver;user id=username;password=pwd", null);
             types.Add(item);
             item = new ComboBoxItem("Oracle 11 ODAC", "Buffalo.Data.Oracle11");
-            item.Tag = "server=Myserver;user id=username;password=pwd";
+            item.Tag = new ComboBoxItem("user id=system;password=123456;data source=//127.0.0.1:1521/orcl", GetOracleSummary("11","11w"));
+
             types.Add(item);
             item = new ComboBoxItem("Oracle 12 ODAC", "Buffalo.Data.Oracle12");
-            item.Tag = "server=Myserver;user id=username;password=pwd";
+            item.Tag = new ComboBoxItem("user id=system;password=123456;data source=//127.0.0.1:1521/orcl",  GetOracleSummary("12","12"));
+
             types.Add(item);
             item = new ComboBoxItem("MySQL 5.0 或以上", "Buffalo.Data.MySQL");
-            item.Tag = "User ID=root;Password=pwd;Host=127.0.0.1;Port=3306;Database=mydb;";
+            item.Tag = new ComboBoxItem("User ID=root;Password=pwd;Host=127.0.0.1;Port=3306;Database=mydb;", null);
             types.Add(item);
             item = new ComboBoxItem("SQLite", "Buffalo.Data.SQLite");
-            item.Tag = "Data Source=D:\\db.s3db";
+            item.Tag = new ComboBoxItem("Data Source=D:\\db.s3db", null);
             types.Add(item);
             item = new ComboBoxItem("IBM DB2 v9或以上", "Buffalo.Data.DB2");
-            item.Tag = "server=127.0.0.1:50000;DATABASE =mydb;UID=DB2Admin;PWD=pwd";
+            item.Tag = new ComboBoxItem("server=127.0.0.1:50000;DATABASE =mydb;UID=DB2Admin;PWD=pwd", null);
             types.Add(item);
             item = new ComboBoxItem("Postgresql9或以上", "Buffalo.Data.PostgreSQL");
-            item.Tag = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=pwd;Database=mydb";
+            item.Tag = new ComboBoxItem("Server=127.0.0.1;Port=5432;User Id=postgres;Password=pwd;Database=mydb", null);
             types.Add(item);
             item = new ComboBoxItem("Access", "Access");
-            item.Tag = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=c:\\db.mdb; Jet OLEDB:Database Password=pwd";
+            item.Tag = new ComboBoxItem("Provider=Microsoft.Jet.OLEDB.4.0; Data Source=c:\\db.mdb; Jet OLEDB:Database Password=pwd", null);
             types.Add(item);
             return types;
         }

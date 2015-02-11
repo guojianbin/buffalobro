@@ -38,7 +38,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Debug\2013\Oracle11\X64\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET_4_5_1;X64</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET_4_5_1;X64;Ora11</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\Debug\2013\Oracle11\X64\Buffalo.Data.Oracle11.XML</DocumentationFile>
@@ -50,7 +50,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Release\2013\Oracle11\X64\</OutputPath>
-    <DefineConstants>TRACE;NET_4_5_1;X64</DefineConstants>
+    <DefineConstants>TRACE;NET_4_5_1;X64;Ora11</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
