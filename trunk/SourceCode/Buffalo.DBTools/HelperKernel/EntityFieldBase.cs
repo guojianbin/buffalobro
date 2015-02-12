@@ -97,7 +97,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <returns></returns>
         public static string ToPascalName(string name,bool replaceSpace) 
         {
-            string propertyName = name;
+            string propertyName = name.TrimStart('_');
             propertyName = propertyName.Substring(0, 1).ToUpper() + propertyName.Substring(1, propertyName.Length - 1);
             if (replaceSpace) 
             {
@@ -123,7 +123,7 @@ namespace Buffalo.DBTools.HelperKernel
         /// <returns></returns>
         public static string ToCamelName(string name, bool replaceSpace)
         {
-            string camelName = name;
+            string camelName = name.TrimStart('_');
             camelName = camelName.Substring(0, 1).ToLower() + camelName.Substring(1, camelName.Length - 1);
             if (replaceSpace)
             {

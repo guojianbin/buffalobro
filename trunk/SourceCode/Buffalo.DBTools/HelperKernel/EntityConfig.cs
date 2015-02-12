@@ -979,8 +979,7 @@ namespace Buffalo.DBTools.HelperKernel
 
         }
 
-        static string[] _modifier ={ "public ", "private ", "protected ", "internal ", 
-            "protected internal ", "internal protected " };
+        static string[] _modifier ={ "protected internal ","internal protected ","public ", "private ", "protected ", "internal " };
 
 
         /// <summary>
@@ -991,26 +990,57 @@ namespace Buffalo.DBTools.HelperKernel
         private string VirtualProperty(string str)
         {
             StringBuilder ret = new StringBuilder();
+
             if (str.IndexOf(" virtual ") < 0)
             {
-                string space = CutSpace(str);
-                string newStr = str.TrimStart(' ','\t');
-                foreach(string mod in _modifier)
+                
+                
+                string line=null;
+                bool hasAdd = false;
+                using (StringReader strRead = new StringReader(str))
                 {
-                    if (newStr.StartsWith(mod)) 
+                    while ((line = strRead.ReadLine()) != null)
                     {
-                        ret.Append(space);
-                        ret.Append(mod);
-                        ret.Append("virtual ");
-                        ret.Append(newStr.Substring(mod.Length));
+                        if (hasAdd) 
+                        {
+                            ret.AppendLine(line);
+                            continue;
+                        }
+                        if (CommonMethods.IsNullOrWhiteSpace(line))
+                        {
+                            ret.AppendLine(line);
+                            continue;
+                        }
 
-                        return ret.ToString();
+                        if (line.Trim().IndexOf('[') == 0)
+                        {
+                            ret.AppendLine(line);
+                            continue;
+                        }
+
+                        string newLine = line.TrimStart(' ');
+                        string space = CutSpace(line);
+                        foreach (string mod in _modifier)
+                        {
+                            if (newLine.StartsWith(mod))
+                            {
+                                ret.Append(space);
+                                ret.Append(mod);
+                                ret.Append("virtual ");
+                                ret.Append(newLine.Substring(mod.Length));
+                                hasAdd = true;
+                                return ret.ToString();
+                            }
+                        }
+                        ret.Append(space);
+                        ret.Append("virtual ");
+                        ret.Append(newLine);
+                        hasAdd = true;
                     }
+                    
                 }
-                ret.Append(space);
-                ret.Append("virtual ");
-                ret.Append(newStr);
-                return ret.ToString();
+                
+                return ret.ToString().TrimEnd('\r','\n');
             }
             return str;
 
@@ -1030,7 +1060,9 @@ namespace Buffalo.DBTools.HelperKernel
                 {
                     if (_properties.TryGetValue(param.PropertyName, out cp)) 
                     {
-                        lst[cp.StartLine]=cp;
+                        int line = cp.StartLine;
+
+                        lst[line] = cp;
                     }
                 }
             }
